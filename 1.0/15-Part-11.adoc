@@ -1,0 +1,127 @@
+=== Query Rewrite Extension (relation_family, serialization, version)
+
+This clause establishes the _Query Rewrite Extension (relation_family, serialization, version)_ parameterized requirements class, with URI `/req/query-rewrite-extension`, which has a single corresponding conformance class _Query Rewrite Extension (relation_family, serialization, version)_, with URI `/conf/query-rewrite-extension`. This requirements class defines a set of RIF rules [15] that use topological extension functions defined in Clause 9 to establish the existence of direct topological predicates defined in Clause 7. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.
+
+The following rule specified using the RIF Core Dialect [W3C RIF Core] is used as a template to describe rules in the remainder of this clause. `ogc:relation` is used as a placeholder for the spatial relation URIs defined in Clause 7, and `ogc:function` is used as a placeholder for the spatial functions defined in Clause 9.
+
+```
+Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial 
+    (?f1[ogc:relation->?f2] :-
+        Or(
+            And
+                # feature – feature rule 
+                (?f1[geo:hasDefaultGeometry->?g1]
+                 ?f2[geo:hasDefaultGeometry->?g2] 
+                 ?g1[ogc:asGeomLiteral->?g1Serial] 
+                 ?g2[ogc:asGeomLiteral->?g2Serial]
+                 External(ogc:function (?g1Serial,?g2Serial)))
+            And             
+                # feature – geometry rule 
+                (?f1[geo:hasDefaultGeometry->?g1]
+                 ?g1[ogc:asGeomLiteral->?g1Serial]
+                 ?f2[ogc:asGeomLiteral->?g2Serial] 
+                 External(ogc:function (?g1Serial,?g2Serial)))
+            And
+                # geometry - feature rule 
+                (?f2[geo:hasDefaultGeometry->?g2]
+                 ?f1[ogc:asGeomLiteral->?g1Serial]
+                 ?g2[ogc:asGeomLiteral->?g2Serial] 
+                 External(ogc:function (?g1Serial,?g2Serial)))
+            And
+                # geometry - geometry rule 
+                (?f1[ogc:asGeomLiteral->?g1Serial] 
+                 ?f2[ogc:asGeomLiteral->?g2Serial]
+                 External(ogc:function (?g1Serial,?g2Serial))) 
+    )
+)
+```
+
+==== Parameters
+
+*relation_family*: Specifies the set of topological spatial relations to support.
+
+*serialization*: Specifies the serialization standard to use for geometry literals.
+
+*version*: Specifies the version of the serialization format used.
+
+==== Requirements for Simple Features Relation Family (relation_family=Simple Features)
+
+This clause defines requirements for the _Simple Features_ relation family. Table 8 specifies the function and property substitutions for each rule in the _Simple Features_ relation family.
+
+|===
+|*Req 28* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:sfEquals`, `geor:sfDisjoint`, `geor:sfIntersects`, `geor:sfTouches`, `geor:sfCrosses`, `geor:sfWithin`, `geor:sfContains`, `geor:sfOverlaps`.
+|`/req/query-rewrite-extension/sf-query-rewrite`
+|===
+
+.Simple Features Query Transformation Rules
+|===
+|Rule | ogc:relation | ogc:function
+
+|geor:sfEquals | geo:sfEquals | geof:sfEquals
+|geor:sfDisjoint | geo:sfDisjoint | geof:sfDisjoint
+|geor:sfIntersects | geo:sfIntersects | geof:sfIntersects
+|geor:sfTouches | geo:sfTouches | geof:sfTouches
+|geor:sfCrosses | geo:sfCrosses | geof:sfCrosses
+|geor:sfWithin | geo:sfWithin | geof:sfWithin
+|geor:sfContains | geo:sfContains | geof:sfContains
+|geor:sfOverlaps | geo:sfOverlaps | geof:sfOverlaps
+|===
+
+==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
+
+|===
+|*Req 29* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:ehEquals`, `geor:ehDisjoint`, `geor:ehMeet`, `geor:ehOverlap`,
+`geor:ehCovers`, `geor:ehCoveredBy`, `geor:ehInside`, `geor:ehContains`.
+|`/req/query-rewrite-extension/eh-query-rewrite`
+|===
+
+.Simple Features Query Transformation Rules
+|===
+|Rule | ogc:relation | ogc:function
+
+|geor:ehEquals | geo:ehEquals | geof:ehEquals
+|geor:ehDisjoint | geo:ehDisjoint | geof:ehDisjoint
+|geor:ehMeet | geo:ehMeet | geof:ehMeet
+|geor:ehOverlap | geo:ehOverlap | geof:ehOverlap
+|geor:ehCovers | geo:ehCovers | geof:ehCovers
+|geor:ehCoveredBy | geo:ehCoveredBy | geof:ehCoveredBy
+|geor:ehInside | geo:ehInside | geof:ehInside
+|geor:ehContains | geo:ehContains | geof:ehContains
+|===
+
+==== Requirements for RCC8 Relation Family (relation_family=RCC8)
+
+This clause defines requirements for the _RCC8_ relation family. Table 10 specifies the function and property substitutions for each rule in the _RCC8_ relation family.
+
+|===
+|*Req 30* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:rcc8eq`, `geor:rcc8dc`, `geor:rcc8ec`, `geor:rcc8po`, `geor:rcc8tppi`, `geor:rcc8tpp`, `geor:rcc8ntpp`, `geor:rcc8ntppi`.
+|`/req/query-rewrite-extension/rcc8-query-rewrite`
+|===
+
+.Simple Features Query Transformation Rules
+|===
+|Rule | ogc:relation | ogc:function
+
+|geor:rcc8eq | geo:rcc8eq | geof:rcc8eq
+|geor:rcc8dc | geo:rcc8dc | geof:rcc8dc
+|geor:rcc8ec | geo:rcc8ec | geof:rcc8ec
+|geor:rcc8po | geo:rcc8po | geof:rcc8po
+|geor:rcc8tppi | geo:rcc8tppi | geof:rcc8tppi
+|geor:rcc8tpp | geo:rcc8tpp | geof:rcc8tpp
+|geor:rcc8ntpp | geo:rcc8ntpp | geof:rcc8ntpp
+|geor:rcc8ntppi | geo:rcc8ntppi | geof:rcc8ntppi
+|===
+
+==== Special Considerations
+
+The applicability of GeoSPARQL rules in certain circumstances has intentionally been left undefined.
+
+The first situation arises for triple patterns with unbound predicates. Consider the query pattern below:
+
+```
+{ my:feature1 ?p my:feature2 }
+````
+
+When using a query transformation strategy, this triple pattern could invoke none of the GeoSPARQL rules or all of the rules. Implementations are free to support either of these alternatives.
+
+The second situation arises when supporting GeoSPARQL rules in the presence of RDFS Entailment. The existence of a topological relation (possibly derived from a GeoSPARQL rule) can entail other RDF triples. For example, if `geo:sfOverlaps` has been defined as an `rdfs:subPropertyOf` the property `my:overlaps`, and the RDF triple `my:feature1 geo:sfOverlaps my:feature2` has been derived from a GeoSPARQL rule, then the RDF triple `my:feature1 my:overlaps my:feature2` can be entailed. Implementations may support such entailments but are not required to.
