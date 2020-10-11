@@ -1,0 +1,150 @@
+=== Geometry Topology Extension (relation_family, serialization, version)
+
+This clause establishes the _Geometry Topology Extension (relation_family, serialization, version)_ parameterized requirements class, with URI `/req/geometry-topology-extension`, which defines a collection of topological query functions that operate on geometry literals. This class is parameterized to give implementations flexibility in the topological relation families and geometry serializations that they choose to support. This requirements class has a single corresponding conformance class _Geometry Topology Extension (relation_family, serialization, version)_, with URI `/conf/geometry-topology-extension`.
+
+The Dimensionally Extended Nine Intersection Model (DE-9IM) has been used to define the relation tested by the query functions introduced in this section. Each query function is associated with a defining DE-9IM intersection pattern. Possible pattern values are `-1` (empty), `0`, `1`, `2`, `T` (true) = `{0, 1, 2}`, `F` (false) = `{-1}`, `*` (don’t care) = `{-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g. points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
+
+==== Parameters
+
+**relation_family**: Specifies the set of topological spatial relations to support.  
+
+**serialization**: Specifies the serialization standard to use for geometry literals.  
+
+**version**: Specifies the version of the serialization format used. 
+
+==== Common Query Functions
+
+|===
+|*Req 21* Implementations shall support `geof:relate` as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].
+|`/req/geometry-topology-extension/relate-query-function`
+|===
+
+```
+geof:relate (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
+             pattern-matrix: xsd:String): xsd:boolean
+```
+
+Returns `true` if the spatial relationship between `geom1` and `geom2` corresponds to one with acceptable values for the specified pattern-matrix. Otherwise, this function returns `false`. `pattern-matrix` represents a DE-9IM intersection pattern consisting of `T` (true) and `F` (false) values. The spatial reference system for `geom1` is used for spatial calculations.
+
+==== Requirements for Simple Features Relation Family (relation_family=Simple Features)
+
+This clause establishes requirements for the _Simple Features_ relation family.
+
+|===
+|*Req 22* Implementations shall support `geof:sfEquals`, `geof:sfDisjoint`, `geof:sfIntersects`, `geof:sfTouches`, `geof:sfCrosses`, `geof:sfWithin`, `geof:sfContains`, `geof:sfOverlaps` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+|`/req/geometry-topology-extension/sf-query-functions`
+|===
+
+Boolean query functions defined for the Simple Features relation family, along with their associated DE-9IM intersection patterns, are shown in Table 5 below. Multi-row intersection patterns should be interpreted as a logical OR of each row. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal _serialization_ type _specified_ by serialization and version. Each function returns an `xsd:boolean` value of `true` if the specified relation exists between `geom1` and `geom2` and returns false otherwise. In each case, the spatial reference system of `geom1` is used for spatial calculations.
+
+.Simple Features Query Functions
+|===
+|Query Function | Defining DE-9IM Intersection Pattern
+
+|```geof:sfEquals(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `(TFFFTFFFT)`
+| ```geof:sfDisjoint(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `(FF*FF****)`
+| ```geof:sfIntersects(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
+| ```geof:sfTouches(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
+| ```geof:sfCrosses(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*T***T**) for P/L, P/A, L/A; (0*T***T**) for L/L+`
+| ```geof:sfWithin(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*F**F***)+`
+| ```geof:sfContains(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*****FF*)+`
+| ```geof:sfOverlaps(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*T***T**) for A/A, P/P; (1*T***T**) for L/L+`
+|===
+
+==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
+
+This clause establishes requirements for the _Egenhofer_ relation family. Consult references [2] and [3] for a more detailed discussion of _Egenhofer_ relations.
+
+|===
+|*Req 23* Implementations shall support `geof:ehEquals`, `geof:ehDisjoint`, `geof:ehMeet`, `geof:ehOverlap`, `geof:ehCovers`, `geof:ehCoveredBy`, `geof:ehInside`, `geof:ehContains` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+|`/req/geometry-topology-extension/eh-query-functions`
+|===
+
+Boolean query functions defined for the _Egenhofer_ relation family, along with their associated DE-9IM intersection patterns, are shown in Table 6 below. Multi-row intersection patterns should be interpreted as a logical OR of each row. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal serialization type specified by _serialization_ and _version_. Each function returns an `xsd:boolean` value of `true` if the specified relation exists between `geom1` and `geom2` and returns `false` otherwise. In each case, the spatial reference system of geom1 is used for spatial calculations.
+
+.Egenhofer Query Functions
+|===
+|Query Function | Defining DE-9IM Intersection Pattern
+
+|```geof:ehEquals(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFFFTFFFT)+`
+| ```geof:ehDisjoint(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FF*FF****)+`
+| ```geof:ehMeet(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
+| ```geof:ehOverlap(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*T***T**)+`
+| ```geof:ehCovers(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*TFT*FF*)+`
+| ```geof:ehCoveredBy(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFF*TFT**)+`
+| ```geof:ehInside(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFF*FFT**)+`
+| ```geof:ehContains(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(T*TFF*FF*)+`
+|===
+
+===== Requirements for RCC8 Relation Family (relation_family=RCC8)
+
+This clause establishes requirements for the _RCC8_ relation family. Consult references [1] and [9] for a more detailed discussion of _RCC8_ relations.
+
+|===
+|*Req 24* Implementations shall support `geof:rcc8eq`, `geof:rcc8dc`, `geof:rcc8ec`, `geof:rcc8po`, `geof:rcc8tppi`, `geof:rcc8tpp`, `geof:rcc8ntpp`, `geof:rcc8ntppi` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+|`/req/geometry-topology-extension/rcc8-query-functions`
+|===
+
+Boolean query functions defined for the _RCC8_ relation family, along with their associated DE-9IM intersection patterns, are shown in Table 7 below. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal serialization type specified by _serialization_ and _version_. Each function returns an `xsd:boolean` value of `true` if the specified relation exists between `geom1` and `geom2` and returns `false` otherwise. In each case, the spatial reference system of geom1 is used for spatial calculations.
+
+.RCC8 Query Functions
+|===
+|Query Function | Defining DE-9IM Intersection Pattern
+
+|```geof:rcc8eq(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFFFTFFFT)+`
+| ```geof:rcc8dc(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FFTFFTTTT)+`
+| ```geof:rcc8ec(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(FFTFTTTTT)+`
+| ```geof:rcc8po(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TTTTTTTTT)+`
+| ```geof:rcc8tppi(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TTTFTTFFT)+`
+| ```geof:rcc8tpp(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFFTTFTTT)+`
+| ```geof:rcc8ntpp(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TFFTFFTTT)+`
+| ```geof:rcc8ntppi(geom1: ogc:geomLiteral, 
+                geom2: ogc:geomLiteral
+                ): xsd:boolean``` | `+(TTTFFTFFT)+`
+|===

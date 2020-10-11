@@ -1,0 +1,57 @@
+=== Core
+
+This clause establishes the *core* requirements class, with URI `/req/core`, which has a single corresponding conformance class, *core*, with URI `/conf/core`. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.
+
+==== SPARQL
+
+|===
+|*Req 1* Implementations shall support the SPARQL Query Language for RDF [W3C SPARQL], the SPARQL Protocol for RDF [W3C SPARQL Protocol] and the SPARQL Query Results XML Format [W3C SPARQL Result Format].
+|`/req/core/sparql-protocol`
+|===
+
+==== Classes
+
+Two main classes are defined: `geo:SpatialObject` and `geo:Feature`. The class `geo:Feature` is equivalent to the UML class `GFI_Feature` defined in [8].
+
+===== Class: geo:SpatialObject
+
+The class `geo:SpatialObject` is defined by the following:
+
+```
+geo:SpatialObject a rdfs:Class, 
+                    owl:Class;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
+    rdfs:label "Spatial Object"@en;
+    rdfs:comment "The class Spatial Object represents everything that can 
+                 have a spatial representation. It is superclass of feature 
+                 and geometry"@en .
+```
+
+|===
+|*Req 2* Implementations shall allow the RDFS class `geo:SpatialObject` to be used in SPARQL graph patterns.
+|`/req/core/spatial-object-class`
+|===
+
+===== Class: geo:Feature
+
+The class `geo:Feature` is equivalent to the class `GFI_Feature` [8] and is defined by the following:
+
+
+
+```
+geo:Feature a rdfs:Class,
+              owl:Class;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
+    rdfs:label "Feature"@en;
+    rdfs:subClassOf geo:SpatialObject;
+    owl:disjointWith geo:Geometry;
+    rdfs:comment "This class represents the top-level feature type. This
+                 class is equivalent to GFI_Feature defined in ISO 19156, 
+                 and it is superclass of all feature types."@en .
+```
+
+|===
+|*Req 3* Implementations shall allow the RDFS class `geo:Feature` to be used in SPARQL graph patterns.
+|`/req/core/feature-class`
+|===
+
