@@ -1,1 +1,64 @@
 # This is a placeholder for a Profile Vocabulary description of GeoSPARQL
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prof: <http://www.w3.org/ns/dx/prof/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix role: <http://www.w3.org/ns/dx/prof/role/> .
+@prefix sdo: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://www.opengis.net/ont/geosparql/profile>  # this URI is not formally established yet
+    a prof:Profile ;
+    dcterms:title "GeoSPARQL 1.1 Profile" ;
+    dcterms:description """This is a 'profile declaration' for the GeoSPARQL 1.1 specification (standard). It describes the multiple parts of the specification and how the standard relates to other standards. It is formulated according to the Profile Vocabulary."""@en ;
+    skos:scopeNote """Profile declarations are used to allow data to identify specifications in a way that allows data to make conformance claims to them - a broader conformance claim than that made to individual 'conformance classes' that are commonly found in recent OGC specifications. Profile delcarations are also used to describe and relate the often multiple parts of specifications: ontologies, specification 'documents', vocabularie, validators and so on. This declaration describes where those parts are, what form (format) they take, what information models they implement and what roles they play."""@en ;
+    prof:hasResource 
+        <http://www.opengis.net/doc/IS/geosparql/1.1> ,
+        <http://www.opengis.net/doc/IS/geosparql/1.1.pdf> ,
+        <http://www.opengis.net/ont/geosparql> ,
+        <http://www.opengis.net/ont/geosparql/profile/validation> ,
+        <https://github.com/opengeospatial/ogc-geosparql> ;
+.
+
+<http://www.opengis.net/doc/IS/geosparql/1.1>
+    a prof:ResourceDescriptor ;
+    dcterms:title "Specification Document in HTML"@en ;
+    dcterms:format "text/html" ;
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/spec/_11-052r4.html> ;
+    prof:hasRole role:specification
+.
+
+<http://www.opengis.net/doc/IS/geosparql/1.1.pdf>
+    a prof:ResourceDescriptor ;
+    dcterms:title "Specification Document as a PDF"@en ;
+    dcterms:format "application/pdf" ;
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/spec/_11-052r4.pdf> ;
+    prof:hasRole role:specification
+.
+
+<http://www.opengis.net/ont/geosparql>
+    a prof:ResourceDescriptor ;
+    dcterms:title "Ontology"@en ;
+    dcterms:format "text/turtle" ;
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/geo.ttl> ;
+    prof:hasRole role:schema
+.
+
+<http://www.opengis.net/ont/geosparql/profile/validation>
+    a prof:ResourceDescriptor ;
+    dcterms:title "Validation SHACL file"@en ;
+    dcterms:format "text/turtle" ;
+    dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/validation.ttl> ;
+    prof:hasRole role:schema
+.
+
+<https://github.com/opengeospatial/ogc-geosparql>
+    a prof:ResourceDescriptor ;
+    dcterms:title "Profile code repository"@en ;
+    dcterms:description "Code repository storing all Profile artifacts"@en ;
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql> ;
+    prof:hasRole role:repository
+.
