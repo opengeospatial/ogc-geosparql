@@ -212,7 +212,7 @@ This section establishes the requirements for representing geometry data in RDF 
 
 ===== RDFS Datatypes
 
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#wktLiteral+`.
+This section defines two RDFS Datatypes: `+http://www.opengis.net/ont/geosparql#wktLiteral+` & `+http://www.opengis.net/ont/geosparql#wktDGGSLiteral+`.
 
 *RDFS Datatype: geo:wktLiteral*
 
@@ -224,7 +224,7 @@ geo:wktLiteral a rdfs:Datatype;
 ```
 
 |===
-|*Req 10* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid `geo:wktLiterals` are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].
+|*Req 10* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid `geo:wktLiteral` instances are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].
 |`/req/geometry-extension/wkt-literal`
 |===
 
@@ -264,9 +264,54 @@ Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 |`/req/geometry-extension/wkt-literal-empty`
 |===
 
+*RDFS Datatype: geo:wktDGGSLiteral*
+
+```
+geo:wktDGGSLiteral a rdfs:Datatype;
+    rdfs:subClassOf geo:wktLiteral ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:label "Well-known Text for DGGS Literal"@en;
+    rdfs:comment "A Well-known Text for Discrete Global Grid Systems serialization of a geometry object."@en .
+```
+
+The datatype class `geo:wktDGGSLiteral` is a sub class of `geo:wktLiteral`. This means that properties which require a range value of 
+`geo:wktLiteral` may be used to indicate `geo:wktDGGSLiteral` objects. It does not mean that `geo:wktDGGSLiteral` instances present
+valid WKT literal values: the WKT specification does not currently allow for the representation of DGGS coordinates so a _WKT-like_
+format is being specified for `geo:wktDGGSLiteral` instances.
+
+|===
+|*Req XX* All RDFS Literals of type `geo:wktDGGWLiteral` shall consist of a mandatory URI identifying the Discrete Global Grid System followed by Well Known Text for DGGS (WKT-DGGS) describing a geometric value. Valid `geo:wktDGGSLiteral` instances are formed similarly to `geo:wktLiteral` instnaces but there are differences which are described in DGGS literature and WKT-DGGS validators are available.
+|`/req/geometry-extension/wkt-dggs-literal`
+|===
+
+For `geo:wktDGGSLiteral` instances, the beginning URI identifies the Discrete Global Grid System for
+the geometry. The OGC is establishing a set of DGGS URIs which _should_ be used. This leading spatial reference
+system URI is mandatory, unlike for `geo:wktLiteral` instances for which it is optional.
+
+The example `geo:wktDGGSLiteral` below encodes a point geometry using the Testbed 16 Pix DGGS - a DGGS created for OGC Testbed 16 activities. Note that a non-OGC URI is used to indicate the DGGS for,
+as of the time of this specification's writing, there was no OGC URIs issued for DGGS instances:
+
+```
+"<https://w3id.org/dggs/tb16pix> Point(P67303512645)"^^<http://www.opengis.net/ont/geosparql#wktDGGSLiteral>
+```
+
+A second example below encodes a polygon according to the AusPIX DGGS which is again identified with a non-OGC URI:
+
+```
+"<https://w3id.org/dggs/auspix> Polygon(P67303512743 P67303512746 P67303512747 
+                                        P67303512748 P67303512756 P67303512760 
+                                        P67303512761 P67303512762 P67303512770
+                                        ...
+                                        P67303512788 P6730351286 P67303515201)"^^<http://www.opengis.net/ont/geosparql#wktDGGSLiteral>
+```
+In the `geo:wktDGGSLiteral` instance above, line breaks, tab spaces and an ellipses have been added for clarity. The complete geometry is not presented.
+
+Note that the major difference between `geo:wktLiteral` & `geo:wktDGGSLiteral` instances values is in the form of coordinates used with DGGS coordinates consisting of single, _CellID_, values as 
+opposed to coordinate pairs (_longitude & latitude_) values.
+
 ===== Serialization Properties
 
-The `geo:asWKT` property is defined to link a geometry with its WKT serialization.
+The `geo:asWKT` property is defined to link a geometry with WKT serialization.
 
 *Property: geo:asWKT*
 
