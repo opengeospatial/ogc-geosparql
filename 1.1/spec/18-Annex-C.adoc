@@ -19,9 +19,17 @@ SELECT ?item ?rel ?val ?geo WHERE {
   OPTIONAL {?item geo:hasGeometry/geo:hasSerialization ?geo .}
 }
 ```
+This SPARQL query retrieves all properties and their values directly connected to an instance of all classes which are subclasses of http://www.opengis.net/ont/geosparql#Feature[geo:Feature].
+The query result is a list of triples which may be converted to a FeatureCollection representation.
 
+This representation results in a valid FeatureCollection which may be exposed using an OGC API Features compatibles webservice.
 
+However, it needs to be remarked that the aforementioned query however may not in all cases deliver the the expected result.
 
+There are several reasons for this:
+
+- More information is connected to the instance which should represent the FeatureCollection than anticipated. Maybe only information in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
+- The aformentioned query only queries directly connected properties and their values. Often geodata formats like GML are hierarchical and therefore need further resolution of property values depicted as URIs. If that is the case the query needs to be adjusted.
 
 ==== C.2 Mappings from CQL statements to GeoSPARQL queries
 
