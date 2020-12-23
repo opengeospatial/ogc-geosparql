@@ -13,7 +13,49 @@ Similarly to SQL backends of OGC webservices, geospatial featurecollections are 
 ==== C.2 Mappings from CQL statements to GeoSPARQL queries
 
 
-===== C2.1 Filter Functions
+===== C2.1 Literal Values
+
+CQL defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.
+
+|======================
+| CQL literal | Examples  | (Geo)SPARQL literal | Examples
+| String  | "This is a string" | xsd:string | "This is a string"^^xsd:string 
+| Number  | -100  3.14159 | xsd:int xsd:integer xsd:double | "-100"^^xsd:integer  "3.14159"^^xsd:double 
+| Boolean  | true false | xsd:boolean| "true"^^xsd:boolean  "false"^^xsd:boolean 
+| Spatial Geometry (WKT)  | POINT(1 1) | geo:wktLiteral | "POINT(1 1)"^^geo:wktLiteral
+| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | geo:geoJSONLiteral | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
+| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | xsd:date xsd:dateTime | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
+|======================
+
+===== C2.2 Property references
+
+CQL allows to reference properties in the FeatureCollection it is targeting for filtering. A property reference is converted to a triple patterns as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
+
+|======================
+| Property Reference  | Triple pattern
+| name="OGC" | ?item my:name "OGC"^^xsd:string
+| number=5 | ?item my:number "5"^^xsd:integer
+| number>5 | ?item my:number ?number . FILTER(?number>5)
+|======================
+
+===== C2.3 Comparison Predicates
+
+CQL defines comparison predicates to compare two scaler expressions. A comparison predicate is converted to a triple patterns as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
+
+|======================
+| Comparison predicate  | Triple pattern | Comment
+| name="OGC" | ?item my:name "OGC"^^xsd:string | Equality statements can be converted to a triple pattern
+| number=5 | ?item my:number "5"^^xsd:integer | 
+| number>5 | ?item my:number ?number . FILTER(?number>5) | Arithmetic comparisons (<,>,>=,<=) are converted to filter expressions
+| number BETWEEN 5 AND 10 | ?item my:number ?number . FILTER(?number>=5 && ?number<=10) | BETWEEN statements are converted to arithmetic expressions
+| name IN ("OGC","W3C") | VALUES ?namevalues {"OGC" "W3C"} ?item my:name ?namevalues . | IN statements are expressed by VALUES statements
+| name IS NOT NULL | EXISTS {?item my:name ?name } | NOT NULL statements are converted to EXIST statements
+| name LIKE "OGC." | ?item my:name ?name . FILTER(regex(?name, "OGC.", "i" )) | LIKE statements are converted to SPARQL regex filters
+|======================
+
+- Filter CRS parameter equivalent does not yet exist in GeoSPARQL?
+
+===== C2.2 Filter Functions
 
 GeoSPARQL includes equivalents of many CQL filter functions as can be seen in the table below.
 
@@ -29,8 +71,8 @@ GeoSPARQL includes equivalents of many CQL filter functions as can be seen in th
 | geometry1 WITHIN geometry2  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
 |======================
 
-===== C2.2 Geospatial Operators
+===== C2.3 Geospatial Operators
 
-===== C2.3 Temporal Operators
+===== C2.4 Temporal Operators
 
 Temporal operators are currently not part of the GeoSPARQL standard. 
