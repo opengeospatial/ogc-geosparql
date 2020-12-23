@@ -10,10 +10,37 @@ Geospatial features in SPARQL endpoints as defined in the GeoSPARQL standard are
 They include one or many geo:hasGeometry relations and a set of further properties which may or may not refer to further instances related to the geospatial feature. 
 Similarly to SQL backends of OGC webservices, geospatial featurecollections are made explicit by defining a SPARQL query retrieving a set of triples which may be converted to a geodata format.
 
+The following query shows an example which retrieves a FeatureCollection
+```
+SELECT ?item ?rel ?val ?geo WHERE {
+  ?item rdf:type ?class .
+  ?class rdfs:subClassOf* geo:Feature .
+  ?item ?rel ?val .
+  OPTIONAL {?item geo:hasGeometry/geo:hasSerialization ?geo .}
+}
+```
+
+
+
+
 ==== C.2 Mappings from CQL statements to GeoSPARQL queries
 
+This section presents lists of equivalences between CQL statements and GeoSPARQL statements.
 
-===== C2.1 Literal Values
+===== C2.1 Query Parameters
+
+Several query parameters may be given as parameters to the HTTP request of the OGC API Features service. These parameters have an influence on the SPARQL query to be executed for the retrieval of a FeatureCollection to be exposed using an OGC API Features compatible service.
+
+|======================
+| Query Parameter | Example | SPARQL Expression | Example | Comment
+| limit  | limit=5 | LIMIT | LIMIT 5 |
+| offset  | offset=10 | OFFSET | OFFSET 10 |
+| bbox | bbox=160.6,-55.95,-170,-25.89 | FILTER(geo:sfIntersects()) | FILTER(geo:sfIntersects(?geom,"POLYGON((160.6 -55.95,160.6 -25.89, -170 -25.89, -170 -55.95, 160.6 -55.95))"^^geo:wktLiteral)) | WKT does not define a type boundingbox, therefore a bbox is converted to a Polygon
+| datetime | datetime=2018-02-12T23%3A20%3A52Z | | |
+|======================
+
+
+===== C2.2 Literal Values
 
 CQL defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.
 
@@ -27,7 +54,7 @@ CQL defines literal values for a variety of datatypes. The following table shows
 | Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | xsd:date xsd:dateTime | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |======================
 
-===== C2.2 Property references
+===== C2.3 Property references
 
 CQL allows to reference properties in the FeatureCollection it is targeting for filtering. A property reference is converted to a triple patterns as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
 
@@ -38,7 +65,7 @@ CQL allows to reference properties in the FeatureCollection it is targeting for 
 | number>5 | ?item my:number ?number . FILTER(?number>5)
 |======================
 
-===== C2.3 Comparison Predicates
+===== C2.4 Comparison Predicates
 
 CQL defines comparison predicates to compare two scaler expressions. A comparison predicate is converted to a triple patterns as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
 
@@ -51,28 +78,44 @@ CQL defines comparison predicates to compare two scaler expressions. A compariso
 | name IN ("OGC","W3C") | VALUES ?namevalues {"OGC" "W3C"} ?item my:name ?namevalues . | IN statements are expressed by VALUES statements
 | name IS NOT NULL | EXISTS {?item my:name ?name } | NOT NULL statements are converted to EXIST statements
 | name LIKE "OGC." | ?item my:name ?name . FILTER(regex(?name, "OGC.", "i" )) | LIKE statements are converted to SPARQL regex filters
+| INTERSECTS(geometry1, geometry2) | FILTER(geof:sfIntersects(?geometry1,?geometry2)) | The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement
 |======================
 
 - Filter CRS parameter equivalent does not yet exist in GeoSPARQL?
 
-===== C2.2 Filter Functions
+===== C2.5 Geospatial Operators
 
 GeoSPARQL includes equivalents of many CQL filter functions as can be seen in the table below.
 
 |======================
 | CQL Filter Expression  | GeoSPARQL Filter Function 
-| geometry1 CONTAINS geometry2  | FILTER(geof:sfContains(?geometry1,?geometry2))  
-| geometry1 CROSSES geometry2  | FILTER(geof:sfCrosses(?geometry1,?geometry2))  
-| geometry1 DISJOINT geometry2  | FILTER(geof:sfDisjoint(?geometry1,?geometry2)) 
-| geometry1 EQUALS geometry2  | FILTER(geof:sfEquals(?geometry1,?geometry2))  
-| geometry1 INTERSECTS geometry2  | FILTER(geof:sfIntersects(?geometry1,?geometry2)) 
-| geometry1 OVERLAPS geometry2  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))  
-| geometry1 TOUCHES geometry2  | FILTER(geof:sfTouches(?geometry1,?geometry2))  
-| geometry1 WITHIN geometry2  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
+| CONTAINS(geometry1,POINT(1 1))  | FILTER(geof:sfContains(?geometry1,"POINT(1 1)"^^geo:wktLiteral))  
+| CROSSES(geometry1,geometry2)  | FILTER(geof:sfCrosses(?geometry1,?geometry2))  
+| DISJOINT(geometry1,geometry2)  | FILTER(geof:sfDisjoint(?geometry1,?geometry2)) 
+| EQUALS(geometry1,geometry2)  | FILTER(geof:sfEquals(?geometry1,?geometry2))  
+| INTERSECTS(geometry1,geometry2)  | FILTER(geof:sfIntersects(?geometry1,?geometry2)) 
+| OVERLAPS(geometry1,geometry2)  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))  
+| TOUCHES(geometry1,geometry2)  | FILTER(geof:sfTouches(?geometry1,?geometry2))  
+| WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
 |======================
 
-===== C2.3 Geospatial Operators
-
-===== C2.4 Temporal Operators
+===== C2.6 Temporal Operators
 
 Temporal operators are currently not part of the GeoSPARQL standard. 
+
+|======================
+| CQL Filter Expression  | GeoSPARQL Filter Function 
+| beginTime AFTER 1969-07-16T13:32:00Z | 
+| beginTime BEFORE 1969-07-16T13:32:00Z |  
+| beginTime BEGINS 1969-07-16T13:32:00Z | 
+| beginTime BEGUNBY 1969-07-16T13:32:00Z | 
+| beginTime DURING 1969-07-16T13:32:00Z | 
+| beginTime ENDEDBY 1969-07-16T13:32:00Z | 
+| beginTime ENDS 1969-07-16T13:32:00Z | 
+| beginTime MEETS 1969-07-16T13:32:00Z |
+| beginTime METBY 1969-07-16T13:32:00Z |
+| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | 
+| beginTime TCONTAINS 1969-07-16T13:32:00Z |   
+| beginTime TEQUALS 1969-07-16T13:32:00Z |  
+| beginTime TOVERLAPS 1969-07-16T13:32:00Z | 
+|======================
