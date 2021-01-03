@@ -9,17 +9,31 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 
-<http://www.opengis.net/ont/geosparql/profile>  # this URI is not formally established yet
+<http://www.opengis.net/def/geosparql>  # this URI is not formally established yet
     a prof:Profile ;
+    owl:versionIRI <http://www.opengis.net/def/geosparql/1.1> ;
+    dcterms:created "2020-10-11"^^xsd:date ;
+    dcterms:modified "2020-12-22"^^xsd:date ;
+    dcterms:issued "2021"^^xsd:gYear ;
+    dcterms:publisher <https://ror.org/00fsdxs93> ;
     dcterms:title "GeoSPARQL 1.1 Profile" ;
-    dcterms:description """This is a 'profile declaration' for the GeoSPARQL 1.1 specification (standard). It describes the multiple parts of the specification and how the standard relates to other standards. It is formulated according to the Profile Vocabulary."""@en ;
-    skos:scopeNote """Profile declarations are used to allow data to identify specifications in a way that allows data to make conformance claims to them - a broader conformance claim than that made to individual 'conformance classes' that are commonly found in recent OGC specifications. Profile delcarations are also used to describe and relate the often multiple parts of specifications: ontologies, specification 'documents', vocabularie, validators and so on. This declaration describes where those parts are, what form (format) they take, what information models they implement and what roles they play."""@en ;
+    dcterms:description """This is a 'profile declaration' for the GeoSPARQL 1.1 specification (standard). It describes the multiple parts of the specification and how the standard relates to other standards. It is formulated according to the Profiles Vocabulary."""@en ;
+    skos:scopeNote """Profile declarations are used to allow data to identify specifications in a way that allows data to make conformance claims to them - a broader conformance claim than that made to individual 'conformance classes' that are commonly found in recent OGC specifications. Profile declarations are also used to describe and relate the often multiple parts of specifications: ontologies, specification 'documents', vocabularies, validators and so on. This declaration describes where those parts are, what form (format) they take, what information models they implement and what roles they play."""@en ;
     prof:hasResource 
         <http://www.opengis.net/doc/IS/geosparql/1.1> ,
         <http://www.opengis.net/doc/IS/geosparql/1.1.pdf> ,
         <http://www.opengis.net/ont/geosparql> ,
         <http://www.opengis.net/ont/geosparql/profile/validation> ,
         <https://github.com/opengeospatial/ogc-geosparql> ;
+        <http://www.opengis.net/def/geosparql/funcsrules> ,
+        <http://www.opengis.net/ont/sf> ;    
+.
+
+<https://ror.org/00fsdxs93>
+    a owl:NamedIndividual ;
+    a sdo:Organization ;
+    sdo:name "Open Geospatial Consortium" ;
+    sdo:url <https://www.ogc.org> ;
 .
 
 <http://www.opengis.net/doc/IS/geosparql/1.1>
@@ -61,4 +75,21 @@
     dcterms:description "Code repository storing all Profile artifacts"@en ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql> ;
     prof:hasRole role:repository
+.
+
+<http://www.opengis.net/def/geosparql/funcsrules>
+    dcterms:title "GeoSPARQL Functions & Rules vocabulary"@en ;
+    dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
+    dcterms:format "text/turtle" ;
+    prof:hasArtifact <http://defs-dev.opengis.net/static/definitions/conceptschemes/functions_geosparql.ttl> ;
+    prof:hasRole role:vocabulary ;
+.
+
+<http://www.opengis.net/ont/sf>
+    dcterms:title "Simple Features Vocabulary"@en ;
+    dcterms:conformsTo <http://www.w3.org/TR/owl2-rdf-based-semantics/> ;
+    dcterms:format "text/xml" ;
+    prof:hasArtifact <http://schemas.opengis.net/sf/1.0/simple_features_geometries.rdf> ;
+    prof:hasRole role:vocabulary ;
+    rdfs:comment "A Turtle format artifact for this Resource is present in the GeoSPARQL 1.0 profile repository. It includes ontology annotations (title, date etc.) not present in the online artifact referenced here."@en ;
 .

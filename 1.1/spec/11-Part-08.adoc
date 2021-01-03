@@ -403,6 +403,71 @@ geo:asGML a rdf:Property;
     rdfs:range geo:gmlLiteral .
 ```
 
+
+==== Requirements for GeoJSON Serialization (serialization=GEOJSON)
+
+This section establishes the requirements for representing geometry data in RDF based on GeoJSON.
+
+===== RDFS Datatypes
+
+This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#geoJSONLiteral+`.
+
+*RDFS Datatype: geo:geoJSONLiteral*
+
+```
+geo:geoJSONLiteral a rdfs:Datatype;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "GeoJSON Literal"@en;
+    rdfs:comment "A GeoJSON serialization of a geometry object."@en .
+```
+
+Valid `geo:geoJSONLiteral`s are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification [RFC 7946].
+
+|===
+|*Req XX* All `geo:geoJSONLiteral`s shall consist of the Geometry objects as defined in the GeoJSON specification [RFC 7946].
+|`/req/geometry-extension/geoJSON-literal1`
+|===
+
+|===
+|*Req XX* All RDFS Literals of type `geo:geoJSONLiteral` do not contain a CRS definition. All literals of this type shall according to the GeoJSON specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (urn:ogc:def:crs:OGC::CRS84).
+|`/req/geometry-extension/geoJSON-literal-crs`
+|===
+
+The example `geo:geoJSONLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+
+```
+"{\"type\":\"Point\", \"coordinates\":[-83.38,33.95]}"^^<http://www.opengis.net/ont/geosparql#geoJSONLiteral>
+```
+
+|===
+|*Req XX* An empty RDFS Literal of type `geo:geoJSONLiteral` shall be interpreted as an empty geometry, i.e. {"geometry":null} in GeoJSON .
+|`/req/geometry-extension/geoJSON-literal-empty`
+|===
+
+===== Serialization Properties
+
+The `geo:asGeoJSON` property is defined to link a geometry with its GeoJSON serialization.
+
+*Property: geo:asGeoJSON*
+
+|===
+|*Req XX* Implementations shall allow the RDF property `geo:asGeoJSON` to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-geojson-literal`
+|===
+
+The property `geo:asGeoJSON` is used to link a geometric element with its GeoJSON serialization.
+
+```
+geo:asGeoJSON a rdf:Property,
+            owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "as GeoJSON"@en;
+    rdfs:comment "The GeoJSON serialization of a geometry."@en;
+    rdfs:domain geo:Geometry;
+    rdfs:range geo:geoJSONLiteral .
+```
+
 ==== Non-topological Query Functions
 
 This clause defines SPARQL functions for performing non-topological spatial operations.
