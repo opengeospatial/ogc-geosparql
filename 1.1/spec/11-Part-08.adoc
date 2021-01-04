@@ -57,8 +57,8 @@ geo:Geometry a rdfs:Class,
 Properties are defined for associating geometries with features.
 
 |===
-|*Req 9* Implementations shall allow the properties `geo:hasGeometry` and
-`geo:hasDefaultGeometry` to be used in SPARQL graph patterns.
+|*Req 9* Implementations shall allow the properties `geo:hasGeometry`, 
+`geo:hasDefaultGeometry`, geo:hasLength, geo:hasArea & geo:hasVolume  to be used in SPARQL graph patterns.
 |`/req/geometry-extension/feature-properties`
 |===
 
@@ -92,7 +92,7 @@ geo:hasDefaultGeometry a rdf:Property,
     rdfs:range geo:Geometry .
 ```
 
-GeoSPARQL does not restrict the cardinality of the `geo:hasDefaultGeometry` property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature my:f1 has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule `geor:sfDisjoint`).
+GeoSPARQL does not restrict the cardinality of the `geo:hasDefaultGeometry` property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature `my:f1` has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule `geor:sfDisjoint`).
 
 ```
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -103,12 +103,60 @@ WHERE { :f1 geo:sfDisjoint :f1 }
 
 Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification.
 
+===== Property: geo:hasLength
+
+The property `geo:hasLength` is used to indicate the length of a `geo:Feature`. The property indicates `geo:SpatialMeasure` object which then contains the length value expressed as a scalar number and which potentially also includes units of measure, uncertainty and other properties.
+
+```
+geo:hasLength a rdf:Property, 
+              owl:ObjectProperty;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "has length"@en;
+    rdfs:comment "The length of a Feature, expressed as a Spatial Measure."@en; 
+    rdfs:domain geo:Feature; 
+    rdfs:range geo:SpatialMeasure .
+```
+
+An ontological consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 1.
+
+===== Property: geo:hasArea
+
+The property `geo:hasArea` is used to indicate the area of a `geo:Feature`. The property indicates `geo:SpatialMeasure` object which then contains the area value expressed as a scalar number and which potentially also includes units of measure, uncertainty and other properties.
+
+```
+geo:hasArea a rdf:Property, 
+              owl:ObjectProperty;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "has area"@en;
+    rdfs:comment "The two-dimensional area of a Feature, expressed as a Spatial Measure."@en; 
+    rdfs:domain geo:Feature; 
+    rdfs:range geo:SpatialMeasure .
+```
+
+An ontological consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 2.
+
+===== Property: geo:hasVolume
+
+The property `geo:hasVolume` is used to indicate the area of a `geo:Feature`. The property indicates `geo:SpatialMeasure` object which then contains the volume value expressed as a scalar number and which potentially also includes units of measure, uncertainty and other properties.
+
+```
+geo:hasVolume a rdf:Property, 
+              owl:ObjectProperty;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "has volume"@en;
+    rdfs:comment "The volume of a Feature, expressed as a Spatial Measure"@en; 
+    rdfs:domain geo:Feature; 
+    rdfs:range geo:SpatialMeasure .
+```
+
+An ontological consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 3.
+
 ==== Standard Properties for geo:Geometry
 
 Properties are defined for describing geometry metadata.
 
 |===
-|*Req 10* Implementations shall allow the properties `geo:dimension`, `geo:coordinateDimension`, `geo:spatialDimension`, `geo:isEmpty`, `geo:isSimple`, `geo:hasSerialization` to be used in SPARQL graph patterns.
+|*Req 10* Implementations shall allow the properties `geo:dimension`, `geo:coordinateDimension`, `geo:spatialDimension`, `geo:isEmpty`, `geo:isSimple`, `geo:hasSerialization` , `geo:inCRS` to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-properties`
 |===
 
