@@ -380,7 +380,7 @@ Valid `geo:geoJSONLiteral`s are formed by encoding geometry information as a Geo
 
 |===
 |*Req XX* All `geo:geoJSONLiteral`s shall consist of the Geometry objects as defined in the GeoJSON specification [RFC 7946].
-|`/req/geometry-extension/geoJSON-literal1`
+|`/req/geometry-extension/geoJSON-literal`
 |===
 
 |===
@@ -422,6 +422,71 @@ geo:asGeoJSON a rdf:Property,
     rdfs:domain geo:Geometry;
     rdfs:range geo:geoJSONLiteral .
 ```
+
+==== Requirements for KML Serialization (serialization=KML)
+
+This section establishes the requirements for representing geometry data in RDF based on KML.
+
+===== RDFS Datatypes
+
+This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#kmlLiteral+`.
+
+*RDFS Datatype: geo:kmlLiteral*
+
+```
+geo:kmlLiteral a rdfs:Datatype;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "KML Literal"@en;
+    rdfs:comment "A KML serialization of a geometry object."@en .
+```
+
+Valid `geo:kmlLiteral`s are formed by encoding geometry information as a Geometry object as defined in the KML specification [https://www.ogc.org/standards/kml/].
+
+|===
+|*Req XX* All `geo:kmlLiteral`s shall consist of the Geometry objects as defined in the KML specification [https://www.ogc.org/standards/kml/].
+|`/req/geometry-extension/kml-literal`
+|===
+
+|===
+|*Req XX* All RDFS Literals of type `geo:kmlLiteral` do not contain a CRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (urn:ogc:def:crs:OGC::CRS84).
+|`/req/geometry-extension/kml-literal-crs`
+|===
+
+The example `geo:kmlLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+
+```
+"<Point xmlns=\"http://www.opengis.net/kml/2.2\"><coordinates>-83.38,33.95</coordinates></Point>"^^<http://www.opengis.net/ont/geosparql#kmlLiteral>
+```
+
+|===
+|*Req XX* An empty RDFS Literal of type `geo:kmlLiteral` shall be interpreted as an empty geometry .
+|`/req/geometry-extension/kml-literal-empty`
+|===
+
+===== Serialization Properties
+
+The `geo:asKML` property is defined to link a geometry with its KML serialization.
+
+*Property: geo:asKML*
+
+|===
+|*Req XX* Implementations shall allow the RDF property `geo:asKML` to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-kml-literal`
+|===
+
+The property `geo:asKML` is used to link a geometric element with its KML serialization.
+
+```
+geo:asKML a rdf:Property,
+            owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "as KML"@en;
+    rdfs:comment "The KML serialization of a geometry."@en;
+    rdfs:domain geo:Geometry;
+    rdfs:range geo:kmlLiteral .
+```
+
 
 ==== Non-topological Query Functions
 
