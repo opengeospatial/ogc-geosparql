@@ -1,56 +1,115 @@
 import os
 import itertools
 
-functions=["geo:sfEquals","geo:sfDisjoint","geo:sfIntersects","geo:sfTouches","geo:sfWithin","geo:sfContains","geo:sfOverlaps","geo:sfCrosses","geo:ehEquals","geo:ehDisjoint","geo:ehMeet","geo:ehOverlap","geo:ehCovers","geo:ehCoveredBy","geo:ehInside","geo:ehContains","geo:rcc8eq","geo:rcc8dc","geo:rcc8ec","geo:rcc8po","geo:rcc8tppi","geo:rcc8tpp","geo:rcc8ntpp","geo:rcc8ntppi"]
-literals=["geo:wktLiteral","geo:gmlLiteral","geo:kmlLiteral","geo:geoJSONLiteral"]
-properties=["geo:asWKT","geo:asGML","geo:asKML","geo:asGeoJSON"]
+# all
+relations_functions = [
+    # Simple Features Topological Relations
+    "sfEquals",
+    "sfDisjoint",
+    "sfIntersects",
+    "sfTouches",
+    "sfWithin",
+    "sfContains",
+    "sfOverlaps",
+    "sfCrosses",
 
-combinations=list(itertools.combinations(properties,2))
-combinations+=list(map(lambda x, y:(x,y), properties, properties)) 
+    # Egenhofer Topological Relations
+    "ehEquals",
+    "ehDisjoint",
+    "ehMeet",
+    "ehOverlap",
+    "ehCovers",
+    "ehCoveredBy",
+    "ehInside",
+    "ehContains",
+
+    # RCC8 Topological Relations
+    "rcc8eq",
+    "rcc8dc",
+    "rcc8ec",
+    "rcc8po",
+    "rcc8tppi",
+    "rcc8tpp",
+    "rcc8ntpp",
+    "rcc8ntppi",
+]
+
+geom_literals = [
+    "gmlLiteral",
+    "wktLiteral",
+	"geoJSONLiteral",
+	"kmlLiteral"
+]
+
+template="""
+   # ogc:relation
+        Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial (
+            ?f1[ogc:relation->?f2] :-
+            Or (
+                # feature – feature rule
+                And (
+                    ?f1[geo:hasDefaultGeometry->?g1]
+                    ?f2[geo:hasDefaultGeometry->?g2]
+                    ?g1[ogc:asGeomLiteral->?g1Serial]
+                    ?g2[ogc:asGeomLiteral->?g2Serial]
+                    External(ogc:function (?g1Serial,?g2Serial))
+                )
+                # feature – geometry rule
+                And (
+                    ?f1[geo:hasDefaultGeometry->?g1]
+                    ?g1[ogc:asGeomLiteral->?g1Serial]
+                    ?f2[ogc:asGeomLiteral->?g2Serial]
+                    External(ogc:function (?g1Serial,?g2Serial))
+                )
+                # geometry - feature rule
+                And (
+                    ?f2[geo:hasDefaultGeometry->?g2]
+                    ?f1[ogc:asGeomLiteral->?g1Serial]
+                    ?g2[ogc:asGeomLiteral->?g2Serial]
+                    External(ogc:function (?g1Serial,?g2Serial))
+                )
+                # geometry - geometry rule
+                And (
+                    ?f1[ogc:asGeomLiteral->?g1Serial]
+                    ?f2[ogc:asGeomLiteral->?g2Serial]
+                    External(ogc:function (?g1Serial,?g2Serial))
+                )
+            )
+        )
+"""
+
+header="""
+Document (
+    Prefix (geo <http://www.opengis.net/ont/geosparql#>)
+    Prefix (geof <http://www.opengis.net/def/function/geosparql/>)
+
+    Group (
+"""
+
+footer="""
+    )
+)
+"""
+combinations=list(itertools.combinations(geom_literals,2))
+combinations+=list(map(lambda x, y:(x,y), geom_literals, geom_literals)) 
 
 print(combinations)
 
-f = open("rules.rifps","w")
-f.write("Document("+"\n")
-f.write("\tPrefix(geo <http://www.opengis.net/ont/geosparql#>)"+"\n")
-f.write("\tPrefix(geof <http://www.opengis.net/def/function/geosparql/>)"+"\n")
-f.write("\tGroup ("+"\n")
-for func in functions:
-	for comb in combinations:
-		f.write("\t\t\t# "+func+"\n")
-		f.write("\t\t\tForall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial ("+"\n")
-		f.write("\t\t\t\t?f1["+func+"->?f2] :-"+"\n")
-		f.write("\t\t\t\tOr ("+"\n")
-		f.write("\t\t\t\t\t# feature - feature rule"+"\n")
-		f.write("\t\t\t\t\tAnd ("+"\n")		
-		f.write("\t\t\t\t\t\t?f1[geo:hasDefaultGeometry->?g1]"+"\n")
-		f.write("\t\t\t\t\t\t?f2[geo:hasDefaultGeometry->?g2]"+"\n")   
-		f.write("\t\t\t\t\t\t?g1["+comb[0]+"->?g1Serial]"+"\n")
-		f.write("\t\t\t\t\t\t?g2["+comb[1]+"->?g2Serial]"+"\n")   		
-		f.write("\t\t\t\t\t\tExternal("+func+" (?g1Serial,?g2Serial))"+"\n")   
-		f.write("\t\t\t\t\t)"+"\n")
-		f.write("\t\t\t\t\t# feature - geometry rule"+"\n")
-		f.write("\t\t\t\t\tAnd ("+"\n")		
-		f.write("\t\t\t\t\t\t?f1[geo:hasDefaultGeometry->?g1]"+"\n")   
-		f.write("\t\t\t\t\t\t?g1["+comb[0]+"->?g1Serial]"+"\n")
-		f.write("\t\t\t\t\t\t?f2["+comb[1]+"->?g2Serial]"+"\n")   		
-		f.write("\t\t\t\t\t\tExternal("+func+" (?g1Serial,?g2Serial))"+"\n")   
-		f.write("\t\t\t\t\t)"+"\n")  
-		f.write("\t\t\t\t\t# geometry - feature rule"+"\n")
-		f.write("\t\t\t\t\tAnd ("+"\n")		
-		f.write("\t\t\t\t\t\t?f2[geo:hasDefaultGeometry->?g2]"+"\n")   
-		f.write("\t\t\t\t\t\t?f1["+comb[0]+"->?g1Serial]"+"\n")
-		f.write("\t\t\t\t\t\t?g2["+comb[1]+"->?g2Serial]"+"\n")   		
-		f.write("\t\t\t\t\t\tExternal("+func+" (?g1Serial,?g2Serial))"+"\n")   
-		f.write("\t\t\t\t\t)"+"\n") 
-		f.write("\t\t\t\t\t# geometry - geometry rule"+"\n")
-		f.write("\t\t\t\t\tAnd ("+"\n")		
-		f.write("\t\t\t\t\t\t?f1["+comb[0]+"->?g1Serial]"+"\n")
-		f.write("\t\t\t\t\t\t?f2["+comb[1]+"->?g2Serial]"+"\n")   		
-		f.write("\t\t\t\t\t\tExternal("+func+" (?g1Serial,?g2Serial))"+"\n")   
-		f.write("\t\t\t\t\t)"+"\n")
-		f.write("\t\t\t\t)"+"\n")  
-		f.write("\t\t\t)"+"\n")  
-f.write("\t\t)"+"\n")
-f.write(")"+"\n") 
-f.close()
+forall_groups = []
+
+for rf in relations_functions:
+    for lit in combinations:
+        forall_groups.append(
+            template
+                .replace("ogc:relation", "geo:" + rf)
+                .replace("ogc:function", "geof:" + rf)
+				.replace("?g1[ogc:asGeomLiteral","?g1[geo:"+lit[0])
+				.replace("?f1[ogc:asGeomLiteral","?f1[geo:"+lit[0])
+				.replace("?g2[ogc:asGeomLiteral","?g2[geo:"+lit[1])
+				.replace("?f2[ogc:asGeomLiteral","?f2[geo:"+lit[1])
+        )
+
+with open("rules.rifps", "w") as f2:
+    f2.write(header)
+    f2.write("\n\n".join(forall_groups))
+    f2.write(footer)
