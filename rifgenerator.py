@@ -41,8 +41,7 @@ geom_literals = [
 	"kmlLiteral"
 ]
 
-template="""
-   	# ogc:relation
+template = """   	    # ogc:relation
         Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial (
             ?f1[ogc:relation->?f2] :-
             Or (
@@ -75,18 +74,16 @@ template="""
                     External(ogc:function (?g1Serial,?g2Serial))
                 )
             )
-        )
-"""
+        )"""
 
-header="""
-Document (
+header = """Document (
     Prefix (geo <http://www.opengis.net/ont/geosparql#>)
     Prefix (geof <http://www.opengis.net/def/function/geosparql/>)
 
     Group (
 """
 
-footer="""
+footer = """
     )
 )
 """
