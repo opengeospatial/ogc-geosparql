@@ -42,11 +42,11 @@ geom_literals = [
 ]
 
 template="""
-   # ogc:relation
+   	# ogc:relation
         Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial (
             ?f1[ogc:relation->?f2] :-
             Or (
-                # feature – feature rule
+                # feature / feature rule
                 And (
                     ?f1[geo:hasDefaultGeometry->?g1]
                     ?f2[geo:hasDefaultGeometry->?g2]
@@ -54,21 +54,21 @@ template="""
                     ?g2[ogc:asGeomLiteral->?g2Serial]
                     External(ogc:function (?g1Serial,?g2Serial))
                 )
-                # feature – geometry rule
+                # feature / geometry rule
                 And (
                     ?f1[geo:hasDefaultGeometry->?g1]
                     ?g1[ogc:asGeomLiteral->?g1Serial]
                     ?f2[ogc:asGeomLiteral->?g2Serial]
                     External(ogc:function (?g1Serial,?g2Serial))
                 )
-                # geometry - feature rule
+                # geometry / feature rule
                 And (
                     ?f2[geo:hasDefaultGeometry->?g2]
                     ?f1[ogc:asGeomLiteral->?g1Serial]
                     ?g2[ogc:asGeomLiteral->?g2Serial]
                     External(ogc:function (?g1Serial,?g2Serial))
                 )
-                # geometry - geometry rule
+                # geometry / geometry rule
                 And (
                     ?f1[ogc:asGeomLiteral->?g1Serial]
                     ?f2[ogc:asGeomLiteral->?g2Serial]
