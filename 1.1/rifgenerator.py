@@ -35,10 +35,10 @@ relations_functions = [
 ]
 
 geom_literals = [
-    "gmlLiteral",
-    "wktLiteral",
-    "geoJSONLiteral",
-    "kmlLiteral"
+    "asGML",
+    "asWKT",
+    "asGeoJSON",
+    "asKML"
 ]
 
 template = """   	    # ogc:relation
