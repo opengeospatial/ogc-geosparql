@@ -24,9 +24,11 @@
         <http://www.opengis.net/doc/IS/geosparql/1.1.pdf> ,
         <http://www.opengis.net/ont/geosparql> ,
         <http://www.opengis.net/ont/geosparql/profile/validation> ,
-        <https://github.com/opengeospatial/ogc-geosparql> ;
+        <https://github.com/opengeospatial/ogc-geosparql> ,
         <http://www.opengis.net/def/geosparql/funcsrules> ,
-        <http://www.opengis.net/ont/sf> ;    
+        <http://www.opengis.net/ont/sf> ,
+        <http://www.opengis.net/def/geosparql/rules> ,
+        <http://www.opengis.net/def/geosparql/rules-script> ;
 .
 
 <https://ror.org/00fsdxs93>
@@ -38,7 +40,7 @@
 
 <http://www.opengis.net/doc/IS/geosparql/1.1>
     a prof:ResourceDescriptor ;
-    dcterms:title "Specification Document in HTML"@en ;
+    dcterms:title "GeoSPARQL Specification online"@en ;
     dcterms:format "text/html" ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/spec/_11-052r4.html> ;
     prof:hasRole role:specification
@@ -46,27 +48,29 @@
 
 <http://www.opengis.net/doc/IS/geosparql/1.1.pdf>
     a prof:ResourceDescriptor ;
-    dcterms:title "Specification Document as a PDF"@en ;
+    dcterms:title "GeoSPARQL Specification Document as a PDF"@en ;
     dcterms:format "application/pdf" ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/spec/_11-052r4.pdf> ;
-    prof:hasRole role:specification
+    prof:hasRole role:specification ;
 .
 
 <http://www.opengis.net/ont/geosparql>
     a prof:ResourceDescriptor ;
-    dcterms:title "Ontology"@en ;
+    dcterms:title "GeoSPARQL Ontology"@en ;
+    dcterms:description "The GeoSPARQL 1.1 ontology in RDF (turtle)"@en ;
     dcterms:format "text/turtle" ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/geo.ttl> ;
-    prof:hasRole role:schema
+    prof:hasRole role:schema ;
 .
 
 <http://www.opengis.net/ont/geosparql/profile/validation>
     a prof:ResourceDescriptor ;
     dcterms:title "Validation SHACL file"@en ;
+    dcterms:description "A Shapes Contraint Language (SHACL) validator provided to validate RDF documents cliaming conformance to GeoSPARQL 1.1"@en ;
     dcterms:format "text/turtle" ;
     dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/master/1.1/validation.ttl> ;
-    prof:hasRole role:schema
+    prof:hasRole role:validation ;
 .
 
 <https://github.com/opengeospatial/ogc-geosparql>
@@ -74,11 +78,12 @@
     dcterms:title "Profile code repository"@en ;
     dcterms:description "Code repository storing all Profile artifacts"@en ;
     prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql> ;
-    prof:hasRole role:repository
+    prof:hasRole role:repository ;
 .
 
 <http://www.opengis.net/def/geosparql/funcsrules>
     dcterms:title "GeoSPARQL Functions & Rules vocabulary"@en ;
+    dcterms:description "all GeoSPARQL functions and rules presented as a SKOS vocabulary"@en ;
     dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
     dcterms:format "text/turtle" ;
     prof:hasArtifact <http://defs-dev.opengis.net/static/definitions/conceptschemes/functions_geosparql.ttl> ;
@@ -87,9 +92,28 @@
 
 <http://www.opengis.net/ont/sf>
     dcterms:title "Simple Features Vocabulary"@en ;
+    dcterms:description "An OWL ontology (vocabulary) of the Simple Features geometry types"@en ;
     dcterms:conformsTo <http://www.w3.org/TR/owl2-rdf-based-semantics/> ;
     dcterms:format "text/xml" ;
     prof:hasArtifact <http://schemas.opengis.net/sf/1.0/simple_features_geometries.rdf> ;
     prof:hasRole role:vocabulary ;
     rdfs:comment "A Turtle format artifact for this Resource is present in the GeoSPARQL 1.0 profile repository. It includes ontology annotations (title, date etc.) not present in the online artifact referenced here."@en ;
+.
+
+<http://www.opengis.net/def/geosparql/rules>
+    dcterms:title "GeoSPARQL Rules in RIF"@en ;
+    dcterms:description "This file contains Rules Interchange Format (RIF) rules for the GeoSPARQL rules defined in the Specification. These rules have been automatically generated using the 'Generator script for GeoSPARQL Rules in RIF' which, in turn, uses the RIF template provided in the Specification."@en ;
+    dcterms:conformsTo <https://www.w3.org/TR/rif-bld/> ;
+    # dcterms:format "text/rif-ps" ;  # unverified Media Type for RIF Presentation Syntax
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/rules.rifps> ;  # to be updated with GeoSPARQL 1.0 publication
+    prof:hasRole role:specification ;  # this may not be appropriate: we may need a new Role, see https://github.com/w3c/dx-prof/issues/41
+.
+
+<http://www.opengis.net/def/geosparql/rules-script>
+    dcterms:title "Generator script for GeoSPARQL Rules in RIF"@en ;
+    dcterms:description "This is a Python script used to generate the 'GeoSPARQL Rules in RIF' artifact from templates specified in the 'Ontology specification in PDF'"@en ;
+    dcterms:conformsTo <https://www.w3.org/TR/rif-bld/> ;
+    dcterms:format "text/plain" ;  # it is not indended that the script be executable "onl the web" only its content visible for reference
+    prof:hasArtifact <https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/rifgenerator.py> ;  # to be updated with GeoSPARQL 1.0 publication
+    prof:hasRole role:guidance ;  # since it is an informative artifact
 .
