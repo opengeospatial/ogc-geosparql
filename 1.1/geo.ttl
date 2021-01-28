@@ -1,20 +1,38 @@
-# This is GeoSPARQL 1.0 as a basis for 1.1
-
 @prefix : <http://www.opengis.net/ont/geosparql#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdo: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <http://www.opengis.net/ont/geosparql> a owl:Ontology ;
     dcterms:title "GeoSPARQL Ontology" ;
-	dcterms:creator "Open Geospatial Consortium"^^xsd:string ;
-	dcterms:date "2012-04-30"^^xsd:date ;
-	dcterms:description "An RDF/OWL vocabulary for representing spatial information"^^xsd:string ;
-	dcterms:source <http://www.opengis.net/doc/IS/geosparql/1.0> , "OGC GeoSPARQL – A Geographic Query Language for RDF Data OGC 11-052r5"^^xsd:string ;
-	rdfs:seeAlso <http://www.opengis.net/def/function/ogc-geosparql/1.0> , <http://www.opengis.net/def/rule/ogc-geosparql/1.0> , <http://www.opengis.net/doc/IS/geosparql/1.0> ;
-	owl:versionInfo "OGC GeoSPARQL 1.0"^^xsd:string .
+	dcterms:publisher [
+		a sdo:Organization ;
+		sdo:name "Open Geospatial Consortium" ;
+		sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+	] ;
+	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
+	dcterms:contributor [
+		a sdo:Person ;
+		sdo:name "Nicholas J. Car" ;
+		sdo:affiliation "SURROUND Australia Pty Ltd" ;
+		sdo:email "nicholas.car@surroundaustralia.com" ;
+	] ,
+	[
+		a sdo:Person ;
+		sdo:name "Joseph Abhayaratna" ;		
+		sdo:affiliation "Geoscape Australia" ;
+		sdo:email "joseph.abhayaratna@geoscape.com.au" ;
+	] ;
+	dcterms:created "2020-09-09"^^xsd:date ;
+	dcterms:modified "2021-01-28"^^xsd:date ;
+	dcterms:replaces <http://www.opengis.net/ont/geosparql/1.0>
+	dcterms:description "An RDF/OWL vocabulary for representing spatial information"@en ;
+	dcterms:source <http://www.opengis.net/doc/IS/geosparql/1.1> , "OGC GeoSPARQL – A Geographic Query Language for RDF Data OGC 11-052r5"@en ;
+	rdfs:seeAlso <http://www.opengis.net/doc/IS/geosparql/1.1> ;
+	owl:versionInfo "OGC GeoSPARQL 1.1" .
 
 # #################################################################
 # #
@@ -24,13 +42,13 @@
 
 # http://www.opengis.net/ont/geosparql#gmlLiteral
 :gmlLiteral a rdfs:Datatype ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """A GML serialization of a geometry object."""@en ;
 	skos:prefLabel "GML Literal"@en .
 
 # http://www.opengis.net/ont/geosparql#wktLiteral
 :wktLiteral a rdfs:Datatype ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """A Well-known Text serialization of a geometry object."""@en ;
 	skos:prefLabel "Well-known Text Literal"@en .
 	
@@ -61,7 +79,7 @@
 	rdfs:subPropertyOf :hasGeometry ;
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The default geometry to be used in spatial calculations. It is Usually the most detailed geometry."""@en ;
 	skos:prefLabel "default geometry"@en .
 
@@ -69,7 +87,7 @@
 :ehContains a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: T*TFF*FF*"""@en ;
 	skos:prefLabel "contains"@en .
 
@@ -77,7 +95,7 @@
 :ehCoveredBy a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially covered by the object SpatialObject. DE-9IM: TFF*TFT**"""@en ;
 	skos:prefLabel "covered by"@en .
 
@@ -85,7 +103,7 @@
 :ehCovers a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially covers the object SpatialObject. DE-9IM: T*TFT*FF*"""@en ;
 	skos:prefLabel "covers"@en .
 
@@ -93,7 +111,7 @@
 :ehDisjoint a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FF*FF****"""@en ;
 	skos:prefLabel "disjoint"@en .
 
@@ -101,7 +119,7 @@
 :ehEquals a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
 	skos:prefLabel "equals"@en .
 
@@ -109,7 +127,7 @@
 :ehInside a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially inside the object SpatialObject. DE-9IM: TFF*FFT**"""@en ;
 	skos:prefLabel "inside"@en .
 
@@ -117,7 +135,7 @@
 :ehMeet a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially meets the object SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
 	skos:prefLabel "meet"@en .
 
@@ -125,7 +143,7 @@
 :ehOverlap a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: T*T***T**"""@en ;
 	skos:prefLabel "overlap"@en .
 
@@ -133,7 +151,7 @@
 :hasGeometry a owl:ObjectProperty ;
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """A spatial representation for a given feature."""@en ;
 	skos:prefLabel "has geometry"@en .
 
@@ -141,7 +159,7 @@
 :rcc8dc a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially disjoint  from the object SpatialObject. DE-9IM: FFTFFTTTT"""@en ;
 	skos:prefLabel "disconnected"@en .
 
@@ -149,7 +167,7 @@
 :rcc8ec a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially meets the object SpatialObject. DE-9IM: FFTFTTTTT"""@en ;
 	skos:prefLabel "externally connected"@en .
 
@@ -157,7 +175,7 @@
 :rcc8eq a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
 	skos:prefLabel "equals"@en .
 
@@ -165,7 +183,7 @@
 :rcc8ntpp a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially inside the object SpatialObject. DE-9IM: TFFTFFTTT"""@en ;
 	skos:prefLabel "non-tangential proper part"@en .
 
@@ -173,7 +191,7 @@
 :rcc8ntppi a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: TTTFFTFFT"""@en ;
 	skos:prefLabel "non-tangential proper part inverse"@en .
 
@@ -181,7 +199,7 @@
 :rcc8po a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: TTTTTTTTT"""@en ;
 	skos:prefLabel "partially overlapping"@en .
 
@@ -189,7 +207,7 @@
 :rcc8tpp a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially covered by the object SpatialObject. DE-9IM: TFFTTFTTT"""@en ;
 	skos:prefLabel "tangential proper part"@en .
 
@@ -197,7 +215,7 @@
 :rcc8tppi a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially covers the object SpatialObject. DE-9IM: TTTFTTFFT"""@en ;
 	skos:prefLabel "tangential proper part inverse"@en .
 
@@ -205,7 +223,7 @@
 :sfContains a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: T*****FF*"""@en ;
 	skos:prefLabel "contains"@en .
 
@@ -213,7 +231,7 @@
 :sfCrosses a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially crosses the object SpatialObject. DE-9IM: T*T******"""@en ;
 	skos:prefLabel "crosses"@en .
 
@@ -221,7 +239,7 @@
 :sfDisjoint a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FF*FF****"""@en ;
 	skos:prefLabel "disjoint"@en .
 
@@ -229,7 +247,7 @@
 :sfEquals a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
 	skos:prefLabel "equals"@en .
 
@@ -237,7 +255,7 @@
 :sfIntersects a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is not spatially disjoint from the object SpatialObject. DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T****"""@en ;
 	skos:prefLabel "intersects"@en .
 
@@ -245,7 +263,7 @@
 :sfOverlaps a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: T*T***T**"""@en ;
 	skos:prefLabel "overlaps"@en .
 
@@ -253,7 +271,7 @@
 :sfTouches a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject spatially touches the object SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
 	skos:prefLabel "touches"@en .
 
@@ -261,7 +279,7 @@
 :sfWithin a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Exists if the subject SpatialObject is spatially within the object SpatialObject. DE-9IM: T*F**F***"""@en ;
 	skos:prefLabel "within"@en .
 
@@ -276,7 +294,7 @@
 	rdfs:subPropertyOf :hasSerialization ;
 	rdfs:domain :Geometry ;
 	rdfs:range :gmlLiteral ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The GML serialization of a geometry"""@en ;
 	skos:prefLabel "as GML"@en .
 
@@ -285,7 +303,7 @@
 	rdfs:subPropertyOf :hasSerialization ;
 	rdfs:domain :Geometry ;
 	rdfs:range :wktLiteral ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The WKT serialization of a geometry"""@en ;
 	skos:prefLabel "as WKT"@en .
 	
@@ -313,7 +331,7 @@
 :coordinateDimension a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range xsd:integer ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The number of measurements or axes needed to describe the position of this geometry in a coordinate system."""@en ;
 	skos:prefLabel "coordinate dimension"@en .
 
@@ -321,7 +339,7 @@
 :dimension a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range xsd:integer ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects."""@en ;
 	skos:prefLabel "dimension"@en .
 
@@ -329,7 +347,7 @@
 :hasSerialization a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range rdfs:Literal ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """Connects a geometry object with its text-based serialization."""@en ;
 	skos:prefLabel "has serialization"@en .
 
@@ -337,7 +355,7 @@
 :isEmpty a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range xsd:boolean ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """(true) if this geometric object is the empty Geometry. If true, then this geometric object represents the empty point set for the coordinate space."""@en ;
 	skos:prefLabel "is empty"@en .
 
@@ -345,7 +363,7 @@
 :isSimple a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range xsd:boolean ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """(true) if this geometric object has no anomalous geometric points, such as self intersection or self tangency."""@en ;
 	skos:prefLabel "is simple"@en .
 
@@ -353,7 +371,7 @@
 :spatialDimension a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
 	rdfs:range xsd:integer ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The number of measurements or axes needed to describe the spatial position of this geometry in a coordinate system."""@en ;
 	skos:prefLabel "spatial dimension"@en .
 
@@ -367,20 +385,20 @@
 :Feature a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
 	owl:disjointWith :Geometry ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types."""@en ;
 	skos:prefLabel "Feature"@en .
 
 # http://www.opengis.net/ont/geosparql#Geometry
 :Geometry a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	skos:definition """The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types."""@en ;
 	skos:prefLabel "Geometry"@en .
 
 # http://www.opengis.net/ont/geosparql#SpatialObject
 :SpatialObject a owl:Class ;
-	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.0> ;
+	rdfs:isDefinedBy <http://www.opengis.net/ont/geosparql> , <http://www.opengis.net/spec/geosparql/1.1> ;
 	rdfs:label "SpatialObject"@en ;
 	skos:definition """The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry."""@en ;
 	skos:prefLabel "Spatial Object"@en .
