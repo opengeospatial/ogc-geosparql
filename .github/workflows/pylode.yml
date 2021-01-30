@@ -14,7 +14,8 @@ jobs:
          sudo apt-get install python3 python3-setuptools python-pip -y
          sudo apt-get install gcc libpq-dev -y
          sudo apt-get install python-dev  python-pip -y
-         sudo apt-get install asciidoctor
+         sudo apt-get install asciidoctor ruby
+         sudo gem install --pre asciidoctor-pdf
          sudo apt-get install python3-dev python3-pip python3-venv python3-wheel -y
          sudo pip3 install wheel pylode
          mkdir docs
@@ -28,6 +29,7 @@ jobs:
          # pylode -i ../../1.0/sf_geometries.ttl -o sfgeometries.html
          cd ../geosparql11/
          asciidoctor ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
+         asciidoctor-pdf ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
          pylode -i ../../1.1/geo.ttl -o index.html
          pylode -i ../../1.1/profile.ttl -o profile.html -p prof
          pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
