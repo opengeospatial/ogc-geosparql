@@ -614,12 +614,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#_parameters_2">8.8.1. Parameters</a></li>
 <li><a href="#_geometry_classes_and_properties">8.8.2. Geometry Classes and Properties</a></li>
-<li><a href="#_standard_properties_for_geogeometry">8.8.3. Standard Properties for geo:Geometry</a></li>
-<li><a href="#_requirements_for_wkt_serialization_serializationwkt">8.8.4. Requirements for WKT Serialization (serialization=WKT)</a></li>
-<li><a href="#_requirements_for_gml_serialization_serializationgml">8.8.5. Requirements for GML Serialization (serialization=GML)</a></li>
-<li><a href="#_requirements_for_geojson_serialization_serializationgeojson">8.8.6. Requirements for GeoJSON Serialization (serialization=GEOJSON)</a></li>
-<li><a href="#_requirements_for_kml_serialization_serializationkml">8.8.7. Requirements for KML Serialization (serialization=KML)</a></li>
-<li><a href="#_non_topological_query_functions">8.8.8. Non-topological Query Functions</a></li>
+<li><a href="#_standard_properties_for_geofeature">8.8.3. Standard Properties for geo:Feature</a></li>
+<li><a href="#_standard_properties_for_geogeometry">8.8.4. Standard Properties for geo:Geometry</a></li>
+<li><a href="#_requirements_for_wkt_serialization_serializationwkt">8.8.5. Requirements for WKT Serialization (serialization=WKT)</a></li>
+<li><a href="#_requirements_for_gml_serialization_serializationgml">8.8.6. Requirements for GML Serialization (serialization=GML)</a></li>
+<li><a href="#_requirements_for_geojson_serialization_serializationgeojson">8.8.7. Requirements for GeoJSON Serialization (serialization=GEOJSON)</a></li>
+<li><a href="#_requirements_for_kml_serialization_serializationkml">8.8.8. Requirements for KML Serialization (serialization=KML)</a></li>
+<li><a href="#_non_topological_query_functions">8.8.9. Non-topological Query Functions</a></li>
 </ul>
 </li>
 <li><a href="#_geometry_topology_extension_relation_family_serialization_version">8.9. Geometry Topology Extension (relation_family, serialization, version)</a>
@@ -1264,7 +1265,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 <div class="sect3">
 <h4 id="_classes"><a class="anchor" href="#_classes"></a>8.6.2. Classes</h4>
 <div class="paragraph">
-<p>Two main classes are defined: <code>geo:SpatialObject</code> and <code>geo:Feature</code>. The class <code>geo:Feature</code> is equivalent to the UML class <code>GFI_Feature</code> defined in [8].</p>
+<p>Three main classes are defined: <code>geo:SpatialObject</code>, <code>geo:SpatialMeasure</code> and <code>geo:Feature</code>. The class <code>geo:Feature</code> is equivalent to the UML class <code>Feature</code> defined in [7].</p>
 </div>
 <div class="sect4">
 <h5 id="_class_geospatialobject"><a class="anchor" href="#_class_geospatialobject"></a>8.6.2.1. Class: geo:SpatialObject</h5>
@@ -1275,7 +1276,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 <div class="content">
 <pre class="highlight"><code>geo:SpatialObject a rdfs:Class,
                     owl:Class;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "Spatial Object"@en;
     rdfs:comment "The class Spatial Object represents everything that can
                  have a spatial representation. It is superclass of feature
@@ -1297,7 +1298,37 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 </table>
 </div>
 <div class="sect4">
-<h5 id="_class_geofeature"><a class="anchor" href="#_class_geofeature"></a>8.6.2.2. Class: geo:Feature</h5>
+<h5 id="_class_geospatialmeasure"><a class="anchor" href="#_class_geospatialmeasure"></a>8.6.2.2. Class: geo:SpatialMeasure</h5>
+<div class="paragraph">
+<p>The class <code>geo:SpatialMeasure</code> is defined by the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:SpatialMeasure a rdfs:Class,
+                    owl:Class;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "Spatial Measure"@en;
+    rdfs:comment "The class represents a measurement of a feature though only
+                spatial measurements. It is therefore naturally a subclass
+                of Spatial Object which is any spatial thing."@en .</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 3</strong> Implementations shall allow the RDFS class <code>geo:SpatialMeasure</code> to be used in SPARQL graph patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/core/spatial-measure-class</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_class_geofeature"><a class="anchor" href="#_class_geofeature"></a>8.6.2.3. Class: geo:Feature</h5>
 <div class="paragraph">
 <p>The class <code>geo:Feature</code> is equivalent to the class <code>GFI_Feature</code> [8] and is defined by the following:</p>
 </div>
@@ -1305,7 +1336,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 <div class="content">
 <pre class="highlight"><code>geo:Feature a rdfs:Class,
               owl:Class;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "Feature"@en;
     rdfs:subClassOf geo:SpatialObject;
     owl:disjointWith geo:Geometry;
@@ -1320,7 +1351,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 3</strong> Implementations shall allow the RDFS class <code>geo:Feature</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 4</strong> Implementations shall allow the RDFS class <code>geo:Feature</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/core/feature-class</code></p></td>
@@ -1336,7 +1367,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 <p>This clause establishes the <em>Topology Vocabulary Extension (relation_family)</em> parameterized requirements class, with URI <code>/req/topology-vocab-extension</code>, which has a single corresponding conformance class <em>Topology Vocabulary Extension (relation_family)</em>, with URI <code>/conf/topology-vocab-extension</code>. This requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, e.g. RCC8, Egenhofer. These relations are generalized so that they may connect features as well as geometries.</p>
 </div>
 <div class="paragraph">
-<p>A DE-9IM pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are <code>-1</code> (empty), <code>0, 1, 2, T</code> (true) <code>= {0, 1, 2}, F</code> (false) = {-1}, *` (don’t care)` = {-1, 0, 1, 2}`. In the following descriptions, the notation <code>X/Y</code> is used denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0- dimensional geometries (e.g. points). The symbol <code>L</code> is used for 1-dimensional geometries (e.g. lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.</p>
+<p>A Dimensionally Extended 9-Intersection Model (DE-9IM) pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are <code>-1</code> (empty), <code>0, 1, 2, T</code> (true) <code>= {0, 1, 2}, F</code> (false) = {-1}, *` (don’t care)` = {-1, 0, 1, 2}`. In the following descriptions, the notation <code>X/Y</code> is used denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0- dimensional geometries (e.g. points). The symbol <code>L</code> is used for 1-dimensional geometries (e.g. lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.</p>
 </div>
 <div class="sect3">
 <h4 id="_parameters"><a class="anchor" href="#_parameters"></a>8.7.1. Parameters</h4>
@@ -1358,7 +1389,7 @@ The URI <code>ogc:asGeomLiteral</code> is used in requirement specifications as 
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 4</strong> Implementations shall allow the properties <code>geo:sfEquals</code>, <code>geo:sfDisjoint</code>, <code>geo:sfIntersects</code>, <code>geo:sfTouches</code>, <code>geo:sfCrosses</code>, <code>geo:sfWithin</code>, <code>geo:sfContains</code>, <code>geo:sfOverlaps</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 5</strong> Implementations shall allow the properties <code>geo:sfEquals</code>, <code>geo:sfDisjoint</code>, <code>geo:sfIntersects</code>, <code>geo:sfTouches</code>, <code>geo:sfCrosses</code>, <code>geo:sfWithin</code>, <code>geo:sfContains</code>, <code>geo:sfOverlaps</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/topology-vocab-extension/sf-spatial-relations</code></p></td>
@@ -1450,7 +1481,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 <div class="sect3">
 <h4 id="_requirements_for_egenhofer_relation_family_relation_familyegenhofer"><a class="anchor" href="#_requirements_for_egenhofer_relation_family_relation_familyegenhofer"></a>8.7.3. Requirements for Egenhofer Relation Family (relation_family=Egenhofer)</h4>
 <div class="paragraph">
-<p>This clause defines requirements for the <em>Egenhofer</em> relation family. Consult references [2] and [3] for a more detailed discussion of <em>Egenhofer</em> relations.</p>
+<p>This clause defines requirements for the 9-intersection model for binary topological relations (<em>Egenhofer</em>) relation family. Consult references [2] and [3] for a more detailed discussion of <em>Egenhofer</em> relations.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1458,7 +1489,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 5</strong> Implementations shall allow the properties <code>geo:ehEquals</code>, <code>geo:ehDisjoint</code>, <code>geo:ehMeet, geo:ehOverlap</code>, <code>geo:ehCovers</code>, <code>geo:ehCoveredBy</code>, <code>geo:ehInside</code>, <code>geo:ehContains</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 6</strong> Implementations shall allow the properties <code>geo:ehEquals</code>, <code>geo:ehDisjoint</code>, <code>geo:ehMeet, geo:ehOverlap</code>, <code>geo:ehCovers</code>, <code>geo:ehCoveredBy</code>, <code>geo:ehInside</code>, <code>geo:ehContains</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/topology-vocab-extension/eh-spatial-relations</code></p></td>
@@ -1549,7 +1580,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 <div class="sect3">
 <h4 id="_requirements_for_rcc8_relation_family_relation_familyrcc8"><a class="anchor" href="#_requirements_for_rcc8_relation_family_relation_familyrcc8"></a>8.7.4. Requirements for RCC8 Relation Family (relation_family=RCC8)</h4>
 <div class="paragraph">
-<p>This clause defines requirements for the <em>RCC8</em> relation family. Consult references [1] and [9] for a more detailed discussion of <em>RCC8</em> relations.</p>
+<p>This clause defines requirements for the region connection calculus basic 8 (<em>RCC8</em>) relation family. Consult references [1] and [9] for a more detailed discussion of <em>RCC8</em> relations.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1557,7 +1588,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 6</strong> Implementations shall allow the properties geo:rcc8eq, <code>geo:rcc8dc</code>, <code>geo:rcc8ec</code>, <code>geo:rcc8po</code>, <code>geo:rcc8tppi</code>, <code>geo:rcc8tpp</code>, <code>geo:rcc8ntpp</code>, <code>geo:rcc8ntppi</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 7</strong> Implementations shall allow the properties geo:rcc8eq, <code>geo:rcc8dc</code>, <code>geo:rcc8ec</code>, <code>geo:rcc8po</code>, <code>geo:rcc8tppi</code>, <code>geo:rcc8tpp</code>, <code>geo:rcc8ntpp</code>, <code>geo:rcc8ntppi</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/topology-vocab-extension/rcc8-spatial-relations</code></p></td>
@@ -1753,7 +1784,7 @@ literals and also the supported geometry types.</p>
 <div class="content">
 <pre class="highlight"><code>geo:Geometry a rdfs:Class,
                owl:Class;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "Geometry"@en;
     rdfs:subClassOf geo:SpatialObject;
     owl:disjointWith geo:Feature;
@@ -1768,7 +1799,7 @@ literals and also the supported geometry types.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 7</strong> Implementations shall allow the RDFS class <code>geo:Geometry</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 8</strong> Implementations shall allow the RDFS class <code>geo:Geometry</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-class</code></p></td>
@@ -1776,8 +1807,9 @@ literals and also the supported geometry types.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="_standard_properties_for_geofeature"><a class="anchor" href="#_standard_properties_for_geofeature"></a>8.8.2.2. Standard Properties for geo:Feature</h5>
+</div>
+<div class="sect3">
+<h4 id="_standard_properties_for_geofeature"><a class="anchor" href="#_standard_properties_for_geofeature"></a>8.8.3. Standard Properties for geo:Feature</h4>
 <div class="paragraph">
 <p>Properties are defined for associating geometries with features.</p>
 </div>
@@ -1787,16 +1819,16 @@ literals and also the supported geometry types.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 8</strong> Implementations shall allow the properties <code>geo:hasGeometry</code> and
-<code>geo:hasDefaultGeometry</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <code>geo:hasGeometry</code>,
+<code>geo:hasDefaultGeometry</code>, <code>geo:hasLength</code>, <code>geo:hasArea</code>, <code>geo:hasVolume</code> and <code>geo:hasSpatialResolution</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/feature-properties</code></p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect5">
-<h6 id="_property_geohasgeometry"><a class="anchor" href="#_property_geohasgeometry"></a>Property: geo:hasGeometry</h6>
+<div class="sect4">
+<h5 id="_property_geohasgeometry"><a class="anchor" href="#_property_geohasgeometry"></a>8.8.3.1. Property: geo:hasGeometry</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasGeometry</code> is used to link a feature with a geometry that represents its spatial extent. A given feature may have many associated geometries.</p>
 </div>
@@ -1804,7 +1836,7 @@ literals and also the supported geometry types.</p>
 <div class="content">
 <pre class="highlight"><code>geo:hasGeometry a rdf:Property,
                   owl:ObjectProperty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "has Geometry"@en;
     rdfs:comment "A spatial representation for a given feature."@en;
     rdfs:domain geo:Feature;
@@ -1812,9 +1844,8 @@ literals and also the supported geometry types.</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect4">
-<h5 id="_property_geohasdefaultgeometry"><a class="anchor" href="#_property_geohasdefaultgeometry"></a>8.8.2.3. Property: geo:hasDefaultGeometry</h5>
+<h5 id="_property_geohasdefaultgeometry"><a class="anchor" href="#_property_geohasdefaultgeometry"></a>8.8.3.2. Property: geo:hasDefaultGeometry</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasDefaultGeometry</code> is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).</p>
 </div>
@@ -1822,7 +1853,7 @@ literals and also the supported geometry types.</p>
 <div class="content">
 <pre class="highlight"><code>geo:hasDefaultGeometry a rdf:Property,
                             owl:ObjectProperty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "has Default Geometry"@en;
     rdfs:comment "The default geometry to be used in spatial calculations,
                  usually the most detailed geometry."@en;
@@ -1832,7 +1863,7 @@ literals and also the supported geometry types.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL does not restrict the cardinality of the <code>geo:hasDefaultGeometry</code> property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature my:f1 has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule <code>geor:sfDisjoint</code>).</p>
+<p>GeoSPARQL does not restrict the cardinality of the <code>geo:hasDefaultGeometry</code> property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature <code>my:f1</code> has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule <code>geor:sfDisjoint</code>).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1846,9 +1877,69 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <p>Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification.</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>8.8.3.3. Property: geo:hasLength</h5>
+<div class="paragraph">
+<p>The property <code>geo:hasLength</code> is used to indicate the length of a <code>geo:Feature</code>. In the case of a one-dimensional <code>geo:Feature</code>, it is the simple length. In the case of a two-dimensional <code>geo:Feature</code>, it is interpreted to mean the perimeter length. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:hasLength a rdf:Property,
+              owl:ObjectProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "has length"@en;
+    rdfs:comment "The length of a Feature, expressed as a Spatial Measure."@en;
+    rdfs:domain geo:Feature;
+    rdfs:range geo:SpatialMeasure .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A consistency check can be applied to geometries indicating this property and the <code>geo:dimension</code> property: the integer range value of a <code>geo:dimension</code> property for a geometry with a <code>geo:hasLength</code> property must be either 1 or 2.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>8.8.3.4. Property: geo:hasArea</h5>
+<div class="paragraph">
+<p>The property <code>geo:hasArea</code> is used to indicate the area of a <code>geo:Feature</code>. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:hasArea a rdf:Property,
+              owl:ObjectProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "has area"@en;
+    rdfs:comment "The two-dimensional area of a Feature, expressed as a Spatial Measure."@en;
+    rdfs:domain geo:Feature;
+    rdfs:range geo:SpatialMeasure .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A consistency check can be applied to geometries indicating this property and the <code>geo:dimension</code> property: the integer range value of a <code>geo:dimension</code> property for a geometry with a <code>geo:hasLength</code> property must be 2.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>8.8.3.5. Property: geo:hasVolume</h5>
+<div class="paragraph">
+<p>The property <code>geo:hasVolume</code> is used to indicate the volume of a <code>geo:Feature</code>. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:hasVolume a rdf:Property,
+              owl:ObjectProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "has volume"@en;
+    rdfs:comment "The volume of a Feature, expressed as a Spatial Measure"@en;
+    rdfs:domain geo:Feature;
+    rdfs:range geo:SpatialMeasure .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A consistency check can be applied to geometries indicating this property and the <code>geo:dimension</code> property: the integer range value of a <code>geo:dimension</code> property for a geometry with a <code>geo:hasLength</code> property must be 3.</p>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_standard_properties_for_geogeometry"><a class="anchor" href="#_standard_properties_for_geogeometry"></a>8.8.3. Standard Properties for geo:Geometry</h4>
+<h4 id="_standard_properties_for_geogeometry"><a class="anchor" href="#_standard_properties_for_geogeometry"></a>8.8.4. Standard Properties for geo:Geometry</h4>
 <div class="paragraph">
 <p>Properties are defined for describing geometry metadata.</p>
 </div>
@@ -1858,7 +1949,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <code>geo:dimension</code>, <code>geo:coordinateDimension</code>, <code>geo:spatialDimension</code>, <code>geo:isEmpty</code>, <code>geo:isSimple</code>, <code>geo:hasSerialization</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> Implementations shall allow the properties <code>geo:dimension</code>, <code>geo:coordinateDimension</code>, <code>geo:spatialDimension</code>, <code>geo:isEmpty</code>, <code>geo:isSimple</code>, <code>geo:hasSerialization</code> , <code>geo:inCRS</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-properties</code></p></td>
@@ -1866,7 +1957,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_property_geodimension"><a class="anchor" href="#_property_geodimension"></a>8.8.3.1. Property: geo:dimension</h5>
+<h5 id="_property_geodimension"><a class="anchor" href="#_property_geodimension"></a>8.8.4.1. Property: geo:dimension</h5>
 <div class="paragraph">
 <p>The dimension is the topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.</p>
 </div>
@@ -1874,7 +1965,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="content">
 <pre class="highlight"><code>geo:dimension a rdf:Property,
                 owl:DatatypeProperty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "dimension"@en;
     rdfs:comment "The topological dimension of this geometric object, which
                  must be less than or equal to the coordinate dimension. In
@@ -1886,7 +1977,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geocoordinatedimension"><a class="anchor" href="#_property_geocoordinatedimension"></a>8.8.3.2. Property: geo:coordinateDimension</h5>
+<h5 id="_property_geocoordinatedimension"><a class="anchor" href="#_property_geocoordinatedimension"></a>8.8.4.2. Property: geo:coordinateDimension</h5>
 <div class="paragraph">
 <p>The coordinate dimension is the dimension of direct positions (coordinate tuples) used in the definition of this geometric object.</p>
 </div>
@@ -1894,7 +1985,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="content">
 <pre class="highlight"><code>geo:coordinateDimension a rdf:Property,
                           owl:DatatypeProperty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "coordinate dimension"@en;
     rdfs:comment "The number of measurements or axes needed to describe the
                  position of this geometry in a coordinate system."@en;
@@ -1904,7 +1995,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geospatialdimension"><a class="anchor" href="#_property_geospatialdimension"></a>8.8.3.3. Property: geo:spatialDimension</h5>
+<h5 id="_property_geospatialdimension"><a class="anchor" href="#_property_geospatialdimension"></a>8.8.4.3. Property: geo:spatialDimension</h5>
 <div class="paragraph">
 <p>The spatial dimension is the dimension of the spatial portion of the direct positions (coordinate tuples) used in the definition of this geometric object. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.</p>
 </div>
@@ -1912,13 +2003,29 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="content">
 <pre class="highlight"><code>geo:spatialDimension a rdf:Property,
                        owl:DatatypeProperty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "spatial dimension"@en;
     rdfs:comment "The number of measurements or axes needed to describe the
                  spatial position of this geometry in a coordinate
                  system."@en;
     rdfs:domain geo:Geometry;
     rdfs:range xsd:integer .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_property_geohasspatialresolution"><a class="anchor" href="#_property_geohasspatialresolution"></a>8.8.4.4. Property: geo:hasSpatialResolution</h5>
+<div class="paragraph">
+<p>The property <code>geo:hasSpatialResolution</code> is used to indicate resolution of the elements within literal representations of a geometry. Since this property is defined for a <code>geo:Geometry</code>, all literal representations of that geometry must have the same spatial resolution.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:hasSpatialResolution a rdf:Property,
+              owl:ObjectProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "has spatial resolution"@en;
+    rdfs:comment "The spatial resolution of a Geometry"@en;
+    rdfs:domain geo:Geometry .</code></pre>
 </div>
 </div>
 <div class="sect5">
@@ -1928,8 +2035,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geo:isEmpty a rdf:Property, owl:DatatypePropterty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+<pre class="highlight"><code>geo:isEmpty a rdf:Property, owl:DatatypeProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "is empty"@en;
     rdfs:comment "(true) if this geometric object is the empty Geometry. If
                  true, then this geometric object represents the empty point
@@ -1947,8 +2054,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:isSimple a rdf:Property,
-               owl:DatatypePropterty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+               owl:DatatypeProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "is simple"@en;
     rdfs:comment "(true) if this geometric object has no anomalous geometric
                 points, such as self intersection or self tangency."@en;
@@ -1959,15 +2066,15 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.3.4. Property: geo:hasSerialization</h5>
+<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.4.5. Property: geo:hasSerialization</h5>
 <div class="paragraph">
 <p>The <code>geo:hasSerialization</code> property is used to connect a geometry with its text- based serialization (e.g., its WKT serialization).</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:hasSerialization a rdf:Property,
-                       owl:DatatypePropterty;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+                       owl:DatatypeProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "has serialization"@en;
     rdfs:comment "Connects a geometry object with its text-based
                  serialization."@en;
@@ -1976,14 +2083,32 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_property_geoincrs"><a class="anchor" href="#_property_geoincrs"></a>8.8.4.6. Property: geo:inCRS</h5>
+<div class="paragraph">
+<p>The <code>geo:inCRS</code> property is used to connect a geometry with the CRS used for its representation which affects measurements of its size (length, area, volume).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:inCRS a rdf:Property,
+            owl:ObjectProperty;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "in CRS"@en;
+    rdfs:comment "A Coordinate Reference System, as recorded in a
+                 vocabulary of them."@en;
+    rdfs:domain geo:Geometry;
+    rdfs:range skos:Concept .</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_requirements_for_wkt_serialization_serializationwkt"><a class="anchor" href="#_requirements_for_wkt_serialization_serializationwkt"></a>8.8.4. Requirements for WKT Serialization (serialization=WKT)</h4>
+<h4 id="_requirements_for_wkt_serialization_serializationwkt"><a class="anchor" href="#_requirements_for_wkt_serialization_serializationwkt"></a>8.8.5. Requirements for WKT Serialization (serialization=WKT)</h4>
 <div class="paragraph">
 <p>This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1].</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.4.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.5.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#wktLiteral</code>.</p>
 </div>
@@ -1993,7 +2118,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:wktLiteral a rdfs:Datatype;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "Well-known Text Literal"@en;
     rdfs:comment "A Well-known Text serialization of a geometry object."@en .</code></pre>
 </div>
@@ -2004,7 +2129,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> All RDFS Literals of type <code>geo:wktLiteral</code> shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid <code>geo:wktLiterals</code> are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 11</strong> All RDFS Literals of type <code>geo:wktLiteral</code> shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid <code>geo:wktLiterals</code> are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/wkt-literal</code></p></td>
@@ -2026,7 +2151,7 @@ This URI denotes WGS 84 longitude-latitude.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 11</strong> The URI <code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code> shall be assumed as the spatial reference system for `geo:wktLiteral`s that do not specify an explicit spatial reference system URI..</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 12</strong> The URI <code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code> shall be assumed as the spatial reference system for <code>geo:wktLiteral</code> instances that do not specify an explicit spatial reference system URI..</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/wkt-literal-default-srs</code></p></td>
@@ -2039,7 +2164,7 @@ This URI denotes WGS 84 longitude-latitude.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 12</strong> Coordinate tuples within `geo:wktLiteral`s shall be interpreted using the axis order defined in the spatial reference system used.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 13</strong> Coordinate tuples within <code>geo:wktLiteral</code> shall be interpreted using the axis order defined in the spatial reference system used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/wkt-axis-order</code></p></td>
@@ -2069,7 +2194,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 13</strong> An empty RDFS Literal of type <code>geo:wktLiteral</code> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 14</strong> An empty RDFS Literal of type <code>geo:wktLiteral</code> shall be interpreted as an empty geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/wkt-literal-empty</code></p></td>
@@ -2078,7 +2203,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties"><a class="anchor" href="#_serialization_properties"></a>8.8.4.2. Serialization Properties</h5>
+<h5 id="_serialization_properties"><a class="anchor" href="#_serialization_properties"></a>8.8.5.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asWKT</code> property is defined to link a geometry with its WKT serialization.</p>
 </div>
@@ -2091,7 +2216,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 14</strong> Implementations shall allow the RDF property <code>geo:asWKT</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 15</strong> Implementations shall allow the RDF property <code>geo:asWKT</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-as-wkt-literal</code></p></td>
@@ -2106,7 +2231,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 <pre class="highlight"><code>geo:asWKT a rdf:Property,
             owl:DatatypeProperty;
     rdfs:subPropertyOf geo:hasSerialization;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "as WKT"@en;
     rdfs:comment "The WKT serialization of a geometry."@en;
     rdfs:domain geo:Geometry;
@@ -2116,12 +2241,12 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </div>
 </div>
 <div class="sect3">
-<h4 id="_requirements_for_gml_serialization_serializationgml"><a class="anchor" href="#_requirements_for_gml_serialization_serializationgml"></a>8.8.5. Requirements for GML Serialization (serialization=GML)</h4>
+<h4 id="_requirements_for_gml_serialization_serializationgml"><a class="anchor" href="#_requirements_for_gml_serialization_serializationgml"></a>8.8.6. Requirements for GML Serialization (serialization=GML)</h4>
 <div class="paragraph">
 <p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036].</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.5.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.6.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype:
 <code><a href="http://www.opengis.net/ont/geosparql#gmlLiteral" class="bare">http://www.opengis.net/ont/geosparql#gmlLiteral</a>.</code></p>
@@ -2132,13 +2257,13 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:gmlLiteral a rdfs:Datatype;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "GML literal"@en;
     rdfs:comment "The datatype of GML literal values"@en .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <code>geo:gmlLiteral`s are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of `GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
+<p>Valid <code>geo:gmlLiteral</code> instances are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2146,7 +2271,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 15</strong> All <code>geo:gmlLiteral`s shall consist of a valid element from the GML schema that implements a subtype of `GM_Object</code> as defined in [OGC 07-036].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 16</strong> All <code>geo:gmlLiteral</code> instances shall consist of a valid element from the GML schema that implements a subtype of <code>GM_Object</code> as defined in [OGC 07-036].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/gml-literal</code></p></td>
@@ -2172,7 +2297,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 16</strong> An empty <code>geo:gmlLiteral</code> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> An empty <code>geo:gmlLiteral</code> shall be interpreted as an empty geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/gml-literal-empty</code></p></td>
@@ -2185,7 +2310,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> Implementations shall document supported GML profiles.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 18</strong> Implementations shall document supported GML profiles.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/gml-profile</code></p></td>
@@ -2194,7 +2319,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties_2"><a class="anchor" href="#_serialization_properties_2"></a>8.8.5.2. Serialization Properties</h5>
+<h5 id="_serialization_properties_2"><a class="anchor" href="#_serialization_properties_2"></a>8.8.6.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>This document defines the <code>geo:asGML</code> property to link a geometry with its serialization.</p>
 </div>
@@ -2207,7 +2332,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 18</strong> Implementations shall allow the RDF property <code>geo:asGML</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 19</strong> Implementations shall allow the RDF property <code>geo:asGML</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-as-gml-literal</code></p></td>
@@ -2221,7 +2346,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="content">
 <pre class="highlight"><code>geo:asGML a rdf:Property;
     rdfs:subPropertyOf geo:hasSerialization;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.0&gt;;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
     rdfs:label "as GML"@en;
     rdfs:comment "The GML serialization of a geometry."@en;
     rdfs:domain geo:Geometry;
@@ -2231,12 +2356,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_requirements_for_geojson_serialization_serializationgeojson"><a class="anchor" href="#_requirements_for_geojson_serialization_serializationgeojson"></a>8.8.6. Requirements for GeoJSON Serialization (serialization=GEOJSON)</h4>
+<h4 id="_requirements_for_geojson_serialization_serializationgeojson"><a class="anchor" href="#_requirements_for_geojson_serialization_serializationgeojson"></a>8.8.7. Requirements for GeoJSON Serialization (serialization=GEOJSON)</h4>
 <div class="paragraph">
 <p>This section establishes the requirements for representing geometry data in RDF based on GeoJSON.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_3"><a class="anchor" href="#_rdfs_datatypes_3"></a>8.8.6.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes_3"><a class="anchor" href="#_rdfs_datatypes_3"></a>8.8.7.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code>.</p>
 </div>
@@ -2252,7 +2377,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid `geo:geoJSONLiteral`s are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification [RFC 7946].</p>
+<p>Valid <code>geo:geoJSONLiteral</code> instances are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification [RFC 7946].</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2260,7 +2385,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All `geo:geoJSONLiteral`s shall consist of the Geometry objects as defined in the GeoJSON specification [RFC 7946].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 20</strong> All <code>geo:geoJSONLiteral</code> instances shall consist of the Geometry objects as defined in the GeoJSON specification [RFC 7946].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geoJSON-literal</code></p></td>
@@ -2273,7 +2398,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All RDFS Literals of type <code>geo:geoJSONLiteral</code> do not contain a CRS definition. All literals of this type shall according to the GeoJSON specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (urn:ogc:def:crs:OGC::CRS84).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> All RDFS Literals of type <code>geo:geoJSONLiteral</code> do not contain a CRS definition. All literals of this type shall according to the GeoJSON specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (urn:ogc:def:crs:OGC::CRS84).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geoJSON-literal-crs</code></p></td>
@@ -2294,7 +2419,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> An empty RDFS Literal of type <code>geo:geoJSONLiteral</code> shall be interpreted as an empty geometry, i.e. {"geometry":null} in GeoJSON .</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 22</strong> An empty RDFS Literal of type <code>geo:geoJSONLiteral</code> shall be interpreted as an empty geometry, i.e. {"geometry":null} in GeoJSON .</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geoJSON-literal-empty</code></p></td>
@@ -2303,7 +2428,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties_3"><a class="anchor" href="#_serialization_properties_3"></a>8.8.6.2. Serialization Properties</h5>
+<h5 id="_serialization_properties_3"><a class="anchor" href="#_serialization_properties_3"></a>8.8.7.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asGeoJSON</code> property is defined to link a geometry with its GeoJSON serialization.</p>
 </div>
@@ -2316,7 +2441,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> Implementations shall allow the RDF property <code>geo:asGeoJSON</code> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 23</strong> Implementations shall allow the RDF property <code>geo:asGeoJSON</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-as-geojson-literal</code></p></td>
@@ -2341,12 +2466,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_requirements_for_kml_serialization_serializationkml"><a class="anchor" href="#_requirements_for_kml_serialization_serializationkml"></a>8.8.7. Requirements for KML Serialization (serialization=KML)</h4>
+<h4 id="_requirements_for_kml_serialization_serializationkml"><a class="anchor" href="#_requirements_for_kml_serialization_serializationkml"></a>8.8.8. Requirements for KML Serialization (serialization=KML)</h4>
 <div class="paragraph">
 <p>This section establishes the requirements for representing geometry data in RDF based on KML.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_4"><a class="anchor" href="#_rdfs_datatypes_4"></a>8.8.7.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes_4"><a class="anchor" href="#_rdfs_datatypes_4"></a>8.8.8.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#kmlLiteral</code>.</p>
 </div>
@@ -2362,7 +2487,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid `geo:kmlLiteral`s are formed by encoding geometry information as a Geometry object as defined in the KML specification [<a href="https://www.ogc.org/standards/kml/" class="bare">https://www.ogc.org/standards/kml/</a>].</p>
+<p>Valid <code>geo:kmlLiteral</code> instances are formed by encoding geometry information as a Geometry object as defined in the KML specification [<a href="https://www.ogc.org/standards/kml/" class="bare">https://www.ogc.org/standards/kml/</a>].</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2370,7 +2495,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All `geo:kmlLiteral`s shall consist of the Geometry objects as defined in the KML specification [<a href="https://www.ogc.org/standards/kml/" class="bare">https://www.ogc.org/standards/kml/</a>].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All <code>geo:kmlLiteral</code> instances shall consist of the Geometry objects as defined in the KML specification [<a href="https://www.ogc.org/standards/kml/" class="bare">https://www.ogc.org/standards/kml/</a>].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/kml-literal</code></p></td>
@@ -2413,7 +2538,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties_4"><a class="anchor" href="#_serialization_properties_4"></a>8.8.7.2. Serialization Properties</h5>
+<h5 id="_serialization_properties_4"><a class="anchor" href="#_serialization_properties_4"></a>8.8.8.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asKML</code> property is defined to link a geometry with its KML serialization.</p>
 </div>
@@ -2451,7 +2576,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.8.8. Non-topological Query Functions</h4>
+<h4 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.8.9. Non-topological Query Functions</h4>
 <div class="paragraph">
 <p>This clause defines SPARQL functions for performing non-topological spatial operations.</p>
 </div>
@@ -2461,7 +2586,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 19</strong> Implementations shall support <code>geof:distance</code>, <code>geof:buffer</code>, <code>geof:convexHull</code>, <code>geof:intersection</code>, <code>geof:union</code>, <code>geof:difference</code>, <code>geof:symDifference</code>, <code>geof:envelope</code> and <code>geof:boundary</code> as SPARQL extension functions, consistent with the definitions of the corresponding functions (<code>distance</code>, <code>buffer</code>, <code>convexHull</code>, <code>intersection</code>, <code>difference</code>, <code>symDifference</code>, <code>envelope</code> and <code>boundary</code> respectively) in Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 24</strong> Implementations shall support <code>geof:distance</code>, <code>geof:buffer</code>, <code>geof:convexHull</code>, <code>geof:intersection</code>, <code>geof:union</code>, <code>geof:difference</code>, <code>geof:symDifference</code>, <code>geof:envelope</code> and <code>geof:boundary</code> as SPARQL extension functions, consistent with the definitions of the corresponding functions (<code>distance</code>, <code>buffer</code>, <code>convexHull</code>, <code>intersection</code>, <code>difference</code>, <code>symDifference</code>, <code>envelope</code> and <code>boundary</code> respectively) in Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/query-functions</code></p></td>
@@ -2488,7 +2613,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 11 of the SPARQL specification [W3C SPARQL] (<a href="http://www.w3.org/TR/rdf-sparql-" class="bare">http://www.w3.org/TR/rdf-sparql-</a> query/#tests).</p>
+<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 11 of the SPARQL specification [W3C SPARQL] (<a href="http://www.w3.org/TR/rdf-sparql-query/#tests" class="bare">http://www.w3.org/TR/rdf-sparql-query/#tests</a>).</p>
 </div>
 <div class="paragraph">
 <p>Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.</p>
@@ -2508,7 +2633,7 @@ SPARQL language extensions may provide additional associations between operators
 <p>Several non-topological query functions use a unit of measure URI. The OGC has defined some standard units of measure URIs under the <code>http://www.opengis.net/def/uom/OGC/1.0/</code> namespace, for example <code>&lt;http://www.opengis.net/def/uom/OGC/1.0/metre&gt;</code>.</p>
 </div>
 <div class="sect4">
-<h5 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.8.8.1. Function: geof:distance</h5>
+<h5 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.8.9.1. Function: geof:distance</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:distance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2521,7 +2646,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.8.8.2. Function: geof:buffer</h5>
+<h5 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.8.9.2. Function: geof:buffer</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:buffer (geom: ogc:geomLiteral, radius: xsd:double,
@@ -2533,7 +2658,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.8.8.3. Function: geof:convexHull</h5>
+<h5 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.8.9.3. Function: geof:convexHull</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2544,7 +2669,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.8.8.4. Function: geof:intersection</h5>
+<h5 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.8.9.4. Function: geof:intersection</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:intersection (geom1: ogc:geomLiteral,
@@ -2556,7 +2681,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.8.8.5. Function: geof:union</h5>
+<h5 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.8.9.5. Function: geof:union</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:union (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2568,7 +2693,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.8.8.6. Function: geof:difference</h5>
+<h5 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.8.9.6. Function: geof:difference</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:difference (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2580,7 +2705,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.8.8.7. Function: geof:symDifference</h5>
+<h5 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.8.9.7. Function: geof:symDifference</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:symDifference (geom1: ogc:geomLiteral,
@@ -2593,7 +2718,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.8.8.8. Function: geof:envelope</h5>
+<h5 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.8.9.8. Function: geof:envelope</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2604,7 +2729,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.8.8.9. Function: geof:boundary</h5>
+<h5 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.8.9.9. Function: geof:boundary</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2619,7 +2744,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 20</strong> Implementations shall support <code>geof:getSRID</code> as a SPARQL extension function.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 25</strong> Implementations shall support <code>geof:getSRID</code> as a SPARQL extension function.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/srid-function</code></p></td>
@@ -2628,7 +2753,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.8.8.10. Function: geof:getsrid</h5>
+<h5 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.8.9.10. Function: geof:getsrid</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI</code></pre>
@@ -2668,7 +2793,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> Implementations shall support <code>geof:relate</code> as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 26</strong> Implementations shall support <code>geof:relate</code> as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-topology-extension/relate-query-function</code></p></td>
@@ -2696,7 +2821,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 22</strong> Implementations shall support <code>geof:sfEquals</code>, <code>geof:sfDisjoint</code>, <code>geof:sfIntersects</code>, <code>geof:sfTouches</code>, <code>geof:sfCrosses</code>, <code>geof:sfWithin</code>, <code>geof:sfContains</code>, <code>geof:sfOverlaps</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> Implementations shall support <code>geof:sfEquals</code>, <code>geof:sfDisjoint</code>, <code>geof:sfIntersects</code>, <code>geof:sfTouches</code>, <code>geof:sfCrosses</code>, <code>geof:sfWithin</code>, <code>geof:sfContains</code>, <code>geof:sfOverlaps</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-topology-extension/sf-query-functions</code></p></td>
@@ -2781,7 +2906,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 23</strong> Implementations shall support <code>geof:ehEquals</code>, <code>geof:ehDisjoint</code>, <code>geof:ehMeet</code>, <code>geof:ehOverlap</code>, <code>geof:ehCovers</code>, <code>geof:ehCoveredBy</code>, <code>geof:ehInside</code>, <code>geof:ehContains</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 28</strong> Implementations shall support <code>geof:ehEquals</code>, <code>geof:ehDisjoint</code>, <code>geof:ehMeet</code>, <code>geof:ehOverlap</code>, <code>geof:ehCovers</code>, <code>geof:ehCoveredBy</code>, <code>geof:ehInside</code>, <code>geof:ehContains</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-topology-extension/eh-query-functions</code></p></td>
@@ -2865,7 +2990,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 24</strong> Implementations shall support <code>geof:rcc8eq</code>, <code>geof:rcc8dc</code>, <code>geof:rcc8ec</code>, <code>geof:rcc8po</code>, <code>geof:rcc8tppi</code>, <code>geof:rcc8tpp</code>, <code>geof:rcc8ntpp</code>, <code>geof:rcc8ntppi</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 29</strong> Implementations shall support <code>geof:rcc8eq</code>, <code>geof:rcc8dc</code>, <code>geof:rcc8ec</code>, <code>geof:rcc8po</code>, <code>geof:rcc8tppi</code>, <code>geof:rcc8tpp</code>, <code>geof:rcc8ntpp</code>, <code>geof:rcc8ntppi</code> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-topology-extension/rcc8-query-functions</code></p></td>
@@ -2969,7 +3094,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 25</strong> Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 30</strong> Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/rdfs-entailment-extension/bgp-rdfs-ent</code></p></td>
@@ -3007,7 +3132,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 26</strong> Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 31</strong> Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/rdfs-entailment-extension/wkt-geometry-types</code></p></td>
@@ -3046,7 +3171,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements <code>GM_Object</code> using the specified <em>version</em> of GML [OGC 07-036].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements <code>GM_Object</code> using the specified <em>version</em> of GML [OGC 07-036].</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/rdfs-entailment-extension/gml-geometry-types</code></p></td>
@@ -3120,7 +3245,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 28</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:sfEquals</code>, <code>geor:sfDisjoint</code>, <code>geor:sfIntersects</code>, <code>geor:sfTouches</code>, <code>geor:sfCrosses</code>, <code>geor:sfWithin</code>, <code>geor:sfContains</code>, <code>geor:sfOverlaps</code>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 33</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:sfEquals</code>, <code>geor:sfDisjoint</code>, <code>geor:sfIntersects</code>, <code>geor:sfTouches</code>, <code>geor:sfCrosses</code>, <code>geor:sfWithin</code>, <code>geor:sfContains</code>, <code>geor:sfOverlaps</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/query-rewrite-extension/sf-query-rewrite</code></p></td>
@@ -3193,7 +3318,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 29</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:ehEquals</code>, <code>geor:ehDisjoint</code>, <code>geor:ehMeet</code>, <code>geor:ehOverlap</code>,
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 34</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:ehEquals</code>, <code>geor:ehDisjoint</code>, <code>geor:ehMeet</code>, <code>geor:ehOverlap</code>,
 <code>geor:ehCovers</code>, <code>geor:ehCoveredBy</code>, <code>geor:ehInside</code>, <code>geor:ehContains</code>.</p></td>
 </tr>
 <tr>
@@ -3270,7 +3395,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 30</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:rcc8eq</code>, <code>geor:rcc8dc</code>, <code>geor:rcc8ec</code>, <code>geor:rcc8po</code>, <code>geor:rcc8tppi</code>, <code>geor:rcc8tpp</code>, <code>geor:rcc8ntpp</code>, <code>geor:rcc8ntppi</code>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 35</strong> Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] <code>geor:rcc8eq</code>, <code>geor:rcc8dc</code>, <code>geor:rcc8ec</code>, <code>geor:rcc8po</code>, <code>geor:rcc8tppi</code>, <code>geor:rcc8tpp</code>, <code>geor:rcc8ntpp</code>, <code>geor:rcc8ntppi</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/query-rewrite-extension/rcc8-query-rewrite</code></p></td>
@@ -4545,7 +4670,7 @@ Recommendation (27 October 2009)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-11 07:56:35 UTC
+Last updated 2021-02-16 11:05:05 UTC
 </div>
 </div>
 </body>
