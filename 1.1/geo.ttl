@@ -8,13 +8,14 @@
 @prefix sdo: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
+
 geosparql: 
 	a owl:Ontology ;
-    dcterms:title "GeoSPARQL Ontology" ;
+  dcterms:title "GeoSPARQL Ontology" ;
 	dcterms:publisher [
-		a sdo:Organization ;
-		sdo:name "Open Geospatial Consortium" ;
-		sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+	 a sdo:Organization ;
+	 sdo:name "Open Geospatial Consortium" ;
+	 sdo:url "https://www.ogc.org"^^xsd:anyURI ;
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
 	dcterms:contributor [
@@ -43,7 +44,9 @@ geosparql:
 	dcterms:description "An RDF/OWL vocabulary for representing spatial information"@en ;
 	dcterms:source <http://www.opengis.net/doc/IS/geosparql/1.1> , "OGC GeoSPARQL – A Geographic Query Language for RDF Data OGC 11-052r5"@en ;
 	rdfs:seeAlso <http://www.opengis.net/doc/IS/geosparql/1.1> ;
-	owl:versionInfo "OGC GeoSPARQL 1.1" .
+	owl:versionInfo "OGC GeoSPARQL 1.1" ;
+.
+
 
 # #################################################################
 # #
@@ -51,7 +54,6 @@ geosparql:
 # #
 # #################################################################
 
-# http://www.opengis.net/ont/geosparql#gmlLiteral
 :gmlLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
@@ -59,7 +61,6 @@ geosparql:
 	skos:prefLabel "GML Literal"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#wktLiteral
 :wktLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
@@ -67,7 +68,6 @@ geosparql:
 	skos:prefLabel "Well-known Text Literal"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#geoJSONLiteral
 :geoJSONLiteral
 	a rdfs:Datatype ;
 	rdfs:seeAlso <https://tools.ietf.org/html/rfc7946> ;
@@ -76,7 +76,6 @@ geosparql:
 	skos:prefLabel "GeoJSON Literal"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#kmlLiteral
 :kmlLiteral
 	a rdfs:Datatype ;
 	rdfs:seeAlso <https://www.ogc.org/standards/kml/> ;
@@ -91,7 +90,6 @@ geosparql:
 # #
 # #################################################################
 
-# http://www.opengis.net/ont/geosparql#defaultGeometry
 :defaultGeometry
 	a owl:ObjectProperty ;
 	rdfs:subPropertyOf :hasGeometry ;
@@ -102,7 +100,6 @@ geosparql:
 	skos:prefLabel "default geometry"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehContains
 :ehContains 
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -112,7 +109,6 @@ geosparql:
 	skos:prefLabel "contains"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehCoveredBy
 :ehCoveredBy
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -122,7 +118,6 @@ geosparql:
 	skos:prefLabel "covered by"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehCovers
 :ehCovers
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -132,7 +127,6 @@ geosparql:
 	skos:prefLabel "covers"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehDisjoint
 :ehDisjoint
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -142,7 +136,6 @@ geosparql:
 	skos:prefLabel "disjoint"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehEquals
 :ehEquals
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -152,7 +145,6 @@ geosparql:
 	skos:prefLabel "equals"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehInside
 :ehInside
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -162,7 +154,6 @@ geosparql:
 	skos:prefLabel "inside"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehMeet
 :ehMeet
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -172,7 +163,6 @@ geosparql:
 	skos:prefLabel "meet"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#ehOverlap
 :ehOverlap
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -182,17 +172,54 @@ geosparql:
 	skos:prefLabel "overlap"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#hasGeometry
 :hasGeometry
 	a owl:ObjectProperty ;
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A spatial representation for a given feature."""@en ;
-	skos:prefLabel "has geometry"@en ;
+	skos:prefLabel "hasGeometry"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8dc
+:hasArea a owl:ObjectProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range :SpatialMeasure ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The area of a Feature, expressed as a Spatial Measure."""@en ;
+	skos:prefLabel "has area"@en ;
+.
+
+:hasLength a owl:ObjectProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range :SpatialMeasure ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The length of a one-dimensional Feature or the perimeter length of a two-dimensional Feature, expressed as a Spatial Measure."""@en ;
+	skos:prefLabel "has length"@en ;
+.
+
+:hasSpatialResolution a owl:ObjectProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The spatial resolution of a Geometry."""@en ;
+	skos:prefLabel "has spatial resolution"@en ;
+.
+
+:hasVolume a owl:ObjectProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range :SpatialMeasure ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The volume of a three-dimensional Feature, expressed as a Spatial Measure."""@en ;
+	skos:prefLabel "has volume"@en ;
+.	
+
+:inCRS a owl:ObjectProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:range skos:Concept ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The coordinate reference system of the coordinates in the litaral representation of the geometry."""@en ;
+	skos:prefLabel "in CRS"@en ;
+.
+
 :rcc8dc
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -202,7 +229,6 @@ geosparql:
 	skos:prefLabel "disconnected"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8ec
 :rcc8ec
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -212,7 +238,6 @@ geosparql:
 	skos:prefLabel "externally connected"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8eq
 :rcc8eq
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -222,7 +247,6 @@ geosparql:
 	skos:prefLabel "equals"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8ntpp
 :rcc8ntpp
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -232,7 +256,6 @@ geosparql:
 	skos:prefLabel "non-tangential proper part"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8ntppi
 :rcc8ntppi
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -242,7 +265,6 @@ geosparql:
 	skos:prefLabel "non-tangential proper part inverse"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8po
 :rcc8po
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -252,7 +274,6 @@ geosparql:
 	skos:prefLabel "partially overlapping"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8tpp
 :rcc8tpp
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -262,7 +283,6 @@ geosparql:
 	skos:prefLabel "tangential proper part"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#rcc8tppi
 :rcc8tppi
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -272,7 +292,6 @@ geosparql:
 	skos:prefLabel "tangential proper part inverse"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfContains
 :sfContains
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -282,7 +301,6 @@ geosparql:
 	skos:prefLabel "contains"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfCrosses
 :sfCrosses
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -292,7 +310,6 @@ geosparql:
 	skos:prefLabel "crosses"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfDisjoint
 :sfDisjoint
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -302,7 +319,6 @@ geosparql:
 	skos:prefLabel "disjoint"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfEquals
 :sfEquals
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -312,7 +328,6 @@ geosparql:
 	skos:prefLabel "equals"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfIntersects
 :sfIntersects
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -322,7 +337,6 @@ geosparql:
 	skos:prefLabel "intersects"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfOverlaps
 :sfOverlaps
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -332,7 +346,6 @@ geosparql:
 	skos:prefLabel "overlaps"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfTouches
 :sfTouches
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -342,7 +355,6 @@ geosparql:
 	skos:prefLabel "touches"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#sfWithin
 :sfWithin
 	a owl:ObjectProperty ;
 	rdfs:domain :SpatialObject ;
@@ -358,7 +370,6 @@ geosparql:
 # #
 # #################################################################
 
-# http://www.opengis.net/ont/geosparql#asGML
 :asGML
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization ;
@@ -369,7 +380,6 @@ geosparql:
 	skos:prefLabel "as GML"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#asWKT
 :asWKT
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization ;
@@ -379,8 +389,7 @@ geosparql:
 	skos:definition """The WKT serialization of a geometry"""@en ;
 	skos:prefLabel "as WKT"@en ;
 .
-	
-# http://www.opengis.net/ont/geosparql#asGeoJSON
+
 :asGeoJSON
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization;
@@ -391,8 +400,7 @@ geosparql:
 	skos:definition """The GeoJSON serialization of a geometry"""@en ;
 	skos:prefLabel "as GeoJSON"@en ;
 .	
-	
-# http://www.opengis.net/ont/geosparql#asKML
+
 :asKML
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization;
@@ -404,7 +412,6 @@ geosparql:
 	skos:prefLabel "as KML"@en ;
 .	
 
-# http://www.opengis.net/ont/geosparql#coordinateDimension
 :coordinateDimension
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -414,7 +421,6 @@ geosparql:
 	skos:prefLabel "coordinate dimension"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#dimension
 :dimension
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -424,7 +430,6 @@ geosparql:
 	skos:prefLabel "dimension"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#hasSerialization
 :hasSerialization
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -434,7 +439,6 @@ geosparql:
 	skos:prefLabel "has serialization"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#isEmpty
 :isEmpty
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -444,7 +448,6 @@ geosparql:
 	skos:prefLabel "is empty"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#isSimple
 :isSimple
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -454,7 +457,6 @@ geosparql:
 	skos:prefLabel "is simple"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#spatialDimension
 :spatialDimension
 	a owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -480,7 +482,6 @@ geosparql:
 	skos:prefLabel "Feature"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#Geometry
 :Geometry
 	a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
@@ -489,11 +490,15 @@ geosparql:
 	skos:prefLabel "Geometry"@en ;
 .
 
-# http://www.opengis.net/ont/geosparql#SpatialObject
+:SpatialMeasure a owl:Class ;
+  rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The class represents a measurement of a feature bot only spatial measurements. It is therefore naturally a subclass of Spatial Object which is any spatial thing."""@en ;
+	skos:prefLabel "Spatial Measure"@en ;
+.
+
 :SpatialObject
 	a owl:Class ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	rdfs:label "SpatialObject"@en ;
 	skos:definition """The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry."""@en ;
 	skos:prefLabel "Spatial Object"@en ;
 .
