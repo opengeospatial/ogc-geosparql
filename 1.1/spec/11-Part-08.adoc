@@ -54,10 +54,10 @@ geo:Geometry a rdfs:Class,
 
 ==== Standard Properties for geo:Feature
 
-Properties are defined for associating geometries with features.
+Properties are defined for associating geometries with features or the inverse.
 
 |===
-|*Req 9* Implementations shall allow the properties `geo:hasGeometry`, 
+|*Req 9* Implementations shall allow the properties `geo:hasGeometry`, `geo:isGeometryOf`, 
 `geo:hasDefaultGeometry`, `geo:hasLength`, `geo:hasArea`, `geo:hasVolume` and `geo:hasSpatialResolution` to be used in SPARQL graph patterns.
 |`/req/geometry-extension/feature-properties`
 |===
@@ -74,6 +74,21 @@ geo:hasGeometry a rdf:Property,
     rdfs:comment "A spatial representation for a given feature."@en;     
     rdfs:domain geo:Feature;
     rdfs:range geo:Geometry .
+```
+
+===== Property: geo:isGeometryOf
+
+The property `geo:isGeometryOf` is used to link a geometry to the feature, or features, that it is the geometry for. It is the inverse of `geo:hasGeometry`.
+
+```
+geo:hasGeometry a rdf:Property, 
+                  owl:ObjectProperty;
+    owl:inverseOf :hasGeometry ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "is geometry of"@en;
+    rdfs:comment "A pointer from a geometry to the feature(s) that it is the geometry for."@en;     
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:Feature .    
 ```
 
 ===== Property: geo:hasDefaultGeometry
