@@ -360,7 +360,8 @@ geo:asWKT a rdf:Property,
 ==== Requirements for GML Serialization (serialization=GML)
 
 This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036]. It defines one RDFS Datatype:
-`+http://www.opengis.net/ont/geosparql#gmlLiteral+` and one property 
+`+http://www.opengis.net/ont/geosparql#gmlLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asGML+`.
+
 
 ===== RDFS Datatype: geo:gmlLiteral
 
@@ -424,13 +425,10 @@ geo:asGML a rdf:Property;
 
 ==== Requirements for GeoJSON Serialization (serialization=GEOJSON)
 
-This section establishes the requirements for representing geometry data in RDF based on GeoJSON.
+This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <<GeoJSON>>. It defines one RDFS Datatype:
+`+http://www.opengis.net/ont/geosparql#geoJSONLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asGeoJSON+`.
 
-===== RDFS Datatypes
-
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#geoJSONLiteral+`.
-
-*RDFS Datatype: geo:geoJSONLiteral*
+===== RDFS Datatype: geo:geoJSONLiteral
 
 ```
 geo:geoJSONLiteral a rdfs:Datatype;
@@ -486,13 +484,10 @@ geo:asGeoJSON a rdf:Property,
 
 ==== Requirements for KML Serialization (serialization=KML)
 
-This section establishes the requirements for representing geometry data in RDF based on KML.
+This section establishes requirements for representing geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
+`+http://www.opengis.net/ont/geosparql#kmlLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asKML+`.
 
-===== RDFS Datatypes
-
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#kmlLiteral+`.
-
-*RDFS Datatype: geo:kmlLiteral*
+===== RDFS Datatype: geo:kmlLiteral
 
 ```
 geo:kmlLiteral a rdfs:Datatype;
@@ -548,13 +543,10 @@ geo:asKML a rdf:Property,
 
 ==== Requirements for DGGS Serialization (serialization=DGGS)
 
-This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation.
+This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation and is based on elements of the second version of the DGGS _Abstract Specification_ <<DGGSAS>>. It defines one RDFS Datatype:
+`+http://www.opengis.net/ont/geosparql#dggsWktLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asDggsWkt+`.
 
-===== RDFS Datatypes
-
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#dggsWktLiteral+`.
-
-*RDFS Datatype: geo:dggsWktLiteral*
+===== RDFS Datatype: geo:dggsWktLiteral
 
 ```
 geo:dggsWktLiteral a rdfs:Datatype;
@@ -572,9 +564,10 @@ dggsWktLiteral ::= "<" IRI ">" SP geometric-data
 The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token `SP` (a single white space character is defined in [22]. `geometric-data` is potentially specific to the DGGS and is not specified here.
 
 |===
-|*Req XX* All `geo:dggsWktLiteral` instances shall consist of a DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.
+|*Req XX* All RDFS Literals of type `geo:dggsWktLiteral` shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.
 |`/req/geometry-extension/dggs-literal`
 |===
+
 
 The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGS [24]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_.:
 
@@ -587,11 +580,10 @@ The example `geo:dggsWktLiteral` below encodes a point geometry according to the
 |`/req/geometry-extension/dggs-literal-empty`
 |===
 
-===== Serialization Properties
+
+===== Property: geo:asDggsWkt
 
 The `geo:asDggsWkt` property is defined to link a geometry with its DGGS WKT serialization.
-
-*Property: geo:asDggsWkt*
 
 |===
 |*Req XX* Implementations shall allow the RDF property `geo:asDggsWkt` to be used in SPARQL graph patterns.
