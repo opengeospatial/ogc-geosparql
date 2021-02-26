@@ -2029,9 +2029,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
     rdfs:domain geo:Geometry .</code></pre>
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.8.4.5. Property: geo:isEmpty</h5>
+<div class="sect5">
+<h6 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>Property: geo:isEmpty</h6>
 <div class="paragraph">
 <p>The <code>geo:isEmpty</code> Boolean will be set to true only if the geometry contains no points.</p>
 </div>
@@ -2048,8 +2047,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.8.4.6. Property: geo:isSimple</h5>
+<div class="sect5">
+<h6 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>Property: geo:isSimple</h6>
 <div class="paragraph">
 <p>The <code>geo:isSimple</code> Boolean will be set to true, only if the geometry contains no self- intersections, with the possible exception of its boundary.</p>
 </div>
@@ -2066,8 +2065,9 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect4">
-<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.4.7. Property: geo:hasSerialization</h5>
+<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.4.5. Property: geo:hasSerialization</h5>
 <div class="paragraph">
 <p>The <code>geo:hasSerialization</code> property is used to connect a geometry with its text- based serialization (e.g., its WKT serialization).</p>
 </div>
@@ -2085,7 +2085,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geoincrs"><a class="anchor" href="#_property_geoincrs"></a>8.8.4.8. Property: geo:inCRS</h5>
+<h5 id="_property_geoincrs"><a class="anchor" href="#_property_geoincrs"></a>8.8.4.6. Property: geo:inCRS</h5>
 <div class="paragraph">
 <p>The <code>geo:inCRS</code> property is used to connect a geometry with the CRS used for its representation which affects measurements of its size (length, area, volume).</p>
 </div>
@@ -2106,10 +2106,16 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="sect3">
 <h4 id="_requirements_for_wkt_serialization_serializationwkt"><a class="anchor" href="#_requirements_for_wkt_serialization_serializationwkt"></a>8.8.5. Requirements for WKT Serialization (serialization=WKT)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1]. It defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#wktLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asWKT`.</p>
+<p>This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1].</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.8.5.1. RDFS Datatype: geo:wktLiteral</h5>
+<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.5.1. RDFS Datatypes</h5>
+<div class="paragraph">
+<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#wktLiteral</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>RDFS Datatype: geo:wktLiteral</strong></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:wktLiteral a rdfs:Datatype;
@@ -2124,7 +2130,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 11</strong> All RDFS Literals of type <code>geo:wktLiteral</code> shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid <code>geo:wktLiterals</code> are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 11</strong> All RDFS Literals of type <code>geo:wktLiteral</code> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <code>geo:wktLiterals</code> are formed by either a WKT string as defined in <a href="#ISO13249">[ISO13249]</a> or by concatenating a valid absolute IRI, as defined in <a href="#IETF3987">[IETF3987]</a>, enclose in angled brackets (<code>&lt;`</code> &amp; <code>&gt;</code>) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <a href="#ISO13249">[ISO13249]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/wkt-literal</code></p></td>
@@ -2132,13 +2138,20 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>For <code>geo:wktLiterals</code>, the beginning URI identifies the spatial reference system for
-the geometry. The OGC maintains a set of CRS URIs under the
-<code>http://www.opengis.net/def/crs/</code> namespace. This leading spatial reference
-system URI is optional. In the absence of a leading spatial reference system URI, the
-following spatial reference system URI will be assumed:
-<code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code>
-This URI denotes WGS 84 longitude-latitude.</p>
+<p>The following <em>ABNF</em> <a href="#IETF5234">[IETF5234]</a> syntax specification formally defines this literal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>wktLiteral ::= opt-iri-and-space geometric-data
+
+opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The token <code>opt-iri-and-space</code> may be either an IRI and space or nothing (<code>""</code>), the token <code>IRI</code> (Internationalized Resource Identifiers) is essentially a web address and is defined in <a href="#IETF3987">[IETF3987]</a> and the token <code>LWSP</code>, is one or more white space characters, as defined in <a href="#IETF5234">[IETF5234]</a>. <code>geometric-data</code> is the Well-Known Text representation of the geometry, defined in <a href="#ISO13249">[ISO13249]</a>.</p>
+</div>
+<div class="paragraph">
+<p>In the absence of a leading spatial reference system IRI, the following spatial reference system URI will be assumed: <code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code> This IRI denotes WGS 84 longitude-latitude.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2153,6 +2166,9 @@ This URI denotes WGS 84 longitude-latitude.</p>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>The OGC maintains a set of CRS IRIs under the`http://www.opengis.net/def/crs/` namespace and IRIs from this set are recommended for use however others may also be used, as long as they are valid IRIs.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 100%;">
@@ -2167,7 +2183,7 @@ This URI denotes WGS 84 longitude-latitude.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <code>geo:wktLiteral</code> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
+<p>The example <code>geo:wktLiteral</code> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2179,8 +2195,7 @@ This URI denotes WGS 84 longitude-latitude.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>"&lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt;
-Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</code></pre>
+<pre class="highlight"><code>"&lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -2198,9 +2213,12 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.8.5.2. Property: geo:asWKT</h5>
+<h5 id="_serialization_properties"><a class="anchor" href="#_serialization_properties"></a>8.8.5.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asWKT</code> property is defined to link a geometry with its WKT serialization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Property: geo:asWKT</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2235,11 +2253,17 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 <div class="sect3">
 <h4 id="_requirements_for_gml_serialization_serializationgml"><a class="anchor" href="#_requirements_for_gml_serialization_serializationgml"></a>8.8.6. Requirements for GML Serialization (serialization=GML)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036]. It defines one RDFS Datatype:
-<code>http://www.opengis.net/ont/geosparql#gmlLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asGML`.</p>
+<p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036].</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.8.6.1. RDFS Datatype: geo:gmlLiteral</h5>
+<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.6.1. RDFS Datatypes</h5>
+<div class="paragraph">
+<p>This section defines one RDFS Datatype:
+<code><a href="http://www.opengis.net/ont/geosparql#gmlLiteral" class="bare">http://www.opengis.net/ont/geosparql#gmlLiteral</a>.</code></p>
+</div>
+<div class="paragraph">
+<p><strong>RDFS Datatype: geo:gmlLiteral</strong></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:gmlLiteral a rdfs:Datatype;
@@ -2305,9 +2329,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasgml"><a class="anchor" href="#_property_geoasgml"></a>8.8.6.2. Property: geo:asGML</h5>
+<h5 id="_serialization_properties_2"><a class="anchor" href="#_serialization_properties_2"></a>8.8.6.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>This document defines the <code>geo:asGML</code> property to link a geometry with its serialization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Property: geo:asGML</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2341,11 +2368,16 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="sect3">
 <h4 id="_requirements_for_geojson_serialization_serializationgeojson"><a class="anchor" href="#_requirements_for_geojson_serialization_serializationgeojson"></a>8.8.7. Requirements for GeoJSON Serialization (serialization=GEOJSON)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
-<code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asGeoJSON`.</p>
+<p>This section establishes the requirements for representing geometry data in RDF based on GeoJSON.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.8.7.1. RDFS Datatype: geo:geoJSONLiteral</h5>
+<h5 id="_rdfs_datatypes_3"><a class="anchor" href="#_rdfs_datatypes_3"></a>8.8.7.1. RDFS Datatypes</h5>
+<div class="paragraph">
+<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>RDFS Datatype: geo:geoJSONLiteral</strong></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:geoJSONLiteral a rdfs:Datatype;
@@ -2406,9 +2438,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasgeojson"><a class="anchor" href="#_property_geoasgeojson"></a>8.8.7.2. Property: geo:asGeoJSON</h5>
+<h5 id="_serialization_properties_3"><a class="anchor" href="#_serialization_properties_3"></a>8.8.7.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asGeoJSON</code> property is defined to link a geometry with its GeoJSON serialization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Property: geo:asGeoJSON</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2443,11 +2478,16 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="sect3">
 <h4 id="_requirements_for_kml_serialization_serializationkml"><a class="anchor" href="#_requirements_for_kml_serialization_serializationkml"></a>8.8.8. Requirements for KML Serialization (serialization=KML)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
-<code>http://www.opengis.net/ont/geosparql#kmlLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asKML`.</p>
+<p>This section establishes the requirements for representing geometry data in RDF based on KML.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.8.8.1. RDFS Datatype: geo:kmlLiteral</h5>
+<h5 id="_rdfs_datatypes_4"><a class="anchor" href="#_rdfs_datatypes_4"></a>8.8.8.1. RDFS Datatypes</h5>
+<div class="paragraph">
+<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#kmlLiteral</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>RDFS Datatype: geo:kmlLiteral</strong></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:kmlLiteral a rdfs:Datatype;
@@ -2508,9 +2548,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoaskml"><a class="anchor" href="#_property_geoaskml"></a>8.8.8.2. Property: geo:asKML</h5>
+<h5 id="_serialization_properties_4"><a class="anchor" href="#_serialization_properties_4"></a>8.8.8.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asKML</code> property is defined to link a geometry with its KML serialization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Property: geo:asKML</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2545,11 +2588,16 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="sect3">
 <h4 id="_requirements_for_dggs_serialization_serializationdggs"><a class="anchor" href="#_requirements_for_dggs_serialization_serializationdggs"></a>8.8.9. Requirements for DGGS Serialization (serialization=DGGS)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a <em>DGGS Well-Known Text</em> geometry representation and is based on elements of the second version of the DGGS <em>Abstract Specification</em> <a href="#DGGSAS">[DGGSAS]</a>. It defines one RDFS Datatype:
-<code>http://www.opengis.net/ont/geosparql#dggsWktLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asDggsWkt`.</p>
+<p>This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a <em>DGGS Well-Known Text</em> geometry representation.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geodggswktliteral"><a class="anchor" href="#_rdfs_datatype_geodggswktliteral"></a>8.8.9.1. RDFS Datatype: geo:dggsWktLiteral</h5>
+<h5 id="_rdfs_datatypes_5"><a class="anchor" href="#_rdfs_datatypes_5"></a>8.8.9.1. RDFS Datatypes</h5>
+<div class="paragraph">
+<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#dggsWktLiteral</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>RDFS Datatype: geo:dggsWktLiteral</strong></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:dggsWktLiteral a rdfs:Datatype;
@@ -2563,11 +2611,11 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>dggsWktLiteral ::= "&lt;" IRI "&gt;" SP geometric-data</code></pre>
+<pre class="highlight"><code>dggsWktLiteral ::= "&lt;" IRI "&gt;" LWSP geometric-data</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The token <code>IRI</code> (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token <code>SP</code> (a single white space character is defined in [22]. <code>geometric-data</code> is potentially specific to the DGGS and is not specified here.</p>
+<p>The token <code>IRI</code> (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token <code>LWSP</code>, is one or more white space characters, as defined in <a href="#IETF5234">[IETF5234]</a>. <code>geometric-data</code> is potentially specific to the DGGS and is not specified here.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2575,7 +2623,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All RDFS Literals of type <code>geo:dggsWktLiteral</code> shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All <code>geo:dggsWktLiteral</code> instances shall consist of a DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/dggs-literal</code></p></td>
@@ -2605,9 +2653,12 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasdggswkt"><a class="anchor" href="#_property_geoasdggswkt"></a>8.8.9.2. Property: geo:asDggsWkt</h5>
+<h5 id="_serialization_properties_5"><a class="anchor" href="#_serialization_properties_5"></a>8.8.9.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asDggsWkt</code> property is defined to link a geometry with its DGGS WKT serialization.</p>
+</div>
+<div class="paragraph">
+<p><strong>Property: geo:asDggsWkt</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -4735,13 +4786,7 @@ Recommendation (27 October 2009)</p>
 <p>[22] Internet Engineering Task Force, <em>RFC 5234: Internet Standard 68: Augmented BNF for Syntax Specifications: ABNF</em>. IETF Request for Comment, 2008. <a href="https://tools.ietf.org/html/std68" class="bare">https://tools.ietf.org/html/std68</a></p>
 </div>
 <div id="IETF" class="paragraph">
-<p>[23] Internet Engineering Task Force, <em>RFC 3987: Internationalized Resource Identifiers (IRIs)</em>. IETF Request for Comment, January 2005. <a href="https://tools.ietf.org/html/rfc3987" class="bare">https://tools.ietf.org/html/rfc3987</a></p>
-</div>
-<div class="paragraph">
-<p>[<a id="GEOJSON"></a>] Internet Engineering Task Force, <em>RFC 7946: The GeoJSON Format</em>. IETF Request for Comment (August 2016). <a href="https://tools.ietf.org/html/rfc7946" class="bare">https://tools.ietf.org/html/rfc7946</a></p>
-</div>
-<div class="paragraph">
-<p>[<a id="OGCKML"></a>] Open Geospatial Consortium, <em>OGC KML 2.3</em>. OGC Implementation Standard (04 August 2015). <a href="http://www.opengis.net/doc/IS/kml/2.3" class="bare">http://www.opengis.net/doc/IS/kml/2.3</a></p>
+<p>[23] Internet Engineering Task Force, <em>RFC 3987: Internationalized Resource Identifiers (IRIs)</em>. IETF Request for Comment (January 2005). <a href="https://tools.ietf.org/html/rfc3987" class="bare">https://tools.ietf.org/html/rfc3987</a></p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -4749,7 +4794,7 @@ Recommendation (27 October 2009)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-26 23:13:19 UTC
+Last updated 2021-02-26 23:57:54 UTC
 </div>
 </div>
 </body>
