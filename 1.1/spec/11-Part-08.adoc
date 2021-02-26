@@ -546,6 +546,70 @@ geo:asKML a rdf:Property,
     rdfs:range geo:kmlLiteral .
 ```
 
+==== Requirements for DGGS Serialization (serialization=DGGS)
+
+This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation.
+
+===== RDFS Datatypes
+
+This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#dggsWktLiteral+`.
+
+*RDFS Datatype: geo:dggsWktLiteral*
+
+```
+geo:dggsWktLiteral a rdfs:Datatype;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "DGGS Well-Known Text Literal"@en;
+    rdfs:comment "A textual serialization of a Discrete Global Grid (DGGS) geometry object."@en .
+```
+
+Valid `geo:dggsWktLiteral` instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ [[21]]. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ [22] syntax specification:
+
+```
+dggsWktLiteral ::= "<" IRI ">" SP geometric-data
+```
+
+The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token `SP` (a single white space character is defined in [22]. `geometric-data` is potentially specific to the DGGS and is not specified here.
+
+|===
+|*Req XX* All `geo:dggsWktLiteral` instances shall consist of a DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.
+|`/req/geometry-extension/dggs-literal`
+|===
+
+The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGS [24]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_.:
+
+```
+"<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>
+```
+
+|===
+|*Req XX* An empty RDFS Literal of type `geo:dggsWktLiteral` shall be interpreted as an empty geometry.
+|`/req/geometry-extension/dggs-literal-empty`
+|===
+
+===== Serialization Properties
+
+The `geo:asDggsWkt` property is defined to link a geometry with its DGGS WKT serialization.
+
+*Property: geo:asDggsWkt*
+
+|===
+|*Req XX* Implementations shall allow the RDF property `geo:asDggsWkt` to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-dggswkt-literal`
+|===
+
+The property `geo:asDggsWkt` is used to link a Geometry instance with its serialization.
+
+```
+geo:asDggsWkt a rdf:Property,
+              owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "as DGGS WKT"@en;
+    rdfs:comment "The DGGS Well-Known Text serialization of a geometry."@en;
+    rdfs:domain geo:Geometry;
+    rdfs:range geo:dggsWktLiteral .
+```
 
 ==== Non-topological Query Functions
 
