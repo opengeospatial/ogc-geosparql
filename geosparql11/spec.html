@@ -620,7 +620,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_requirements_for_gml_serialization_serializationgml">8.8.6. Requirements for GML Serialization (serialization=GML)</a></li>
 <li><a href="#_requirements_for_geojson_serialization_serializationgeojson">8.8.7. Requirements for GeoJSON Serialization (serialization=GEOJSON)</a></li>
 <li><a href="#_requirements_for_kml_serialization_serializationkml">8.8.8. Requirements for KML Serialization (serialization=KML)</a></li>
-<li><a href="#_non_topological_query_functions">8.8.9. Non-topological Query Functions</a></li>
+<li><a href="#_requirements_for_dggs_serialization_serializationdggs">8.8.9. Requirements for DGGS Serialization (serialization=DGGS)</a></li>
+<li><a href="#_non_topological_query_functions">8.8.10. Non-topological Query Functions</a></li>
 </ul>
 </li>
 <li><a href="#_geometry_topology_extension_relation_family_serialization_version">8.9. Geometry Topology Extension (relation_family, serialization, version)</a>
@@ -2235,7 +2236,7 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 <h4 id="_requirements_for_gml_serialization_serializationgml"><a class="anchor" href="#_requirements_for_gml_serialization_serializationgml"></a>8.8.6. Requirements for GML Serialization (serialization=GML)</h4>
 <div class="paragraph">
 <p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036]. It defines one RDFS Datatype:
-<code>http://www.opengis.net/ont/geosparql#gmlLiteral</code> and one property</p>
+<code>http://www.opengis.net/ont/geosparql#gmlLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asGML`.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.8.6.1. RDFS Datatype: geo:gmlLiteral</h5>
@@ -2340,16 +2341,11 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="sect3">
 <h4 id="_requirements_for_geojson_serialization_serializationgeojson"><a class="anchor" href="#_requirements_for_geojson_serialization_serializationgeojson"></a>8.8.7. Requirements for GeoJSON Serialization (serialization=GEOJSON)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on GeoJSON.</p>
+<p>This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
+<code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asGeoJSON`.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.7.1. RDFS Datatypes</h5>
-<div class="paragraph">
-<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code>.</p>
-</div>
-<div class="paragraph">
-<p><strong>RDFS Datatype: geo:geoJSONLiteral</strong></p>
-</div>
+<h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.8.7.1. RDFS Datatype: geo:geoJSONLiteral</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:geoJSONLiteral a rdfs:Datatype;
@@ -2447,16 +2443,11 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <div class="sect3">
 <h4 id="_requirements_for_kml_serialization_serializationkml"><a class="anchor" href="#_requirements_for_kml_serialization_serializationkml"></a>8.8.8. Requirements for KML Serialization (serialization=KML)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on KML.</p>
+<p>This section establishes requirements for representing geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
+<code>http://www.opengis.net/ont/geosparql#kmlLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asKML`.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.8.1. RDFS Datatypes</h5>
-<div class="paragraph">
-<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#kmlLiteral</code>.</p>
-</div>
-<div class="paragraph">
-<p><strong>RDFS Datatype: geo:kmlLiteral</strong></p>
-</div>
+<h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.8.8.1. RDFS Datatype: geo:kmlLiteral</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:kmlLiteral a rdfs:Datatype;
@@ -2552,7 +2543,104 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.8.9. Non-topological Query Functions</h4>
+<h4 id="_requirements_for_dggs_serialization_serializationdggs"><a class="anchor" href="#_requirements_for_dggs_serialization_serializationdggs"></a>8.8.9. Requirements for DGGS Serialization (serialization=DGGS)</h4>
+<div class="paragraph">
+<p>This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a <em>DGGS Well-Known Text</em> geometry representation and is based on elements of the second version of the DGGS <em>Abstract Specification</em> <a href="#DGGSAS">[DGGSAS]</a>. It defines one RDFS Datatype:
+<code>http://www.opengis.net/ont/geosparql#dggsWktLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asDggsWkt`.</p>
+</div>
+<div class="sect4">
+<h5 id="_rdfs_datatype_geodggswktliteral"><a class="anchor" href="#_rdfs_datatype_geodggswktliteral"></a>8.8.9.1. RDFS Datatype: geo:dggsWktLiteral</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:dggsWktLiteral a rdfs:Datatype;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "DGGS Well-Known Text Literal"@en;
+    rdfs:comment "A textual serialization of a Discrete Global Grid (DGGS) geometry object."@en .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Valid <code>geo:dggsWktLiteral</code> instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the <em>Discrete Global Grid System Abstract Specification</em> [[21]]. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following <em>ABNF</em> [22] syntax specification:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dggsWktLiteral ::= "&lt;" IRI "&gt;" SP geometric-data</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The token <code>IRI</code> (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token <code>SP</code> (a single white space character is defined in [22]. <code>geometric-data</code> is potentially specific to the DGGS and is not specified here.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> All RDFS Literals of type <code>geo:dggsWktLiteral</code> shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/dggs-literal</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The example <code>geo:dggsWktLiteral</code> below encodes a point geometry according to the <em>AusPIX</em> DGGS [24]. The DGGS geometry type is indicated with the token <code>OrdinateList</code> and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of <em>R3234</em>.:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>"&lt;https://w3id.org/dggs/auspix&gt; OrdinateList (R3234)"^^&lt;http://www.opengis.net/ont/geosparql#dggsWktLiteral&gt;</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> An empty RDFS Literal of type <code>geo:dggsWktLiteral</code> shall be interpreted as an empty geometry.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/dggs-literal-empty</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_property_geoasdggswkt"><a class="anchor" href="#_property_geoasdggswkt"></a>8.8.9.2. Property: geo:asDggsWkt</h5>
+<div class="paragraph">
+<p>The <code>geo:asDggsWkt</code> property is defined to link a geometry with its DGGS WKT serialization.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req XX</strong> Implementations shall allow the RDF property <code>geo:asDggsWkt</code> to be used in SPARQL graph patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-as-dggswkt-literal</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The property <code>geo:asDggsWkt</code> is used to link a Geometry instance with its serialization.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:asDggsWkt a rdf:Property,
+              owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
+    rdfs:label "as DGGS WKT"@en;
+    rdfs:comment "The DGGS Well-Known Text serialization of a geometry."@en;
+    rdfs:domain geo:Geometry;
+    rdfs:range geo:dggsWktLiteral .</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.8.10. Non-topological Query Functions</h4>
 <div class="paragraph">
 <p>This clause defines SPARQL functions for performing non-topological spatial operations.</p>
 </div>
@@ -2609,7 +2697,7 @@ SPARQL language extensions may provide additional associations between operators
 <p>Several non-topological query functions use a unit of measure URI. The OGC has defined some standard units of measure URIs under the <code>http://www.opengis.net/def/uom/OGC/1.0/</code> namespace, for example <code>&lt;http://www.opengis.net/def/uom/OGC/1.0/metre&gt;</code>.</p>
 </div>
 <div class="sect4">
-<h5 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.8.9.1. Function: geof:distance</h5>
+<h5 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.8.10.1. Function: geof:distance</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:distance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2622,7 +2710,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.8.9.2. Function: geof:buffer</h5>
+<h5 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.8.10.2. Function: geof:buffer</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:buffer (geom: ogc:geomLiteral, radius: xsd:double,
@@ -2634,7 +2722,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.8.9.3. Function: geof:convexHull</h5>
+<h5 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.8.10.3. Function: geof:convexHull</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2645,7 +2733,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.8.9.4. Function: geof:intersection</h5>
+<h5 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.8.10.4. Function: geof:intersection</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:intersection (geom1: ogc:geomLiteral,
@@ -2657,7 +2745,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.8.9.5. Function: geof:union</h5>
+<h5 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.8.10.5. Function: geof:union</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:union (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2669,7 +2757,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.8.9.6. Function: geof:difference</h5>
+<h5 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.8.10.6. Function: geof:difference</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:difference (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
@@ -2681,7 +2769,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.8.9.7. Function: geof:symDifference</h5>
+<h5 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.8.10.7. Function: geof:symDifference</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:symDifference (geom1: ogc:geomLiteral,
@@ -2694,7 +2782,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.8.9.8. Function: geof:envelope</h5>
+<h5 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.8.10.8. Function: geof:envelope</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2705,7 +2793,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.8.9.9. Function: geof:boundary</h5>
+<h5 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.8.10.9. Function: geof:boundary</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -2729,7 +2817,7 @@ objects as calculated in the spatial reference system of <code>geom1</code>.</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.8.9.10. Function: geof:getSRID</h5>
+<h5 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.8.10.10. Function: geof:getSRID</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI</code></pre>
@@ -4640,13 +4728,28 @@ Recommendation (27 October 2009)</p>
 <div id="XSD2" class="paragraph">
 <p>[20] W3C XML Schema Part 2, <em>XML Schema Part 2: Datatypes (Second Edition)</em>, W3C Recommendation (28 October 2004)</p>
 </div>
+<div id="DGGSAS" class="paragraph">
+<p>[21] Open Geospatial Consortium, <em>Abstract Standard Topic 21 - Discrete Global Grid Systems - Part 1 Core Reference system and Operations and Equal Area Earth Reference System</em>, Open Geospatial Consortium Standard (2021). <a href="http://www.opengis.net/doc/AS/dggs/2.0" class="bare">http://www.opengis.net/doc/AS/dggs/2.0</a></p>
+</div>
+<div id="IETF5234" class="paragraph">
+<p>[22] Internet Engineering Task Force, <em>RFC 5234: Internet Standard 68: Augmented BNF for Syntax Specifications: ABNF</em>. IETF Request for Comment, 2008. <a href="https://tools.ietf.org/html/std68" class="bare">https://tools.ietf.org/html/std68</a></p>
+</div>
+<div id="IETF" class="paragraph">
+<p>[23] Internet Engineering Task Force, <em>RFC 3987: Internationalized Resource Identifiers (IRIs)</em>. IETF Request for Comment, January 2005. <a href="https://tools.ietf.org/html/rfc3987" class="bare">https://tools.ietf.org/html/rfc3987</a></p>
+</div>
+<div class="paragraph">
+<p>[<a id="GEOJSON"></a>] Internet Engineering Task Force, <em>RFC 7946: The GeoJSON Format</em>. IETF Request for Comment (August 2016). <a href="https://tools.ietf.org/html/rfc7946" class="bare">https://tools.ietf.org/html/rfc7946</a></p>
+</div>
+<div class="paragraph">
+<p>[<a id="OGCKML"></a>] Open Geospatial Consortium, <em>OGC KML 2.3</em>. OGC Implementation Standard (04 August 2015). <a href="http://www.opengis.net/doc/IS/kml/2.3" class="bare">http://www.opengis.net/doc/IS/kml/2.3</a></p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-26 22:49:22 UTC
+Last updated 2021-02-26 23:13:19 UTC
 </div>
 </div>
 </body>
