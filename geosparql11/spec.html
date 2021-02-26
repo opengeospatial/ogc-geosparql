@@ -1811,7 +1811,7 @@ literals and also the supported geometry types.</p>
 <div class="sect3">
 <h4 id="_standard_properties_for_geofeature"><a class="anchor" href="#_standard_properties_for_geofeature"></a>8.8.3. Standard Properties for geo:Feature</h4>
 <div class="paragraph">
-<p>Properties are defined for associating geometries with features or the inverse.</p>
+<p>Properties are defined for associating geometries with features.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1819,7 +1819,7 @@ literals and also the supported geometry types.</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <code>geo:hasGeometry</code>, <code>geo:isGeometryOf</code>,
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <code>geo:hasGeometry</code>,
 <code>geo:hasDefaultGeometry</code>, <code>geo:hasLength</code>, <code>geo:hasArea</code>, <code>geo:hasVolume</code> and <code>geo:hasSpatialResolution</code> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
@@ -1845,25 +1845,7 @@ literals and also the supported geometry types.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geoisgeometryof"><a class="anchor" href="#_property_geoisgeometryof"></a>8.8.3.2. Property: geo:isGeometryOf</h5>
-<div class="paragraph">
-<p>The property <code>geo:isGeometryOf</code> is used to link a geometry to the feature, or features, that it is the geometry for. It is the inverse of <code>geo:hasGeometry</code>.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>geo:hasGeometry a rdf:Property,
-                  owl:ObjectProperty;
-    owl:inverseOf :hasGeometry ;
-    rdfs:isDefinedBy &lt;http://www.opengis.net/spec/geosparql/1.1&gt;;
-    rdfs:label "is geometry of"@en;
-    rdfs:comment "A pointer from a geometry to the feature(s) that it is the geometry for."@en;
-    rdfs:domain geo:Geometry ;
-    rdfs:range geo:Feature .</code></pre>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_property_geohasdefaultgeometry"><a class="anchor" href="#_property_geohasdefaultgeometry"></a>8.8.3.3. Property: geo:hasDefaultGeometry</h5>
+<h5 id="_property_geohasdefaultgeometry"><a class="anchor" href="#_property_geohasdefaultgeometry"></a>8.8.3.2. Property: geo:hasDefaultGeometry</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasDefaultGeometry</code> is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).</p>
 </div>
@@ -1896,7 +1878,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>8.8.3.4. Property: geo:hasLength</h5>
+<h5 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>8.8.3.3. Property: geo:hasLength</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasLength</code> is used to indicate the length of a <code>geo:Feature</code>. In the case of a one-dimensional <code>geo:Feature</code>, it is the simple length. In the case of a two-dimensional <code>geo:Feature</code>, it is interpreted to mean the perimeter length. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -1916,7 +1898,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>8.8.3.5. Property: geo:hasArea</h5>
+<h5 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>8.8.3.4. Property: geo:hasArea</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasArea</code> is used to indicate the area of a <code>geo:Feature</code>. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -1936,7 +1918,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>8.8.3.6. Property: geo:hasVolume</h5>
+<h5 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>8.8.3.5. Property: geo:hasVolume</h5>
 <div class="paragraph">
 <p>The property <code>geo:hasVolume</code> is used to indicate the volume of a <code>geo:Feature</code>. The range of the property is <code>geo:SpatialMeasure</code>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -2046,8 +2028,9 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
     rdfs:domain geo:Geometry .</code></pre>
 </div>
 </div>
-<div class="sect5">
-<h6 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>Property: geo:isEmpty</h6>
+</div>
+<div class="sect4">
+<h5 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.8.4.5. Property: geo:isEmpty</h5>
 <div class="paragraph">
 <p>The <code>geo:isEmpty</code> Boolean will be set to true only if the geometry contains no points.</p>
 </div>
@@ -2064,8 +2047,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 </div>
-<div class="sect5">
-<h6 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>Property: geo:isSimple</h6>
+<div class="sect4">
+<h5 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.8.4.6. Property: geo:isSimple</h5>
 <div class="paragraph">
 <p>The <code>geo:isSimple</code> Boolean will be set to true, only if the geometry contains no self- intersections, with the possible exception of its boundary.</p>
 </div>
@@ -2082,9 +2065,8 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div class="sect4">
-<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.4.5. Property: geo:hasSerialization</h5>
+<h5 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.8.4.7. Property: geo:hasSerialization</h5>
 <div class="paragraph">
 <p>The <code>geo:hasSerialization</code> property is used to connect a geometry with its text- based serialization (e.g., its WKT serialization).</p>
 </div>
@@ -2102,7 +2084,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geoincrs"><a class="anchor" href="#_property_geoincrs"></a>8.8.4.6. Property: geo:inCRS</h5>
+<h5 id="_property_geoincrs"><a class="anchor" href="#_property_geoincrs"></a>8.8.4.8. Property: geo:inCRS</h5>
 <div class="paragraph">
 <p>The <code>geo:inCRS</code> property is used to connect a geometry with the CRS used for its representation which affects measurements of its size (length, area, volume).</p>
 </div>
@@ -2123,16 +2105,10 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="sect3">
 <h4 id="_requirements_for_wkt_serialization_serializationwkt"><a class="anchor" href="#_requirements_for_wkt_serialization_serializationwkt"></a>8.8.5. Requirements for WKT Serialization (serialization=WKT)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1].</p>
+<p>This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1]. It defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#wktLiteral</code> and one property, http://www.opengis.net/ont/geosparql#asWKT`.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.5.1. RDFS Datatypes</h5>
-<div class="paragraph">
-<p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#wktLiteral</code>.</p>
-</div>
-<div class="paragraph">
-<p><strong>RDFS Datatype: geo:wktLiteral</strong></p>
-</div>
+<h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.8.5.1. RDFS Datatype: geo:wktLiteral</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geo:wktLiteral a rdfs:Datatype;
@@ -2221,12 +2197,9 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties"><a class="anchor" href="#_serialization_properties"></a>8.8.5.2. Serialization Properties</h5>
+<h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.8.5.2. Property: geo:asWKT</h5>
 <div class="paragraph">
 <p>The <code>geo:asWKT</code> property is defined to link a geometry with its WKT serialization.</p>
-</div>
-<div class="paragraph">
-<p><strong>Property: geo:asWKT</strong></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2261,13 +2234,8 @@ Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</c
 <div class="sect3">
 <h4 id="_requirements_for_gml_serialization_serializationgml"><a class="anchor" href="#_requirements_for_gml_serialization_serializationgml"></a>8.8.6. Requirements for GML Serialization (serialization=GML)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036].</p>
-</div>
-<div class="sect4">
-<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.6.1. RDFS Datatypes</h5>
-<div class="paragraph">
-<p>This section defines one RDFS Datatype:
-<code><a href="http://www.opengis.net/ont/geosparql#gmlLiteral" class="bare">http://www.opengis.net/ont/geosparql#gmlLiteral</a>.</code></p>
+<p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036]. It defines one RDFS Datatype:
+<code>http://www.opengis.net/ont/geosparql#gmlLiteral</code> and one property</p>
 </div>
 <div class="paragraph">
 <p><strong>RDFS Datatype: geo:gmlLiteral</strong></p>
@@ -2335,9 +2303,8 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </tr>
 </tbody>
 </table>
-</div>
 <div class="sect4">
-<h5 id="_serialization_properties_2"><a class="anchor" href="#_serialization_properties_2"></a>8.8.6.2. Serialization Properties</h5>
+<h5 id="_serialization_properties"><a class="anchor" href="#_serialization_properties"></a>8.8.6.1. Serialization Properties</h5>
 <div class="paragraph">
 <p>This document defines the <code>geo:asGML</code> property to link a geometry with its serialization.</p>
 </div>
@@ -2379,7 +2346,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <p>This section establishes the requirements for representing geometry data in RDF based on GeoJSON.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_3"><a class="anchor" href="#_rdfs_datatypes_3"></a>8.8.7.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes"><a class="anchor" href="#_rdfs_datatypes"></a>8.8.7.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code>.</p>
 </div>
@@ -2446,7 +2413,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties_3"><a class="anchor" href="#_serialization_properties_3"></a>8.8.7.2. Serialization Properties</h5>
+<h5 id="_serialization_properties_2"><a class="anchor" href="#_serialization_properties_2"></a>8.8.7.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asGeoJSON</code> property is defined to link a geometry with its GeoJSON serialization.</p>
 </div>
@@ -2489,7 +2456,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 <p>This section establishes the requirements for representing geometry data in RDF based on KML.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatypes_4"><a class="anchor" href="#_rdfs_datatypes_4"></a>8.8.8.1. RDFS Datatypes</h5>
+<h5 id="_rdfs_datatypes_2"><a class="anchor" href="#_rdfs_datatypes_2"></a>8.8.8.1. RDFS Datatypes</h5>
 <div class="paragraph">
 <p>This section defines one RDFS Datatype: <code>http://www.opengis.net/ont/geosparql#kmlLiteral</code>.</p>
 </div>
@@ -2556,7 +2523,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_serialization_properties_4"><a class="anchor" href="#_serialization_properties_4"></a>8.8.8.2. Serialization Properties</h5>
+<h5 id="_serialization_properties_3"><a class="anchor" href="#_serialization_properties_3"></a>8.8.8.2. Serialization Properties</h5>
 <div class="paragraph">
 <p>The <code>geo:asKML</code> property is defined to link a geometry with its KML serialization.</p>
 </div>
@@ -4688,7 +4655,7 @@ Recommendation (27 October 2009)</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-24 22:35:44 UTC
+Last updated 2021-02-26 12:13:58 UTC
 </div>
 </div>
 </body>
