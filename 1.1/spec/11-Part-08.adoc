@@ -300,17 +300,19 @@ geo:wktLiteral a rdfs:Datatype;
 ```
 
 |===
-|*Req 11* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional IRI identifying the coordinate reference system and a Simple Features Well Known Text (WKT) description of a geometric value. Valid `geo:wktLiterals` are formed by concatenating a valid, absolute IRI as defined in <<IETF3987>>, a single spa (Unicode U+0020 character) as a separator, and a WKT string as defined in <<ISO13249>>.
+|*Req 11* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid `geo:wktLiterals` are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<`` & `>`) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <<ISO13249>>.
 |`/req/geometry-extension/wkt-literal`
 |===
 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 ```
-wktLiteral ::= "<" IRI ">" SP geometric-data
+wktLiteral ::= opt-iri-and-space geometric-data
+
+opt-iri-and-space = "<" IRI ">" LWSP / ""
 ```
 
-The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in <<IETF3987>> and the token `SP` (a single white space character is defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the geometry, defined in <<ISO13249>>.
+The token `opt-iri-and-space` may be either an IRI and space or nothing (`""`), the token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the geometry, defined in <<ISO13249>>.
 
 In the absence of a leading spatial reference system IRI, the following spatial reference system URI will be assumed: `+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+` This IRI denotes WGS 84 longitude-latitude.
 
@@ -586,13 +588,13 @@ geo:dggsWktLiteral a rdfs:Datatype;
 Valid `geo:dggsWktLiteral` instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ [[21]]. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ [22] syntax specification:
 
 ```
-dggsWktLiteral ::= "<" IRI ">" SP geometric-data
+dggsWktLiteral ::= "<" IRI ">" LWSP geometric-data
 ```
 
-The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token `SP` (a single white space character is defined in [22]. `geometric-data` is potentially specific to the DGGS and is not specified here.
+The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in [23] and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is potentially specific to the DGGS and is not specified here.
 
 |===
-|*Req XX* All `geo:dggsWktLiteral` instances shall consist of a DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.
+|*Req XX* All `geo:dggsWktLiteral` instances shall consist of a DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
 |`/req/geometry-extension/dggs-literal`
 |===
 
