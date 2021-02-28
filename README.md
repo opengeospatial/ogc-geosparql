@@ -4,6 +4,10 @@
 
 This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL standard](https://www.ogc.org/standards/geosparql). It is used to work on updates of that standard.
 
+To see in-progress HTML & PDF versions of the GeoSPARQL 1.1 standard - specification, ontology, constituent vocabularies etc. - see the files that are auto-built from this repository at:
+
+* <https://opengeospatial.github.io/ogc-geosparql/>
+
 ## Updates of GeoSPARQL
 
 ### Rationale
