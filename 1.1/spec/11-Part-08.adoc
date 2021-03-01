@@ -1,6 +1,6 @@
 === Geometry Extension (serialization, version)
 
-This clause establishes the _Geometry Extension (serialization, version)_ parameterized requirements class, with URI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension (serialization, version)_, with URI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
+This clause establishes the _Geometry Extension (serialization, version)_ parameterized requirements class, with IRI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension (serialization, version)_, with IRI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
 
 As part of the vocabulary, an RDFS datatype is defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
@@ -295,29 +295,35 @@ geo:wktLiteral a rdfs:Datatype;
 ```
 
 |===
-|*Req 11* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid `geo:wktLiterals` are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].
+|*Req 11* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid `geo:wktLiterals` are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<`` & `>`) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <<ISO13249>>.
 |`/req/geometry-extension/wkt-literal`
 |===
 
-For `geo:wktLiterals`, the beginning URI identifies the spatial reference system for
-the geometry. The OGC maintains a set of CRS URIs under the
-`+http://www.opengis.net/def/crs/+` namespace. This leading spatial reference
-system URI is optional. In the absence of a leading spatial reference system URI, the
-following spatial reference system URI will be assumed:
-`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`
-This URI denotes WGS 84 longitude-latitude.
+The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
+
+```
+wktLiteral ::= opt-iri-and-space geometric-data
+
+opt-iri-and-space = "<" IRI ">" LWSP / ""
+```
+
+The token `opt-iri-and-space` may be either an IRI and space or nothing (`""`), the token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the geometry, defined in <<ISO13249>>.
+
+In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: `+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+` This IRI denotes WGS 84 longitude-latitude.
 
 |===
-|*Req 12* The URI `+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+` shall be assumed as the spatial reference system for `geo:wktLiteral` instances that do not specify an explicit spatial reference system URI..
+|*Req 12* The IRI `+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+` shall be assumed as the spatial reference system for `geo:wktLiteral` instances that do not specify an explicit spatial reference system IRI..
 |`/req/geometry-extension/wkt-literal-default-srs`
 |===
+
+The OGC maintains a set of CRS IRIs under the`+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use however others may also be used, as long as they are valid IRIs.
 
 |===
 |*Req 13* Coordinate tuples within `geo:wktLiteral` shall be interpreted using the axis order defined in the spatial reference system used.
 |`/req/geometry-extension/wkt-axis-order`
 |===
 
-The example `geo:wktLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+The example `geo:wktLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 ```
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
@@ -326,8 +332,7 @@ The example `geo:wktLiteral` below encodes a point geometry using the default WG
 A second example below encodes the same point using `+<http://www.opengis.net/def/crs/EPSG/0/4326>+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
 ```
-"<http://www.opengis.net/def/crs/EPSG/0/4326>
-Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
 |===
@@ -558,13 +563,13 @@ geo:dggsWktLiteral a rdfs:Datatype;
 Valid `geo:dggsWktLiteral` instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ [<<DGGSAS>>]. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ <<IETF5234>> syntax specification:
 
 ```
-dggsWktLiteral ::= "<" IRI ">" SP geometric-data
+dggsWktLiteral ::= "<" IRI ">" LWSP geometric-data
 ```
 
-The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in <<IETF3987>> and the token `SP` (a single white space character is defined in <<IETF5234>>. `geometric-data` is potentially specific to the DGGS and is not specified here.
+The token `IRI` (Internationalized Resource Identifiers) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is potentially specific to the DGGS and is not specified here.
 
 |===
-|*Req XX* All RDFS Literals of type `geo:dggsWktLiteral` shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identifierd DGGS.
+|*Req XX* All RDFS Literals of type `geo:dggsWktLiteral` shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
 |`/req/geometry-extension/dggs-literal`
 |===
 
@@ -617,7 +622,7 @@ An invocation of any of the following functions with invalid arguments produces 
 - An argument of an unexpected type
 - An invalid geometry literal value
 - A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
-- An invalid units URI
+- An invalid units IRI
 
 For further discussion of the effects of errors during FILTER evaluation, consult Section 11 of the SPARQL specification [W3C SPARQL] (http://www.w3.org/TR/rdf-sparql-query/#tests).
 
@@ -630,7 +635,7 @@ SPARQL language extensions may provide additional associations between operators
 
 This extension mechanism is intended to allow GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports `geo:wktLiteral` serializations may also support `geo:gmlLiteral` serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.
 
-Several non-topological query functions use a unit of measure URI. The OGC has defined some standard units of measure URIs under the `+http://www.opengis.net/def/uom/OGC/1.0/+` namespace, for example `+<http://www.opengis.net/def/uom/OGC/1.0/metre>+`.
+Several non-topological query functions use a unit of measure IRI. The OGC has defined some standard units of measure IRIs under the `+http://www.opengis.net/def/uom/OGC/1.0/+` namespace, for example `+<http://www.opengis.net/def/uom/OGC/1.0/metre>+`.
 
 ===== Function: geof:distance
 
@@ -724,7 +729,7 @@ This function returns the closure of the boundary of `geom1`. Calculations are i
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ```
 
-Returns the spatial reference system URI for `geom`.
+Returns the spatial reference system IRI for `geom`.
 
 ===== Function: geof:maxX
 
