@@ -1,10 +1,10 @@
-=== Geometry Topology Extension (relation_family, serialization, version)
+== Geometry Topology Extension (relation_family, serialization, version)
 
 This clause establishes the _Geometry Topology Extension (relation_family, serialization, version)_ parameterized requirements class, with IRI `/req/geometry-topology-extension`, which defines a collection of topological query functions that operate on geometry literals. This class is parameterized to give implementations flexibility in the topological relation families and geometry serializations that they choose to support. This requirements class has a single corresponding conformance class _Geometry Topology Extension (relation_family, serialization, version)_, with IRI `/conf/geometry-topology-extension`.
 
 The Dimensionally Extended Nine Intersection Model (DE-9IM) has been used to define the relation tested by the query functions introduced in this section. Each query function is associated with a defining DE-9IM intersection pattern. Possible pattern values are `-1` (empty), `0`, `1`, `2`, `T` (true) = `{0, 1, 2}`, `F` (false) = `{-1}`, `*` (don’t care) = `{-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g. points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
 
-==== Parameters
+=== Parameters
 
 **relation_family**: Specifies the set of topological spatial relations to support.  
 
@@ -12,7 +12,7 @@ The Dimensionally Extended Nine Intersection Model (DE-9IM) has been used to def
 
 **version**: Specifies the version of the serialization format used. 
 
-==== Common Query Functions
+=== Common Query Functions
 
 |===
 |*Req 26* Implementations shall support `geof:relate` as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].
@@ -26,7 +26,7 @@ geof:relate (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
 
 Returns `true` if the spatial relationship between `geom1` and `geom2` corresponds to one with acceptable values for the specified pattern-matrix. Otherwise, this function returns `false`. `pattern-matrix` represents a DE-9IM intersection pattern consisting of `T` (true) and `F` (false) values. The spatial reference system for `geom1` is used for spatial calculations.
 
-==== Requirements for Simple Features Relation Family (relation_family=Simple Features)
+=== Requirements for Simple Features Relation Family (relation_family=Simple Features)
 
 This clause establishes requirements for the _Simple Features_ relation family.
 
@@ -67,7 +67,7 @@ Boolean query functions defined for the Simple Features relation family, along w
                 ): xsd:boolean``` | `+(T*T***T**) for A/A, P/P; (1*T***T**) for L/L+`
 |===
 
-==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
+=== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
 
 This clause establishes requirements for the _Egenhofer_ relation family. Consult references <<FORMAL>> and <<CATEG>> for a more detailed discussion of _Egenhofer_ relations.
 
@@ -108,7 +108,7 @@ Boolean query functions defined for the _Egenhofer_ relation family, along with 
                 ): xsd:boolean``` | `+(T*TFF*FF*)+`
 |===
 
-===== Requirements for RCC8 Relation Family (relation_family=RCC8)
+==== Requirements for RCC8 Relation Family (relation_family=RCC8)
 
 This clause establishes requirements for the _RCC8_ relation family. Consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
 

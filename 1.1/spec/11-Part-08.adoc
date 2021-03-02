@@ -1,4 +1,4 @@
-=== Geometry Extension (serialization, version)
+== Geometry Extension (serialization, version)
 
 This clause establishes the _Geometry Extension (serialization, version)_ parameterized requirements class, with IRI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension (serialization, version)_, with IRI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
 
@@ -16,7 +16,7 @@ WHERE { ?point w3cGeo:long ?long .
         ?point w3cGeo:lat ?lat }
 ```
 
-==== Parameters
+=== Parameters
 
 The following parameters are defined for the _Geometry Extension_ requirements class.
 
@@ -27,11 +27,11 @@ Note that the serialization chosen strongly affects the geometry conceptualizati
 
 *version*: Specifies the version of the serialization format used.
 
-==== Geometry Classes and Properties
+=== Geometry Classes and Properties
 
 A single root geometry class is defined: `geo:Geometry`. The class `geo:Geometry` is equivalent to the UML class `GM_Object` defined in <<ISO19107>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
 
-===== Class: geo:Geometry
+==== Class: geo:Geometry
 
 The class `geo:Geometry` is equivalent to `GM_Object` <<ISO19107>> and is defined by the following:
 
@@ -52,7 +52,7 @@ geo:Geometry a rdfs:Class,
 |`/req/geometry-extension/geometry-class`
 |===
 
-==== Standard Properties for geo:Feature
+=== Standard Properties for geo:Feature
 
 Properties are defined for associating geometries with features.
 
@@ -62,7 +62,7 @@ Properties are defined for associating geometries with features.
 |`/req/geometry-extension/feature-properties`
 |===
 
-===== Property: geo:hasGeometry
+==== Property: geo:hasGeometry
 
 The property `geo:hasGeometry` is used to link a feature with a geometry that represents its spatial extent. A given feature may have many associated geometries.
 
@@ -76,7 +76,7 @@ geo:hasGeometry a rdf:Property,
     rdfs:range geo:Geometry .
 ```
 
-===== Property: geo:hasDefaultGeometry
+==== Property: geo:hasDefaultGeometry
 
 The property `geo:hasDefaultGeometry` is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).
 
@@ -103,7 +103,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }
 
 Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification.
 
-===== Property: geo:hasLength
+==== Property: geo:hasLength
 
 The property `geo:hasLength` is used to indicate the length of a `geo:Feature`. In the case of a one-dimensional `geo:Feature`, it is the simple length. In the case of a two-dimensional `geo:Feature`, it is interpreted to mean the perimeter length. The range of the property is `geo:SpatialMeasure`, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
@@ -119,7 +119,7 @@ geo:hasLength a rdf:Property,
 
 A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be either 1 or 2.
 
-===== Property: geo:hasArea
+==== Property: geo:hasArea
 
 The property `geo:hasArea` is used to indicate the area of a `geo:Feature`. The range of the property is `geo:SpatialMeasure`, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
@@ -135,7 +135,7 @@ geo:hasArea a rdf:Property,
 
 A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 2.
 
-===== Property: geo:hasVolume
+==== Property: geo:hasVolume
 
 The property `geo:hasVolume` is used to indicate the volume of a `geo:Feature`. The range of the property is `geo:SpatialMeasure`, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
@@ -151,7 +151,7 @@ geo:hasVolume a rdf:Property,
 
 A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 3.
 
-==== Standard Properties for geo:Geometry
+=== Standard Properties for geo:Geometry
 
 Properties are defined for describing geometry metadata.
 
@@ -160,7 +160,7 @@ Properties are defined for describing geometry metadata.
 |`/req/geometry-extension/geometry-properties`
 |===
 
-===== Property: geo:dimension
+==== Property: geo:dimension
 
 The dimension is the topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.
 
@@ -177,7 +177,7 @@ geo:dimension a rdf:Property,
     rdfs:range xsd:integer .
 ```
 
-===== Property: geo:coordinateDimension
+==== Property: geo:coordinateDimension
 
 The coordinate dimension is the dimension of direct positions (coordinate tuples) used in the definition of this geometric object.
 
@@ -192,7 +192,7 @@ geo:coordinateDimension a rdf:Property,
     rdfs:range xsd:integer .
 ```
 
-===== Property: geo:spatialDimension
+==== Property: geo:spatialDimension
 
 The spatial dimension is the dimension of the spatial portion of the direct positions (coordinate tuples) used in the definition of this geometric object. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.
 
@@ -208,7 +208,7 @@ geo:spatialDimension a rdf:Property,
     rdfs:range xsd:integer .
 ```
 
-===== Property: geo:hasSpatialResolution
+==== Property: geo:hasSpatialResolution
 
 The property `geo:hasSpatialResolution` is used to indicate resolution of the elements within literal representations of a geometry. Since this property is defined for a `geo:Geometry`, all literal representations of that geometry must have the same spatial resolution.
 
@@ -221,7 +221,7 @@ geo:hasSpatialResolution a rdf:Property,
     rdfs:domain geo:Geometry .
 ```
 
-===== Property: geo:isEmpty
+==== Property: geo:isEmpty
 
 The `geo:isEmpty` Boolean will be set to true only if the geometry contains no points.
 
@@ -236,7 +236,7 @@ geo:isEmpty a rdf:Property, owl:DatatypeProperty;
     rdfs:range xsd:boolean .
 ```
 
-===== Property: geo:isSimple
+==== Property: geo:isSimple
 
 The `geo:isSimple` Boolean will be set to true, only if the geometry contains no self- intersections, with the possible exception of its boundary.
 
@@ -251,7 +251,7 @@ geo:isSimple a rdf:Property,
     rdfs:range xsd:boolean .    
 ```
 
-===== Property: geo:hasSerialization
+==== Property: geo:hasSerialization
 
 The `geo:hasSerialization` property is used to connect a geometry with its text- based serialization (e.g., its WKT serialization).
 
@@ -266,7 +266,7 @@ geo:hasSerialization a rdf:Property,
     rdfs:range rdfs:Literal .
 ```
 
-===== Property: geo:inCRS
+==== Property: geo:inCRS
 
 The `geo:inCRS` property is used to connect a geometry with the CRS used for its representation which affects measurements of its size (length, area, volume).
 
@@ -281,11 +281,11 @@ geo:inCRS a rdf:Property,
     rdfs:range skos:Concept .
 ```
 
-==== Requirements for WKT Serialization (serialization=WKT)
+=== Requirements for WKT Serialization (serialization=WKT)
 
 This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1]. It defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#wktLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asWKT+`.
 
-===== RDFS Datatype: geo:wktLiteral
+==== RDFS Datatype: geo:wktLiteral
 
 ```
 geo:wktLiteral a rdfs:Datatype;
@@ -340,7 +340,7 @@ A second example below encodes the same point using `+<http://www.opengis.net/de
 |`/req/geometry-extension/wkt-literal-empty`
 |===
 
-===== Property: geo:asWKT
+==== Property: geo:asWKT
 
 The `geo:asWKT` property is defined to link a geometry with its WKT serialization.
 
@@ -362,13 +362,13 @@ geo:asWKT a rdf:Property,
     rdfs:range geo:wktLiteral .
 ```
 
-==== Requirements for GML Serialization (serialization=GML)
+=== Requirements for GML Serialization (serialization=GML)
 
 This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036]. It defines one RDFS Datatype:
 `+http://www.opengis.net/ont/geosparql#gmlLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asGML+`.
 
 
-===== RDFS Datatype: geo:gmlLiteral
+==== RDFS Datatype: geo:gmlLiteral
 
 ```
 geo:gmlLiteral a rdfs:Datatype;
@@ -405,7 +405,7 @@ geodetic longitude-latitude spatial reference system using GML version 3.2:
 |`/req/geometry-extension/gml-profile`
 |===
 
-===== Property: geo:asGML
+==== Property: geo:asGML
 
 This document defines the `geo:asGML` property to link a geometry with its serialization.
 
@@ -428,12 +428,12 @@ geo:asGML a rdf:Property;
 ```
 
 
-==== Requirements for GeoJSON Serialization (serialization=GEOJSON)
+=== Requirements for GeoJSON Serialization (serialization=GEOJSON)
 
 This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <<GeoJSON>>. It defines one RDFS Datatype:
 `+http://www.opengis.net/ont/geosparql#geoJSONLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asGeoJSON+`.
 
-===== RDFS Datatype: geo:geoJSONLiteral
+==== RDFS Datatype: geo:geoJSONLiteral
 
 ```
 geo:geoJSONLiteral a rdfs:Datatype;
@@ -465,7 +465,7 @@ The example `geo:geoJSONLiteral` below encodes a point geometry using the defaul
 |`/req/geometry-extension/geoJSON-literal-empty`
 |===
 
-===== Property: geo:asGeoJSON
+==== Property: geo:asGeoJSON
 
 The `geo:asGeoJSON` property is defined to link a geometry with its GeoJSON serialization.
 
@@ -487,12 +487,12 @@ geo:asGeoJSON a rdf:Property,
     rdfs:range geo:geoJSONLiteral .
 ```
 
-==== Requirements for KML Serialization (serialization=KML)
+=== Requirements for KML Serialization (serialization=KML)
 
 This section establishes requirements for representing geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
 `+http://www.opengis.net/ont/geosparql#kmlLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asKML+`.
 
-===== RDFS Datatype: geo:kmlLiteral
+==== RDFS Datatype: geo:kmlLiteral
 
 ```
 geo:kmlLiteral a rdfs:Datatype;
@@ -524,7 +524,7 @@ The example `geo:kmlLiteral` below encodes a point geometry using the default WG
 |`/req/geometry-extension/kml-literal-empty`
 |===
 
-===== Property: geo:asKML
+==== Property: geo:asKML
 
 The `geo:asKML` property is defined to link a geometry with its KML serialization.
 
@@ -546,12 +546,12 @@ geo:asKML a rdf:Property,
     rdfs:range geo:kmlLiteral .
 ```
 
-==== Requirements for DGGS Serialization (serialization=DGGS)
+=== Requirements for DGGS Serialization (serialization=DGGS)
 
 This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation and is based on elements of the second version of the DGGS _Abstract Specification_ <<DGGSAS>>. It defines one RDFS Datatype:
 `+http://www.opengis.net/ont/geosparql#dggsWktLiteral+` and one property, +http://www.opengis.net/ont/geosparql#asDggsWkt+`.
 
-===== RDFS Datatype: geo:dggsWktLiteral
+==== RDFS Datatype: geo:dggsWktLiteral
 
 ```
 geo:dggsWktLiteral a rdfs:Datatype;
@@ -586,7 +586,7 @@ The example `geo:dggsWktLiteral` below encodes a point geometry according to the
 |===
 
 
-===== Property: geo:asDggsWkt
+==== Property: geo:asDggsWkt
 
 The `geo:asDggsWkt` property is defined to link a geometry with its DGGS WKT serialization.
 
@@ -608,7 +608,7 @@ geo:asDggsWkt a rdf:Property,
     rdfs:range geo:dggsWktLiteral .
 ```
 
-==== Non-topological Query Functions
+=== Non-topological Query Functions
 
 This clause defines SPARQL functions for performing non-topological spatial operations.
 
@@ -637,7 +637,7 @@ This extension mechanism is intended to allow GeoSPARQL implementations to simul
 
 Several non-topological query functions use a unit of measure IRI. The OGC has defined some standard units of measure IRIs under the `+http://www.opengis.net/def/uom/OGC/1.0/+` namespace, for example `+<http://www.opengis.net/def/uom/OGC/1.0/metre>+`.
 
-===== Function: geof:distance
+==== Function: geof:distance
 
 
 ```
@@ -648,7 +648,7 @@ geof:distance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
 Returns the shortest distance in units between any two Points in the two geometric
 objects as calculated in the spatial reference system of `geom1`.
 
-===== Function: geof:buffer
+==== Function: geof:buffer
 
 ```
 geof:buffer (geom: ogc:geomLiteral, radius: xsd:double, 
@@ -657,7 +657,7 @@ geof:buffer (geom: ogc:geomLiteral, radius: xsd:double,
 
 This function returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:convexHull
+==== Function: geof:convexHull
 
 ```
 geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
@@ -665,7 +665,7 @@ geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:intersection
+==== Function: geof:intersection
 
 ```
 geof:intersection (geom1: ogc:geomLiteral,
@@ -674,7 +674,7 @@ geof:intersection (geom1: ogc:geomLiteral,
 
 This function returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:union
+==== Function: geof:union
 
 ```
 geof:union (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
@@ -683,7 +683,7 @@ geof:union (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
 
 This function returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:difference
+==== Function: geof:difference
 
 ```
 geof:difference (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
@@ -692,7 +692,7 @@ geof:difference (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
 
 This function returns a geometric object that represents all Points in the set difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:symDifference
+==== Function: geof:symDifference
 
 ```
 geof:symDifference (geom1: ogc:geomLiteral, 
@@ -702,7 +702,7 @@ geof:symDifference (geom1: ogc:geomLiteral,
 
 This function returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:envelope
+==== Function: geof:envelope
 
 ```
 geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
@@ -710,7 +710,7 @@ geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the minimum bounding box of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:boundary
+==== Function: geof:boundary
 
 ```
 geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
@@ -723,7 +723,7 @@ This function returns the closure of the boundary of `geom1`. Calculations are i
 |`/req/geometry-extension/srid-function`
 |===
 
-===== Function: geof:getSRID
+==== Function: geof:getSRID
 
 ```
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
@@ -731,7 +731,7 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 
 Returns the spatial reference system IRI for `geom`.
 
-===== Function: geof:maxX
+==== Function: geof:maxX
 
 ```
 geof:maxX (geom: ogc:geomLiteral): xsd:double
@@ -739,7 +739,7 @@ geof:maxX (geom: ogc:geomLiteral): xsd:double
 
 Returns the maximum X coordinate for `geom`.
 
-===== Function: geof:maxY
+==== Function: geof:maxY
 
 ```
 geof:maxY (geom: ogc:geomLiteral): xsd:double
@@ -747,7 +747,7 @@ geof:maxY (geom: ogc:geomLiteral): xsd:double
 
 Returns the maximum Y coordinate for `geom`.
 
-===== Function: geof:maxZ
+==== Function: geof:maxZ
 
 ```
 geof:maxZ (geom: ogc:geomLiteral): xsd:double
@@ -755,7 +755,7 @@ geof:maxZ (geom: ogc:geomLiteral): xsd:double
 
 Returns the maximum Z coordinate for `geom`.
 
-===== Function: geof:minX
+==== Function: geof:minX
 
 ```
 geof:minX (geom: ogc:geomLiteral): xsd:double
@@ -763,7 +763,7 @@ geof:minX (geom: ogc:geomLiteral): xsd:double
 
 Returns the minimum X coordinate for `geom`.
 
-===== Function: geof:minY
+==== Function: geof:minY
 
 ```
 geof:minY (geom: ogc:geomLiteral): xsd:double
@@ -771,7 +771,7 @@ geof:minY (geom: ogc:geomLiteral): xsd:double
 
 Returns the minimum Y coordinate for `geom`.
 
-===== Function: geof:minZ
+==== Function: geof:minZ
 
 ```
 geof:minZ (geom: ogc:geomLiteral): xsd:double
@@ -779,58 +779,56 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 
 Returns the minimum Z coordinate for `geom`.
 
-=== Spatial Aggregate Extension
+=== Spatial Aggregate Functions
 
 This clause establishes the Spatial Aggregate extension requirements class with URI `/req/spatial-aggregate-extension`.
 Spatial Aggregate Functions may be used in the SELECT used in the SELECT, HAVING and ORDER BY clauses of a SPARQL query.
 Such functions calculate an aggregate value over a group of solutions. Solution groups are determined by a GROUP BY clause. 
 All solutions form a single group if no GROUP BY is specified.
 
-==== Spatial Aggregate Functions
-
-===== Function: geosaf:BBOX
+==== Function: geosaf:BBOX
 
 ```
 geosaf:BBOX (ogc:geomLiteral): ogc:geomLiteral
 ```
 Calculates a minimum bounding box of the set of given geometries.
 
-===== Function: geosaf:BoundingCircle
+==== Function: geosaf:BoundingCircle
 
 ```
 geosaf:BoundingCircle (ogc:geomLiteral): ogc:geomLiteral
 ```
 Calculates a minimum bounding circle of the set of given geometries.
 
-===== Function: geosaf:Centroid
+==== Function: geosaf:Centroid
 
 ```
 geosaf:Centroid (ogc:geomLiteral): ogc:geomLiteral
 ```
 Calculates the centroid of the set of given geometries.
 
-===== Function: geosaf:ConcatLines
+==== Function: geosaf:ConcatLines
 
 ```
 geosaf:ConcatLines (ogc:geomLiteral): ogc:geomLiteral
 ```
 Concatenates a set of LineStrings.
 
-===== Function: geosaf:ConcaveHull
+==== Function: geosaf:ConcaveHull
 
 ```
 geosaf:ConcaveHull (ogc:geomLiteral): ogc:geomLiteral
 ```
 Calculates the concave hull of the set of given geometries.
 
-===== Function: geosaf:ConvexHull
+==== Function: geosaf:ConvexHull
 
 ```
 geosaf:ConvexHull (ogc:geomLiteral): ogc:geomLiteral
 ```
 Calculates the convex hull of the set of given geometries.
 
-===== Function: geosaf:Union
+==== Function: geosaf:Union
 
 ```
 geosaf:Union (ogc:geomLiteral): ogc:geomLiteral
