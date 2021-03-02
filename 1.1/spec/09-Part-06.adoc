@@ -1,6 +1,6 @@
 === Core
 
-This clause establishes the *core* requirements class, with URI `/req/core`, which has a single corresponding conformance class, *core*, with URI `/conf/core`. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.
+This clause establishes the *core* requirements class, with IRI `/req/core`, which has a single corresponding conformance class, *core*, with IRI `/conf/core`. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.
 
 ==== SPARQL
 
@@ -11,7 +11,7 @@ This clause establishes the *core* requirements class, with URI `/req/core`, whi
 
 ==== Classes
 
-Two main classes are defined: `geo:SpatialObject` and `geo:Feature`. The class `geo:Feature` is equivalent to the UML class `GFI_Feature` defined in [8].
+Three main classes are defined: `geo:SpatialObject`, `geo:SpatialMeasure` and `geo:Feature`. The class `geo:Feature` is equivalent to the UML class `Feature` defined in <<ISO19109>>.
 
 ===== Class: geo:SpatialObject
 
@@ -20,7 +20,7 @@ The class `geo:SpatialObject` is defined by the following:
 ```
 geo:SpatialObject a rdfs:Class, 
                     owl:Class;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
     rdfs:label "Spatial Object"@en;
     rdfs:comment "The class Spatial Object represents everything that can 
                  have a spatial representation. It is superclass of feature 
@@ -32,16 +32,35 @@ geo:SpatialObject a rdfs:Class,
 |`/req/core/spatial-object-class`
 |===
 
+===== Class: geo:SpatialMeasure
+
+The class `geo:SpatialMeasure` is defined by the following:
+
+```
+geo:SpatialMeasure a rdfs:Class, 
+                    owl:Class;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
+    rdfs:label "Spatial Measure"@en;
+    rdfs:comment "The class represents a measurement of a feature though only 
+                spatial measurements. It is therefore naturally a subclass 
+                of Spatial Object which is any spatial thing."@en .
+```
+
+|===
+|*Req 3* Implementations shall allow the RDFS class `geo:SpatialMeasure` to be used in SPARQL graph patterns.
+|`/req/core/spatial-measure-class`
+|===
+
 ===== Class: geo:Feature
 
-The class `geo:Feature` is equivalent to the class `GFI_Feature` [8] and is defined by the following:
+The class `geo:Feature` is equivalent to the class `GFI_Feature` <<ISO19156>> and is defined by the following:
 
 
 
 ```
 geo:Feature a rdfs:Class,
               owl:Class;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
     rdfs:label "Feature"@en;
     rdfs:subClassOf geo:SpatialObject;
     owl:disjointWith geo:Geometry;
@@ -51,7 +70,7 @@ geo:Feature a rdfs:Class,
 ```
 
 |===
-|*Req 3* Implementations shall allow the RDFS class `geo:Feature` to be used in SPARQL graph patterns.
+|*Req 4* Implementations shall allow the RDFS class `geo:Feature` to be used in SPARQL graph patterns.
 |`/req/core/feature-class`
 |===
 

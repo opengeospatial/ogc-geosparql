@@ -1,8 +1,8 @@
 === Topology Vocabulary Extension (relation_family)
 
-This clause establishes the _Topology Vocabulary Extension (relation_family)_ parameterized requirements class, with URI `/req/topology-vocab-extension`, which has a single corresponding conformance class _Topology Vocabulary Extension (relation_family)_, with URI `/conf/topology-vocab-extension`. This requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, e.g. RCC8, Egenhofer. These relations are generalized so that they may connect features as well as geometries.
+This clause establishes the _Topology Vocabulary Extension (relation_family)_ parameterized requirements class, with IRI `/req/topology-vocab-extension`, which has a single corresponding conformance class _Topology Vocabulary Extension (relation_family)_, with IRI `/conf/topology-vocab-extension`. This requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, e.g. RCC8, Egenhofer. These relations are generalized so that they may connect features as well as geometries.
 
-A DE-9IM pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are `-1` (empty), `0, 1, 2, T` (true) `= {0, 1, 2}, F` (false) = {-1}, *` (don’t care)` = {-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0- dimensional geometries (e.g. points). The symbol `L` is used for 1-dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
+A Dimensionally Extended 9-Intersection Model (DE-9IM) pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are `-1` (empty), `0, 1, 2, T` (true) `= {0, 1, 2}, F` (false) = {-1}, *` (don’t care)` = {-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0- dimensional geometries (e.g. points). The symbol `L` is used for 1-dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
 
 ==== Parameters
 
@@ -15,7 +15,7 @@ The following parameter is defined for the _Topology Vocabulary Extension_ requi
 This clause defines requirements for the _Simple Features_ relation family.
 
 |===
-|*Req 4* Implementations shall allow the properties `geo:sfEquals`, `geo:sfDisjoint`, `geo:sfIntersects`, `geo:sfTouches`, `geo:sfCrosses`, `geo:sfWithin`, `geo:sfContains`, `geo:sfOverlaps` to be used in SPARQL graph patterns.
+|*Req 5* Implementations shall allow the properties `geo:sfEquals`, `geo:sfDisjoint`, `geo:sfIntersects`, `geo:sfTouches`, `geo:sfCrosses`, `geo:sfWithin`, `geo:sfContains`, `geo:sfOverlaps` to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/sf-spatial-relations`
 |===
 
@@ -23,7 +23,7 @@ Topological relations in the _Simple Features_ family are summarized in Table 1.
 
 .Simple Features Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
 |equals | `geo:sfEquals` | `geo:SpatialObject` | `All` | `(TFFFTFFFT)`
 |disjoint | `geo:sfDisjoint` | `geo:SpatialObject` | `All` | `+(FF**FF****)+`
@@ -38,10 +38,10 @@ L/A+`; `+(0********) for L/L+`
 
 ==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
 
-This clause defines requirements for the _Egenhofer_ relation family. Consult references [2] and [3] for a more detailed discussion of _Egenhofer_ relations.
+This clause defines requirements for the 9-intersection model for binary topological relations (_Egenhofer_) relation family. Consult references <<FORMAL>> and <<CATEG>> for a more detailed discussion of _Egenhofer_ relations.
 
 |===
-|*Req 5* Implementations shall allow the properties `geo:ehEquals`, `geo:ehDisjoint`, `geo:ehMeet, geo:ehOverlap`, `geo:ehCovers`, `geo:ehCoveredBy`, `geo:ehInside`, `geo:ehContains` to be used in SPARQL graph patterns.
+|*Req 6* Implementations shall allow the properties `geo:ehEquals`, `geo:ehDisjoint`, `geo:ehMeet, geo:ehOverlap`, `geo:ehCovers`, `geo:ehCoveredBy`, `geo:ehInside`, `geo:ehContains` to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/eh-spatial-relations`
 |===
 
@@ -49,7 +49,7 @@ Topological relations in the _Egenhofer_ family are summarized in Table 2. Multi
 
 .Egenhofer Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
 |equals | `geo:ehEquals` | `geo:SpatialObject` | `All` | `(TFFFTFFFT)`
 |disjoint | `geo:ehDisjoint` | `geo:SpatialObject` | `All` | `+(FF*FF****)+`
@@ -63,16 +63,16 @@ Topological relations in the _Egenhofer_ family are summarized in Table 2. Multi
 
 ==== Requirements for RCC8 Relation Family (relation_family=RCC8)
 
-This clause defines requirements for the _RCC8_ relation family. Consult references [1] and [9] for a more detailed discussion of _RCC8_ relations.
+This clause defines requirements for the region connection calculus basic 8 (_RCC8_) relation family. Consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
 
 |===
-|*Req 6* Implementations shall allow the properties geo:rcc8eq, `geo:rcc8dc`, `geo:rcc8ec`, `geo:rcc8po`, `geo:rcc8tppi`, `geo:rcc8tpp`, `geo:rcc8ntpp`, `geo:rcc8ntppi` to be used in SPARQL graph patterns.
+|*Req 7* Implementations shall allow the properties geo:rcc8eq, `geo:rcc8dc`, `geo:rcc8ec`, `geo:rcc8po`, `geo:rcc8tppi`, `geo:rcc8tpp`, `geo:rcc8ntpp`, `geo:rcc8ntppi` to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/rcc8-spatial-relations`
 |===
 
 .RCC8 Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
 |equals | `geo:rcc8eq` | `geo:SpatialObject` | `A/A` | `(TFFFTFFFT)`
 |disconnected | `geo:rcc8dc` | `geo:SpatialObject` | `A/A` | `(FFTFFTTTT)`
@@ -101,4 +101,3 @@ Table 4 summarizes the equivalences between _Egenhofer_, _RCC8_ and _Simple Feat
 |contains | non-tangential proper part inverse `+` tangential proper part inverse | contains `+` covers
 |overlaps | partially overlapping | overlap
 |===
-
