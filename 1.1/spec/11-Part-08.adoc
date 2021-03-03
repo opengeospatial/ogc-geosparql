@@ -574,7 +574,7 @@ The token `IRI` (Internationalized Resource Identifiers) is essentially a web ad
 |===
 
 
-The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGS [24]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_.:
+The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGS <<24>>. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_.:
 
 ```
 "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>
@@ -624,14 +624,14 @@ An invocation of any of the following functions with invalid arguments produces 
 - A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
 - An invalid units IRI
 
-For further discussion of the effects of errors during FILTER evaluation, consult Section 11 of the SPARQL specification [W3C SPARQL] (http://www.w3.org/TR/rdf-sparql-query/#tests).
+For further discussion of the effects of errors during FILTER evaluation, consult Section 17footnote:[<https://www.w3.org/TR/sparql11-query/#expressions>] of the SPARQL specification <<SPARQL>>.
 
 Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.
 
-From Section 11.3.1 of the SPARQL specification [W3C SPARQL] (http://www.w3.org/TR/rdf-sparql-query/#operatorExtensibility):
+From Section 17.3.1footnote:[<https://www.w3.org/TR/sparql11-query/#operatorExtensibility>] of the SPARQL specification <<SPARQL>>:
 
 [quote]
-SPARQL language extensions may provide additional associations between operators and operator functions; this amounts to adding rows to the table above. No additional operator may yield a result that replaces any result other than a type error in the semantics defined above. The consequence of this rule is that SPARQL extensions will produce at least the same solutions as an unextended implementation, and may, for some queries, produce more solutions.
+SPARQL language extensions may provide additional associations between operators and operator functions; ... No additional operator may yield a result that replaces any result other .. in the semantics defined above. The consequence of this rule is that SPARQL `FILTER` s will produce at least the same intermediate bindings after applying a `FILTER` as an unextended implementation.
 
 This extension mechanism is intended to allow GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports `geo:wktLiteral` serializations may also support `geo:gmlLiteral` serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.
 
