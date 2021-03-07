@@ -16,12 +16,11 @@ Some of the properties defined in these vocabularies, such as `bbox` and `centro
 
 The following parameters are defined for the _Geometry Extension_ requirements class.
 
-*serialization*: Specifies the serialization standard to use when generating geometry
-literals and also the supported geometry types.
+serialization:: Specifies the serialization standard to use when generating geometry literals and also the supported geometry types.
 
-Note that the serialization chosen strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with ISO 19125 Simple Features [ISO 19125-1], and the GML serialization aligns the geometry types with ISO 19107 Spatial Schema <<ISO19107>>.
+Note that the serialization chosen strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<ISO19125-1>>, and the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
 
-*version*: Specifies the version of the serialization format used.
+version:: Specifies the version of the serialization format used.
 
 === Geometry Classes and Properties
 
@@ -87,14 +86,14 @@ geo:hasDefaultGeometry a rdf:Property, owl:ObjectProperty ;
 
 GeoSPARQL does not restrict the cardinality of the `geo:hasDefaultGeometry` property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature `my:f1` has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule `geor:sfDisjoint`).
 
-```
+```sparql
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 SELECT (COUNT(*) AS ?cnt)
 WHERE { :f1 geo:sfDisjoint :f1 }
 ```
 
-Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification.
+Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with `geo:hasDefaultGeometry` should be differentiated by `Geometry` class properties, perhaps relating to precision, CRS etc.
 
 ==== Property: geo:hasLength
 
@@ -109,7 +108,18 @@ geo:hasLength a rdf:Property, owl:ObjectProperty ;
     rdfs:range geo:SpatialMeasure .
 ```
 
-A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be either 1 or 2.
+TIP: A consistency check can be applied to geometries indicating both this property and the `geo:dimension` property: if supplied, the `geo:dimension` property's range value must be the literal integer  1 or 2. The following SPARQL query will return `true` if applied to a graph where is not always the case for all geometries:
+
+```sparql
+    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+    ASK 
+    WHERE {
+        ?g geo:hasLength ?l ;
+           geo:dimension ?d .
+            
+        FILTER (?d > 2)
+    }
+```
 
 ==== Property: geo:hasArea
 
@@ -124,7 +134,18 @@ geo:hasArea a rdf:Property, owl:ObjectProperty;
     rdfs:range geo:SpatialMeasure .
 ```
 
-A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 2.
+TIP: A consistency check can be applied to geometries indicating both this property and the `geo:dimension` property: if supplied, the `geo:dimension` property's range value must be the literal integer 2. The following SPARQL query will return `true` if applied to a graph where is not always the case for all geometries:
+
+```sparql
+    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+    ASK 
+    WHERE {
+        ?g geo:hasArea ?a ;
+           geo:dimension ?d .
+            
+        FILTER (?d != 2)
+    }
+```
 
 ==== Property: geo:hasVolume
 
@@ -134,12 +155,24 @@ The property `geo:hasVolume` is used to indicate the volume of a `geo:Feature`. 
 geo:hasVolume a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume"@en ;
-    skos:definition "The volume of a Feature, expressed as a Spatial Measure"@en ; 
+    skos:definition "The volume of a Feature, expressed as a 
+                    Spatial Measure"@en ; 
     rdfs:domain geo:Feature ; 
     rdfs:range geo:SpatialMeasure .
 ```
 
-A consistency check can be applied to geometries indicating this property and the `geo:dimension` property: the integer range value of a `geo:dimension` property for a geometry with a `geo:hasLength` property must be 3.
+TIP: A consistency check can be applied to geometries indicating both this property and the `geo:dimension` property: if supplied, the `geo:dimension` property's range value must be the literal integer 3. The following SPARQL query will return `true` if applied to a graph where is not always the case for all geometries:
+
+```sparql
+    PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+    ASK 
+    WHERE {
+        ?g geo:hasVolume ?a ;
+           geo:dimension ?d .
+            
+        FILTER (?d != 3)
+    }
+```
 
 === Standard Properties for geo:Geometry
 
