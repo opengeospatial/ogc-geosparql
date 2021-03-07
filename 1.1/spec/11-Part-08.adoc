@@ -4,17 +4,13 @@ This clause establishes the _Geometry Extension (serialization, version)_ parame
 
 As part of the vocabulary, an RDFS datatype is defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
-Other schemes for encoding simple geometry data in RDF have been proposed. The W3C Basic Geo vocabulary (http://www.w3.org/2003/01/geo/) is one popular vocabulary. These simple vocabularies have limitations, for example the inability to specify different datums and coordinate systems, and were therefore not used in GeoSPARQL. Note that most existing geometry data encoded using these vocabularies can easily be converted into GeoSPARQL representations. The SPARQL query below creates http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] values from W3C Basic Geo geometries.
+Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabularyfootnote:[http://www.w3.org/2003/01/geo/] was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things, using WGS84 as a reference datum" and many widely used Semantic Web vocabularies contain some spatial data support. For example, _Dublin Core Terms_ provides a _Location_ classfootnote:[http://purl.org/dc/terms/Location] for "A spatial region or named place." and _schema.org_ provides a number of spatial object and geometry classes, such as `GeoCoordinates`footnote:[https://schema.org/GeoCoordinates] and `GeoShape`footnote:[https://schema.org/GeoShape]. 
 
-```sparql
-PREFIX w3cGeo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
-PREFIX geo: <http://www.opengis.net/#geosparql>
+Many vocabularies, such as these two, provide little specific support for detailed geometries and only support the WGS84 Coordinate Reference System (CSR).
 
-SELECT (STRDT(CONCAT("POINT(",?long," ",?lat,")"), 
-              geo:wktLiteral) AS ?wktLit)
-WHERE { ?point w3cGeo:long ?long . 
-        ?point w3cGeo:lat ?lat }
-```
+Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent DCAT2 standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
+
+Some of the properties defined in these vocabularies, such as `bbox` and `centroid` are now defined in this version of GeoSPARQL and, indeed, vocabularies such as DCAT2 provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontiligies that were influential in the generation of this verison of GeoSPARQL.
 
 === Parameters
 
