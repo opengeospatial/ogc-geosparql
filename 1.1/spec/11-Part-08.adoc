@@ -93,7 +93,7 @@ SELECT (COUNT(*) AS ?cnt)
 WHERE { :f1 geo:sfDisjoint :f1 }
 ```
 
-Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with `geo:hasDefaultGeometry` should be differentiated by `Geometry` class properties, perhaps relating to precision, CRS etc.
+Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with `geo:hasDefaultGeometry` should be differentiated by `Geometry` class properties, perhaps relating to precision, SRS etc.
 
 ==== Property: geo:hasLength
 
@@ -283,9 +283,9 @@ geo:hasSerialization a rdf:Property, owl:DatatypeProperty ;
 
 NOTE: this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example `geo:asGeoJSON` which can be used for GeoJSON <<GEOJSON>> literals.
 
-==== Property: geo:inCRS
+==== Property: geo:inSRS
 
-The `geo:inCRS` property is used to connect a geometry with the CRS used for its representation which affects measurements of its size (length, area, volume).
+The `geo:inCRS` property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).
 
 ```turtle
 geo:inCRS a rdf:Property, owl:ObjectProperty ;
@@ -331,7 +331,7 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 |`/req/geometry-extension/wkt-literal-default-srs`
 |===
 
-The OGC maintains a set of CRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
+The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
 
 |===
 | *Req 13* Coordinate tuples within `geo:wktLiteral` shall be interpreted using the axis order defined in the spatial reference system used.
@@ -344,7 +344,7 @@ The example `geo:wktLiteral` below encodes a point geometry using the default WG
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
-A second example below encodes the same point as encoded in the example above but using a CRS identified by `+http://www.opengis.net/def/crs/EPSG/0/4326+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
+A second example below encodes the same point as encoded in the example above but using a CRS identified by `+http://www.opengis.net/def/SRS/EPSG/0/4326+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
 ```turtle
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
@@ -461,12 +461,12 @@ Valid `geo:geoJSONLiteral` instances are formed by encoding geometry information
 
 |===
 | *Req 20* All `geo:geoJSONLiteral` instances shall consist of the Geometry objects as defined in the GeoJSON specification <<GEOJSON>>.
-|`/req/geometry-extension/geoJSON-literal`
+|`/req/geometry-extension/geojson-literal`
 |===
 
 |===
-| *Req 21* RDFS Literals of type `geo:geoJSONLiteral` do not contain a CRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-|`/req/geometry-extension/geoJSON-literal-crs`
+| *Req 21* RDFS Literals of type `geo:geoJSONLiteral` do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+|`/req/geometry-extension/geojson-literal-srs`
 |===
 
 The example `geo:geoJSONLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
@@ -479,7 +479,7 @@ The example `geo:geoJSONLiteral` below encodes a point geometry using the defaul
 
 |===
 | *Req 22* An empty RDFS Literal of type `geo:geoJSONLiteral` shall be interpreted as an empty geometry, i.e. `{"geometry": null}` in GeoJSON .
-|`/req/geometry-extension/geoJSON-literal-empty`
+|`/req/geometry-extension/geojson-literal-empty`
 |===
 
 ==== Property: geo:asGeoJSON
@@ -525,8 +525,8 @@ Valid `geo:kmlLiteral` instances are formed by encoding geometry information as 
 |===
 
 |===
-| *Req 25* RDFS Literals of type `geo:kmlLiteral` do not contain a CRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
-|`/req/geometry-extension/kml-literal-crs`
+| *Req 25* RDFS Literals of type `geo:kmlLiteral` do not contain a SRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).
+|`/req/geometry-extension/kml-literal-srs`
 |===
 
 The example `geo:kmlLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
@@ -589,11 +589,11 @@ The token `IRI` (Internationalized Resource Identifier) is essentially a web add
 
 |===
 | *Req 28* All RDFS Literals of type `geo:dggsWktLiteral` shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
-|`/req/geometry-extension/dggs-literal`
+|`/req/geometry-extension/dggswkt-literal`
 |===
 
 
-The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formatl identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's CRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
+The example `geo:dggsWktLiteral` below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formatl identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's SRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
 
 ```turtle
 "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>
@@ -601,7 +601,7 @@ The example `geo:dggsWktLiteral` below encodes a point geometry according to the
 
 |===
 | *Req 29* An empty RDFS Literal of type `geo:dggsWktLiteral` shall be interpreted as an empty geometry.
-|`/req/geometry-extension/dggs-literal-empty`
+|`/req/geometry-extension/dggswkt-literal-empty`
 |===
 
 
@@ -735,10 +735,6 @@ geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-|===
-| *Req 32* Implementations shall support `geof:getSRID` as a SPARQL extension function.
-|`/req/geometry-extension/srid-function`
-|===
 
 ==== Function: geof:getSRID
 
@@ -747,6 +743,11 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ```
 
 Returns the spatial reference system IRI for `geom`.
+
+|===
+| *Req 32* Implementations shall support `geof:getSRID` as a SPARQL extension function.
+|`/req/geometry-extension/srid-function`
+|===
 
 ==== Function: geof:maxX
 
