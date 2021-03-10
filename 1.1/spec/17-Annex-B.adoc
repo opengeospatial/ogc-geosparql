@@ -1,10 +1,8 @@
-=== Annex B 
-=== (informative)
-=== GeoSPARQL Examples
+= Annex B (informative) GeoSPARQL Examples
 
-==== B.1 Example Data
+== B.1 Example Data
 
-The following RDF/XML data encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class my:PlaceOfInterest, and two properties are created for associating geometries with features: my:hasExactGeometry and my:hasPointGeometry. my:hasExactGeometry is designated as the default geometry for the my:PlaceOfInterest feature class.
+The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
 
 All the following examples use the parameter values relation_family = Simple Features, serialization = WKT, and version = 1.0.
 
@@ -12,184 +10,97 @@ All the following examples use the parameter values relation_family = Simple Fea
 .Illustration of spatial data
 image::img/03.png[RDF Triple,300,200]
 
-```
-<rdf:RDF 
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-    xmlns:owl="http://www.w3.org/2002/07/owl#" 
-    xmlns:sf="http://www.opengis.net/ont/sf#" 
-    xmlns:geo="http://www.opengis.net/ont/geosparql#" 
-    xmlns:my="http://example.org/ApplicationSchema#">
+```turtle
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix my: <http://example.org/ApplicationSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
-<!-- Integration with GeoSPARQL classes and properties --> 
-<rdfs:Class rdf:about=
-    "http://example.org/ApplicationSchema#PlaceOfInterest"> 
-    <rdfs:subClassOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#Feature"/>
-</rdfs:Class>
-<rdf:Property rdf:about= 
-    "http://example.org/ApplicationSchema#hasExactGeometry"> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasGeometry"/> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasDefaultGeometry"/>
-</rdf:Property>
-<rdf:Property rdf:about= 
-    "http://example.org/ApplicationSchema#hasPointGeometry"> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasGeometry"/> 
-</rdf:Property>
+my:PlaceOfInterest a rdfs:Class ;
+    rdfs:subClassOf geo:Feature .
 
-<!-- Instance-level statements -->
-<!-- A -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#A">
-    <my:hasExactGeometry rdf:resource= 
-        "http://example.org/ApplicationSchema#AExactGeom"/>
-    <my:hasPointGeometry rdf:resource= 
-        "http://example.org/ApplicationSchema#APointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#AExactGeom">
-    <geo:asWKT rdf:datatype= 
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[ 
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5,
-                    -83.6 34.5, -83.6 34.1))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#APointGeom">
-    <geo:asWKT rdf:datatype= 
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[ 
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Point(-83.4 34.3)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:A a my:PlaceOfInterest ;
+    my:hasExactGeometry my:AExactGeom ;
+    my:hasPointGeometry my:APointGeom .
 
-<!-- B -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#B">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#BExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#BPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#BExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3,
-                     -83.6 34.3, -83.6 34.1))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#BPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Point(-83.5 34.2)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:B a my:PlaceOfInterest ;
+    my:hasExactGeometry my:BExactGeom ;
+    my:hasPointGeometry my:BPointGeom .
 
-<!-- C -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#C">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#CExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#CPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#CExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5,
-                     -83.2 34.5, -83.2 34.3))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#CPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Point(-83.1 34.4)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:C a my:PlaceOfInterest ;
+    my:hasExactGeometry my:CExactGeom ;
+    my:hasPointGeometry my:CPointGeom .
 
-<!-- D -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#D">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#DExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#DPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#DExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Polygon((-83.3 34.0, -83.1 34.0, -83.1 34.2,
-                     -83.3 34.2, -83.3 34.0))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#DPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-        Point(-83.2 34.1)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:D a my:PlaceOfInterest ;
+    my:hasExactGeometry my:DExactGeom ;
+    my:hasPointGeometry my:DPointGeom .
 
-<!-- E -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#E">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#EExactGeom"/>
-</my:PlaceOfInterest>
-<sf:LineString rdf:about=
-    "http://example.org/ApplicationSchema#EExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            LineString((-83.4 34.0, -83.3 34.3))
-        ]]>
-    </geo:asWKT>
-</sf:LineString>
+my:E a my:PlaceOfInterest ;
+    my:hasExactGeometry my:EExactGeom .
 
-<!-- F -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#F">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#FExactGeom"/>
-</my:PlaceOfInterest>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#FExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-        Point(-83.4 34.4)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:F a my:PlaceOfInterest ;
+    my:hasExactGeometry my:FExactGeom .
 
-</rdf:RDF>
+my:hasExactGeometry a rdf:Property ;
+    rdfs:subPropertyOf geo:hasDefaultGeometry,
+        geo:hasGeometry .
+
+my:hasPointGeometry a rdf:Property ;
+    rdfs:subPropertyOf geo:hasGeometry .
+
+my:AExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5,
+                 -83.6 34.5, -83.6 34.1))"""^^geo:wktLiteral.
+
+my:APointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Point(-83.4 34.3)"""^^geo:wktLiteral.
+
+my:BExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3,
+                 -83.6 34.3, -83.6 34.1))"""^^geo:wktLiteral.
+
+my:BPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.5 34.2)"""^^geo:wktLiteral.
+
+my:CExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5,
+                 -83.2 34.5, -83.2 34.3))"""^^geo:wktLiteral.
+
+my:CPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.1 34.4)"""^^geo:wktLiteral.
+
+my:DExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Polygon((-83.3 34.0, -83.1 34.0, -83.1 34.2,
+                 -83.3 34.2, -83.3 34.0))"""^^geo:wktLiteral.
+
+my:DPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.2 34.1)"""^^geo:wktLiteral.
+
+my:EExactGeom a sf:LineString ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 LineString((-83.4 34.0, -83.3 34.3))"""^^geo:wktLiteral.
+
+my:FExactGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.4 34.4)"""^^geo:wktLiteral.
 ```
 
-==== B.2 Example Queries
+== B.2 Example Queries
 
 This Section illustrates the use of GeoSPARQL functions through a series of example queries.
 
 *Example 1*: _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -215,7 +126,7 @@ WHERE {
 
 *Example 2*: _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -241,7 +152,7 @@ WHERE { ?f my:hasPointGeometry ?fGeom .
 *Example 3*: _Find all features that touch the union of feature `my:A` and feature `my:D`,
 where computations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -267,7 +178,7 @@ WHERE { ?f my:hasExactGeometry ?fGeom .
 
 *Example 4*: _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/> 
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -292,7 +203,7 @@ LIMIT 3
 |`my:E`
 |===
 
-==== B.3 Example Rule Application
+== B.3 Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
@@ -300,7 +211,7 @@ This section illustrates the query transformation strategy for implementing GeoS
 
 *Original Query*:
 
-```
+```sparql
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 SELECT ?f
@@ -309,7 +220,7 @@ WHERE { ?f geo:sfOverlaps my:A }
 
 *Transformed Query (application of transformation rule geor:sfOverlaps)*:
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
