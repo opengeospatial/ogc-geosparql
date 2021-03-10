@@ -179,7 +179,7 @@ TIP: A consistency check can be applied to geometries indicating both this prope
 Properties are defined for describing geometry metadata.
 
 |===
-| *Req 10* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`], http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`], http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`], http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`], http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`], http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] , http://www.opengis.net/ont/geosparql#inCRS[`geo:inCRS`] to be used in SPARQL graph patterns.
+| *Req 10* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`], http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`], http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`], http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`], http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`], http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] , http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-properties`
 |===
 
@@ -285,13 +285,13 @@ NOTE: this property is the generic property used to connect a geometry with its 
 
 ==== Property: geo:inSRS
 
-The `geo:inCRS` property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).
+The `geo:inSRS` property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).
 
 ```turtle
-geo:inCRS a rdf:Property, owl:ObjectProperty ;
+geo:inSRS a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ; 
-    skos:prefLabel "in CRS"@en ;
-    skos:definition "A Coordinate Reference System, as recorded in a vocabulary of them."@en ;
+    skos:prefLabel "in SRS"@en ;
+    skos:definition "The spatial reference system used for the literal representation of the geometry."@en ;
     rdfs:domain geo:Geometry ; 
     rdfs:range skos:Concept .
 ```
@@ -344,7 +344,7 @@ The example `geo:wktLiteral` below encodes a point geometry using the default WG
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
-A second example below encodes the same point as encoded in the example above but using a CRS identified by `+http://www.opengis.net/def/SRS/EPSG/0/4326+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
+A second example below encodes the same point as encoded in the example above but using a SRS identified by `+http://www.opengis.net/def/SRS/EPSG/0/4326+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
 ```turtle
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
