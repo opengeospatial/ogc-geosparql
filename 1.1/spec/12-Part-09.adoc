@@ -2,26 +2,32 @@
 
 This clause establishes the _Geometry Topology Extension (relation_family, serialization, version)_ parameterized requirements class, with IRI `/req/geometry-topology-extension`, which defines a collection of topological query functions that operate on geometry literals. This class is parameterized to give implementations flexibility in the topological relation families and geometry serializations that they choose to support. This requirements class has a single corresponding conformance class _Geometry Topology Extension (relation_family, serialization, version)_, with IRI `/conf/geometry-topology-extension`.
 
-The Dimensionally Extended Nine Intersection Model (DE-9IM) has been used to define the relation tested by the query functions introduced in this section. Each query function is associated with a defining DE-9IM intersection pattern. Possible pattern values are `-1` (empty), `0`, `1`, `2`, `T` (true) = `{0, 1, 2}`, `F` (false) = `{-1}`, `*` (don’t care) = `{-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g. points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
+The Dimensionally Extended Nine Intersection Model (DE-9IM) <<DE-9IM>> has been used to define the relation tested by the query functions introduced in this section. Each query function is associated with a defining DE-9IM intersection pattern. Possible pattern values are:
+
+* `-1` (empty)
+* `0`, `1`, `2`, `T` (true) = `{0, 1, 2}`
+* `F` (false) = `{-1}`
+* `*` (don’t care) = `{-1, 0, 1, 2}`
+
+In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g. points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification <<ISO19125-1>> for a more detailed description of DE-9IM intersection patterns.
 
 === Parameters
 
-**relation_family**: Specifies the set of topological spatial relations to support.  
-
-**serialization**: Specifies the serialization standard to use for geometry literals.  
-
-**version**: Specifies the version of the serialization format used. 
+* **relation_family**: Specifies the set of topological spatial relations to support.  
+* **serialization**: Specifies the serialization standard to use for geometry literals.  
+* **version**: Specifies the version of the serialization format used. 
 
 === Common Query Functions
 
 |===
-| *Req 26* Implementations shall support `geof:relate` as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].
+| *Req 26* Implementations shall support `geof:relate` as a SPARQL extension function, consistent with the relate operator defined in Simple Features <<ISO19125-1>>.
 |`/req/geometry-topology-extension/relate-query-function`
 |===
 
 ```
-geof:relate (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
-             pattern-matrix: xsd:String): xsd:boolean
+geof:relate (geom1: ogc:geomLiteral, 
+             geom2: ogc:geomLiteral, 
+             pattern-matrix: xsd:string): xsd:boolean
 ```
 
 Returns `true` if the spatial relationship between `geom1` and `geom2` corresponds to one with acceptable values for the specified pattern-matrix. Otherwise, this function returns `false`. `pattern-matrix` represents a DE-9IM intersection pattern consisting of `T` (true) and `F` (false) values. The spatial reference system for `geom1` is used for spatial calculations.
@@ -31,7 +37,7 @@ Returns `true` if the spatial relationship between `geom1` and `geom2` correspon
 This clause establishes requirements for the _Simple Features_ relation family.
 
 |===
-| *Req 27* Implementations shall support http://www.opengis.net/def/function/geosparql/sfEquals[`geof:sfEquals`], http://www.opengis.net/def/function/geosparql/sfDisjoint[`geof:sfDisjoint`], http://www.opengis.net/def/function/geosparql/sfIntersects[`geof:sfIntersects`], http://www.opengis.net/def/function/geosparql/sfTouches[`geof:sfTouches`], http://www.opengis.net/def/function/geosparql/sfCrosses[`geof:sfCrosses`], http://www.opengis.net/def/function/geosparql/sfWithin[`geof:sfWithin`], http://www.opengis.net/def/function/geosparql/sfContains[`geof:sfContains`], http://www.opengis.net/def/function/geosparql/sfOverlaps[`geof:sfOverlaps`] as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+| *Req 27* Implementations shall support http://www.opengis.net/def/function/geosparql/sfEquals[`geof:sfEquals`], http://www.opengis.net/def/function/geosparql/sfDisjoint[`geof:sfDisjoint`], http://www.opengis.net/def/function/geosparql/sfIntersects[`geof:sfIntersects`], http://www.opengis.net/def/function/geosparql/sfTouches[`geof:sfTouches`], http://www.opengis.net/def/function/geosparql/sfCrosses[`geof:sfCrosses`], http://www.opengis.net/def/function/geosparql/sfWithin[`geof:sfWithin`], http://www.opengis.net/def/function/geosparql/sfContains[`geof:sfContains`], http://www.opengis.net/def/function/geosparql/sfOverlaps[`geof:sfOverlaps`] as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<ISO19125-1>>.
 |`/req/geometry-topology-extension/sf-query-functions`
 |===
 
@@ -72,7 +78,7 @@ Boolean query functions defined for the Simple Features relation family, along w
 This clause establishes requirements for the _Egenhofer_ relation family. Consult references <<FORMAL>> and <<CATEG>> for a more detailed discussion of _Egenhofer_ relations.
 
 |===
-| *Req 28* Implementations shall support `geof:ehEquals`, `geof:ehDisjoint`, `geof:ehMeet`, `geof:ehOverlap`, `geof:ehCovers`, `geof:ehCoveredBy`, `geof:ehInside`, `geof:ehContains` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+| *Req 28* Implementations shall support `geof:ehEquals`, `geof:ehDisjoint`, `geof:ehMeet`, `geof:ehOverlap`, `geof:ehCovers`, `geof:ehCoveredBy`, `geof:ehInside`, `geof:ehContains` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<ISO19125-1>>.
 |`/req/geometry-topology-extension/eh-query-functions`
 |===
 
@@ -113,7 +119,7 @@ Boolean query functions defined for the _Egenhofer_ relation family, along with 
 This clause establishes requirements for the _RCC8_ relation family. Consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
 
 |===
-| *Req 29* Implementations shall support `geof:rcc8eq`, `geof:rcc8dc`, `geof:rcc8ec`, `geof:rcc8po`, `geof:rcc8tppi`, `geof:rcc8tpp`, `geof:rcc8ntpp`, `geof:rcc8ntppi` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].
+| *Req 29* Implementations shall support `geof:rcc8eq`, `geof:rcc8dc`, `geof:rcc8ec`, `geof:rcc8po`, `geof:rcc8tppi`, `geof:rcc8tpp`, `geof:rcc8ntpp`, `geof:rcc8ntppi` as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<ISO19125-1>>.
 |`/req/geometry-topology-extension/rcc8-query-functions`
 |===
 
