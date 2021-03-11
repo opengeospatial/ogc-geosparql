@@ -1,12 +1,14 @@
 name: Ontology Documentation CI
 
-on: [push]
-
+on: 
+  push: 
+      branches:
+          - master
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+ 
     steps:
     - uses: actions/checkout@v1
     - name: Create Ontology Documentation 🔧
@@ -32,11 +34,13 @@ jobs:
          cd ../geosparql11/
          asciidoctor ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
          asciidoctor-pdf ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
-         cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/validation.ttl .
+         cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/validation.ttl ../../1.1/sa_functions.ttl .
+         cp -r ../../1.1/spec/img .
          pylode -i ../../1.1/geo.ttl -o index.html
          pylode -i ../../1.1/profile.ttl -o profile.html -p prof
          pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
          pylode -i ../../1.1/sf_geometries.ttl -o sf_geometries.html -p vocpub
+         pylode -i ../../1.1/sa_functions.ttl -o sa_functions.html -p vocpub
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
          #pylode -i ../../1.1/validation.ttl -o validation.html
     - name: Deploy 🚀

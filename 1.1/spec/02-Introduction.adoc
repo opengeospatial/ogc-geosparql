@@ -1,44 +1,79 @@
 == Introduction
 
-The W3C Semantic Web Activity is defining a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the RDF (Resource Description Framework) data model [12,14], the OWL Web Ontology Language [16] and the SPARQL protocol and RDF query language [W3C SPARQL].
+The W3C Semantic Web Activity is defining a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the RDF (Resource Description Framework) data model <<RDF>>, <<RDFS>>, the OWL Web Ontology Language <<OWL2>> and the SPARQL protocol and RDF query language <<SPARQL>>.
+
+=== RDF
 
 RDF is, among other things, a data model built on edge-node "graphs." Each link in a graph consists of three things (with many aliases depending on the mapping from other types of data models):
 
-- Subject (start node, instance, entity, feature)
-- Predicate (verb, property, attribute, relation, member, link, reference)
-- Object (value, end node, non-literal values can be used as a Subject)
+* Subject (start node, instance, entity, feature)
+* Predicate (verb, property, attribute, relation, member, link, reference)
+* Object (value, end node, non-literal values can be used as a Subject)
 
-Any of the three values in a single triple can be represented via a URI (with an optional fragment identifier). Subjects and objects are called nodes and can be represented as a blank node (usually with a local identifier with no meaning). Objects can also be represented as a literal value. Note that the same node may play the role of a Subject in some edges, and the role of the Object in others.
+Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniqueliy identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necissarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser. 
+
+Subjects and objects within an RDF triple are called nodes and can also be be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialised purposes and in this specification are, for geometry data. 
+
+Note that the same node may be a subject in some triples, and tan object in others.
 
 [#img-rdf]
 .RDF Triple
-image::img/01.png[RDF Triple,300,200]
+image::img/01.png[600,400,align="center"]
 
-Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model [7], and for the relational model as (table primary key, column, value).
+Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <<ISO19109>>, and for the relational model as (table primary key, column, value).
 
-From http://dbpedia.org/page/SPARQL:
+=== SPARQL
+
+From <<SPARQL>>:
 
 [quote]
-SPARQL is an RDF query language; its name is a recursive acronym that stands for SPARQL Protocol and RDF Query Language. It was standardized by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is considered a key semantic web technology. On 15 January 2008, SPARQL became an official W3C Recommendation. SPARQL allows [a] query to consist of triple patterns, conjunctions, disjunctions, and optional patterns.
+SPARQL ... is a set of specifications that provide languages and protocols to query and manipulate RDF graph content on the Web or in an RDF store.
+
+and, from Wikipediafootnote:[https://en.wikipedia.org/wiki/SPARQL]:
+
+[quote]
+SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Protocol and RDF Query Language) is an RDF query language - that is, a semantic query language for databases — able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web. On 15 January 2008, SPARQL 1.0 was acknowledged by W3C as an official recommendation, and SPARQL 1.1 in March, 2013. 
 
 SPARQL queries work on RDF representations of data by finding patterns that match templates in the query, in effect finding information graphs in the RDF data based on the templates and filters (constraints on nodes and edges) expressed in the query. This query template is represented in the SPARQL query by a set of parameterized “query variables” appearing in a sequence of RDF triples and filters. If the query processor finds a set of triples in the data (converted to an RDF graph in some predetermined standard manner) then the values that the “query variables” take on in those triples become a solution to the query request. The values of the variables are returned in the query result in a format based on the “SELECT” clause of the query (similar to SQL).
 
-In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. The SPARQL specification [W3C SPARQL] in section 11.6 (http://www.w3.org/TR/rdf-sparql-query/#extensionFunctions) describes the mechanism for invocation of such a filter function.
+In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. The SPARQL specification <<SPARQL>> in section 17.6footnote:[https://www.w3.org/TR/sparql11-query/#extensionFunctions] describes the mechanism for invocation of such a filter function.
 
-The OGC GeoSPARQL standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF, and it defines an extension to the SPARQL query language for processing geospatial data.
+The OGC GeoSPARQL standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF, and it defines extensions to the SPARQL query language for processing geospatial data.
 
-The GeoSPARQL standard follows a modular design; it comprises several different components.
+=== GeoSPARQL Standard structure
 
-- A _core_ component defines top-level RDFS/OWL classes for spatial objects. 
-- A _topology vocabulary_ component defines RDF properties for asserting and
-querying topological relations between spatial objects.
-- A _geometry_ component defines RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects.
-- A _geometry topology_ component defines topological query functions.
-- An _RDFS entailment_ component defines a mechanism for matching implicit RDF
-triples that are derived based on RDF and RDFS semantics.
-- A _query rewrite_ component defines rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions.
+The GeoSPARQL standard comprises multiple parts:
 
-Each of the components described above forms a requirements class for GeoSPARQL. Implementations can provide various levels of functionality by choosing which requirements classes to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary components.
+* a formal _profile_
+* <http://www.opengis.net/def/geosparql>
+** defined according to the _Profiles Vocabulary_ <<PROF>>
+** this relates the parts in the standard together, provides access to them, and declares dependencies on other standards
+* **this specification document**
+** which defines many of the standard's parts
+* a core RDF/OWL <<RDF>>,<<OWL2>> ontology for geographic information representation
+** based on the General Feature Model <<ISO19109>>, Simple Features <<ISO19125-1>>, Feature Geometry <<ISO19107>> and SQL MM <<ISO13249>>
+** defined within the specification document and delivered in RDF also
+* a Functions & Rules vocabulary, derived from the ontology
+** presented as a <<SKOS>> taxonomy
+* a Simple Features feature types vocabulary
+** presented as a <<SKOS>> taxonomy
+* a set of SPARQL <<SPARQL>> extension functions
+** defined within the specification document
+* a set of RIF <<RIFCORE>> rules, and
+** templated within the specification document
+** also delivered as a RIF document also
+* SHACL <<SHACL>> shapes for RDF data validation
+** defined within a shapes graph file
 
-In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g. those based on the Region Connection Calculus [1, 9]) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relations between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relations between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.
+This specification document follows further modular design; it comprises several different components:
 
+* a _core_ component defining the top-level RDFS/OWL classes for spatial objects 
+* a _topology vocabulary_ component defining the RDF properties for asserting and querying topological relations between spatial objects
+* a _geometry_ component defines RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects
+* a _geometry topology_ component defining topological query functions
+* an _RDFS entailment_ component defining mechanisms for matching implicit RDF triples that are derived based on RDF and RDFS semantics
+* a _query rewrite_ component defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions
+
+Each of these specification components forms a _requirements class_ for GeoSPARQL. Implementations can provide various levels of functionality by choosing which requirements classes to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary components.
+
+In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g. those based on the Region Connection Calculus <<QUAL>>, <<LOGIC>>) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relations between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relations between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.
