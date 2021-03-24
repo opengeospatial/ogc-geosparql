@@ -95,6 +95,36 @@ WHERE { :f1 geo:sfDisjoint :f1 }
 
 Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`] should be differentiated by `Geometry` class properties, perhaps relating to precision, SRS etc.
 
+==== Property: geo:hasBoundingBox
+
+The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
+```turtle
+geo:hasBoundingBox a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has Bounding-Box"@en ;
+    skos:definition "Bounding-box or envelope of a given feature."@en ; 
+	skos:scopeNote "The target geometry shall describe a rectilinear region whose edges are aligned with the axes of the coordinate reference system"@en ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:range geo:Geometry .
+```
+
+GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] property. A feature may be associated with more than one bounding-box, for example in different coordinate reference systems.
+
+==== Property: geo:hasCentroid
+
+The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution map, and for some indexing and discovery functions. 
+```turtle
+geo:hasCentroid a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has Bounding-Box"@en ;
+    skos:definition "Centroid of a given feature."@en ; 
+	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:range geo:Geometry .
+```
+
+GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] property. A feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.
+
 ==== Property: geo:hasLength
 
 The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] is used to indicate the length of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. In the case of a one-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is the simple length. In the case of a two-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is interpreted to mean the perimeter length. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
