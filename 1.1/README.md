@@ -5,7 +5,7 @@ This folder contains the working copy of OGC's GeoSPARQL standard, expected to b
 * **Profile Declaration**
     * a desription of the various parts of GeoSPARQL 1.1, according to the [W3C's Profiles Vocabulary](https://w3c.github.io/dx-prof/prof/)
     * [profile.ttl](profile.ttl) - RDF file of the profile declaration, in turtle format
-    * [https://raw.githack.com/opengeospatial/ogc-geosparql/master/1.1/profile.html](profile.html) - HTML file of the profile declaration, rendered for viewing
+    * [profile.html](https://raw.githack.com/opengeospatial/ogc-geosparql/master/1.1/profile.html) - HTML file of the profile declaration, rendered for viewing
 
 * **Specification**
     * [spec/](spec/) - folder containing ASCII Doc source files. images and build scripts
