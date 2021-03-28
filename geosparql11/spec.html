@@ -642,9 +642,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel3">
 <li><a href="#_property_geohasgeometry">8.3.1. Property: geo:hasGeometry</a></li>
 <li><a href="#_property_geohasdefaultgeometry">8.3.2. Property: geo:hasDefaultGeometry</a></li>
-<li><a href="#_property_geohaslength">8.3.3. Property: geo:hasLength</a></li>
-<li><a href="#_property_geohasarea">8.3.4. Property: geo:hasArea</a></li>
-<li><a href="#_property_geohasvolume">8.3.5. Property: geo:hasVolume</a></li>
+<li><a href="#_property_geohasboundingbox">8.3.3. Property: geo:hasBoundingBox</a></li>
+<li><a href="#_property_geohascentroid">8.3.4. Property: geo:hasCentroid</a></li>
+<li><a href="#_property_geohaslength">8.3.5. Property: geo:hasLength</a></li>
+<li><a href="#_property_geohasarea">8.3.6. Property: geo:hasArea</a></li>
+<li><a href="#_property_geohasvolume">8.3.7. Property: geo:hasVolume</a></li>
 </ul>
 </li>
 <li><a href="#_standard_properties_for_geogeometry">8.4. Standard Properties for geo:Geometry</a>
@@ -2233,7 +2235,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 <p>Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL&#8217;s "geometry class". The W3C&#8217;s more recent DCAT2 standard<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup> similarly contains usage notes for <code>geometry</code>, <code>bbox</code> and other properties that suggest the use of GeoSPARQL literals.</p>
 </div>
 <div class="paragraph">
-<p>Some of the properties defined in these vocabularies, such as <code>bbox</code> and <code>centroid</code> are now defined in this version of GeoSPARQL and, indeed, vocabularies such as DCAT2 provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <a href="#CHARTER">[CHARTER]</a> contains references to a number of vocabularies/ontiligies that were influential in the generation of this verison of GeoSPARQL.</p>
+<p>Some of the properties defined in these vocabularies, such as <code>hasSpatialResolution</code> which are introduced in this version of GeoSPARQL, were motivated by similar properties introduced in external vocabularies such as DCAT2, which provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <a href="#CHARTER">[CHARTER]</a> contains references to a number of vocabularies/ontologies that were influential in the generation of this verison of GeoSPARQL.</p>
 </div>
 <div class="sect2">
 <h3 id="_parameters_2"><a class="anchor" href="#_parameters_2"></a>8.1. Parameters</h3>
@@ -2309,7 +2311,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a>,
-<a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> to be used in SPARQL graph patterns.</p></td>
+<a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/feature-properties</code></p></td>
@@ -2365,7 +2367,49 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>8.3.3. Property: geo:hasLength</h4>
+<h4 id="_property_geohasboundingbox"><a class="anchor" href="#_property_geohasboundingbox"></a>8.3.3. Property: geo:hasBoundingBox</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasBoundingBox a rdf:Property, owl:ObjectProperty ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has bounding box"@en ;
+    skos:definition "The minimum or smallest bounding or enclosing box of a given feature."@en ;
+    skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:Geometry .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GeoSPARQL does not restrict the cardinality of the <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> property. A feature may be associated with more than one bounding-box, for example in different coordinate reference systems.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohascentroid"><a class="anchor" href="#_property_geohascentroid"></a>8.3.4. Property: geo:hasCentroid</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution map, and for some indexing and discovery functions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasCentroid a rdf:Property, owl:ObjectProperty ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has centroid"@en ;
+    skos:definition "The arithmetic mean position of all the geoetry points of a given feature."@en ;
+    skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:Geometry .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GeoSPARQL does not restrict the cardinality of the <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> property. A feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>8.3.5. Property: geo:hasLength</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a> is used to indicate the length of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. In the case of a one-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is the simple length. In the case of a two-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is interpreted to mean the perimeter length. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -2405,7 +2449,7 @@ A consistency check can be applied to geometries indicating both this property a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>8.3.4. Property: geo:hasArea</h4>
+<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>8.3.6. Property: geo:hasArea</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a> is used to indicate the area of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -2445,7 +2489,7 @@ A consistency check can be applied to geometries indicating both this property a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>8.3.5. Property: geo:hasVolume</h4>
+<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>8.3.7. Property: geo:hasVolume</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> is used to indicate the volume of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -4549,7 +4593,12 @@ Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/g
 <h4 id="_a_3_1_2_confgeometry_extensionfeature_properties"><a class="anchor" href="#_a_3_1_2_confgeometry_extensionfeature_properties"></a>A.3.1.2 <code>/conf/geometry-extension/feature-properties</code></h4>
 <div class="paragraph">
 <p><strong>Requirement</strong>: <code>/req/geometry-extension/feature-properties</code>
-Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a> to be used in SPARQL graph patterns.</p>
+Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasVolume</code></a>
+<a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a>
+<a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5935,7 +5984,7 @@ WHERE { { # check for asserted statement
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-24 01:06:08 UTC
+Last updated 2021-03-28 10:26:31 UTC
 </div>
 </div>
 </body>
