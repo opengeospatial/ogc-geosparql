@@ -10,7 +10,7 @@ Many vocabularies, such as these two, provide little specific support for detail
 
 Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent DCAT2 standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
 
-Some of the properties defined in these vocabularies, such as `bbox` and `centroid` are now defined in this version of GeoSPARQL and, indeed, vocabularies such as DCAT2 provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontiligies that were influential in the generation of this verison of GeoSPARQL.
+Some of the properties defined in these vocabularies, such as `hasSpatialResolution` which are introduced in this version of GeoSPARQL, were motivated by similar properties introduced in external vocabularies such as DCAT2, which provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontologies that were influential in the generation of this verison of GeoSPARQL.
 
 === Parameters
 
@@ -52,7 +52,7 @@ Properties are defined for associating geometries with features.
 
 |===
 | *Req 9* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`], 
-http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`], http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] and http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] to be used in SPARQL graph patterns.
+http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`], http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`], http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] and http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/feature-properties`
 |===
 
@@ -94,6 +94,38 @@ WHERE { :f1 geo:sfDisjoint :f1 }
 ```
 
 Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`] should be differentiated by `Geometry` class properties, perhaps relating to precision, SRS etc.
+
+==== Property: geo:hasBoundingBox
+
+The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
+```turtle
+geo:hasBoundingBox a rdf:Property, owl:ObjectProperty ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has bounding box"@en ;
+    skos:definition "The minimum or smallest bounding or enclosing box of a given feature."@en ; 
+    skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
+    rdfs:domain geo:Feature ;      
+    rdfs:range geo:Geometry .
+```
+
+GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] property. A feature may be associated with more than one bounding-box, for example in different coordinate reference systems.
+
+==== Property: geo:hasCentroid
+
+The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution map, and for some indexing and discovery functions. 
+```turtle
+geo:hasCentroid a rdf:Property, owl:ObjectProperty ;
+    rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has centroid"@en ;
+    skos:definition "The arithmetic mean position of all the geoetry points of a given feature."@en ; 
+    skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+    rdfs:domain geo:Feature ;     
+    rdfs:range geo:Geometry .
+```
+
+GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] property. A feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.
 
 ==== Property: geo:hasLength
 
