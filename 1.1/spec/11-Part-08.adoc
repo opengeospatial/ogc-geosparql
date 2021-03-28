@@ -408,6 +408,19 @@ geo:asWKT a rdf:Property, owl:DatatypeProperty ;
     rdfs:range geo:wktLiteral .
 ```
 
+==== Function: geof:asWKT
+
+```
+geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] converts `geom` to an equivalent WKT representation preserving the coordinate reference system. 
+
+|===
+| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] as a SPARQL extension function.
+|`/req/geometry-extension/asWKT-function`
+|===
+
 === GML Serialization (serialization=GML)
 
 This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
@@ -474,6 +487,19 @@ geo:asGML a rdf:Property ;
     rdfs:range geo:gmlLiteral .
 ```
 
+==== Function: geof:asGML
+
+```
+geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] converts `geom` to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system. 
+
+|===
+| *Req 19.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] as a SPARQL extension function.
+|`/req/geometry-extension/asGML-function`
+|===
+
 
 === GeoJSON Serialization (serialization=GEOJSON)
 
@@ -534,6 +560,19 @@ geo:asGeoJSON a rdf:Property, owl:DatatypeProperty ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:geoJSONLiteral .
 ```
+
+==== Function: geof:asGeoJSON
+
+```
+geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] converts `geom` to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal. 
+
+|===
+| *Req 23.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] as a SPARQL extension function.
+|`/req/geometry-extension/asGeoJSON-function`
+|===
 
 === KML Serialization (serialization=KML)
 
@@ -597,6 +636,19 @@ geo:asKML a rdf:Property, owl:DatatypeProperty;
     rdfs:range geo:kmlLiteral .
 ```
 
+==== Function: geof:asKML
+
+```
+geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] converts `geom` to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal. 
+
+|===
+| *Req 27.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] as a SPARQL extension function.
+|`/req/geometry-extension/asKML-function`
+|===
+
 === DGGS Serialization (serialization=DGGS)
 
 This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation and is based on elements of the second version of the DGGS _Abstract Specification_ <<DGGSAS>>. It defines one RDFS Datatype:
@@ -657,6 +709,19 @@ geo:asDggsWkt a rdf:Property, owl:DatatypeProperty ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:dggsWktLiteral .
 ```
+
+==== Function: geof:asDggsWKT
+
+```
+geof:asDggsWKT (geom: ogc:geomLiteral, dggsIri: xsd:anyURI): geo:DggsWKTLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asDggsWKT[`geof:asDggsWKT`] converts `geom` to an equivalent DggsWKT representation. 
+
+|===
+| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asDggsWKT[`geof:asDggsWKT`] as a SPARQL extension function.
+|`/req/geometry-extension/asDggsWKT-function`
+|===
 
 === Non-topological Query Functions
 
@@ -828,6 +893,14 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 ```
 
 Returns the minimum Z coordinate for `geom`.
+
+```
+geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
+```
+
+http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+
+NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
 
 === Spatial Aggregate Functions
 
