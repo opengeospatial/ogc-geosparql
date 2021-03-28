@@ -100,11 +100,12 @@ Such cases are application-specific data modeling errors and are therefore outsi
 The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
 ```turtle
 geo:hasBoundingBox a rdf:Property, owl:ObjectProperty ;
-    rdfs:isDefinedBy geo: ;
-    skos:prefLabel "has Bounding-Box"@en ;
-    skos:definition "Bounding-box or envelope of a given feature."@en ; 
-	skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
     rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has bounding box"@en ;
+    skos:definition "The minimum or smallest bounding or enclosing box of a given feature."@en ; 
+    skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
+    rdfs:domain geo:Feature ;      
     rdfs:range geo:Geometry .
 ```
 
@@ -115,11 +116,12 @@ GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/ge
 The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution map, and for some indexing and discovery functions. 
 ```turtle
 geo:hasCentroid a rdf:Property, owl:ObjectProperty ;
-    rdfs:isDefinedBy geo: ;
-    skos:prefLabel "has Bounding-Box"@en ;
-    skos:definition "Centroid of a given feature."@en ; 
-	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
     rdfs:subPropertyOf geo:hasGeometry;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has centroid"@en ;
+    skos:definition "The arithmetic mean position of all the geoetry points of a given feature."@en ; 
+    skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+    rdfs:domain geo:Feature ;     
     rdfs:range geo:Geometry .
 ```
 
