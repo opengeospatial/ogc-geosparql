@@ -1,6 +1,177 @@
 = Annex B (informative) GeoSPARQL Examples
 
-== B.1 Example Data
+== B.1 RDF Examples
+
+This Section illustrates GeoSPARQL ontology modelling with extended examples.
+
+=== B.1.1 Classes
+
+==== B 1.1.1 `SpatialObject`
+Defined in Section <<Class: geo:SpatialObject>>.
+
+Basic use (as per the example in the class definition)
+
+```turtle
+eg:x a geo:SpatialObject ;
+     skos:prefLabel "Object X";
+.
+```
+
+NOTE: it is unlikely that users of GeoSPARQL will create many instances of `geo:SpatialObject` as its two more concrete subclasses, `geo:Feature` & `geo:Geometry` are thought to be more related to real-world phenomena and use.
+
+==== B 1.1.2 `Feature`
+Defined in Section <<Class: geo:Feature>>.
+
+===== B 1.1.2.1 Basic use
+
+```turtle
+eg:x a geo:Feature ;
+     skos:prefLabel "Feature X";
+.
+```
+
+Here a `Feature` is declared and given a preferred label.
+
+===== B 1.1.2.2 A `Feature` related to a `Geometry`
+
+```turtle
+eg:x a geo:Feature ;
+     skos:prefLabel "Feature X";
+     geo:hasGeometry [
+         geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+     ] ;
+.
+```
+
+Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of `geo:hasGeometry`. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property `geo:asWKT` and the literal type `geo:WktLiteral`.
+
+===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+     skos:prefLabel "Feature X";
+     geo:hasGeometry [
+         geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+     ] ;
+     geo:hasArea [
+         a geo:SpatialMeasure ;
+         qudt:numericValue 8.7 ;
+         qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+     ] ;
+.
+```
+
+Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property `goe:hasArea`. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
+
+Note that in this example, the use of QUDT and its `qudt:numericValue` & `qudt:unit` is just one of many possible ways to convey a `SpatialMeasure` instance's value.
+
+===== B 1.1.2.3 `Feature` with two different `Geometry` instances indicated
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+     skos:prefLabel "Feature X";
+     geo:hasGeometry [
+         rdfs:label "Official boundary" ;
+         rdfs:comment "Official boundary from the Department of Xxx" ;
+         geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+     ] ,
+     [
+         rdfs:label "Unofficial boundary" ;
+         rdfs:comment "Unofficial boundary as actually used by everyone" ;
+         geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:WktLiteral ;
+     ] ;
+.
+```
+
+In this example, `Feature X` has two differnt `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
+
+===== B 1.1.2.3 `Feature` with two different `Geometry` instances of different types indicated
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+     skos:prefLabel "Feature X";
+     geo:hasGeometry [
+         geo:hasSpatialResolution [
+            qudt:numericValue 100 ;
+            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
+         ] ;
+         geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:WktLiteral ;
+     ] ,
+     [
+         geo:hasSpatialResolution [
+            qudt:numericValue 5 ;
+            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
+         ] ;
+         geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:WktLiteral ;
+     ] ;
+.
+```
+
+In this example, `Feature X` has two differnt `Geometry` instances indicated with different spatial resolutions. This use of the `geo:hasSpatialResolution` property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
+
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of `geo:hasSpatialResolution`.
+
+
+==== B.1.1.3 `Geometry`
+Defined in Section <<Class: geo:Geometry>>.
+
+==== B 1.1.4 `SpatialMeasure`
+Defined in Section <<Class: geo:SpatialMeasure>>.
+
+=== B.1.2 Properties
+|===
+|New element | Section
+
+2+|_Classes_
+|Spatial Measure class | <<Class: geo:SpatialMeasure>>
+2+|_Feature Properties_
+|hasBoundingBox | <<Property: geo:hasBoundingBox>>
+|hasCentroid | <<Property: geo:hasCentroid>>
+|hasLength | <<Property: geo:hasLength>>
+|hasArea | <<Property: geo:hasArea>>
+|hasVolume | <<Property: geo:hasVolume>>
+2+|_Geometry Properties_
+|inSRS | <<Property: geo:inSRS>>
+2+|_Geometry Serializations_
+|asWKT function | <<Function: geof:asWKT>>
+|asGML function | <<Function: geof:asGML>>
+|geoJSONLiteral | <<RDFS Datatype: geo:geoJSONLiteral>>
+|asGeoJSON | <<Property: geo:asGeoJSON>>
+|asGeoJSON function | <<Function: geof:asGeoJSON>>
+|kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
+|asKML | <<Property: geo:asKML>>
+|asKML function | <<Function: geof:asKML>>
+|dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
+|asDGGSWKT | <<Property: geo:asDGGSWKT>>
+|asDGGSWKT function | <<Function: geo:asDGGSWKT>>
+2+|_Non-topological Query Functions_
+|maxX | <<Function: geof:maxX>>
+|maxY | <<Function: geof:maxY>>
+|maxZ | <<Function: geof:maxZ>>
+|minX | <<Function: geof:minX>>
+|minY | <<Function: geof:minY>>
+|minZ | <<Function: geof:minZ>>
+2+|_Spatial Aggregate Functions_
+|BBOX | <<Function: geosaf:BBOX>>
+|BoundingCircle | <<Function: geoaf:BoundingCircle>>
+|Centroid | <<Function: geoaf:Centroid>>
+|ConcatLines | <<Function: geoaf:ConcatLines>>
+|ConcaveHull | <<Function: geoaf:ConcaveHull>>
+|ConvexHull | <<Function: geoaf:ConvexHull>>
+|Union | <<Function: geoaf:Union>>
+|===
+
+== B.2 Example Queries & Rules 
+
+This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
+
+=== B.2.1 Example Data
 
 The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
 
@@ -94,11 +265,12 @@ my:FExactGeom a sf:Point ;
                  Point(-83.4 34.4)"""^^geo:wktLiteral.
 ```
 
-== B.2 Example Queries
+=== B.2.2 Example Queries
 
 This Section illustrates the use of GeoSPARQL functions through a series of example queries.
 
-*Example 1*: _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
+==== Example 1
+_Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
 
 ```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
@@ -124,7 +296,8 @@ WHERE {
 |`my:F`
 |===
 
-*Example 2*: _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
+==== Example 2
+_Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
 
 ```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
@@ -149,7 +322,8 @@ WHERE { ?f my:hasPointGeometry ?fGeom .
 |`my:D`
 |===
 
-*Example 3*: _Find all features that touch the union of feature `my:A` and feature `my:D`,
+==== Example 3
+_Find all features that touch the union of feature `my:A` and feature `my:D`,
 where computations are based on_ `my:hasExactGeometry`.
 
 ```sparql
@@ -176,7 +350,8 @@ WHERE { ?f my:hasExactGeometry ?fGeom .
 |`my:C`
 |===
 
-*Example 4*: _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
+==== Example 4
+_Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
 
 ```sparql
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/> 
@@ -203,11 +378,12 @@ LIMIT 3
 |`my:E`
 |===
 
-== B.3 Example Rule Application
+=== B.2.3 Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
-*Example 5*: _Find all features or geometries that overlap feature_ `my:A`.
+==== Example 5
+_Find all features or geometries that overlap feature_ `my:A`.
 
 *Original Query*:
 
