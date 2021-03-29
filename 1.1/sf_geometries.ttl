@@ -11,8 +11,9 @@
     dc:title "Simple Features Vocabulary" ;
 	dc:creator "Open Geospatial Consortium"^^xsd:string ;
 	dc:date "2012-09-11"^^xsd:date ;
+	dc:modified "2022-03-25"^^xsd:date ;
 	dc:description "An RDF/OWL vocabulary for defining SimpleFeature geometry types"^^xsd:string ;
-	owl:versionInfo "OGC GeoSPARQL 1.0.1"^^xsd:string .
+	owl:versionInfo "OGC GeoSPARQL 1.1"^^xsd:string .
 
 sf:Curve a rdfs:Class,
         owl:Class ;
@@ -35,6 +36,43 @@ The boundary of a non-closed Curve consists of its two end Points.
 A Curve is defined as topologically closed, that is, it contains its endpoints f(a) and f(b)."""@en ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
     rdfs:subClassOf sf:Geometry .
+
+sf:Envelope
+  a rdfs:Class ;
+  a owl:Class ;
+  rdfs:comment """Shape defined by the corner points of the bounding box of a geometry.
+The corner points may be in any dimension (usually 2D or 3D) but the two corners must have the same dimension. """ ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
+  rdfs:label "Envelope or Bounding Box"@en ;
+  rdfs:subClassOf sf:Geometry ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sf:maximum ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty sf:minimum ;
+    ] ;
+.
+
+sf:maximum
+  a owl:ObjectProperty ;
+  rdfs:comment "Point containing the maximum values of the coordinates of an envelope or bounding box" ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
+  rdfs:domain sf:Envelope ;
+  rdfs:label "maximum" ;
+  rdfs:range sf:Point ;
+.
+sf:minimum
+  a owl:ObjectProperty ;
+  rdfs:comment "Point containing the minimum values of the coordinates of an envelope or bounding box" ;
+  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
+  rdfs:domain sf:Envelope ;
+  rdfs:label "minimum" ;
+  rdfs:range sf:Point ;
+.
 
 sf:Geometry a rdfs:Class,
         owl:Class ;
@@ -206,3 +244,4 @@ sf:Triangle a rdfs:Class,
     rdfs:comment """A Triangle is a polygon with 3 distinct, non-collinear vertices and no interior boundary."""@en ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
     rdfs:subClassOf sf:Polygon .
+

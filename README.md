@@ -29,4 +29,11 @@ An index of the working artefacts can be found <a href="https://opengeospatial.g
 ### How to get involved
 It is the SWG's intention to operate as open and transparent as possible. Different communities or knowledge domains use spatial data on the web and/or in graphs, in one way or another. They all stand to benefit from improvement of the GeoSPARQL standard, so participation in development is highly recommended.
 
-Next to making change requests in the OGC Issue Tracker, which is possible for everyone at any time, anyone can participate in the standard's development by commenting on issues in this repository, or adding a new issue. The SWG particularly want to inivite implementers of the GeoSPARQL standard to get actively involved in working towards improved versions of the standard.
+Next to making change requests in the OGC Issue Tracker, which is possible for everyone at any time, anyone can participate in this standard's development by commenting on [Issues in this repository](https://github.com/opengeospatial/ogc-geosparql/issues/), or adding a new Issue. The SWG particularly want to inivite implementers of the GeoSPARQL standard to get actively involved in working towards improved versions of the standard.
+
+#### Contact
+To contact the SWG directly, you may email the closed SWG mailing list (<geosparql.swg@lists.opengeospatial.org>) or email SWG chairs directly:
+
+* Joseph Abhayaratna - <joseph.abhayaratna@geoscape.com.au>
+* Linda van den Brink - <l.vandenbrink@geonovum.nl>
+* Dimitris Kotzinos - <kotzino@gmail.com>
