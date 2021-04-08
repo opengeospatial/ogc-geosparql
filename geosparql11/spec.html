@@ -712,17 +712,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_function_geofminx">8.9.14. Function: geof:minX</a></li>
 <li><a href="#_function_geofminy">8.9.15. Function: geof:minY</a></li>
 <li><a href="#_function_geofminz">8.9.16. Function: geof:minZ</a></li>
-</ul>
-</li>
-<li><a href="#_spatial_aggregate_functions">8.10. Spatial Aggregate Functions</a>
-<ul class="sectlevel3">
-<li><a href="#_function_geosafbbox">8.10.1. Function: geosaf:BBOX</a></li>
-<li><a href="#_function_geosafboundingcircle">8.10.2. Function: geosaf:BoundingCircle</a></li>
-<li><a href="#_function_geosafcentroid">8.10.3. Function: geosaf:Centroid</a></li>
-<li><a href="#_function_geosafconcatlines">8.10.4. Function: geosaf:ConcatLines</a></li>
-<li><a href="#_function_geosafconcavehull">8.10.5. Function: geosaf:ConcaveHull</a></li>
-<li><a href="#_function_geosafconvexhull">8.10.6. Function: geosaf:ConvexHull</a></li>
-<li><a href="#_function_geosafunion">8.10.7. Function: geosaf:Union</a></li>
+<li><a href="#_function_geoftransform">8.9.17. Function: geof:transform</a></li>
+<li><a href="#_function_geofminboundingcircle">8.9.18. Function: geof:minBoundingCircle</a></li>
+<li><a href="#_function_geofcentroid">8.9.19. Function: geof:centroid</a></li>
+<li><a href="#_function_geofconcatlines">8.9.20. Function: geof:concatLines</a></li>
+<li><a href="#_function_geofconcavehull">8.9.21. Function: geof:concaveHull</a></li>
+<li><a href="#_function_geofunion2">8.9.22. Function: geof:union2</a></li>
 </ul>
 </li>
 </ul>
@@ -3386,7 +3381,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 31</strong> Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/distance"><code>geof:distance</code></a>, <a href="http://www.opengis.net/def/function/geosparql/buffer"><code>geof:buffer</code></a>, <a href="http://www.opengis.net/def/function/geosparql/convexHull"><code>geof:convexHull</code></a>, <a href="http://www.opengis.net/def/function/geosparql/intersection"><code>geof:intersection</code></a>, <a href="http://www.opengis.net/def/function/geosparql/union"><code>geof:union</code></a>, <a href="http://www.opengis.net/def/function/geosparql/difference"><code>geof:difference</code></a>, <a href="http://www.opengis.net/def/function/geosparql/symDifference"><code>geof:symDifference</code></a>, <a href="http://www.opengis.net/def/function/geosparql/envelope"><code>geof:envelope</code></a> and <a href="http://www.opengis.net/def/function/geosparql/boundary"><code>geof:boundary</code></a> as SPARQL extension functions, consistent with the definitions of their corresponding functions (<code>distance</code>, <code>buffer</code>, <code>convexHull</code>, <code>intersection</code>, <code>difference</code>, <code>symDifference</code>, <code>envelope</code> and <code>boundary</code> respectively) in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 31</strong> Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/distance"><code>geof:distance</code></a>, <a href="http://www.opengis.net/def/function/geosparql/buffer"><code>geof:buffer</code></a>, <a href="http://www.opengis.net/def/function/geosparql/convexHull"><code>geof:convexHull</code></a>, <a href="http://www.opengis.net/def/function/geosparql/intersection"><code>geof:intersection</code></a>, <a href="http://www.opengis.net/def/function/geosparql/union"><code>geof:union</code></a>, <a href="http://www.opengis.net/def/function/geosparql/difference"><code>geof:difference</code></a>, <a href="http://www.opengis.net/def/function/geosparql/symDifference"><code>geof:symDifference</code></a>, <a href="http://www.opengis.net/def/function/geosparql/envelope"><code>geof:envelope</code></a>, <a href="http://www.opengis.net/def/function/geosparql/boundary"><code>geof:boundary</code></a> as SPARQL extension functions, consistent with the definitions of their corresponding functions (<code>distance</code>, <code>buffer</code>, <code>convexHull</code>, <code>intersection</code>, <code>difference</code>, <code>symDifference</code>, <code>envelope</code> and <code>boundary</code> respectively) in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a> and other attached definitions respectively.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/query-functions</code></p></td>
@@ -3564,7 +3559,8 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/getSRID"><code>geof:getSRID</code></a> as a SPARQL extension function.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/getSRID"><code>geof:getSRID</code></a>, <a href="http://www.opengis.net/def/function/geosparql/concaveHull"><code>geof:concaveHull</code></a>, <a href="http://www.opengis.net/def/function/geosparql/boundingCircle"><code>geof:minBoundingCircle</code></a>, <a href="http://www.opengis.net/def/function/geosparql/union2"><code>geof:union2</code></a>, <a href="http://www.opengis.net/def/function/geosparql/concatLines"><code>geof:concatLines</code></a>, <a href="http://www.opengis.net/def/function/geosparql/concatLines"><code>geof:centroid</code></a>, <a href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:maxX</code></a>,
+<a href="http://www.opengis.net/def/function/geosparql/maxY"><code>geof:maxY</code></a>, <a href="http://www.opengis.net/def/function/geosparql/maxZ"><code>geof:maxZ</code></a>,  <a href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:minX</code></a>, <a href="http://www.opengis.net/def/function/geosparql/minY"><code>geof:minY</code></a> and <a href="http://www.opengis.net/def/function/geosparql/minZ"><code>geof:minZ</code></a> as a SPARQL extension functions.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/srid-function</code></p></td>
@@ -3580,7 +3576,7 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the maximum X coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxX"><code>geof:maxX</code></a> returns the maximum X coordinate for <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3591,7 +3587,7 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the maximum Y coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxY"><code>geof:maxY</code></a> returns the maximum Y coordinate for <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3602,7 +3598,7 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the maximum Z coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxZ"><code>geof:maxZ</code></a> returns the maximum Z coordinate for <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3613,7 +3609,7 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the minimum X coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:minX</code></a> returns the minimum X coordinate for <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3624,7 +3620,7 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the minimum Y coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minY"><code>geof:minY</code></a> returns the minimum Y coordinate for <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -3635,8 +3631,11 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </div>
 </div>
 <div class="paragraph">
-<p>Returns the minimum Z coordinate for <code>geom</code>.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minZ"><code>geof:minZ</code></a> returns the minimum Z coordinate for <code>geom</code>.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_function_geoftransform"><a class="anchor" href="#_function_geoftransform"></a>8.9.17. Function: geof:transform</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral</code></pre>
@@ -3658,106 +3657,59 @@ We recommend that implementers use the same literal type as a result of this fun
 </table>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_spatial_aggregate_functions"><a class="anchor" href="#_spatial_aggregate_functions"></a>8.10. Spatial Aggregate Functions</h3>
-<div class="paragraph">
-<p>This clause defines SPARQL functions for performing spatial aggregation operations.</p>
-</div>
-<table class="tableblock frame-all grid-all stripes-odd stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 33</strong> Implementations shall support <code>geoaf:BBOX</code>, <code>geosaf:BoundingCircle</code>, <code>geosaf:Centroid</code>, <code>geosaf:ConcatLines</code>, <code>geosaf:ConcaveHull</code>, <code>geosaf:ConvexHull</code> and <code>geosaf:Union</code> as SPARQL extension functions.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/query-aggregate-functions</code></p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>This clause establishes the Spatial Aggregate extension requirements class with URI <code>/req/spatial-aggregate-extension</code>.
-Spatial Aggregate Functions may be used in the SELECT used in the SELECT, HAVING and ORDER BY clauses of a SPARQL query.
-Such functions calculate an aggregate value over a group of solutions. Solution groups are determined by a GROUP BY clause.
-All solutions form a single group if no GROUP BY is specified.</p>
-</div>
 <div class="sect3">
-<h4 id="_function_geosafbbox"><a class="anchor" href="#_function_geosafbbox"></a>8.10.1. Function: geosaf:BBOX</h4>
+<h4 id="_function_geofminboundingcircle"><a class="anchor" href="#_function_geofminboundingcircle"></a>8.9.18. Function: geof:minBoundingCircle</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geosaf:BBOX (ogc:geomLiteral): ogc:geomLiteral</code></pre>
+<pre class="highlight"><code>geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Calculates a minimum bounding box of the set of given geometries.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/boundingCircle"><code>geof:boundingCircle</code></a> calculates a minimum bounding circle of the set of given geometries.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geosafboundingcircle"><a class="anchor" href="#_function_geosafboundingcircle"></a>8.10.2. Function: geosaf:BoundingCircle</h4>
+<h4 id="_function_geofcentroid"><a class="anchor" href="#_function_geofcentroid"></a>8.9.19. Function: geof:centroid</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geosaf:BoundingCircle (ogc:geomLiteral): ogc:geomLiteral</code></pre>
+<pre class="highlight"><code>geof:centroid (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Calculates a minimum bounding circle of the set of given geometries.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/centroid"><code>geof:centroid</code></a> valculates the centroid of the set of given geometries.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geosafcentroid"><a class="anchor" href="#_function_geosafcentroid"></a>8.10.3. Function: geosaf:Centroid</h4>
+<h4 id="_function_geofconcatlines"><a class="anchor" href="#_function_geofconcatlines"></a>8.9.20. Function: geof:concatLines</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geosaf:Centroid (ogc:geomLiteral): ogc:geomLiteral</code></pre>
+<pre class="highlight"><code>geof:concatLines (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Calculates the centroid of the set of given geometries.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/concatLines"><code>geof:concatLines</code></a>  Concatenates a set of LineStrings.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geosafconcatlines"><a class="anchor" href="#_function_geosafconcatlines"></a>8.10.4. Function: geosaf:ConcatLines</h4>
+<h4 id="_function_geofconcavehull"><a class="anchor" href="#_function_geofconcavehull"></a>8.9.21. Function: geof:concaveHull</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geosaf:ConcatLines (ogc:geomLiteral): ogc:geomLiteral</code></pre>
+<pre class="highlight"><code>geof:concaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Concatenates a set of LineStrings.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/concaveHull"><code>geof:concaveHull</code></a> calculates the concave hull of the set of given geometries.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geosafconcavehull"><a class="anchor" href="#_function_geosafconcavehull"></a>8.10.5. Function: geosaf:ConcaveHull</h4>
+<h4 id="_function_geofunion2"><a class="anchor" href="#_function_geofunion2"></a>8.9.22. Function: geof:union2</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>geosaf:ConcaveHull (ogc:geomLiteral): ogc:geomLiteral</code></pre>
+<pre class="highlight"><code>geof:union2 (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Calculates the concave hull of the set of given geometries.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_function_geosafconvexhull"><a class="anchor" href="#_function_geosafconvexhull"></a>8.10.6. Function: geosaf:ConvexHull</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>geosaf:ConvexHull (ogc:geomLiteral): ogc:geomLiteral</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Calculates the convex hull of the set of given geometries.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_function_geosafunion"><a class="anchor" href="#_function_geosafunion"></a>8.10.7. Function: geosaf:Union</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code>geosaf:Union (ogc:geomLiteral): ogc:geomLiteral</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Calculates the union of the set of given geometries.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/union2"><code>geof:union2</code></a> calculates the union of the set of given geometries.</p>
 </div>
 </div>
 </div>
@@ -6253,7 +6205,7 @@ WHERE { { # check for asserted statement
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-31 00:26:03 UTC
+Last updated 2021-04-08 16:17:34 UTC
 </div>
 </div>
 </body>
