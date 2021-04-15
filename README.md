@@ -12,6 +12,14 @@ To see in-progress HTML & PDF versions of the GeoSPARQL 1.1 standard - specifica
 
 * [GeoSPARQL auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)
 
+If you want to cite the living document of the in-progress standard we encourage you to use the following BibTeX statement:
+
+@article{ogcgeosparql11,
+  title={OGC GeoSPARQL - A geographic query language for RDF data: GeoSPARQL 1.1 draft},
+  author={Perry, Matthew and Herring, John and Car, Nicholas J. and Homburg, Timo and J.D. Cox, Simon},
+  journal={OGC implementation standard draft}
+}
+
 ## Updates of GeoSPARQL
 
 ### Rationale
