@@ -94,12 +94,12 @@ geosparql:
 	skos:prefLabel "KML Literal"@en ;
 .
 
-:dggsWktLiteral
+:dggsLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A textual serialization of a Discrete Global Grid (DGGS) geometry object."""@en ;
-	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>""" ;
-	skos:prefLabel "DGGS Well-Known Text Literal"@en ;
+	skos:example """ "OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>""" ;
+	skos:prefLabel "DGGS Literal"@en ;
 .
 
 # #################################################################
@@ -415,6 +415,16 @@ geosparql:
 	skos:prefLabel "within"@en ;
 .
 
+:hasDggs
+	a owl:ObjectProperty ;
+	rdfs:domain :DggsObject ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """A reference to the specification of a Discrete Global Grid System (DGGS). Preferably an IRI."""@en ;
+	skos:prefLabel "has DGGS"@en ;
+	skos:example """ "<https://w3id.org/dggs/auspix>" """ ;
+.
+
+
 # #################################################################
 # #
 # #    Data properties
@@ -462,17 +472,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The KML serialization of a geometry"""@en ;
 	skos:prefLabel "as KML"@en ;
-.	
-
-:asDggsWkt
-	a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :hasSerialization;
-	rdfs:domain :Geometry ;
-	rdfs:range :dggsWktLiteral ;
-	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The Discrete Global Grid System (DGGS) serialization of a geometry"""@en ;	
-	skos:prefLabel "as DGGS"@en ;
-.	
+.		
 
 :coordinateDimension
 	a owl:DatatypeProperty ;
@@ -528,6 +528,16 @@ geosparql:
 	skos:prefLabel "spatial dimension"@en ;
 .
 
+:hasZones
+	a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :hasSerialization;
+	rdfs:domain :DggsObject ;
+	rdfs:range :dggsLiteral ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The serialization of the zones of a DGGS Object"""@en ;	
+	skos:prefLabel "has Zones"@en ;
+.
+
 # #################################################################
 # #
 # #    Classes
@@ -566,4 +576,12 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry."""@en ;
 	skos:prefLabel "Spatial Object"@en ;
+.
+
+:DggsObject
+	a owl:Class ;
+  	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	rdfs:subClassOf :SpatialObject ;
+	skos:definition """A collection of coherent DGGS zones"""@en ;
+	skos:prefLabel "DGGS Object"@en ;
 .
