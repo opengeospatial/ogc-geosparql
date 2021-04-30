@@ -2,6 +2,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql> .
 @prefix geosparql-spec: <http://www.opengis.net/spec/geosparql/1.1> .
+@prefix geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> . #To be changed once the definitive IRI of the HTML documentation is known.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -74,6 +75,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A Well-known Text serialization of a geometry object."""@en ;
 	skos:prefLabel "Well-known Text Literal"@en ;
+	skos:example geosparql-doc:annexB_example2 ;
 .
 
 :geoJSONLiteral
@@ -112,7 +114,7 @@ geosparql:
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The default geometry to be used in spatial calculations. It is Usually the most detailed geometry."""@en ;
+	skos:definition """The default geometry to be used in spatial calculations. It is usually the most detailed geometry."""@en ;
 	skos:prefLabel "default geometry"@en ;
 .
 
@@ -194,7 +196,18 @@ geosparql:
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A spatial representation for a given feature."""@en ;
-	skos:prefLabel "hasGeometry"@en ;
+	skos:prefLabel "has geometry"@en ;
+  skos:example geosparql-doc:annexB_example1 ,  geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 ;
+.
+
+:hasDefaultGeometry 
+	a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasGeometry ;
+	rdfs:domain :Feature ;
+	rdfs:range :Geometry ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The default geometry to be used in spatial calculations, usually the most detailed geometry."""@en ;
+	skos:prefLabel "has default geometry"@en ;
 .
 
 :hasBoundingBox
@@ -205,7 +218,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The minimum or smallest bounding or enclosing box of a given feature."""@en ;
 	skos:prefLabel "has bounding box"@en ;
-	skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
+	skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope."@en ;
 .
 
 :hasCentroid
@@ -214,9 +227,9 @@ geosparql:
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The arithmetic mean position of all the geoetry points of a given feature."""@en ;
+	skos:definition """The arithmetic mean position of all the geometry points of a given feature."""@en ;
 	skos:prefLabel "has centroid"@en ;
-	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point."@en ;
 .
 
 :hasArea a owl:ObjectProperty ;
@@ -426,6 +439,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The WKT serialization of a geometry"""@en ;
 	skos:prefLabel "as WKT"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
 :asGeoJSON
@@ -528,6 +542,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types."""@en ;
 	skos:prefLabel "Feature"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
 :Geometry
@@ -536,10 +551,12 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types."""@en ;
 	skos:prefLabel "Geometry"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
-:SpatialMeasure a owl:Class ;
-  rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+:SpatialMeasure
+	a owl:Class ;
+  	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """This class represents a measurement of some dimension of a feature's spatial presence."""@en ;
 	skos:prefLabel "Spatial Measure"@en ;
 .
