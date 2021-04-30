@@ -2,6 +2,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql> .
 @prefix geosparql-spec: <http://www.opengis.net/spec/geosparql/1.1> .
+@prefix geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> . #To be changed once the definitive IRI of the HTML documentation is known.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -11,41 +12,63 @@
 
 geosparql: 
 	a owl:Ontology ;
-  dcterms:title "GeoSPARQL Ontology" ;
+  	dcterms:title "GeoSPARQL Ontology" ;
 	dcterms:publisher [
-	 a sdo:Organization ;
-	 sdo:name "Open Geospatial Consortium" ;
-	 sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+		a sdo:Organization ;
+		sdo:name "Open Geospatial Consortium" ;
+		sdo:url "https://www.ogc.org"^^xsd:anyURI ;
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
-	dcterms:contributor [
+	dcterms:contributor 
+	[
+		a sdo:Person ;
+		sdo:name "Matthew Perry" ;
+		sdo:affiliation "Oracle Corporation" ;
+		sdo:email "matthew.perry@oracle.com"^^xsd:anyURI ;
+		sdo:url "?????????"^^xsd:anyURI ;
+	] ,
+	[
+		a sdo:Person ;
+		sdo:name "John Herring" ;
+		sdo:affiliation "Oracle Corporation" ;
+		sdo:email "john.herring@oracle.com"^^xsd:anyURI ;
+		sdo:url "?????????"^^xsd:anyURI ;
+	] ,
+	[
 		a sdo:Person ;
 		sdo:name "Nicholas J. Car" ;
 		sdo:affiliation "SURROUND Australia Pty Ltd" ;
-		sdo:email "nicholas.car@surroundaustralia.com" ;
-		sdo:url <https://orcid.org/0000-0002-8742-7730> ;
+		sdo:email "nicholas.car@surroundaustralia.com"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-8742-7730"^^xsd:anyURI ;
 	] ,
 	[
 		a sdo:Person ;
 		sdo:name "Joseph Abhayaratna" ;		
 		sdo:affiliation "Geoscape Australia" ;
-		sdo:email "joseph.abhayaratna@geoscape.com.au" ;
-		sdo:url <https://orcid.org/0000-0001-5075-6234> ;
+		sdo:email "joseph.abhayaratna@geoscape.com.au"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0001-5075-6234"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Timo Homburg" ;		
 		sdo:affiliation "Mainz University Of Applied Sciences" ;
-		sdo:email "timo.homburg@hs-mainz.de" ;
-		sdo:url <https://orcid.org/0000-0002-9499-5840> ;
+		sdo:email "timo.homburg@hs-mainz.de"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-9499-5840"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Simon J D Cox" ;		
 		sdo:affiliation "CSIRO Australia" ;
-		sdo:email "simon.cox@csiro.au" ;
-		sdo:url <https://orcid.org/0000-0002-3884-3420> ;
-	] ;
+		sdo:email "simon.cox@csiro.au"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-3884-3420"^^xsd:anyURI ;
+	] ,
+	[
+		a sdo:Person ;
+		sdo:name "Frans Knibbe" ;		
+		sdo:affiliation "CSIRO Australia" ;
+		sdo:email "fjknibbe@gmail.com"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-3884-3420"^^xsd:anyURI ;
+	] ;	
 	dcterms:created "2020-09-09"^^xsd:date ;
 	dcterms:modified "2021-03-25"^^xsd:date ;
 	dcterms:replaces <http://www.opengis.net/ont/geosparql/1.0> ;
@@ -74,6 +97,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A Well-known Text serialization of a geometry object."""@en ;
 	skos:prefLabel "Well-known Text Literal"@en ;
+	skos:example geosparql-doc:annexB_example2 ;
 .
 
 :geoJSONLiteral
@@ -96,8 +120,8 @@ geosparql:
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A textual serialization of a Discrete Global Grid (DGGS) geometry object."""@en ;
-	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWKTLiteral>""" ;
-	skos:prefLabel "DGGS Well-Known Text Literal"@en ;
+	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>""" ;
+	skos:prefLabel "DGGS Literal"@en ;
 .
 
 # #################################################################
@@ -112,7 +136,7 @@ geosparql:
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The default geometry to be used in spatial calculations. It is Usually the most detailed geometry."""@en ;
+	skos:definition """The default geometry to be used in spatial calculations. It is usually the most detailed geometry."""@en ;
 	skos:prefLabel "default geometry"@en ;
 .
 
@@ -194,7 +218,18 @@ geosparql:
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A spatial representation for a given feature."""@en ;
-	skos:prefLabel "hasGeometry"@en ;
+	skos:prefLabel "has geometry"@en ;
+  skos:example geosparql-doc:annexB_example1 ,  geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 ;
+.
+
+:hasDefaultGeometry 
+	a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasGeometry ;
+	rdfs:domain :Feature ;
+	rdfs:range :Geometry ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	skos:definition """The default geometry to be used in spatial calculations, usually the most detailed geometry."""@en ;
+	skos:prefLabel "has default geometry"@en ;
 .
 
 :hasBoundingBox
@@ -205,7 +240,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The minimum or smallest bounding or enclosing box of a given feature."""@en ;
 	skos:prefLabel "has bounding box"@en ;
-	skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope"@en ;
+	skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the geometry or feature e.g. sf:Envelope."@en ;
 .
 
 :hasCentroid
@@ -214,9 +249,9 @@ geosparql:
 	rdfs:domain :Feature ;
 	rdfs:range :Geometry ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The arithmetic mean position of all the geoetry points of a given feature."""@en ;
+	skos:definition """The arithmetic mean position of all the geometry points of a given feature."""@en ;
 	skos:prefLabel "has centroid"@en ;
-	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
+	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point."@en ;
 .
 
 :hasArea a owl:ObjectProperty ;
@@ -263,7 +298,7 @@ geosparql:
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """Exists if the subject SpatialObject is spatially disjoint  from the object SpatialObject. DE-9IM: FFTFFTTTT"""@en ;
+	skos:definition """Exists if the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FFTFFTTTT"""@en ;
 	skos:prefLabel "disconnected"@en ;
 .
 
@@ -272,7 +307,7 @@ geosparql:
 	rdfs:domain :SpatialObject ;
 	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """Exists if the subject SpatialObject spatially meets the object SpatialObject. DE-9IM: FFTFTTTTT"""@en ;
+	skos:definition """Exists if the subject SpatialObject spatially is externally connected to the object SpatialObject. DE-9IM: FFTFTTTTT"""@en ;
 	skos:prefLabel "externally connected"@en ;
 .
 
@@ -426,6 +461,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The WKT serialization of a geometry"""@en ;
 	skos:prefLabel "as WKT"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
 :asGeoJSON
@@ -450,7 +486,7 @@ geosparql:
 	skos:prefLabel "as KML"@en ;
 .	
 
-:asDGGSWKT
+:asDGGS
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization;
 	rdfs:domain :Geometry ;
@@ -520,7 +556,6 @@ geosparql:
 # #
 # #################################################################
 
-# http://www.opengis.net/ont/geosparql#Feature
 :Feature
 	a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
@@ -528,6 +563,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types."""@en ;
 	skos:prefLabel "Feature"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
 :Geometry
@@ -536,10 +572,12 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types."""@en ;
 	skos:prefLabel "Geometry"@en ;
+	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
-:SpatialMeasure a owl:Class ;
-  rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+:SpatialMeasure
+	a owl:Class ;
+  	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """This class represents a measurement of some dimension of a feature's spatial presence."""@en ;
 	skos:prefLabel "Spatial Measure"@en ;
 .
@@ -547,6 +585,6 @@ geosparql:
 :SpatialObject
 	a owl:Class ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry."""@en ;
+	skos:definition """The class represents everything that can have a spatial representation. It is superclass of Feature and Geometry."""@en ;
 	skos:prefLabel "Spatial Object"@en ;
 .
