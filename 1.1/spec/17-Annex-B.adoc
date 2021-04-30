@@ -26,7 +26,7 @@ eg:x a geo:SpatialObject ;
 .
 ```
 
-NOTE: It is unlikely that users of GeoSPARQL will create many instances of `geo:SpatialObject` as its two more concrete subclasses, `geo:Feature` & `geo:Geometry`, are more directly relatable to real-world phenomena and use.
+NOTE: It is unlikely that users of GeoSPARQL will create many instances of http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] as its two more concrete subclasses, http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] & http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], are more directly relatable to real-world phenomena and use.
 
 ==== B 1.1.2 `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
@@ -47,12 +47,12 @@ Here a `Feature` is declared and given a preferred label.
 eg:x a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
-        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
-Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of `geo:hasGeometry`. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property `geo:asWKT` and the literal type `geo:WktLiteral`.
+Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
 ===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated
 
@@ -62,7 +62,7 @@ Here a `Feature` is declared, given a preferred label and a geometry for that `F
 eg:x a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
-            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
     ] ;
     geo:hasArea [
         a geo:SpatialMeasure ;
@@ -72,9 +72,9 @@ eg:x a geo:Feature ;
 .
 ```
 
-Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property `geo:hasArea`. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
+Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`]. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
 
-Note that in this example, the use of QUDT and its `qudt:numericValue` & `qudt:unit` is just one of many possible ways to convey a `SpatialMeasure` instance's value.
+Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialMeasure` instance's value.
 
 ===== B 1.1.2.4 `Feature` with two different `Geometry` instances indicated
 
@@ -86,17 +86,17 @@ eg:x a geo:Feature ;
     geo:hasGeometry [
         rdfs:label "Official boundary" ;
         rdfs:comment "Official boundary from the Department of Xxx" ;
-        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:WktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
     ] ,
     [
         rdfs:label "Unofficial boundary" ;
         rdfs:comment "Unofficial boundary as actually used by everyone" ;
-        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:WktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
-In this example, `Feature X` has two differnt `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
+In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
 
 ===== B 1.1.2.5 `Feature` with two different `Geometry` instances with different property values
 
@@ -110,21 +110,21 @@ eg:x a geo:Feature ;
             qudt:numericValue 100 ;
             qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
         ] ;
-        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:WktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ,
     [
         geo:hasSpatialResolution [
             qudt:numericValue 5 ;
             qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
         ] ;
-        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:WktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the `geo:hasSpatialResolution` property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
+In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of `geo:hasSpatialResolution`.
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
 
 ===== B 1.1.2.6 `Feature` with two different types of `Geometry` instances
 
@@ -132,7 +132,7 @@ Machine use of this `Feature` would be able to differentiate the two `Geometry` 
 eg:x a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
-        geo:asWKT "POLYGON ((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610))"^^geo:WktLiteral ;
+        geo:asWKT "POLYGON ((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610))"^^geo:wktLiteral ;
     ] ;
     geo:hasCentroid [
         geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:WktLiteral ;
@@ -161,7 +161,7 @@ From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in rel
 <https://example.com/geometry/y> 
     a geo:Geometry ;
     skos:prefLabel "Geometry Y";
-    geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:WktLiteral ;
+    geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     geo:inSRS <http://www.opengis.net/def/crs/EPSG/0/4326> ;
 .
 ```
@@ -175,13 +175,13 @@ eg:x
     a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
-        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:WktLiteral ;
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
         geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:dggsLiteral ;
     ] ;
 .
 ```
 
-Here a single `Geometry`, linked to a `Feature` instance is expressed using two different serializations: Well-know Text and the AusPIX DGGS. Note that `inSRS` is not used for the `Geometry` instance as this would conflict with the DGGS serialization so, as per GeoSPARQL 1.0, the SRS used for the WKT serialization is nclded driectly in the WKT literal value.
+Here a single `Geometry`, linked to a `Feature` instance is expressed using two different serializations: Well-known Text and the AusPIX DGGS. Note that `inSRS` is not used for the `Geometry` instance as this would conflict with the DGGS serialization so, as per GeoSPARQL 1.0, the SRS used for the WKT serialization is included directly in the WKT literal value.
 
 ==== B 1.1.4 `SpatialMeasure`
 The `SpatialMeasure` class is defined in <<Class: geo:SpatialMeasure>>.
@@ -198,7 +198,7 @@ eg:z
     qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
 ```
 
-This example defines an instance of `SpatialMeasure` and supplies it with a prefedder label, a numeric value and a unit of measure. 
+This example defines an instance of `SpatialMeasure` and supplies it with a preferred label, a numeric value and a unit of measure. 
 
 `SpatialMeasure` instances may be declared in isolation like this - without reference to a `Feature` instance, just as Geometry instances may be - and future use of GeoSPARQL may see such declarations used widely however, at the time of writing GeoSPARQL 1.1, anticipated use of `SpatialMeasure` is with reference to a `Feature` instance: the _thing_ for which the spatial measure is defined. The next example give use in relation to a `Feature` instance.
 
@@ -273,10 +273,10 @@ eg:x
     a geo:Feature ;
     skos:preferredLabel "Feature X" ;
     geo:hasGeometry [
-        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.06016 -35.23610, ... , 149.06016 -35.23610)))"^^geo:WktLiteral ;
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.06016 -35.23610, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ;
     geo:hasDefaultGeometry [
-        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.0601 -35.2361, ... , 149.0601 -35.2361)))"^^geo:WktLiteral ;
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.0601 -35.2361, ... , 149.0601 -35.2361)))"^^geo:wktLiteral ;
     ] ;
     geo:hasLength [
         a geo:SpatialMeasure ;
@@ -294,10 +294,10 @@ eg:x
         qudt:unit <http://qudt.org/vocab/unit/M3> ;  # cubic metre        
     ]
     geo:hasCentroid [
-        geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:WktLiteral ;
+        geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:wktLiteral ;
     ] ;
     geo:hasBoundingBox [
-        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:WktLiteral ;
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
     ] ;
     geo:hasSpatialResolution [
         qudt:numericValue 5 ;
@@ -322,13 +322,13 @@ eg:x
         geo:spatialDimension 2 ;
         geo:isEmpty false ;
         geo:isSimple true ;
-        geo:hasSerialization "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:WktLiteral ;
+        geo:hasSerialization "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
         geo:inSRS <http://www.opengis.net/def/crs/EPSG/0/4326> ;
     ] ;
 . 
 ```
 
-In this example, each of the standards properties defined for a `Geometry` instance has realistic values, for example, the `geo:isEmpty` is set to `false` since the geometry contains information. Note that the SRS of the given serialzation is given within the geoemtry literal (a WKT value) as well as by the `geo:inSRS` property.
+In this example, each of the standards properties defined for a `Geometry` instance has realistic values, for example, the http://www.opengis.net/ont/geosparql#isempty[`geo:isEmpty`] is set to `false` since the geometry contains information. Note that the SRS of the given serialzation is given within the geoemtry literal (a WKT value) as well as by the http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] property.
 
 ==== B.1.2.3 Geometry Serializations
 
