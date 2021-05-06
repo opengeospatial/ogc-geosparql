@@ -12,41 +12,61 @@
 
 geosparql: 
 	a owl:Ontology ;
-  dcterms:title "GeoSPARQL Ontology" ;
+  	dcterms:title "GeoSPARQL Ontology" ;
 	dcterms:publisher [
-	 a sdo:Organization ;
-	 sdo:name "Open Geospatial Consortium" ;
-	 sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+		a sdo:Organization ;
+		sdo:name "Open Geospatial Consortium" ;
+		sdo:url "https://www.ogc.org"^^xsd:anyURI ;
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
-	dcterms:contributor [
+	dcterms:contributor 
+	[
+		a sdo:Person ;
+		sdo:name "Matthew Perry" ;
+		sdo:affiliation "Oracle Corporation" ;
+		sdo:email "matthew.perry@oracle.com"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0003-1988-462X"^^xsd:anyURI ;
+	] ,
+	[
+		a sdo:Person ;
+		sdo:name "John Herring" ;
+		sdo:affiliation "Oracle Corporation" ;
+		sdo:email "john.herring@oracle.com"^^xsd:anyURI ;
+	] ,
+	[
 		a sdo:Person ;
 		sdo:name "Nicholas J. Car" ;
 		sdo:affiliation "SURROUND Australia Pty Ltd" ;
-		sdo:email "nicholas.car@surroundaustralia.com" ;
-		sdo:url <https://orcid.org/0000-0002-8742-7730> ;
+		sdo:email "nicholas.car@surroundaustralia.com"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-8742-7730"^^xsd:anyURI ;
 	] ,
 	[
 		a sdo:Person ;
 		sdo:name "Joseph Abhayaratna" ;		
 		sdo:affiliation "Geoscape Australia" ;
-		sdo:email "joseph.abhayaratna@geoscape.com.au" ;
-		sdo:url <https://orcid.org/0000-0001-5075-6234> ;
+		sdo:email "joseph.abhayaratna@geoscape.com.au"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0001-5075-6234"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Timo Homburg" ;		
 		sdo:affiliation "Mainz University Of Applied Sciences" ;
-		sdo:email "timo.homburg@hs-mainz.de" ;
-		sdo:url <https://orcid.org/0000-0002-9499-5840> ;
+		sdo:email "timo.homburg@hs-mainz.de"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-9499-5840"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Simon J D Cox" ;		
 		sdo:affiliation "CSIRO Australia" ;
-		sdo:email "simon.cox@csiro.au" ;
-		sdo:url <https://orcid.org/0000-0002-3884-3420> ;
-	] ;
+		sdo:email "simon.cox@csiro.au"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0002-3884-3420"^^xsd:anyURI ;
+	] ,
+	[
+		a sdo:Person ;
+		sdo:name "Frans Knibbe" ;
+		sdo:email "fjknibbe@gmail.com"^^xsd:anyURI ;
+		sdo:url "https://orcid.org/0000-0003-3789-2260"^^xsd:anyURI ;
+	] ;	
 	dcterms:created "2020-09-09"^^xsd:date ;
 	dcterms:modified "2021-03-25"^^xsd:date ;
 	dcterms:replaces <http://www.opengis.net/ont/geosparql/1.0> ;
@@ -96,13 +116,13 @@ geosparql:
 	skos:prefLabel "KML Literal"@en ;
 .
 
-:dggsWktLiteral
+:dggsLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A textual serialization of a Discrete Global Grid (DGGS) geometry object."""@en ;
-	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWktLiteral>""" ;
-	rdfs:seeAlso <http://www.opengis.net/doc/AS/dggs/2.0> ;
-	skos:prefLabel "DGGS Well-known Text Literal"@en ;
+	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>""" ;
+  rdfs:seeAlso <http://www.opengis.net/doc/AS/dggs/2.0> ;
+	skos:prefLabel "DGGS Literal"@en ;
 .
 
 # #################################################################
@@ -222,7 +242,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """A spatial representation for a given feature."""@en ;
 	skos:prefLabel "has geometry"@en ;
-  skos:example geosparql-doc:annexB_example1 ,  geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 ;
+	skos:example geosparql-doc:annexB_example1 ,  geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 ;
 .
 
 :hasBoundingBox
@@ -495,11 +515,11 @@ geosparql:
 	skos:prefLabel "as KML"@en ;
 .	
 
-:asDggsWkt
+:asDGGS
 	a owl:DatatypeProperty ;
 	rdfs:subPropertyOf :hasSerialization;
 	rdfs:domain :Geometry ;
-	rdfs:range :dggsWktLiteral ;
+	rdfs:range :dggsLiteral ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The Discrete Global Grid System (DGGS) serialization of a geometry"""@en ;	
 	skos:prefLabel "as DGGS"@en ;
@@ -566,7 +586,6 @@ geosparql:
 # #
 # #################################################################
 
-# http://www.opengis.net/ont/geosparql#Feature
 :Feature
 	a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
