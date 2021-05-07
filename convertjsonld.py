@@ -4,5 +4,5 @@ import sys
 
 g = Graph().parse(sys.argv[1], format='turtle')
 
-#context = {"@vocab": "http://purl.org/dc/terms/", "@language": "en"}
+context = {"@geo": "http://www.opengis.net/ont/geosparql#", "@language": "en"}
 g.serialize(format='json-ld', indent=2,destination=sys.argv[2])
