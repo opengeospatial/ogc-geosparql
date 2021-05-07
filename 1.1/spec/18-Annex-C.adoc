@@ -54,17 +54,17 @@ CQL defines literal values for a variety of datatypes. The following table shows
 
 |======================
 | CQL literal | Examples  | (Geo)SPARQL literal | Examples
-| String  | "This is a string" | xsd:string | "This is a string"^^xsd:string 
-| Number  | -100  3.14159 | xsd:int xsd:integer xsd:double | "-100"^^xsd:integer  "3.14159"^^xsd:double 
-| Boolean  | true false | xsd:boolean| "true"^^xsd:boolean  "false"^^xsd:boolean 
-| Spatial Geometry (WKT)  | POINT(1 1) | geo:wktLiteral | "POINT(1 1)"^^geo:wktLiteral
-| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | geo:geoJSONLiteral | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
-| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | xsd:date xsd:dateTime | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
+| String  | "This is a string" | http://www.w3.org/2001/XMLSchema#string[xsd:string] | "This is a string"^^xsd:string 
+| Number  | -100  3.14159 | http://www.w3.org/2001/XMLSchema#int[xsd:int] http://www.w3.org/2001/XMLSchema#integer[xsd:integer] http://www.w3.org/2001/XMLSchema#double[xsd:double] | "-100"^^xsd:integer  "3.14159"^^xsd:double 
+| Boolean  | true false | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] | "true"^^xsd:boolean  "false"^^xsd:boolean 
+| Spatial Geometry (WKT)  | POINT(1 1) | http://www.opengis.net/ont/geosparql#wktLiteral[geo:wktLiteral] | "POINT(1 1)"^^geo:wktLiteral
+| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | http://www.opengis.net/ont/geosparql#geoJSONLiteral[geo:geoJSONLiteral] | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
+| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | http://www.w3.org/2001/XMLSchema#date[xsd:date] http://www.w3.org/2001/XMLSchema#dateTime[xsd:dateTime] | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |======================
 
 ===== C2.3 Property references
 
-CQL allows to reference properties in the FeatureCollection it is targeting for filtering. A property reference is converted to a triple patterns as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
+CQL allows to reference properties in the FeatureCollection it is targeting for filtering. A property reference is converted to a triple pattern as shown in the following example. A SPARQL variable ?item is assumed to represent the FeatureCollection.
 
 |======================
 | Property Reference  | Triple pattern
@@ -86,7 +86,7 @@ CQL defines comparison predicates to compare two scaler expressions. A compariso
 | name IN ("OGC","W3C") | VALUES ?namevalues {"OGC" "W3C"} ?item my:name ?namevalues . | IN statements are expressed by VALUES statements
 | name IS NOT NULL | EXISTS {?item my:name ?name } | NOT NULL statements are converted to EXIST statements
 | name LIKE "OGC." | ?item my:name ?name . FILTER(regex(?name, "OGC.", "i" )) | LIKE statements are converted to SPARQL regex filters
-| INTERSECTS(geometry1, geometry2) | FILTER(geof:sfIntersects(?geometry1,?geometry2)) | The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement
+| INTERSECTS(geometry1, geometry2) | FILTER(http://www.opengis.net/def/function/geosparql/sfIntersects[geof:sfIntersects](?geometry1,?geometry2)) | The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement
 |======================
 
 - Filter CRS parameter equivalent does not yet exist in GeoSPARQL?
@@ -97,14 +97,14 @@ GeoSPARQL includes equivalents of many CQL filter functions as can be seen in th
 
 |======================
 | CQL Filter Expression  | GeoSPARQL Filter Function 
-| CONTAINS(geometry1,POINT(1 1))  | FILTER(geof:sfContains(?geometry1,"POINT(1 1)"^^geo:wktLiteral))  
-| CROSSES(geometry1,geometry2)  | FILTER(geof:sfCrosses(?geometry1,?geometry2))  
-| DISJOINT(geometry1,geometry2)  | FILTER(geof:sfDisjoint(?geometry1,?geometry2)) 
-| EQUALS(geometry1,geometry2)  | FILTER(geof:sfEquals(?geometry1,?geometry2))  
-| INTERSECTS(geometry1,geometry2)  | FILTER(geof:sfIntersects(?geometry1,?geometry2)) 
-| OVERLAPS(geometry1,geometry2)  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))  
-| TOUCHES(geometry1,geometry2)  | FILTER(geof:sfTouches(?geometry1,?geometry2))  
-| WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
+| CONTAINS(geometry1,POINT(1 1))  | FILTER(http://www.opengis.net/def/function/geosparql/sfContains[geof:sfContains](?geometry1,"POINT(1 1)"^^geo:wktLiteral))  
+| CROSSES(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfCrosses[geof:sfCrosses](?geometry1,?geometry2))  
+| DISJOINT(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfDisjoint[geof:sfDisjoint](?geometry1,?geometry2)) 
+| EQUALS(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfEquals[geof:sfEquals](?geometry1,?geometry2))  
+| INTERSECTS(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfIntersects[geof:sfIntersects](?geometry1,?geometry2)) 
+| OVERLAPS(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfOverlaps[geof:sfOverlaps](?geometry1,?geometry2))  
+| TOUCHES(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfTouches[geof:sfTouches](?geometry1,?geometry2))  
+| WITHIN(geometry1,geometry2)  | FILTER(http://www.opengis.net/def/function/geosparql/sfWithin[geof:sfWithin](?geometry1,?geometry2))  
 |======================
 
 ===== C2.6 Temporal Operators
@@ -113,17 +113,17 @@ Temporal operators are currently not part of the GeoSPARQL standard.
 
 |======================
 | CQL Filter Expression  | GeoSPARQL Filter Function 
-| beginTime AFTER 1969-07-16T13:32:00Z | 
-| beginTime BEFORE 1969-07-16T13:32:00Z |  
-| beginTime BEGINS 1969-07-16T13:32:00Z | 
-| beginTime BEGUNBY 1969-07-16T13:32:00Z | 
-| beginTime DURING 1969-07-16T13:32:00Z | 
-| beginTime ENDEDBY 1969-07-16T13:32:00Z | 
-| beginTime ENDS 1969-07-16T13:32:00Z | 
-| beginTime MEETS 1969-07-16T13:32:00Z |
-| beginTime METBY 1969-07-16T13:32:00Z |
-| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | 
-| beginTime TCONTAINS 1969-07-16T13:32:00Z |   
-| beginTime TEQUALS 1969-07-16T13:32:00Z |  
-| beginTime TOVERLAPS 1969-07-16T13:32:00Z | 
+| beginTime AFTER 1969-07-16T13:32:00Z | N/A
+| beginTime BEFORE 1969-07-16T13:32:00Z | N/A
+| beginTime BEGINS 1969-07-16T13:32:00Z | N/A
+| beginTime BEGUNBY 1969-07-16T13:32:00Z | N/A
+| beginTime DURING 1969-07-16T13:32:00Z | N/A
+| beginTime ENDEDBY 1969-07-16T13:32:00Z | N/A
+| beginTime ENDS 1969-07-16T13:32:00Z | N/A
+| beginTime MEETS 1969-07-16T13:32:00Z | N/A
+| beginTime METBY 1969-07-16T13:32:00Z | N/A
+| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | N/A 
+| beginTime TCONTAINS 1969-07-16T13:32:00Z | N/A  
+| beginTime TEQUALS 1969-07-16T13:32:00Z | N/A 
+| beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
 |======================
