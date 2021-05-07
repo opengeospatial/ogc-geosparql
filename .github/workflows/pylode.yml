@@ -33,8 +33,10 @@ jobs:
          #pylode -i ../../1.0/profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.0 functions and rules"
          pylode -i ../../1.0/funcsrules.ttl -o funcsrules.html -p vocpub
+         python3 ../../convertjsonld.py ../../1.0/funcsrules.ttl ../../1.0/funcsrules.json
          echo "Generating documentation for GeoSPARQL 1.0 Simple Features Vocabulary"
          pylode -i ../../1.0/sf_geometries.ttl -o sf_geometries.html -p vocpub
+         python3 ../../convertjsonld.py ../../1.0/sf_geometries.ttl ../../1.0/sf_geometries.json
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
          cd ../geosparql11/
          asciidoctor ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
@@ -42,13 +44,16 @@ jobs:
          cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/validation.ttl ../../1.1/sa_functions.ttl .
          cp -r ../../1.1/spec/img .
          echo "Generating documentation for GeoSPARQL 1.1 ontology"
+         python3 ../../convertjsonld.py ../../1.1/geo.ttl ../../1.1/geo.json
          pylode -i ../../1.1/geo.ttl -o index.html
          echo "Generating documentation for GeoSPARQL 1.1 Profile"
          #pylode -i ../../1.1/profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
          pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
+         python3 ../../convertjsonld.py ../../1.1/funcsrules.ttl ../../1.1/funcsrules.json
          echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
          pylode -i ../../1.1/sf_geometries.ttl -o sf_geometries.html -p vocpub
+         python3 ../../convertjsonld.py ../../1.1/sf_geometries.ttl ../../1.1/sf_geometries.json
          echo "Generating documentation for GeoSPARQL 1.1 SA functions"
          #pylode -i ../../1.1/sa_functions.ttl -o sa_functions.html -p vocpub
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
