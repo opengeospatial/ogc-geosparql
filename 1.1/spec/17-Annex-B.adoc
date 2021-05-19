@@ -675,7 +675,8 @@ SELECT ?f
 WHERE { 
     my:C my:hasExactGeometry ?cGeom .
     ?cGeom geo:asWKT ?cWKT .
-    ?f my:hasExactGeometry ?fGeom . ?fGeom geo:asWKT ?fWKT .
+    ?f my:hasExactGeometry ?fGeom . 
+    ?fGeom geo:asWKT ?fWKT .
     FILTER (?fGeom != ?cGeom) 
 }
 ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre)) 
@@ -690,6 +691,39 @@ LIMIT 3
 |`my:D`
 |`my:E`
 |===
+
+[[annexB_example5]]
+*Example 5*: Find the maximum and minimum coordinates of a given set of geometries .
+
+```sparql
+PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/> 
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/geosparql/function>
+
+SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
+WHERE { 
+    BIND ("<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+            Polygon Z((-83.4 34.0 0, -83.1 34.0 1,
+                        -83.1 34.2 1, -83.4 34.2 1,
+                        -83.4 34.0 0))"^^geo:wktLiteral") AS ?testgeom)
+    BIND(geof:minX(?testgeom) AS ?minX)
+    BIND(geof:maxX(?testgeom) AS ?maxX)
+    BIND(geof:minY(?testgeom) AS ?minY)
+    BIND(geof:maxY(?testgeom) AS ?maxY)
+    BIND(geof:maxZ(?testgeom) AS ?maxZ)
+    BIND(geof:minZ(?testgeom) AS ?minZ)
+}
+```
+
+*Result*:
+|===
+|*?minX* | *?minY* | *?minZ* | *?maxX* | *?maxY* | *?maxZ*
+
+|`-83.4` | `34.0` | `0` | `-83.1` | `34.2` | `1`
+|===
+
+
 
 === B.2.3 Example Rule Application
 
