@@ -1,70 +1,66 @@
-=== RDFS Entailment Extension (relation_family, serialization, version)
+== RDFS Entailment Extension (relation_family, serialization, version)
 
-This clause establishes the _RDFS Entailment Extension (relation_family, serialization, version)_ parameterized requirements class, with IRI `/req/rdfs-entailment-extension`, which defines a mechanism for matching implicitly derived RDF triples in GeoSPARQL queries. This class is parameterized to give implementations flexibility in the topological relation families and geometry types that they choose to support. This requirements class has a single corresponding conformance class _RDFS Entailment Extension (relation_family, serialization, version)_, `with IRI /conf/rdfs-entailment-extension`.
+This clause establishes the _RDFS Entailment Extension (relation_family, serialization, version)_ parameterized requirements class, with IRI `/req/rdfs-entailment-extension`, which defines a mechanism for matching implicitly-derived RDF triples in GeoSPARQL queries. This class is parameterized to give implementations flexibility in the topological relation families and geometry types that they choose to support. This requirements class has a single corresponding conformance class _RDFS Entailment Extension (relation_family, serialization, version)_, `with IRI /conf/rdfs-entailment-extension`.
 
-==== Parameters
+=== Parameters
 
-*relation_family*: Specifies the set of topological spatial relations to support.  
+* *relation_family*: Specifies the set of topological spatial relations to support.  
+* *serialization*: Specifies the serialization standard to use for geometry literals.  
+* *version*: Specifies the version of the serialization format used.  
 
-*serialization*: Specifies the serialization standard to use for geometry literals.  
+=== Common Requirements
 
-*version*: Specifies the version of the serialization format used.  
-
-==== Common Requirements
-
-The basic mechanism for supporting RDFS entailment has been defined by the W3C SPARQL 1.1 RDFS Entailment Regime [W3C SPARQL Entailment].
+The basic mechanism for supporting RDFS entailment has been defined by the W3C SPARQL 1.1 RDFS Entailment Regime <<SPARQLENT>>.
 
 |===
-|*Req 30* Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].
+| *Req 38* Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime <<SPARQLENT>>.
 |`/req/rdfs-entailment-extension/bgp-rdfs-ent`
 |===
 
-==== Requirements for WKT Serialization (serialization=WKT)
+=== WKT Serialization (serialization=WKT)
 
-This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1].
+This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features <<ISO19125-1>>.
 
-===== Geometry Class Hierarchy
+==== Geometry Class Hierarchy
 
-The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/sf#{geometry class}+` and by asserting appropriate `rdfs:subClassOf` statements.
+The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/sf#{geometry class}+` and by asserting appropriate http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] statements.
 
 The example RDF snippet below encodes the Polygon class from Simple Features 1.0.
 
-```
-sf:Polygon a rdfs:Class, 
-             owl:Class;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "Polygon"@en;
-    rdfs:subClassOf sf:Surface;
-    rdfs:comment "A planar surface defined by 1 exterior boundary and 0 or 
-                  more interior boundaries"@en .
+```turtle
+sf:Polygon a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Polygon"@en ;
+    rdfs:subClassOf sf:Surface ;
+    skos:definition "A planar surface defined by 1 exterior boundary and 0 or 
+                    more interior boundaries"@en .
 ```
 
 |===
-|*Req 31* Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].
+| *Req 39* Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features <<ISO19125-1>>.
 |`/req/rdfs-entailment-extension/wkt-geometry-types`
 |===
 
-==== Requirements for GML Serialization (serialization=GML)
+=== GML Serialization (serialization=GML)
 
-This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036].
+This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <<OGC07-036>>.
 
-===== Geometry Class Hierarchy
+==== Geometry Class Hierarchy
 
-An RDF/OWL class hierarchy can be generated from the GML schema that implements `GM_Object` by constructing IRIs for geometry classes using the following pattern: `http://www.opengis.net/ont/gml#{GML Element}` and by asserting appropriate `rdfs:subClassOf` statements.
+An RDF/OWL class hierarchy can be generated from the GML schema that implements `GM_Object` by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/gml#{GML Element}+` and by asserting appropriate http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] statements.
 
 The example RDF snippet below encodes the Polygon class from GML 3.2.
 
-```
-gml:Polygon a rdfs:Class, 
-              owl:Class;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "Polygon"@en;
-    rdfs:subClassOf gml:SurfacePatch;
-    rdfs:comment "A planar surface defined by 1 exterior boundary and 0 or
-                  more interior boundaries."@en .
+```turtle
+gml:Polygon a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Polygon"@en ;
+    rdfs:subClassOf gml:SurfacePatch ;
+    skos:definition "A planar surface defined by 1 exterior boundary and 0 or
+                    more interior boundaries."@en .
 ```
 
 |===
-|*Req 32* Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements `GM_Object` using the specified _version_ of GML [OGC 07-036].
+| *Req 40* Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements `GM_Object` using the specified _version_ of GML <<OGC07-036>>.
 |`/req/rdfs-entailment-extension/gml-geometry-types`
 |===
