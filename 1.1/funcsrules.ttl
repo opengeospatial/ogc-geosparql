@@ -16,11 +16,13 @@ PREFIX geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.h
     owl:imports <http://www.opengis.net/def/ogc-na> ;
     owl:versionIRI <http://defs-dev.opengis.net/static/definitions/conceptschemes/functions_geosparql.ttl> ;
     skos:definition "A vocabulary (taxonomy) of the functions and rules defined within the GeoSPARQL 1.1 specification"@en ;
-    skos:hasTopConcept 
+    skos:hasTopConcept
+        funcs:area,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:ehContains,
         funcs:ehCoveredBy,
@@ -33,6 +35,8 @@ PREFIX geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.h
         funcs:envelope,
         funcs:getSRID,
         funcs:intersection,
+        funcs:isEmpty,
+        funcs:isSimple,
         funcs:rcc8dc,
         funcs:rcc8ec,
         funcs:rcc8eq,
@@ -83,10 +87,12 @@ funcs: a skos:Collection ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """All the GeoSPARQL Functions defined within the GeoSPARQL 1.1 specification"""@en ;
     skos:member 
+        funcs:area,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:ehContains,
         funcs:ehCoveredBy,
@@ -98,6 +104,8 @@ funcs: a skos:Collection ;
         funcs:ehOverlap,
         funcs:envelope,
         funcs:getSRID,
+        funcs:isEmpty,
+        funcs:isSimple,
         funcs:minx,
         funcs:miny,
         funcs:minz,
@@ -175,14 +183,19 @@ funcs:nonTopo a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """All the GeoSPARQL Non-topological Query Functions defined within the GeoSPARQL 1.1 specification"""@en ;
-    skos:member 
+    skos:member
+        funcs:area,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:envelope,
         funcs:getSRID,
+        funcs:isEmpty,
+        funcs:isSimple,
+        funcs:length,
         funcs:minx,
         funcs:miny,
         funcs:minz,
@@ -458,6 +471,61 @@ funcs:getSRID a skos:Concept ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the spatial reference system URI of the input geometry."@en ;
     skos:prefLabel "getSRID"@en .
+
+funcs:isEmpty a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is empty."@en ;
+    skos:prefLabel "isEmpty"@en .
+
+funcs:isSimple a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is a simple geometry."@en ;
+    skos:prefLabel "isSimple"@en .
+
+funcs:dimension a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the dimension of a geometry."@en ;
+    skos:prefLabel "area"@en .
+
+funcs:length a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the length of a geometry in meters."@en ;
+    skos:prefLabel "length"@en .
+
+funcs:area a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in squaremeters."@en ;
+    skos:prefLabel "area"@en .
 
 funcs:minx a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
