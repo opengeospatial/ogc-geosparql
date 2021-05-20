@@ -1,10 +1,10 @@
-=== Query Rewrite Extension (relation_family, serialization, version)
+== Query Rewrite Extension (relation_family, serialization, version)
 
-This clause establishes the _Query Rewrite Extension (relation_family, serialization, version)_ parameterized requirements class, with URI `/req/query-rewrite-extension`, which has a single corresponding conformance class _Query Rewrite Extension (relation_family, serialization, version)_, with URI `/conf/query-rewrite-extension`. This requirements class defines a set of RIF rules [15] that use topological extension functions defined in Clause 9 to establish the existence of direct topological predicates defined in Clause 7. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.
+This clause establishes the _Query Rewrite Extension (relation_family, serialization, version)_ parameterized requirements class, with IRI `/req/query-rewrite-extension`, which has a single corresponding conformance class _Query Rewrite Extension (relation_family, serialization, version)_, with IRI `/conf/query-rewrite-extension`. This requirements class defines a set of RIF rules <<RIF>> that use topological extension functions defined in Clause 9 to establish the existence of direct topological predicates defined in Clause 7. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.
 
-The following rule specified using the RIF Core Dialect [W3C RIF Core] is used as a template to describe rules in the remainder of this clause. `ogc:relation` is used as a placeholder for the spatial relation URIs defined in Clause 7, and `ogc:function` is used as a placeholder for the spatial functions defined in Clause 9.
+The following rule specified using the RIF Core Dialect <<RIFCORE>> is used as a template to describe rules in the remainder of this clause. http://www.opengis.net/def/relation[`ogc:relation`] is used as a placeholder for the spatial relation IRIs defined in Clause 7, and http://www.opengis.net/def/function[`ogc:function`] is used as a placeholder for the spatial functions defined in <<geometry_extension>>.
 
-```
+```rif
 Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial 
     (?f1[ogc:relation->?f2] :-
         Or(
@@ -36,83 +36,88 @@ Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial
 )
 ```
 
-==== Parameters
+NOTE: The GeoSPARQL 1.1 Standard contains a RIF rules artefact expanded for all function generated from this template and Python software for re-issuing the expanded artefact. See <<GeoSPARQL Standard structure>>.
 
-*relation_family*: Specifies the set of topological spatial relations to support.
+=== Parameters
 
-*serialization*: Specifies the serialization standard to use for geometry literals.
+* *relation_family*: Specifies the set of topological spatial relations to support.
+* *serialization*: Specifies the serialization standard to use for geometry literals.
+* *version*: Specifies the version of the serialization format used.
 
-*version*: Specifies the version of the serialization format used.
+=== Simple Features Relation Family (relation_family=Simple Features)
 
-==== Requirements for Simple Features Relation Family (relation_family=Simple Features)
-
-This clause defines requirements for the _Simple Features_ relation family. Table 8 specifies the function and property substitutions for each rule in the _Simple Features_ relation family.
+This clause defines requirements for the _Simple Features_ relation family. <<sf_query_transformation_rules>> specifies the function and property substitutions for each rule in the _Simple Features_ relation family.
 
 |===
-|*Req 28* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:sfEquals`, `geor:sfDisjoint`, `geor:sfIntersects`, `geor:sfTouches`, `geor:sfCrosses`, `geor:sfWithin`, `geor:sfContains`, `geor:sfOverlaps`.
+| *Req 41* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<SPARQLENT>> for the RIF rules <<RIFCORE>> http://www.opengis.net/def/rule/geosparql/sfEquals[`geor:sfEquals`], http://www.opengis.net/def/rule/geosparql/sfDisjoint[`geor:sfDisjoint`], http://www.opengis.net/def/rule/geosparql/sfIntersects[`geor:sfIntersects`], http://www.opengis.net/def/rule/geosparql/sfTouches[`geor:sfTouches`], http://www.opengis.net/def/rule/geosparql/sfCrosses[`geor:sfCrosses`], http://www.opengis.net/def/rule/geosparql/sfWithin[`geor:sfWithin`], http://www.opengis.net/def/rule/geosparql/sfContains[`geor:sfContains`], http://www.opengis.net/def/rule/geosparql/sfOverlaps[`geor:sfOverlaps`].
 |`/req/query-rewrite-extension/sf-query-rewrite`
 |===
 
+[#sf_query_transformation_rules]
 .Simple Features Query Transformation Rules
 |===
 |Rule | ogc:relation | ogc:function
 
-|geor:sfEquals | geo:sfEquals | geof:sfEquals
-|geor:sfDisjoint | geo:sfDisjoint | geof:sfDisjoint
-|geor:sfIntersects | geo:sfIntersects | geof:sfIntersects
-|geor:sfTouches | geo:sfTouches | geof:sfTouches
-|geor:sfCrosses | geo:sfCrosses | geof:sfCrosses
-|geor:sfWithin | geo:sfWithin | geof:sfWithin
-|geor:sfContains | geo:sfContains | geof:sfContains
-|geor:sfOverlaps | geo:sfOverlaps | geof:sfOverlaps
+| http://www.opengis.net/def/rule/geosparql/sfEquals[geor:sfEquals] | http://www.opengis.net/ont/geosparql#sfEquals[geo:sfEquals] | http://www.opengis.net/def/function/geosparql/sfEquals[geof:sfEquals]
+| http://www.opengis.net/def/rule/geosparql/sfDisjoint[geor:sfDisjoint] | http://www.opengis.net/ont/geosparql#sfDisjoint[geo:sfDisjoint]| http://www.opengis.net/def/function/geosparql/sfDisjoint[geof:sfDisjoint]
+| http://www.opengis.net/def/rule/geosparql/sfIntersects[geor:sfIntersects] | http://www.opengis.net/ont/geosparql#sfIntersects[geo:sfIntersects] | http://www.opengis.net/def/function/geosparql/sfIntersects[geof:sfIntersects]
+| http://www.opengis.net/def/rule/geosparql/sfTouches[geor:sfTouches] | http://www.opengis.net/ont/geosparql#sfTouches[geo:sfTouches] | http://www.opengis.net/def/function/geosparql/sfTouches[geof:sfTouches]
+| http://www.opengis.net/def/rule/geosparql/sfCrosses[geor:sfCrosses] | http://www.opengis.net/ont/geosparql#sfCrosses[geo:sfCrosses] | http://www.opengis.net/def/function/geosparql/sfCrosses[geof:sfCrosses]
+| http://www.opengis.net/def/rule/geosparql/sfWithin[geor:sfWithin] | http://www.opengis.net/ont/geosparql#sfWithin[geo:sfWithin] | http://www.opengis.net/def/function/geosparql/sfWithin[geof:sfWithin]
+| http://www.opengis.net/def/rule/geosparql/sfContains[geor:sfContains] | http://www.opengis.net/ont/geosparql#sfContains[geo:sfContains] | http://www.opengis.net/def/function/geosparql/sfContains[geof:sfContains]
+| http://www.opengis.net/def/rule/geosparql/sfOverlaps[geor:sfOverlaps] | http://www.opengis.net/ont/geosparql#sfOverlaps[geo:sfOverlaps] | http://www.opengis.net/def/function/geosparql/sfOverlaps[geof:sfOverlaps]
 |===
 
-==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
+=== Egenhofer Relation Family (relation_family=Egenhofer)
+
+This clause defines requirements for the _Egenhofer_ relation family. <<eh_query_transformation_rules>> specifies the function and property substitutions for each rule in the _Egenhofer_ relation family.
 
 |===
-|*Req 29* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:ehEquals`, `geor:ehDisjoint`, `geor:ehMeet`, `geor:ehOverlap`,
-`geor:ehCovers`, `geor:ehCoveredBy`, `geor:ehInside`, `geor:ehContains`.
+| *Req 42* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<SPARQLENT>> for the RIF rules <<RIFCORE>> http://www.opengis.net/def/rule/geosparql/ehEquals[`geor:ehEquals`], http://www.opengis.net/def/rule/geosparql/ehDisjoint[`geor:ehDisjoint`], http://www.opengis.net/def/rule/geosparql/ehMeet[`geor:ehMeet`], http://www.opengis.net/def/rule/geosparql/ehOverlap[`geor:ehOverlap`],
+http://www.opengis.net/def/rule/geosparql/ehCovers[`geor:ehCovers`], http://www.opengis.net/def/rule/geosparql/ehCoveredBy[`geor:ehCoveredBy`], http://www.opengis.net/def/rule/geosparql/ehInside[`geor:ehInside`], http://www.opengis.net/def/rule/geosparql/ehContains[`geor:ehContains`].
 |`/req/query-rewrite-extension/eh-query-rewrite`
 |===
 
-.Simple Features Query Transformation Rules
+[#eh_query_transformation_rules]
+.Egenhofer Query Transformation Rules
 |===
 |Rule | ogc:relation | ogc:function
 
-|geor:ehEquals | geo:ehEquals | geof:ehEquals
-|geor:ehDisjoint | geo:ehDisjoint | geof:ehDisjoint
-|geor:ehMeet | geo:ehMeet | geof:ehMeet
-|geor:ehOverlap | geo:ehOverlap | geof:ehOverlap
-|geor:ehCovers | geo:ehCovers | geof:ehCovers
-|geor:ehCoveredBy | geo:ehCoveredBy | geof:ehCoveredBy
-|geor:ehInside | geo:ehInside | geof:ehInside
-|geor:ehContains | geo:ehContains | geof:ehContains
+| http://www.opengis.net/def/rule/geosparql/ehEquals[geor:ehEquals] | http://www.opengis.net/ont/geosparql#ehEquals[geo:ehEquals] | http://www.opengis.net/ont/geosparql#ehEquals[geof:ehEquals]
+| http://www.opengis.net/def/rule/geosparql/ehDisjoint[geor:ehDisjoint] | http://www.opengis.net/ont/geosparql#ehDisjoint[geo:ehDisjoint] | http://www.opengis.net/def/function/geosparql/ehDisjoint[geof:ehDisjoint]
+| http://www.opengis.net/def/rule/geosparql/ehMeet[geor:ehMeet] | http://www.opengis.net/ont/geosparql#ehMeet[geo:ehMeet] | http://www.opengis.net/def/function/geosparql/ehMeet[geof:ehMeet]
+| http://www.opengis.net/def/rule/geosparql/ehOverlap[geor:ehOverlap] | http://www.opengis.net/ont/geosparql#ehOverlap[geo:ehOverlap] | http://www.opengis.net/def/function/geosparql/ehOverlap[geof:ehOverlap]
+| http://www.opengis.net/def/rule/geosparql/ehCovers[geor:ehCovers] | http://www.opengis.net/ont/geosparql#ehCovers[geo:ehCovers] | http://www.opengis.net/def/function/geosparql/ehCovers[geof:ehCovers]
+| http://www.opengis.net/def/rule/geosparql/ehCoveredBy[geor:ehCoveredBy] | http://www.opengis.net/ont/geosparql#ehCoveredBy[geo:ehCoveredBy] | http://www.opengis.net/def/function/geosparql/ehCoveredBy[geof:ehCoveredBy]
+| http://www.opengis.net/def/rule/geosparql/ehInside[geor:ehInside] | http://www.opengis.net/ont/geosparql#ehInside[geo:ehInside] | http://www.opengis.net/def/function/geosparql/ehInside[geof:ehInside]
+| http://www.opengis.net/def/rule/geosparql/ehContains[geor:ehContains] | http://www.opengis.net/ont/geosparql#ehContains[geo:ehContains] | http://www.opengis.net/def/function/geosparql/ehContains[geof:ehContains]
 |===
 
-==== Requirements for RCC8 Relation Family (relation_family=RCC8)
+=== RCC8 Relation Family (relation_family=RCC8)
 
-This clause defines requirements for the _RCC8_ relation family. Table 10 specifies the function and property substitutions for each rule in the _RCC8_ relation family.
+This clause defines requirements for the _RCC8_ relation family. <<rcc8_query_transformation_rules>> specifies the function and property substitutions for each rule in the _RCC8_ relation family.
 
 |===
-|*Req 30* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] `geor:rcc8eq`, `geor:rcc8dc`, `geor:rcc8ec`, `geor:rcc8po`, `geor:rcc8tppi`, `geor:rcc8tpp`, `geor:rcc8ntpp`, `geor:rcc8ntppi`.
+| *Req 43* Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<SPARQLENT>> for the RIF rules <<RIFCORE>> http://www.opengis.net/def/rule/geosparql/rcc8eq[`geor:rcc8eq`], http://www.opengis.net/def/rule/geosparql/rcc8dc[`geor:rcc8dc`], http://www.opengis.net/def/rule/geosparql/rcc8ec[`geor:rcc8ec`], http://www.opengis.net/def/rule/geosparql/rcc8po[`geor:rcc8po`], http://www.opengis.net/def/rule/geosparql/rcc8tppi[`geor:rcc8tppi`], http://www.opengis.net/def/rule/geosparql/rcc8tpp[`geor:rcc8tpp`], http://www.opengis.net/def/rule/geosparql/rcc8ntpp[`geor:rcc8ntpp`], http://www.opengis.net/def/rule/geosparql/rcc8ntppi[`geor:rcc8ntppi`].
 |`/req/query-rewrite-extension/rcc8-query-rewrite`
 |===
 
-.Simple Features Query Transformation Rules
+[#rcc8_query_transformation_rules]
+.RCC8 Query Transformation Rules
 |===
 |Rule | ogc:relation | ogc:function
 
-|geor:rcc8eq | geo:rcc8eq | geof:rcc8eq
-|geor:rcc8dc | geo:rcc8dc | geof:rcc8dc
-|geor:rcc8ec | geo:rcc8ec | geof:rcc8ec
-|geor:rcc8po | geo:rcc8po | geof:rcc8po
-|geor:rcc8tppi | geo:rcc8tppi | geof:rcc8tppi
-|geor:rcc8tpp | geo:rcc8tpp | geof:rcc8tpp
-|geor:rcc8ntpp | geo:rcc8ntpp | geof:rcc8ntpp
-|geor:rcc8ntppi | geo:rcc8ntppi | geof:rcc8ntppi
+| http://www.opengis.net/def/rule/geosparql/rcc8eq[geor:rcc8eq] | http://www.opengis.net/ont/geosparql#rcc8eq[geo:rcc8eq] | http://www.opengis.net/def/function/geosparql/rcc8eq[geof:rcc8eq]
+| http://www.opengis.net/def/rule/geosparql/rcc8dc[geor:rcc8dc] | http://www.opengis.net/ont/geosparql#rcc8dc[geo:rcc8dc] | http://www.opengis.net/def/function/geosparql/rcc8dc[geof:rcc8dc]
+| http://www.opengis.net/def/rule/geosparql/rcc8ec[geor:rcc8ec] | http://www.opengis.net/ont/geosparql#rcc8ec[geo:rcc8ec] | http://www.opengis.net/def/function/geosparql/rcc8ec[geof:rcc8ec]
+| http://www.opengis.net/def/rule/geosparql/rcc8po[geor:rcc8po] | http://www.opengis.net/ont/geosparql#rcc8po[geo:rcc8po] | http://www.opengis.net/def/function/geosparql/rcc8po[geof:rcc8po]
+| http://www.opengis.net/def/rule/geosparql/rcc8tppi[geor:rcc8tppi] | http://www.opengis.net/ont/geosparql#rcc8tppi[geo:rcc8tppi] | http://www.opengis.net/def/function/geosparql/rcc8tppi[geof:rcc8tppi]
+| http://www.opengis.net/def/rule/geosparql/rcc8tpp[geor:rcc8tpp] | http://www.opengis.net/ont/geosparql#rcc8tpp[geo:rcc8tpp] | http://www.opengis.net/def/function/geosparql/rcc8tpp[geof:rcc8tpp]
+| http://www.opengis.net/def/rule/geosparql/rcc8ntpp[geor:rcc8ntpp] | http://www.opengis.net/ont/geosparql#rcc8ntpp[geo:rcc8ntpp] | http://www.opengis.net/def/function/geosparql/rcc8ntpp[geof:rcc8ntpp]
+| http://www.opengis.net/def/rule/geosparql/rcc8ntppi[geor:rcc8ntppi] | http://www.opengis.net/ont/geosparql#rcc8ntppi[geo:rcc8ntppi] | http://www.opengis.net/def/function/geosparql/rcc8ntppi[geof:rcc8ntppi]
 |===
 
-==== Special Considerations
+=== Special Considerations
 
 The applicability of GeoSPARQL rules in certain circumstances has intentionally been left undefined.
 
@@ -124,4 +129,4 @@ The first situation arises for triple patterns with unbound predicates. Consider
 
 When using a query transformation strategy, this triple pattern could invoke none of the GeoSPARQL rules or all of the rules. Implementations are free to support either of these alternatives.
 
-The second situation arises when supporting GeoSPARQL rules in the presence of RDFS Entailment. The existence of a topological relation (possibly derived from a GeoSPARQL rule) can entail other RDF triples. For example, if `geo:sfOverlaps` has been defined as an `rdfs:subPropertyOf` the property `my:overlaps`, and the RDF triple `my:feature1 geo:sfOverlaps my:feature2` has been derived from a GeoSPARQL rule, then the RDF triple `my:feature1 my:overlaps my:feature2` can be entailed. Implementations may support such entailments but are not required to.
+The second situation arises when supporting GeoSPARQL rules in the presence of RDFS Entailment. The existence of a topological relation (possibly derived from a GeoSPARQL rule) can entail other RDF triples. For example, if http://www.opengis.net/ont/geosparql#sfOverlaps[`geo:sfOverlaps`] has been defined as an http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] the property `my:overlaps`, and the RDF triple `my:feature1 http://www.opengis.net/ont/geosparql#sfOverlaps[geo:sfOverlaps] my:feature2` has been derived from a GeoSPARQL rule, then the RDF triple `my:feature1 my:overlaps my:feature2` can be entailed. Implementations may support such entailments but are not required to.

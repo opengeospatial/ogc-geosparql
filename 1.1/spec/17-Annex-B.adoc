@@ -1,195 +1,578 @@
-=== Annex B 
-=== (informative)
-=== GeoSPARQL Examples
+= Annex B (informative) GeoSPARQL Examples
 
-==== B.1 Example Data
+== B.1 RDF Examples
 
-The following RDF/XML data encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class my:PlaceOfInterest, and two properties are created for associating geometries with features: my:hasExactGeometry and my:hasPointGeometry. my:hasExactGeometry is designated as the default geometry for the my:PlaceOfInterest feature class.
+This Section illustrates GeoSPARQL ontology modelling with extended examples.
+
+_New Features checklist - to be removed when all examples are complete:_
+
+|===
+|New element | Section
+
+2+|_Classes_
+|Spatial Measure class | <<Class: geo:SpatialMeasure>>
+|===
+
+=== B.1.1 Classes
+
+==== B 1.1.1 `SpatialObject`
+The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
+
+Basic use (as per the example in the class definition)
+
+```turtle
+eg:x a geo:SpatialObject ;
+    skos:prefLabel "Object X";
+.
+```
+
+NOTE: It is unlikely that users of GeoSPARQL will create many instances of http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] as its two more concrete subclasses, http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] & http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], are more directly relatable to real-world phenomena and use.
+
+==== B 1.1.2 `Feature`
+The `Feature` class is defined in <<Class: geo:Feature>>.
+
+===== B 1.1.2.1 Basic use
+
+```turtle
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+.
+```
+
+Here a `Feature` is declared and given a preferred label.
+
+===== B 1.1.2.2 A `Feature` related to a `Geometry`
+
+```turtle
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    ] ;
+.
+```
+
+Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
+
+===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+        geo:hasGeometry [
+            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasArea [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 8.7 ;
+        qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+    ] ;
+.
+```
+
+Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`]. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
+
+Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialMeasure` instance's value.
+
+===== B 1.1.2.4 `Feature` with two different `Geometry` instances indicated
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        rdfs:label "Official boundary" ;
+        rdfs:comment "Official boundary from the Department of Xxx" ;
+        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    ] ,
+    [
+        rdfs:label "Unofficial boundary" ;
+        rdfs:comment "Unofficial boundary as actually used by everyone" ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+    ] ;
+.
+```
+
+In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
+
+===== B 1.1.2.5 `Feature` with two different `Geometry` instances with different property values
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:hasSpatialResolution [
+            qudt:numericValue 100 ;
+            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
+        ] ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    ] ,
+    [
+        geo:hasSpatialResolution [
+            qudt:numericValue 5 ;
+            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
+        ] ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+    ] ;
+.
+```
+
+In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
+
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
+
+===== B 1.1.2.6 `Feature` with two different types of `Geometry` instances
+
+```turtle
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:asWKT "POLYGON ((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasCentroid [
+        geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:WktLiteral ;
+    ] ;
+.
+```
+
+Here a `Feature` instance has two geometries, one indicated with the general property `hasGeometry` and a second indicated with the specialised property `hasCentroid` which suggests the role that the indicated geometry plays. Note that while `hasGeometry` may indicate any type of `Geometry`, `hasCentroid` should only be used to indicate a point geometry. It may be informally inferred that the polygonal geometry is the `Feature` instance's boundary.
+
+==== B.1.1.3 `Geometry`
+The `Geometry` class is defined in <<Class: geo:Geometry>>.
+
+===== B1.1.3.1 Basic Use
+
+```turtle
+eg:y a geo:Geometry ;
+    skos:prefLabel "Geometry Y";
+.
+```
+
+Here a `Geometry` is declared and given a preferred label. 
+
+From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<B 1.1.2.2 A `Feature` related to a `Geometry`>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node, however it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an demonstration absolute URI and data.
+
+```turtle
+<https://example.com/geometry/y> 
+    a geo:Geometry ;
+    skos:prefLabel "Geometry Y";
+    geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    geo:inSRS <http://www.opengis.net/def/crs/EPSG/0/4326> ;
+.
+```
+
+Here the `Geometry` instance has data in WKT form and declares an SRS, WGS84: using the EPSG identifier.
+
+===== B1.1.3.2 A `Geometry` with multiple serializations
+
+```turtle
+eg:x
+    a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:dggsLiteral ;
+    ] ;
+.
+```
+
+Here a single `Geometry`, linked to a `Feature` instance is expressed using two different serializations: Well-known Text and the AusPIX DGGS. Note that `inSRS` is not used for the `Geometry` instance as this would conflict with the DGGS serialization so, as per GeoSPARQL 1.0, the SRS used for the WKT serialization is included directly in the WKT literal value.
+
+==== B 1.1.4 `SpatialMeasure`
+The `SpatialMeasure` class is defined in <<Class: geo:SpatialMeasure>>.
+
+===== B1.1.4.1 Basic Use
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:z
+    a geo:SpatialMeasure ;
+    skos:prefLabel "Area Z" ;
+    qudt:numericValue 8.7 ;
+    qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+```
+
+This example defines an instance of `SpatialMeasure` and supplies it with a preferred label, a numeric value and a unit of measure. 
+
+`SpatialMeasure` instances may be declared in isolation like this - without reference to a `Feature` instance, just as Geometry instances may be - and future use of GeoSPARQL may see such declarations used widely however, at the time of writing GeoSPARQL 1.1, anticipated use of `SpatialMeasure` is with reference to a `Feature` instance: the _thing_ for which the spatial measure is defined. The next example give use in relation to a `Feature` instance.
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x
+    a geo:Feature ;
+    skos:prefLabel "Feature X" ;
+    geo:hasArea [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 8.7 ;
+        qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+    ] ;
+```
+
+In this example, the `SpatialMeasure` instance has no label - only a numeric value and a unit of measure - but it is declared to be the area for "Feature X".
+
+===== B1.1.4.1 Multiple measures
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+eg:x
+    a geo:Feature ;
+    skos:prefLabel "Lake X" ;
+    eg:hasFeatureCategory <http://example.com/cat/lake> ;
+    geo:hasArea [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 8.7 ;
+        qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+    ] ;
+    geo:hasVolume [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 624432 ;
+        qudt:unit <http://qudt.org/vocab/unit/M3> ;  # cubic metre
+    ]
+```
+
+This example shows a `Feature` instance with area and volume declared. A categorization of the feature is given through the use of the `eg:hasFeatureCategory` dummy property which, along with the feature's preferred label, indicate that this feature is a lake. Having both an area and a volume makes sense for a lake.
+
+=== B.1.2 Properties
+
+_New Features checklist - to be removed when all examples are complete:_
+
+|===
+|New element | Section
+
+2+|_Feature Properties_
+|hasBoundingBox | <<Property: geo:hasBoundingBox>>
+|hasCentroid | <<Property: geo:hasCentroid>>
+|hasLength | <<Property: geo:hasLength>>
+|hasArea | <<Property: geo:hasArea>>
+|hasVolume | <<Property: geo:hasVolume>>
+2+|_Geometry Properties_
+|inSRS | <<Property: geo:inSRS>>
+2+|_Geometry Serializations_
+|geoJSONLiteral | <<RDFS Datatype: geo:geoJSONLiteral>>
+|asGeoJSON | <<Property: geo:asGeoJSON>>
+|kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
+|asKML | <<Property: geo:asKML>>
+|dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
+|asDGGS | <<Property: geo:asDGGS>>
+|===
+
+==== B.1.2.1 Feature Properties
+
+This example shows a `Feature` instance with each of the properties defined in <<8.3. Standard Properties for geo:Feature>> used.
+
+```turtle
+eg:x
+    a geo:Feature ;
+    skos:preferredLabel "Feature X" ;
+    geo:hasGeometry [
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.06016 -35.23610, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasDefaultGeometry [
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.0601 -35.2361, ... , 149.0601 -35.2361)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasLength [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 355 ;
+        qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre   
+    ] ;
+    geo:hasArea [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 8.7 ;
+        qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+    ] ;
+    geo:hasVolume [
+        a geo:SpatialMeasure ;
+        qudt:numericValue 624432 ;
+        qudt:unit <http://qudt.org/vocab/unit/M3> ;  # cubic metre        
+    ]
+    geo:hasCentroid [
+        geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:wktLiteral ;
+    ] ;
+    geo:hasBoundingBox [
+        geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasSpatialResolution [
+        qudt:numericValue 5 ;
+        qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
+    ] ;
+.
+```
+
+The properties defined for this example's `Feature` instance are vaguely aligned in that the values are not real but are not unrealistic either. It is outside the scope of GeoSPARQL to validate `Feature` instances' property values.
+
+==== B.1.2.2 Geometry Properties
+
+This example shows a `Geometry` instance declaread in relation to a `Feature` instance with each of the properties defined in <<8.4. Standard Properties for geo:Geometry>> used.
+
+```turtle
+eg:x
+    a geo:Feature ;
+    geo:hasGeometry [
+        skos:prefLabel "Geometry Y" ;
+        geo:dimension 2 ;
+        geo:coordinateDimension 2 ;
+        geo:spatialDimension 2 ;
+        geo:isEmpty false ;
+        geo:isSimple true ;
+        geo:hasSerialization "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
+        geo:inSRS <http://www.opengis.net/def/crs/EPSG/0/4326> ;
+    ] ;
+. 
+```
+
+In this example, each of the standards properties defined for a `Geometry` instance has realistic values, for example, the http://www.opengis.net/ont/geosparql#isempty[`geo:isEmpty`] is set to `false` since the geometry contains information. Note that the SRS of the given serialzation is given within the geometry literal (a WKT value) as well as by the http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] property.
+
+==== B.1.2.3 Geometry Serializations
+
+This section shows a `Geometry` instance for a `Feature` instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
+
+```turtle
+eg:x
+    a geo:Feature ;
+    geo:hasGeometry [
+        geo:asWKT """<http://www.opengis.net/def/crs/EPSG/0/4326>
+            POLYGON ((
+                153.3610112 -27.0621757, 
+                153.3658177 -27.1990606, 
+                153.421436 -27.3406573, 
+                153.4269292 -27.3607835, 
+                153.4434087 -27.3315078, 
+                153.4183848 -27.2913403, 
+                153.4189391 -27.2039578, 
+                153.4673476 -27.0267166, 
+                153.3610112 -27.0621757
+            ))"""^^geo:wktLiteral ;
+
+        geo:asGML """<gml:Polygon 
+                srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                <gml:exterior>
+                    <gml:LinearRing>
+                        <gml:posList>
+                            -27.0621757 153.3610112
+                            -27.1990606 153.3658177
+                            -27.3406573 153.421436
+                            -27.3607835 153.4269292
+                            -27.3315078 153.4434087
+                            -27.2913403 153.4183848
+                            -27.2039578 153.4189391
+                            -27.0267166 153.4673476
+                            -27.0621757 153.3610112
+                        </gml:posList>
+                    </gml:LinearRing>
+                </gml:exterior>
+            </gml:Polygon>"""^^go:gmlLiteral ;
+
+        geo:asKML """<Polygon>
+                <outerBoundaryIs>
+                    <LinearRing>
+                        <coordinates>
+                        153.3610112,-27.0621757
+                        153.3658177,-27.1990606
+                        153.421436,-27.3406573
+                        153.4269292,-27.3607835
+                        153.4434087,-27.3315078
+                        153.4183848,-27.2913403
+                        153.4189391,-27.2039578
+                        153.4673476,-27.0267166
+                        153.3610112,-27.0621757
+                        </coordinates>
+                    </LinearRing>
+                </outerBoundaryIs>
+            </Polygon>"""^^go:kmlLiteral ;
+
+        geo:asGeoJSON """{
+                "type": "Polygon",
+                "coordinates": [[
+                    [153.3610112, -27.0621757],
+                    [153.3658177, -27.1990606],
+                    [153.421436, -27.3406573],
+                    [153.4269292, -27.3607835],
+                    [153.4434087, -27.3315078],
+                    [153.4183848, -27.2913403],
+                    [153.4189391, -27.2039578],
+                    [153.4673476, -27.0267166],
+                    [153.3610112, -27.0621757]
+                ]]
+            }"""^^geo:geoJSONLiteral ;
+
+        geo:asDGGS """<https://w3id.org/dggs/auspix> CELLLIST ((R8346031 R8346034 R8346037 
+            R83460058 R83460065 R83460068 R83460072 R83460073 R83460074 R83460075 R83460076 
+            R83460077 R83460078 R83460080 R83460081 R83460082 R83460083 R83460084 R83460085 
+            R83460086 R83460087 R83460088 R83460302 R83460305 R83460308 R83460320 R83460321 
+            R83460323 R83460324 R83460326 R83460327 R83460332 R83460335 R83460338 R83460350 
+            R83460353 R83460356 R83460362 R83460365 R83460380 R83460610 R83460611 R83460612 
+            R83460613 R83460614 R83460615 R83460617 R83460618 R83460641 R83460642 R83460644 
+            R83460645 R83460648 R83460672 R83460686 R83463020 R83463021 R834600487 R834600488 
+            R834600557 R834600558 R834600564 R834600565 R834600566 R834600567 R834600568 
+            R834600571 R834600572 R834600573 R834600574 R834600575 R834600576 R834600577 
+            R834600578 R834600628 R834600705 R834600706 R834600707 R834600708 R834600712 
+            R834600713 R834600714 R834600715 R834600716 R834600717 R834600718 R834601334 
+            R834601335 R834601336 R834601337 R834601338 R834601360 R834601361 R834601363 
+            R834601364 R834601366 R834601367 R834601600 R834601601 R834601603 R834601606 
+            R834601630 R834601633 R834603220 R834603221 R834603223 R834603224 R834603226 
+            R834603227 R834603250 R834603251 R834603253 R834603256 R834603280 R834603283 
+            R834603510 R834603511 R834603512 R834603513 R834603514 R834603515 R834603516 
+            R834603517 R834603540 R834603541 R834603543 R834603544 R834603546 R834603547 
+            R834603570 R834603573 R834603576 R834603681 R834603682 R834603684 R834603685 
+            R834603687 R834603688 R834603810 R834603830 R834603831 R834603832 R834603833 
+            R834603834 R834603835 R834603836 R834603837 R834603860 R834603861 R834603863 
+            R834603864 R834603866 R834603867 R834606021 R834606022 R834606024 R834606025 
+            R834606028 R834606052 R834606055 R834606160 R834606161 R834606162 R834606164 
+            R834606165 R834606167 R834606168 R834606200 R834606203 R834606206 R834606230 
+            R834606233 R834606236 R834606260 R834606263 R834606266 R834606401 R834606402 
+            R834606405 R834606408 R834606432 R834606471 R834606472 R834606474 R834606475 
+            R834606477 R834606478 R834606500 R834606503 R834606506 R834606530 R834606533 
+            R834606536 R834606560 R834606563 R834606566 R834606712 R834606715 R834606718 
+            R834606750 R834606751 R834606752 R834606753 R834606754 R834606755 R834606757 
+            R834606758 R834606781 R834606782 R834606784 R834606785 R834606788 R834606800 
+            R834606803 R834606806 R834606807 R834606830 R834606831 R834606833 R834606834 
+            R834606835 R834606836 R834606837 R834606838 R834606870 R834606873 R834606874 
+            R834606876 R834606877 R834630122 R834630125 R834630226 R834630230 R834630231 
+            R834630232 R834630234 R834630235 R834630237 R834630238 R834630240 R834630241 
+            R834630242 R834630243 R834630244 R834630245 R834630246 R834630247 R834630261 
+            R834630262 R834630264 R834630265 R834630268 R834630270 R834630271 R834630273 
+            R834630276 R834630502))""""^^geo:dggsLiteral ;
+    ] ;
+.
+```
+
+== B.2 Example SPARQL Queries & Rules 
+
+_New Features checklist - to be removed when all examples are complete:_
+
+|===
+|New element | Section
+
+2+|_Non-topological Query Functions_
+|maxX | <<Function: geof:maxX>>
+|maxY | <<Function: geof:maxY>>
+|maxZ | <<Function: geof:maxZ>>
+|minX | <<Function: geof:minX>>
+|minY | <<Function: geof:minY>>
+|minZ | <<Function: geof:minZ>>
+2+|_Spatial Aggregate Functions_
+|BBOX | <<Function: geosaf:BBOX>>
+|BoundingCircle | <<Function: geoaf:BoundingCircle>>
+|Centroid | <<Function: geoaf:Centroid>>
+|ConcatLines | <<Function: geoaf:ConcatLines>>
+|ConcaveHull | <<Function: geoaf:ConcaveHull>>
+|ConvexHull | <<Function: geoaf:ConvexHull>>
+|Union | <<Function: geoaf:Union>>
+|===
+
+
+This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
+
+=== B.2.1 Example Data
+
+The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
 
 All the following examples use the parameter values relation_family = Simple Features, serialization = WKT, and version = 1.0.
 
 [#img-illustration]
 .Illustration of spatial data
-image::img/03.png[RDF Triple,300,200]
+image::img/03.png[600,400,align="center"]
 
-```
-<rdf:RDF 
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-    xmlns:owl="http://www.w3.org/2002/07/owl#" 
-    xmlns:sf="http://www.opengis.net/ont/sf#" 
-    xmlns:geo="http://www.opengis.net/ont/geosparql#" 
-    xmlns:my="http://example.org/ApplicationSchema#">
+```turtle
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix my: <http://example.org/ApplicationSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
-<!-- Integration with GeoSPARQL classes and properties --> 
-<rdfs:Class rdf:about=
-    "http://example.org/ApplicationSchema#PlaceOfInterest"> 
-    <rdfs:subClassOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#Feature"/>
-</rdfs:Class>
-<rdf:Property rdf:about= 
-    "http://example.org/ApplicationSchema#hasExactGeometry"> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasGeometry"/> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasDefaultGeometry"/>
-</rdf:Property>
-<rdf:Property rdf:about= 
-    "http://example.org/ApplicationSchema#hasPointGeometry"> 
-    <rdfs:subPropertyOf rdf:resource=
-        "http://www.opengis.net/ont/geosparql#hasGeometry"/> 
-</rdf:Property>
+my:PlaceOfInterest a rdfs:Class ;
+    rdfs:subClassOf geo:Feature .
 
-<!-- Instance-level statements -->
-<!-- A -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#A">
-    <my:hasExactGeometry rdf:resource= 
-        "http://example.org/ApplicationSchema#AExactGeom"/>
-    <my:hasPointGeometry rdf:resource= 
-        "http://example.org/ApplicationSchema#APointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#AExactGeom">
-    <geo:asWKT rdf:datatype= 
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[ 
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5,
-                    -83.6 34.5, -83.6 34.1))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#APointGeom">
-    <geo:asWKT rdf:datatype= 
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[ 
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Point(-83.4 34.3)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:A a my:PlaceOfInterest ;
+    my:hasExactGeometry my:AExactGeom ;
+    my:hasPointGeometry my:APointGeom .
 
-<!-- B -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#B">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#BExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#BPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#BExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3,
-                     -83.6 34.3, -83.6 34.1))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#BPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Point(-83.5 34.2)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:B a my:PlaceOfInterest ;
+    my:hasExactGeometry my:BExactGeom ;
+    my:hasPointGeometry my:BPointGeom .
 
-<!-- C -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#C">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#CExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#CPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#CExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5,
-                     -83.2 34.5, -83.2 34.3))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#CPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            Point(-83.1 34.4)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:C a my:PlaceOfInterest ;
+    my:hasExactGeometry my:CExactGeom ;
+    my:hasPointGeometry my:CPointGeom .
 
-<!-- D -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#D">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#DExactGeom"/>
-    <my:hasPointGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#DPointGeom"/>
-</my:PlaceOfInterest>
-<sf:Polygon rdf:about="http://example.org/ApplicationSchema#DExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-            Polygon((-83.3 34.0, -83.1 34.0, -83.1 34.2,
-                     -83.3 34.2, -83.3 34.0))
-        ]]>
-    </geo:asWKT>
-</sf:Polygon>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#DPointGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-        Point(-83.2 34.1)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:D a my:PlaceOfInterest ;
+    my:hasExactGeometry my:DExactGeom ;
+    my:hasPointGeometry my:DPointGeom .
 
-<!-- E -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#E">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#EExactGeom"/>
-</my:PlaceOfInterest>
-<sf:LineString rdf:about=
-    "http://example.org/ApplicationSchema#EExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-            LineString((-83.4 34.0, -83.3 34.3))
-        ]]>
-    </geo:asWKT>
-</sf:LineString>
+my:E a my:PlaceOfInterest ;
+    my:hasExactGeometry my:EExactGeom .
 
-<!-- F -->
-<my:PlaceOfInterest rdf:about="http://example.org/ApplicationSchema#F">
-    <my:hasExactGeometry rdf:resource=
-        "http://example.org/ApplicationSchema#FExactGeom"/>
-</my:PlaceOfInterest>
-<sf:Point rdf:about="http://example.org/ApplicationSchema#FExactGeom">
-    <geo:asWKT rdf:datatype=
-        "http://www.opengis.net/ont/geosparql#wktLiteral">
-        <![CDATA[
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-        Point(-83.4 34.4)
-        ]]>
-    </geo:asWKT>
-</sf:Point>
+my:F a my:PlaceOfInterest ;
+    my:hasExactGeometry my:FExactGeom .
 
-</rdf:RDF>
+my:hasExactGeometry a rdf:Property ;
+    rdfs:subPropertyOf geo:hasDefaultGeometry,
+        geo:hasGeometry .
+
+my:hasPointGeometry a rdf:Property ;
+    rdfs:subPropertyOf geo:hasGeometry .
+
+my:AExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5,
+                 -83.6 34.5, -83.6 34.1))"""^^geo:wktLiteral.
+
+my:APointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Point(-83.4 34.3)"""^^geo:wktLiteral.
+
+my:BExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3,
+                 -83.6 34.3, -83.6 34.1))"""^^geo:wktLiteral.
+
+my:BPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.5 34.2)"""^^geo:wktLiteral.
+
+my:CExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5,
+                 -83.2 34.5, -83.2 34.3))"""^^geo:wktLiteral.
+
+my:CPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.1 34.4)"""^^geo:wktLiteral.
+
+my:DExactGeom a sf:Polygon ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+                 Polygon((-83.3 34.0, -83.1 34.0, -83.1 34.2,
+                 -83.3 34.2, -83.3 34.0))"""^^geo:wktLiteral.
+
+my:DPointGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.2 34.1)"""^^geo:wktLiteral.
+
+my:EExactGeom a sf:LineString ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 LineString((-83.4 34.0, -83.3 34.3))"""^^geo:wktLiteral.
+
+my:FExactGeom a sf:Point ;
+    geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
+                 Point(-83.4 34.4)"""^^geo:wktLiteral.
 ```
 
-==== B.2 Example Queries
+=== B.2.2 Example Queries
 
 This Section illustrates the use of GeoSPARQL functions through a series of example queries.
 
+[[annexB_example1]]
 *Example 1*: _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -200,8 +583,11 @@ WHERE {
     ?aGeom geo:asWKT ?aWKT .
     ?f my:hasExactGeometry ?fGeom .
     ?fGeom geo:asWKT ?fWKT .
-    FILTER (geof:sfContains(?aWKT, ?fWKT) &&
-            !sameTerm(?aGeom, ?fGeom))
+
+    FILTER (
+        geof:sfContains(?aWKT, ?fWKT) &&
+            !sameTerm(?aGeom, ?fGeom)
+        )
 )
 ```
 
@@ -213,22 +599,28 @@ WHERE {
 |`my:F`
 |===
 
+[[annexB_example2]]
 *Example 2*: _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 
 SELECT ?f
-WHERE { ?f my:hasPointGeometry ?fGeom .
-        ?fGeom geo:asWKT ?fWKT . 
-        FILTER (geof:sfWithin(?fWKT,
-                "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
-                Polygon ((-83.4 34.0, -83.1 34.0,
-                          -83.1 34.2, -83.4 34.2,
-                          -83.4 34.0))"^^geo:wktLiteral))
-)
+WHERE { 
+    ?f my:hasPointGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT . 
+    FILTER (
+        geof:sfWithin(
+            ?fWKT,
+            "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+            Polygon ((-83.4 34.0, -83.1 34.0,
+                        -83.1 34.2, -83.4 34.2,
+                        -83.4 34.0))"^^geo:wktLiteral
+        )
+    )
+}
 ```
 
 *Result*:
@@ -238,23 +630,28 @@ WHERE { ?f my:hasPointGeometry ?fGeom .
 |`my:D`
 |===
 
-*Example 3*: _Find all features that touch the union of feature `my:A` and feature `my:D`,
-where computations are based on_ `my:hasExactGeometry`.
+[[annexB_example3]]
+*Example 3*: _Find all features that touch the union of feature `my:A` and feature `my:D`, where computations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 
 SELECT ?f
-WHERE { ?f my:hasExactGeometry ?fGeom .
-        ?fGeom geo:asWKT ?fWKT .
-        my:A my:hasExactGeometry ?aGeom . 
-        ?aGeom geo:asWKT ?aWKT .
-        ?my:D my:hasExactGeometry ?dGeom . 
-        ?dGeom geo:asWKT ?dWKT .
-        FILTER (geof:sfTouches(?fWKT,
-                geof:union(?aWKT, ?dWKT)))
+WHERE { 
+    ?f my:hasExactGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
+    my:A my:hasExactGeometry ?aGeom . 
+    ?aGeom geo:asWKT ?aWKT .
+    ?my:D my:hasExactGeometry ?dGeom . 
+    ?dGeom geo:asWKT ?dWKT .
+    FILTER (
+        geof:sfTouches(
+            ?fWKT,
+            geof:union(?aWKT, ?dWKT)
+        )
+    )
 }
 ```
 
@@ -265,21 +662,23 @@ WHERE { ?f my:hasExactGeometry ?fGeom .
 |`my:C`
 |===
 
+[[annexB_example4]]
 *Example 4*: _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
 
-```
+```sparql
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/> 
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/geosparql/function>
 
 SELECT ?f
-WHERE { my:C my:hasExactGeometry ?cGeom .
-        ?cGeom geo:asWKT ?cWKT .
-        ?f my:hasExactGeometry ?fGeom . ?fGeom geo:asWKT ?fWKT .
-        FILTER (?fGeom != ?cGeom) }
-ORDER BY ASC (geof:distance(?cWKT, ?fWKT,
-              uom:metre)) 
+WHERE { 
+    my:C my:hasExactGeometry ?cGeom .
+    ?cGeom geo:asWKT ?cWKT .
+    ?f my:hasExactGeometry ?fGeom . ?fGeom geo:asWKT ?fWKT .
+    FILTER (?fGeom != ?cGeom) 
+}
+ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre)) 
 LIMIT 3
 ```
 
@@ -292,15 +691,16 @@ LIMIT 3
 |`my:E`
 |===
 
-==== B.3 Example Rule Application
+=== B.2.3 Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
+[[annexB_example5]]
 *Example 5*: _Find all features or geometries that overlap feature_ `my:A`.
 
 *Original Query*:
 
-```
+```sparql
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 SELECT ?f
@@ -309,40 +709,45 @@ WHERE { ?f geo:sfOverlaps my:A }
 
 *Transformed Query (application of transformation rule geor:sfOverlaps)*:
 
-```
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 
 SELECT ?f
-WHERE { { # check for asserted statement
-          ?f geo:sfOverlaps my:A } 
-        UNION
-        { # feature – feature
-          ?f geo:hasDefaultGeometry ?fGeom . 
-          ?fGeom geo:asWKT ?fSerial .
-          my:A geo:hasDefaultGeometry ?aGeom .
-          ?aGeom geo:asWKT ?aSerial .
-          FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) } 
-        UNION
-        { # feature – geometry
-          ?f geo:hasDefaultGeometry ?fGeom .
-          ?fGeom geo:asWKT ?fSerial .
-          my:A geo:asWKT ?aSerial .
-          FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) }
-        UNION
-        { # geometry – feature
-          ?f geo:asWKT ?fSerial .
-          my:A geo:hasDefaultGeometry ?aGeom .
-          ?aGeom geo:asWKT ?aSerial .
-          FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) }
-        UNION
-        { # geometry – geometry
-          ?f geo:hasDefaultGeometry ?fGeom . 
-          ?fGeom geo:asWKT ?fSerial .
-          my:A geo:hasDefaultGeometry ?aGeom . 
-          ?aGeom geo:asWKT ?aSerial .
-          FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) } 
+WHERE { 
+    { # check for asserted statement
+        ?f geo:sfOverlaps my:A } 
+    UNION
+    { # feature – feature
+        ?f geo:hasDefaultGeometry ?fGeom . 
+        ?fGeom geo:asWKT ?fSerial .
+        my:A geo:hasDefaultGeometry ?aGeom .
+        ?aGeom geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
+    } 
+    UNION
+    { # feature – geometry
+        ?f geo:hasDefaultGeometry ?fGeom .
+        ?fGeom geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
+    }
+    UNION
+    { # geometry – feature
+        ?f geo:asWKT ?fSerial .
+        my:A geo:hasDefaultGeometry ?aGeom .
+        ?aGeom geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
+    }
+    UNION
+    { # geometry – geometry
+        ?f geo:hasDefaultGeometry ?fGeom . 
+        ?fGeom geo:asWKT ?fSerial .
+        my:A geo:hasDefaultGeometry ?aGeom . 
+        ?aGeom geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
+    } 
 }
 ```
 
@@ -355,3 +760,26 @@ WHERE { { # check for asserted statement
 |`my:E`
 |`my:EExactGeom`
 |===
+
+
+=== B.2.4 Example Geometry Serialization Conversion Functions
+
+_New Features checklist - to be removed when all examples are complete:_
+
+|===
+|New element | Section
+
+2+|_Geometry Serializations_
+|asWKT function | <<Function: geof:asWKT>>
+|asGML function | <<Function: geof:asGML>>
+|asGeoJSON function | <<Function: geof:asGeoJSON>>
+|asKML function | <<Function: geof:asKML>>
+|===
+
+==== B.1.2.2.1 `geof:asWKT`
+
+For the geometry literal values in <<B.1.2.3 Geometry Serializations>>:
+
+Application of the function `geof:asWKT` to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, `geof:asGML`, `geof:asKML`, `geof:asGeoJSON` & `geof:asDGGS`.
+
+Note that the application of `geof:asDGGS` requires a `dggsIri` parameter which indicates the IRI of the particular DGGS being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be `+https://w3id.org/dggs/auspix+`, the IRI of the AusPIX DGGS.

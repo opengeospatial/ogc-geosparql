@@ -1,523 +1,661 @@
-=== Geometry Extension (serialization, version)
+== Geometry Extension (serialization, version)
 
-This clause establishes the _Geometry Extension (serialization, version)_ parameterized requirements class, with URI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension (serialization, version)_, with URI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
+This clause establishes the _Geometry Extension (serialization, version)_ parameterized requirements class, with IRI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension (serialization, version)_, with IRI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
 
 As part of the vocabulary, an RDFS datatype is defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
-Other schemes for encoding simple geometry data in RDF have been proposed. The W3C Basic Geo vocabulary (http://www.w3.org/2003/01/geo/) is one popular vocabulary. These simple vocabularies have limitations, for example the inability to specify different datums and coordinate systems, and were therefore not used in GeoSPARQL. Note that most existing geometry data encoded using these vocabularies can easily be converted into GeoSPARQL representations. The SPARQL query below creates `geo:wktLiteral` values from W3C Basic Geo geometries.
+Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabularyfootnote:[http://www.w3.org/2003/01/geo/] was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things, using WGS84 as a reference datum" and many widely used Semantic Web vocabularies contain some spatial data support. For example, _Dublin Core Terms_ provides a _Location_ classfootnote:[http://purl.org/dc/terms/Location] for "A spatial region or named place." and _schema.org_ provides a number of spatial object and geometry classes, such as `GeoCoordinates`footnote:[https://schema.org/GeoCoordinates] and `GeoShape`footnote:[https://schema.org/GeoShape]. 
 
-```
-PREFIX w3cGeo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
-PREFIX geo: <http://www.opengis.net/#geosparql>
+Many vocabularies, such as these two, provide little specific support for detailed geometries and only support the WGS84 Coordinate Reference System (CSR).
 
-SELECT (STRDT(CONCAT("POINT(",?long," ",?lat,")"), 
-              geo:wktLiteral) AS ?wktLit)
-WHERE { ?point w3cGeo:long ?long . 
-        ?point w3cGeo:lat ?lat }
-```
+Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent DCAT2 standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
 
-==== Parameters
+Some of the properties defined in these vocabularies, such as `hasSpatialResolution` which are introduced in this version of GeoSPARQL, were motivated by similar properties introduced in external vocabularies such as DCAT2, which provided some of the motivation for their inclusion here. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontologies that were influential in the generation of this verison of GeoSPARQL.
+
+=== Parameters
 
 The following parameters are defined for the _Geometry Extension_ requirements class.
 
-*serialization*: Specifies the serialization standard to use when generating geometry
-literals and also the supported geometry types.
+serialization:: Specifies the serialization standard to use when generating geometry literals and also the supported geometry types.
 
-Note that the serialization chosen strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with ISO 19125 Simple Features [ISO 19125-1], and the GML serialization aligns the geometry types with ISO 19107 Spatial Schema [6].
+Note that the serialization chosen strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<ISO19125-1>>, and the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
 
-*version*: Specifies the version of the serialization format used.
+version:: Specifies the version of the serialization format used.
 
-==== Geometry Classes and Properties
+=== Geometry Class
 
-A single root geometry class is defined: `geo:Geometry`. The class `geo:Geometry` is equivalent to the UML class `GM_Object` defined in [6]. In addition, properties are defined for describing geometry data and for associating geometries with features.
+A single root geometry class is defined: http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to the UML class `GM_Object` defined in <<ISO19107>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
 
-===== Class: geo:Geometry
+==== Class: geo:Geometry
 
-The class `geo:Geometry` is equivalent to `GM_Object` [6] and is defined by the following:
+The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to `GM_Object` <<ISO19107>> and is defined by the following:
 
-```
-geo:Geometry a rdfs:Class, 
-               owl:Class;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>; 
-    rdfs:label "Geometry"@en;
-    rdfs:subClassOf geo:SpatialObject;
+```turtle
+geo:Geometry a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy geo: ; 
+    skos:prefLabel "Geometry"@en ;
+    rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Feature;
-    rdfs:comment "The class represents the top-level geometry type. This class 
-                 is equivalent to the UML class GM_Object defined in ISO 19107, 
-                 and it is superclass of all geometry types."@en .
+    skos:definition "The class represents the top-level geometry type. This class 
+                    is equivalent to the UML class GM_Object defined in ISO 19107, 
+                    and it is superclass of all geometry types."@en .
 ```
 
 |===
-|*Req 7* Implementations shall allow the RDFS class `geo:Geometry` to be used in SPARQL graph patterns.
+| *Req 8* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-class`
 |===
 
-===== Standard Properties for geo:Feature
-
-Properties are defined for associating geometries with features.
-
-|===
-|*Req 8* Implementations shall allow the properties `geo:hasGeometry` and
-`geo:hasDefaultGeometry` to be used in SPARQL graph patterns.
-|`/req/geometry-extension/feature-properties`
-|===
-
-====== Property: geo:hasGeometry
-
-The property `geo:hasGeometry` is used to link a feature with a geometry that represents its spatial extent. A given feature may have many associated geometries.
-
-```
-geo:hasGeometry a rdf:Property, 
-                  owl:ObjectProperty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "has Geometry"@en;
-    rdfs:comment "A spatial representation for a given feature."@en;     
-    rdfs:domain geo:Feature;
-    rdfs:range geo:Geometry .
-```
-
-===== Property: geo:hasDefaultGeometry
-
-The property `geo:hasDefaultGeometry` is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).
-
-```
-geo:hasDefaultGeometry a rdf:Property, 
-                            owl:ObjectProperty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "has Default Geometry"@en;
-    rdfs:comment "The default geometry to be used in spatial calculations, 
-                 usually the most detailed geometry."@en; 
-    rdfs:subPropertyOf geo:hasGeometry;
-    rdfs:domain geo:Feature; 
-    rdfs:range geo:Geometry .
-```
-
-GeoSPARQL does not restrict the cardinality of the `geo:hasDefaultGeometry` property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature my:f1 has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule `geor:sfDisjoint`).
-
-```
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-
-SELECT (COUNT(*) AS ?cnt)
-WHERE { :f1 geo:sfDisjoint :f1 }
-```
-
-Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification.
-
-====  Standard Properties for geo:Geometry
+=== Standard Properties for geo:Geometry
 
 Properties are defined for describing geometry metadata.
 
 |===
-|*Req 9* Implementations shall allow the properties `geo:dimension`, `geo:coordinateDimension`, `geo:spatialDimension`, `geo:isEmpty`, `geo:isSimple`, `geo:hasSerialization` to be used in SPARQL graph patterns.
+| *Req 10* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`], http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`], http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`], http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`], http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`], http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] , http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-properties`
 |===
 
-===== Property: geo:dimension
+==== Property: geo:dimension
 
 The dimension is the topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.
 
-```
-geo:dimension a rdf:Property,
-                owl:DatatypeProperty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "dimension"@en;
-    rdfs:comment "The topological dimension of this geometric object, which
-                 must be less than or equal to the coordinate dimension. In 
-                 non-homogeneous collections, this is the largest 
-                 topological dimension of the contained objects."@en;
-    rdfs:domain geo:Geometry;
+```turtle
+geo:dimension a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "dimension"@en ;
+    skos:definition "The topological dimension of this geometric object, which
+                    must be less than or equal to the coordinate dimension. In 
+                    non-homogeneous collections, this is the largest 
+                    topological dimension of the contained objects."@en ;
+    rdfs:domain geo:Geometry ;
     rdfs:range xsd:integer .
 ```
 
-===== Property: geo:coordinateDimension
+==== Property: geo:coordinateDimension
 
 The coordinate dimension is the dimension of direct positions (coordinate tuples) used in the definition of this geometric object.
 
-```
-geo:coordinateDimension a rdf:Property,
-                          owl:DatatypeProperty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "coordinate dimension"@en;
-    rdfs:comment "The number of measurements or axes needed to describe the
-                 position of this geometry in a coordinate system."@en;
-    rdfs:domain geo:Geometry;
+```turtle
+geo:coordinateDimension a rdf:Property, owl:DatatypeProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "coordinate dimension"@en ;
+    skos:definition "The number of measurements or axes needed to describe the
+                    position of this geometry in a coordinate system."@en ;
+    rdfs:domain geo:Geometry ;
     rdfs:range xsd:integer .
 ```
 
-===== Property: geo:spatialDimension
+==== Property: geo:spatialDimension
 
 The spatial dimension is the dimension of the spatial portion of the direct positions (coordinate tuples) used in the definition of this geometric object. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.
 
-```
-geo:spatialDimension a rdf:Property,
-                       owl:DatatypeProperty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "spatial dimension"@en;
-    rdfs:comment "The number of measurements or axes needed to describe the
-                 spatial position of this geometry in a coordinate
-                 system."@en;
-    rdfs:domain geo:Geometry;
+```turtle
+geo:spatialDimension a rdf:Property, owl:DatatypeProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "spatial dimension"@en ;
+    skos:definition "The number of measurements or axes needed to describe the
+                    spatial position of this geometry in a coordinate system."@en ;
+    rdfs:domain geo:Geometry ;
     rdfs:range xsd:integer .
 ```
 
-====== Property: geo:isEmpty
+==== Property: geo:hasSpatialResolution
 
+The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is used to indicate resolution of the elements within literal representations of a geometry. Since this property is defined for a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], all literal representations of that geometry must have the same spatial resolution.
 
-The `geo:isEmpty` Boolean will be set to true only if the geometry contains no points.
-
+```turtle
+geo:hasSpatialResolution a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has spatial resolution"@en ;
+    skos:definition "The spatial resolution of a Geometry"@en ; 
+    rdfs:domain geo:Geometry .
 ```
-geo:isEmpty a rdf:Property, owl:DatatypePropterty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "is empty"@en;
-    rdfs:comment "(true) if this geometric object is the empty Geometry. If
-                 true, then this geometric object represents the empty point
-                 set for the coordinate space."@en; 
-    rdfs:domain geo:Geometry;
+
+==== Property: geo:isEmpty
+
+The http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`] Boolean will be set to `true` only if the geometry contains no information.
+
+```turtle
+geo:isEmpty a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "is empty"@en ;
+    skos:definition "(true) if this geometric object is the empty Geometry. If
+                    true, then this geometric object represents the empty point
+                    set for the coordinate space."@en ; 
+    rdfs:domain geo:Geometry ;
     rdfs:range xsd:boolean .
 ```
 
-====== Property: geo:isSimple
+==== Property: geo:isSimple
 
-The `geo:isSimple` Boolean will be set to true, only if the geometry contains no self- intersections, with the possible exception of its boundary.
+The http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] Boolean will be set to `true`, only if the geometry contains no self-intersections, with the possible exception of its boundary.
 
-```
-geo:isSimple a rdf:Property, 
-               owl:DatatypePropterty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "is simple"@en;
-    rdfs:comment "(true) if this geometric object has no anomalous geometric
-                points, such as self intersection or self tangency."@en; 
-    rdfs:domain geo:Geometry;
+```turtle
+geo:isSimple a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "is simple"@en ;
+    skos:definition "(true) if this geometric object has no anomalous geometric
+                    points, such as self intersection or self tangency."@en ; 
+    rdfs:domain geo:Geometry ;
     rdfs:range xsd:boolean .    
 ```
 
-===== Property: geo:hasSerialization
+==== Property: geo:hasSerialization
 
-The `geo:hasSerialization` property is used to connect a geometry with its text- based serialization (e.g., its WKT serialization).
+The http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] property is used to connect a geometry with its text-based serialization (e.g., its WKT serialization).
 
-```
-geo:hasSerialization a rdf:Property, 
-                       owl:DatatypePropterty;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>; 
-    rdfs:label "has serialization"@en;
-    rdfs:comment "Connects a geometry object with its text-based
-                 serialization."@en;
-    rdfs:domain geo:Geometry; 
+```turtle
+geo:hasSerialization a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ; 
+    skos:prefLabel "has serialization"@en ;
+    skos:definition "Connects a geometry object with its text-based serialization."@en ;
+    rdfs:domain geo:Geometry ; 
     rdfs:range rdfs:Literal .
 ```
 
-==== Requirements for WKT Serialization (serialization=WKT)
+NOTE: this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`] which can be used for GeoJSON <<GEOJSON>> literals.
 
-This section establishes the requirements for representing geometry data in RDF based on WKT as defined by Simple Features [ISO 19125-1].
+==== Property: geo:inSRS
 
-===== RDFS Datatypes
+The http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).
 
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#wktLiteral+`.
-
-*RDFS Datatype: geo:wktLiteral*
-
+```turtle
+geo:inSRS a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy geo: ; 
+    skos:prefLabel "in SRS"@en ;
+    skos:definition "The spatial reference system used for the literal representation of the geometry."@en ;
+    rdfs:domain geo:Geometry ; 
+    rdfs:range skos:Concept .
 ```
-geo:wktLiteral a rdfs:Datatype;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "Well-known Text Literal"@en;
-    rdfs:comment "A Well-known Text serialization of a geometry object."@en .
+
+=== Geometry Serializations
+This section establishes the requirements for representing geometry data in RDF based on different systems.
+
+==== Well-Known Text (serialization=WKT)
+
+This section establishes the requirements for representing geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <<ISO19125-1>>. It defines one RDFS Datatype: http://www.opengis.net/ont/geosparql#wktLiteral[`+http://www.opengis.net/ont/geosparql#wktLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asWKT[`+http://www.opengis.net/ont/geosparql#asWKT+`].
+
+===== RDFS Datatype: geo:wktLiteral
+
+```turtle
+geo:wktLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Well-known Text literal"@en ;
+    skos:definition "A Well-known Text serialization of a geometry object."@en .
 ```
 
 |===
-|*Req 10* All RDFS Literals of type `geo:wktLiteral` shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid `geo:wktLiterals` are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].
+| *Req 11* All RDFS Literals of type http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiterals`] are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<` & `>`) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <<ISO13249>>.
 |`/req/geometry-extension/wkt-literal`
 |===
 
-For `geo:wktLiterals`, the beginning URI identifies the spatial reference system for
-the geometry. The OGC maintains a set of CRS URIs under the
-`+http://www.opengis.net/def/crs/+` namespace. This leading spatial reference
-system URI is optional. In the absence of a leading spatial reference system URI, the
-following spatial reference system URI will be assumed:
-`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`
-This URI denotes WGS 84 longitude-latitude.
+The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
+
+```
+wktLiteral ::= opt-iri-and-space geometric-data
+
+opt-iri-and-space = "<" IRI ">" LWSP / ""
+```
+
+The token `opt-iri-and-space` may be either an IRI and space or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the geometry, defined in <<ISO13249>>.
+
+In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
 |===
-|*Req 11* The URI `+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+` shall be assumed as the spatial reference system for `geo:wktLiteral`s that do not specify an explicit spatial reference system URI..
+| *Req 12* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] instances that do not specify an explicit spatial reference system IRI.
 |`/req/geometry-extension/wkt-literal-default-srs`
 |===
 
+The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
+
 |===
-|*Req 12* Coordinate tuples within `geo:wktLiteral`s shall be interpreted using the axis order defined in the spatial reference system used.
+| *Req 13* Coordinate tuples within http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] shall be interpreted using the axis order defined in the spatial reference system used.
 |`/req/geometry-extension/wkt-axis-order`
 |===
 
-The example `geo:wktLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+The example http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
-```
+```turtle
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
-A second example below encodes the same point using `+<http://www.opengis.net/def/crs/EPSG/0/4326>+`: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
+A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
-```
-"<http://www.opengis.net/def/crs/EPSG/0/4326>
-Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+```turtle
+"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
 |===
-|*Req 13* An empty RDFS Literal of type `geo:wktLiteral` shall be interpreted as an empty geometry.
+| *Req 14* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] shall be interpreted as an empty geometry.
 |`/req/geometry-extension/wkt-literal-empty`
 |===
 
-===== Serialization Properties
+===== Property: geo:asWKT
 
 The `geo:asWKT` property is defined to link a geometry with its WKT serialization.
 
-*Property: geo:asWKT*
-
 |===
-|*Req 14* Implementations shall allow the RDF property `geo:asWKT` to be used in SPARQL graph patterns.
+| *Req 15* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-as-wkt-literal`
 |===
 
-The property `geo:asWKT` is used to link a geometric element with its WKT serialization.
+The property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] is used to link a geometric element with its WKT serialization.
 
-```
-geo:asWKT a rdf:Property,
-            owl:DatatypeProperty;
-    rdfs:subPropertyOf geo:hasSerialization;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "as WKT"@en;
-    rdfs:comment "The WKT serialization of a geometry."@en;
-    rdfs:domain geo:Geometry;
+```turtle
+geo:asWKT a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as WKT"@en ;
+    skos:definition "The WKT serialization of a geometry."@en ;
+    rdfs:domain geo:Geometry ;
     rdfs:range geo:wktLiteral .
 ```
 
-==== Requirements for GML Serialization (serialization=GML)
-
-This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard [OGC 07-036].
-
-===== RDFS Datatypes
-
-This section defines one RDFS Datatype:
-`http://www.opengis.net/ont/geosparql#gmlLiteral.`
-
-*RDFS Datatype: geo:gmlLiteral*
+===== Function: geof:asWKT
 
 ```
-geo:gmlLiteral a rdfs:Datatype;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>; 
-    rdfs:label "GML literal"@en;
-    rdfs:comment "The datatype of GML literal values"@en .
+geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral
 ```
 
-Valid `geo:gmlLiteral`s are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of `GM_Object`. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml/3.2}AbstractGeometry`. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml}_Geometry`.
+The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] converts `geom` to an equivalent WKT representation preserving the coordinate reference system. 
 
 |===
-|*Req 15* All `geo:gmlLiteral`s shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in [OGC 07-036].
+| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] as a SPARQL extension function.
+|`/req/geometry-extension/asWKT-function`
+|===
+
+==== Geography Markup Language (serialization=GML)
+
+This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
+http://www.opengis.net/ont/geosparql#gmlLiteral[`+http://www.opengis.net/ont/geosparql#gmlLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asGML[`+http://www.opengis.net/ont/geosparql#asGML+`].
+
+===== RDFS Datatype: geo:gmlLiteral
+
+```turtle
+geo:gmlLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ; 
+    skos:prefLabel "GML literal"@en ;
+    skos:definition "The datatype of GML literal values"@en .
+```
+
+Valid http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] instances are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of `GM_Object`. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml/3.2}AbstractGeometry`. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml}_Geometry`.
+
+|===
+| *Req 16* All http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] instances shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in <<OGC07-036>>.
 |`/req/geometry-extension/gml-literal`
 |===
 
-The example `geo:gmlLiteral` below encodes a point geometry in the WGS 84
-geodetic longitude-latitude spatial reference system using GML version 3.2:
+The example http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] below encodes a point geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
 
-```
-"<gml:Point 
+```turtle
+"""
+<gml:Point 
         srsName=\"http://www.opengis.net/def/crs/OGC/1.3/CRS84\" 
         xmlns:gml=\"http://www.opengis.net/ont/gml\">
     <gml:pos>-83.38 33.95</gml:pos>
-</gml:Point>"^^<http://www.opengis.net/ont/geosparql#gmlLiteral>
+</gml:Point>
+"""^^<http://www.opengis.net/ont/geosparql#gmlLiteral>
 ```
 
 |===
-|*Req 16* An empty `geo:gmlLiteral` shall be interpreted as an empty geometry.
+| *Req 17* An empty http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] shall be interpreted as an empty geometry.
 |`/req/geometry-extension/gml-literal-empty`
 |===
 
 |===
-|*Req 17* Implementations shall document supported GML profiles.
+| *Req 18* Implementations shall document supported GML profiles.
 |`/req/geometry-extension/gml-profile`
 |===
 
-===== Serialization Properties
+===== Property: geo:asGML
 
-This document defines the `geo:asGML` property to link a geometry with its serialization.
-
-*Property: geo:asGML*
+This document defines the http://www.opengis.net/ont/geosparql#asGML[`geo:asGML`] property to link a geometry with its serialization.
 
 |===
-|*Req 18* Implementations shall allow the RDF property `geo:asGML` to be used in SPARQL graph patterns.
+| *Req 19* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asGML[`geo:asGML`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-as-gml-literal`
 |===
 
 
-The property `geo:asGML` is used to link a geometric element with its GML serialization.
+The property http://www.opengis.net/ont/geosparql#asGML[`geo:asGML`] is used to link a geometric element with its GML serialization.
 
-```
-geo:asGML a rdf:Property; 
-    rdfs:subPropertyOf geo:hasSerialization;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0>;
-    rdfs:label "as GML"@en;
-    rdfs:comment "The GML serialization of a geometry."@en; 
-    rdfs:domain geo:Geometry;
+```turtle
+geo:asGML a rdf:Property ; 
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as GML"@en ;
+    skos:definition "The GML serialization of a geometry."@en ; 
+    rdfs:domain geo:Geometry ;
     rdfs:range geo:gmlLiteral .
 ```
 
-
-==== Requirements for GeoJSON Serialization (serialization=GEOJSON)
-
-This section establishes the requirements for representing geometry data in RDF based on GeoJSON.
-
-===== RDFS Datatypes
-
-This section defines one RDFS Datatype: `+http://www.opengis.net/ont/geosparql#geoJSONLiteral+`.
-
-*RDFS Datatype: geo:geoJSONLiteral*
+===== Function: geof:asGML
 
 ```
-geo:geoJSONLiteral a rdfs:Datatype;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
-    rdfs:label "GeoJSON Literal"@en;
-    rdfs:comment "A GeoJSON serialization of a geometry object."@en .
+geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral
 ```
 
-Valid `geo:geoJSONLiteral`s are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification [RFC 7946].
+The function http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] converts `geom` to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system. 
 
 |===
-|*Req XX* All `geo:geoJSONLiteral`s shall consist of the Geometry objects as defined in the GeoJSON specification [RFC 7946].
-|`/req/geometry-extension/geoJSON-literal1`
+| *Req 19.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] as a SPARQL extension function.
+|`/req/geometry-extension/asGML-function`
 |===
 
-|===
-|*Req XX* All RDFS Literals of type `geo:geoJSONLiteral` do not contain a CRS definition. All literals of this type shall according to the GeoJSON specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (urn:ogc:def:crs:OGC::CRS84).
-|`/req/geometry-extension/geoJSON-literal-crs`
-|===
+==== GeoJSON (serialization=GEOJSON)
 
-The example `geo:geoJSONLiteral` below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <<GeoJSON>>. It defines one RDFS Datatype:
+http://www.opengis.net/ont/geosparql#geoJSONLiteral[`+http://www.opengis.net/ont/geosparql#geoJSONLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asGeoJSON[`+http://www.opengis.net/ont/geosparql#asGeoJSON+`].
 
+===== RDFS Datatype: geo:geoJSONLiteral
+
+```turtle
+geo:geoJSONLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "GeoJSON Literal"@en ;
+    skos:definition "A GeoJSON serialization of a geometry object."@en .
 ```
-"{\"type\":\"Point\", \"coordinates\":[-83.38,33.95]}"^^<http://www.opengis.net/ont/geosparql#geoJSONLiteral>
+
+Valid http://www.opengis.net/ont/geosparql#geoJSONLiteral[`geo:geoJSONLiteral`] instances are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification <<GEOJSON>>.
+
+|===
+| *Req 20* All http://www.opengis.net/ont/geosparql#geoJSONLiteral[`geo:geoJSONLiteral`] instances shall consist of the Geometry objects as defined in the GeoJSON specification <<GEOJSON>>.
+|`/req/geometry-extension/geojson-literal`
+|===
+
+|===
+| *Req 21* RDFS Literals of type http://www.opengis.net/ont/geosparql#geoJSONLiteral[`geo:geoJSONLiteral`] do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
+|`/req/geometry-extension/geojson-literal-srs`
+|===
+
+The example http://www.opengis.net/ont/geosparql#geoJSONLiteral[`geo:geoJSONLiteral`] below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+
+```turtle
+"""
+{"type": "Point", "coordinates": [-83.38,33.95]}
+"""^^<http://www.opengis.net/ont/geosparql#geoJSONLiteral>
 ```
 
 |===
-|*Req XX* An empty RDFS Literal of type `geo:geoJSONLiteral` shall be interpreted as an empty geometry, i.e. {"geometry":null} in GeoJSON .
-|`/req/geometry-extension/geoJSON-literal-empty`
+| *Req 22* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#geoJSONLiteral[`geo:geoJSONLiteral`] shall be interpreted as an empty geometry, i.e. `{"geometry": null}` in GeoJSON .
+|`/req/geometry-extension/geojson-literal-empty`
 |===
 
-===== Serialization Properties
+===== Property: geo:asGeoJSON
 
-The `geo:asGeoJSON` property is defined to link a geometry with its GeoJSON serialization.
-
-*Property: geo:asGeoJSON*
+The http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`] property is defined to link a geometry with its GeoJSON serialization.
 
 |===
-|*Req XX* Implementations shall allow the RDF property `geo:asGeoJSON` to be used in SPARQL graph patterns.
+| *Req 23* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-as-geojson-literal`
 |===
 
-The property `geo:asGeoJSON` is used to link a geometric element with its GeoJSON serialization.
+The property http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`] is used to link a geometric element with its GeoJSON serialization.
 
-```
-geo:asGeoJSON a rdf:Property,
-            owl:DatatypeProperty;
-    rdfs:subPropertyOf geo:hasSerialization;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1>;
-    rdfs:label "as GeoJSON"@en;
-    rdfs:comment "The GeoJSON serialization of a geometry."@en;
-    rdfs:domain geo:Geometry;
+```turtle
+geo:asGeoJSON a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as GeoJSON"@en ;
+    skos:definition "The GeoJSON serialization of a geometry."@en ;
+    rdfs:domain geo:Geometry ;
     rdfs:range geo:geoJSONLiteral .
 ```
 
-==== Non-topological Query Functions
+===== Function: geof:asGeoJSON
+
+```
+geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] converts `geom` to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal. 
+
+|===
+| *Req 23.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] as a SPARQL extension function.
+|`/req/geometry-extension/asGeoJSON-function`
+|===
+
+==== Keyhole Markup Language (serialization=KML)
+
+This section establishes requirements for representing geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
+http://www.opengis.net/ont/geosparql#kmlLiteral[`+http://www.opengis.net/ont/geosparql#kmlLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asKML[`+http://www.opengis.net/ont/geosparql#asKML+`].
+
+===== RDFS Datatype: geo:kmlLiteral
+
+```turtle
+geo:kmlLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "KML Literal"@en ;
+    skos:definition "A KML serialization of a geometry object."@en .
+```
+
+Valid http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] instances are formed by encoding geometry information as a Geometry object as defined in the KML specification <<OGCKML>>.
+
+|===
+| *Req 24* All http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] instances shall consist of the Geometry objects as defined in the KML specification <<OGCKML>>.
+|`/req/geometry-extension/kml-literal`
+|===
+
+|===
+| *Req 25* RDFS Literals of type http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] do not contain a SRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
+|`/req/geometry-extension/kml-literal-srs`
+|===
+
+The example http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+
+```turtle
+"""
+<Point xmlns=\"http://www.opengis.net/kml/2.2\">
+    <coordinates>-83.38,33.95</coordinates>
+</Point>
+"""^^<http://www.opengis.net/ont/geosparql#kmlLiteral>
+```
+
+|===
+| *Req 26* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] shall be interpreted as an empty geometry .
+|`/req/geometry-extension/kml-literal-empty`
+|===
+
+===== Property: geo:asKML
+
+The http://www.opengis.net/ont/geosparql#asKML[`geo:asKML`] property is defined to link a geometry with its KML serialization.
+
+|===
+| *Req 27* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asKML[`geo:asKML`] to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-kml-literal`
+|===
+
+The property http://www.opengis.net/ont/geosparql#asKML[`geo:asKML`] is used to link a geometric element with its KML serialization.
+
+```turtle
+geo:asKML a rdf:Property, owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as KML"@en ;
+    skos:definition "The KML serialization of a geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:kmlLiteral .
+```
+
+===== Function: geof:asKML
+
+```
+geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] converts `geom` to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal. 
+
+|===
+| *Req 27.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] as a SPARQL extension function.
+|`/req/geometry-extension/asKML-function`
+|===
+
+==== Discrete Global Grid System (serialization=DGGS)
+
+This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation and is based on elements of the second version of the DGGS _Abstract Specification_ <<DGGSAS>>. It defines one RDFS Datatype:
+http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`].
+
+===== RDFS Datatype: geo:dggsLiteral
+
+```turtle
+geo:dggsLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "DGGS Well-Known Text Literal"@en ;
+    skos:definition "A textual serialization of a Discrete Global Grid (DGGS) geometry object."@en .
+```
+
+Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ <<DGGSAS>>. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ <<IETF5234>> syntax specification:
+
+```
+dggsLiteral ::= "<" IRI ">" LWSP geometric-data
+```
+
+The token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is potentially specific to the DGGS and is not specified here.
+
+|===
+| *Req 28* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
+|`/req/geometry-extension/dggswkt-literal`
+|===
+
+The example http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formal identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's SRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
+
+```turtle
+"<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>
+```
+
+|===
+| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall be interpreted as an empty geometry.
+|`/req/geometry-extension/dggs-literal-empty`
+|===
+
+===== Property: geo:asDGGS
+
+The http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] property is defined to link a geometry with its DGGS serialization.
+
+|===
+| *Req 30* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-dggs-literal`
+|===
+
+The property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] is used to link a Geometry instance with its serialization.
+
+```turtle
+geo:asDGGS a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as DGGS"@en ;
+    skos:definition "The DGGS Well-Known Text serialization of a geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:dggsLiteral .
+```
+
+===== Function: geof:asDGGS
+
+```
+geof:asDGGS (geom: ogc:geomLiteral, dggsIri: xsd:anyURI): geo:DggsLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation. 
+
+|===
+| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] as a SPARQL extension function.
+|`/req/geometry-extension/asDGGS-function`
+|===
+
+=== Non-topological Query Functions
 
 This clause defines SPARQL functions for performing non-topological spatial operations.
 
 |===
-|*Req 19* Implementations shall support `geof:distance`, `geof:buffer`, `geof:convexHull`, `geof:intersection`, `geof:union`, `geof:difference`, `geof:symDifference`, `geof:envelope` and `geof:boundary` as SPARQL extension functions, consistent with the definitions of the corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features [ISO 19125-1].
+| *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
 |`/req/geometry-extension/query-functions`
 |===
 
 An invocation of any of the following functions with invalid arguments produces an error. An invalid argument includes any of the following:
 
-- An argument of an unexpected type
-- An invalid geometry literal value
-- A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
-- An invalid units URI
+* An argument of an unexpected type
+* An invalid geometry literal value
+* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
+* An invalid units IRI
 
-For further discussion of the effects of errors during FILTER evaluation, consult Section 11 of the SPARQL specification [W3C SPARQL] (http://www.w3.org/TR/rdf-sparql- query/#tests).
+For further discussion of the effects of errors during FILTER evaluation, consult Section 17footnote:[<https://www.w3.org/TR/sparql11-query/#expressions>] of the SPARQL specification <<SPARQL>>.
 
 Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.
 
-From Section 11.3.1 of the SPARQL specification [W3C SPARQL] (http://www.w3.org/TR/rdf-sparql-query/#operatorExtensibility):
+From Section 17.3.1footnote:[<https://www.w3.org/TR/sparql11-query/#operatorExtensibility>] of the SPARQL specification <<SPARQL>>:
 
 [quote]
-SPARQL language extensions may provide additional associations between operators and operator functions; this amounts to adding rows to the table above. No additional operator may yield a result that replaces any result other than a type error in the semantics defined above. The consequence of this rule is that SPARQL extensions will produce at least the same solutions as an unextended implementation, and may, for some queries, produce more solutions.
+SPARQL language extensions may provide additional associations between operators and operator functions; ... No additional operator may yield a result that replaces any result other ... . The consequence of this rule is that SPARQL `FILTER` s will produce at least the same intermediate bindings after applying a `FILTER` as an unextended implementation.
 
-This extension mechanism is intended to allow GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports `geo:wktLiteral` serializations may also support `geo:gmlLiteral` serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.
+This extension mechanism enables GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] serializations may also support http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.
 
-Several non-topological query functions use a unit of measure URI. The OGC has defined some standard units of measure URIs under the `+http://www.opengis.net/def/uom/OGC/1.0/+` namespace, for example `+<http://www.opengis.net/def/uom/OGC/1.0/metre>+`.
+NOTE: Several non-topological query functions use a unit of measure IRI. The OGC has recommended units of measure vocabularies for use, see the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
 
-===== Function: geof:distance
-
+==== Function: geof:distance
 
 ```
-geof:distance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
+geof:distance (geom1: ogc:geomLiteral, 
+               geom2: ogc:geomLiteral, 
                units: xsd:anyURI): xsd:double
 ```
 
-Returns the shortest distance in units between any two Points in the two geometric
-objects as calculated in the spatial reference system of `geom1`.
+Returns the shortest distance between any two Points in the two geometric objects. Calculations are in spatial reference system of `geom1`.
 
-===== Function: geof:buffer
+==== Function: geof:buffer
 
 ```
-geof:buffer (geom: ogc:geomLiteral, radius: xsd:double, 
+geof:buffer (geom: ogc:geomLiteral, 
+             radius: xsd:double, 
              units: xsd:anyURI): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
+Returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:convexHull
+==== Function: geof:convexHull
 
 ```
 geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+Returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:intersection
+==== Function: geof:intersection
 
 ```
 geof:intersection (geom1: ogc:geomLiteral,
                    geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+Returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:union
+==== Function: geof:union
 
 ```
-geof:union (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
-            ): ogc:geomLiteral
+geof:union (geom1: ogc:geomLiteral, 
+            geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 This function returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:difference
+==== Function: geof:difference
 
 ```
-geof:difference (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral, 
-                 ): ogc:geomLiteral
+geof:difference (geom1: ogc:geomLiteral, 
+                 geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 This function returns a geometric object that represents all Points in the set difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:symDifference
+==== Function: geof:symDifference
 
 ```
 geof:symDifference (geom1: ogc:geomLiteral, 
-                    geom2: ogc:geomLiteral,
-                    ): ogc:geomLiteral
+                    geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 This function returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:envelope
+==== Function: geof:envelope
 
 ```
 geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
@@ -525,7 +663,7 @@ geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the minimum bounding box of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-===== Function: geof:boundary
+==== Function: geof:boundary
 
 ```
 geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
@@ -533,16 +671,110 @@ geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-|===
-|*Req 20* Implementations shall support `geof:getSRID` as a SPARQL extension function.
-|`/req/geometry-extension/srid-function`
-|===
 
-===== Function: geof:getsrid
+==== Function: geof:getSRID
 
 ```
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ```
 
-Returns the spatial reference system URI for `geom`.
+Returns the spatial reference system IRI for `geom`.
+
+|===
+| *Req 32* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`], http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:minBoundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
+http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] and http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] as a SPARQL extension functions.
+|`/req/geometry-extension/srid-function`
+|===
+
+==== Function: geof:maxX
+
+```
+geof:maxX (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom`.
+
+==== Function: geof:maxY
+
+```
+geof:maxY (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom`.
+
+==== Function: geof:maxZ
+
+```
+geof:maxZ (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom`.
+
+==== Function: geof:minX
+
+```
+geof:minX (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom`.
+
+==== Function: geof:minY
+
+```
+geof:minY (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom`.
+
+==== Function: geof:minZ
+
+```
+geof:minZ (geom: ogc:geomLiteral): xsd:double
+```
+
+The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom`.
+
+==== Function: geof:transform
+
+```
+geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
+```
+
+http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+
+NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
+
+==== Function: geof:minBoundingCircle
+```
+geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+The function http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`] calculates a minimum bounding circle of the set of given geometries.
+
+==== Function: geof:centroid
+
+```
+geof:centroid (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+The function http://www.opengis.net/def/function/geosparql/centroid[`geof:centroid`] valculates the centroid of the set of given geometries.
+
+==== Function: geof:concatLines
+
+```
+geof:concatLines (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+The function http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`]  Concatenates a set of LineStrings.
+
+==== Function: geof:concaveHull
+
+```
+geof:concaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral
+```
+The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`] calculates the concave hull of the set of given geometries.
+
+==== Function: geof:union2
+
+```
+geof:union2 (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+The function http://www.opengis.net/def/function/geosparql/union2[`geof:union2`] calculates the union of the set of given geometries.
 

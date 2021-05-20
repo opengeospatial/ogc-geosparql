@@ -1,94 +1,100 @@
-=== Topology Vocabulary Extension (relation_family)
+== Topology Vocabulary Extension (relation_family)
 
-This clause establishes the _Topology Vocabulary Extension (relation_family)_ parameterized requirements class, with URI `/req/topology-vocab-extension`, which has a single corresponding conformance class _Topology Vocabulary Extension (relation_family)_, with URI `/conf/topology-vocab-extension`. This requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, e.g. RCC8, Egenhofer. These relations are generalized so that they may connect features as well as geometries.
+This clause establishes the _Topology Vocabulary Extension (relation_family)_ parameterized requirements class, with IRI `/req/topology-vocab-extension`, which has a single corresponding conformance class _Topology Vocabulary Extension (relation_family)_, with IRI `/conf/topology-vocab-extension`. This requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, e.g. RCC8, Egenhofer. These relations are generalized so that they may connect features as well as geometries.
 
-A DE-9IM pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are `-1` (empty), `0, 1, 2, T` (true) `= {0, 1, 2}, F` (false) = {-1}, *` (don’t care)` = {-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0- dimensional geometries (e.g. points). The symbol `L` is used for 1-dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification [ISO 19125-1] for a more detailed description of DE-9IM intersection patterns.
+A Dimensionally Extended 9-Intersection Model (DE-9IM) pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are `-1 (empty)`, `0, 1, 2, T (true) = {0, 1, 2}`, `F (false) = {-1}`, `* (don’t care) = {-1, 0, 1, 2}`. In the following descriptions, the notation `X/Y` is used denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0- dimensional geometries (e.g. points). The symbol `L` is used for 1-dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification <<ISO19125-1>> for a more detailed description of DE-9IM intersection patterns.
 
-==== Parameters
+=== Parameters
 
 The following parameter is defined for the _Topology Vocabulary Extension_ requirements class.
 
 *relation_family*: Specifies the set of topological spatial relations to support.
 
-==== Requirements for Simple Features Relation Family (relation_family=Simple Features)
+=== Simple Features Relation Family (relation_family=Simple Features)
 
 This clause defines requirements for the _Simple Features_ relation family.
 
 |===
-|*Req 4* Implementations shall allow the properties `geo:sfEquals`, `geo:sfDisjoint`, `geo:sfIntersects`, `geo:sfTouches`, `geo:sfCrosses`, `geo:sfWithin`, `geo:sfContains`, `geo:sfOverlaps` to be used in SPARQL graph patterns.
+| *Req 5* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#sfEquals[`geo:sfEquals`], http://www.opengis.net/ont/geosparql#sfDisjoint[`geo:sfDisjoint`], http://www.opengis.net/ont/geosparql#sfIntersects[`geo:sfIntersects`], http://www.opengis.net/ont/geosparql#sfTouches[`geo:sfTouches`], http://www.opengis.net/ont/geosparql#sfCrosses[`geo:sfCrosses`], http://www.opengis.net/ont/geosparql#sfWithin[`geo:sfWithin`], http://www.opengis.net/ont/geosparql#sfContains[`geo:sfContains`], http://www.opengis.net/ont/geosparql#sfOverlaps[`geo:sfOverlaps`] to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/sf-spatial-relations`
 |===
 
-Topological relations in the _Simple Features_ family are summarized in Table 1. Multi- row intersection patterns should be interpreted as a logical `OR` of each row.
+Topological relations in the _Simple Features_ family are summarized in <<sf_relations>>. Multi-row intersection patterns should be interpreted as a logical `OR` of each row.
 
+[#sf_relations]
 .Simple Features Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
-|equals | `geo:sfEquals` | `geo:SpatialObject` | `All` | `(TFFFTFFFT)`
-|disjoint | `geo:sfDisjoint` | `geo:SpatialObject` | `All` | `+(FF**FF****)+`
-|intersects | `geo:sfIntersects` | `geo:SpatialObject` | `All` | `+(T******** *T******* ***T***** ****T****)+`
-|touches | `geo:sfTouches` | `geo:SpatialObject` | `All except P/P` | `+(FT******* F**T***** F***T****)+`
-|within | `geo:sfWithin` | `geo:SpatialObject` | `All` | `+(T*F**F***)+`
-|contains | `geo:sfContains` | `geo:SpatialObject` | `All` | `+(T*****FF*)+`
-|overlaps | `geo:sfOverlaps` | `geo:SpatialObject` | `A/A, P/P, L/L` | `+(T*T***T**) for A/A, P/P+`; `+(1*T***T**) for L/L+`
-|crosses | `geo:sfCrosses` | `geo:SpatialObject` | `P/L, P/A, L/A, L/L` | `+(T*T***T**) for P/L, P/A,
+|equals | http://www.opengis.net/ont/geosparql#sfEquals[`geo:sfEquals`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `(TFFFTFFFT)`
+|disjoint | http://www.opengis.net/ont/geosparql#sfDisjoint[`geo:sfDisjoint`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(FF**FF****)+`
+|intersects | http://www.opengis.net/ont/geosparql#sfIntersects[`geo:sfIntersects`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(T******** *T******* ***T***** ****T****)+`
+|touches | http://www.opengis.net/ont/geosparql#sfTouches[`geo:sfTouches`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All except P/P` | `+(FT******* F**T***** F***T****)+`
+|within | http://www.opengis.net/ont/geosparql#sfWithin[`geo:sfWithin`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(T*F**F***)+`
+|contains | http://www.opengis.net/ont/geosparql#sfContains[`geo:sfContains`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(T*****FF*)+`
+|overlaps | http://www.opengis.net/ont/geosparql#sfOverlaps[`geo:sfOverlaps`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `A/A, P/P, L/L` | `+(T*T***T**) for A/A, P/P+`; `+(1*T***T**) for L/L+`
+|crosses | http://www.opengis.net/ont/geosparql#sfCrosses[`geo:sfCrosses`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `P/L, P/A, L/A, L/L` | `+(T*T***T**) for P/L, P/A,
 L/A+`; `+(0********) for L/L+`
 |===
 
-==== Requirements for Egenhofer Relation Family (relation_family=Egenhofer)
+=== Egenhofer Relation Family (relation_family=Egenhofer)
 
-This clause defines requirements for the _Egenhofer_ relation family. Consult references [2] and [3] for a more detailed discussion of _Egenhofer_ relations.
+This clause defines requirements for the 9-intersection model for binary topological relations (_Egenhofer_) relation family. Consult references <<FORMAL>> and <<CATEG>> for a more detailed discussion of _Egenhofer_ relations.
 
 |===
-|*Req 5* Implementations shall allow the properties `geo:ehEquals`, `geo:ehDisjoint`, `geo:ehMeet, geo:ehOverlap`, `geo:ehCovers`, `geo:ehCoveredBy`, `geo:ehInside`, `geo:ehContains` to be used in SPARQL graph patterns.
+| *Req 6* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#ehEquals[`geo:ehEquals`], http://www.opengis.net/ont/geosparql#ehDisjoint[`geo:ehDisjoint`], http://www.opengis.net/ont/geosparql#ehMeet[`geo:ehMeet`], http://www.opengis.net/ont/geosparql#ehOverlap[`geo:ehOverlap`], http://www.opengis.net/ont/geosparql#ehCovers[`geo:ehCovers`], http://www.opengis.net/ont/geosparql#ehCoveredBy[`geo:ehCoveredBy`], http://www.opengis.net/ont/geosparql#ehInside[`geo:ehInside`], http://www.opengis.net/ont/geosparql#ehContains[`geo:ehContains`] to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/eh-spatial-relations`
 |===
 
-Topological relations in the _Egenhofer_ family are summarized in Table 2. Multi-row intersection patterns should be interpreted as a logical `OR` of each row.
+Topological relations in the _Egenhofer_ family are summarized in <<genhofer_relations>>. Multi-row intersection patterns should be interpreted as a logical `OR` of each row.
 
+[#genhofer_relations]
 .Egenhofer Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
-|equals | `geo:ehEquals` | `geo:SpatialObject` | `All` | `(TFFFTFFFT)`
-|disjoint | `geo:ehDisjoint` | `geo:SpatialObject` | `All` | `+(FF*FF****)+`
-|meet | `geo:ehMeet` | `geo:SpatialObject` | `All except P/P` | `+(FT******* F**T***** F***T****)+`
-|overlap | `geo:ehOverlap` |`geo:SpatialObject` | `All` | `+(T*T***T**)+`
-|covers | `geo:ehCovers` | `geo:SpatialObject` | `A/A, A/L, L/L` | `+(T*TFT*FF*)+`
-|covered by | `geo:ehCoveredBy` | `geo:SpatialObject` | `A/A, L/A, L/L` | `+(TFF*TFT**)+`
-|inside | `geo:ehInside` | `geo:SpatialObject` | All | `+(TFF*FFT**)+`
-|contains | `geo:ehContains` | `geo:SpatialObject` | All | `+(T*TFF*FF*)+`
+|equals | http://www.opengis.net/ont/geosparql#ehEquals[`geo:ehEquals`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `(TFFFTFFFT)`
+|disjoint | http://www.opengis.net/ont/geosparql#ehDisjoint[`geo:ehDisjoint`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(FF*FF****)+`
+|meet | http://www.opengis.net/ont/geosparql#ehMeet[`geo:ehMeet`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All except P/P` | `+(FT******* F**T***** F***T****)+`
+|overlap | http://www.opengis.net/ont/geosparql#ehOverlap[`geo:ehOverlap`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `All` | `+(T*T***T**)+`
+|covers | http://www.opengis.net/ont/geosparql#ehCovers[`geo:ehCovers`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `A/A, A/L, L/L` | `+(T*TFT*FF*)+`
+|covered by | http://www.opengis.net/ont/geosparql#ehCoveredBy[`geo:ehCoveredBy`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | `A/A, L/A, L/L` | `+(TFF*TFT**)+`
+|inside | http://www.opengis.net/ont/geosparql#ehInside[`geo:ehInside`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | All | `+(TFF*FFT**)+`
+|contains | http://www.opengis.net/ont/geosparql#ehContains[`geo:ehContains`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] | All | `+(T*TFF*FF*)+`
 |===
 
-==== Requirements for RCC8 Relation Family (relation_family=RCC8)
+=== RCC8 Relation Family (relation_family=RCC8)
 
-This clause defines requirements for the _RCC8_ relation family. Consult references [1] and [9] for a more detailed discussion of _RCC8_ relations.
+This clause defines requirements for the region connection calculus basic 8 (_RCC8_) relation family. Consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
 
 |===
-|*Req 6* Implementations shall allow the properties geo:rcc8eq, `geo:rcc8dc`, `geo:rcc8ec`, `geo:rcc8po`, `geo:rcc8tppi`, `geo:rcc8tpp`, `geo:rcc8ntpp`, `geo:rcc8ntppi` to be used in SPARQL graph patterns.
+| *Req 7* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#rcc8eq[`geo:rcc8eq`], http://www.opengis.net/ont/geosparql#rcc8dc[`geo:rcc8dc`], http://www.opengis.net/ont/geosparql#rcc8ec[`geo:rcc8ec`], http://www.opengis.net/ont/geosparql#rcc8po[`geo:rcc8po`], http://www.opengis.net/ont/geosparql#rcc8tppi[`geo:rcc8tppi`], http://www.opengis.net/ont/geosparql#rcc8tpp[`geo:rcc8tpp`], http://www.opengis.net/ont/geosparql#rcc8ntpp[`geo:rcc8ntpp`], http://www.opengis.net/ont/geosparql#rcc8ntppi[`geo:rcc8ntppi`] to be used in SPARQL graph patterns.
 |`/req/topology-vocab-extension/rcc8-spatial-relations`
 |===
 
+Topological relations in the _RCC8_ family are summarized in <<rcc8_relations>>.
+
+[#rcc8_relations]
 .RCC8 Topological Relations
 |===
-|Relation Name | Relation URI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
-|equals | `geo:rcc8eq` | `geo:SpatialObject` | `A/A` | `(TFFFTFFFT)`
-|disconnected | `geo:rcc8dc` | `geo:SpatialObject` | `A/A` | `(FFTFFTTTT)`
-|externally connected | `geo:rcc8ec` | `geo:SpatialObject` | `A/A` | `(FFTFTTTTT)`
-|partially overlapping | `geo:rcc8po` |`geo:SpatialObject` | `A/A` | `(TTTTTTTTT)`
-|tangential proper part inverse | `geo:rcc8tppi` | `geo:SpatialObject` | `A/A`  | `(TTTFTTFFT)`
-|tangential proper part | `geo:rcc8tpp` | `geo:SpatialObject` | `A/A` | `(TFFTTFTTT)`
-|non-tangential proper part | `geo:rcc8ntpp` | `geo:SpatialObject` | `A/A` | `(TFFTFFTTT)`
-|non-tangential proper part inverse | `geo:rcc8ntppi` | `geo:SpatialObject` | `A/A` | `(TTTFFTFFT)`
+|equals | http://www.opengis.net/ont/geosparql#rcc8eq[`geo:rcc8eq`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(TFFFTFFFT)`
+|disconnected | http://www.opengis.net/ont/geosparql#rcc8dc[`geo:rcc8dc`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(FFTFFTTTT)`
+|externally connected | http://www.opengis.net/ont/geosparql#rcc8ec[`geo:rcc8ec`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(FFTFTTTTT)`
+|partially overlapping | http://www.opengis.net/ont/geosparql#rcc8po[`geo:rcc8po`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(TTTTTTTTT)`
+|tangential proper part inverse | http://www.opengis.net/ont/geosparql#rcc8tppi[`geo:rcc8tppi`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A`  | `(TTTFTTFFT)`
+|tangential proper part | http://www.opengis.net/ont/geosparql#rcc8tpp[`geo:rcc8tpp`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(TFFTTFTTT)`
+|non-tangential proper part | http://www.opengis.net/ont/geosparql#rcc8ntpp[`geo:rcc8ntpp`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(TFFTFFTTT)`
+|non-tangential proper part inverse | http://www.opengis.net/ont/geosparql#rcc8ntppi[`geo:rcc8ntppi`] | http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`]  | `A/A` | `(TTTFFTFFT)`
 |===
 
 
-==== Equivalent RCC8, Egenhofer and Simple Features Topological Relations
+=== Equivalent RCC8, Egenhofer and Simple Features Topological Relations
 
-Table 4 summarizes the equivalences between _Egenhofer_, _RCC8_ and _Simple Features_ spatial relations for closed, non-empty regions. The symbol `+` denotes logical `OR`, and the symbol `¬` denotes negation.
+<<relation_equivalences>> summarizes the equivalences between _Egenhofer_, _RCC8_ and _Simple Features_ spatial relations for closed, non-empty regions. The symbol `+` denotes logical `OR`, and the symbol `¬` denotes negation.
 
+[#relation_equivalences]
 .Equivalent Simple Features, RCC8 and Egenhofer relations
 |===
 |Simple Features | RCC8 | Egenhofer
@@ -101,4 +107,3 @@ Table 4 summarizes the equivalences between _Egenhofer_, _RCC8_ and _Simple Feat
 |contains | non-tangential proper part inverse `+` tangential proper part inverse | contains `+` covers
 |overlaps | partially overlapping | overlap
 |===
-
