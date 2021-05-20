@@ -567,7 +567,10 @@ The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`]
 This clause defines SPARQL functions for performing non-topological spatial operations.
 
 |===
-| *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
+| *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], 
+http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`], http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`], 
+http://www.opengis.net/def/function/geosparql/area[`geof:area`],http://www.opengis.net/def/function/geosparql/length[`geof:length`],
+http://www.opengis.net/def/function/geosparql/dimension[`geof:dimension`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `isEmpty`, `isSimple`, `area`, `length`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
 |`/req/geometry-extension/query-functions`
 |===
 
@@ -618,6 +621,41 @@ geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 Returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+
+==== Function: geof:isEmpty
+
+```
+geof:isEmpty (geom1: ogc:geomLiteral): xsd:boolean
+```
+Returns true if `geom1` is an empty geometry, i.e. contains no coordinates.
+
+==== Function: geof:isSimple
+
+```
+geof:isSimple (geom1: ogc:geomLiteral): xsd:boolean
+```
+Returns true if `geom1` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
+
+==== Function: geof:area
+
+```
+geof:area (geom1: ogc:geomLiteral): xsd:double
+```
+Returns the area of `geom1` in squaremeters.
+
+==== Function: geof:length
+
+```
+geof:length (geom1: ogc:geomLiteral): xsd:double
+```
+Returns the length of `geom1` in meters.
+
+==== Function: geof:dimension
+
+```
+geof:dimension (geom1: ogc:geomLiteral): xsd:integer
+```
+Returns the dimension of `geom1`.
 
 ==== Function: geof:intersection
 
