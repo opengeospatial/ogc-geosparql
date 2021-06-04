@@ -39,25 +39,6 @@ eg:x a geo:SpatialObject ;
 .
 ```
 
-==== Class: geo:SpatialMeasure
-
-The class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] is defined by the following:
-
-```turtle
-geo:SpatialMeasure a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
-    skos:prefLabel "Spatial Measure"@en ;
-    skos:definition "This class represents a measurement of some dimension 
-                    of a feature's spatial presence."@en .
-```
-
-NOTE: Properties for Spatial Measure may need to indicate a use a unit of measure. When they do, OGC recommended units of measure vocabularies should be used. See the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
-
-|===
-| *Req 3* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] to be used in SPARQL graph patterns.
-|`/req/core/spatial-measure-class`
-|===
-
 ==== Class: geo:Feature
 
 The class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] is equivalent to the class `GFI_Feature` <<ISO19156>> and is defined by the following:
@@ -78,11 +59,26 @@ geo:Feature a rdfs:Class, owl:Class ;
 |`/req/core/feature-class`
 |===
 
+==== Class: geo:SpatialMeasure
+
+The class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] is defined by the following:
+
+```turtle
+geo:SpatialMeasure a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Spatial Measure"@en ;
+    skos:definition "This class represents a measurement of some dimension 
+                    of a feature's spatial presence."@en .
+```
+
+NOTE: Properties for Spatial Measure may need to indicate a use a unit of measure. When they do, OGC recommended units of measure vocabularies should be used. See the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
+
+|===
+| *Req 3* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] to be used in SPARQL graph patterns.
+|`/req/core/spatial-measure-class`
+|===
+
 === Standard Properties for geo:SpatialObject
-
-_To be defined_
-
-=== Standard Properties for geo:SpatialMeasure
 
 _To be defined_
 
@@ -138,6 +134,7 @@ Such cases are application-specific data modeling errors and are therefore outsi
 ==== Property: geo:hasBoundingBox
 
 The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
+
 ```turtle
 geo:hasBoundingBox a rdf:Property, owl:ObjectProperty ;
     rdfs:subPropertyOf geo:hasGeometry;
@@ -154,6 +151,7 @@ GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/ge
 ==== Property: geo:hasCentroid
 
 The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions. 
+
 ```turtle
 geo:hasCentroid a rdf:Property, owl:ObjectProperty ;
     rdfs:subPropertyOf geo:hasGeometry;
@@ -245,3 +243,7 @@ TIP: A consistency check can be applied to geometries indicating both this prope
         FILTER (?d != 3)
     }
 ```
+
+=== Standard Properties for geo:SpatialMeasure
+
+_To be defined_

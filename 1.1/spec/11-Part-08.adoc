@@ -493,73 +493,73 @@ The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] c
 ==== Discrete Global Grid System (serialization=DGGS)
 
 This section establishes the requirements for representing geometry data in RDF as represented in a Discrete Global Grid System (DGGS), in text. The form of representation is known as a _DGGS Well-Known Text_ geometry representation and is based on elements of the second version of the DGGS _Abstract Specification_ <<DGGSAS>>. It defines one RDFS Datatype:
-http://www.opengis.net/ont/geosparql#dggsWKTLiteral[`+http://www.opengis.net/ont/geosparql#dggsWKTLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGSWKT[`+http://www.opengis.net/ont/geosparql#asDGGSWKT+`].
+http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`].
 
-===== RDFS Datatype: geo:dggsWKTLiteral
+===== RDFS Datatype: geo:dggsLiteral
 
 ```turtle
-geo:dggsWKTLiteral a rdfs:Datatype ;
+geo:dggsLiteral a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "DGGS Well-Known Text Literal"@en ;
     skos:definition "A textual serialization of a Discrete Global Grid (DGGS) geometry object."@en .
 ```
 
-Valid http://www.opengis.net/ont/geosparql#dggsWKTLiteral[`geo:dggsWKTLiteral`] instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ <<DGGSAS>>. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ <<IETF5234>> syntax specification:
+Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instances are formed by encoding geometry information as text and as required by a particular DGGS and in accordance with the _Discrete Global Grid System Abstract Specification_ <<DGGSAS>>. An indication of the particular DGGS, as well as the geometric information must also be indicated in the literal as per the following _ABNF_ <<IETF5234>> syntax specification:
 
 ```
-dggsWKTLiteral ::= "<" IRI ">" LWSP geometric-data
+dggsLiteral ::= "<" IRI ">" LWSP geometric-data
 ```
 
 The token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is potentially specific to the DGGS and is not specified here.
 
 |===
-| *Req 28* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsWKTLiteral[`geo:dggsWKTLiteral`] shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
+| *Req 28* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall consist of a required DGGS identifier, an IRI, and a DGGS geometry serialization formulated according to the identified DGGS.
 |`/req/geometry-extension/dggswkt-literal`
 |===
 
-The example http://www.opengis.net/ont/geosparql#dggsWKTLiteral[`geo:dggsWKTLiteral`] below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formatl identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's SRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
+The example http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formal identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's SRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
 
 ```turtle
-"<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsWKTLiteral>
+"<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>
 ```
 
 |===
-| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsWKTLiteral[`geo:dggsWKTLiteral`] shall be interpreted as an empty geometry.
-|`/req/geometry-extension/dggswkt-literal-empty`
+| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall be interpreted as an empty geometry.
+|`/req/geometry-extension/dggs-literal-empty`
 |===
 
-===== Property: geo:asDGGSWKT
+===== Property: geo:asDGGS
 
-The http://www.opengis.net/ont/geosparql#asDGGSWKT[`geo:asDGGSWKT`] property is defined to link a geometry with its DGGS WKT serialization.
+The http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] property is defined to link a geometry with its DGGS serialization.
 
 |===
-| *Req 30* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asDGGSWKT[`geo:asDGGSWKT`] to be used in SPARQL graph patterns.
-|`/req/geometry-extension/geometry-as-dggswkt-literal`
+| *Req 30* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] to be used in SPARQL graph patterns.
+|`/req/geometry-extension/geometry-as-dggs-literal`
 |===
 
-The property http://www.opengis.net/ont/geosparql#asDGGSWKT[`geo:asDGGSWKT`] is used to link a Geometry instance with its serialization.
+The property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] is used to link a Geometry instance with its serialization.
 
 ```turtle
-geo:asDGGSWKT a rdf:Property, owl:DatatypeProperty ;
+geo:asDGGS a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "as DGGS WKT"@en ;
+    skos:prefLabel "as DGGS"@en ;
     skos:definition "The DGGS Well-Known Text serialization of a geometry."@en ;
     rdfs:domain geo:Geometry ;
-    rdfs:range geo:dggsWKTLiteral .
+    rdfs:range geo:dggsLiteral .
 ```
 
-===== Function: geof:asDGGSWKT
+===== Function: geof:asDGGS
 
 ```
-geof:asDGGSWKT (geom: ogc:geomLiteral, dggsIri: xsd:anyURI): geo:DggsWKTLiteral
+geof:asDGGS (geom: ogc:geomLiteral, dggsIri: xsd:anyURI): geo:DggsLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/asDGGSWKT[`geof:asDGGSWKT`] converts `geom` to an equivalent DggsWKT representation. 
+The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation. 
 
 |===
-| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asDGGSWKT[`geof:asDGGSWKT`] as a SPARQL extension function.
-|`/req/geometry-extension/asDGGSWKT-function`
+| *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] as a SPARQL extension function.
+|`/req/geometry-extension/asDGGS-function`
 |===
 
 === Non-topological Query Functions
@@ -567,7 +567,10 @@ The function http://www.opengis.net/def/function/geosparql/asDGGSWKT[`geof:asDGG
 This clause defines SPARQL functions for performing non-topological spatial operations.
 
 |===
-| *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
+| *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], 
+http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`], http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`], 
+http://www.opengis.net/def/function/geosparql/area[`geof:area`],http://www.opengis.net/def/function/geosparql/length[`geof:length`],
+http://www.opengis.net/def/function/geosparql/dimension[`geof:dimension`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `isEmpty`, `isSimple`, `area`, `length`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
 |`/req/geometry-extension/query-functions`
 |===
 
@@ -618,6 +621,41 @@ geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 Returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+
+==== Function: geof:isEmpty
+
+```
+geof:isEmpty (geom1: ogc:geomLiteral): xsd:boolean
+```
+Returns true if `geom1` is an empty geometry, i.e. contains no coordinates.
+
+==== Function: geof:isSimple
+
+```
+geof:isSimple (geom1: ogc:geomLiteral): xsd:boolean
+```
+Returns true if `geom1` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
+
+==== Function: geof:area
+
+```
+geof:area (geom1: ogc:geomLiteral): xsd:double
+```
+Returns the area of `geom1` in squaremeters.
+
+==== Function: geof:length
+
+```
+geof:length (geom1: ogc:geomLiteral): xsd:double
+```
+Returns the length of `geom1` in meters.
+
+==== Function: geof:dimension
+
+```
+geof:dimension (geom1: ogc:geomLiteral): xsd:integer
+```
+Returns the dimension of `geom1`.
 
 ==== Function: geof:intersection
 
@@ -681,7 +719,7 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 Returns the spatial reference system IRI for `geom`.
 
 |===
-| *Req 32* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`], http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:minBoundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
+| *Req 32* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`], http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
 http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] and http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] as a SPARQL extension functions.
 |`/req/geometry-extension/srid-function`
 |===
@@ -744,7 +782,7 @@ http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts
 
 NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
 
-==== Function: geof:minBoundingCircle
+==== Function: geof:boundingCircle
 ```
 geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
