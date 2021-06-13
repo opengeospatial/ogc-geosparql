@@ -3,34 +3,35 @@
 
 === Best-practice: A GeoSPARQL-enabled triple store as a backend of an OGC web service
 
-This annex wants to present best practices of creating linked data backends to OGC webservices.
+This annex presents best practices for the creation of Linked Data backends to OGC webservices.
 
 ==== C.1 Accessing geospatial features in a SPARQL endpoint
 
-Geospatial features in SPARQL endpoints as defined in the GeoSPARQL standard are instances of subclasses of http://www.opengis.net/ont/geosparql#Feature[geo:Feature].
-They include one or many http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relations and further properties related to the geospatial feature. 
-Similarly to SQL backends of OGC webservices, geospatial featurecollections are made explicit by defining a SPARQL query retrieving a set of triples which may be converted to a geodata format.
+Geospatial _features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of http://www.opengis.net/ont/geosparql#Feature[geo:Feature] or of subclasses of it.
+They may include one or more http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relations and further properties related to the feature and may be grouped into http://www.opengis.net/ont/geosparql#geo:FeatureCollection[geo:FeatureCollection] instances where `geo:FeatureCollection` is a new class in GeoSPARQL 1.1 specifically for the description of collections of `geo:Feature` instances.
+Similarly, for SQL backends of OGC webservices, geospatial _features_ are made explicit by defining an SQL query retrieving a set of triples which may be converted to a geodata format.
 
-The following query shows an example which retrieves a FeatureCollection
-```
-SELECT ?item ?rel ?val ?geo WHERE {
-  ?item rdf:type ?class .
-  ?class rdfs:subClassOf* geo:Feature .
+The following example SPARQL retrieves a collection of Feature instances (each `item`) and, optionally, their serialized geometries (`geom`):
+
+```turtle
+SELECT ?item ?rel ?val ?geo 
+WHERE {
+  ?item rdfs:subClassOf* geo:Feature .
   ?item ?rel ?val .
-  OPTIONAL {?item geo:hasGeometry/geo:hasSerialization ?geo .}
+  OPTIONAL {?item geo:hasGeometry/geo:hasSerialization ?geom}
 }
 ```
-This SPARQL query retrieves all properties and their values directly connected to an instance of all classes which are subclasses of http://www.opengis.net/ont/geosparql#Feature[geo:Feature].
-The query result is a list of triples which may be converted to a FeatureCollection representation.
 
-This representation results in a valid FeatureCollection which may be exposed using an OGC API Features webservice.
+This SPARQL query retrieves all features' properties and their values directly connected to an instance of all classes which are subclasses of http://www.opengis.net/ont/geosparql#Feature[geo:Feature].
+The query result is a list of triples which may be converted to a `geo:FeatureCollection` instance.
 
-However, it needs to be remarked that this however may not in all cases deliver the expected result.
+`geo:FeatureCollection` match the OGC API Features's <<OGCAPIF>> concept of a FeatureCollection and thus may be exposed using an OGC API Features webservice.
 
-There are several reasons for this:
+However, it needs to be remarked that this may not deliver the expected result in all cases. There are several reasons for this:
 
-- More information is connected to the instance which should represent the Feature Collection than anticipated. Maybe only information in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
-- The aforementioned query only queries directly connected properties and their values. Often geodata formats like GML are hierarchical and therefore need further resolution of property values depicted as URIs. If that is the case the query needs to be adjusted.
+- More information for the `geo:FeatureCollection` instance may be needed, in particular, an identifier and perhaps a label for it. If the back-end data store also contains information for the `geo:FeatureCollection` instance then this may be queried for to solve this issue. If not, the API might need to create such information
+- Maybe only information in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
+- The above query only queries directly connected properties and their values. Often geodata formats like GML are hierarchical and therefore need further resolution of property values depicted as URIs. If that is the case the query needs to be adjusted.
 
 ==== C.2 Mappings from CQL statements to GeoSPARQL queries
 
@@ -196,3 +197,8 @@ The following table maps the functions and properties from Simple Features for S
 | Centroid(): Point | http://www.opengis.net/def/function/geosparql/centroid[geof:centroid] | 1.1 | http://www.opengis.net/ont/geosparql#hasCentroid[geo:hasCentroid] | 1.1
 | PointOnSurface(): Point | N/A | - | N/A | -
 |===
+
+
+==== References
+
+* [[OGCAPIF]] Open Geospatial Consortium, _OGC API - Features - Part 1: Core_. OGC Implementation Standard (14 October 2019). <http://www.opengis.net/doc/IS/ogcapi-features-1/1.0>
