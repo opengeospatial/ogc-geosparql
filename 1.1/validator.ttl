@@ -1,0 +1,62 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix sdo: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <http://www.opengis.net/def/geosparql/validator/rule/> .
+
+
+<http://www.opengis.net/def/geosparql/validator>
+	a owl:Ontology ;
+  	dcterms:title "GeoSPARQL RDF Shapes Validator"@en ;
+	dcterms:description """This is a [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) file that specifies rules for RDF data. It can be used to test the conformance of data to the GeoSPARQL standard.
+	
+As of GeoSPARQL 1.1, this validator is not normaltive, only informative, however this is likely to be the basis of future, normative, validators."""@en ;
+	dcterms:publisher [
+		a sdo:Organization ;
+		sdo:name "Open Geospatial Consortium" ;
+		sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+	] ;
+	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
+	dcterms:created "2021-06-13"^^xsd:date ;
+	dcterms:modified "2021-06-13"^^xsd:date ;
+	owl:versionInfo "OGC GeoSPARQL 1.1" ;
+	owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;  # same as Spec version for now
+.
+
+<feature-geometry>
+    a sh:NodeShape ;
+	sh:targetClass geo:Feature ;
+	sh:property [
+    	sh:path geo:hasGeometry ;
+		sh:class geo:Geometry ;
+    	sh:message "Where the predicate geo:hasGeometry is used, it must indicate a geo:Geometry instance as its range value;"@en ;
+	] ;
+	skos:example 
+		"""
+		# valid example
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			a geo:Feature ;
+			geo:hasGeometry [
+				a geo:Geometry ;
+				geo:asWKT "POINT (153.084230 -27.322738)" ;
+			]
+		.
+		"""^^xsd:string ,
+		"""
+		# invalid example - no class for the geo:hasGeometry range value
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			a geo:Feature ;
+			geo:hasGeometry [
+				a geo:Geometry ;
+				geo:asWKT "POINT (153.084230 -27.322738)" ;
+			]
+		.
+		"""^^xsd:string ;		
+.
