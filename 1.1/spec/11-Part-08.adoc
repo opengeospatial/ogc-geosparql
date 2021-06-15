@@ -512,13 +512,19 @@ Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instan
 
 |===
 | *Req 28* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall consist of a DGGS geometry serialization formulated according to a specific DGGS.
-|`/req/geometry-extension/dggswkt-literal`
+|`/req/geometry-extension/dggs-literal`
+|===
+
+|===
+| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`], or one of its sud datatypes, shall be interpreted as an empty geometry.
+|`/req/geometry-extension/dggs-literal-empty`
 |===
 
 ===== RDFS Datatype: geo:auspixDggsLiteral
 
 ```turtle
-geo:auspixDggsLiteral a rdfs:Datatype ;
+geo:auspixDggsLiteral 
+    a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "AusPIX DGGS Literal"@en ;
     skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) geometry object."@en .
@@ -526,17 +532,17 @@ geo:auspixDggsLiteral a rdfs:Datatype ;
 
 Valid http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] instances are formed by encoding geometry information according to the AusPIX DGGS implmentation <<AUSPIX>>.
 
-XXXXXXX UP TO HERE
-
-The example http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGSfootnote:[https://w3id.org/dggs/auspix - this is a semi-formal identifier for AusPIX. Likley, in time, a more official identifier regime for DGGSes will emerge, similar to the OGC's SRS register]. The DGGS geometry type is indicated with the token `OrdinateList` and the point, enclosed in parenthesis, is identified with the AusPIX-specific 'Cell ID' of _R3234_:
+The example http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGS. The DGGS geometry type is indicated with the token `CellList` and the list of values, a single cell, is enclosed in parenthesis. The cell value of _R3234_ is analogous to either a `Point` or simple `Polygon` in WKT geometries, so a single coordinate pair or a list of them:
 
 ```turtle
-"<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>
+"CellList (R3234)"^^<http://www.opengis.net/ont/geosparql#auspixDggsLiteral>
 ```
 
+NOTE: What `R3234` means is not handled by GeoSPARQL but by the AusPIX DGGS specification <<AUSPIX>>, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
+
 |===
-| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall be interpreted as an empty geometry.
-|`/req/geometry-extension/dggs-literal-empty`
+| *Req 30* All RDFS Literals of type http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] shall consist of a DGGS geometry serialization formulated according to the AusPIX DGGS.
+|`/req/geometry-extension/auspix-dggs-literal`
 |===
 
 ===== Property: geo:asDGGS
@@ -555,18 +561,20 @@ geo:asDGGS a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as DGGS"@en ;
-    skos:definition "The DGGS Well-Known Text serialization of a geometry."@en ;
+    skos:definition "A DGGS Well-Known Text serialization of a geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:dggsLiteral .
 ```
 
+NOTE: It is expected that this property will be used to indicate specific DGGS data types, such as http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`], descibed above, as opposed to the generic http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`].
+
 ===== Function: geof:asDGGS
 
 ```
-geof:asDGGS (geom: ogc:geomLiteral, dggsIri: xsd:anyURI): geo:DggsLiteral
+geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation. 
+The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the `specificDggsDatatype` parameter.
 
 |===
 | *Req 15.x* Implementations shall support http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] as a SPARQL extension function.
