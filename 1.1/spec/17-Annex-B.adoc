@@ -558,7 +558,7 @@ my:DPointGeom a sf:Point ;
 
 my:EExactGeom a sf:LineString ;
     geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-                 LineString((-83.4 34.0, -83.3 34.3))"""^^geo:wktLiteral.
+                 LineString(-83.4 34.0, -83.3 34.3)"""^^geo:wktLiteral.
 
 my:FExactGeom a sf:Point ;
     geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
@@ -644,7 +644,7 @@ WHERE {
     ?fGeom geo:asWKT ?fWKT .
     my:A my:hasExactGeometry ?aGeom . 
     ?aGeom geo:asWKT ?aWKT .
-    ?my:D my:hasExactGeometry ?dGeom . 
+    my:D my:hasExactGeometry ?dGeom . 
     ?dGeom geo:asWKT ?dWKT .
     FILTER (
         geof:sfTouches(
@@ -697,7 +697,7 @@ LIMIT 3
 
 ```sparql
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX geof: <http://www.opengis.net/def/geosparql/function>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 
 SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
 WHERE { 
@@ -773,13 +773,10 @@ WHERE {
     }
     UNION
     { # geometry – geometry
-        ?f geo:hasDefaultGeometry ?fGeom . 
-        ?fGeom geo:asWKT ?fSerial .
-        my:A geo:hasDefaultGeometry ?aGeom . 
-        ?aGeom geo:asWKT ?aSerial .
+        ?f geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
         FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
     } 
-}
 ```
 
 *Result*:
