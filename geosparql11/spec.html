@@ -6702,7 +6702,8 @@ SELECT ?f
 WHERE {
     my:C my:hasExactGeometry ?cGeom .
     ?cGeom geo:asWKT ?cWKT .
-    ?f my:hasExactGeometry ?fGeom . ?fGeom geo:asWKT ?fWKT .
+    ?f my:hasExactGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
     FILTER (?fGeom != ?cGeom)
 }
 ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre))
@@ -6730,6 +6731,62 @@ LIMIT 3</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>my:E</code></p></td>
+</tr>
+</tbody>
+</table>
+<div id="annexB_example5" class="paragraph">
+<p><strong>Example 5</strong>: Find the maximum and minimum coordinates of a given set of geometries .</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/geosparql/function&gt;
+
+SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
+WHERE {
+    BIND ("&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
+            Polygon Z((-83.4 34.0 0, -83.1 34.0 1,
+                        -83.1 34.2 1, -83.4 34.2 1,
+                        -83.4 34.0 0))"^^geo:wktLiteral") AS ?testgeom)
+    BIND(geof:minX(?testgeom) AS ?minX)
+    BIND(geof:maxX(?testgeom) AS ?maxX)
+    BIND(geof:minY(?testgeom) AS ?minY)
+    BIND(geof:maxY(?testgeom) AS ?maxY)
+    BIND(geof:maxZ(?testgeom) AS ?maxZ)
+    BIND(geof:minZ(?testgeom) AS ?minZ)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Result</strong>:</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?minX</strong></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?minY</strong></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?minZ</strong></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?maxX</strong></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?maxY</strong></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><strong>?maxZ</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>-83.4</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>34.0</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>-83.1</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>34.2</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>1</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -7499,7 +7556,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-13 06:46:43 UTC
+Last updated 2021-06-15 16:18:35 UTC
 </div>
 </div>
 </body>
