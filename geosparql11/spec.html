@@ -6544,7 +6544,7 @@ my:DPointGeom a sf:Point ;
 
 my:EExactGeom a sf:LineString ;
     geo:asWKT """&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
-                 LineString((-83.4 34.0, -83.3 34.3))"""^^geo:wktLiteral.
+                 LineString(-83.4 34.0, -83.3 34.3)"""^^geo:wktLiteral.
 
 my:FExactGeom a sf:Point ;
     geo:asWKT """&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
@@ -6659,7 +6659,7 @@ WHERE {
     ?fGeom geo:asWKT ?fWKT .
     my:A my:hasExactGeometry ?aGeom .
     ?aGeom geo:asWKT ?aWKT .
-    ?my:D my:hasExactGeometry ?dGeom .
+    my:D my:hasExactGeometry ?dGeom .
     ?dGeom geo:asWKT ?dWKT .
     FILTER (
         geof:sfTouches(
@@ -6740,14 +6740,14 @@ LIMIT 3</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
-PREFIX geof: &lt;http://www.opengis.net/def/geosparql/function&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
 SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
 WHERE {
     BIND ("&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
             Polygon Z((-83.4 34.0 0, -83.1 34.0 1,
                         -83.1 34.2 1, -83.4 34.2 1,
-                        -83.4 34.0 0))"^^geo:wktLiteral") AS ?testgeom)
+                        -83.4 34.0 0))"^^geo:wktLiteral) AS ?testgeom)
     BIND(geof:minX(?testgeom) AS ?minX)
     BIND(geof:maxX(?testgeom) AS ?maxX)
     BIND(geof:minY(?testgeom) AS ?minY)
@@ -6847,13 +6847,10 @@ WHERE {
     }
     UNION
     { # geometry – geometry
-        ?f geo:hasDefaultGeometry ?fGeom .
-        ?fGeom geo:asWKT ?fSerial .
-        my:A geo:hasDefaultGeometry ?aGeom .
-        ?aGeom geo:asWKT ?aSerial .
+        ?f geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
         FILTER (geof:sfOverlaps(?fSerial, ?aSerial))
-    }
-}</code></pre>
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7556,7 +7553,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-15 16:18:35 UTC
+Last updated 2021-06-15 23:10:16 UTC
 </div>
 </div>
 </body>
