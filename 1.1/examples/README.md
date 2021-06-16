@@ -1,4 +1,4 @@
-# GeoSPARQL 1.1 Longer Examples
+# GeoSPARQL 1.1 Extended Examples
 This directory contains multiple files of GeoSPARQL 1.1 examples. These are an extension to examples in the [Specification Document's Annex B](https://opengeospatial.github.io/ogc-geosparql/geosparql11/spec.html#_annex_b_informative_geosparql_examples) and are presented separately since some of them are large and not easily incorporated into the Specification's document format.
 
 These examples are:
@@ -11,7 +11,7 @@ These examples are:
         * [moreton-island.kml](moreton-island.kml) - Keyhole Markup Language [OGCKML]
         * [moreton-island.wkt](moreton-island.wkt) - Well-Known Text [ISO19125-1]
 2. **GeoSPARQL Demonstration Dataset**
-    * An example of how to package multiple `Feature` instances in `FeatureCollection` instances within a `dcat:Dataset`.
+    * An example of how to package multiple `Feature` instances in `FeatureCollection` instances within a [DCAT] `dcat:Dataset`.
     * The following single file contains the dataset:
         * [demo-dataset.ttl](demo-dataset.ttl)
 
@@ -19,6 +19,7 @@ These examples are:
 ## References
 
 * [AUSPIX] Geoscience Australia, _AusPIX: An Australian Government implimentation of the rHEALPix DGGS in Python_ (2020). <https://github.com/GeoscienceAustralia/AusPIX_DGGS>
+* [DCAT2] World Wide Web Consortium, _Data Catalog Vocabulary (DCAT) - Version 2_ (2020). W3C Recommendation (04 February 2020). <https://www.w3.org/TR/vocab-dcat/>
 * [GEOJSON] Internet Engineering Task Force, _RFC 7946: The GeoJSON Format_. IETF Request for Comment (August 2016). <https://tools.ietf.org/html/rfc7946>
 * [OGC07-036] Open Geospatial Consortium, _OGC 07-036: Geography Markup Language (GML) Encoding Standard_, Version 3.2.1 (27 August 2007).
 * [OGCKML] Open Geospatial Consortium, _OGC KML 2.3_. OGC Implementation Standard (04 August 2015). <http://www.opengis.net/doc/IS/kml/2.3>
