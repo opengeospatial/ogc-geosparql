@@ -119,10 +119,20 @@ geosparql:
 :dggsLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
-	skos:definition """A textual serialization of a Discrete Global Grid (DGGS) geometry object."""@en ;
-	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>""" ;
-  rdfs:seeAlso <http://www.opengis.net/doc/AS/dggs/2.0> ;
+	skos:definition """A textual serialization of a Discrete Global Grid System (DGGS) geometry object."""@en ;
+	skos:scopeNote "This datatype is not expected to be used directly but to serve as an abstract datatype for a series of specific DGGS literal types, for specific DGGS implementations" ;
 	skos:prefLabel "DGGS Literal"@en ;
+.
+
+:auspixDggsLiteral
+	a rdfs:Datatype ;
+	rdfs:subClassOf :dggsLiteral ;
+	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
+	rdfs:seeAlso "https://github.com/GeoscienceAustralia/AusPIX_DGGS"^^xsd:anyURI ;
+	skos:definition """A textual serialization of an AusPix Discrete Global Grid System (DGGS) geometry object."""@en ;
+	skos:example """ "OrdinateList (R3234)"^^geo:auspixDggsLiteral""" ;
+	skos:scopeNote "This datatype is to be used only for a specific DGGS implementation - AusPix. Other DGGS implementations should declare their own datatypes."	
+	skos:prefLabel "AusPIX DGGS Literal"@en ;
 .
 
 # #################################################################
@@ -523,6 +533,7 @@ geosparql:
 	rdfs:isDefinedBy geosparql: , geosparql-spec: ;
 	skos:definition """The Discrete Global Grid System (DGGS) serialization of a geometry"""@en ;	
 	skos:prefLabel "as DGGS"@en ;
+	skos:scopeNote "This property is likely to be used with specific DGGS' literal types, such as auspuxDggsLiteral, which are sub classes of the essentially abstract dggsLiteral" ;
 .	
 
 :coordinateDimension
