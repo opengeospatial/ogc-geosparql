@@ -176,7 +176,7 @@ eg:x
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
-        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:dggsLiteral ;
+        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:auspixDggsLiteral ;
     ] ;
 .
 ```
@@ -261,6 +261,7 @@ _New Features checklist - to be removed when all examples are complete:_
 |kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
 |asKML | <<Property: geo:asKML>>
 |dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
+|auspixDggsWKTLiteral | <<RDFS Datatype: geo:auspixDggsWKTLiteral>>
 |asDGGS | <<Property: geo:asDGGS>>
 |===
 
@@ -403,7 +404,7 @@ eg:x
                 ]]
             }"""^^geo:geoJSONLiteral ;
 
-        geo:asDGGS """<https://w3id.org/dggs/auspix> CELLLIST ((R8346031 R8346034 R8346037 
+        geo:asDGGS """CELLLIST ((R8346031 R8346034 R8346037 
             R83460058 R83460065 R83460068 R83460072 R83460073 R83460074 R83460075 R83460076 
             R83460077 R83460078 R83460080 R83460081 R83460082 R83460083 R83460084 R83460085 
             R83460086 R83460087 R83460088 R83460302 R83460305 R83460308 R83460320 R83460321 
@@ -439,7 +440,7 @@ eg:x
             R834630232 R834630234 R834630235 R834630237 R834630238 R834630240 R834630241 
             R834630242 R834630243 R834630244 R834630245 R834630246 R834630247 R834630261 
             R834630262 R834630264 R834630265 R834630268 R834630270 R834630271 R834630273 
-            R834630276 R834630502))""""^^geo:dggsLiteral ;
+            R834630276 R834630502))""""^^geo:auspixDggsLiteral ;
     ] ;
 .
 ```
@@ -782,4 +783,4 @@ For the geometry literal values in <<B.1.2.3 Geometry Serializations>>:
 
 Application of the function `geof:asWKT` to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, `geof:asGML`, `geof:asKML`, `geof:asGeoJSON` & `geof:asDGGS`.
 
-Note that the application of `geof:asDGGS` requires a `dggsIri` parameter which indicates the IRI of the particular DGGS being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be `+https://w3id.org/dggs/auspix+`, the IRI of the AusPIX DGGS.
+Note that the application of `geof:asDGGS` requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be http://www.opengis.net/def/function/geosparql/auspixDggsLiteral[`geof:auspixDggsLiteral`], the datatype of the AusPIX DGGS format provided by GeoSPARQL 1.1.
