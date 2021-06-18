@@ -176,7 +176,7 @@ eg:x
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
-        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:dggsLiteral ;
+        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:auspixDggsLiteral ;
     ] ;
 .
 ```
@@ -261,6 +261,7 @@ _New Features checklist - to be removed when all examples are complete:_
 |kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
 |asKML | <<Property: geo:asKML>>
 |dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
+|auspixDggsWKTLiteral | <<RDFS Datatype: geo:auspixDggsWKTLiteral>>
 |asDGGS | <<Property: geo:asDGGS>>
 |===
 
@@ -403,7 +404,7 @@ eg:x
                 ]]
             }"""^^geo:geoJSONLiteral ;
 
-        geo:asDGGS """<https://w3id.org/dggs/auspix> CELLLIST ((R8346031 R8346034 R8346037 
+        geo:asDGGS """CELLLIST ((R8346031 R8346034 R8346037 
             R83460058 R83460065 R83460068 R83460072 R83460073 R83460074 R83460075 R83460076 
             R83460077 R83460078 R83460080 R83460081 R83460082 R83460083 R83460084 R83460085 
             R83460086 R83460087 R83460088 R83460302 R83460305 R83460308 R83460320 R83460321 
@@ -439,7 +440,7 @@ eg:x
             R834630232 R834630234 R834630235 R834630237 R834630238 R834630240 R834630241 
             R834630242 R834630243 R834630244 R834630245 R834630246 R834630247 R834630261 
             R834630262 R834630264 R834630265 R834630268 R834630270 R834630271 R834630273 
-            R834630276 R834630502))""""^^geo:dggsLiteral ;
+            R834630276 R834630502))""""^^geo:auspixDggsLiteral ;
     ] ;
 .
 ```
@@ -558,7 +559,7 @@ my:DPointGeom a sf:Point ;
 
 my:EExactGeom a sf:LineString ;
     geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
-                 LineString((-83.4 34.0, -83.3 34.3))"""^^geo:wktLiteral.
+                 LineString(-83.4 34.0, -83.3 34.3)"""^^geo:wktLiteral.
 
 my:FExactGeom a sf:Point ;
     geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84>
@@ -644,7 +645,7 @@ WHERE {
     ?fGeom geo:asWKT ?fWKT .
     my:A my:hasExactGeometry ?aGeom . 
     ?aGeom geo:asWKT ?aWKT .
-    ?my:D my:hasExactGeometry ?dGeom . 
+    my:D my:hasExactGeometry ?dGeom . 
     ?dGeom geo:asWKT ?dWKT .
     FILTER (
         geof:sfTouches(
@@ -675,7 +676,8 @@ SELECT ?f
 WHERE { 
     my:C my:hasExactGeometry ?cGeom .
     ?cGeom geo:asWKT ?cWKT .
-    ?f my:hasExactGeometry ?fGeom . ?fGeom geo:asWKT ?fWKT .
+    ?f my:hasExactGeometry ?fGeom . 
+    ?fGeom geo:asWKT ?fWKT .
     FILTER (?fGeom != ?cGeom) 
 }
 ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre)) 
@@ -691,12 +693,42 @@ LIMIT 3
 |`my:E`
 |===
 
+[[annexB_example5]]
+*Example 5*: Find the maximum and minimum coordinates of a given set of geometries .
+
+```sparql
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
+WHERE { 
+    BIND ("<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+            Polygon Z((-83.4 34.0 0, -83.1 34.0 1,
+                        -83.1 34.2 1, -83.4 34.2 1,
+                        -83.4 34.0 0))"^^geo:wktLiteral) AS ?testgeom)
+    BIND(geof:minX(?testgeom) AS ?minX)
+    BIND(geof:maxX(?testgeom) AS ?maxX)
+    BIND(geof:minY(?testgeom) AS ?minY)
+    BIND(geof:maxY(?testgeom) AS ?maxY)
+    BIND(geof:maxZ(?testgeom) AS ?maxZ)
+    BIND(geof:minZ(?testgeom) AS ?minZ)
+}
+```
+
+*Result*:
+|===
+|*?minX* | *?minY* | *?minZ* | *?maxX* | *?maxY* | *?maxZ*
+
+|`-83.4` | `34.0` | `0` | `-83.1` | `34.2` | `1`
+|===
+
+
 === B.2.3 Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
-[[annexB_example5]]
-*Example 5*: _Find all features or geometries that overlap feature_ `my:A`.
+[[annexB_example6]]
+*Example 6*: _Find all features or geometries that overlap feature_ `my:A`.
 
 *Original Query*:
 
@@ -742,13 +774,10 @@ WHERE {
     }
     UNION
     { # geometry – geometry
-        ?f geo:hasDefaultGeometry ?fGeom . 
-        ?fGeom geo:asWKT ?fSerial .
-        my:A geo:hasDefaultGeometry ?aGeom . 
-        ?aGeom geo:asWKT ?aSerial .
+        ?f geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
         FILTER (geof:sfOverlaps(?fSerial, ?aSerial)) 
     } 
-}
 ```
 
 *Result*:
@@ -780,6 +809,6 @@ _New Features checklist - to be removed when all examples are complete:_
 
 For the geometry literal values in <<B.1.2.3 Geometry Serializations>>:
 
-Application of the function `geof:asWKT` to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, `geof:asGML`, `geof:asKML`, `geof:asGeoJSON` & `geof:asDGGS`.
+Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].
 
-Note that the application of `geof:asDGGS` requires a `dggsIri` parameter which indicates the IRI of the particular DGGS being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be `+https://w3id.org/dggs/auspix+`, the IRI of the AusPIX DGGS.
+Note that the application of http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be http://www.opengis.net/def/function/geosparql/auspixDggsLiteral[`geof:auspixDggsLiteral`], the datatype of the AusPIX DGGS format provided by GeoSPARQL 1.1.
