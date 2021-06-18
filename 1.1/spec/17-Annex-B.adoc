@@ -76,7 +76,21 @@ Here a `Feature` and a `Geometry` are described as per the previous example but 
 
 Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialMeasure` instance's value.
 
-===== B 1.1.2.4 `Feature` with two different `Geometry` instances indicated
+===== B 1.1.2.4 `Feature` with metric Area
+
+
+```turtle
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+        geo:hasGeometry [
+            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    ] ;
+    geo:metricArea 8.7E4^^xsd:double;
+.
+```
+This example encodes the same data as the example above (B 1.1.2.3), but it uses the simpler metric expression of area.
+
+===== B 1.1.2.5 `Feature` with two different `Geometry` instances indicated
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -98,7 +112,7 @@ eg:x a geo:Feature ;
 
 In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
 
-===== B 1.1.2.5 `Feature` with two different `Geometry` instances with different property values
+===== B 1.1.2.6 `Feature` with two different `Geometry` instances with different property values
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -126,7 +140,25 @@ In this example, `Feature X` has two different `Geometry` instances indicated wi
 
 Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
 
-===== B 1.1.2.6 `Feature` with two different types of `Geometry` instances
+===== B 1.1.2.7 `Feature` with two different `Geometry` instances with metric spatial resolution
+
+```turtle
+eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:metricSpatialResolution 100^^xsd:float ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    ] ,
+    [
+        geo:metricSpatialResolution 5^^xsd:float ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+    ] ;
+.
+```
+
+This example encodes the same data as the example above (B 1.1.2.7), but uses the simpler metric property to indicate spatial resolution.
+
+===== B 1.1.2.8 `Feature` with two different types of `Geometry` instances
 
 ```turtle
 eg:x a geo:Feature ;
