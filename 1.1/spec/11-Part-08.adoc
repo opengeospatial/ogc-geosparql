@@ -101,7 +101,9 @@ geo:spatialDimension a rdf:Property, owl:DatatypeProperty;
 
 ==== Property: geo:hasSpatialResolution
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is used to indicate resolution of the elements within literal representations of a geometry. Since this property is defined for a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], all literal representations of that geometry must have the same spatial resolution.
+The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is used to indicate spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinghuishable distance between adjacent coordinate sets. Therefore this property is not applicable to a point Geometry, because it consists of a single coordinate set.
+
+Since this property is defined for a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], all literal representations of a Geometry instance must have the same spatial resolution.
 
 ```turtle
 geo:hasSpatialResolution a rdf:Property, owl:ObjectProperty;
@@ -109,6 +111,48 @@ geo:hasSpatialResolution a rdf:Property, owl:ObjectProperty;
     skos:prefLabel "has spatial resolution"@en ;
     skos:definition "The spatial resolution of a Geometry"@en ; 
     rdfs:domain geo:Geometry .
+```
+
+
+==== Property: geo:metricSpatialResolution
+
+The property http://www.opengis.net/ont/geosparql#metricSpatialResolution[`geo:metricSpatialResolution`] is similar to http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`], but it is easier to specify and use because the unit of resolution distance is always meter (the standard distance unit of the International System of Units). 
+
+```turtle
+geo:metricSpatialResolution a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "metric spatial resolution"@en ;
+    skos:definition "The spatial resolution of a Geometry in meters."@en ; 
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:decimal .
+```
+
+
+==== Property: geo:hasSpatialAccuracy
+
+The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
+
+Since this property is defined for a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], all literal representations of a Geometry instance must have the same spatial accuracy.
+
+```turtle
+geo:hasSpatialAccuracy a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has spatial accuracy"@en ;
+    skos:definition "The positional accuracy of the coordinates of a Geometry."@en ; 
+    rdfs:domain geo:Geometry .
+```
+
+==== Property: geo:metricSpatialAccuracy
+
+The property http://www.opengis.net/ont/geosparql#metricSpatialAccuracy[`geo:metricSpatialAccuracy`] is similar to http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialaccuracy`], but it is easier to specify and use because the unit of distance is always meter (the standard distance unit of the International System of Units). 
+
+```turtle
+geo:metricSpatialAccuracy a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "metrci spatial accuracy"@en ;
+    skos:definition "The positional accuracy of the coordinates of a Geometry in meters."@en ; 
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:decimal .
 ```
 
 ==== Property: geo:isEmpty
