@@ -1083,13 +1083,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.7</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Properties</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">inSRS</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoinsrs">Section 8.3.8</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Serializations</em></p></td>
 </tr>
 <tr>
@@ -2574,7 +2567,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a>, <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> , <a href="http://www.opengis.net/ont/geosparql#inSRS"><code>geo:inSRS</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a>, <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-properties</code></p></td>
@@ -2710,22 +2703,6 @@ this property is the generic property used to connect a geometry with its serial
 </td>
 </tr>
 </table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_property_geoinsrs"><a class="anchor" href="#_property_geoinsrs"></a>8.3.8. Property: geo:inSRS</h4>
-<div class="paragraph">
-<p>The <a href="http://www.opengis.net/ont/geosparql#inSRS"><code>geo:inSRS</code></a> property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:inSRS a rdf:Property, owl:ObjectProperty ;
-    rdfs:isDefinedBy geo: ;
-    skos:prefLabel "in SRS"@en ;
-    skos:definition "The spatial reference system used for the literal representation of the geometry."@en ;
-    rdfs:domain geo:Geometry ;
-    rdfs:range skos:Concept .</code></pre>
-</div>
 </div>
 </div>
 </div>
@@ -3314,7 +3291,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> instances are formed by encoding geometry information according to specific DGGS implmentation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
+<p>Valid <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3335,7 +3312,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 29</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>, or one of its sud datatypes, shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 29</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>, or one of its data subtypes, shall be interpreted as an empty <code>geo:Geometry</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/dggs-literal-empty</code></p></td>
@@ -3355,7 +3332,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> instances are formed by encoding geometry information according to the AusPIX DGGS implmentation <a href="#AUSPIX">[AUSPIX]</a>.</p>
+<p>Valid <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> instances are formed by encoding geometry information according to the AusPIX DGGS implementation <a href="#AUSPIX">[AUSPIX]</a>.</p>
 </div>
 <div class="paragraph">
 <p>The example <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> below encodes a point geometry according to the <em>AusPIX</em> DGGS. The DGGS geometry type is indicated with the token <code>CellList</code> and the list of values, a single cell, is enclosed in parenthesis. The cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries, so a single coordinate pair or a list of them:</p>
@@ -6067,12 +6044,11 @@ eg:x a geo:Feature ;
     a geo:Geometry ;
     skos:prefLabel "Geometry Y";
     geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
-    geo:inSRS &lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here the <code>Geometry</code> instance has data in WKT form and declares an SRS, WGS84: using the EPSG identifier.</p>
+<p>Here the <code>Geometry</code> instance has data in WKT form and, since no CRS is declared, WGS84 is the assumed, default, CRS.</p>
 </div>
 </div>
 <div class="sect4">
@@ -6090,7 +6066,7 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="paragraph">
-<p>Here a single <code>Geometry</code>, linked to a <code>Feature</code> instance is expressed using two different serializations: Well-known Text and the AusPIX DGGS. Note that <code>inSRS</code> is not used for the <code>Geometry</code> instance as this would conflict with the DGGS serialization so, as per GeoSPARQL 1.0, the SRS used for the WKT serialization is included directly in the WKT literal value.</p>
+<p>Here a single <code>Geometry</code>, linked to a <code>Feature</code> instance, is expressed using two different serializations: Well-known Text and the AusPIX DGGS.</p>
 </div>
 </div>
 </div>
@@ -6205,13 +6181,6 @@ eg:x
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.7</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Properties</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">inSRS</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoinsrs">Section 8.3.8</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Serializations</em></p></td>
 </tr>
 <tr>
@@ -6309,13 +6278,12 @@ eg:x
         geo:isEmpty false ;
         geo:isSimple true ;
         geo:hasSerialization "&lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
-        geo:inSRS &lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; ;
     ] ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, each of the standards properties defined for a <code>Geometry</code> instance has realistic values, for example, the <a href="http://www.opengis.net/ont/geosparql#isempty"><code>geo:isEmpty</code></a> is set to <code>false</code> since the geometry contains information. Note that the SRS of the given serialzation is given within the geometry literal (a WKT value) as well as by the <a href="http://www.opengis.net/ont/geosparql#inSRS"><code>geo:inSRS</code></a> property.</p>
+<p>In this example, each of the standards properties defined for a <code>Geometry</code> instance has realistic values, for example, the <a href="http://www.opengis.net/ont/geosparql#isempty"><code>geo:isEmpty</code></a> is set to <code>false</code> since the <code>Geometry</code> contains information.</p>
 </div>
 </div>
 <div class="sect3">
@@ -7620,7 +7588,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-17 02:27:46 UTC
+Last updated 2021-06-20 23:19:49 UTC
 </div>
 </div>
 </body>
