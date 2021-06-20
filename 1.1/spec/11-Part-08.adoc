@@ -51,7 +51,7 @@ geo:Geometry a rdfs:Class, owl:Class ;
 Properties are defined for describing geometry metadata.
 
 |===
-| *Req 10* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`], http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`], http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`], http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`], http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`], http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] , http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] to be used in SPARQL graph patterns.
+| *Req 10* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`], http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`], http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`], http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`], http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`], http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-properties`
 |===
 
@@ -154,19 +154,6 @@ geo:hasSerialization a rdf:Property, owl:DatatypeProperty ;
 ```
 
 NOTE: this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`] which can be used for GeoJSON <<GEOJSON>> literals.
-
-==== Property: geo:inSRS
-
-The http://www.opengis.net/ont/geosparql#inSRS[`geo:inSRS`] property is used to connect a geometry with the SRS used for its representation which affects measurements of its size (length, area, volume).
-
-```turtle
-geo:inSRS a rdf:Property, owl:ObjectProperty ;
-    rdfs:isDefinedBy geo: ; 
-    skos:prefLabel "in SRS"@en ;
-    skos:definition "The spatial reference system used for the literal representation of the geometry."@en ;
-    rdfs:domain geo:Geometry ; 
-    rdfs:range skos:Concept .
-```
 
 === Geometry Serializations
 This section establishes the requirements for representing geometry data in RDF based on different systems.
@@ -508,7 +495,7 @@ geo:dggsLiteral a rdfs:Datatype ;
     skos:definition "A textual serialization of a Discrete Global Grid System (DGGS) geometry object."@en .
 ```
 
-Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instances are formed by encoding geometry information according to specific DGGS implmentation. The specific implementation should be indicated by use of a subclass of the `geo:dggsLiteral` datatype. 
+Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the `geo:dggsLiteral` datatype. 
 
 |===
 | *Req 28* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall consist of a DGGS geometry serialization formulated according to a specific DGGS.
@@ -516,7 +503,7 @@ Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instan
 |===
 
 |===
-| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`], or one of its sud datatypes, shall be interpreted as an empty geometry.
+| *Req 29* An empty RDFS Literal of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`], or one of its data subtypes, shall be interpreted as an empty `geo:Geometry`.
 |`/req/geometry-extension/dggs-literal-empty`
 |===
 
@@ -530,7 +517,7 @@ geo:auspixDggsLiteral
     skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) geometry object."@en .
 ```
 
-Valid http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] instances are formed by encoding geometry information according to the AusPIX DGGS implmentation <<AUSPIX>>.
+Valid http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] instances are formed by encoding geometry information according to the AusPIX DGGS implementation <<AUSPIX>>.
 
 The example http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGS. The DGGS geometry type is indicated with the token `CellList` and the list of values, a single cell, is enclosed in parenthesis. The cell value of _R3234_ is analogous to either a `Point` or simple `Polygon` in WKT geometries, so a single coordinate pair or a list of them:
 
