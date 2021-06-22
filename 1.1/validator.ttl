@@ -21,22 +21,31 @@ As of GeoSPARQL 1.1, this validator is not normaltive, only informative, however
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
 	dcterms:created "2021-06-13"^^xsd:date ;
-	dcterms:modified "2021-06-13"^^xsd:date ;
+	dcterms:modified "2021-06-22"^^xsd:date ;
 	owl:versionInfo "OGC GeoSPARQL 1.1" ;
 	owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;  # same as Spec version for now
 .
 
-<feature-hasGeometry>
+<hasGeometry-hasSerialization>
     a sh:NodeShape ;
-	sh:targetClass geo:Feature ;
+	sh:targetSubjectsOf geo:hasGeometry ;
 	sh:property [
-    	sh:path geo:hasGeometry ;
-		sh:class geo:Geometry ;
-    	sh:message "Where the predicate geo:hasGeometry is used, it must indicate a geo:Geometry instance as its range value"@en ;
+    	sh:path [ 
+			sh:alternativePath (
+				geo:hasSerialization
+				geo:asGML
+				geo:asWKT
+				geo:asGeoJSON
+				geo:asKML
+				geo:asDGGS
+			) 
+		] ;
+        sh:minCount 1 ;
 	] ;
+	sh:message "Each node with an incoming geo:hasGeometry should have at least one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
 	skos:example 
 		"""
-		# A valid example
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -48,7 +57,37 @@ As of GeoSPARQL 1.1, this validator is not normaltive, only informative, however
 		.
 		"""^^xsd:string ,
 		"""
-		# An invalid example - geo:Geometry class for the geo:hasGeometry range value not declared
+		# An invalid example: incoming into the Geometry Blank Node is geo:hasGeometry, there is no outgoing subproperty of geo:hasSerialization
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			a geo:Feature ;
+			geo:hasGeometry [
+				a geo:Geometry ;
+			] ;
+		.
+		"""^^xsd:string ;
+.
+
+# Each node with an outgoing relation that is either geo:hasSerialization or a specialisation of it, should have exactly one incoming geo:hasGeometry relation
+<hasSerialization-hasGeometry>
+    a sh:NodeShape ;
+	sh:targetSubjectsOf     	
+		geo:hasSerialization ,
+		geo:asGML ,
+		geo:asWKT ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
+	sh:property [
+		sh:path [ sh:inversePath geo:hasGeometry ] ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+	] ;
+	sh:message "Each node with an incoming geo:hasGeometry should have exactly one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
+	skos:example 
+		"""
+		# A valid example: outgoing from the Geometry Blank Node is geo:asWKT, incoming is geo:hasGeometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -56,7 +95,60 @@ As of GeoSPARQL 1.1, this validator is not normaltive, only informative, however
 			geo:hasGeometry [
 				a geo:Geometry ;
 				geo:asWKT "POINT (153.084230 -27.322738)" ;
-			]
+			] ;
 		.
-		"""^^xsd:string ;		
+		"""^^xsd:string ,
+		"""
+		# An invalid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there is no incoming geo:hasGeometry
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> a geo:Feature .
+
+		[] a geo:Geometry ;
+			geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral ;
+		.
+		"""^^xsd:string ;
 .
+
+
+<hasGeometry-hasSerialization>
+    a sh:NodeShape ;
+	sh:targetObjectsOf geo:hasGeometry ;
+	sh:property [
+		sh:path geo:hasGeometry ;
+        sh:maxCount 0 ;
+	] ;
+	sh:message "A node that has an outgoing geo:hasGeometry property cannot have an incoming geo:hasGeometry property at the same time (a reasoner can detect the inconsistency (a geo:Feature cannot be a geo:Geometry at the same time), but it cannot be used to pinpoint the problem as SHACL can)"@en ;
+	skos:example 
+		"""
+		# A valid example: the Resource instance <resource-x> has an outgoing geo:hasGeometry property and no incoming geo:hasGeometry
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<resource-x>
+			geo:hasGeometry [
+				a geo:Geometry ;
+				geo:asWKT "POINT (153.084230 -27.322738)" ;
+			] ;
+		.
+		"""^^xsd:string ,
+		"""
+		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<resource-x>
+			geo:hasGeometry [
+				a geo:Geometry ;
+				geo:asWKT "POINT (153.084230 -27.322738)" ;
+			] ;
+		.
+
+		<resource-y>
+			geo:hasGeometry <resource-x> ;
+		.		
+		"""^^xsd:string ;
+.
+
+# Checks on the target of datatype properties, i.e. are they effectively RDF literals? (a reasoner can only detect inconsistencies)
+
+# Checks on the datatype of datatype properties, e.g. a geo:asGeoJSON property needs to point to a literal with datatype geo:geoJSONLiteral (a reasoner cannot infer a datatype via rdfs:range, only detect inconsistencies)
+
