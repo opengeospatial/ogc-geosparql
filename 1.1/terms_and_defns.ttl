@@ -27,12 +27,7 @@ cs:
         td:Subject ,
         td:Predicate ,
         td:Object ,
-        td:Resource ,
-        td:Class ,
-        td:Property ,
-        td:ObjectProperty ;
-        # td:DatatypeProperty ,
-        # td:AnnotationProperty 
+        td:Resource ;
     skos:prefLabel "GeoSPARQL Terms & Definitions" ;
 .
 
@@ -59,9 +54,9 @@ td:SemanticWeb a skos:Collection ;
         td:Resource ,
         td:Class ,
         td:Property ,
-        td:ObjectProperty ;
-        # td:DatatypeProperty ,
-        # td:AnnotationProperty 
+        td:ObjectProperty ,
+        td:DatatypeProperty ,
+        td:AnnotationProperty ;
 .
 
 td:Subject a skos:Concept ;
@@ -117,7 +112,8 @@ td:Class a skos:Concept ;
     dcterms:provenance "From the RDF Schema vocabulary (RDFS)"@en ;
     owl:equivalentClass rdfs:Class ;
     rdfs:isDefinedBy rdfs: ;
-    skos:definition "The class resource, everything."@en ;
+    skos:broader td:Resource ;
+    skos:definition "The class of classes."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "RDFS Class"@en ;
     skos:scopeNote """The RDF Schema vocabulary (RDFS)'s 'Class' is set notion, i.e. a type of thing for which there are a number of individuals of that type (there could be zero individuals). For example, the class of 'Hammer' is a set of individuals - individual hammers - with certain properties that are defined to be the essential properties of a hammer.
@@ -130,6 +126,7 @@ td:Property a skos:Concept ;
     dcterms:provenance "From the RDF Schema vocabulary (RDFS)"@en ;
     owl:equivalentClass rdfs:Property ;
     rdfs:isDefinedBy rdfs: ;
+    skos:broader td:Resource ;
     skos:definition "The class of RDF properties."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "RDFS Property"@en ;
@@ -145,6 +142,7 @@ td:ObjectProperty a skos:Concept ;
     dcterms:provenance "The OWL 2 Schema vocabulary (OWL 2)"@en ;
     owl:equivalentClass owl:ObjectProperty ;
     rdfs:isDefinedBy <http://www.w3.org/2002/07/owl> ;
+    skos:broader td:Property ;
     skos:definition "The class of object properties."@en ;
     skos:inScheme cs: ;
     skos:prefLabel "OWL Object Property"@en ;
@@ -154,6 +152,42 @@ td:ObjectProperty a skos:Concept ;
         dcterms:format "text/turtle" ;
         prof:hasArtifact "<feature_x> geo:hasGeometry <geometry_y> .";
     ] ,
-    """A specific instance of geoSPARQL's `Feature` class, <feature_x>, is related to a complex object that is of GeoSPARQL's `Geometry` class by the GeoSPARQL's RDF predicate `hasGeometry`. Here the predicate `hasGeometry` is an OWL2 object of type `ObjectProperty`."""@en ;
+    """A specific instance of geoSPARQL's `Feature` class, <feature_x>, is related to a complex object that is of GeoSPARQL's `Geometry` class by GeoSPARQL's RDF predicate `hasGeometry`. Here the predicate `hasGeometry` is an OWL2 object of type `ObjectProperty`."""@en ;
+    skos:topConceptOf cs: ;
+.
+
+td:AnnotationProperty a skos:Concept ;
+    dcterms:provenance "The OWL 2 Schema vocabulary (OWL 2)"@en ;
+    owl:equivalentClass owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/2002/07/owl> ;
+    skos:broader td:Property ;
+    skos:definition "The class of annotation properties."@en ;
+    skos:inScheme cs: ;
+    skos:prefLabel "OWL Annotation Property"@en ;
+    skos:scopeNote """The OWL 2 Schema vocabulary (OWL 2)'s 'AnnotationProperty' is a subclass of rdfs:Property that links the subject of an RDF triple to the object of that triple where the object is a simple data type (usually a string) that provides information about the subject - annotates it."""@en ;
+    skos:example [
+        a prof:resourceDescriptor ;
+        dcterms:format "text/turtle" ;
+        prof:hasArtifact "<feature_x> sdo:name \"Feature X\" .";
+    ] ,
+    """A specific instance of geoSPARQL's `Feature` class, <feature_x>, is related to a simple label - such as a schema.org 'name' property. The `sdo:name` property is an OWL2 object of type `AnnotationProperty`."""@en ;
+    skos:topConceptOf cs: ;
+.
+
+td:DatatypeProperty a skos:Concept ;
+    dcterms:provenance "The OWL 2 Schema vocabulary (OWL 2)"@en ;
+    owl:equivalentClass owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.w3.org/2002/07/owl> ;
+    skos:broader td:Property ;
+    skos:definition "The class of data properties."@en ;
+    skos:inScheme cs: ;
+    skos:prefLabel "OWL Datatype Property"@en ;
+    skos:scopeNote """The OWL 2 Schema vocabulary (OWL 2)'s 'DatatypeProperty' is a subclass of rdfs:Property that links the subject of an RDF triple to the object of that triple where the object is a simple data type."""@en ;
+    skos:example [
+        a prof:resourceDescriptor ;
+        dcterms:format "text/turtle" ;
+        prof:hasArtifact "<feature_y> geo:hasMetricArea 435.6 .";
+    ] ,
+    """A specific instance of geoSPARQL's `Feature` class, <feature_x>, is related to a simple literal property - an `xsd:decimal` - by GeoSPARQL's RDF predicate `hasMetricArea`. Here the predicate `hasMetricArea` is an OWL2 object of type `DatatypeProperty`."""@en ;
     skos:topConceptOf cs: ;
 .
