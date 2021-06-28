@@ -18,6 +18,11 @@ PREFIX geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.h
     skos:definition "A vocabulary (taxonomy) of the functions and rules defined within the GeoSPARQL 1.1 specification"@en ;
     skos:hasTopConcept
         funcs:area,
+		funcs:asDGGS,
+		funcs:asKML,
+		funcs:asGeoJSON,
+		funcs:asGML,
+		funcs:asWKT,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
@@ -97,6 +102,11 @@ funcs: a skos:Collection ;
     skos:definition """All the GeoSPARQL Functions defined within the GeoSPARQL 1.1 specification"""@en ;
     skos:member 
         funcs:area,
+		funcs:asDGGS,
+		funcs:asKML,
+		funcs:asGeoJSON,
+		funcs:asGML,
+		funcs:asWKT,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
@@ -311,6 +321,72 @@ rules:sf a skos:Collection ;
         rules:sfTouches,
         rules:sfWithin ;
     skos:prefLabel "GeoSPARQL Simple Features Rules" .
+
+funcs:area a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in squaremeters."@en ;
+    skos:prefLabel "area"@en .
+
+funcs:asDGGS a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter."@en ;
+    skos:prefLabel "asDGGS"@en .
+	
+funcs:asGeoJSON a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal."@en ;
+    skos:prefLabel "asGeoJSON"@en .
+		
+funcs:asGML a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system."@en ;
+    skos:prefLabel "asGML"@en .
+	
+funcs:asKML a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal."@en ;
+    skos:prefLabel "asKML"@en .
+	
+funcs:asWKT a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible."@en ;
+    skos:prefLabel "asWKT"@en .
 
 funcs:boundary a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -527,6 +603,17 @@ funcs:envelope a skos:Concept ;
     skos:definition "A query function that returns the minimum bounding rectangle of the input geometry."@en ;
     skos:prefLabel "envelope"@en .
 
+funcs:geometryN a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "geometryN"@en .
+
 funcs:getSRID a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
@@ -582,16 +669,6 @@ funcs:length a skos:Concept ;
     skos:definition "Returns the length of a geometry in meters."@en ;
     skos:prefLabel "length"@en .
 
-funcs:area a skos:Concept ;
-    dcterms:contributor "Timo Homburg" ;
-    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
-    dcterms:date "2021-05-20"^^xsd:date ;
-    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
-    policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
-    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
-    skos:definition "Returns the area of a geometry in squaremeters."@en ;
-    skos:prefLabel "area"@en .
 
 funcs:minx a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
@@ -664,6 +741,17 @@ funcs:maxz a skos:Concept ;
     skos:definition "A query function that returns the maximum z coordinate of the input geometry."@en ;
     skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
     skos:prefLabel "maxZ"@en .
+
+funcs:numGeometries a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "numGeometries"@en .
 
 funcs:intersection a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -906,6 +994,17 @@ funcs:symDifference a skos:Concept ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of only one input geometry."@en ;
     skos:prefLabel "symmetric difference"@en .
+
+funcs:transform a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that converts a given geometry to a spatial reference system defined by an IRI. The function raises an error if a transformation is not mathematically possible."@en ;
+    skos:prefLabel "transform"@en .
 
 funcs:union a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -1194,4 +1293,3 @@ rules:sfWithin a skos:Concept ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is within another spatial object based on their associated geometry objects."@en ;
     skos:prefLabel "within"@en .
-
