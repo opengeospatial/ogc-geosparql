@@ -1,3 +1,6 @@
+# baseURI: http://www.opengis.net/ont/geosparql
+# prefix: geosparql
+
 @prefix : <http://www.opengis.net/ont/geosparql#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql> .
@@ -5,14 +8,15 @@
 @prefix geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> . #To be changed once the definitive IRI of the HTML documentation is known.
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sdo: <https://schema.org/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 
-geosparql: 
+<http://www.opengis.net/ont/geosparql> 
 	a owl:Ontology ;
-  	dcterms:title "GeoSPARQL Ontology" ;
+	dcterms:title "GeoSPARQL Ontology" ;
 	dcterms:publisher [
 		a sdo:Organization ;
 		sdo:name "Open Geospatial Consortium" ;
@@ -68,7 +72,7 @@ geosparql:
 		sdo:url "https://orcid.org/0000-0003-3789-2260"^^xsd:anyURI ;
 	] ;	
 	dcterms:created "2020-09-09"^^xsd:date ;
-	dcterms:modified "2021-03-25"^^xsd:date ;
+	dcterms:modified "2021-06-03"^^xsd:date ;
 	dcterms:replaces <http://www.opengis.net/ont/geosparql/1.0> ;
 	dcterms:description "An RDF/OWL vocabulary for representing spatial information"@en ;
 	dcterms:source <http://www.opengis.net/doc/IS/geosparql/1.1> , "OGC GeoSPARQL – A Geographic Query Language for RDF Data OGC 11-052r5"@en ;
@@ -123,6 +127,7 @@ geosparql:
 	skos:example """ "<https://w3id.org/dggs/auspix> OrdinateList (R3234)"^^<http://www.opengis.net/ont/geosparql#dggsLiteral>""" ;
   rdfs:seeAlso <http://www.opengis.net/doc/AS/dggs/2.0> ;
 	skos:prefLabel "DGGS Literal"@en ;
+	skos:scopeNote "This datatype is not expected to be used directly but to serve as an abstract datatype for a series of specific DGGS literal types, for specific DGGS implementations" ;
 .
 
 # #################################################################
@@ -589,6 +594,18 @@ geosparql:
 	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
+:FeatureCollection
+	a owl:Class ;
+	rdfs:subClassOf :SpatialObjectCollection ;
+	rdfs:subClassOf [
+		rdf:type owl:Restriction ;
+		owl:allValuesFrom :Feature ;
+		owl:onProperty rdfs:member ;
+	] ;
+	skos:prefLabel "Collection of geospatial features"@en ;
+	skos:definition "The class Feature Collection represents any collection of individual Features."@en ;
+.
+
 :Geometry
 	a owl:Class ;
 	rdfs:subClassOf :SpatialObject ;
@@ -599,9 +616,21 @@ geosparql:
 	skos:example geosparql-doc:annexB_example1 , geosparql-doc:annexB_example2 , geosparql-doc:annexB_example3 , geosparql-doc:annexB_example4 , geosparql-doc:annexB_example5 ;
 .
 
+:GeometryCollection
+	a owl:Class ;
+	rdfs:subClassOf :SpatialObjectCollection ;
+	rdfs:subClassOf [
+		rdf:type owl:Restriction ;
+		owl:allValuesFrom :Geometry ;
+		owl:onProperty rdfs:member ;
+	] ;
+	skos:definition "The class Geometry Collection represents any collection of Geometry entities."@en ;
+	skos:prefLabel "Collection of geometry entities"@en ;
+.
+
 :SpatialMeasure
 	a owl:Class ;
-  	rdfs:isDefinedBy geosparql: , <http://www.opengis.net/spec/geosparql/1.1/req/spatial-measure-class> ;
+  rdfs:isDefinedBy geosparql: , <http://www.opengis.net/spec/geosparql/1.1/req/spatial-measure-class> ;
 	skos:definition """A measurement or estimate of one or more dimensions of a Feature's spatial presence."""@en ;
 	skos:note """It can be used to convey an idea of the size of a Feature."""@en ;
 	skos:prefLabel "Spatial Measure"@en ;
@@ -613,4 +642,16 @@ geosparql:
 	skos:definition """Anything spatial (having or being a shape, position or an extent)."""@en ;
 	skos:note """Subclasses are expected to be used for instance data."""@en ;
 	skos:prefLabel "Spatial Object"@en ;
+.
+
+:SpatialObjectCollection
+	a owl:Class ;
+	rdfs:subClassOf rdfs:Container ;
+	rdfs:subClassOf [
+		rdf:type owl:Restriction ;
+		owl:allValuesFrom :SpatialObject ;
+		owl:onProperty rdfs:member ;
+	] ;
+	skos:prefLabel "Collection of spatial objects"@en ;
+	skos:definition """The class Spatial Object Collection represents any collection of things that can have a spatial representation. It is superclass of Feature Collection and Geometry Collection."""@en ;
 .

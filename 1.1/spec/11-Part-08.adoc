@@ -26,6 +26,8 @@ version:: Specifies the version of the serialization format used.
 
 A single root geometry class is defined: http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to the UML class `GM_Object` defined in <<ISO19107>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
 
+One container class is defined: http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`]. 
+
 ==== Class: geo:Geometry
 
 The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to `GM_Object` <<ISO19107>> and is defined by the following:
@@ -44,6 +46,29 @@ geo:Geometry a rdfs:Class, owl:Class ;
 |===
 | *Req 8* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-class`
+|===
+
+==== Class: geo:GeometryCollection
+
+The class http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] is defined by the following:
+
+```turtle
+geo:GeometryCollection
+  rdf:type owl:Class ;
+  rdfs:subClassOf geo:SpatialObjectCollection ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom geo:Geometry ;
+      owl:onProperty rdfs:member ;
+    ] ;
+  skos:definition "The class Geometry Collection represents any collection of Geometry entities. " ;
+  skos:prefLabel "Collection of geometry entities" ;
+.
+```
+
+|===
+| *Req 52* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] to be used in SPARQL graph patterns.
+|`/req/core/geometry-collection-class`
 |===
 
 === Standard Properties for geo:Geometry
