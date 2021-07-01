@@ -16,11 +16,18 @@ PREFIX geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.h
     owl:imports <http://www.opengis.net/def/ogc-na> ;
     owl:versionIRI <http://defs-dev.opengis.net/static/definitions/conceptschemes/functions_geosparql.ttl> ;
     skos:definition "A vocabulary (taxonomy) of the functions and rules defined within the GeoSPARQL 1.1 specification"@en ;
-    skos:hasTopConcept 
+    skos:hasTopConcept
+        funcs:area,
+		funcs:asDGGS,
+		funcs:asKML,
+		funcs:asGeoJSON,
+		funcs:asGML,
+		funcs:asWKT,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:ehContains,
         funcs:ehCoveredBy,
@@ -32,7 +39,18 @@ PREFIX geosparql-doc: <http://www.opengis.net/spec/geosparql/1.1/specification.h
         funcs:ehOverlap,
         funcs:envelope,
         funcs:getSRID,
+        funcs:geometryN,
         funcs:intersection,
+        funcs:isEmpty,
+        funcs:isSimple,
+        funcs:minx,
+        funcs:miny,
+        funcs:minz,
+        funcs:maxx,
+        funcs:maxy,
+        funcs:maxz,
+        funcs:numGeometries,
+        funcs:transform,
         funcs:rcc8dc,
         funcs:rcc8ec,
         funcs:rcc8eq,
@@ -83,10 +101,17 @@ funcs: a skos:Collection ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """All the GeoSPARQL Functions defined within the GeoSPARQL 1.1 specification"""@en ;
     skos:member 
+        funcs:area,
+		funcs:asDGGS,
+		funcs:asKML,
+		funcs:asGeoJSON,
+		funcs:asGML,
+		funcs:asWKT,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:ehContains,
         funcs:ehCoveredBy,
@@ -98,6 +123,8 @@ funcs: a skos:Collection ;
         funcs:ehOverlap,
         funcs:envelope,
         funcs:getSRID,
+        funcs:isEmpty,
+        funcs:isSimple,
         funcs:minx,
         funcs:miny,
         funcs:minz,
@@ -175,20 +202,27 @@ funcs:nonTopo a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """All the GeoSPARQL Non-topological Query Functions defined within the GeoSPARQL 1.1 specification"""@en ;
-    skos:member 
+    skos:member
+        funcs:area,
         funcs:boundary,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
+        funcs:dimension,
         funcs:distance,
         funcs:envelope,
+        funcs:geometryN,
         funcs:getSRID,
+        funcs:isEmpty,
+        funcs:isSimple,
+        funcs:length,
         funcs:minx,
         funcs:miny,
         funcs:minz,
         funcs:maxx,
         funcs:maxy,
         funcs:maxz,
+        funcs:numGeometries,
         funcs:intersection,
         funcs:symDifference,
         funcs:union ;
@@ -201,6 +235,17 @@ funcs:common a skos:Collection ;
     skos:member 
         funcs:relate ;
     skos:prefLabel "GeoSPARQL Common Query Functions" .    
+
+funcs:sa a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:member
+        funcs:boundingCircle,
+        funcs:centroid,
+        funcs:concatLines,
+        funcs:concaveHull,
+        funcs:union2;
+    skos:prefLabel "GeoSPARQL Spatial Aggregate Functions" .
 
 rules: a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -277,16 +322,93 @@ rules:sf a skos:Collection ;
         rules:sfWithin ;
     skos:prefLabel "GeoSPARQL Simple Features Rules" .
 
+funcs:area a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in squaremeters."@en ;
+    skos:prefLabel "area"@en .
+
+funcs:asDGGS a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter."@en ;
+    skos:prefLabel "asDGGS"@en .
+	
+funcs:asGeoJSON a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal."@en ;
+    skos:prefLabel "asGeoJSON"@en .
+		
+funcs:asGML a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system."@en ;
+    skos:prefLabel "asGML"@en .
+	
+funcs:asKML a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal."@en ;
+    skos:prefLabel "asKML"@en .
+	
+funcs:asWKT a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible."@en ;
+    skos:prefLabel "asWKT"@en .
+
 funcs:boundary a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the boundary of the input geometry."@en ;
     skos:prefLabel "boundary"@en .
+
+funcs:boundingCircle a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the minimum bounding circle of set of geometries."@en ;
+    skos:prefLabel "bounding circle"@en .
 
 funcs:buffer a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -294,10 +416,43 @@ funcs:buffer a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a buffer around the input geometry."@en ;
     skos:prefLabel "buffer"@en .
+
+funcs:centroid a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates a centroid of a set of geometries."@en ;
+    skos:prefLabel "centroid"@en .
+
+funcs:concatLines a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates a concatenated line of a set of lines."@en ;
+    skos:prefLabel "concat lines"@en .
+
+funcs:concaveHull a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the concave hull of a set of geometries."@en ;
+    skos:prefLabel "concave hull"@en .
 
 funcs:convexHull a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -305,7 +460,7 @@ funcs:convexHull a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the convex hull of the input geometry."@en ;
     skos:prefLabel "convex hull"@en .
@@ -316,7 +471,7 @@ funcs:difference a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of the first geometry but not the second geometry."@en ;
     skos:prefLabel "difference"@en .
@@ -327,7 +482,7 @@ funcs:distance a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the distance between the two closest points of the input geometries."@en ;
     skos:prefLabel "distance"@en ;
@@ -339,7 +494,7 @@ funcs:ehContains a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument. 
       
@@ -352,7 +507,7 @@ funcs:ehCoveredBy a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.
 
@@ -365,7 +520,7 @@ funcs:ehCovers a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially covers the second geometry argument.
 
@@ -378,7 +533,7 @@ funcs:ehDisjoint a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are disjoint. 
 
@@ -391,7 +546,7 @@ funcs:ehEquals a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are equal. 
 
@@ -404,7 +559,7 @@ funcs:ehInside a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument is spatially inside the second geometry argument.
 
@@ -417,7 +572,7 @@ funcs:ehMeet a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries meet.
 
@@ -430,7 +585,7 @@ funcs:ehOverlap a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries overlap.
 
@@ -443,10 +598,21 @@ funcs:envelope a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions>  ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the minimum bounding rectangle of the input geometry."@en ;
     skos:prefLabel "envelope"@en .
+
+funcs:geometryN a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "geometryN"@en .
 
 funcs:getSRID a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -454,10 +620,55 @@ funcs:getSRID a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/srid-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the spatial reference system URI of the input geometry."@en ;
     skos:prefLabel "getSRID"@en .
+
+funcs:isEmpty a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is empty."@en ;
+    skos:prefLabel "isEmpty"@en .
+
+funcs:isSimple a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is a simple geometry."@en ;
+    skos:prefLabel "isSimple"@en .
+
+funcs:dimension a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the dimension of a geometry."@en ;
+    skos:prefLabel "area"@en .
+
+funcs:length a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the length of a geometry in meters."@en ;
+    skos:prefLabel "length"@en .
+
 
 funcs:minx a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
@@ -465,7 +676,7 @@ funcs:minx a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the minimum x coordinate of the input geometry."@en ;
     skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en ;
@@ -477,7 +688,7 @@ funcs:maxx a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the maximum x coordinate of the input geometry."@en ;
     skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en ;
@@ -489,7 +700,7 @@ funcs:miny a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the minimum y coordinate of the input geometry."@en ;
     skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en ;
@@ -501,7 +712,7 @@ funcs:maxy a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the maximum y coordinate of the input geometry."@en ;
     skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en ;
@@ -513,7 +724,7 @@ funcs:minz a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the minimum z coordinate of the input geometry."@en ;
     skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
@@ -525,11 +736,22 @@ funcs:maxz a skos:Concept ;
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the maximum z coordinate of the input geometry."@en ;
     skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
     skos:prefLabel "maxZ"@en .
+
+funcs:numGeometries a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "numGeometries"@en .
 
 funcs:intersection a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -537,7 +759,7 @@ funcs:intersection a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of both input geometries."@en ;
     skos:prefLabel "intersection"@en .
@@ -548,7 +770,7 @@ funcs:rcc8dc a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are disjoint. 
 
@@ -561,7 +783,7 @@ funcs:rcc8ec a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries meet. 
 
@@ -574,7 +796,7 @@ funcs:rcc8eq a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are equal. 
       
@@ -587,7 +809,7 @@ funcs:rcc8ntpp a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument is spatially inside the second geometry argument.
 
@@ -600,7 +822,7 @@ funcs:rcc8ntppi a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument.
 
@@ -613,7 +835,7 @@ funcs:rcc8po a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries overlap.
 
@@ -626,7 +848,7 @@ funcs:rcc8tpp a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.
 
@@ -639,7 +861,7 @@ funcs:rcc8tppi a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially covers the second geometry argument.
 
@@ -652,7 +874,7 @@ funcs:relate a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/relate-query-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns true if the spatial relationship between the two input geometries corresponds to one with acceptable values for the specified DE-9IM pattern matrix."@en ;
     skos:prefLabel "relate"@en .
@@ -663,7 +885,7 @@ funcs:sfContains a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument.
 
@@ -677,7 +899,7 @@ funcs:sfCrosses a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially crosses the second geometry argument.
 
@@ -688,7 +910,7 @@ funcs:sfDisjoint a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are disjoint. 
       
@@ -701,7 +923,7 @@ funcs:sfEquals a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries are equal. 
 
@@ -714,7 +936,7 @@ funcs:sfIntersects a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries intersect.
 
@@ -727,7 +949,7 @@ funcs:sfOverlaps a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument spatially overlaps the second geometry argument.
 
@@ -740,7 +962,7 @@ funcs:sfTouches a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the input geometries touch.
 
@@ -754,7 +976,7 @@ funcs:sfWithin a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition """A query function that returns true if the first geometry argument is spatially within the second geometry argument. 
 
@@ -768,10 +990,21 @@ funcs:symDifference a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of only one input geometry."@en ;
     skos:prefLabel "symmetric difference"@en .
+
+funcs:transform a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
+    dcterms:date "2011-06-28"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that converts a given geometry to a spatial reference system defined by an IRI. The function raises an error if a transformation is not mathematically possible."@en ;
+    skos:prefLabel "transform"@en .
 
 funcs:union a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -779,11 +1012,22 @@ funcs:union a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of at least one input geometry."@en ;
     skos:prefLabel "union"@en ;
     skos:example geosparql-doc:annexB_example3 .
+
+funcs:union2 a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the union of a set of geometries."@en ;
+    skos:prefLabel "union2"@en .
 
 rules:ehContains a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
@@ -791,7 +1035,7 @@ rules:ehContains a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "contains"@en .
@@ -802,7 +1046,7 @@ rules:ehCoveredBy a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is covered by another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "covered by"@en .
@@ -813,7 +1057,7 @@ rules:ehCovers a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object covers another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "covers"@en .
@@ -824,7 +1068,7 @@ rules:ehDisjoint a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
     skos:prefLabel "disjoint"@en .
@@ -835,7 +1079,7 @@ rules:ehEquals a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects."@en ;
     skos:prefLabel "equals"@en .
@@ -846,7 +1090,7 @@ rules:ehInside a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is inside another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "inside"@en .
@@ -857,7 +1101,7 @@ rules:ehMeet a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects meet based on their associated primary geometry objects."@en ;
     skos:prefLabel "meet"@en .
@@ -868,7 +1112,7 @@ rules:ehOverlap a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects."@en ;
     skos:prefLabel "overlap"@en .
@@ -879,7 +1123,7 @@ rules:rcc8dc a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
     skos:prefLabel "disconnected"@en .
@@ -890,7 +1134,7 @@ rules:rcc8ec a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are externally connected based on their associated primary geometry objects."@en ;
     skos:prefLabel "externally connected"@en .
@@ -901,7 +1145,7 @@ rules:rcc8eq a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine two spatial objects are equal based on their associated primary geometry objects."@en ;
     skos:prefLabel "equals"@en .
@@ -912,8 +1156,8 @@ rules:rcc8ntpp a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
-    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/spec/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is a non-tangential proper part of another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "non-tangential proper part"@en .
 
@@ -923,7 +1167,7 @@ rules:rcc8ntppi a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is a non-tangential proper part inverse of another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "non-tangential proper part inverse"@en .
@@ -934,7 +1178,7 @@ rules:rcc8po a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects partially overlap based on their associated primary geometry objects."@en ;
     skos:prefLabel "partially overlapping"@en .
@@ -945,7 +1189,7 @@ rules:rcc8tpp a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is a tangential proper part of another spatial object based on their associated geometry objects."@en ;
     skos:prefLabel "tangential proper part"@en .
@@ -956,7 +1200,7 @@ rules:rcc8tppi a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is a tangential proper part inverse of another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "tangential proper part inverse"@en .
@@ -967,7 +1211,7 @@ rules:sfContains a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects."@en ;
     skos:prefLabel "contains"@en .
@@ -978,7 +1222,7 @@ rules:sfCrosses a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects cross based their associated primary geometry objects."@en ;
     skos:prefLabel "crosses"@en .
@@ -989,7 +1233,7 @@ rules:sfDisjoint a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
     skos:prefLabel "disjoint"@en .
@@ -1000,7 +1244,7 @@ rules:sfEquals a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects."@en ;
     skos:prefLabel "equals"@en .
@@ -1011,7 +1255,7 @@ rules:sfIntersects a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects intersect based on their associated primary geometry objects."@en ;
     skos:prefLabel "intersects"@en .
@@ -1022,7 +1266,7 @@ rules:sfOverlaps a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects."@en ;
     skos:prefLabel "overlaps"@en ;
@@ -1034,7 +1278,7 @@ rules:sfTouches a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if two spatial objects touch based on their associated primary geometry objects."@en ;
     skos:prefLabel "touches"@en .
@@ -1045,8 +1289,7 @@ rules:sfWithin a skos:Concept ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1> ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query rewrite rule used to determine if one spatial object is within another spatial object based on their associated geometry objects."@en ;
     skos:prefLabel "within"@en .
-

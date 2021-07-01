@@ -11,7 +11,9 @@ This clause establishes the *core* requirements class, with IRI `/req/core`, whi
 
 === Classes
 
-Three main classes are defined: http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`], http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] and http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. The class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] is equivalent to the UML class `Feature` defined in <<ISO19109>>.
+Three main classes are defined: http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`], http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], and http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`]. The class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] is equivalent to the UML class `Feature` defined in <<ISO19109>>.
+
+Two container classes are defined: http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:SpatialObjectCollection`] and http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`]. 
 
 ==== Class: geo:SpatialObject
 
@@ -55,7 +57,7 @@ geo:Feature a rdfs:Class, owl:Class ;
 ```
 
 |===
-| *Req 4* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] to be used in SPARQL graph patterns.
+| *Req 3* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] to be used in SPARQL graph patterns.
 |`/req/core/feature-class`
 |===
 
@@ -74,8 +76,56 @@ geo:SpatialMeasure a rdfs:Class, owl:Class ;
 NOTE: Properties for Spatial Measure may need to indicate a use a unit of measure. When they do, OGC recommended units of measure vocabularies should be used. See the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
 
 |===
-| *Req 3* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] to be used in SPARQL graph patterns.
+| *Req 4* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] to be used in SPARQL graph patterns.
 |`/req/core/spatial-measure-class`
+|===
+
+==== Class: geo:SpatialObjectCollection
+
+The class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:SpatialObjectCollection`] is defined by the following:
+
+```turtle
+geo:SpatialObjectCollection
+  rdf:type owl:Class ;
+  rdfs:subClassOf rdfs:Container ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom geo:SpatialObject ;
+      owl:onProperty rdfs:member ;
+    ] ;
+  skos:prefLabel "Collection of spatial objects" ;
+  skos:definition """The class Spatial Object Collection represents any collection of things that can 
+                    have a spatial representation. It is superclass of Feature Collection
+                    and Geometry Collection""" ;
+.
+```
+
+|===
+| *Req 50* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:SpatialObjectCollection`] to be used in SPARQL graph patterns.
+|`/req/core/spatial-object-collection-class`
+|===
+
+==== Class: geo:FeatureCollection
+
+The class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`] is defined by the following:
+
+```turtle
+geo:FeatureCollection
+  rdf:type owl:Class ;
+  rdfs:subClassOf geo:SpatialObjectCollection ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom :Feature ;
+      owl:onProperty rdfs:member ;
+    ] ;
+  skos:prefLabel "Collection of geospatial features" ;
+  skos:definition "The class Feature Collection represents any collection of individual Features. " ;
+.
+```
+
+|===
+| *Req 51* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`] to be used in SPARQL graph patterns.
+|`/req/core/feature-collection-class`
 |===
 
 === Standard Properties for geo:SpatialObject
