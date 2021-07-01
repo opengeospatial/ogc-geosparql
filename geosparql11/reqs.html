@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoSPARQL 1.1 Requirement and Conformance Class Register</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1Sew
+EAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://www.opengis.net/def/geosparql/reqs",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification</p>"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "GeoSPARQL 1.1 Requirement and Conformance Class Register"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.10.0</span>
+  </div>
+  <h1>GeoSPARQL 1.1 Requirement and Conformance Class Register</h1>
+<h3><em>A taxonomy</em></h3>
+  <section id="conceptscheme">
+      <h2 style="display:none;">Concept Scheme</h2>
+      <dl>
+          <dt>URI</dt>
+          <dd><code>http://www.opengis.net/def/geosparql/reqs</code></dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+          <dd>2021-06-28</dd>
+          <dt>Ontology RDF</dt>
+          <dd><a href="geosparqlreq.ttl">RDF (turtle)</a></dd>
+      </dl>
+      <h2>Description</h2>
+      <div id="description">
+          <p>A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification</p>
+      </div>
+  </section>
+  <section id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+          <li><a href="#concepts">Concepts</a></li>
+          <li><a href="#namespaces">Namespaces</a></li>
+          <li><a href="#legend">Legend</a></li>
+      </ol>
+  </section>
+  <section id="overview">
+      <h2>Overview</h2>
+      <div class="figure">
+          <div style="width:500px; height:500px; background-color: black;">&nbsp;</div>
+          <div class="caption"><strong>Figure 1:</strong> Taxonomy overview</div>
+      </div>
+  </section>
+  <section id="concepts">
+    <h2>Concepts <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hierarchy">
+<li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/feature-class">http://www.opengis.net/spec/geosparql/1.0/conf/core/feature-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/sparql-protocol">http://www.opengis.net/spec/geosparql/1.0/conf/core/sparql-protocol</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/spatial-object-class">http://www.opengis.net/spec/geosparql/1.0/conf/core/spatial-object-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/feature-properties">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/feature-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-gml-literal">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-wkt-literal">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-class">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-properties">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal-empty">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-profile">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-profile</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/query-functions">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/srid-function">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/srid-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-axis-order">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-axis-order</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-default-srs">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-default-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-empty">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/bgp-rdfs-ent">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/bgp-rdfs-ent</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/eh-query-functions">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/eh-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/gml-geometry-types">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/gml-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/rcc8-query-functions">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/rcc8-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/relate-query-function">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/relate-query-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/sf-query-functions">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/sf-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/wkt-geometry-types">http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/wkt-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/eh-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/eh-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/rcc8-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/rcc8-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/sf-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/sf-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/eh-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/eh-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/rcc8-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/rcc8-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/sf-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/sf-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class">http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol">http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class">http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/feature-properties">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/feature-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-profile">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-profile</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/query-functions">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty">http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/bgp-rdfs-ent">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/bgp-rdfs-ent</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/gml-geometry-types">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/gml-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/wkt-geometry-types">http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/wkt-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/eh-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/eh-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/rcc8-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/rcc8-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/sf-query-rewrite">http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/sf-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/eh-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/eh-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations">http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-collection-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/geometry-collection-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/geometry-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/sparql-protocol">http://www.opengis.net/spec/geosparql/1.1/conf/core/sparql-protocol</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-measure-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-measure-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-collection-class">http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal-empty">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/feature-properties">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/feature-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-empty">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-srs">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-class">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-properties">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal-empty">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-profile">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-profile</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-empty">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-srs">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/query-functions">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/sa-functions">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/sa-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/srid-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/srid-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-axis-order">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-axis-order</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-default-srs">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-default-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-empty">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/bgp-rdfs-ent">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/bgp-rdfs-ent</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/eh-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/gml-geometry-types">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/gml-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/rcc8-query-functions">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/rcc8-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/relate-query-function">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/relate-query-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/sf-query-functions">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/sf-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/wkt-geometry-types">http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/wkt-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/eh-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/eh-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/rcc8-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/rcc8-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/sf-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/sf-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/eh-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/eh-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/rcc8-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/rcc8-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/sf-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/sf-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/feature-class">http://www.opengis.net/spec/geosparql/1.1/req/core/feature-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class">http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class">http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/sparql-protocol">http://www.opengis.net/spec/geosparql/1.1/req/core/sparql-protocol</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-measure-class">http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-measure-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-class">http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class">http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-class">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-class</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal-empty">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-profile">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-profile</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/srid-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/srid-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-axis-order">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-axis-order</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-default-srs">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-default-srs</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-empty">http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-empty</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/bgp-rdfs-ent">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/bgp-rdfs-ent</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/gml-geometry-types">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/gml-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/relate-query-function">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/relate-query-function</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/wkt-geometry-types">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/wkt-geometry-types</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite">http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/eh-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/eh-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/rcc8-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/rcc8-spatial-relations</a></li><li><a href="http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/sf-spatial-relations">http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/sf-spatial-relations</a></li><li><a href="http://www.w3.org/2004/02/skos/core#Concept">skos:Concept</a></li>
+</ul>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:FeatureClass">
+        <h3>GeoSPARQL 1.0 Conformance Class: Feature Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/core/feature-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SPARQLProtocol">
+        <h3>GeoSPARQL 1.0 Conformance Class: SPARQL Protocol<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/core/sparql-protocol</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF [SPARQL], the SPARQL Protocol [SPARQLPROT] and the SPARQL Query Results XML [SPARQLRESX] and JSON [SPARQLRESJ] Formats.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SpatialObjectClass">
+        <h3>GeoSPARQL 1.0 Conformance Class: Spatial Object Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/core/spatial-object-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:FeatureProperties">
+        <h3>GeoSPARQL 1.0 Conformance Class: Feature Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/feature-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:hasGeometry and geo:hasDefaultGeometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GeometryasGMLLiteral">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry asGML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GeometryasWKTLiteral">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry asWKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asWKT to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GeometryClass">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Geometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GeometryProperties">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GMLLiteral">
+        <h3>GeoSPARQL 1.0 Conformance Class: GML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:gmlLiterals shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GMLLiteralEmpty">
+        <h3>GeoSPARQL 1.0 Conformance Class: GML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:gmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GMLProfile">
+        <h3>GeoSPARQL 1.0 Conformance Class: GML Profile<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-profile</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall document supported GML profiles.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:QueryFunctions">
+        <h3>GeoSPARQL 1.0 Conformance Class: Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SRIDFunction">
+        <h3>GeoSPARQL 1.0 Conformance Class: SRID Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/srid-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:getSRID as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:WKTAxisOrder">
+        <h3>GeoSPARQL 1.0 Conformance Class: WKT Axis Order<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-axis-order</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Coordinate tuples within geo:wktLiterals shall be interpreted using the axis order defined in the spatial reference system used.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:WKTLiteral">
+        <h3>GeoSPARQL 1.0 Conformance Class: WKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:wktLiteral shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid geo:wktLiterals are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:WKTLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.0 Conformance Class: WKT Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-default-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The URI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">http://www.opengis.net/def/crs/OGC/1.3/CRS84</a> shall be assumed as the spatial reference system for geo:wktLiterals that do not specify an explicit spatial reference system URI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:WKTLiteralEmpty">
+        <h3>GeoSPARQL 1.0 Conformance Class: WKT Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty RDFS Literal of type geo:wktLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:BGPRDFSEntailment">
+        <h3>GeoSPARQL 1.0 Conformance Class: BGP RDFS Entailment<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/bgp-rdfs-ent</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:EHQueryFunctions">
+        <h3>GeoSPARQL 1.0 Conformance Class: EH Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/eh-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside, geof:ehContains as SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:GMLGeometryTypes">
+        <h3>GeoSPARQL 1.0 Conformance Class: GML Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/gml-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:RCC8QueryFunctions">
+        <h3>GeoSPARQL 1.0 Conformance Class: RCC8 Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/rcc8-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp, geof:rcc8ntppi as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:RelateQueryFunction">
+        <h3>GeoSPARQL 1.0 Conformance Class: Relate Query Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/relate-query-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:relate as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SFQueryFunctions">
+        <h3>GeoSPARQL 1.0 Conformance Class: SF Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/sf-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps as  SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:WKTGeometryTypes">
+        <h3>GeoSPARQL 1.0 Conformance Class: WKT Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/wkt-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:EHQueryRewrite">
+        <h3>GeoSPARQL 1.0 Conformance Class: EH Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/eh-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:RCC8QueryRewrite">
+        <h3>GeoSPARQL 1.0 Conformance Class: RCC8 Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/rcc8-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SFQueryRewrite">
+        <h3>GeoSPARQL 1.0 Conformance Class: SF Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/sf-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains, geor:sfOverlaps.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:EHSpatialRelations">
+        <h3>GeoSPARQL 1.0 Conformance Class: EH Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/eh-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:ehEquals, geo:ehDisjoint, geo:ehMeet, geo:ehOverlap, geo:ehCovers, geo:ehCoveredBy, geo:ehInside, geo:ehContains to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:RCC8SpatialRelations">
+        <h3>GeoSPARQL 1.0 Conformance Class: RCC8 Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/rcc8-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:rcc8eq, geo:rcc8dc, geo:rcc8ec, geo:rcc8po, geo:rcc8tppi, geo:rcc8tpp, geo:rcc8ntpp, geo:rcc8ntppi to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0ConformanceClass:SFSpatialRelations">
+        <h3>GeoSPARQL 1.0 Conformance Class: SF Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/sf-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:FeatureClass">
+        <h3>GeoSPARQL 1.0 Requirement: Feature Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Feature to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SPARQLProtocol">
+        <h3>GeoSPARQL 1.0 Requirement: SPARQL Protocol<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SpatialObjectClass">
+        <h3>GeoSPARQL 1.0 Requirement: Spatial Object Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialObject to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:FeatureProperties">
+        <h3>GeoSPARQL 1.0 Requirement: Feature Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/feature-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:hasGeometry and geo:hasDefaultGeometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GeometryasGMLLiteral">
+        <h3>GeoSPARQL 1.0 Requirement:  Geometry asGML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GeometryasWKTLiteral">
+        <h3>GeoSPARQL 1.0 Requirement: Geometry asWKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asWKT to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GeometryClass">
+        <h3>GeoSPARQL 1.0 Requirement: Geometry Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Geometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GeometryProperties">
+        <h3>GeoSPARQL 1.0 Requirement: Geometry Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GMLLiteral">
+        <h3>GeoSPARQL 1.0 Requirement: GML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:gmlLiterals shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GMLLiteralEmpty">
+        <h3>GeoSPARQL 1.0 Requirement: GML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:gmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GMLProfile">
+        <h3>GeoSPARQL 1.0 Requirement: GML Profile<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-profile</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall document supported GML profiles.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:QueryFunctions">
+        <h3>GeoSPARQL 1.0 Requirement: Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SRIDFunction">
+        <h3>GeoSPARQL 1.0 Requirement: SRID Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:getSRID as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:WKTAxisOrder">
+        <h3>GeoSPARQL 1.0 Requirement: WKT Axis Order<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Coordinate tuples within geo:wktLiterals shall be interpreted using the axis order defined in the spatial reference system used.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:WKTLiteral">
+        <h3>GeoSPARQL 1.0 Requirement: WKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:wktLiteral shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid geo:wktLiterals are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:WKTLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.0 Requirement: WKT Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The URI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">http://www.opengis.net/def/crs/OGC/1.3/CRS84</a> shall be assumed as the spatial reference system for geo:wktLiterals that do not specify an explicit spatial reference system URI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:WKTLiteralEmpty">
+        <h3>GeoSPARQL 1.0 Requirement: WKT Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty RDFS Literal of type geo:wktLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:BGPRDFSEntailment">
+        <h3>GeoSPARQL 1.0 Requirement: BGP RDFS Entailment<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/bgp-rdfs-ent</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:EHQueryFunctions">
+        <h3>GeoSPARQL 1.0 Requirement: EH Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside, geof:ehContains as SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:GMLGeometryTypes">
+        <h3>GeoSPARQL 1.0 Requirement: GML Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/gml-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:RCC8QueryFunctions">
+        <h3>GeoSPARQL 1.0 Requirement: RCC8 Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp, geof:rcc8ntppi as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:RelateQueryFunction">
+        <h3>GeoSPARQL 1.0 Requirement: Relate Query Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:relate as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SFQueryFunctions">
+        <h3>GeoSPARQL 1.0 Requirement: SF Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps as  SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:WKTGeometryTypes">
+        <h3>GeoSPARQL 1.0 Requirement: WKT Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/wkt-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:EHQueryRewrite">
+        <h3>GeoSPARQL 1.0 Requirement: EH Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/eh-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:RCC8QueryRewrite">
+        <h3>GeoSPARQL 1.0 Requirement: RCC8 Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/rcc8-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SFQueryRewrite">
+        <h3>GeoSPARQL 1.0 Requirement: SF Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/sf-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains, geor:sfOverlaps.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:EHSpatialRelations">
+        <h3>GeoSPARQL 1.0 Requirement: EH Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/eh-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:ehEquals, geo:ehDisjoint, geo:ehMeet, geo:ehOverlap, geo:ehCovers, geo:ehCoveredBy, geo:ehInside, geo:ehContains to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:RCC8SpatialRelations">
+        <h3>GeoSPARQL 1.0 Requirement: RCC8 Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:rcc8eq, geo:rcc8dc, geo:rcc8ec, geo:rcc8po, geo:rcc8tppi, geo:rcc8tpp, geo:rcc8ntpp, geo:rcc8ntppi to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.0Requirement:SFSpatialRelations">
+        <h3>GeoSPARQL 1.0 Requirement: SF Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:sfEquals, geo:sfDisjoint, geo:sfIntersects, geo:sfTouches, geo:sfCrosses, geo:sfWithin, geo:sfContains, geo:sfOverlaps to be used in SPARQL graph patterns</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:FeatureClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Feature Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:FeatureCollectionClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Feature Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:FeatureCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryCollectionClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/geometry-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:GeometryCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SPARQLProtocol">
+        <h3>GeoSPARQL 1.1 Conformance Class: SPARQL Protocol<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/sparql-protocol</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SpatialMeasureClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Spatial Measure Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-measure-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialMeasure to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SpatialObjectClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Spatial Object Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SpatialObjectCollectionClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Spatial Object Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialObjectCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:DGGSLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: DGGS Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:dggsLiteral shall consist of a DGGS geometry serialization formulated according to a specific DGGS literal type identified by a datatype specializing this generic datatype.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:DGGSLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Conformance Class: DGGS Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:dggsLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:FeatureProperties">
+        <h3>GeoSPARQL 1.1 Conformance Class: Feature Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/feature-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:hasGeometry, geo:hasDefaultGeometry, geo:hasLength, geo:hasArea, geo:hasVolume geo:hasCentroid, geo:hasBoundingBox and geo:hasSpatialResolution to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeoJSONLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: GeoJSON Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:geoJSONLiteral instances shall consist of the Geometry objects as defined in the GeoJSON specification [GEOJSON].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:KMLLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Conformance Class: KML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:kmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeoJSONLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Conformance Class: GeoJSON Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>RDFS Literals of type geo:geoJSONLiteral do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:asDGGSFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: asDGGS Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asDGGS, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryasDGGSLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry asDGGS Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asDGGS to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:asGeoJSONFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: asGeoJSON Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asGeoJSON, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryasGeoJSONLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry asGeoJSON Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGeoJSON to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:asGMLFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: asGML Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asGML, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryasGMLLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry asGML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:asKMLFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: asKML Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asKML, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryasKMLLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry asKML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asKML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:asWKTFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: asWKT Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asWKT, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryasWKTLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry asWKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asWKT to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryClass">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Geometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeometryProperties">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GMLLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: GML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:gmlLiterals shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GMLLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Conformance Class: GML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:gmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GMLProfile">
+        <h3>GeoSPARQL 1.1 Conformance Class: GML Profile<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/gml-profile</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall document supported GML profiles.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:KMLLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: KML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:kmlLiteral instances shall consist of the Geometry objects as defined in the KML specification [OGCKML].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GeoJSONLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Conformance Class: GeoJSON Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:geoJSONLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:KMLLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Conformance Class: KML Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84 shall be assumed as the SRS for geo:kmlLiterals that do not specify an explicit SRS IRI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:QueryFunctions">
+        <h3>GeoSPARQL 1.1 Conformance Class: Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection,  geof:union, geof:isEmpty, geof:isSimple, geof:area, geof:length, geof:numGeometries, geof:geometryN, geof:dimension, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, isEmpty, isSimple, area, length, , numGeometries, geometryN, dimension, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SpatialAggregateFunctions">
+        <h3>GeoSPARQL 1.1 Conformance Class: Spatial Aggregate Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/sa-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:concaveHull, geof:boundingCircle, geof:union2, geof:concatLines, geof:centroid, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY and geof:minZ as a SPARQL extension functions..</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SRIDFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: SRID Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/srid-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:getSRID as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:WKTAxisOrder">
+        <h3>GeoSPARQL 1.1 Conformance Class: WKT Axis Order<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-axis-order</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Coordinate tuples within geo:wktLiterals shall be interpreted using the axis order defined in the spatial reference system used.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:WKTLiteral">
+        <h3>GeoSPARQL 1.1 Conformance Class: WKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:wktLiteral shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid geo:wktLiterals are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:WKTLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Conformance Class: WKT Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-default-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The URI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">http://www.opengis.net/def/crs/OGC/1.3/CRS84</a> shall be assumed as the spatial reference system for geo:wktLiterals that do not specify an explicit spatial reference system URI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:WKTLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Conformance Class: WKT Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/wkt-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty RDFS Literal of type geo:wktLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:BGPRDFSEntailment">
+        <h3>GeoSPARQL 1.1 Conformance Class: BGP RDFS Entailment<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/bgp-rdfs-ent</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:EHQueryFunctions">
+        <h3>GeoSPARQL 1.1 Conformance Class: EH Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/eh-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside, geof:ehContains as SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:GMLGeometryTypes">
+        <h3>GeoSPARQL 1.1 Conformance Class: GML Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/gml-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:RCC8QueryFunctions">
+        <h3>GeoSPARQL 1.1 Conformance Class: RCC8 Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/rcc8-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp, geof:rcc8ntppi as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:RelateQueryFunction">
+        <h3>GeoSPARQL 1.1 Conformance Class: Relate Query Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/relate-query-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:relate as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SFQueryFunctions">
+        <h3>GeoSPARQL 1.1 Conformance Class: SF Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/sf-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps as  SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:WKTGeometryTypes">
+        <h3>GeoSPARQL 1.1 Conformance Class: WKT Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/wkt-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:EHQueryRewrite">
+        <h3>GeoSPARQL 1.1 Conformance Class: EH Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/eh-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:RCC8QueryRewrite">
+        <h3>GeoSPARQL 1.1 Conformance Class: RCC8 Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/rcc8-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SFQueryRewrite">
+        <h3>GeoSPARQL 1.1 Conformance Class: SF Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/sf-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains, geor:sfOverlaps.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:EHSpatialRelations">
+        <h3>GeoSPARQL 1.1 Conformance Class: EH Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/eh-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:ehEquals, geo:ehDisjoint, geo:ehMeet, geo:ehOverlap, geo:ehCovers, geo:ehCoveredBy, geo:ehInside, geo:ehContains to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:RCC8SpatialRelations">
+        <h3>GeoSPARQL 1.1 Conformance Class: RCC8 Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/rcc8-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:rcc8eq, geo:rcc8dc, geo:rcc8ec, geo:rcc8po, geo:rcc8tppi, geo:rcc8tpp, geo:rcc8ntpp, geo:rcc8ntppi to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1ConformanceClass:SFSpatialRelations">
+        <h3>GeoSPARQL 1.1 Conformance Class: SF Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/sf-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:FeatureClass">
+        <h3>GeoSPARQL 1.1 Requirement: Feature Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/feature-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Feature to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:FeatureCollectionClass">
+        <h3>GeoSPARQL 1.1 Requirement: Feature Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:FeatureCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryCollectionClass">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:GeometryCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SPARQLProtocol">
+        <h3>GeoSPARQL 1.1 Requirement: SPARQL Protocol<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/sparql-protocol</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support the SPARQL Query Language for RDF [SPARQL], the SPARQL Protocol [SPARQLPROT] and the SPARQL Query Results XML [SPARQLRESX] and JSON [SPARQLRESJ] Formats.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SpatialMeasureClass">
+        <h3>GeoSPARQL 1.1 Requirement: Spatial Measure Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-measure-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialMeasure to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SpatialObjectClass">
+        <h3>GeoSPARQL 1.1 Requirement: Spatial Object Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialObject to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SpatialObjectCollectionClass">
+        <h3>GeoSPARQL 1.1 Requirement: Spatial Object Collection Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:SpatialObjectCollection to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:DGGSLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: DGGS Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:dggsLiteral shall consist of a DGGS geometry serialization formulated according to a specific DGGS literal type identified by a datatype specializing this generic datatype.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:DGGSLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Requirement: DGGS Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:dggsLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:FeatureProperties">
+        <h3>GeoSPARQL 1.1 Requirement: Feature Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:hasGeometry, geo:hasDefaultGeometry, geo:hasLength, geo:hasArea, geo:hasVolume geo:hasCentroid, geo:hasBoundingBox and geo:hasSpatialResolution to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeoJSONLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: GeoJSON Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:geoJSONLiteral instances shall consist of the Geometry objects as defined in the GeoJSON specification [GEOJSON].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:KMLLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Requirement: KML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:kmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeoJSONLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Requirement: GeoJSON Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>RDFS Literals of type geo:geoJSONLiteral do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84).</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:asDGGSFunction">
+        <h3>GeoSPARQL 1.1 Requirement: asDGGS Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asDGGS, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryasDGGSLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry asDGGS Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asDGGS to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:asGeoJSONFunction">
+        <h3>GeoSPARQL 1.1 Requirement: asGeoJSON Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asGeoJSON, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryasGeoJSONLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry asGeoJSON Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGeoJSON to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:asGMLFunction">
+        <h3>GeoSPARQL 1.1 Requirement: asGML Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asGML, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryasGMLLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry asGML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asGML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:asKMLFunction">
+        <h3>GeoSPARQL 1.1 Requirement: asKML Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asKML, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryasKMLLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry asKML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asKML to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:asWKTFunction">
+        <h3>GeoSPARQL 1.1 Requirement: asWKT Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:asWKT, as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryasWKTLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry asWKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDF property geo:asWKT to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryClass">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry Class<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-class</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Geometry to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeometryProperties">
+        <h3>GeoSPARQL 1.1 Requirement: Geometry Properties<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GMLLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: GML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:gmlLiterals shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GMLLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Requirement: GML Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:gmlLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GMLProfile">
+        <h3>GeoSPARQL 1.1 Requirement: GML Profile<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/gml-profile</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall document supported GML profiles.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:KMLLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: KML Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All geo:kmlLiteral instances shall consist of the Geometry objects as defined in the KML specification [OGCKML].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GeoJSONLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Requirement: GeoJSON Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty geo:geoJSONLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:KMLLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Requirement: KML Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84 shall be assumed as the SRS for geo:kmlLiterals that do not specify an explicit SRS IRI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:QueryFunctions">
+        <h3>GeoSPARQL 1.1 Requirement: Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection,  geof:union, geof:isEmpty, geof:isSimple, geof:area, geof:length, geof:numGeometries, geof:geometryN, geof:dimension, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, isEmpty, isSimple, area, length, , numGeometries, geometryN, dimension, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SpatialAggregateFunctions">
+        <h3>GeoSPARQL 1.1 Requirement: Spatial Aggregate Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:concaveHull, geof:boundingCircle, geof:union2, geof:concatLines, geof:centroid, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY and geof:minZ as a SPARQL extension functions..</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SRIDFunction">
+        <h3>GeoSPARQL 1.1 Requirement: SRID Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/srid-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:getSRID as a SPARQL extension function.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:WKTAxisOrder">
+        <h3>GeoSPARQL 1.1 Requirement: WKT Axis Order<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-axis-order</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Coordinate tuples within geo:wktLiterals shall be interpreted using the axis order defined in the spatial reference system used.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:WKTLiteral">
+        <h3>GeoSPARQL 1.1 Requirement: WKT Literal<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>All RDFS Literals of type geo:wktLiteral shall consist of an optional URI identifying the coordinate reference system followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid geo:wktLiterals are formed by concatenating a valid, absolute URI as defined in [RFC 2396], one or more spaces U+0020 character) as a separator, and a WKT string as defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:WKTLiteralDefaultSRS">
+        <h3>GeoSPARQL 1.1 Requirement: WKT Literal Default SRS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-default-srs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>The URI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">http://www.opengis.net/def/crs/OGC/1.3/CRS84</a> shall be assumed as the spatial reference system for geo:wktLiterals that do not specify an explicit spatial reference system URI.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:WKTLiteralEmpty">
+        <h3>GeoSPARQL 1.1 Requirement: WKT Literal Empty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/wkt-literal-empty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>An empty RDFS Literal of type geo:wktLiteral shall be interpreted as an empty geometry.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:BGPRDFSEntailment">
+        <h3>GeoSPARQL 1.1 Requirement: BGP RDFS Entailment<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/bgp-rdfs-ent</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime [W3C SPARQL Entailment].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="eh-query-functions">
+        <h3>GeoSPARQL 1.0 Requirement: EH Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside, geof:ehContains as SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:GMLGeometryTypes">
+        <h3>GeoSPARQL 1.1 Requirement: GML Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/gml-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML [OGC 07-036].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:RCC8QueryFunctions">
+        <h3>GeoSPARQL 1.1 Requirement: RCC8 Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp, geof:rcc8ntppi as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:RelateQueryFunction">
+        <h3>GeoSPARQL 1.1 Requirement: Relate Query Function<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/relate-query-function</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:relate as a SPARQL extension function, consistent with the relate operator defined in Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SFQueryFunctions">
+        <h3>GeoSPARQL 1.1 Requirement: SF Query Functions<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps as  SPARQL extension functions, consistent with their corresponding DE9IM intersection patterns, as defined by Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:WKTGeometryTypes">
+        <h3>GeoSPARQL 1.1 Requirement: WKT Geometry Types<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/wkt-geometry-types</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features [ISO 19125-1].</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:EHQueryRewrite">
+        <h3>GeoSPARQL 1.1 Requirement: EH Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:RCC8QueryRewrite">
+        <h3>GeoSPARQL 1.1 Requirement: RCC8 Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SFQueryRewrite">
+        <h3>GeoSPARQL 1.1 Requirement: SF Query Rewrite<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime [W3C SPARQL Entailment] for the RIF rules [W3C RIF Core] geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains, geor:sfOverlaps.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:EHSpatialRelations">
+        <h3>GeoSPARQL 1.1 Requirement: EH Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/eh-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:ehEquals, geo:ehDisjoint, geo:ehMeet, geo:ehOverlap, geo:ehCovers, geo:ehCoveredBy, geo:ehInside, geo:ehContains to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:RCC8SpatialRelations">
+        <h3>GeoSPARQL 1.1 Requirement: RCC8 Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/rcc8-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the properties geo:rcc8eq, geo:rcc8dc, geo:rcc8ec, geo:rcc8po, geo:rcc8tppi, geo:rcc8tpp, geo:rcc8ntpp, geo:rcc8ntppi to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="GeoSPARQL1.1Requirement:SFSpatialRelations">
+        <h3>GeoSPARQL 1.1 Requirement: SF Spatial Relations<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/sf-spatial-relations</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Implementations shall allow the RDFS class geo:Feature to be used in SPARQL graph patterns.</p><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="Concept">
+        <h3>Concept<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.w3.org/2004/02/skos/core#Concept</code></td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>default (:)</dt>
+        <dd><code>http://www.opengis.net/def/geosparql/reqs</code></dd>
+        <dt>dcterms</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>geo</dt>
+        <dd><code>http://www.opengis.net/ont/geosparql#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov-o/</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+
+  <section id="legend">
+    <h2>Legend</h2>
+    <table class="entity">
+      <tr><td><sup class="sup-col" title="Collections">col</sup></td><td>Collections</td></tr>
+      <tr><td><sup class="sup-con" title="Concepts">con</sup></td><td>Concepts</td></tr>
+    </table>
+  </section>
+</body>
+</html>
