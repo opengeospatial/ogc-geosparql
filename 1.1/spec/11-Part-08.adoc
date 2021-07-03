@@ -26,6 +26,8 @@ version:: Specifies the version of the serialization format used.
 
 A single root geometry class is defined: http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to the UML class `GM_Object` defined in <<ISO19107>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
 
+One container class is defined: http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`]. 
+
 ==== Class: geo:Geometry
 
 The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to `GM_Object` <<ISO19107>> and is defined by the following:
@@ -44,6 +46,29 @@ geo:Geometry a rdfs:Class, owl:Class ;
 |===
 | *Req 8* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] to be used in SPARQL graph patterns.
 |`/req/geometry-extension/geometry-class`
+|===
+
+==== Class: geo:GeometryCollection
+
+The class http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] is defined by the following:
+
+```turtle
+geo:GeometryCollection
+  rdf:type owl:Class ;
+  rdfs:subClassOf geo:SpatialObjectCollection ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom geo:Geometry ;
+      owl:onProperty rdfs:member ;
+    ] ;
+  skos:definition "The class Geometry Collection represents any collection of Geometry entities. " ;
+  skos:prefLabel "Collection of geometry entities" ;
+.
+```
+
+|===
+| *Req 52* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] to be used in SPARQL graph patterns.
+|`/req/core/geometry-collection-class`
 |===
 
 === Standard Properties for geo:Geometry
@@ -575,7 +600,7 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 |===
 | *Req 31* Implementations shall support http://www.opengis.net/def/function/geosparql/distance[`geof:distance`], http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`], http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`], http://www.opengis.net/def/function/geosparql/union[`geof:union`], 
 http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`], http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`], 
-http://www.opengis.net/def/function/geosparql/area[`geof:area`],http://www.opengis.net/def/function/geosparql/length[`geof:length`],
+http://www.opengis.net/def/function/geosparql/area[`geof:area`], http://www.opengis.net/def/function/geosparql/length[`geof:length`],
 http://www.opengis.net/def/function/geosparql/numGeometries[`geof:numGeometries`],
 http://www.opengis.net/def/function/geosparql/geometryN[`geof:geometryN`],
 http://www.opengis.net/def/function/geosparql/dimension[`geof:dimension`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `isEmpty`, `isSimple`, `area`, `length`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
@@ -732,6 +757,11 @@ geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
 
+|===
+| *Req 32* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] as a SPARQL extension function.
+|`/req/geometry-extension/srid-function`
+|===
+
 ==== Function: geof:getSRID
 
 ```
@@ -740,10 +770,11 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 
 Returns the spatial reference system IRI for `geom`.
 
+
 |===
-| *Req 32* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`], http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
+| *Req 33* Implementations shall support http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
 http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] and http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] as a SPARQL extension functions.
-|`/req/geometry-extension/srid-function`
+|`/req/geometry-extension/sa-functions`
 |===
 
 ==== Function: geof:maxX

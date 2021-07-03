@@ -39,7 +39,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path [ 
 		sh:alternativePath (
-			geo:hasSerialization
+			geo:hasSerialization # can a geo:hasSerialization be asserted? If not, it would make sense to only require one property of the set of subproperties of geo:hasSerialization
 			geo:asGML
 			geo:asWKT
 			geo:asGeoJSON
@@ -48,7 +48,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		) 
 	] ;
 	sh:minCount 1 ;
-	sh:message "Each node with an incoming geo:hasGeometry should have at least one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
+	sh:maxCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry should have exactly one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
 	skos:example 
 		"""
 		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
@@ -345,7 +346,6 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 # Shape 10-11-12-13-14
 #################################################
 # each metadata property on geo:Geometry can exist only once
-# can be automatically derived from ontology if owl:FunctionalProperty is used or OWL restriction on geo:Geometry with owl:cardinality = 1 => this is not the case
 
 <many-coordinateDimension-one>
 	a sh:NodeShape ;
@@ -483,12 +483,12 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 #################################################
 # Shape 16-17-18-19-20
 #################################################
-# regex to check if content of WKT/GeoJSON/KML/DGGS/GML literals complies with the basic patterns of such geometries, if possible (check start / end to find e.g. copy/paste errors with GeoSPARQL properties and datatypes, not to check if the content of a literal is fully compliant to the geometry format specification)
+# regex to check if content of WKT/GeoJSON/KML/DGGS/GML literals complies with the basic patterns of such geometries, if possible (check start and/or end to find e.g. copy/paste errors with GeoSPARQL properties and datatypes, not to check if the content of a literal is fully compliant to the geometry format specification)
 
 #################################################
 # Shape 21
 #################################################
-# each node that is asserted to be of class geo:Feature should have at least one outgoing geo:hasGeometry, i.e. a geo:Feature node should not exist without connected geo:Geometry node
+# each node that is asserted to be of class geo:Feature should have at least one outgoing geo:hasGeometry, i.e. a geo:Feature node should not exist without connected geo:Geometry node through geo:hasGeometry
 # note: if shapes 32 to 35 b are ratified, this shape will need to be executed after reasoning
 
 #################################################
@@ -500,7 +500,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 #################################################
 # Shape 25-26-27-28-29
 #################################################
-# a literal with datatype geo:wktLiteral must have an incoming geo:asWKT relation (unsure if this can be defined in SHACL)
+# a literal with datatype geo:wktLiteral must have an incoming geo:asWKT relation (unsure if this can be defined in regular SHACL. Should be possible in SPARQL)
 
 #################################################
 # Shape 30
@@ -517,6 +517,6 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 #################################################
 # a) each node that is asserted to be of class geo:Geometry should have at least one outgoing relation that is either geo:hasSerialization or a specialisation of it AND exactly one incoming geo:hasGeometry relation
 # OR
-# b) classes that can be inferred from relations should not be asserted in datasets to avoid redundant information (geo:Geometry, geo:Feature, geo:SpatialMeasure, geo:SpatialObject) 
+# b) classes that can be inferred from relations through rdfs:domain/range should not be asserted in datasets to avoid redundant information (geo:Geometry, geo:Feature, geo:SpatialMeasure, geo:SpatialObject) 
 
 
