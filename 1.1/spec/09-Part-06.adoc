@@ -138,7 +138,8 @@ Properties are defined for associating geometries with features.
 
 |===
 | *Req 9* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`], 
-http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`], http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`], http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] and http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] to be used in SPARQL graph patterns.
+http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`], http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetricLength`], http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricArea`], http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`],
+http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetricVolume`], http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] and http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`]  to be used in SPARQL graph patterns.
 |`/req/geometry-extension/feature-properties`
 |===
 
@@ -241,6 +242,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
     }
 ```
 
+==== Property: geo:hasMetricLength
+The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetricLength`] is similar to http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], but is easier to specify and use because the unit is always meter (the standard length unit of the International System of Units).
+
+```turtle
+geo:hasMetricLength a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has length in meters"@en ;
+    skos:definition "The length of a Feature in meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
+```
+
 ==== Property: geo:hasArea
 
 The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
@@ -265,6 +278,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
             
         FILTER (?d != 2)
     }
+```
+
+==== Property: geo:hasMetricArea
+The property http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricArea`] is similar to http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], but is easier to specify and use because the unit is always square meter (the standard area unit of the International System of Units).
+
+```turtle
+geo:hasMetricArea a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has area in square meters"@en ;
+    skos:definition "The area of a Feature in square meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
 ```
 
 ==== Property: geo:hasVolume
@@ -292,6 +317,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
             
         FILTER (?d != 3)
     }
+```
+
+==== Property: geo:hasMetricVolume
+The property http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetricVolume`] is similar to http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`], but is easier to specify and use because the unit is always cubic meter (the standard volume unit of the International System of Units).
+
+```turtle
+geo:hasMetricVolume a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has volume in cubic meters"@en ;
+    skos:definition "The volume of a Feature in cubic meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
 ```
 
 === Standard Properties for geo:SpatialMeasure
