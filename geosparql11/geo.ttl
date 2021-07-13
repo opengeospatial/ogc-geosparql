@@ -292,7 +292,16 @@
 	rdfs:domain :Geometry ;
 	rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties> ;
 	skos:definition """The spatial resolution of a Geometry."""@en ;
+	skos:note """Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinguishable distance between spatially adjacent coordinates."""@en;
 	skos:prefLabel "has spatial resolution"@en ;
+.
+
+:hasSpatialAccuracy a owl:ObjectProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The positional accuracy of the coordinates of a Geometry."""@en ;
+	skos:note """Spatial accuracy is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension)."""@en;
+	skos:prefLabel "has spatial accuracy"@en ;
 .
 
 :hasVolume a owl:ObjectProperty ;
@@ -575,6 +584,53 @@
 	rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties> ;
 	skos:definition """The number of measurements or axes needed to describe the spatial position of this geometry in a coordinate system."""@en ;
 	skos:prefLabel "spatial dimension"@en ;
+.
+
+:hasMetricSpatialResolution
+	a owl:DatatypeProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:range xsd:double ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The spatial resolution of a Geometry in meters."""@en ;
+	skos:note """Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinguishable distance between spatially adjacent coordinates."""@en;
+	skos:prefLabel "has spatial resolution in meters"@en ;
+.
+
+:hasMetricSpatialAccuracy
+	a owl:DatatypeProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:range xsd:double ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The positional accuracy of the coordinates of a Geometry in meters."""@en ;
+	skos:note """Spatial accuracy is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension)."""@en;
+	skos:prefLabel "has spatial accuracy in meters"@en ;
+.
+
+:hasMetricLength
+	a owl:DatatypeProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range xsd:double ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The length of a Feature in meters."""@en ;
+	skos:prefLabel "has length in meters"@en ;
+.
+
+:hasMetricArea
+	a owl:DatatypeProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range xsd:double ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The area of a Feature in square meters."""@en ;
+	skos:prefLabel "has area in square meters"@en ;
+.
+
+:hasMetricVolume
+	a owl:DatatypeProperty ;
+	rdfs:domain :Feature ;
+	rdfs:range xsd:double ;
+	rdfs:isDefinedBy <> , geosparql-spec: ;
+	skos:definition """The volume of a Feature in cubic meters."""@en ;
+	skos:prefLabel "has volume in cubic meters"@en ;
 .
 
 # #################################################################

@@ -1090,11 +1090,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasArea</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.4.6</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.4.7</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasVolume</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.7</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.9</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Serializations</em></p></td>
@@ -1957,7 +1957,8 @@ Properties for Spatial Measure may need to indicate a use a unit of measure. Whe
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 9</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a>,
-<a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> to be used in SPARQL graph patterns.</p></td>
+<a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasMetricLength"><code>geo:hasMetricLength</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasMetricArea"><code>geo:hasMetricArea</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#hasMetricVolume"><code>geo:hasMetricVolume</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a>  to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/feature-properties</code></p></td>
@@ -2095,7 +2096,23 @@ A consistency check can be applied to geometries indicating both this property a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>6.4.6. Property: geo:hasArea</h4>
+<h4 id="_property_geohasmetriclength"><a class="anchor" href="#_property_geohasmetriclength"></a>6.4.6. Property: geo:hasMetricLength</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricLength"><code>geo:hasMetricLength</code></a> is similar to <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a>, but is easier to specify and use because the unit is always meter (the standard length unit of the International System of Units).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricLength a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has length in meters"@en ;
+    skos:definition "The length of a Feature in meters."@en ;
+    rdfs:domain geo:Feature ;
+    rdfs:range xsd:double .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>6.4.7. Property: geo:hasArea</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a> is used to indicate the area of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -2135,7 +2152,23 @@ A consistency check can be applied to geometries indicating both this property a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>6.4.7. Property: geo:hasVolume</h4>
+<h4 id="_property_geohasmetricarea"><a class="anchor" href="#_property_geohasmetricarea"></a>6.4.8. Property: geo:hasMetricArea</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricArea"><code>geo:hasMetricArea</code></a> is similar to <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a>, but is easier to specify and use because the unit is always square meter (the standard area unit of the International System of Units).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricArea a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has area in square meters"@en ;
+    skos:definition "The area of a Feature in square meters."@en ;
+    rdfs:domain geo:Feature ;
+    rdfs:range xsd:double .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>6.4.9. Property: geo:hasVolume</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> is used to indicate the volume of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
 </div>
@@ -2172,6 +2205,22 @@ A consistency check can be applied to geometries indicating both this property a
 
         FILTER (?d != 3)
     }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasmetricvolume"><a class="anchor" href="#_property_geohasmetricvolume"></a>6.4.10. Property: geo:hasMetricVolume</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricVolume"><code>geo:hasMetricVolume</code></a> is similar to <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a>, but is easier to specify and use because the unit is always cubic meter (the standard volume unit of the International System of Units).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricVolume a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has volume in cubic meters"@en ;
+    skos:definition "The volume of a Feature in cubic meters."@en ;
+    rdfs:domain geo:Feature ;
+    rdfs:range xsd:double .</code></pre>
 </div>
 </div>
 </div>
@@ -2691,7 +2740,10 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a>, <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a>, <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 10</strong> Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a>, <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#geo:hasSpatialResolution"><code>hasSpatialResolution</code></a>, <a href="http://www.opengis.net/ont/geosparql#geo:hasMetricSpatialResolution"><code>hasMetricSpatialResolution</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#geo:hasSpatialAccuracy"><code>hasSpatialAccuracy</code></a>, <a href="http://www.opengis.net/ont/geosparql#geo:hasMetricSpatialAccuracy"><code>hasMetricSpatialAccuracy</code></a>,
+<a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a>, <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> and <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>/req/geometry-extension/geometry-properties</code></p></td>
@@ -2754,7 +2806,10 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 <div class="sect3">
 <h4 id="_property_geohasspatialresolution"><a class="anchor" href="#_property_geohasspatialresolution"></a>8.3.4. Property: geo:hasSpatialResolution</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> is used to indicate resolution of the elements within literal representations of a geometry. Since this property is defined for a <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a>, all literal representations of that geometry must have the same spatial resolution.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> is used to indicate spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinghuishable distance between adjacent coordinate sets. Therefore this property is not applicable to a point Geometry, because it consists of a single coordinate set.</p>
+</div>
+<div class="paragraph">
+<p>Since this property is defined for a <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a>, all literal representations of that Geometry instance must have the same spatial resolution.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2767,7 +2822,54 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.3.5. Property: geo:isEmpty</h4>
+<h4 id="_property_geohasmetricspatialresolution"><a class="anchor" href="#_property_geohasmetricspatialresolution"></a>8.3.5. Property: geo:hasMetricSpatialResolution</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution"><code>geo:hasMetricSpatialResolution</code></a> is similar to <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a>, but it is easier to specify and use because the unit of resolution distance is always meter (the standard distance unit of the International System of Units).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricSpatialResolution a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has spatial resolution in meters"@en ;
+    skos:definition "The spatial resolution of a Geometry in meters."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:double .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasspatialaccuracy"><a class="anchor" href="#_property_geohasspatialaccuracy"></a>8.3.6. Property: geo:hasSpatialAccuracy</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialAccuracy"><code>geo:hasSpatialAccuracy</code></a> is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasSpatialAccuracy a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has spatial accuracy"@en ;
+    skos:definition "The positional accuracy of the coordinates of a Geometry."@en ;
+    rdfs:domain geo:Geometry .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasmetricspatialaccuracy"><a class="anchor" href="#_property_geohasmetricspatialaccuracy"></a>8.3.7. Property: geo:hasMetricSpatialAccuracy</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricSpatialAccuracy"><code>geo:hasMetricSpatialAccuracy</code></a> is similar to <a href="http://www.opengis.net/ont/geosparql#hasSpatialAccuracy"><code>geo:hasSpatialaccuracy</code></a>, but it is easier to specify and use because the unit of distance is always meter (the standard distance unit of the International System of Units).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricSpatialAccuracy a rdf:Property, owl:ObjectProperty;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has spatial accuracy in meters"@en ;
+    skos:definition "The positional accuracy of the coordinates of a Geometry in meters."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:double .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.3.8. Property: geo:isEmpty</h4>
 <div class="paragraph">
 <p>The <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a> Boolean will be set to <code>true</code> only if the geometry contains no information.</p>
 </div>
@@ -2785,7 +2887,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.3.6. Property: geo:isSimple</h4>
+<h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.3.9. Property: geo:isSimple</h4>
 <div class="paragraph">
 <p>The <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> Boolean will be set to <code>true</code>, only if the geometry contains no self-intersections, with the possible exception of its boundary.</p>
 </div>
@@ -2802,7 +2904,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.3.7. Property: geo:hasSerialization</h4>
+<h4 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.3.10. Property: geo:hasSerialization</h4>
 <div class="paragraph">
 <p>The <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> property is used to connect a geometry with its text-based serialization (e.g., its WKT serialization).</p>
 </div>
@@ -6182,7 +6284,24 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_4_feature_with_two_different_geometry_instances_indicated"><a class="anchor" href="#_b_1_1_2_4_feature_with_two_different_geometry_instances_indicated"></a>B 1.1.2.4 <code>Feature</code> with two different <code>Geometry</code> instances indicated</h5>
+<h5 id="_b_1_1_2_4_feature_with_metric_area"><a class="anchor" href="#_b_1_1_2_4_feature_with_metric_area"></a>B 1.1.2.4 <code>Feature</code> with metric area</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+        geo:hasGeometry [
+            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasMetricArea "8.7E4"^^xsd:double;
+.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example encodes the same data as the example above (B 1.1.2.3), but it uses the simpler metric expression of area.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"><a class="anchor" href="#_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"></a>B 1.1.2.5 <code>Feature</code> with two different <code>Geometry</code> instances indicated</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
@@ -6207,7 +6326,7 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_5_feature_with_two_different_geometry_instances_with_different_property_values"><a class="anchor" href="#_b_1_1_2_5_feature_with_two_different_geometry_instances_with_different_property_values"></a>B 1.1.2.5 <code>Feature</code> with two different <code>Geometry</code> instances with different property values</h5>
+<h5 id="_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"><a class="anchor" href="#_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"></a>B 1.1.2.6 <code>Feature</code> with two different <code>Geometry</code> instances with different property values</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
@@ -6239,7 +6358,28 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_6_feature_with_two_different_types_of_geometry_instances"><a class="anchor" href="#_b_1_1_2_6_feature_with_two_different_types_of_geometry_instances"></a>B 1.1.2.6 <code>Feature</code> with two different types of <code>Geometry</code> instances</h5>
+<h5 id="_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"><a class="anchor" href="#_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"></a>B 1.1.2.7 <code>Feature</code> with two different <code>Geometry</code> instances using metric spatial resolution</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry [
+        geo:hasMetricSpatialResolution "100"^^xsd:double ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    ] ,
+    [
+        geo:hasMetricSpatialResolution "5"^^xsd:double ;
+        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+    ] ;
+.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example encodes the same data as the example above (B 1.1.2.7), but uses the simpler metric property to indicate spatial resolution.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"><a class="anchor" href="#_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"></a>B 1.1.2.8 <code>Feature</code> with two different types of <code>Geometry</code> instances</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
@@ -6414,11 +6554,11 @@ eg:x
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasArea</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.4.6</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.4.7</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasVolume</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.7</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.4.9</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Serializations</em></p></td>
@@ -7828,7 +7968,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-13 23:36:21 UTC
+Last updated 2021-07-13 23:52:55 UTC
 </div>
 </div>
 </body>
