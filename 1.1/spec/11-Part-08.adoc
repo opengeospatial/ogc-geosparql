@@ -602,7 +602,7 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`], http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`], 
 http://www.opengis.net/def/function/geosparql/area[`geof:area`], http://www.opengis.net/def/function/geosparql/length[`geof:length`],
 http://www.opengis.net/def/function/geosparql/numGeometries[`geof:numGeometries`],
-http://www.opengis.net/def/function/geosparql/geometryN[`geof:geometryN`],
+http://www.opengis.net/def/function/geosparql/geometryN[`geof:geometryN`], http://www.opengis.net/def/function/geosparql/transform[`geof:transform],
 http://www.opengis.net/def/function/geosparql/dimension[`geof:dimension`], http://www.opengis.net/def/function/geosparql/difference[`geof:difference`], http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`], http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`], http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] as SPARQL extension functions, consistent with the definitions of their corresponding functions (`distance`, `buffer`, `convexHull`, `intersection`, `isEmpty`, `isSimple`, `area`, `length`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) in Simple Features <<ISO19125-1>> and other attached definitions respectively.
 |`/req/geometry-extension/query-functions`
 |===
@@ -703,6 +703,16 @@ Returns the number of geometries of `geom1`.
 geof:geometryN (geom1: ogc:geomLiteral): xsd:integer
 ```
 Returns the nth geometry of `geom1` if it is a GeometryCollection .
+
+==== Function: geof:transform
+
+```
+geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
+```
+
+http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+
+NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
 
 ==== Function: geof:intersection
 
@@ -824,16 +834,6 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 ```
 
 The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom`.
-
-==== Function: geof:transform
-
-```
-geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
-```
-
-http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
-
-NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
 
 ==== Function: geof:boundingCircle
 ```
