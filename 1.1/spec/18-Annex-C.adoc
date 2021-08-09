@@ -8,10 +8,23 @@ This annex presents best practices for the creation of Linked Data backends to O
 ==== C.1 Accessing geospatial features in a SPARQL endpoint
 
 Geospatial _features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of http://www.opengis.net/ont/geosparql#Feature[geo:Feature] or of subclasses of it.
-They may include one or more http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relations and further properties related to the feature and may be grouped into http://www.opengis.net/ont/geosparql#geo:FeatureCollection[geo:FeatureCollection] instances where `geo:FeatureCollection` is a new class in GeoSPARQL 1.1 specifically for the description of collections of `geo:Feature` instances.
+They may include one or more http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relations and further properties related to the feature and may be grouped into http://www.opengis.net/ont/geosparql#FeatureCollection[geo:FeatureCollection] instances where `geo:FeatureCollection` is a new class in GeoSPARQL 1.1 specifically for the description of collections of `geo:Feature` instances.
+
+The following example SPARQL query retrieves all feature collections of a given SPARQL endpoint. A third-party webservice may convert the query results to one or many geoformat serializations.  
+
+```turtle
+SELECT ?fcollection ?item ?rel ?val ?geo 
+WHERE {
+  ?fcollection rdf:type geo:FeatureCollection .
+  ?item dcterms:isPartOf ?fcollection . 
+  ?item ?rel ?val .
+  OPTIONAL {?item geo:hasGeometry/geo:hasSerialization ?geom}
+}
+```
+
 Similarly, for SQL backends of OGC webservices, geospatial _features_ are made explicit by defining an SQL query retrieving a set of triples which may be converted to a geodata format.
 
-The following example SPARQL retrieves a collection of Feature instances (each `item`) and, optionally, their serialized geometries (`geom`):
+The following example SPARQL query retrieves a collection of Feature instances (each `item`) and, optionally, their serialized geometries (`geom`):
 
 ```turtle
 SELECT ?item ?rel ?val ?geo 
