@@ -6,7 +6,7 @@ This clause establishes the *core* requirements class, with IRI `/req/core`, whi
 
 |===
 | *Req 1* Implementations shall support the SPARQL Query Language for RDF <<SPARQL>>, the SPARQL Protocol <<SPARQLPROT>> and the SPARQL Query Results XML <<SPARQLRESX>> and JSON <<SPARQLRESJ>> Formats.
-| `/req/core/sparql-protocol`
+| http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol[`http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol`]
 |===
 
 === Classes
@@ -30,7 +30,7 @@ geo:SpatialObject a rdfs:Class, owl:Class ;
 
 |===
 | *Req 2* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] to be used in SPARQL graph patterns.
-|`/req/core/spatial-object-class`
+|http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class[`http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class`]
 |===
 
 *Example:*
@@ -58,7 +58,7 @@ geo:Feature a rdfs:Class, owl:Class ;
 
 |===
 | *Req 3* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] to be used in SPARQL graph patterns.
-|`/req/core/feature-class`
+|http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class[`http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class`]
 |===
 
 ==== Class: geo:SpatialMeasure
@@ -77,7 +77,7 @@ NOTE: Properties for Spatial Measure may need to indicate a use a unit of measur
 
 |===
 | *Req 4* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`] to be used in SPARQL graph patterns.
-|`/req/core/spatial-measure-class`
+|http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-measure-class[`http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-measure-class`]
 |===
 
 ==== Class: geo:SpatialObjectCollection
@@ -101,8 +101,8 @@ geo:SpatialObjectCollection
 ```
 
 |===
-| *Req 50* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:SpatialObjectCollection`] to be used in SPARQL graph patterns.
-|`/req/core/spatial-object-collection-class`
+| *Req 5* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:SpatialObjectCollection`] to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class[`http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class`]
 |===
 
 ==== Class: geo:FeatureCollection
@@ -124,8 +124,8 @@ geo:FeatureCollection
 ```
 
 |===
-| *Req 51* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`] to be used in SPARQL graph patterns.
-|`/req/core/feature-collection-class`
+| *Req 6* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`] to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class[`http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class`]
 |===
 
 === Standard Properties for geo:SpatialObject
@@ -137,9 +137,9 @@ _To be defined_
 Properties are defined for associating geometries with features.
 
 |===
-| *Req 9* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`], 
+| *Req 7* Implementations shall allow the properties http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`], 
 http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`], http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`], http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] and http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] to be used in SPARQL graph patterns.
-|`/req/geometry-extension/feature-properties`
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties`]
 |===
 
 ==== Property: geo:hasGeometry
@@ -241,6 +241,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
     }
 ```
 
+==== Property: geo:hasMetricLength
+The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetricLength`] is similar to http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`], but is easier to specify and use because the unit is always meter (the standard length unit of the International System of Units).
+
+```turtle
+geo:hasMetricLength a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has length in meters"@en ;
+    skos:definition "The length of a Feature in meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
+```
+
 ==== Property: geo:hasArea
 
 The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
@@ -265,6 +277,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
             
         FILTER (?d != 2)
     }
+```
+
+==== Property: geo:hasMetricArea
+The property http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricArea`] is similar to http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`], but is easier to specify and use because the unit is always square meter (the standard area unit of the International System of Units).
+
+```turtle
+geo:hasMetricArea a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has area in square meters"@en ;
+    skos:definition "The area of a Feature in square meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
 ```
 
 ==== Property: geo:hasVolume
@@ -292,6 +316,18 @@ TIP: A consistency check can be applied to geometries indicating both this prope
             
         FILTER (?d != 3)
     }
+```
+
+==== Property: geo:hasMetricVolume
+The property http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetricVolume`] is similar to http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`], but is easier to specify and use because the unit is always cubic meter (the standard volume unit of the International System of Units).
+
+```turtle
+geo:hasMetricVolume a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "has volume in cubic meters"@en ;
+    skos:definition "The volume of a Feature in cubic meters."@en ; 
+    rdfs:domain geo:Feature ; 
+    rdfs:range xsd:double .
 ```
 
 === Standard Properties for geo:SpatialMeasure
