@@ -5,10 +5,10 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@base <http://www.opengis.net/def/geosparql/validation/> .
+@base <http://www.opengis.net/def/geosparql/validator/> .
 
 
-<http://www.opengis.net/def/geosparql/validation>
+<http://www.opengis.net/def/geosparql/validator>
 	a owl:Ontology ;
   	dcterms:title "GeoSPARQL RDF Shapes Validator"@en ;
 	dcterms:description """This is a [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) file that specifies constraints for RDF data. It can be used to test the conformance of data to the GeoSPARQL standard.
@@ -21,9 +21,9 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
 	dcterms:created "2021-06-13"^^xsd:date ;
-	dcterms:modified "2021-07-25"^^xsd:date ;
+	dcterms:modified "2021-08-12"^^xsd:date ;
 	owl:versionInfo "OGC GeoSPARQL 1.1" ;
-	owl:versionIRI <http://www.opengis.net/def/geosparql/validation/1.1> ;  # same as Spec version for now
+	owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;
 .
 
 #################################################
@@ -60,7 +60,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	sh:minCount 1 ;
 	sh:maxCount 1 ;
-	sh:message "Each node with an incoming geo:hasGeometry or a specialization of it should have exactly one outgoing relation that is either geo:hasSerialization or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, should have exactly one outgoing relation that is either geo:hasSerialization, or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
 	skos:example 
 		"""
 		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
@@ -71,7 +71,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			]
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: incoming into the Geometry Blank Node is geo:hasGeometry, there is no outgoing geo:hasSerialization or a specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -79,7 +79,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x>
 			geo:hasGeometry [] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# A valid example: incoming into the Geometry Blank Node is geo:hasDefaultGeometry, outgoing is geo:asWKT
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -89,7 +89,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			]
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: incoming into the Geometry Blank Node is geo:hasDefaultGeometry, there is no outgoing geo:hasSerialization or a specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -97,7 +97,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x>
 			geo:hasDefaultGeometry [] ;
 		.
-		"""^^xsd:string ;
+		""" ;
 .
 
 #################################################
@@ -126,7 +126,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		)
 	] ;
 	sh:minCount 1 ;
-	sh:message "Each node with one or more outgoing relations that are either geo:hasSerialization or a specialization of it should have at least one incoming geo:hasGeometry relation or a specialization of it."@en ;
+	sh:message "Each node with one or more outgoing relations that are either geo:hasSerialization, or a specialization of it, should have at least one incoming geo:hasGeometry relation or a specialization of it."@en ;
 	skos:example 
 		"""
 		# A valid example: outgoing from the Geometry Blank Node is geo:asWKT, incoming is geo:hasGeometry
@@ -137,7 +137,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# A valid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there are two incoming geo:hasGeometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -145,13 +145,13 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-z> geo:hasGeometry <geometry-x> .
 		<feature-w> geo:hasGeometry <geometry-x> .
 		<geometry-x> geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there is no incoming geo:hasGeometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		[] geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
-		"""^^xsd:string
+		""" ;
 .
 
 #################################################
@@ -184,7 +184,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		)
 	] ;
 	sh:maxCount 0 ;
-	sh:message "A node that has an incoming geo:hasGeometry property cannot have an outgoing geo:hasGeometry property or a specialization of it at the same time (a geo:Feature cannot be a geo:Geometry at the same time)"@en ;
+	sh:message "A node that has an incoming geo:hasGeometry property, or specialization of it, cannot have an outgoing geo:hasGeometry property, or a specialization of, it at the same time (a geo:Feature cannot be a geo:Geometry at the same time)"@en ;
 	skos:example 
 		"""
 		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasGeometry property and no outgoing geo:hasGeometry or specialization of it
@@ -192,7 +192,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 		<resource-x> geo:hasGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property (i.e. it's a geo:Feature and a geo:Geometry at the same time)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -206,14 +206,14 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.		
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasDefaultGeometry property and no outgoing geo:hasGeometry or specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<resource-x> geo:hasDefaultGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the Resource instance <resource-x> has an incoming geo:hasDefaultGeometry property and an outgoing geo:hasGeometry (i.e. it's a geo:Feature and a geo:Geometry at the same time)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -227,7 +227,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.		
-		"""^^xsd:string ;
+		""" ;
 .
 
 #################################################
@@ -244,7 +244,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		geo:asKML ,
 		geo:asDGGS ;
 	sh:nodeKind sh:Literal ;
-	sh:message "The target of a geo:hasSerialization property or a specialization of it should be an RDF literal."@en ;
+	sh:message "The target of a geo:hasSerialization property, or a specialization of, it should be an RDF literal."@en ;
 	skos:example 
 		"""
 		# A valid example: the target of a geo:asWKT property is an RDF literal
@@ -255,7 +255,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is not an RDF literal
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -265,7 +265,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT <geometry-serialization-node> ;
 			] ;
 		.		
-		"""^^xsd:string ;
+		""" ;
 .
 
 #################################################
@@ -287,7 +287,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is not an RDF literal
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -297,7 +297,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT <geometry-serialization-node> ;
 			] ;
 		.		
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is an RDF literal but with the wrong datatype (xsd:string)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -307,7 +307,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)" ;
 			] ;
 		.		
-		"""^^xsd:string ;
+		""" ;
 .
 
 <S6-asGML-gmlLiteral>
@@ -346,7 +346,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:coordinateDimension ;
 	sh:maxCount 1 ;
-	sh:message "The geo:Geometry node with an outgoing geo:coordinateDimension property should have maximum one outgoing geo:coordinateDimension property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:coordinateDimension property."@en ;
 	skos:example
 		"""
 		# A valid example: the subject of a geo:coordinateDimension property has no other properties with the same name
@@ -358,7 +358,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:dggsLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the subject of a geo:coordinateDimension property has also another property with with the same property name but a different value
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -369,7 +369,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:dggsLiteral ;
 			] ;
 		.
-		"""^^xsd:string ;
+		""" ;
 .	
 	
 <S11-many-dimension-one>
@@ -382,7 +382,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:dimension ;
 	sh:maxCount 1 ;
-	sh:message "The geo:Geometry node with an outgoing geo:dimension property should have maximum one outgoing geo:dimension property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:dimension property."@en ;
 .	
 
 <S12-many-isEmpty-one>
@@ -395,7 +395,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:isEmpty ;
 	sh:maxCount 1 ;
-	sh:message "The geo:Geometry node with an outgoing geo:isEmpty property should have maximum one outgoing geo:isEmpty property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:isEmpty property."@en ;
 .	
 
 <S13-many-isSimple-one>
@@ -408,7 +408,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:isSimple ;
 	sh:maxCount 1 ;
-	sh:message "The geo:Geometry node with an outgoing geo:isSimple property should have maximum one outgoing geo:isSimple property."@en ;
+	sh:message "A geo:Geometry node should have a maximum one outgoing geo:isSimple property."@en ;
 .	
 
 <S14-many-spatialDimension-one>
@@ -421,7 +421,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:spatialDimension ;
 	sh:maxCount 1 ;
-	sh:message "The geo:Geometry node with an outgoing geo:spatialDimension property should have maximum one outgoing geo:spatialDimension property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:spatialDimension property."@en ;
 .	
 
 #################################################
@@ -451,7 +451,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the RDF literal with an incoming geo:asWKT does not have a well-formed WKT string as its content, but rather a GeoJSON string
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -461,7 +461,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 				geo:asWKT "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ;
+		""" ;
 .
 
 <S17-gml-content>
@@ -526,7 +526,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		)
 	] ;
 	sh:minCount 1 ;
-	sh:message "A node of class geo:Feature (inferred or asserted) should always have at least one outgoing geo:hasGeometry relation or a specialization of it."@en ;
+	sh:message "A geo:Feature node (inferred or asserted) should have at least one outgoing geo:hasGeometry relation, or a specialization of it."@en ;
 	skos:example 
 		"""
 		# A valid example: the geo:Feature instance node has one outgoing geo:hasGeometry relation
@@ -535,13 +535,13 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x> a geo:Feature ;
 			geo:hasGeometry <feature-x-geom1> ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the geo:Feature instance node has no outgoing geo:hasGeometry relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x> a geo:Feature .
-		"""^^xsd:string ;
+		""" ;
 .
 
 #################################################
@@ -558,7 +558,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:coordinateDimension ;
 	sh:sparql [
-		sh:message "if both geo:dimension and geo:coordinateDimension properties are asserted, the value of geo:dimension should be less than or equal to the value of geo:coordinateDimension"@en ;
+		sh:message "If both geo:dimension and geo:coordinateDimension properties are asserted, the value of geo:dimension should be less than or equal to the value of geo:coordinateDimension"@en ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			SELECT $this
@@ -578,7 +578,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x-geom1> geo:dimension 2 ;
 			geo:coordinateDimension 2 ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# A valid example: the geo:dimension has value is 2 while there is no geo:coordinateDimension
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -586,7 +586,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> geo:dimension 2 ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the geo:dimension has value is 3 while the geo:coordinateDimension has value 2
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
@@ -595,7 +595,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		<feature-x-geom1> geo:dimension 3 ;
 			geo:coordinateDimension 2 ;
 		.
-		"""^^xsd:string ;
+		""" ;
 .
 
 #################################################
@@ -618,7 +618,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		)
 	] ;
 	sh:minCount 1 ;
-	sh:message "A node of class geo:Geometry (inferred or asserted) should always have at least one incoming geo:hasGeometry relation or a specialization of it."@en ;
+	sh:message "A geo:Geometry node (inferred or asserted) should always have at least one incoming geo:hasGeometry relation, or a specialization of it."@en ;
 	skos:example 
 		"""
 		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
@@ -626,13 +626,13 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> a geo:Geometry .
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x-geom1> a geo:Geometry .
-		"""^^xsd:string ;
+		""" ;
 .
 
 <S32-geometryClass-hasSerialization-sub>
@@ -649,7 +649,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	sh:minCount 1 ;
 	sh:maxCount 1 ; # should be the same as shape 1 (under discussion)
-	sh:message "A node of class geo:Geometry (inferred or asserted) should always have exactly one outgoing geo:hasSerialization relation or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
+	sh:message "A geo:Geometry node (inferred or asserted) should have exactly one outgoing geo:hasSerialization relation, or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
 	skos:example 
 		"""
 		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
@@ -657,11 +657,11 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> a geo:Geometry .
-		"""^^xsd:string ,
+		""" ,
 		"""
 		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x-geom1> a geo:Geometry .
-		"""^^xsd:string ;
+		""" ;
 .
