@@ -12,7 +12,7 @@ _New Features checklist - to be removed when all examples are complete:_
 |New element | Section
 
 2+|_Classes_
-|Spatial Measure class | <<Class: geo:SpatialMeasure>>
+|Spatial Size class | <<Class: geo:SpatialSize>>
 |===
 
 === B.1.1 Classes
@@ -56,7 +56,7 @@ eg:x a geo:Feature ;
 
 Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
-===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated
+===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -67,16 +67,16 @@ eg:x a geo:Feature ;
             geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
     ] ;
     geo:hasArea [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 8.7 ;
         qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
     ] ;
 .
 ```
 
-Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`]. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
+Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialSize` for the `Feature` is indicated with the use of the property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`]. This property indicates a `SpatialSize` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
 
-Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialMeasure` instance's value.
+Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialSize` instance's value.
 
 ===== B 1.1.2.4 `Feature` with metric area
 
@@ -138,7 +138,7 @@ eg:x a geo:Feature ;
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
+In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated>> with its use of QUDT for unit & value. 
 
 Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
 
@@ -216,8 +216,8 @@ eg:x
 
 Here a single `Geometry`, linked to a `Feature` instance, is expressed using two different serializations: Well-known Text and the AusPIX DGGS.
 
-==== B 1.1.4 `SpatialMeasure`
-The `SpatialMeasure` class is defined in <<Class: geo:SpatialMeasure>>.
+==== B 1.1.4 `SpatialSize`
+The `SpatialSize` class is defined in <<Class: geo:SpatialSize>>.
 
 ===== B1.1.4.1 Basic Use
 
@@ -225,15 +225,15 @@ The `SpatialMeasure` class is defined in <<Class: geo:SpatialMeasure>>.
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
 eg:z
-    a geo:SpatialMeasure ;
+    a geo:SpatialSize ;
     skos:prefLabel "Area Z" ;
     qudt:numericValue 8.7 ;
     qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
 ```
 
-This example defines an instance of `SpatialMeasure` and supplies it with a preferred label, a numeric value and a unit of measure. 
+This example defines an instance of `SpatialSize` and supplies it with a preferred label, a numeric value and a unit of measure. 
 
-`SpatialMeasure` instances may be declared in isolation like this - without reference to a `Feature` instance, just as Geometry instances may be - and future use of GeoSPARQL may see such declarations used widely however, at the time of writing GeoSPARQL 1.1, anticipated use of `SpatialMeasure` is with reference to a `Feature` instance: the _thing_ for which the spatial measure is defined. The next example give use in relation to a `Feature` instance.
+`SpatialSize` instances may be declared in isolation like this - without reference to a `Feature` instance, just as Geometry instances may be - and future use of GeoSPARQL may see such declarations used widely. However, at the time of writing GeoSPARQL 1.1, anticipated use of `SpatialSize` is mostly with reference to a `Feature` instance: the _thing_ for which the spatial size is defined. The next example give use in relation to a `Feature` instance.
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -242,15 +242,15 @@ eg:x
     a geo:Feature ;
     skos:prefLabel "Feature X" ;
     geo:hasArea [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 8.7 ;
         qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
     ] ;
 ```
 
-In this example, the `SpatialMeasure` instance has no label - only a numeric value and a unit of measure - but it is declared to be the area for "Feature X".
+In this example, the `SpatialSize` instance has no label - only a numeric value and a unit of measure - but it is declared to be the area for "Feature X".
 
-===== B1.1.4.1 Multiple measures
+===== B1.1.4.1 Multiple sizes
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -260,12 +260,12 @@ eg:x
     skos:prefLabel "Lake X" ;
     eg:hasFeatureCategory <http://example.com/cat/lake> ;
     geo:hasArea [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 8.7 ;
         qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
     ] ;
     geo:hasVolume [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 624432 ;
         qudt:unit <http://qudt.org/vocab/unit/M3> ;  # cubic metre
     ]
@@ -311,20 +311,20 @@ eg:x
         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.0601 -35.2361, ... , 149.0601 -35.2361)))"^^geo:wktLiteral ;
     ] ;
     geo:hasLength [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 355 ;
         qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre   
     ] ;
     geo:hasArea [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 8.7 ;
         qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
     ] ;
     geo:hasVolume [
-        a geo:SpatialMeasure ;
+        a geo:SpatialSize ;
         qudt:numericValue 624432 ;
         qudt:unit <http://qudt.org/vocab/unit/M3> ;  # cubic metre        
-    ]
+    ] ;
     geo:hasCentroid [
         geo:asWKT "POINT (149.06017784 -35.23612321)"^^geo:wktLiteral ;
     ] ;
