@@ -1136,12 +1136,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_rdfs_datatype_geodggsliteral">Section 8.4.5.1</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">auspixDggsLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_rdfs_datatype_geoauspixdggsliteral">Section 8.4.5.2</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">asDGGS</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoasdggs">Section 8.4.5.3</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoasdggs">Section 8.4.5.2</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">asDGGS function</p></td>
@@ -1669,7 +1665,7 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/" class="bare">http://www.opengis.net/</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">eg:</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ex:</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://example.com/" class="bare">http://example.com/</a></p></td>
 </tr>
 <tr>
@@ -3502,8 +3498,8 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <p>This section establishes the requirements for representing Discrete Global Grid System (DGGS) geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
 </div>
 <div class="paragraph">
-<p>Here are defined two RDFS Datatypes:
-<a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>http://www.opengis.net/ont/geosparql#dggsLiteral</code></a> &amp; <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>http://www.opengis.net/ont/geosparql#auspixDggsLiteral</code></a> and one property, <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>http://www.opengis.net/ont/geosparql#asDGGS</code></a>.</p>
+<p>Here is defined one RDFS Datatypes:
+<a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>http://www.opengis.net/ont/geosparql#dggsLiteral</code></a> and one property, <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>http://www.opengis.net/ont/geosparql#asDGGS</code></a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3512,7 +3508,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-The two datatypes defined here are for an abstract DGGS implementation (<a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>) and a specific one, AusPIX <a href="#AUSPIX">[AUSPIX]</a> (<a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>). The purposes of including both of these are to indicate the conceptual position of DGGS literals in this specification - the abstract form acts as a parent of all other potential, specific, DGGS datatypes - and to exemplify a specific system implementation which allows for real examples of use.
+The datatype defined here is for an abstract DGGS implementation (<a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>) but concrete ones should be used in real implementations. For example, the AusPIX DGGS <a href="#AUSPIX">[AUSPIX]</a> might implement something similar to <code>ex:auspixDggsLiteral</code>.
 </td>
 </tr>
 </table>
@@ -3526,9 +3522,6 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
     skos:prefLabel "DGGS Literal"@en ;
     skos:definition "A textual serialization of a Discrete Global Grid System (DGGS) geometry object."@en .</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3556,27 +3549,23 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>An example of a literal for concrete DGGS, AusPIX, could be</p>
 </div>
-<div class="sect4">
-<h5 id="_rdfs_datatype_geoauspixdggsliteral"><a class="anchor" href="#_rdfs_datatype_geoauspixdggsliteral"></a>8.4.5.2. RDFS Datatype: geo:auspixDggsLiteral</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:auspixDggsLiteral
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">ex:auspixDggsLiteral
     a rdfs:Datatype ;
-    rdfs:isDefinedBy geo: ;
     skos:prefLabel "AusPIX DGGS Literal"@en ;
     skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) geometry object."@en .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> instances are formed by encoding geometry information according to the AusPIX DGGS implementation <a href="#AUSPIX">[AUSPIX]</a>.</p>
-</div>
-<div class="paragraph">
-<p>The example <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> below encodes a point geometry according to the <em>AusPIX</em> DGGS. The DGGS geometry type is indicated with the token <code>CellList</code> and the list of values, a single cell, is enclosed in parenthesis. The cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries, so a single coordinate pair or a list of them:</p>
+<p>A single <em>Cell</em> geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">"CellList (R3234)"^^&lt;http://www.opengis.net/ont/geosparql#auspixDggsLiteral&gt;</code></pre>
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">"CellList (R3234)"^^&lt;http://example.com#auspixDggsLiteral&gt;</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3586,27 +3575,14 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 <div class="title">Note</div>
 </td>
 <td class="content">
-What <code>R3234</code> means is not handled by GeoSPARQL but by the AusPIX DGGS specification <a href="#AUSPIX">[AUSPIX]</a>, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
+What <code>R3234</code> means, or the meaning of any other element within a concrete DGGS literal is not handled by GeoSPARQL but is expected to be handled by that DGGS' specification, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
 </td>
 </tr>
 </table>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch">
-<colgroup>
-<col style="width: 100%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 37</strong> All RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a> shall consist of a DGGS geometry serialization formulated according to the AusPIX DGGS.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/auspix-dggs-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/auspix-dggs-literal</code></a></p></td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.4.5.3. Property: geo:asDGGS</h5>
+<h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.4.5.2. Property: geo:asDGGS</h5>
 <div class="paragraph">
 <p>The <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> property is defined to link a geometry with its DGGS serialization.</p>
 </div>
@@ -3632,7 +3608,7 @@ What <code>R3234</code> means is not handled by GeoSPARQL but by the AusPIX DGGS
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as DGGS"@en ;
-    skos:definition "A DGGS Well-Known Text serialization of a geometry."@en ;
+    skos:definition "A DGGS serialization of a geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:dggsLiteral .</code></pre>
 </div>
@@ -3644,14 +3620,14 @@ What <code>R3234</code> means is not handled by GeoSPARQL but by the AusPIX DGGS
 <div class="title">Note</div>
 </td>
 <td class="content">
-It is expected that this property will be used to indicate specific DGGS data types, such as <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>, descibed above, as opposed to the generic <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>.
+It is expected that this property will be used to indicate specific DGGS data types, such as the example <code>ex:auspixDggsLiteral</code>, described above, as opposed to the generic <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>.
 </td>
 </tr>
 </table>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofasdggs"><a class="anchor" href="#_function_geofasdggs"></a>8.4.5.4. Function: geof:asDGGS</h5>
+<h5 id="_function_geofasdggs"><a class="anchor" href="#_function_geofasdggs"></a>8.4.5.3. Function: geof:asDGGS</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral</code></pre>
@@ -5850,7 +5826,7 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <p><strong>Test method</strong>: Verify that queries involving the <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.4.5.3</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.4.5.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6451,13 +6427,13 @@ eg:x a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "&lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
-        geo:asDGGS "&lt;https://w3id.org/dggs/aspix&gt; CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:auspixDggsLiteral ;
+        geo:asDGGS "&lt;https://w3id.org/dggs/aspix&gt; CELLLIST ((R1234 R1235 R1236 ... R1256))"^^eg:auspixDggsLiteral ;
     ] ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here a single <code>Geometry</code>, linked to a <code>Feature</code> instance, is expressed using two different serializations: Well-known Text and the AusPIX DGGS.</p>
+<p>Here a single <code>Geometry</code>, linked to a <code>Feature</code> instance, is expressed using two different serializations: Well-known Text and the example AusPIX DGGS. Note that the latter is not formally defined in GeoSPARQL.</p>
 </div>
 </div>
 </div>
@@ -6595,12 +6571,8 @@ eg:x
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#RDFS Datatype: geo:dggsWKTLiteral">[RDFS Datatype: geo:dggsWKTLiteral]</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">auspixDggsWKTLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#RDFS Datatype: geo:auspixDggsWKTLiteral">[RDFS Datatype: geo:auspixDggsWKTLiteral]</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">asDGGS</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoasdggs">Section 8.4.5.3</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geoasdggs">Section 8.4.5.2</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -6681,6 +6653,9 @@ eg:x
 <h4 id="_b_1_2_3_geometry_serializations"><a class="anchor" href="#_b_1_2_3_geometry_serializations"></a>B.1.2.3 Geometry Serializations</h4>
 <div class="paragraph">
 <p>This section shows a <code>Geometry</code> instance for a <code>Feature</code> instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate <a href="https://en.wikipedia.org/wiki/Moreton_Island">Moreton Island</a> in Queensland, Australia.</p>
+</div>
+<div class="paragraph">
+<p>Note that the concrete DGGS serialization used is for example purposes only as it is not formally defined in GeoSPARQL.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6788,7 +6763,7 @@ eg:x
             R834630232 R834630234 R834630235 R834630237 R834630238 R834630240 R834630241
             R834630242 R834630243 R834630244 R834630245 R834630246 R834630247 R834630261
             R834630262 R834630264 R834630265 R834630268 R834630270 R834630271 R834630273
-            R834630276 R834630502))""""^^geo:auspixDggsLiteral ;
+            R834630276 R834630502))""""^^eg:auspixDggsLiteral ;
     ] ;
 .</code></pre>
 </div>
@@ -7354,7 +7329,7 @@ WHERE {
 <p>Application of the function <a href="http://www.opengis.net/def/function/geosparql/asWKT"><code>geof:asWKT</code></a> to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, <a href="http://www.opengis.net/def/function/geosparql/asGML"><code>geof:asGML</code></a>, <a href="http://www.opengis.net/def/function/geosparql/asKML"><code>geof:asKML</code></a>, <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON"><code>geof:asGeoJSON</code></a> &amp; <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a>.</p>
 </div>
 <div class="paragraph">
-<p>Note that the application of <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> requires a <code>specificDggsDatatype</code> parameter which indicates the particular DGGS literal form being converted to. In the case of <a href="#_b_1_2_3_geometry_serializations">B.1.2.3 Geometry Serializations</a>, this value would be <a href="http://www.opengis.net/def/function/geosparql/auspixDggsLiteral"><code>geof:auspixDggsLiteral</code></a>, the datatype of the AusPIX DGGS format provided by GeoSPARQL 1.1.</p>
+<p>Note that the application of <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> requires a <code>specificDggsDatatype</code> parameter which indicates the particular DGGS literal form being converted to. In the case of <a href="#_b_1_2_3_geometry_serializations">B.1.2.3 Geometry Serializations</a>, this value would be <code>eg:auspixDggsLiteral</code>, the example datatype of the AusPIX DGGS.</p>
 </div>
 </div>
 </div>
@@ -7979,7 +7954,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-08-12 21:58:37 UTC
+Last updated 2021-08-12 23:13:32 UTC
 </div>
 </div>
 </body>
