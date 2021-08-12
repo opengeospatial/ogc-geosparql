@@ -1887,16 +1887,17 @@ Properties for Spatial Measure may need to indicate a use a unit of measure. Whe
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:SpatialObjectCollection
   a owl:Class ;
+  rdfs:isDefinedBy geo: ;
+  skos:prefLabel "Collection of spatial objects" ;
+  skos:definition "The class Spatial Object Collection represents any collection of things that can
+                  have a spatial representation. It is superclass of Feature Collection
+                  and Geometry Collection."@en ;
   rdfs:subClassOf rdfs:Container ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom geo:SpatialObject ;
       owl:onProperty rdfs:member ;
     ] ;
-  skos:prefLabel "Collection of spatial objects" ;
-  skos:definition "The class Spatial Object Collection represents any collection of things that can
-                  have a spatial representation. It is superclass of Feature Collection
-                  and Geometry Collection."@en ;
 .</code></pre>
 </div>
 </div>
@@ -1923,15 +1924,16 @@ Properties for Spatial Measure may need to indicate a use a unit of measure. Whe
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:FeatureCollection
   a owl:Class ;
+  rdfs:isDefinedBy geo: ;
+  skos:prefLabel "Collection of geospatial features" ;
+  skos:definition "The class Feature Collection represents
+                  any collection of individual Features."@en ;
   rdfs:subClassOf geo:SpatialObjectCollection ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom :Feature ;
       owl:onProperty rdfs:member ;
     ] ;
-  skos:prefLabel "Collection of geospatial features" ;
-  skos:definition "The class Feature Collection represents
-                  any collection of individual Features."@en ;
 .</code></pre>
 </div>
 </div>
@@ -2393,7 +2395,7 @@ L/A</code>; <code>(0********) for L/L</code></p></td>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Topological relations in the <em>Egenhofer</em> family are summarized in <a href="#genhofer_relations">Table 3</a>. Multi-row intersection patterns should be interpreted as a logical <code>OR</code> of each row.</p>
+<p>Topological relations in the <em>Egenhofer</em> family are summarized in <a href="#egenhofer_relations">[egenhofer_relations]</a>. Multi-row intersection patterns should be interpreted as a logical <code>OR</code> of each row.</p>
 </div>
 <table id="genhofer_relations" class="tableblock frame-all grid-all stripes-odd stretch">
 <caption class="title">Table 3. Egenhofer Topological Relations</caption>
@@ -2937,7 +2939,7 @@ a serialization strongly affects the geometry conceptualization. The WKT seriali
 <div class="sect3">
 <h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.3.9. Property: geo:isSimple</h4>
 <div class="paragraph">
-<p>The proeprty <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> will indicate a Boolean object set to <code>true</code>, only if the geometry contains no self-intersections, with the possible exception of its boundary.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> will indicate a Boolean object set to <code>true</code>, only if the geometry contains no self-intersections, with the possible exception of its boundary.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2977,7 +2979,7 @@ a serialization strongly affects the geometry conceptualization. The WKT seriali
 <div class="title">Note</div>
 </td>
 <td class="content">
-this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> which can be used for GeoJSON <a href="#GEOJSON">[GEOJSON]</a> literals.
+this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <a href="#_property_geoasgeojson">as GeoJSON</a> which can be used for GeoJSON <a href="#GEOJSON">[GEOJSON]</a> literals.
 </td>
 </tr>
 </table>
@@ -2992,7 +2994,7 @@ this property is the generic property used to connect a geometry with its serial
 <div class="sect3">
 <h4 id="_well_known_text_serializationwkt"><a class="anchor" href="#_well_known_text_serializationwkt"></a>8.4.1. Well-Known Text (serialization=WKT)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>http://www.opengis.net/ont/geosparql#wktLiteral</code></a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
+<p>This section establishes the requirements for representing geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.4.1.1. RDFS Datatype: geo:wktLiteral</h5>
@@ -3015,7 +3017,7 @@ this property is the generic property used to connect a geometry with its serial
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 14</strong> All RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiterals</code></a> are formed by either a WKT string as defined in <a href="#ISO13249">[ISO13249]</a> or by concatenating a valid absolute IRI, as defined in <a href="#IETF3987">[IETF3987]</a>, enclose in angled brackets (<code>&lt;</code> &amp; <code>&gt;</code>) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <a href="#ISO13249">[ISO13249]</a>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 14</strong> All RDFS Literals of type <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances are formed by either a WKT string as defined in <a href="#ISO13249">[ISO13249]</a> or by concatenating a valid absolute IRI, as defined in <a href="#IETF3987">[IETF3987]</a>, enclose in angled brackets (<code>&lt;</code> &amp; <code>&gt;</code>) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <a href="#ISO13249">[ISO13249]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal</code></a></p></td>
@@ -3044,7 +3046,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 15</strong> The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code></a> shall be assumed as the spatial reference system for <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> instances that do not specify an explicit spatial reference system IRI.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 15</strong> The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code></a> shall be assumed as the spatial reference system for <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances that do not specify an explicit spatial reference system IRI.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs</code></a></p></td>
@@ -3060,7 +3062,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 16</strong> Coordinate tuples within <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> shall be interpreted using the axis order defined in the spatial reference system used.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 16</strong> Coordinate tuples within <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> shall be interpreted using the axis order defined in the spatial reference system used.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order</code></a></p></td>
@@ -3068,7 +3070,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
+<p>The example <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3089,7 +3091,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> shall be interpreted as an empty geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty</code></a></p></td>
@@ -3108,16 +3110,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 18</strong> Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 18</strong> Implementations shall allow the RDF property <a href="#_property_geoaswkt">as WKT</a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal</code></a></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> is used to link a geometric element with its WKT serialization.</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asWKT
@@ -3161,7 +3160,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <h4 id="_geography_markup_language_serializationgml"><a class="anchor" href="#_geography_markup_language_serializationgml"></a>8.4.2. Geography Markup Language (serialization=GML)</h4>
 <div class="paragraph">
 <p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>. It defines one RDFS Datatype:
-<a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>http://www.opengis.net/ont/geosparql#gmlLiteral</code></a> and one property, <a href="#_function_geofasgml">as GML</a>.</p>
+<a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> and one property, <a href="#_function_geofasgml">as GML</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.4.2.1. RDFS Datatype: geo:gmlLiteral</h5>
@@ -3179,7 +3178,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> instances are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
+<p>Valid <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3187,7 +3186,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 20</strong> All <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> instances shall consist of a valid element from the GML schema that implements a subtype of <code>GM_Object</code> as defined in <a href="#OGC07-036">[OGC07-036]</a>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 20</strong> All <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances shall consist of a valid element from the GML schema that implements a subtype of <code>GM_Object</code> as defined in <a href="#OGC07-036">[OGC07-036]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal</code></a></p></td>
@@ -3195,7 +3194,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> below encodes a point geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
+<p>The example <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> below encodes a point geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3214,7 +3213,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> An empty <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> An empty <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> shall be interpreted as an empty geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty</code></a></p></td>
@@ -3246,16 +3245,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 23</strong> Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 23</strong> Implementations shall allow the RDF property <a href="#_property_geoasgml">as GML</a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal</code></a></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> is used to link a geometric element with its GML serialization.</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asGML
@@ -3299,7 +3295,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <h4 id="_geojson_serializationgeojson"><a class="anchor" href="#_geojson_serializationgeojson"></a>8.4.3. GeoJSON (serialization=GEOJSON)</h4>
 <div class="paragraph">
 <p>This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
-<a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>http://www.opengis.net/ont/geosparql#geoJSONLiteral</code></a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
+<a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.4.3.1. RDFS Datatype: geo:geoJSONLiteral</h5>
@@ -3315,7 +3311,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> instances are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p>
+<p>Valid <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3323,7 +3319,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 25</strong> All <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> instances shall consist of the Geometry objects as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 25</strong> All <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances shall consist of the Geometry objects as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal</code></a></p></td>
@@ -3336,7 +3332,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 26</strong> RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (<a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>http://www.opengis.net/def/crs/OGC/1.3/CRS84</code></a>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 26</strong> RDFS Literals of type <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (<a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>http://www.opengis.net/def/crs/OGC/1.3/CRS84</code></a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs</code></a></p></td>
@@ -3344,7 +3340,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
+<p>The example <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3359,7 +3355,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> shall be interpreted as an empty geometry, i.e. <code>{"geometry": null}</code> in GeoJSON .</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> shall be interpreted as an empty geometry, i.e. <code>{"geometry": null}</code> in GeoJSON .</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty</code></a></p></td>
@@ -3378,16 +3374,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 28</strong> Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 28</strong> Implementations shall allow the RDF property <a href="#_property_geoasgeojson">as GeoJSON</a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal</code></a></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> is used to link a geometric element with its GeoJSON serialization.</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asGeoJSON
@@ -3431,7 +3424,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <h4 id="_keyhole_markup_language_serializationkml"><a class="anchor" href="#_keyhole_markup_language_serializationkml"></a>8.4.4. Keyhole Markup Language (serialization=KML)</h4>
 <div class="paragraph">
 <p>This section establishes requirements for representing geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
-<a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>http://www.opengis.net/ont/geosparql#kmlLiteral</code></a> and one property, <a href="#_function_geofaskml">as KML</a>.</p>
+<a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> and one property, <a href="#_function_geofaskml">as KML</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.4.4.1. RDFS Datatype: geo:kmlLiteral</h5>
@@ -3449,7 +3442,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> instances are formed by encoding geometry information as a Geometry object as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p>
+<p>Valid <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances are formed by encoding geometry information as a Geometry object as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3457,7 +3450,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 30</strong> All <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> instances shall consist of the Geometry objects as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 30</strong> All <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances shall consist of the Geometry objects as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal</code></a></p></td>
@@ -3470,7 +3463,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 31</strong> RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> do not contain a SRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (<a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>http://www.opengis.net/def/crs/OGC/1.3/CRS84</code></a>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 31</strong> RDFS Literals of type <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> do not contain a SRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (<a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>http://www.opengis.net/def/crs/OGC/1.3/CRS84</code></a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs</code></a></p></td>
@@ -3478,7 +3471,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
+<p>The example <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3495,7 +3488,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> shall be interpreted as an empty geometry .</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> shall be interpreted as an empty geometry .</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty</code></a></p></td>
@@ -3514,7 +3507,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 33</strong> Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> to be used in SPARQL graph patterns.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 33</strong> Implementations shall allow the RDF property <a href="#_property_geoaskml">as KML</a> to be used in SPARQL graph patterns.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal</code></a></p></td>
@@ -3522,7 +3515,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> is used to link a geometric element with its KML serialization.</p>
+<p>The property <a href="#_property_geoaskml">as KML</a> is used to link a geometric element with its KML serialization.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3569,7 +3562,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <p>This section establishes the requirements for representing Discrete Global Grid System (DGGS) geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
 </div>
 <div class="paragraph">
-<p>Here are defined two RDFS Datatypes:
+<p>Here defined are two RDFS Datatypes:
 <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>http://www.opengis.net/ont/geosparql#dggsLiteral</code></a> &amp; <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>http://www.opengis.net/ont/geosparql#auspixDggsLiteral</code></a> and one property, <a href="#_function_geofasdggs">as DGGS</a>.</p>
 </div>
 <div class="admonitionblock note">
@@ -3579,7 +3572,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="title">Note</div>
 </td>
 <td class="content">
-The two datatypes defined here are for an abstract DGGS implementation (<a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>) and a specific one, AusPIX <a href="#AUSPIX">[AUSPIX]</a> (<a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>). The purposes of including both of these are to indicate the conceptual position of DGGS literals in this specification - the abstract form acts as a parent of all other potential, specific, DGGS datatypes - and to exemplify a specific system implementation which allows for real examples of use.
+The two datatypes defined here are for an abstract DGGS implementation (<a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a>) and a specific one, AusPIX <a href="#AUSPIX">[AUSPIX]</a> (<a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>). The purposes of including both of these are to indicate the conceptual position of DGGS literals in this specification - the abstract form acts as a parent of all other potential, specific, DGGS datatypes - and to exemplify a specific system implementation which allows for real examples of use.
 </td>
 </tr>
 </table>
@@ -3600,7 +3593,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
+<p>Valid <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3608,7 +3601,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 35</strong> All RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> shall consist of a DGGS geometry serialization formulated according to a specific DGGS.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 35</strong> All RDFS Literals of type <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> shall consist of a DGGS geometry serialization formulated according to a specific DGGS.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal</code></a></p></td>
@@ -3621,7 +3614,7 @@ The two datatypes defined here are for an abstract DGGS implementation (<a href=
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 36</strong> An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>, or one of its data subtypes, shall be interpreted as an empty <code>geo:Geometry</code>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 36</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a>, or one of its data subtypes, shall be interpreted as an empty <code>geo:Geometry</code>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty</code></a></p></td>
@@ -3699,9 +3692,6 @@ What <code>R3234</code> means is not handled by GeoSPARQL but by the AusPIX DGGS
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> is used to link a Geometry instance with its serialization.</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asDGGS
@@ -3722,7 +3712,7 @@ What <code>R3234</code> means is not handled by GeoSPARQL but by the AusPIX DGGS
 <div class="title">Note</div>
 </td>
 <td class="content">
-It is expected that this property will be used to indicate specific DGGS data types, such as <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>, descibed above, as opposed to the generic <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a>.
+It is expected that this property will be used to indicate specific DGGS data types, such as <a href="http://www.opengis.net/ont/geosparql#auspixDggsLiteral"><code>geo:auspixDggsLiteral</code></a>, descibed above, as opposed to the generic <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a>.
 </td>
 </tr>
 </table>
@@ -3811,7 +3801,7 @@ SPARQL language extensions may provide additional associations between operators
 </blockquote>
 </div>
 <div class="paragraph">
-<p>This extension mechanism enables GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> serializations may also support <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.</p>
+<p>This extension mechanism enables GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> serializations may also support <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4989,7 +4979,7 @@ The GeoSPARQL 1.1 Standard contains a RIF rules artefact expanded for all functi
 <p><strong>Requirement</strong>: <code>/req/core/spatial-object-class</code></p>
 </div>
 <div class="paragraph">
-<p>Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/geosparql#SpatialObject">geo:SpatialObject</a> to be used in SPARQL graph
+<p>Implementations shall allow the RDFS class <a href="#_class_geospatialobject">Spatial Object</a> to be used in SPARQL graph
 patterns.</p>
 </div>
 <div class="olist loweralpha">
@@ -4998,7 +4988,7 @@ patterns.</p>
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#SpatialObject">geo:SpatialObject</a> return the correct result on a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_class_geospatialobject">Spatial Object</a> return the correct result on a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_class_geospatialobject">Section 6.2.1</a></p>
@@ -5013,7 +5003,7 @@ patterns.</p>
 <h3 id="_a_1_3_confcorefeature_class"><a class="anchor" href="#_a_1_3_confcorefeature_class"></a>A.1.3 <code>/conf/core/feature-class</code></h3>
 <div class="paragraph">
 <p><strong>Requirement</strong>: <code>/req/core/feature-class</code>
-Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/geosparql#Feature">geo:Feature</a> to be used in SPARQL graph patterns.</p>
+Implementations shall allow the RDFS class <a href="#_class_geofeature">Feature</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5021,7 +5011,7 @@ Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/g
 <p><strong>Test purpose</strong>: check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: verify that queries involving <a href="http://www.opengis.net/ont/geosparql#Feature">geo:Feature</a> return the correct result on a test dataset.</p>
+<p><strong>Test method</strong>: verify that queries involving <a href="#_class_geofeature">Feature</a> return the correct result on a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_class_geofeature">Section 6.2.2</a></p>
@@ -5036,7 +5026,7 @@ Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/g
 <h3 id="_a_1_4_confcorespatial_measure_class"><a class="anchor" href="#_a_1_4_confcorespatial_measure_class"></a>A.1.4 <code>/conf/core/spatial-measure-class</code></h3>
 <div class="paragraph">
 <p><strong>Requirement</strong>: <code>/req/core/spatial-measure-class</code>
-Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure">geo:SpatialMeasure</a> to be used in SPARQL graph patterns.</p>
+Implementations shall allow the RDFS class <a href="#_class_geospatialmeasure">Spatial Measure</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5044,7 +5034,7 @@ Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/g
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure">geo:SpatialMeasure</a> return the correct result on a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_class_geospatialmeasure">Spatial Measure</a> return the correct result on a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_class_geospatialmeasure">Section 6.2.3</a></p>
@@ -5061,7 +5051,7 @@ Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/g
 <p><strong>Requirement</strong>: <code>/req/core/spatial-object-collection-class</code></p>
 </div>
 <div class="paragraph">
-<p>Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/geosparql#SpatialObjectCollection">geo:SpatialObjectCollection</a> to be used in SPARQL graph
+<p>Implementations shall allow the RDFS class <a href="#_class_geospatialobjectcollection">Spatial Object Collection</a> to be used in SPARQL graph
 patterns.</p>
 </div>
 <div class="olist loweralpha">
@@ -5070,7 +5060,7 @@ patterns.</p>
 <p><strong>Test purpose</strong>: check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: verify that queries involving <a href="http://www.opengis.net/ont/geosparql#SpatialObjectCollection">geo:SpatialObjectCollection</a> return the correct result on a test dataset.</p>
+<p><strong>Test method</strong>: verify that queries involving <a href="#_class_geospatialobjectcollection">Spatial Object Collection</a> return the correct result on a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_class_geospatialobjectcollection">Section 6.2.4</a></p>
@@ -5087,7 +5077,7 @@ patterns.</p>
 <p><strong>Requirement</strong>: <code>/req/core/feature-collection-class</code></p>
 </div>
 <div class="paragraph">
-<p>Implementations shall allow the RDFS class <a href="http://www.opengis.net/ont/geosparql#FeatureCollection">geo:FeatureCollection</a> to be used in SPARQL graph
+<p>Implementations shall allow the RDFS class <a href="#_class_geofeaturecollection">Feature Collection</a> to be used in SPARQL graph
 patterns.</p>
 </div>
 <div class="olist loweralpha">
@@ -5096,7 +5086,7 @@ patterns.</p>
 <p><strong>Test purpose</strong>: check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: verify that queries involving <a href="http://www.opengis.net/ont/geosparql#FeatureCollection">geo:FeatureCollection</a> return the correct result on a test dataset.</p>
+<p><strong>Test method</strong>: verify that queries involving <a href="#_class_geofeaturecollection">Feature Collection</a> return the correct result on a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_class_geofeaturecollection">Section 6.2.5</a></p>
@@ -5120,8 +5110,10 @@ patterns.</p>
 <div class="sect3">
 <h4 id="_a_2_1_1_conftopology_vocab_extensionsf_spatial_relations"><a class="anchor" href="#_a_2_1_1_conftopology_vocab_extensionsf_spatial_relations"></a>A.2.1.1 <code>/conf/topology-vocab-extension/sf-spatial-relations</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/sf-spatial-relations</code>
-Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#sfEquals"><code>geo:sfEquals</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfDisjoint"><code>geo:sfDisjoint</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfIntersects"><code>geo:sfIntersects</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfTouches"><code>geo:sfTouches</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfCrosses"><code>geo:sfCrosses</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfWithin"><code>geo:sfWithin</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfContains"><code>geo:sfContains</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfOverlaps"><code>geo:sfOverlaps</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/sf-spatial-relations</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#sfEquals"><code>geo:sfEquals</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfDisjoint"><code>geo:sfDisjoint</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfIntersects"><code>geo:sfIntersects</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfTouches"><code>geo:sfTouches</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfCrosses"><code>geo:sfCrosses</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfWithin"><code>geo:sfWithin</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfContains"><code>geo:sfContains</code></a>, <a href="http://www.opengis.net/ont/geosparql#sfOverlaps"><code>geo:sfOverlaps</code></a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5146,8 +5138,10 @@ Implementations shall allow the properties <a href="http://www.opengis.net/ont/g
 <div class="sect3">
 <h4 id="_a_2_2_1_conftopology_vocab_extensioneh_spatial_relations"><a class="anchor" href="#_a_2_2_1_conftopology_vocab_extensioneh_spatial_relations"></a>A.2.2.1 <code>/conf/topology-vocab-extension/eh-spatial-relations</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/eh-spatial-relations</code>
-Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#ehEquals"><code>geo:ehEquals</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehDisjoint"><code>geo:ehDisjoint</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehMeet"><code>geo:ehMeet</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehOverlap"><code>geo:ehOverlap</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehCovers"><code>geo:ehCovers</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehCoveredBy"><code>geo:ehCoveredBy</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehInside"> <code>geo:ehInside</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehContains"><code>geo:ehContains</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/eh-spatial-relations</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#ehEquals"><code>geo:ehEquals</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehDisjoint"><code>geo:ehDisjoint</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehMeet"><code>geo:ehMeet</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehOverlap"><code>geo:ehOverlap</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehCovers"><code>geo:ehCovers</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehCoveredBy"><code>geo:ehCoveredBy</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehInside"> <code>geo:ehInside</code></a>, <a href="http://www.opengis.net/ont/geosparql#ehContains"><code>geo:ehContains</code></a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5172,8 +5166,10 @@ Implementations shall allow the properties <a href="http://www.opengis.net/ont/g
 <div class="sect3">
 <h4 id="_a_2_3_1_conftopology_vocab_extensionrcc8_spatial_relations"><a class="anchor" href="#_a_2_3_1_conftopology_vocab_extensionrcc8_spatial_relations"></a>A.2.3.1 <code>/conf/topology-vocab-extension/rcc8-spatial-relations</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/rcc8-spatial-relations</code>
-Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#rcc8eq"><code>geo:rcc8eq</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8dc"><code>geo:rcc8dc</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8ec"><code>geo:rcc8ec</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8po"><code>geo:rcc8po</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tppi"><code>geo:rcc8tppi</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tpp"><code>geo:rcc8tpp</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tpp"><code>geo:rcc8ntpp</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tppi"><code>geo:rcc8ntppi</code></a> to be used in SPARQL graph patterns</p>
+<p><strong>Requirement</strong>: <code>/req/topology-vocab-extension/rcc8-spatial-relations</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the properties <a href="http://www.opengis.net/ont/geosparql#rcc8eq"><code>geo:rcc8eq</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8dc"><code>geo:rcc8dc</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8ec"><code>geo:rcc8ec</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8po"><code>geo:rcc8po</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tppi"><code>geo:rcc8tppi</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tpp"><code>geo:rcc8tpp</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tpp"><code>geo:rcc8ntpp</code></a>, <a href="http://www.opengis.net/ont/geosparql#rcc8tppi"><code>geo:rcc8ntppi</code></a> to be used in SPARQL graph patterns</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5229,8 +5225,10 @@ Implementations shall allow the RDFS class <a href="#_class_geogeometry">Geometr
 <div class="sect3">
 <h4 id="_a_3_1_6_confgeometry_extensiongeometry_collection_class"><a class="anchor" href="#_a_3_1_6_confgeometry_extensiongeometry_collection_class"></a>A.3.1.6 <code>/conf/geometry-extension/geometry-collection-class</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-collection-class</code>
-Implementations shall allow the RDFS class <a href="#_class_geogeometrycollection">Geometry Collection</a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-collection-class</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDFS class <a href="#_class_geogeometrycollection">Geometry Collection</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5252,8 +5250,10 @@ Implementations shall allow the RDFS class <a href="#_class_geogeometrycollectio
 <div class="sect3">
 <h4 id="_a_3_1_2_confgeometry_extensionfeature_properties"><a class="anchor" href="#_a_3_1_2_confgeometry_extensionfeature_properties"></a>A.3.1.2 <code>/conf/geometry-extension/feature-properties</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/feature-properties</code>
-Implementations shall allow the properties <a href="#_property_geohasgeometry">has geometry</a> and <a href="#_property_geohasdefaultgeometry">has default geometry</a>,
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/feature-properties</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the properties <a href="#_property_geohasgeometry">has geometry</a> and <a href="#_property_geohasdefaultgeometry">has default geometry</a>,
 <a href="#_property_geohaslength">has length</a>,
 <a href="#_property_geohasarea">has area</a>,
 <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasVolume</code></a>
@@ -5280,8 +5280,10 @@ Implementations shall allow the properties <a href="#_property_geohasgeometry">h
 <div class="sect3">
 <h4 id="_a_3_1_3_confgeometry_extensiongeometry_properties"><a class="anchor" href="#_a_3_1_3_confgeometry_extensiongeometry_properties"></a>A.3.1.3 <code>/conf/geometry-extension/geometry-properties</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-properties</code>
-Implementations shall allow the properties <a href="#_property_geodimension">dimension</a>, <a href="#_property_geocoordinatedimension">coordinate dimension</a>, <a href="#_property_geospatialdimension">spatial dimension</a>,  <a href="#_property_geoisempty">is empty</a>,  <a href="#_property_geoissimple">is simple</a>,  <a href="#_property_geohasserialization">has serialization</a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-properties</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the properties <a href="#_property_geodimension">dimension</a>, <a href="#_property_geocoordinatedimension">coordinate dimension</a>, <a href="#_property_geospatialdimension">spatial dimension</a>,  <a href="#_property_geoisempty">is empty</a>,  <a href="#_property_geoissimple">is simple</a>,  <a href="#_property_geohasserialization">has serialization</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5303,8 +5305,10 @@ Implementations shall allow the properties <a href="#_property_geodimension">dim
 <div class="sect3">
 <h4 id="_a_3_1_4_confgeometry_extensionquery_functions"><a class="anchor" href="#_a_3_1_4_confgeometry_extensionquery_functions"></a>A.3.1.4 <code>/conf/geometry-extension/query-functions</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/query-functions</code>
-Implementations shall support <a href="#_function_geofdistance">distance</a>, <a href="#_function_geofbuffer">buffer</a>, <a href="#_function_geofconvexhull">convex hull</a>, <a href="#_function_geofintersection">intersection</a>, <a href="#_function_geofunion">union</a>, <a href="#_function_geofdifference">difference</a>, <a href="#_function_geofsymdifference">sym difference</a>, <a href="#_function_geofenvelope">envelope</a> and <a href="#_function_geofboundary">boundary</a> as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/query-functions</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofdistance">distance</a>, <a href="#_function_geofbuffer">buffer</a>, <a href="#_function_geofconvexhull">convex hull</a>, <a href="#_function_geofintersection">intersection</a>, <a href="#_function_geofunion">union</a>, <a href="#_function_geofdifference">difference</a>, <a href="#_function_geofsymdifference">sym difference</a>, <a href="#_function_geofenvelope">envelope</a> and <a href="#_function_geofboundary">boundary</a> as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5326,8 +5330,10 @@ Implementations shall support <a href="#_function_geofdistance">distance</a>, <a
 <div class="sect3">
 <h4 id="_a_3_1_5_confgeometry_extensionsrid_function"><a class="anchor" href="#_a_3_1_5_confgeometry_extensionsrid_function"></a>A.3.1.5 <code>/conf/geometry-extension/srid-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/srid-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/getSRID"><code>geof:getSRID</code></a> as a SPARQL extension function.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/srid-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofgetsrid">get SRID</a> as a SPARQL extension function.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5335,7 +5341,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a SPARQL query involving the <a href="http://www.opengis.net/def/function/geosparql/getSRID"><code>geof:getSRID</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a SPARQL query involving the <a href="#_function_geofgetsrid">get SRID</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_geofgetsrid">Section 8.5.18</a></p>
@@ -5349,8 +5355,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_3_1_5_confgeometry_extensionsa_functions"><a class="anchor" href="#_a_3_1_5_confgeometry_extensionsa_functions"></a>A.3.1.5 <code>/conf/geometry-extension/sa-functions</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/-functions</code>
-Implementations shall support geof:concaveHull, geof:boundingCircle, geof:union2, geof:concatLines, geof:centroid, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY and geof:minZ as a SPARQL extension functions.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/-functions</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support geof:concaveHull, geof:boundingCircle, geof:union2, geof:concatLines, geof:centroid, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY and geof:minZ as a SPARQL extension functions.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5375,8 +5383,10 @@ Implementations shall support geof:concaveHull, geof:boundingCircle, geof:union2
 <div class="sect3">
 <h4 id="_a_3_2_1_confgeometry_extensionwkt_literal"><a class="anchor" href="#_a_3_2_1_confgeometry_extensionwkt_literal"></a>A.3.2.1 <code>/conf/geometry-extension/wkt-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal</code>
-All <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> instances shall consist of an optional IRI identifying the Spatial Reference System (SRS) followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> instances are formed by concatenating a valid, absolute IRI as defined in <a href="#IETF3987">[IETF3987]</a>, one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal</code></p>
+</div>
+<div class="paragraph">
+<p>All <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances shall consist of an optional IRI identifying the Spatial Reference System (SRS) followed by Simple Features Well Known Text (WKT) describing a geometric value. Valid <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances are formed by concatenating a valid, absolute IRI as defined in <a href="#IETF3987">[IETF3987]</a>, one or more spaces (Unicode U+0020 character) as a separator, and a WKT string as defined in Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5384,7 +5394,7 @@ All <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiter
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving  <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.4.1.1</a></p>
@@ -5398,8 +5408,10 @@ All <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiter
 <div class="sect3">
 <h4 id="_a_3_2_2_confgeometry_extensionwkt_literal_default_srs"><a class="anchor" href="#_a_3_2_2_confgeometry_extensionwkt_literal_default_srs"></a>A.3.2.2 <code>/conf/geometry-extension/wkt-literal-default-srs</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal-default-srs</code>
-The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for  <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiterals</code></a> that do not specify an explicit SRS IRI.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal-default-srs</code></p>
+</div>
+<div class="paragraph">
+<p>The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances that do not specify an explicit SRS IRI.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5407,7 +5419,7 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving  <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.4.1.1</a></p>
@@ -5421,8 +5433,10 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <div class="sect3">
 <h4 id="_a_3_2_3_confgeometry_extensionwkt_axis_order"><a class="anchor" href="#_a_3_2_3_confgeometry_extensionwkt_axis_order"></a>A.3.2.3 <code>/conf/geometry-extension/wkt-axis-order</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-axis-order</code>
-Coordinate tuples within <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiterals</code></a> shall be interpreted using the axis order defined in the SRS used.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-axis-order</code></p>
+</div>
+<div class="paragraph">
+<p>Coordinate tuples within <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> instances shall be interpreted using the axis order defined in the SRS used.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5430,7 +5444,7 @@ Coordinate tuples within <a href="http://www.opengis.net/ont/geosparql#wktLitera
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving  <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.4.1.1</a></p>
@@ -5444,8 +5458,10 @@ Coordinate tuples within <a href="http://www.opengis.net/ont/geosparql#wktLitera
 <div class="sect3">
 <h4 id="_a_3_2_4_confgeometry_extensionwkt_literal_empty"><a class="anchor" href="#_a_3_2_4_confgeometry_extensionwkt_literal_empty"></a>A.3.2.4 <code>/conf/geometry-extension/wkt-literal-empty</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal-empty</code>
-An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> shall be interpreted as an empty geometry.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/wkt-literal-empty</code></p>
+</div>
+<div class="paragraph">
+<p>An empty RDFS Literal of type <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> shall be interpreted as an empty geometry.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5453,7 +5469,7 @@ An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#wktL
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving empty <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.4.1.1</a></p>
@@ -5467,8 +5483,10 @@ An empty RDFS Literal of type <a href="http://www.opengis.net/ont/geosparql#wktL
 <div class="sect3">
 <h4 id="_a_3_2_5_confgeometry_extensiongeometry_as_wkt_literal"><a class="anchor" href="#_a_3_2_5_confgeometry_extensiongeometry_as_wkt_literal"></a>A.3.2.5 <code>/conf/geometry-extension/geometry-as-wkt-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-wkt-literal</code>
-Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-wkt-literal</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDF property <a href="#_property_geoaswkt">as WKT</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5476,7 +5494,7 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving the <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> property return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoaswkt">as WKT</a> property return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_property_geoaswkt">Section 8.4.1.2</a></p>
@@ -5490,8 +5508,10 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <div class="sect3">
 <h4 id="_a_3_2_6_reqgeometry_extensionaswkt_function"><a class="anchor" href="#_a_3_2_6_reqgeometry_extensionaswkt_function"></a>A.3.2.6 <code>/req/geometry-extension/asWKT-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/asWKT-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/asWKT"><code>geof:asWKT</code></a>, as a SPARQL extension function</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/asWKT-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofaswkt">as WKT</a>, as a SPARQL extension function</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5499,7 +5519,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="http://www.opengis.net/def/function/geosparql/asWKT"><code>geof:asWKT</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofaswkt">as WKT</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_aswkt">[_function_aswkt]</a></p>
@@ -5516,8 +5536,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_3_3_1_confgeometry_extensiongml_literal"><a class="anchor" href="#_a_3_3_1_confgeometry_extensiongml_literal"></a>A.3.3.1 <code>/conf/geometry-extension/gml-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-literal</code>
-All <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> instances shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-literal</code></p>
+</div>
+<div class="paragraph">
+<p>All <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances shall consist of a valid element from the GML schema that implements a subtype of GM_Object as defined in [OGC 07-036].</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5525,7 +5547,7 @@ All <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiter
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.4.2.1</a></p>
@@ -5539,8 +5561,10 @@ All <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiter
 <div class="sect3">
 <h4 id="_a_3_3_2_confgeometry_extensiongml_literal_empty"><a class="anchor" href="#_a_3_3_2_confgeometry_extensiongml_literal_empty"></a>A.3.3.2 <code>/conf/geometry-extension/gml-literal-empty</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-literal-empty</code>
-An empty <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> shall be interpreted as an empty geometry.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-literal-empty</code></p>
+</div>
+<div class="paragraph">
+<p>An empty <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> shall be interpreted as an empty geometry.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5548,7 +5572,7 @@ An empty <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gml
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving empty <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.4.2.1</a></p>
@@ -5562,8 +5586,10 @@ An empty <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gml
 <div class="sect3">
 <h4 id="_a_3_3_3_confgeometry_extensiongml_profile"><a class="anchor" href="#_a_3_3_3_confgeometry_extensiongml_profile"></a>A.3.3.3 <code>/conf/geometry-extension/gml-profile</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-profile</code>
-Implementations shall document supported GML profiles.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/gml-profile</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall document supported GML profiles.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5585,8 +5611,10 @@ Implementations shall document supported GML profiles.</p>
 <div class="sect3">
 <h4 id="_a_3_3_4_confgeometry_extensiongeometry_as_gml_literal"><a class="anchor" href="#_a_3_3_4_confgeometry_extensiongeometry_as_gml_literal"></a>A.3.3.4 <code>/conf/geometry-extension/geometry-as-gml-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-gml-literal</code>
-Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-gml-literal</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5608,8 +5636,10 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <div class="sect3">
 <h4 id="_a_3_3_5_reqgeometry_extensionasgml_function"><a class="anchor" href="#_a_3_3_5_reqgeometry_extensionasgml_function"></a>A.3.3.5 <code>/req/geometry-extension/asGML-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/asGML-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/asGML"><code>geof:asGML</code></a>, as a SPARQL extension function</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/asGML-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofasgml">as GML</a>, as a SPARQL extension function</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5617,7 +5647,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="http://www.opengis.net/def/function/geosparql/asGML"><code>geof:asGML</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasgml">as GML</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_asgml">[_function_asgml]</a></p>
@@ -5634,8 +5664,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_3_4_1_reqgeometry_extensiongeojson_literal"><a class="anchor" href="#_a_3_4_1_reqgeometry_extensiongeojson_literal"></a>A.3.4.1 <code>/req/geometry-extension/geojson-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal</code>
-All <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> instances shall consist of valid JSON that conforms to the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a></p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal</code></p>
+</div>
+<div class="paragraph">
+<p>All <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances shall consist of valid JSON that conforms to the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a></p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5643,7 +5675,7 @@ All <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJ
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_property_geoasgml">Section 8.4.2.2</a></p>
@@ -5657,8 +5689,10 @@ All <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJ
 <div class="sect3">
 <h4 id="_a_3_4_2_reqgeometry_extensiongeojson_literal_srs"><a class="anchor" href="#_a_3_4_2_reqgeometry_extensiongeojson_literal_srs"></a>A.3.4.2 <code>/req/geometry-extension/geojson-literal-srs</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal-default-srs</code>
-The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> instances that do not specify an explicit SRS IRI.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal-default-srs</code></p>
+</div>
+<div class="paragraph">
+<p>The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances that do not specify an explicit SRS IRI.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5666,7 +5700,7 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.4.3.1</a></p>
@@ -5680,8 +5714,10 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <div class="sect3">
 <h4 id="_a_3_4_3_reqgeometry_extensiongeojson_literal_empty"><a class="anchor" href="#_a_3_4_3_reqgeometry_extensiongeojson_literal_empty"></a>A.3.4.3 <code>/req/geometry-extension/geojson-literal-empty</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal-empty</code>
-An empty <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> shall be interpreted as an empty geometry.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geojson-literal-empty</code></p>
+</div>
+<div class="paragraph">
+<p>An empty <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> shall be interpreted as an empty geometry.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5689,7 +5725,7 @@ An empty <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving empty <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo:geoJSONLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.4.3.1</a></p>
@@ -5703,8 +5739,10 @@ An empty <a href="http://www.opengis.net/ont/geosparql#geoJSONLiteral"><code>geo
 <div class="sect3">
 <h4 id="_a_3_4_4_reqgeometry_extensiongeometry_as_geojson_literal"><a class="anchor" href="#_a_3_4_4_reqgeometry_extensiongeometry_as_geojson_literal"></a>A.3.4.4 <code>/req/geometry-extension/geometry-as-geojson-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-geojson-literal</code>
-Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-geojson-literal</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDF property <a href="#_property_geoasgeojson">as GeoJSON</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5712,7 +5750,7 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving the <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> property return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoasgeojson">as GeoJSON</a> property return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_property_geoasgeojson">Section 8.4.3.2</a></p>
@@ -5726,8 +5764,10 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <div class="sect3">
 <h4 id="_a_3_4_5_reqgeometry_extensionasgeojson_function"><a class="anchor" href="#_a_3_4_5_reqgeometry_extensionasgeojson_function"></a>A.3.4.5 <code>/req/geometry-extension/asGeoJSON-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/asGeoJSON-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON"><code>geof:asGeoJSON</code></a>, as a SPARQL extension function</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/asGeoJSON-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofasgeojson">as GeoJSON</a>, as a SPARQL extension function</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5735,7 +5775,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON"><code>geof:asGeoJSON</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasgeojson">as GeoJSON</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_asgeojson">[_function_asgeojson]</a></p>
@@ -5752,8 +5792,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_3_5_1_reqgeometry_extensionkml_literal"><a class="anchor" href="#_a_3_5_1_reqgeometry_extensionkml_literal"></a>A.3.5.1 <code>/req/geometry-extension/kml-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal</code>
-All <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> instances shall consist of a valid element from the KML schema that implements a <code>kml:AbstractObjectGroup</code> as defined in <a href="#OGCKML">[OGCKML]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal</code></p>
+</div>
+<div class="paragraph">
+<p>All <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances shall consist of a valid element from the KML schema that implements a <code>kml:AbstractObjectGroup</code> as defined in <a href="#OGCKML">[OGCKML]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5761,7 +5803,7 @@ All <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiter
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geomklliteral">[_rdfs_datatype_geomklliteral]</a></p>
@@ -5775,8 +5817,10 @@ All <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiter
 <div class="sect3">
 <h4 id="_a_3_5_2_reqgeometry_extensionkml_literal_srs"><a class="anchor" href="#_a_3_5_2_reqgeometry_extensionkml_literal_srs"></a>A.3.5.2 <code>/req/geometry-extension/kml-literal-srs</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal-default-srs</code>
-The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiterals</code></a> that do not specify an explicit SRS IRI.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal-default-srs</code></p>
+</div>
+<div class="paragraph">
+<p>The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</a> shall be assumed as the SRS for <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances that do not specify an explicit SRS IRI.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5784,7 +5828,7 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a>  values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a>  values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geomklliteral">[_rdfs_datatype_geomklliteral]</a></p>
@@ -5798,8 +5842,10 @@ The IRI <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84">&lt;http://www.op
 <div class="sect3">
 <h4 id="_a_3_5_3_reqgeometry_extensionkml_literal_empty"><a class="anchor" href="#_a_3_5_3_reqgeometry_extensionkml_literal_empty"></a>A.3.5.3 <code>/req/geometry-extension/kml-literal-empty</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal-empty</code>
-An empty <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> shall be interpreted as an empty geometry.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/kml-literal-empty</code></p>
+</div>
+<div class="paragraph">
+<p>An empty <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> shall be interpreted as an empty geometry.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5807,7 +5853,7 @@ An empty <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kml
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving empty <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_rdfs_datatype_geomklliteral">[_rdfs_datatype_geomklliteral]</a></p>
@@ -5821,8 +5867,10 @@ An empty <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kml
 <div class="sect3">
 <h4 id="_a_3_5_4_reqgeometry_extensiongeometry_as_kml_literal"><a class="anchor" href="#_a_3_5_4_reqgeometry_extensiongeometry_as_kml_literal"></a>A.3.5.4 <code>/req/geometry-extension/geometry-as-kml-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-kml-literal</code>
-Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-kml-literal</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDF property <a href="#_property_geoaskml">as KML</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5830,7 +5878,7 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving the <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a>  property return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoaskml">as KML</a>  property return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_property_geoaskml">Section 8.4.4.2</a></p>
@@ -5844,8 +5892,10 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <div class="sect3">
 <h4 id="_a_3_5_5_reqgeometry_extensionaskml_function"><a class="anchor" href="#_a_3_5_5_reqgeometry_extensionaskml_function"></a>A.3.5.5 <code>/req/geometry-extension/asKML-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/asKML-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/asKML"><code>geof:asKML</code></a>, as a SPARQL extension function</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/asKML-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofaskml">as KML</a>, as a SPARQL extension function</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5853,7 +5903,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="http://www.opengis.net/def/function/geosparql/asKML"><code>geof:asKML</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofaskml">as KML</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_askml">[_function_askml]</a></p>
@@ -5870,8 +5920,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_3_6_1_reqgeometry_extensiondggs_literal"><a class="anchor" href="#_a_3_6_1_reqgeometry_extensiondggs_literal"></a>A.3.6.1 <code>/req/geometry-extension/dggs-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/dggs-literal</code>
-All RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> shall consist of a DGGS geometry serialization formulated according to a specific DGGS literal type identified by a datatype specializing this generic datatype.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/dggs-literal</code></p>
+</div>
+<div class="paragraph">
+<p>All RDFS Literals of type <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> shall consist of a DGGS geometry serialization formulated according to a specific DGGS literal type identified by a datatype specializing this generic datatype.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5893,8 +5945,10 @@ All RDFS Literals of type <a href="http://www.opengis.net/ont/geosparql#dggsLite
 <div class="sect3">
 <h4 id="_a_3_6_2_reqgeometry_extensiondggs_literal_empty"><a class="anchor" href="#_a_3_6_2_reqgeometry_extensiondggs_literal_empty"></a>A.3.6.2 <code>/req/geometry-extension/dggs-literal-empty</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/dggs-literal-empty</code>
-An empty <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:dggsLiteral</code></a> shall be interpreted as an empty geometry.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/dggs-literal-empty</code></p>
+</div>
+<div class="paragraph">
+<p>An empty <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> shall be interpreted as an empty geometry.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5902,7 +5956,7 @@ An empty <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:dggsLit
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving empty <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:dggsLiteral</code></a> values return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_dggs_serialization_serializationdggs">[_dggs_serialization_serializationdggs]</a></p>
@@ -5916,8 +5970,10 @@ An empty <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:dggsLit
 <div class="sect3">
 <h4 id="_a_3_6_3_reqgeometry_extensiongeometry_as_dggs_literal"><a class="anchor" href="#_a_3_6_3_reqgeometry_extensiongeometry_as_dggs_literal"></a>A.3.6.3 <code>/req/geometry-extension/geometry-as-dggs-literal</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-dggs-literal</code>
-Implementations shall allow the RDF property <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> to be used in SPARQL graph patterns.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/geometry-as-dggs-literal</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall allow the RDF property <a href="#_property_geoasdggs">as DGGS</a> to be used in SPARQL graph patterns.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5925,7 +5981,7 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that queries involving the <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> property return the correct result for a test dataset.</p>
+<p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoasdggs">as DGGS</a> property return the correct result for a test dataset.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.4.5.3</a></p>
@@ -5939,8 +5995,10 @@ Implementations shall allow the RDF property <a href="http://www.opengis.net/ont
 <div class="sect3">
 <h4 id="_a_3_6_4_reqgeometry_extensionasdggs_function"><a class="anchor" href="#_a_3_6_4_reqgeometry_extensionasdggs_function"></a>A.3.6.4 <code>/req/geometry-extension/asDGGS-function</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-extension/asDGGS-function</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a>, as a SPARQL extension function</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-extension/asDGGS-function</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="#_function_geofasdggs">as DGGS</a>, as a SPARQL extension function</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -5948,7 +6006,7 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <p><strong>Test purpose</strong>: Check conformance with this requirement</p>
 </li>
 <li>
-<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
+<p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasdggs">as DGGS</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
 <p><strong>Reference</strong>: <a href="#_function_asdggs">[_function_asdggs]</a></p>
@@ -5999,8 +6057,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_4_2_1_confgeometry_topology_extensionsf_query_functions"><a class="anchor" href="#_a_4_2_1_confgeometry_topology_extensionsf_query_functions"></a>A.4.2.1 <code>/conf/geometry-topology-extension/sf-query-functions</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/sf-query-functions</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/sfEquals"><code>geof:sfEquals</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfDisjoint"><code>geof:sfDisjoint</code></a>, <a href="http://www.opengis.net/def/function/geosparql/efIntersects"><code>geof:sfIntersects</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfTouches"><code>geof:sfTouches</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfCrosses"><code>geof:sfCrosses</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfWithin"><code>geof:sfWithin</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfContains"><code>geof:sfContains</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfOverlaps"><code>geof:sfOverlaps</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/sf-query-functions</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/sfEquals"><code>geof:sfEquals</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfDisjoint"><code>geof:sfDisjoint</code></a>, <a href="http://www.opengis.net/def/function/geosparql/efIntersects"><code>geof:sfIntersects</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfTouches"><code>geof:sfTouches</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfCrosses"><code>geof:sfCrosses</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfWithin"><code>geof:sfWithin</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfContains"><code>geof:sfContains</code></a>, <a href="http://www.opengis.net/def/function/geosparql/sfOverlaps"><code>geof:sfOverlaps</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6025,8 +6085,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_4_3_1_confgeometry_topology_extensioneh_query_functions"><a class="anchor" href="#_a_4_3_1_confgeometry_topology_extensioneh_query_functions"></a>A.4.3.1 <code>/conf/geometry-topology-extension/eh-query-functions</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/eh-query-functions</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/ehEquals"><code>geof:ehEquals</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehDisjoint"><code>geof:ehDisjoint</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehMeet"><code>geof:ehMeet</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehOverlap"><code>geof:ehOverlap</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehCovers"><code>geof:ehCovers</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehCoveredBy"><code>geof:ehCoveredBy</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehInside"><code>geof:ehInside</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehContains"><code>geof:ehContains</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125- 1].</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/eh-query-functions</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/ehEquals"><code>geof:ehEquals</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehDisjoint"><code>geof:ehDisjoint</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehMeet"><code>geof:ehMeet</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehOverlap"><code>geof:ehOverlap</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehCovers"><code>geof:ehCovers</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehCoveredBy"><code>geof:ehCoveredBy</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehInside"><code>geof:ehInside</code></a>, <a href="http://www.opengis.net/def/function/geosparql/ehContains"><code>geof:ehContains</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features [ISO 19125- 1].</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6051,8 +6113,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_4_4_1_confgeometry_topology_extensionrcc8_query_functions"><a class="anchor" href="#_a_4_4_1_confgeometry_topology_extensionrcc8_query_functions"></a>A.4.4.1 <code>/conf/geometry-topology-extension/rcc8-query-functions</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/rcc8-query-functions</code>
-Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/rcc8eq"><code>geof:rcc8eq</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8dc"><code>geof:rcc8dc</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ec"><code>geof:rcc8ec</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8po"><code>geof:rcc8po</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8tppi"><code>geof:rcc8tppi</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8tpp"><code>geof:rcc8tpp</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ntpp"><code>geof:rcc8ntpp</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ntppi"><code>geof:rcc8ntppi</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/geometry-topology-extension/rcc8-query-functions</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support <a href="http://www.opengis.net/def/function/geosparql/rcc8eq"><code>geof:rcc8eq</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8dc"><code>geof:rcc8dc</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ec"><code>geof:rcc8ec</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8po"><code>geof:rcc8po</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8tppi"><code>geof:rcc8tppi</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8tpp"><code>geof:rcc8tpp</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ntpp"><code>geof:rcc8ntpp</code></a>, <a href="http://www.opengis.net/def/function/geosparql/rcc8ntppi"><code>geof:rcc8ntppi</code></a> as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6085,8 +6149,10 @@ Implementations shall support <a href="http://www.opengis.net/def/function/geosp
 <div class="sect3">
 <h4 id="_a_5_1_1_confrdfsentailmentextensionbgp_rdfs_ent"><a class="anchor" href="#_a_5_1_1_confrdfsentailmentextensionbgp_rdfs_ent"></a>A.5.1.1 <code>/conf/rdfsentailmentextension/bgp-rdfs-ent</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/bgp-rdfs-ent</code>
-Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/bgp-rdfs-ent</code></p>
+</div>
+<div class="paragraph">
+<p>Basic graph pattern matching shall use the semantics defined by the RDFS Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6111,8 +6177,10 @@ Basic graph pattern matching shall use the semantics defined by the RDFS Entailm
 <div class="sect3">
 <h4 id="_a_5_2_1_confrdfs_entailment_extensionwkt_geometry_types"><a class="anchor" href="#_a_5_2_1_confrdfs_entailment_extensionwkt_geometry_types"></a>A.5.2.1 <code>/conf/rdfs-entailment-extension/wkt-geometry-types</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/wkt-geometry-types</code>
-Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/wkt-geometry-types</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the one in the specified version of Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6137,8 +6205,10 @@ Implementations shall support graph patterns involving terms from an RDFS/OWL cl
 <div class="sect3">
 <h4 id="_a_5_3_1_confrdfs_entailment_extensiongml_geometry_types"><a class="anchor" href="#_a_5_3_1_confrdfs_entailment_extensiongml_geometry_types"></a>A.5.3.1 <code>/conf/rdfs-entailment-extension/gml-geometry-types</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/gml-geometry-types</code>
-Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML <a href="#OGC07-036">[OGC07-036]</a>.</p>
+<p><strong>Requirement</strong>: <code>/req/rdfs-entailment-extension/gml-geometry-types</code></p>
+</div>
+<div class="paragraph">
+<p>Implementations shall support graph patterns involving terms from an RDFS/OWL class hierarchy of geometry types consistent with the GML schema that implements GM_Object using the specified version of GML <a href="#OGC07-036">[OGC07-036]</a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6171,8 +6241,10 @@ Implementations shall support graph patterns involving terms from an RDFS/OWL cl
 <div class="sect3">
 <h4 id="_a_6_1_1_confquery_rewrite_extensionsf_query_rewrite"><a class="anchor" href="#_a_6_1_1_confquery_rewrite_extensionsf_query_rewrite"></a>A.6.1.1 <code>/conf/query-rewrite-extension/sf-query-rewrite</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/query-rewrite-extension/sf-query-rewrite</code>
-Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a> for the RIF rules <a href="#RIFCORE">[RIFCORE]</a> <a href="http://www.opengis.net/def/rule/geosparql/sfEquals"><code>geor:sfEquals</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfDisjoint"><code>geor:sfDisjoint</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfIntersects"><code>geor:sfIntersects</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfTouches"><code>geor:sfTouches</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfCrosses"><code>geor:sfCrosses</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfWithin"><code>geor:sfWithin</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfContains"><code>geor:sfContains</code></a> and <a href="http://www.opengis.net/def/rule/geosparql/sfOverlaps"><code>geor:sfOverlaps</code></a>..</p>
+<p><strong>Requirement</strong>: <code>/req/query-rewrite-extension/sf-query-rewrite</code></p>
+</div>
+<div class="paragraph">
+<p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a> for the RIF rules <a href="#RIFCORE">[RIFCORE]</a> <a href="http://www.opengis.net/def/rule/geosparql/sfEquals"><code>geor:sfEquals</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfDisjoint"><code>geor:sfDisjoint</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfIntersects"><code>geor:sfIntersects</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfTouches"><code>geor:sfTouches</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfCrosses"><code>geor:sfCrosses</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfWithin"><code>geor:sfWithin</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/sfContains"><code>geor:sfContains</code></a> and <a href="http://www.opengis.net/def/rule/geosparql/sfOverlaps"><code>geor:sfOverlaps</code></a>..</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -6197,8 +6269,10 @@ Basic graph pattern matching shall use the semantics defined by the RIF Core Ent
 <div class="sect3">
 <h4 id="_a_6_2_1_confquery_rewrite_extensioneh_query_rewrite"><a class="anchor" href="#_a_6_2_1_confquery_rewrite_extensioneh_query_rewrite"></a>A.6.2.1 <code>/conf/query-rewrite-extension/eh-query-rewrite</code></h4>
 <div class="paragraph">
-<p><strong>Requirement</strong>: <code>/req/query-rewrite-extension/eh-query-rewrite</code>
-Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a> for the RIF rules <a href="#RIFCORE">[RIFCORE]</a> <a href="http://www.opengis.net/def/rule/geosparql/ehEquals"><code>geor:ehEquals</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehDisjoint"><code>geor:ehDisjoint</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehMeet"><code>geor:ehMeet</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehOverlap"><code>geor:ehOverlap</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehCovers"><code>geor:ehCovers</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehCoveredBy"><code>geor:ehCoveredBy</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehInside"><code>geor:ehInside</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehContains"><code>geor:ehContains</code></a>.</p>
+<p><strong>Requirement</strong>: <code>/req/query-rewrite-extension/eh-query-rewrite</code></p>
+</div>
+<div class="paragraph">
+<p>Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <a href="#SPARQLENT">[SPARQLENT]</a> for the RIF rules <a href="#RIFCORE">[RIFCORE]</a> <a href="http://www.opengis.net/def/rule/geosparql/ehEquals"><code>geor:ehEquals</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehDisjoint"><code>geor:ehDisjoint</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehMeet"><code>geor:ehMeet</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehOverlap"><code>geor:ehOverlap</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehCovers"><code>geor:ehCovers</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehCoveredBy"><code>geor:ehCoveredBy</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehInside"><code>geor:ehInside</code></a>, <a href="http://www.opengis.net/def/rule/geosparql/ehContains"><code>geor:ehContains</code></a>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -8057,7 +8131,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-21 10:39:32 +1000
+Last updated 2021-08-12 01:14:33 +1000
 </div>
 </div>
 </body>
