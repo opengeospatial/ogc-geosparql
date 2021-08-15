@@ -10,7 +10,7 @@ Many vocabularies, such as these two, provide little specific support for detail
 
 Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_ footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent _Data Catalog Vocabulary, Version 2_ (DCAT2) standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
 
-Some of the properties defined in these vocabularies, such as DCAT2's `spatialResolution` have motivated the inclusion of new properties in this version of GeoSPARQL. In this case the equivalent property is <<Property: geo:hasSpatialResolution, has spatial resolution>>. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontologies that were influential in the generation of this verison of GeoSPARQL.
+Some of the properties defined in these vocabularies, such as DCAT2's `spatialResolution` have motivated the inclusion of new properties in this version of GeoSPARQL. In this case the equivalent property is <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontologies that were influential in the generation of this verison of GeoSPARQL.
 
 === Parameters
 
@@ -24,7 +24,7 @@ version:: Specifies the version of the serialization format used.
 
 === Geometry Class
 
-A single root geometry class is defined: <<Class: geo:Geometry, Geometry>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
+A single root geometry class is defined: <<Class: geo:Geometry, `geo:Geometry`>>. In addition, properties are defined for describing geometry data and for associating geometries with features.
 
 One container class is defined: <<Class: geo:GeometryCollection, Geometry Collection>>. 
 
@@ -46,7 +46,7 @@ geo:Geometry
 ```
 
 |===
-| *Req 11* Implementations shall allow the RDFS class <<Class: geo:Geometry, Geometry>> to be used in SPARQL graph patterns.
+| *Req 11* Implementations shall allow the RDFS class <<Class: geo:Geometry, `geo:Geometry`>> to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class`]
 |===
 
@@ -139,7 +139,7 @@ geo:spatialDimension
 
 The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is defined to indicate spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinghuishable distance between adjacent coordinate sets. Therefore this property is not applicable to a point Geometry, because it consists of a single coordinate set.
 
-Since this property is defined for a <<Class: geo:Geometry, Geometry>>, all literal representations of that Geometry instance must have the same spatial resolution.
+Since this property is defined for a <<Class: geo:Geometry, `geo:Geometry`>>, all literal representations of that Geometry instance must have the same spatial resolution.
 
 ```turtle
 geo:hasSpatialResolution 
@@ -154,7 +154,7 @@ geo:hasSpatialResolution
 
 ==== Property: geo:hasMetricSpatialResolution
 
-The property http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[`geo:hasMetricSpatialResolution`] is similar to <<Property: geo:hasSpatialResolution, has spatial resolution>>, specifies that the unit of resolution distance is always meter (the standard distance unit of the International System of Units). 
+The property http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[`geo:hasMetricSpatialResolution`] is similar to <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>, specifies that the unit of resolution distance is always meter (the standard distance unit of the International System of Units). 
 
 ```turtle
 geo:hasMetricSpatialResolution 
@@ -643,7 +643,9 @@ NOTE: What `R3234` means, or the meaning of any other element within a concrete 
 The property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] is defined to link a geometry with its DGGS serialization.
 
 |===
-| *Req 38* Implementations shall allow the RDF property http://www.opengis.net/ont/geosparql#asDGGS[`geo:asDGGS`] to be used in SPARQL graph patterns.
+| *Req 38* Implementations shall allow the RDF property 
+<<Property: geo:asDGGS, `geo:asDGGS`>> 
+to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal`]
 |===
 
@@ -684,7 +686,14 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 <<Function: geof:area, area>>, <<Function: geof:length, length>>,
 <<Function: geof:numGeometries, num geometries>>,
 <<Function: geof:geometryN, geometry n>>, <<Function: geof:transform, transform>>,
-<<Function: geof:dimension, dimension>>, <<Function: geof:difference, difference>>, <<Function: geof:symDifference, sym difference>>, <<Function: geof:envelope, envelope>>, <<Function: geof:boundary, boundary>> as SPARQL extension functions, consistent with the definitions of their corresponding functions in Simple Features <<ISO19125-1>> (`distance`, `buffer`, `intersection`, `union`, `isEmpty`, `isSimple`, `area`, `length`, `numGeometries`, `geometryN`, `transform`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) and other attached definitions.
+<<Function: geof:dimension, dimension>>, <<Function: geof:difference, difference>>, <<Function: geof:symDifference, sym difference>>, <<Function: geof:envelope, envelope>>, <<Function: geof:boundary, boundary>> as SPARQL extension functions, consistent with the definitions of their corresponding functions in Simple Features <<ISO19125-1>> (`distance`, `buffer`, `intersection`, `union`, `isEmpty`, `isSimple`, `area`, `length`, `numGeometries`, `geometryN`, `transform`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) and other attached definitions and also 
+http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
+http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], 
+http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  
+http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], 
+http://www.opengis.net/def/function/geosparql/minY[`geof:minY`], 
+http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`]
+SPARQL extension functions
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions`]
 |===
 
@@ -846,35 +855,14 @@ geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-
-|===
-| *Req 41* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] as a SPARQL extension function.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function`]
-|===
-
-==== Function: geof:getSRID
+==== Function: geof:convexHull
 
 ```
-geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
+geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-Returns the spatial reference system IRI for `geom`.
+The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-=== Spatial Aggregate Functions
-This clause defines SPARQL functions for performing spatial aggregations of data.
-
-|===
-| *Req 42* Implementations shall support http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
-http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`], http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`], 
-http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingBox`], 
-http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], 
-http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`],
-http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`],
-http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`],
-http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], 
-http://www.opengis.net/def/function/geosparql/union2[`geof:union2`] as a SPARQL extension functions.
-|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions`]
-|===
 
 ==== Function: geof:maxX
 
@@ -924,12 +912,40 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 
 The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom`.
 
+==== Function: geof:getSRID
+
+```
+geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
+```
+
+Returns the spatial reference system IRI for `geom`.
+
+|===
+| *Req 41* Implementations shall support http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] as a SPARQL extension function.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function`]
+|===
+
+=== Spatial Aggregate Functions
+This clause defines SPARQL functions for performing spatial aggregations of data.
+
+|===
+| *Req 42* Implementations shall support 
+<<Function: geof:boundingBox,`geof:boundingBox`>>, 
+<<Function: geof:boundingCircle,`geof:boundingCircle`>>, 
+<<Function: geof:centroid,`geof:centroid`>>, 
+<<Function: geof:concatLines,`geof:concatLines`>>, 
+<<Function: geof:concaveHull,`geof:concaveHull`>>, 
+<<Function: geof:convexHull,`geof:convexHull`>> and 
+<<Function: geof:union2,`geof:union2`>> as a SPARQL extension functions.
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions`]
+|===
+
 ==== Function: geof:boundingBox
 ```
 geof:boundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function is an alias for <<Function: geof:envelope, geof:envelope>> and is included due to the common use of the term _Bounding Box_ for an envelope and to keep consistency with _Bounding Circle_.
+The function http://www.opengis.net/def/function/geosparql/boundingBox[`geof:boundingBox`] calculates a minimum bounding box - rectangle - of the set of given geometries.
 
 ==== Function: geof:boundingCircle
 ```
@@ -962,13 +978,15 @@ geof:concaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLit
 
 The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`] calculates the concave hull of the set of given geometries.
 
-==== Function: geof:convexHull
+==== Function: geof:convexHull2
 
 ```
-geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
+geof:convexHull2 (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+The function http://www.opengis.net/def/function/geosparql/convexHull2[`geof:convexHull2`] calculates the convex hull of the set of given geometries.
+
+NOTE: this function is similar in name to <<Function: geof:convexHull, geof:convexHull>> used to calculate the convex hull of just one geometry.
 
 ==== Function: geof:union2
 
@@ -978,3 +996,4 @@ geof:union2 (geom: ogc:geomLiteral): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/union2[`geof:union2`] calculates the union of the set of given geometries.
 
+NOTE: this function is similar in name to <<Function: geof:union, geof:union>> used to calculate the union of just two geometries.

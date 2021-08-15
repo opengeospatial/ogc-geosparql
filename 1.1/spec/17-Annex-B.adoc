@@ -6,19 +6,10 @@ This Annex provides examples of the GeoSPARQL ontology and functions. In additio
 
 This Section illustrates GeoSPARQL ontology modelling with extended examples.
 
-_New Features checklist - to be removed when all examples are complete:_
-
-|===
-|New element | Section
-
-2+|_Classes_
-|Spatial Measure class | <<Class: geo:SpatialMeasure>>
-|===
-
 === B.1.1 Classes
 
 ==== B 1.1.1 `SpatialObject`
-The `SpatialObject` class is defined in <<Class: geo:SpatialObject, Spatial Object>>.
+The `SpatialObject` class is defined in <<Class: geo:SpatialObject, `geo:SpatialObject`>>.
 
 Basic use (as per the example in the class definition)
 
@@ -28,7 +19,7 @@ eg:x a geo:SpatialObject ;
 .
 ```
 
-NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: geo:SpatialObject, Spatial Object>> as its two more concrete subclasses, <<Class: geo:Feature, Feature>> & <<Class: geo:Geometry, Geometry>>, are more directly relatable to real-world phenomena and use.
+NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> as its two more concrete subclasses, <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>>, are more directly relatable to real-world phenomena and use.
 
 ==== B 1.1.2 `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
@@ -54,7 +45,7 @@ eg:x a geo:Feature ;
 .
 ```
 
-Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of <<Property: geo:hasGeometry, has geometry>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
+Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of <<Property: geo:hasGeometry, `geo:hasGeometry`>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
 ===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated
 
@@ -74,7 +65,7 @@ eg:x a geo:Feature ;
 .
 ```
 
-Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property <<Property: geo:hasArea, has area>>. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
+Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialMeasure` for the `Feature` is indicated with the use of the property <<Property: geo:hasArea, `geo:hasArea`>>. This property indicates a `SpatialMeasure` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
 
 Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialMeasure` instance's value.
 
@@ -138,9 +129,9 @@ eg:x a geo:Feature ;
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the <<Property: geo:hasSpatialResolution, has spatial resolution>> property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
+In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>> property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialMeasure` instances indicated>> with its use of QUDT for unit & value. 
 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of <<Property: geo:hasSpatialResolution, has spatial resolution>>.
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>.
 
 ===== B 1.1.2.7 `Feature` with two different `Geometry` instances using metric spatial resolution
 
@@ -216,10 +207,10 @@ eg:x
 
 Here a single `Geometry`, linked to a `Feature` instance, is expressed using two different serializations: Well-known Text and the example AusPIX DGGS. Note that the latter is not formally defined in GeoSPARQL.
 
-==== B 1.1.4 `SpatialMeasure`
+==== B.1.1.4 `SpatialMeasure`
 The `SpatialMeasure` class is defined in <<Class: geo:SpatialMeasure>>.
 
-===== B1.1.4.1 Basic Use
+===== B.1.1.4.1 Basic Use
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -250,7 +241,7 @@ eg:x
 
 In this example, the `SpatialMeasure` instance has no label - only a numeric value and a unit of measure - but it is declared to be the area for "Feature X".
 
-===== B1.1.4.1 Multiple measures
+===== B.1.1.4.1 Multiple measures
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -273,31 +264,48 @@ eg:x
 
 This example shows a `Feature` instance with area and volume declared. A categorization of the feature is given through the use of the `eg:hasFeatureCategory` dummy property which, along with the feature's preferred label, indicate that this feature is a lake. Having both an area and a volume makes sense for a lake.
 
+==== B 1.1.5 `SpatialObjectCollection`
+<<Class: geo:SpatialObjectCollection, `geo:SpatialObjectCollection`>> isn't really intended to be implemented - it's essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> & <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> classes.
+
+==== B 1.1.6 `FeatureCollection`
+
+This example shows a `FeatureCollection` instance containing 3 `Feature` instances.
+
+```turtle
+ex:fc-x
+    a geo:FeatureCollection ;
+    dcterms:title "Feature Collection X" ;
+    rdfs:member
+        ex:feature-something ,
+        ex:feature-other ,
+        ex:feature-another ;
+.
+```
+
+All of the GeoSPARQL collection classes are unordered since they are succlasses of the generic `rdfs:Container`, however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instances labels, their areas, geometries or any other property.
+
+==== B 1.1.7 `GeometryCollection`
+
+This example shows a `GeometryCollection` instance containing 3 `Geometry` instances.
+
+```turtle
+ex:gc-x
+    a geo:GeometryCollection ;
+    dcterms:title "Geometry Collection X" ;
+    rdfs:member
+        ex:geometry-shape ,
+        ex:geometry-othershape ,
+        ex:geometry-anothershape ;
+.
+```
+
+As per `FeatureCollection`, the `GeometryCollection` itse;f doesn't impose any ordering on its member `Geometry` instances, however there are many ways to order them, based on their own properties.
+
 === B.1.2 Properties
-
-_New Features checklist - to be removed when all examples are complete:_
-
-|===
-|New element | Section
-
-2+|_Feature Properties_
-|hasBoundingBox | <<Property: geo:hasBoundingBox>>
-|hasCentroid | <<Property: geo:hasCentroid>>
-|hasLength | <<Property: geo:hasLength>>
-|hasArea | <<Property: geo:hasArea>>
-|hasVolume | <<Property: geo:hasVolume>>
-2+|_Geometry Serializations_
-|geoJSONLiteral | <<RDFS Datatype: geo:geoJSONLiteral>>
-|asGeoJSON | <<Property: geo:asGeoJSON>>
-|kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
-|asKML | <<Property: geo:asKML>>
-|dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
-|asDGGS | <<Property: geo:asDGGS>>
-|===
 
 ==== B.1.2.1 Feature Properties
 
-This example shows a `Feature` instance with each of the properties defined in <<8.3. Standard Properties for geo:Feature>> used.
+This example shows a `Feature` instance with each of the properties defined in <<Standard Properties for geo:Feature>> used.
 
 ```turtle
 eg:x
@@ -341,7 +349,7 @@ The properties defined for this example's `Feature` instance are vaguely aligned
 
 ==== B.1.2.2 Geometry Properties
 
-This example shows a `Geometry` instance declaread in relation to a `Feature` instance with each of the properties defined in <<8.4. Standard Properties for geo:Geometry>> used.
+This example shows a `Geometry` instance declaread in relation to a `Feature` instance with each of the properties defined in <<Standard Properties for geo:Geometry>> used.
 
 ```turtle
 eg:x
@@ -477,29 +485,6 @@ eg:x
 ```
 
 == B.2 Example SPARQL Queries & Rules 
-
-_New Features checklist - to be removed when all examples are complete:_
-
-|===
-|New element | Section
-
-2+|_Non-topological Query Functions_
-|maxX | <<Function: geof:maxX>>
-|maxY | <<Function: geof:maxY>>
-|maxZ | <<Function: geof:maxZ>>
-|minX | <<Function: geof:minX>>
-|minY | <<Function: geof:minY>>
-|minZ | <<Function: geof:minZ>>
-2+|_Spatial Aggregate Functions_
-|BBOX | <<Function: geosaf:BBOX>>
-|BoundingCircle | <<Function: geoaf:BoundingCircle>>
-|Centroid | <<Function: geoaf:Centroid>>
-|ConcatLines | <<Function: geoaf:ConcatLines>>
-|ConcaveHull | <<Function: geoaf:ConcaveHull>>
-|ConvexHull | <<Function: geoaf:ConvexHull>>
-|Union | <<Function: geoaf:Union>>
-|===
-
 
 This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
 
@@ -823,18 +808,6 @@ WHERE {
 
 
 === B.2.4 Example Geometry Serialization Conversion Functions
-
-_New Features checklist - to be removed when all examples are complete:_
-
-|===
-|New element | Section
-
-2+|_Geometry Serializations_
-|asWKT function | <<Function: geof:asWKT>>
-|asGML function | <<Function: geof:asGML>>
-|asGeoJSON function | <<Function: geof:asGeoJSON>>
-|asKML function | <<Function: geof:asKML>>
-|===
 
 ==== B.1.2.2.1 `geof:asWKT`
 
