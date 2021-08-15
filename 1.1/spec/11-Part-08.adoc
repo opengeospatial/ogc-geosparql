@@ -679,12 +679,12 @@ The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`]
 This clause defines SPARQL functions for performing non-topological spatial operations.
 
 |===
-| *Req 40* Implementations shall support the functions <<Function: geof:distance, distance>>, <<Function: geof:buffer, buffer>>, <<Function: geof:convexHull, convex hull>>, <<Function: geof:intersection, intersection>>, <<Function: geof:union, union>>, 
+| *Req 40* Implementations shall support the functions <<Function: geof:distance, distance>>, <<Function: geof:buffer, buffer>>, <<Function: geof:intersection, intersection>>, <<Function: geof:union, union>>, 
 <<Function: geof:isEmpty, is empty>>, <<Function: geof:isSimple, is simple>>, 
 <<Function: geof:area, area>>, <<Function: geof:length, length>>,
 <<Function: geof:numGeometries, num geometries>>,
 <<Function: geof:geometryN, geometry n>>, <<Function: geof:transform, transform>>,
-<<Function: geof:dimension, dimension>>, <<Function: geof:difference, difference>>, <<Function: geof:symDifference, sym difference>>, <<Function: geof:envelope, envelope>>, <<Function: geof:boundary, boundary>> as SPARQL extension functions, consistent with the definitions of their corresponding functions in Simple Features <<ISO19125-1>> (`distance`, `buffer`, `convexHull`, `intersection`, `union`, `isEmpty`, `isSimple`, `area`, `length`, `numGeometries`, `geometryN`, `transform`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) and other attached definitions.
+<<Function: geof:dimension, dimension>>, <<Function: geof:difference, difference>>, <<Function: geof:symDifference, sym difference>>, <<Function: geof:envelope, envelope>>, <<Function: geof:boundary, boundary>> as SPARQL extension functions, consistent with the definitions of their corresponding functions in Simple Features <<ISO19125-1>> (`distance`, `buffer`, `intersection`, `union`, `isEmpty`, `isSimple`, `area`, `length`, `numGeometries`, `geometryN`, `transform`, `dimension`, `difference`, `symDifference`, `envelope` and `boundary` respectively) and other attached definitions.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions`]
 |===
 
@@ -727,14 +727,6 @@ geof:buffer (geom: ogc:geomLiteral,
 ```
 
 Returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
-
-==== Function: geof:convexHull
-
-```
-geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
-```
-
-Returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:isEmpty
 
@@ -844,7 +836,7 @@ This function returns a geometric object that represents all Points in the set s
 geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns the minimum bounding box of `geom1`. Calculations are in the spatial reference system of `geom1`.
+This function returns the minimum bounding box - a rectangle - of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:boundary
 
@@ -868,10 +860,19 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 
 Returns the spatial reference system IRI for `geom`.
 
+=== Spatial Aggregate Functions
+This clause defines SPARQL functions for performing spatial aggregations of data.
 
 |===
-| *Req 42* Implementations shall support http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`], http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], http://www.opengis.net/def/function/geosparql/union2[`geof:union2`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`], http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`], http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
-http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] and http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] as a SPARQL extension functions.
+| *Req 42* Implementations shall support http://www.opengis.net/def/function/geosparql/minX[`geof:maxX`],
+http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`], http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`],  http://www.opengis.net/def/function/geosparql/minX[`geof:minX`], http://www.opengis.net/def/function/geosparql/minY[`geof:minY`], http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`], 
+http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingBox`], 
+http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`], 
+http://www.opengis.net/def/function/geosparql/concatLines[`geof:centroid`],
+http://www.opengis.net/def/function/geosparql/concatLines[`geof:concatLines`],
+http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`],
+http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`], 
+http://www.opengis.net/def/function/geosparql/union2[`geof:union2`] as a SPARQL extension functions.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions`]
 |===
 
@@ -923,6 +924,13 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 
 The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom`.
 
+==== Function: geof:boundingBox
+```
+geof:boundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+
+This function is an alias for <<Function: geof:envelope, geof:envelope>> and is included due to the common use of the term _Bounding Box_ for an envelope and to keep consistency with _Bounding Circle_.
+
 ==== Function: geof:boundingCircle
 ```
 geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
@@ -953,6 +961,14 @@ geof:concaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLit
 ```
 
 The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`] calculates the concave hull of the set of given geometries.
+
+==== Function: geof:convexHull
+
+```
+geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:union2
 
