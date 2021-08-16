@@ -221,14 +221,14 @@ GeoSPARQL does not restrict the cardinality of the http://www.opengis.net/ont/ge
 
 ==== Property: geo:hasLength
 
-The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] is used to indicate the length of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. In the case of a one-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is the simple length. In the case of a two-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is interpreted to mean the perimeter length. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] is used to indicate the length of a http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] which could be either a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. In the case of a one-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is the simple length. In the case of a two-dimensional http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`], it is interpreted to mean the perimeter length. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.
 
 ```turtle
 geo:hasLength a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length"@en ;
-    skos:definition "The length of a Feature, expressed as a Spatial Measure."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The length of a one-dimensional Spatial Object or the perimeter length of a two-dimensional Spatial Object, expressed as a Spatial Measure."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .
 ```
 
@@ -252,21 +252,21 @@ The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetric
 geo:hasMetricLength a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length in meters"@en ;
-    skos:definition "The length of a Feature in meters."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The length of a Spatial Object in meters."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .
 ```
 
 ==== Property: geo:hasArea
 
-The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] which could be either a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.
 
 ```turtle
 geo:hasArea a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area"@en ;
-    skos:definition "The two-dimensional area of a Feature, expressed as a Spatial Measure."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The two-dimensional area of a Spatial Object, expressed as a Spatial Measure."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .
 ```
 
@@ -290,22 +290,22 @@ The property http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricAr
 geo:hasMetricArea a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area in square meters"@en ;
-    skos:definition "The area of a Feature in square meters."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The area of a Spatial Object in square meters."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .
 ```
 
 ==== Property: geo:hasVolume
 
-The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] is used to indicate the volume of a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] is used to indicate the volume of a http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] which could be either a http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or a http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`]. The range of the property is http://www.opengis.net/ont/geosparql#SpatialMeasure[`geo:SpatialMeasure`], which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.
 
 ```turtle
 geo:hasVolume a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume"@en ;
-    skos:definition "The volume of a Feature, expressed as a 
+    skos:definition "The volume of a Spatial Object, expressed as a 
                     Spatial Measure"@en ; 
-    rdfs:domain geo:Feature ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .
 ```
 
@@ -329,8 +329,8 @@ The property http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetric
 geo:hasMetricVolume a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume in cubic meters"@en ;
-    skos:definition "The volume of a Feature in cubic meters."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The volume of a Spatial Object in cubic meters."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .
 ```
 
