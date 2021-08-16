@@ -2065,15 +2065,15 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="sect3">
 <h4 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>6.4.5. Property: geo:hasLength</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a> is used to indicate the length of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. In the case of a one-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is the simple length. In the case of a two-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is interpreted to mean the perimeter length. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a> is used to indicate the length of a <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> which could be either a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or a <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a>. In the case of a one-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is the simple length. In the case of a two-dimensional <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>, it is interpreted to mean the perimeter length. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasLength a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length"@en ;
-    skos:definition "The length of a Feature, expressed as a Spatial Measure."@en ;
-    rdfs:domain geo:Feature ;
+    skos:definition "The length of a one-dimensional Spatial Object or the perimeter length of a two-dimensional Spatial Object, expressed as a Spatial Measure."@en ;
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .</code></pre>
 </div>
 </div>
@@ -2112,8 +2112,8 @@ A consistency check can be applied to geometries indicating both this property a
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricLength a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length in meters"@en ;
-    skos:definition "The length of a Feature in meters."@en ;
-    rdfs:domain geo:Feature ;
+    skos:definition "The length of a Spatial Object in meters."@en ;
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .</code></pre>
 </div>
 </div>
@@ -2121,15 +2121,15 @@ A consistency check can be applied to geometries indicating both this property a
 <div class="sect3">
 <h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>6.4.7. Property: geo:hasArea</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a> is used to indicate the area of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a> is used to indicate the area of a <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> which could be either a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or a <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasArea a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area"@en ;
-    skos:definition "The two-dimensional area of a Feature, expressed as a Spatial Measure."@en ;
-    rdfs:domain geo:Feature ;
+    skos:definition "The two-dimensional area of a Spatial Object, expressed as a Spatial Measure."@en ;
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .</code></pre>
 </div>
 </div>
@@ -2168,8 +2168,8 @@ A consistency check can be applied to geometries indicating both this property a
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricArea a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area in square meters"@en ;
-    skos:definition "The area of a Feature in square meters."@en ;
-    rdfs:domain geo:Feature ;
+    skos:definition "The area of a Spatial Object in square meters."@en ;
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .</code></pre>
 </div>
 </div>
@@ -2177,16 +2177,16 @@ A consistency check can be applied to geometries indicating both this property a
 <div class="sect3">
 <h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>6.4.9. Property: geo:hasVolume</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> is used to indicate the volume of a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> is used to indicate the volume of a <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> which could be either a <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or a <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a>. The range of the property is <a href="http://www.opengis.net/ont/geosparql#SpatialMeasure"><code>geo:SpatialMeasure</code></a>, which encodes the length value expressed as a scalar quantity and also other properties as needed by the measurement system used, such as units of measure. Uncertainty and other properties may be included also.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasVolume a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume"@en ;
-    skos:definition "The volume of a Feature, expressed as a
+    skos:definition "The volume of a Spatial Object, expressed as a
                     Spatial Measure"@en ;
-    rdfs:domain geo:Feature ;
+    rdfs:domain :SpatialObject ;
     rdfs:range geo:SpatialMeasure .</code></pre>
 </div>
 </div>
@@ -2225,8 +2225,8 @@ A consistency check can be applied to geometries indicating both this property a
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:hasMetricVolume a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume in cubic meters"@en ;
-    skos:definition "The volume of a Feature in cubic meters."@en ;
-    rdfs:domain geo:Feature ;
+    skos:definition "The volume of a Spatial Object in cubic meters."@en ;
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .</code></pre>
 </div>
 </div>
@@ -6183,7 +6183,7 @@ This Annex provides examples of the GeoSPARQL ontology and functions. In additio
 <div class="sect2">
 <h3 id="_b_1_1_classes"><a class="anchor" href="#_b_1_1_classes"></a>B.1.1 Classes</h3>
 <div class="sect3">
-<h4 id="_b_1_1_1_spatialobject"><a class="anchor" href="#_b_1_1_1_spatialobject"></a>B 1.1.1 <code>SpatialObject</code></h4>
+<h4 id="_b_1_1_1_spatialobject"><a class="anchor" href="#_b_1_1_1_spatialobject"></a>B.1.1.1 <code>SpatialObject</code></h4>
 <div class="paragraph">
 <p>The <code>SpatialObject</code> class is defined in <a href="#_class_geospatialobject">Section 6.2.1</a>.</p>
 </div>
@@ -6192,7 +6192,8 @@ This Annex provides examples of the GeoSPARQL ontology and functions. In additio
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:SpatialObject ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:SpatialObject ;
     skos:prefLabel "Object X";
 .</code></pre>
 </div>
@@ -6211,15 +6212,16 @@ It is unlikely that users of GeoSPARQL will create many instances of <a href="ht
 </div>
 </div>
 <div class="sect3">
-<h4 id="_b_1_1_2_feature"><a class="anchor" href="#_b_1_1_2_feature"></a>B 1.1.2 <code>Feature</code></h4>
+<h4 id="_b_1_1_2_feature"><a class="anchor" href="#_b_1_1_2_feature"></a>B.1.1.2 <code>Feature</code></h4>
 <div class="paragraph">
 <p>The <code>Feature</code> class is defined in <a href="#_class_geofeature">Section 6.2.2</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_1_basic_use"><a class="anchor" href="#_b_1_1_2_1_basic_use"></a>B 1.1.2.1 Basic use</h5>
+<h5 id="_b_1_1_2_1_basic_use"><a class="anchor" href="#_b_1_1_2_1_basic_use"></a>B.1.1.2.1 Basic use</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
 .</code></pre>
 </div>
@@ -6229,10 +6231,11 @@ It is unlikely that users of GeoSPARQL will create many instances of <a href="ht
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_2_a_feature_related_to_a_geometry"><a class="anchor" href="#_b_1_1_2_2_a_feature_related_to_a_geometry"></a>B 1.1.2.2 A <code>Feature</code> related to a <code>Geometry</code></h5>
+<h5 id="_b_1_1_2_2_a_feature_related_to_a_geometry"><a class="anchor" href="#_b_1_1_2_2_a_feature_related_to_a_geometry"></a>B.1.1.2.2 A <code>Feature</code> related to a <code>Geometry</code></h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -6245,12 +6248,13 @@ It is unlikely that users of GeoSPARQL will create many instances of <a href="ht
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_3_feature_with_both_geometry_and_spatialmeasure_instances_indicated"><a class="anchor" href="#_b_1_1_2_3_feature_with_both_geometry_and_spatialmeasure_instances_indicated"></a>B 1.1.2.3 <code>Feature</code> with both <code>Geometry</code> and <code>SpatialMeasure</code> instances indicated</h5>
+<h5 id="_b_1_1_2_3_feature_with_both_geometry_and_spatialmeasure_instances_indicated"><a class="anchor" href="#_b_1_1_2_3_feature_with_both_geometry_and_spatialmeasure_instances_indicated"></a>B.1.1.2.3 <code>Feature</code> with both <code>Geometry</code> and <code>SpatialMeasure</code> instances indicated</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
 
-eg:x a geo:Feature ;
+eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
             geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -6271,10 +6275,11 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_4_feature_with_metric_area"><a class="anchor" href="#_b_1_1_2_4_feature_with_metric_area"></a>B 1.1.2.4 <code>Feature</code> with metric area</h5>
+<h5 id="_b_1_1_2_4_feature_with_metric_area"><a class="anchor" href="#_b_1_1_2_4_feature_with_metric_area"></a>B.1.1.2.4 <code>Feature</code> with metric area</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
             geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -6288,12 +6293,13 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"><a class="anchor" href="#_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"></a>B 1.1.2.5 <code>Feature</code> with two different <code>Geometry</code> instances indicated</h5>
+<h5 id="_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"><a class="anchor" href="#_b_1_1_2_5_feature_with_two_different_geometry_instances_indicated"></a>B.1.1.2.5 <code>Feature</code> with two different <code>Geometry</code> instances indicated</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
 
-eg:x a geo:Feature ;
+eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         rdfs:label "Official boundary" ;
@@ -6313,12 +6319,13 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"><a class="anchor" href="#_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"></a>B 1.1.2.6 <code>Feature</code> with two different <code>Geometry</code> instances with different property values</h5>
+<h5 id="_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"><a class="anchor" href="#_b_1_1_2_6_feature_with_two_different_geometry_instances_with_different_property_values"></a>B.1.1.2.6 <code>Feature</code> with two different <code>Geometry</code> instances with different property values</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
 
-eg:x a geo:Feature ;
+eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:hasSpatialResolution [
@@ -6338,17 +6345,18 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="paragraph">
-<p>In this example, <code>Feature X</code> has two different <code>Geometry</code> instances indicated with different spatial resolutions. This use of the <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> property follows Example <a href="#_b_1_1_2_3_feature_with_both_geometry_and_spatialmeasure_instances_indicated">B 1.1.2.3 <code>Feature</code> with both <code>Geometry</code> and <code>SpatialMeasure</code> instances indicated</a> with its use of QUDT for unit &amp; value.</p>
+<p>In this example, <code>Feature X</code> has two different <code>Geometry</code> instances indicated with different spatial resolutions. This use of the <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> property follows Example <a href="#B 1.1.2.3 <code>Feature</code> with both <code>Geometry</code> and <code>SpatialMeasure</code> instances indicated">[B 1.1.2.3 <code>Feature</code> with both <code>Geometry</code> and <code>SpatialMeasure</code> instances indicated]</a> with its use of QUDT for unit &amp; value.</p>
 </div>
 <div class="paragraph">
 <p>Machine use of this <code>Feature</code> would be able to differentiate the two <code>Geometry</code> instnaces based on this use of <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a>.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"><a class="anchor" href="#_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"></a>B 1.1.2.7 <code>Feature</code> with two different <code>Geometry</code> instances using metric spatial resolution</h5>
+<h5 id="_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"><a class="anchor" href="#_b_1_1_2_7_feature_with_two_different_geometry_instances_using_metric_spatial_resolution"></a>B.1.1.2.7 <code>Feature</code> with two different <code>Geometry</code> instances using metric spatial resolution</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:hasMetricSpatialResolution "100"^^xsd:double ;
@@ -6366,10 +6374,11 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"><a class="anchor" href="#_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"></a>B 1.1.2.8 <code>Feature</code> with two different types of <code>Geometry</code> instances</h5>
+<h5 id="_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"><a class="anchor" href="#_b_1_1_2_8_feature_with_two_different_types_of_geometry_instances"></a>B.1.1.2.8 <code>Feature</code> with two different types of <code>Geometry</code> instances</h5>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x a geo:Feature ;
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "POLYGON ((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610))"^^geo:wktLiteral ;
@@ -6391,7 +6400,7 @@ eg:x a geo:Feature ;
 <p>The <code>Geometry</code> class is defined in <a href="#_class_geogeometry">Section 8.2.1</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_b1_1_3_1_basic_use"><a class="anchor" href="#_b1_1_3_1_basic_use"></a>B1.1.3.1 Basic Use</h5>
+<h5 id="_b_1_1_3_1_basic_use"><a class="anchor" href="#_b_1_1_3_1_basic_use"></a>B.1.1.3.1 Basic Use</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:y a geo:Geometry ;
@@ -6403,7 +6412,7 @@ eg:x a geo:Feature ;
 <p>Here a <code>Geometry</code> is declared and given a preferred label.</p>
 </div>
 <div class="paragraph">
-<p>From GeoSPARQL 1.0 use, the most commonly observed use of a <code>Geometry</code> is in relation to a <code>Feature</code> as per the example in <a href="#_b_1_1_2_2_a_feature_related_to_a_geometry">B 1.1.2.2 A <code>Feature</code> related to a <code>Geometry</code></a> and often the <code>Geometry</code> is indirectly declared by the use of <code>hasGeometry</code> on the <code>Feature</code> instance indicating a Blank Node, however it is entirely possible to declare <code>Geometry</code> instances without any <code>Feature</code> instances. The next basic example declares a <code>Geometry</code> instance with an demonstration absolute URI and data.</p>
+<p>From GeoSPARQL 1.0 use, the most commonly observed use of a <code>Geometry</code> is in relation to a <code>Feature</code> as per the example in <a href="#B 1.1.2.2 A <code>Feature</code> related to a <code>Geometry</code>">[B 1.1.2.2 A <code>Feature</code> related to a <code>Geometry</code>]</a> and often the <code>Geometry</code> is indirectly declared by the use of <code>hasGeometry</code> on the <code>Feature</code> instance indicating a Blank Node, however it is entirely possible to declare <code>Geometry</code> instances without any <code>Feature</code> instances. The next basic example declares a <code>Geometry</code> instance with an demonstration absolute URI and data.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6419,7 +6428,7 @@ eg:x a geo:Feature ;
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b1_1_3_2_a_geometry_with_multiple_serializations"><a class="anchor" href="#_b1_1_3_2_a_geometry_with_multiple_serializations"></a>B1.1.3.2 A <code>Geometry</code> with multiple serializations</h5>
+<h5 id="_b_1_1_3_2_a_geometry_with_multiple_serializations"><a class="anchor" href="#_b_1_1_3_2_a_geometry_with_multiple_serializations"></a>B.1.1.3.2 A <code>Geometry</code> with multiple serializations</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
@@ -6436,14 +6445,38 @@ eg:x a geo:Feature ;
 <p>Here a single <code>Geometry</code>, linked to a <code>Feature</code> instance, is expressed using two different serializations: Well-known Text and the example AusPIX DGGS. Note that the latter is not formally defined in GeoSPARQL.</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_b_1_1_3_3_geometry_with_spatial_measure_property"><a class="anchor" href="#_b_1_1_3_3_geometry_with_spatial_measure_property"></a>B.1.1.3.3 <code>Geometry</code> with Spatial Measure property</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
+    a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry eg:x-geo ;
+.
+
+eg:x-geo
+    a geo:Geometry ;
+    geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    geo:hasMetricArea "8.7E4"^^xsd:double;
+.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This example shows a Feature, <code>eg:x</code>, with a Geometry, <code>eg:x-geo</code>, which has both a serilization (WKT) and a scalar area. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a scalar area in addition to the polygon. Perhaps it&#8217;s a detailed polygon and a one-time calculation with results stored is efficient for repeated use.</p>
+</div>
+<div class="paragraph">
+<p>This use of a Spatial Measure property with a Geometry, here <code>geo:hasMetricArea</code>, is possible since the domain of such properties is <code>geo:SpatialObject</code>, the superclass of both <code>geo:Feature</code> and <code>geo:Geometry</code>.</p>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_b_1_1_4_spatialmeasure"><a class="anchor" href="#_b_1_1_4_spatialmeasure"></a>B 1.1.4 <code>SpatialMeasure</code></h4>
+<h4 id="_b_1_1_4_spatialmeasure"><a class="anchor" href="#_b_1_1_4_spatialmeasure"></a>B.1.1.4 <code>SpatialMeasure</code></h4>
 <div class="paragraph">
 <p>The <code>SpatialMeasure</code> class is defined in <a href="#_class_geospatialmeasure">Section 6.2.3</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_b1_1_4_1_basic_use"><a class="anchor" href="#_b1_1_4_1_basic_use"></a>B1.1.4.1 Basic Use</h5>
+<h5 id="_b_1_1_4_1_basic_use"><a class="anchor" href="#_b_1_1_4_1_basic_use"></a>B.1.1.4.1 Basic Use</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
@@ -6480,7 +6513,7 @@ eg:x
 </div>
 </div>
 <div class="sect4">
-<h5 id="_b1_1_4_1_multiple_measures"><a class="anchor" href="#_b1_1_4_1_multiple_measures"></a>B1.1.4.1 Multiple measures</h5>
+<h5 id="_b_1_1_4_1_multiple_measures"><a class="anchor" href="#_b_1_1_4_1_multiple_measures"></a>B.1.1.4.1 Multiple measures</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
@@ -7320,8 +7353,6 @@ WHERE {
 </tr>
 </tbody>
 </table>
-<div class="sect3">
-<h4 id="_b_1_2_2_1_geofaswkt"><a class="anchor" href="#_b_1_2_2_1_geofaswkt"></a>B.1.2.2.1 <code>geof:asWKT</code></h4>
 <div class="paragraph">
 <p>For the geometry literal values in <a href="#_b_1_2_3_geometry_serializations">B.1.2.3 Geometry Serializations</a>:</p>
 </div>
@@ -7330,7 +7361,6 @@ WHERE {
 </div>
 <div class="paragraph">
 <p>Note that the application of <a href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> requires a <code>specificDggsDatatype</code> parameter which indicates the particular DGGS literal form being converted to. In the case of <a href="#_b_1_2_3_geometry_serializations">B.1.2.3 Geometry Serializations</a>, this value would be <code>eg:auspixDggsLiteral</code>, the example datatype of the AusPIX DGGS.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -7954,7 +7984,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-08-12 23:13:32 UTC
+Last updated 2021-08-16 03:00:36 UTC
 </div>
 </div>
 </body>
