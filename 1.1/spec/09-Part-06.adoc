@@ -245,14 +245,14 @@ GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasCentroid, 
 
 ==== Property: geo:hasLength
 
-The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] is used to indicate the length of a <<Class: geo:Feature, Feature>> or <<Class: geo:Geometry, Geometry>> instance. In the case of a one-dimensional <<Class: geo:Feature, Feature>> or <<Class: geo:Geometry, Geometry>> instance, it is the simple length. In the case of a two-dimensional <<Class: geo:Feature, Feature>> or <<Class: geo:Geometry, Geometry>> instance, it is interpreted to mean the perimeter length. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] is used to indicate the length of a <<Class: geo:SpatialObject, Spatial Object>>. In the case of a one-dimensional <<Class: geo:Feature, Feature>> or <<Class: geo:Geometry, Geometry>> instance, it is the simple length. In the case of a two-dimensional <<Class: geo:Feature, Feature>> or <<Class: geo:Geometry, Geometry>> instance, it is interpreted to mean the perimeter length. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the length value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
 ```turtle
 geo:hasLength 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length"@en ;
-    skos:definition "The length of a Feature, expressed as a Spatial Measure."@en ; 
+    skos:definition "The length of a one-dimensional Spatial Object or the perimeter length of a two-dimensional Spatial Object, expressed as a Spatial Measure."@en ; 
     rdfs:domain geo:SpatialObject ; 
     rdfs:range geo:SpatialMeasure ;
 .
@@ -279,7 +279,7 @@ geo:hasMetricLength
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has length in meters"@en ;
-    skos:definition "The length of a Feature in meters."@en ; 
+    skos:definition "he length of a Spatial Object in meters."@en ; 
     rdfs:domain geo:Feature ; 
     rdfs:range xsd:double ;
 .
@@ -287,14 +287,14 @@ geo:hasMetricLength
 
 ==== Property: geo:hasArea
 
-The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a <<Class: geo:Feature, Feature>>. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] is used to indicate the area of a <<Class: geo:SpatialObject, Spatial Object>>. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the area value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
 ```turtle
 geo:hasArea 
     a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area"@en ;
-    skos:definition "The two-dimensional area of a Feature, expressed as a Spatial Measure."@en ; 
+    skos:definition "The two-dimensional area of a Spatial Object, expressed as a Spatial Measure."@en ; 
     rdfs:domain geo:SpatialObject ; 
     rdfs:range geo:SpatialMeasure ;
 .
@@ -321,21 +321,21 @@ geo:hasMetricArea
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has area in square meters"@en ;
-    skos:definition "The area of a Feature in square meters."@en ; 
-    rdfs:domain geo:Feature ; 
+    skos:definition "The area of a Spatial Object in square meters."@en ; 
+    rdfs:domain :SpatialObject ;
     rdfs:range xsd:double .
 ```
 
 ==== Property: geo:hasVolume
 
-The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] is used to indicate the volume of a <<Class: geo:Feature, Feature>>. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
+The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] is used to indicate the volume of a <<Class: geo:SpatialObject, Spatial Object>>. The range of the property is <<Class: geo:SpatialMeasure, Spatial Measure>>, which encodes the volume value expressed as a scalar quantity which also includes the units of measure, and potentially uncertainty and other properties.
 
 ```turtle
 geo:hasVolume 
     a rdf:Property, owl:ObjectProperty;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume"@en ;
-    skos:definition "The volume of a Feature, expressed as a Spatial Measure"@en ; 
+    skos:definition "The volume of a Spatial Object, expressed as a Spatial Measure"@en ; 
     rdfs:domain geo:SpatialObject ; 
     rdfs:range geo:SpatialMeasure ;
 .
@@ -362,7 +362,7 @@ geo:hasMetricVolume
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has volume in cubic meters"@en ;
-    skos:definition "The volume of a Feature in cubic meters."@en ; 
+    skos:definition "The volume of a Spatial Object in cubic meters."@en ; 
     rdfs:domain geo:Feature ; 
     rdfs:range xsd:double ;
 .
