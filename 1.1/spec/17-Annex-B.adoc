@@ -17,36 +17,39 @@ _New Features checklist - to be removed when all examples are complete:_
 
 === B.1.1 Classes
 
-==== B 1.1.1 `SpatialObject`
+==== B.1.1.1 `SpatialObject`
 The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
 
 Basic use (as per the example in the class definition)
 
 ```turtle
-eg:x a geo:SpatialObject ;
+eg:x 
+    a geo:SpatialObject ;
     skos:prefLabel "Object X";
 .
 ```
 
 NOTE: It is unlikely that users of GeoSPARQL will create many instances of http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] as its two more concrete subclasses, http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] & http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], are more directly relatable to real-world phenomena and use.
 
-==== B 1.1.2 `Feature`
+==== B.1.1.2 `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
 
-===== B 1.1.2.1 Basic use
+===== B.1.1.2.1 Basic use
 
 ```turtle
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
 .
 ```
 
 Here a `Feature` is declared and given a preferred label.
 
-===== B 1.1.2.2 A `Feature` related to a `Geometry`
+===== B.1.1.2.2 A `Feature` related to a `Geometry`
 
 ```turtle
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -56,12 +59,13 @@ eg:x a geo:Feature ;
 
 Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
-===== B 1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated
+===== B.1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
             geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -78,11 +82,11 @@ Here a `Feature` and a `Geometry` are described as per the previous example but 
 
 Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialSize` instance's value.
 
-===== B 1.1.2.4 `Feature` with metric area
-
+===== B.1.1.2.4 `Feature` with metric area
 
 ```turtle
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
             geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
@@ -92,12 +96,13 @@ eg:x a geo:Feature ;
 ```
 This example encodes the same data as the example above (B 1.1.2.3), but it uses the simpler metric expression of area.
 
-===== B 1.1.2.5 `Feature` with two different `Geometry` instances indicated
+===== B.1.1.2.5 `Feature` with two different `Geometry` instances indicated
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         rdfs:label "Official boundary" ;
@@ -114,12 +119,13 @@ eg:x a geo:Feature ;
 
 In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
 
-===== B 1.1.2.6 `Feature` with two different `Geometry` instances with different property values
+===== B.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:hasSpatialResolution [
@@ -142,10 +148,11 @@ In this example, `Feature X` has two different `Geometry` instances indicated wi
 
 Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
 
-===== B 1.1.2.7 `Feature` with two different `Geometry` instances using metric spatial resolution
+===== B.1.1.2.7 `Feature` with two different `Geometry` instances using metric spatial resolution
 
 ```turtle
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:hasMetricSpatialResolution "100"^^xsd:double ;
@@ -160,10 +167,11 @@ eg:x a geo:Feature ;
 
 This example encodes the same data as the example above (B 1.1.2.7), but uses the simpler metric property to indicate spatial resolution.
 
-===== B 1.1.2.8 `Feature` with two different types of `Geometry` instances
+===== B.1.1.2.8 `Feature` with two different types of `Geometry` instances
 
 ```turtle
-eg:x a geo:Feature ;
+eg:x 
+    a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "POLYGON ((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610))"^^geo:wktLiteral ;
@@ -179,7 +187,7 @@ Here a `Feature` instance has two geometries, one indicated with the general pro
 ==== B.1.1.3 `Geometry`
 The `Geometry` class is defined in <<Class: geo:Geometry>>.
 
-===== B1.1.3.1 Basic Use
+===== B.1.1.3.1 Basic Use
 
 ```turtle
 eg:y a geo:Geometry ;
@@ -201,7 +209,7 @@ From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in rel
 
 Here the `Geometry` instance has data in WKT form and, since no CRS is declared, WGS84 is the assumed, default, CRS.
 
-===== B1.1.3.2 A `Geometry` with multiple serializations
+===== B.1.1.3.2 A `Geometry` with multiple serializations
 
 ```turtle
 eg:x
@@ -209,17 +217,36 @@ eg:x
     skos:prefLabel "Feature X";
     geo:hasGeometry [
         geo:asWKT "<http://www.opengis.net/def/crs/EPSG/0/4326> MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
-        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^geo:auspixDggsLiteral ;
+        geo:asDGGS "<https://w3id.org/dggs/aspix> CELLLIST ((R1234 R1235 R1236 ... R1256))"^^eg:auspixDggsLiteral ;
     ] ;
 .
 ```
 
-Here a single `Geometry`, linked to a `Feature` instance, is expressed using two different serializations: Well-known Text and the AusPIX DGGS.
+Here a single `Geometry`, linked to a `Feature` instance, is expressed using two different serializations: Well-known Text and the example AusPIX DGGS. Note that the latter is not formally defined in GeoSPARQL.
 
-==== B 1.1.4 `SpatialSize`
+===== B.1.1.3.3 `Geometry` with scalar spatial property
+
+```turtle
+eg:x 
+    a geo:Feature ;
+    skos:prefLabel "Feature X";
+    geo:hasGeometry eg:x-geo ;    
+.
+
+eg:x-geo
+    a geo:Geometry ;
+    geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+    geo:hasMetricArea "8.7E4"^^xsd:double;
+.
+```
+This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has both a serilization (WKT) indicated with the predicate `go:asWKT` and a scalar area indicated with the predicate `geo:hasMetricArea`. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a pre-calculated scalar area in addition to the polygon. Perhaps the polygon is large and detailed and a one-time calculation with results stored is efficient for repeated use.
+
+This use of a scalar spatial measurement property with a Geometry, here `geo:hasMetricArea`, is possible since the domain of such properties is `geo:SpatialObject`, the superclass of both `geo:Feature` and `geo:Geometry`.
+
+==== B.1.1.4 `SpatialSize`
 The `SpatialSize` class is defined in <<Class: geo:SpatialSize>>.
 
-===== B1.1.4.1 Basic Use
+===== B.1.1.4.1 Basic Use
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -250,7 +277,7 @@ eg:x
 
 In this example, the `SpatialSize` instance has no label - only a numeric value and a unit of measure - but it is declared to be the area for "Feature X".
 
-===== B1.1.4.1 Multiple sizes
+===== B.1.1.4.1 Multiple sizes
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -292,7 +319,6 @@ _New Features checklist - to be removed when all examples are complete:_
 |kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
 |asKML | <<Property: geo:asKML>>
 |dggsWKTLiteral | <<RDFS Datatype: geo:dggsWKTLiteral>>
-|auspixDggsWKTLiteral | <<RDFS Datatype: geo:auspixDggsWKTLiteral>>
 |asDGGS | <<Property: geo:asDGGS>>
 |===
 
@@ -364,6 +390,8 @@ In this example, each of the standards properties defined for a `Geometry` insta
 ==== B.1.2.3 Geometry Serializations
 
 This section shows a `Geometry` instance for a `Feature` instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
+
+Note that the concrete DGGS serialization used is for example purposes only as it is not formally defined in GeoSPARQL.
 
 ```turtle
 eg:x
@@ -470,7 +498,7 @@ eg:x
             R834630232 R834630234 R834630235 R834630237 R834630238 R834630240 R834630241 
             R834630242 R834630243 R834630244 R834630245 R834630246 R834630247 R834630261 
             R834630262 R834630264 R834630265 R834630268 R834630270 R834630271 R834630273 
-            R834630276 R834630502))""""^^geo:auspixDggsLiteral ;
+            R834630276 R834630502))""""^^eg:auspixDggsLiteral ;
     ] ;
 .
 ```
@@ -835,10 +863,8 @@ _New Features checklist - to be removed when all examples are complete:_
 |asKML function | <<Function: geof:asKML>>
 |===
 
-==== B.1.2.2.1 `geof:asWKT`
-
 For the geometry literal values in <<B.1.2.3 Geometry Serializations>>:
 
 Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].
 
-Note that the application of http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be http://www.opengis.net/def/function/geosparql/auspixDggsLiteral[`geof:auspixDggsLiteral`], the datatype of the AusPIX DGGS format provided by GeoSPARQL 1.1.
+Note that the application of http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be `eg:auspixDggsLiteral`, the example datatype of the AusPIX DGGS.

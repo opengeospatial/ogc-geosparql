@@ -66,6 +66,8 @@ geo:GeometryCollection
 .
 ```
 
+The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Geometry, Geometry>> are allowed to be members of it and these are to be indicated with the `rdfs:member` property.
+
 |===
 | *Req 12* Implementations shall allow the RDFS class http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class[`http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class`]
@@ -548,10 +550,10 @@ The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] c
 
 This section establishes the requirements for representing Discrete Global Grid System (DGGS) geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar. 
 
-Here are defined two RDFS Datatypes:
-http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] & http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`+http://www.opengis.net/ont/geosparql#auspixDggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`]. 
+Here is defined one RDFS Datatypes:
+http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`]. 
 
-NOTE: The two datatypes defined here are for an abstract DGGS implementation (http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`]) and a specific one, AusPIX <<AUSPIX>> (http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`]). The purposes of including both of these are to indicate the conceptual position of DGGS literals in this specification - the abstract form acts as a parent of all other potential, specific, DGGS datatypes - and to exemplify a specific system implementation which allows for real examples of use.
+NOTE: The datatype defined here is for an abstract DGGS implementation (http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`]) but concrete ones should be used in real implementations. For example, the AusPIX DGGS <<AUSPIX>> might implement something similar to `ex:auspixDggsLiteral`.
 
 ===== RDFS Datatype: geo:dggsLiteral
 
@@ -561,8 +563,6 @@ geo:dggsLiteral a rdfs:Datatype ;
     skos:prefLabel "DGGS Literal"@en ;
     skos:definition "A textual serialization of a Discrete Global Grid System (DGGS) geometry object."@en .
 ```
-
-Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the `geo:dggsLiteral` datatype. 
 
 |===
 | *Req 35* All RDFS Literals of type http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] shall consist of a DGGS geometry serialization formulated according to a specific DGGS.
@@ -574,30 +574,22 @@ Valid http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] instan
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty`]
 |===
 
-===== RDFS Datatype: geo:auspixDggsLiteral
+An example of a literal for concrete DGGS, AusPIX, could be
 
 ```turtle
-geo:auspixDggsLiteral 
+ex:auspixDggsLiteral 
     a rdfs:Datatype ;
-    rdfs:isDefinedBy geo: ;
     skos:prefLabel "AusPIX DGGS Literal"@en ;
     skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) geometry object."@en .
 ```
 
-Valid http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] instances are formed by encoding geometry information according to the AusPIX DGGS implementation <<AUSPIX>>.
-
-The example http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] below encodes a point geometry according to the _AusPIX_ DGGS. The DGGS geometry type is indicated with the token `CellList` and the list of values, a single cell, is enclosed in parenthesis. The cell value of _R3234_ is analogous to either a `Point` or simple `Polygon` in WKT geometries, so a single coordinate pair or a list of them:
+A single _Cell_ geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of _R3234_ is analogous to either a `Point` or simple `Polygon` in WKT geometries.
 
 ```turtle
-"CellList (R3234)"^^<http://www.opengis.net/ont/geosparql#auspixDggsLiteral>
+"CellList (R3234)"^^<http://example.com#auspixDggsLiteral>
 ```
 
-NOTE: What `R3234` means is not handled by GeoSPARQL but by the AusPIX DGGS specification <<AUSPIX>>, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
-
-|===
-| *Req 37* All RDFS Literals of type http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`] shall consist of a DGGS geometry serialization formulated according to the AusPIX DGGS.
-|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/auspix-dggs-literal[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/auspix-dggs-literal`]
-|===
+NOTE: What `R3234` means, or the meaning of any other element within a concrete DGGS literal is not handled by GeoSPARQL but is expected to be handled by that DGGS' specification, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
 
 ===== Property: geo:asDGGS
 
@@ -615,12 +607,12 @@ geo:asDGGS a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as DGGS"@en ;
-    skos:definition "A DGGS Well-Known Text serialization of a geometry."@en ;
+    skos:definition "A DGGS serialization of a geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:dggsLiteral .
 ```
 
-NOTE: It is expected that this property will be used to indicate specific DGGS data types, such as http://www.opengis.net/ont/geosparql#auspixDggsLiteral[`geo:auspixDggsLiteral`], descibed above, as opposed to the generic http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`].
+NOTE: It is expected that this property will be used to indicate specific DGGS data types, such as the example `ex:auspixDggsLiteral`, described above, as opposed to the generic http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`].
 
 ===== Function: geof:asDGGS
 
