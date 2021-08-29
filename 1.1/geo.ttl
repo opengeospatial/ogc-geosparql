@@ -272,21 +272,27 @@
 	skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point."@en ;
 .
 
+
+:hasLength a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	rdfs:isDefinedBy <> ;
+	skos:definition """The length of al Spatial Object."""@en ;
+	skos:prefLabel "has length"@en ;
+.
+
 :hasArea a owl:ObjectProperty ;
-	rdfs:domain :SpatialObject ;
-	rdfs:range :SpatialSize ;
-	rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties> ;
-	skos:definition """The area of a Spatial Object, expressed as a Spatial Size."""@en ;
+	rdfs:subPropertyOf :hasSize ;
+	rdfs:isDefinedBy <> ;
+	skos:definition """The area of a Spatial Object."""@en ;
 	skos:prefLabel "has area"@en ;
 .
 
-:hasLength a owl:ObjectProperty ;
-	rdfs:domain :SpatialObject ;
-	rdfs:range :SpatialSize ;
-	rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties> ;
-	skos:definition """The length of a one-dimensional Spatial Object or the perimeter length of a two-dimensional Spatial Object, expressed as a Spatial Size."""@en ;
-	skos:prefLabel "has length"@en ;
-.
+:hasVolume a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	rdfs:isDefinedBy <> ;
+	skos:definition """The volume of a three-dimensional Spatial Object."""@en ;
+	skos:prefLabel "has volume"@en ;
+.	
 
 :hasSpatialResolution a owl:ObjectProperty ;
 	rdfs:domain :Geometry ;
@@ -303,14 +309,6 @@
 	skos:note """Spatial accuracy is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension)."""@en;
 	skos:prefLabel "has spatial accuracy"@en ;
 .
-
-:hasVolume a owl:ObjectProperty ;
-	rdfs:domain :SpatialObject ;
-	rdfs:range :SpatialSize ;
-	rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties> ;
-	skos:definition """The volume of a three-dimensional Spatial Object, expressed as a Spatial Size."""@en ;
-	skos:prefLabel "has volume"@en ;
-.	
 
 :rcc8dc
 	a owl:ObjectProperty ;
@@ -477,6 +475,7 @@
 	rdfs:domain :SpatialObject ;
 	rdfs:isDefinedBy <> ;
 	skos:definition """Subproperties of this property are used to indicate the size of a Spatial Object as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence.""""@en ;
+	skos:note """The recommended way to specify size is by using a subproperty of hasMetricSize. Subproperties of hasSize can be used if more complex expressions are necessary, for example if the unit of length can not be converted to meter, or if additional data are needed to describe the measurement or estimate."""@en
 	skos:prefLabel "has size"@en ;
 .
 
@@ -616,7 +615,7 @@
 
 :hasMetricLength
 	a owl:DatatypeProperty ;
-	rdfs:subPropertyOf :hasMetricSize ; ;
+	rdfs:subPropertyOf :hasMetricSize ;
 	rdfs:isDefinedBy <> , geosparql-spec: ;
 	skos:definition """The length of a Spatial Object in meters."""@en ;
 	skos:prefLabel "has length in meters"@en ;
@@ -644,7 +643,7 @@
 	rdfs:range xsd:double ;
 	rdfs:isDefinedBy <> ;
 	skos:definition """Subproperties of this property are used to indicate the size of a Spatial Object, as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence. Units are always metric (meter, square meter or cubic meter).""""@en ;
-	skos:prefLabel "has size in meters"@en ;
+	skos:prefLabel "has metric size"@en ;
 .
 
 # #################################################################
