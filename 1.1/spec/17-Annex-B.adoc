@@ -12,7 +12,7 @@ _New Features checklist - to be removed when all examples are complete:_
 |New element | Section
 
 2+|_Classes_
-|Spatial Size class | <<Class: geo:SpatialSize>>
+
 |===
 
 === B.1.1 Classes
@@ -52,14 +52,28 @@ eg:x
     a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
-        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
 Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
-===== B.1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated
+===== B.1.1.2.3 `Feature` with `Geometry` and size (area)
+
+```turtle
+eg:x 
+    a geo:Feature ;
+    skos:prefLabel "Feature X";
+        geo:hasGeometry [
+            geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+    ] ;
+    geo:hasMetricArea "8.9E4"^^xsd:double;
+.
+```
+This example and the example below (B 1.1.2.3) show the same `Feature`, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of `hasMetricSize` (`hasMetricArea` in this case). These subproperties have fixed units based on the SI standard unit of distance: meter.
+
+===== B.1.1.2.4 `Feature` with `Geometry` and non-metric size
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -68,33 +82,16 @@ eg:x
     a geo:Feature ;
     skos:prefLabel "Feature X";
         geo:hasGeometry [
-            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+            geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ;
     geo:hasArea [
-        a geo:SpatialSize ;
-        qudt:numericValue 8.7 ;
-        qudt:unit <http://qudt.org/vocab/unit/HA> ;  # hectare
+        qudt:numericValue "2.2E5"^^xsd:double ;
+        qudt:unit <http://qudt.org/vocab/unit/AC> ;  # international acre
     ] ;
 .
 ```
 
-Here a `Feature` and a `Geometry` are described as per the previous example but an additional `SpatialSize` for the `Feature` is indicated with the use of the property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`]. This property indicates a `SpatialSize` instance which conveys its value using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]
-
-Note that in this example, the use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey a `SpatialSize` instance's value.
-
-===== B.1.1.2.4 `Feature` with metric area
-
-```turtle
-eg:x 
-    a geo:Feature ;
-    skos:prefLabel "Feature X";
-        geo:hasGeometry [
-            geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
-    ] ;
-    geo:hasMetricArea "8.7E4"^^xsd:double;
-.
-```
-This example encodes the same data as the example above (B 1.1.2.3), but it uses the simpler metric expression of area.
+Here a `Feature` and a `Geometry` are described as per the previous example but its area is expressed in non-metric units. Are is expressed using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]. The use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of a subproperty of `hasSize`.
 
 ===== B.1.1.2.5 `Feature` with two different `Geometry` instances indicated
 
@@ -107,17 +104,17 @@ eg:x
     geo:hasGeometry [
         rdfs:label "Official boundary" ;
         rdfs:comment "Official boundary from the Department of Xxx" ;
-        geo:asWKT "MULTIPOLYGON (((149.06016596 -35.23610602, 149.060620714 -35.236043434, ... , 149.06016596 -35.23610602)))"^^geo:wktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ,
     [
         rdfs:label "Unofficial boundary" ;
         rdfs:comment "Unofficial boundary as actually used by everyone" ;
-        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No ontology properties are used to indicate a difference in these `Geometry` thus machine use of this `Feature` woud not be easily able to differentiate them.
+In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No GeoSPARQL ontology properties are used to indicate a difference in these `Geometry` instances thus machine use of this `Feature` woud not be easily able to differentiate them.
 
 ===== B.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
 
@@ -128,27 +125,20 @@ eg:x
     a geo:Feature ;
     skos:prefLabel "Feature X";
     geo:hasGeometry [
-        geo:hasSpatialResolution [
-            qudt:numericValue 100 ;
-            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
-        ] ;
-        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.060620 -35.236043, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
+        geo:hasMetricSpatialResolution "100"^^xsd:double ;
+        geo:asWKT "MULTIPOLYGON (((149.0601 -35.2361, 149.0606 -35.2360, ... , 149.0601 -35.2361)))"^^geo:wktLiteral ;
     ] ,
     [
-        geo:hasSpatialResolution [
-            qudt:numericValue 5 ;
-            qudt:unit <http://qudt.org/vocab/unit/M> ;  # metre
-        ] ;
-        geo:asWKT "MULTIPOLYGON (((149.06016597 -35.23610603, 149.060620715 -35.236043435, ... , 149.06016597 -35.23610603)))"^^geo:wktLiteral ;
+        geo:hasMetricSpatialResolution "5"^^xsd:double ;
+        geo:asWKT "MULTIPOLYGON (((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610)))"^^geo:wktLiteral ;
     ] ;
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. This use of the http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] property follows Example <<B 1.1.2.3 `Feature` with both `Geometry` and `SpatialSize` instances indicated>> with its use of QUDT for unit & value. 
+In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. 
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[`geo:hasMetricSpatialResolution`].
 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instnaces based on this use of http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`].
-
-===== B.1.1.2.7 `Feature` with two different `Geometry` instances using metric spatial resolution
+===== B.1.1.2.7 `Feature` with two different `Geometry` instances using non-metric spatial resolution
 
 ```turtle
 eg:x 
@@ -165,7 +155,7 @@ eg:x
 .
 ```
 
-This example encodes the same data as the example above (B 1.1.2.7), but uses the simpler metric property to indicate spatial resolution.
+
 
 ===== B.1.1.2.8 `Feature` with two different types of `Geometry` instances
 
