@@ -29,7 +29,7 @@ eg:x
 .
 ```
 
-NOTE: It is unlikely that users of GeoSPARQL will create many instances of http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] as its two more concrete subclasses, http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] & http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`], are more directly relatable to real-world phenomena and use.
+NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: SpatialObject, Spatial Object>> as its two more concrete subclasses, <<Class: Feature, Feature>> &  <<Class: Geometry, Geometry>> , are more directly relatable to real-world phenomena and use.
 
 ==== B.1.1.2 `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
@@ -57,7 +57,7 @@ eg:x
 .
 ```
 
-Here a `Feature` is declared, given a preferred label and a geometry for that `Feature` is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
+Here a <<Class: geo:Feature>> is declared, given a preferred label and a Geometry for that <<Class: geo:Feature>> is indicated with the use of http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] and the literal type `geo:wktLiteral`.
 
 ===== B.1.1.2.3 `Feature` with `Geometry` and size (area)
 
@@ -71,7 +71,7 @@ eg:x
     geo:hasMetricArea "8.9E4"^^xsd:double;
 .
 ```
-This example and the example below (B 1.1.2.3) show the same `Feature`, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of `hasMetricSize` (`hasMetricArea` in this case). These subproperties have fixed units based on the SI standard unit of distance: meter.
+This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize>> (in this case, <Property: geo:MetricArea>> ). These subproperties have fixed units based on the unit of distance in the International System of Units: meter.
 
 ===== B.1.1.2.4 `Feature` with `Geometry` and non-metric size
 
@@ -91,12 +91,11 @@ eg:x
 .
 ```
 
-Here a `Feature` and a `Geometry` are described as per the previous example but its area is expressed in non-metric units. Are is expressed using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]. The use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of a subproperty of `hasSize`.
+Here a <<Class: geo:Feature>> is described as per the previous example but its area is expressed in non-metric units. The unit international acre is expressed using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]. The use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of a subproperty of <<Property: geo:hasSize>>.
 
 ===== B.1.1.2.5 `Feature` with two different `Geometry` instances indicated
 
 ```turtle
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 
 eg:x 
     a geo:Feature ;
@@ -119,7 +118,6 @@ In this example, `Feature X` has two different `Geometry` instances indicated wi
 ===== B.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
 
 ```turtle
-@prefix qudt: <http://qudt.org/schema/qudt/> .
 
 eg:x 
     a geo:Feature ;
@@ -136,9 +134,9 @@ eg:x
 ```
 
 In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[`geo:hasMetricSpatialResolution`].
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<.
 
-===== B.1.1.2.7 `Feature` with two different `Geometry` instances using non-metric spatial resolution
+===== B.1.1.2.7 `Feature` with non-metric size
 
 ```turtle
 eg:x 
@@ -155,7 +153,7 @@ eg:x
 .
 ```
 
-
+In this example it is not possible to convert the length of the feature to meters, because the historical unit does not have a known precise conversion factor. 
 
 ===== B.1.1.2.8 `Feature` with two different types of `Geometry` instances
 
