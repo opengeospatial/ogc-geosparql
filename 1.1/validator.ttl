@@ -847,21 +847,27 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S33-FeatureCollectionClass-minOneMember-feature-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "An instance of geo:FeatureCollection should have at least one incoming rdfs:member relation."@en ;
+	sh:message "An instance of geo:FeatureCollection should have at least one outgoing rdfs:member relation."@en ;
 	skos:example 
 		"""
-		# A valid example: the geo:FeatureCollection instance node has one incoming rdfs:member relation
+		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<featureCollection-x> a geo:FeatureCollection .
-		<feature-x> rdfs:member <featureCollection-x> ;
-			geo:hasGeometry <feature-x-geom1> .
+		<featureCollection-x> 
+		    a geo:FeatureCollection ;
+		    rdfs:member <feature-x> ;
+		.
+		
+		<feature-x>
+		    a geo:Feature ;
+		    geo:hasGeometry <feature-x-geom1> ;
+		.
 		""" ,
 		"""
-		# An invalid example: the geo:FeatureCollection instance node has no incoming rdfs:member relations
+		# An invalid example: the geo:FeatureCollection instance node has no outgoing rdfs:member relations
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -871,15 +877,15 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S33-FeatureCollectionClass-member-onlyFeature-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "An instance of geo:FeatureCollection should only have incoming rdfs:member relations coming from a geo:Feature instance."@en ;
+		sh:message "An instance of geo:FeatureCollection should only have outgoing rdfs:member going to geo:Feature instances."@en ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			SELECT $this
 			WHERE {
-				?feature rdfs:member $this .
+				$this rdfs:member ?feature .
 				FILTER NOT EXISTS {
 					?feature geo:hasGeometry ?geometry .
 				}
@@ -888,23 +894,33 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	skos:example 
 		"""
-		# A valid example: the geo:FeatureCollection instance node has one incoming rdfs:member relation coming from a geo:Feature node
+		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<featureCollection-x> a geo:FeatureCollection .
-		<feature-x> rdfs:member <featureCollection-x> ;
-			geo:hasGeometry <feature-x-geom1> .
+		<featureCollection-x>
+		    a geo:FeatureCollection ;
+		    rdfs:member <feature-x>
+		.
+		
+		<feature-x>
+		    a geo:Feature ;
+		    geo:hasGeometry <feature-x-geom1> ;
+		.
 		""" ,
 		"""
-		# An invalid example: the geo:FeatureCollection instance node has one incoming rdfs:member relation coming from a geo:Feature node and one incoming rdfs:member relation not coming from a geo:Feature node
+		# An invalid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node and another to a geo:Geometry node
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<featureCollection-x> a geo:FeatureCollection .
-		<feature-x> rdfs:member <featureCollection-x> .
-		<geometry-x> rdfs:member <featureCollection-x> .
-		<feature-x>	geo:hasGeometry <feature-x-geom1> .
+		<featureCollection-x> 
+		    a geo:FeatureCollection ;
+		    rdfs:member <featureCollection-x> , <geometry-x> ;
+		.
+		
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		
+		<geometry-x> a geo:Geometry .			
 		""" ;
 .
 
@@ -920,21 +936,24 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S34-GeometryCollectionClass-minOneMember-geometry-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "An instance of geo:GeometryCollection should have at least one incoming rdfs:member relation."@en ;
+	sh:message "An instance of geo:GeometryCollection should have at least one outgoing rdfs:member relation."@en ;
 	skos:example 
 		"""
 		# A valid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<geometryCollection-x> a geo:GeometryCollection .
-		<geometry-x> rdfs:member <geometryCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.
+				
+		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
-		# An invalid example: the geo:GeometryCollection instance node has no incoming rdfs:member relations
+		# An invalid example: the geo:GeometryCollection instance node has no outgoing rdfs:member relations
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -944,15 +963,15 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S34-GeometryCollectionClass-member-onlyGeometry-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "An instance of geo:GeometryCollection should only have incoming rdfs:member relations coming from a geo:Geometry instance."@en ;
+		sh:message "An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances."@en ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			SELECT $this
 			WHERE {
-				?geometry rdfs:member $this .
+				$this rdfs:member ?geometry .
 				FILTER NOT EXISTS {
 					?feature geo:hasGeometry ?geometry .
 				}
@@ -961,23 +980,28 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	skos:example 
 		"""
-		# A valid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation coming from a geo:Geometry node
+		# A valid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<geometryCollection-x> a geo:GeometryCollection .
-		<geometry-x> rdfs:member <geometryCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.		
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
-		# An invalid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation coming from a geo:Geometry node and one incoming rdfs:member relation not coming from a geo:Geometry node
+		# An invalid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to geo:Geometry node and one to a non-geo:Geometry node (a geo:Feature)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<geometryCollection-x> a geo:GeometryCollection .
-		<feature-y> rdfs:member <geometryCollection-x> .
-		<geometry-x> rdfs:member <geometryCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> , <feature-x> ;
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ;
 .
 
@@ -985,47 +1009,52 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 # Shape 35 - geo:SpatialObjectCollection
 #################################################
 
-<S35-SpatialObjectCollection-member-geometry>
+<S35-SpatialObjectCollection-member-spatialObject>
 	a sh:NodeShape ;
-	sh:property <S35-SpatialObjectCollection-minOneMember-geometry-sub> , <S35-SpatialObjectCollection-member-onlyGeometry-sub> ;
+	sh:property <S35-SpatialObjectCollection-minOneMember-spatialObject-sub> , <S35-SpatialObjectCollection-member-onlySpatialObject-sub> ;
 	sh:targetClass geo:SpatialObjectCollection ;
 .
 
-<S35-SpatialObjectCollection-minOneMember-geometry-sub>
+<S35-SpatialObjectCollection-minOneMember-spatialObject-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "An instance of geo:SpatialObjectCollection should have at least one incoming rdfs:member relation."@en ;
+	sh:message "An instance of geo:SpatialObjectCollection should have at least one outgoing rdfs:member relation."@en ;
 	skos:example 
 		"""
-		# A valid example: the geo:SpatialObjectCollection instance node has one incoming rdfs:member relation
+		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<spatialObjectCollection-x> a geo:SpatialObjectCollection .
-		<spatialObject-x> rdfs:member <spatialObjectCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <feature-x>
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
 		# An invalid example: the geo:SpatialObjectCollection instance node has no incoming rdfs:member relations
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<spatialObjectCollection-x> a geo:SpatialObjectCollection .
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		.
 		""" ;
 .
 
-<S35-SpatialObjectCollection-member-onlyGeometry-sub>
+<S35-SpatialObjectCollection-member-onlySpatialObject-sub>
 	a sh:PropertyShape ;
-	sh:path [ sh:inversePath rdfs:member ] ;
+	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "An instance of geo:SpatialObjectCollection should only have incoming rdfs:member relations coming from a geo:SpatialObject instance."@en ;
+		sh:message "An instance of geo:SpatialObjectCollection should only have outgoing rdfs:member relations going to geo:SpatialObject instances, or subclasses of them."@en ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 			SELECT $this
 			WHERE {
-				?spatialObject rdfs:member $this .
+				$this rdfs:member ?spatialObject .
 				FILTER NOT EXISTS {
 					?spatialObject geo:hasGeometry|^geo:hasGeometry ?geometryOrFeature .
 				}
@@ -1034,26 +1063,31 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	skos:example 
 		"""
-		# A valid example: the geo:SpatialObjectCollection instance node has one incoming rdfs:member relation coming from a geo:Geometry node and one incoming rdfs:member relation coming from a geo:Feature node
+		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node and one to a geo:Feature node
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<spatialObjectCollection-x> a geo:SpatialObjectCollection .
-		<geometry-x> rdfs:member <spatialObjectCollection-x> .
-		<feature-y> rdfs:member <spatialObjectCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
-		<feature-y>	geo:hasGeometry <geometry-y> .
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <geometry-x> , <feature-y> ;
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		<feature-y> geo:hasGeometry <geometry-y> .
 		""" ,
 		"""
-		# An invalid example: the geo:SpatialObjectCollection instance node has one incoming rdfs:member relation coming from a geo:Geometry node, one incoming rdfs:member relation coming from a geo:Feature node and a third incoming rdfs:member relation from a random other type of node
+		# An invalid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node, one outgoing rdfs:member relation to a geo:Feature node and a third outgoing rdfs:member relation from a node of another type (ex:Thing)
+		@prefix ex: <http://example.com/> .
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-		<spatialObjectCollection-x> a geo:SpatialObjectCollection .
-		<geometry-x> rdfs:member <spatialObjectCollection-x> .
-		<feature-y> rdfs:member <spatialObjectCollection-x> .
-		<random-x> rdfs:member <spatialObjectCollection-x> .
-		<feature-x>	geo:hasGeometry <geometry-x> .
-		<feature-y>	geo:hasGeometry <geometry-y> .
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <geometry-x> , <feature-y> , <thing-x> ;
+		.
+		
+		<thing-x> a ex:Thing .		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		<feature-y> geo:hasGeometry <geometry-y> .
 		""" ;
 .
