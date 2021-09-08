@@ -607,9 +607,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S16-wkt-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
-	sh:pattern "" ; # TODO: regex // starts with "POINT" or "POLYGON" or "<" (for CRS URI) or ... // ends with ")"
-	sh:flags "i" ; # TODO: optional regex flags / Ignore case? ...
-	sh:message "the content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT geometry string, as defined by its official specification."@en ;
+	sh:pattern "^(P|C|S|L|T|<)" ;  # starts with P, C, S, L, T, or < for Point, TIN etc. or IRI
+	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
 	skos:example 
 		"""
 		# A valid example: the RDF literal with an incoming geo:asWKT has a well-formed WKT string as its content
@@ -642,9 +641,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S17-gml-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asGML ;
-	sh:pattern "" ;	# TODO: regex // starts with  ... // ends with ...
-	sh:flags "i" ; # TODO: optional regex flags / Ignore case? ...
-	sh:message "the content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry string, as defined by its official specification."@en ;
+	sh:pattern "^(<)(.+)(>)$" ;  # starts with < ends with >
+	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification."@en ;
 .
 
 <S18-geojson-content>
@@ -656,9 +654,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S18-geojson-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asGeoJSON ;
-	sh:pattern "" ;	# TODO: regex // starts with  ... // ends with ...
-	sh:flags "i" ; # TODO: optional regex flags / Ignore case? ...
-	sh:message "the content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
+	sh:pattern "^({)(.*)(})$" ;  # starts with { ends with }
+	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
 .
 
 <S19-kml-content>
@@ -670,9 +667,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S19-kml-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asKML ;
-	sh:pattern "" ;	# TODO: regex // starts with  ... // ends with ...
-	sh:flags "i" ; # TODO: optional regex flags / Ignore case? ...
-	sh:message "the content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry string, as defined by its official specification."@en ;
+	sh:pattern "^(<)(.+)(>)$" ;  # starts with < ends with >
+	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
 .
 
 #################################################
