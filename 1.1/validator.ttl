@@ -5,13 +5,14 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@base <http://www.opengis.net/def/geosparql/validator/rule/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.opengis.net/def/geosparql/validator/> .
 
 
 <http://www.opengis.net/def/geosparql/validator>
 	a owl:Ontology ;
   	dcterms:title "GeoSPARQL RDF Shapes Validator"@en ;
-	dcterms:description """This is a [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) file that specifies rules for RDF data. It can be used to test the conformance of data to the GeoSPARQL standard.
+	dcterms:description """This is a [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) file that specifies constraints for RDF data. It can be used to test the conformance of data to the GeoSPARQL standard.
 	
 As of GeoSPARQL 1.1, this validator is not normative, only informative, however this is likely to be the basis of future, normative, validators."""@en ;
 	dcterms:publisher [
@@ -21,57 +22,205 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	] ;
 	dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
 	dcterms:created "2021-06-13"^^xsd:date ;
-	dcterms:modified "2021-06-22"^^xsd:date ;
+	dcterms:modified "2021-08-12"^^xsd:date ;
 	owl:versionInfo "OGC GeoSPARQL 1.1" ;
-	owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;  # same as Spec version for now
+	owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;
 .
 
-<hasGeometry-hasSerialization>
+#################################################
+# Shape 1 (1a-1f)
+#################################################
+
+<S1-hasGeometry-hasSerialization>
     a sh:NodeShape ;
 	sh:targetObjectsOf geo:hasGeometry ;
-	sh:property [
-    	    sh:path [ 
-	        sh:alternativePath (
-	            geo:hasSerialization
-		    geo:asGML
-		    geo:asWKT
-		    geo:asGeoJSON
-		    geo:asKML
-		    geo:asDGGS
-	        ) 
-	    ] ;
-            sh:minCount 1 ;
-	    sh:maxCount 1 ;
+	sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> , <S1-f-hasGeometry-hasSerialization-sub> ;
+.
+<S1-hasDefaultGeometry-hasSerialization>
+    a sh:NodeShape ;
+	sh:targetObjectsOf geo:hasDefaultGeometry ;
+	sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> , <S1-f-hasGeometry-hasSerialization-sub> ;
+.
+<S1-defaultGeometry-hasSerialization>
+    a sh:NodeShape ;
+	sh:targetObjectsOf geo:defaultGeometry ;
+	sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> , <S1-f-hasGeometry-hasSerialization-sub> ;
+.
+
+<S1-a-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			geo:hasSerialization
+			geo:asGML
+			geo:asWKT
+			geo:asGeoJSON
+			geo:asKML
+			geo:asDGGS
+		) 
 	] ;
-	sh:message "Each node with an incoming geo:hasGeometry should have at least one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
+	sh:minCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, should have minimum one outgoing relation that is either geo:hasSerialization, or a specialization of it."@en ;
 	skos:example 
 		"""
 		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
-			a geo:Feature ;
 			geo:hasGeometry [
-				a geo:Geometry ;
-				geo:asWKT "POINT (153.084230 -27.322738)" ;
-			]
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
 		"""
-		# An invalid example: incoming into the Geometry Blank Node is geo:hasGeometry, there is no outgoing subproperty of geo:hasSerialization
+		# An invalid example: incoming into the Geometry Blank Node is geo:hasGeometry, there is no outgoing geo:hasSerialization or a specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
-			a geo:Feature ;
-			geo:hasGeometry [
-				a geo:Geometry ;
+			geo:hasGeometry [] ;
+		.
+		""" ,
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasDefaultGeometry, outgoing is geo:asWKT
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasDefaultGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ;
+		""" ,
+		"""
+		# An invalid example: incoming into the Geometry Blank Node is geo:hasDefaultGeometry, there is no outgoing geo:hasSerialization or a specialization of it
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasDefaultGeometry [] ;
+		.
+		""" ;
 .
 
-# Each node with an outgoing relation that is either geo:hasSerialization or a specialisation of it, should have exactly one incoming geo:hasGeometry relation
-<hasSerialization-hasGeometry>
+<S1-b-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			geo:hasSerialization
+			geo:asGML
+			geo:asWKT
+			geo:asGeoJSON
+			geo:asKML
+			geo:asDGGS
+		) 
+	] ;
+	sh:maxCount 1 ;
+	sh:severity sh:Warning ;
+	sh:message """It seems like more then one geometry serialization (outgoing geo:hasSerialization or a specialization of it) exist for this geometry node (incoming geo:hasGeometry or a specialization of it). 
+	A data publisher should assure that the CRS/SRS and the actual coordinates are equivalent for each serialization of the same geometry, but this might not be the case.
+	A single GeoSPARQL engine might treat different geometry serializations (with the same coordinates and CRS) differently by using distinct geometry loaders and processers internally, resulting in potentially conflicting GeoSPARQL spatial relations delivered by the engine for the multiple serializations. 
+	Before using the data, you might want to evaluate if the published data and the operations of the GeoSPARQL engine are correct.
+	If you trust the data publisher in this, you can deactivate this shape using sh:deactivated equal to true.
+	Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."""@en ;
+	skos:example 
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# A valid example but a warning will be raised: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT and geo:asGeoJSON. A check by the user is thus recommended. Since both serializations use the same CRS (WGS84, as resp. defined by the GeoSPARL specification for WKT and the GeoJSON specification) and the exact same coordinates, this pattern is in fact allowed and the warning can be ignored. 
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [153.084230, -27.322738] }"^^geo:geoJSONLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example (warning will be raised): incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT and geo:asGeoJSON. A check by the user is thus recommended. Since both serializations don't use the exact same coordinates, this pattern is not allowed. 
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [153.08, -27.32] }"^^geo:geoJSONLiteral ;
+			] ;
+		.
+		""" ;
+.
+
+<S1-c-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asWKT ;
+	sh:maxCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, can have a maximum of one outgoing geo:asWKT relation."@en ;
+	skos:example 
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is one geo:asWKT relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is one geo:asWKT relation. RDF treats both entries as one triple since they are identical.
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing are two geo:asWKT relations
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.08 -27.32)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ;
+.
+
+<S1-d-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asGML ;
+	sh:maxCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, can have a maximum of one outgoing geo:asGML relation."@en ;
+.
+
+<S1-e-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asGeoJSON ;
+	sh:maxCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, can have a maximum of one outgoing geo:asGeoJSON relation."@en ;
+.
+
+<S1-f-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asKML ;
+	sh:maxCount 1 ;
+	sh:message "Each node with an incoming geo:hasGeometry, or a specialization of it, can have a maximum of one outgoing geo:asKML relation."@en ;
+.
+
+#################################################
+# Shape 2
+#################################################
+
+<S2-hasSerialization-hasGeometry>
     a sh:NodeShape ;
 	sh:targetSubjectsOf     	
 		geo:hasSerialization ,
@@ -80,76 +229,861 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		geo:asGeoJSON ,
 		geo:asKML ,
 		geo:asDGGS ;
-	sh:property [
-		sh:path [ sh:inversePath geo:hasGeometry ] ;
-        sh:minCount 1 ;
-        sh:maxCount 1 ;
+	sh:property <S2-hasSerialization-hasGeometry-sub> ;
+.
+
+<S2-hasSerialization-hasGeometry-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			[ sh:inversePath geo:hasGeometry ]
+			[ sh:inversePath geo:hasDefaultGeometry ]
+			[ sh:inversePath geo:defaultGeometry ]
+		)
 	] ;
-	sh:message "Each node with an incoming geo:hasGeometry should have exactly one outgoing relation that is either geo:hasSerialization or a specialisation of it."@en ;
+	sh:minCount 1 ;
+	sh:message "Each node with one or more outgoing relations that are either geo:hasSerialization, or a specialization of it, should have at least one incoming geo:hasGeometry relation or a specialization of it."@en ;
 	skos:example 
 		"""
 		# A valid example: outgoing from the Geometry Blank Node is geo:asWKT, incoming is geo:hasGeometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
-			a geo:Feature ;
 			geo:hasGeometry [
-				a geo:Geometry ;
-				geo:asWKT "POINT (153.084230 -27.322738)" ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
 			] ;
 		.
-		"""^^xsd:string ,
+		""" ,
+		"""
+		# A valid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there are two incoming geo:hasGeometry
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-z> geo:hasGeometry <geometry-x> .
+		<feature-w> geo:hasGeometry <geometry-x> .
+		<geometry-x> geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
+		""" ,
 		"""
 		# An invalid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there is no incoming geo:hasGeometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
-		<feature-x> a geo:Feature .
-
-		[] a geo:Geometry ;
-			geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral ;
-		.
-		"""^^xsd:string ;
+		[] geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
+		""" ;
 .
 
+#################################################
+# Shape 3 + 3b + 3c
+#################################################
 
-<hasGeometry-hasSerialization>
+<S3-hasGeometry-hasGeometry>
     a sh:NodeShape ;
 	sh:targetObjectsOf geo:hasGeometry ;
-	sh:property [
-		sh:path geo:hasGeometry ;
-        sh:maxCount 0 ;
+	sh:property <S3-hasGeometry-hasGeometry-sub> ;
+.
+<S3-b-hasDefaultGeometry-hasGeometry>
+    a sh:NodeShape ;
+	sh:targetObjectsOf geo:hasDefaultGeometry ;
+	sh:property <S3-hasGeometry-hasGeometry-sub> ;
+.
+<S3-c-defaultGeometry-hasGeometry>
+    a sh:NodeShape ;
+	sh:targetObjectsOf geo:defaultGeometry ;
+	sh:property <S3-hasGeometry-hasGeometry-sub> ;
+.
+
+<S3-hasGeometry-hasGeometry-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			geo:hasGeometry
+			geo:hasDefaultGeometry
+			geo:defaultGeometry
+		)
 	] ;
-	sh:message "A node that has an outgoing geo:hasGeometry property cannot have an incoming geo:hasGeometry property at the same time (a reasoner can detect the inconsistency (a geo:Feature cannot be a geo:Geometry at the same time), but it cannot be used to pinpoint the problem as SHACL can)"@en ;
+	sh:maxCount 0 ;
+	sh:message "A node that has an incoming geo:hasGeometry property, or specialization of it, cannot have an outgoing geo:hasGeometry property, or a specialization of, it at the same time (a geo:Feature cannot be a geo:Geometry at the same time)"@en ;
 	skos:example 
 		"""
-		# A valid example: the Resource instance <resource-x> has an outgoing geo:hasGeometry property and no incoming geo:hasGeometry
+		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasGeometry property and no outgoing geo:hasGeometry or specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
-		<resource-x>
-			geo:hasGeometry [
-				a geo:Geometry ;
-				geo:asWKT "POINT (153.084230 -27.322738)" ;
-			] ;
-		.
-		"""^^xsd:string ,
+		<resource-x> geo:hasGeometry <resource-x-geom1> .
+		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
+		""" ,
 		"""
-		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property
+		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property (i.e. it's a geo:Feature and a geo:Geometry at the same time)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<resource-x>
-			geo:hasGeometry [
-				a geo:Geometry ;
-				geo:asWKT "POINT (153.084230 -27.322738)" ;
-			] ;
-		.
 
 		<resource-y>
 			geo:hasGeometry <resource-x> ;
+		.
+		<resource-x>
+			geo:asWKT "POINT (153.084232 -27.322734)"^^geo:wktLiteral ;
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
 		.		
-		"""^^xsd:string ;
+		""" ,
+		"""
+		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasDefaultGeometry property and no outgoing geo:hasGeometry or specialization of it
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<resource-x> geo:hasDefaultGeometry <resource-x-geom1> .
+		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
+		""" ,
+		"""
+		# An invalid example: the Resource instance <resource-x> has an incoming geo:hasDefaultGeometry property and an outgoing geo:hasGeometry (i.e. it's a geo:Feature and a geo:Geometry at the same time)
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<resource-y>
+			geo:hasDefaultGeometry <resource-x> ;
+		.
+		<resource-x>
+			geo:asWKT "POINT (153.084232 -27.322734)"^^geo:wktLiteral ;
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.		
+		""" ;
 .
 
-# Checks on the target of datatype properties, i.e. are they effectively RDF literals? (a reasoner can only detect inconsistencies)
+#################################################
+# Shape 4
+#################################################
 
-# Checks on the datatype of datatype properties, e.g. a geo:asGeoJSON property needs to point to a literal with datatype geo:geoJSONLiteral (a reasoner cannot infer a datatype via rdfs:range, only detect inconsistencies)
+<S4-hasSerialization-literal>
+	a sh:NodeShape ;
+	sh:targetObjectsOf
+		geo:hasSerialization ,
+		geo:asGML ,
+		geo:asWKT ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
+	sh:nodeKind sh:Literal ;
+	sh:message "The target of a geo:hasSerialization property, or a specialization of, it should be an RDF literal."@en ;
+	skos:example 
+		"""
+		# A valid example: the target of a geo:asWKT property is an RDF literal
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the target of a geo:asWKT property is not an RDF literal
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-y>
+			geo:hasGeometry [
+				geo:asWKT <geometry-serialization-node> ;
+			] ;
+		.		
+		""" ;
+.
+
+#################################################
+# Shape 5-6-7-8
+#################################################
+
+<S5-asWKT-wktLiteral>
+	a sh:NodeShape ;
+	sh:targetObjectsOf geo:asWKT ;
+	sh:datatype geo:wktLiteral ;
+	sh:message "The target of a geo:asWKT property should be an RDF literal with datatype geo:wktLiteral."@en ;
+	skos:example 
+		"""
+		# A valid example: the target of a geo:asWKT property is an RDF literal with datatype geo:wktLiteral
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the target of a geo:asWKT property is not an RDF literal
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-y>
+			geo:hasGeometry [
+				geo:asWKT <geometry-serialization-node> ;
+			] ;
+		.		
+		""" ,
+		"""
+		# An invalid example: the target of a geo:asWKT property is an RDF literal but with the wrong datatype (xsd:string)
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-z>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)" ;
+			] ;
+		.		
+		""" ;
+.
+
+<S6-asGML-gmlLiteral>
+	a sh:NodeShape ;
+	sh:targetObjectsOf geo:asGML ;
+	sh:datatype geo:gmlLiteral ;
+	sh:message "The target of a geo:asGML property should be an RDF literal with datatype geo:gmlLiteral."@en ;
+.
+
+<S7-asGeoJSON-geoJSONLiteral>
+	a sh:NodeShape ;
+	sh:targetObjectsOf geo:asGeoJSON ;
+	sh:datatype geo:geoJSONLiteral ;
+	sh:message "The target of a geo:asGeoJSON property should be an RDF literal with datatype geo:geoJSONLiteral."@en ;
+.
+
+<S8-asKML-kmlLiteral>
+	a sh:NodeShape ;
+	sh:targetObjectsOf geo:asKML ;
+	sh:datatype geo:kmlLiteral ;
+	sh:message "The target of a geo:asKML property should be an RDF literal with datatype geo:kmlLiteral."@en ;
+.
+
+#################################################
+# Shape 10-11-12-13-14-15 (15a-15d)
+#################################################
+# each metadata property on geo:Geometry can exist only once
+
+<S10-many-coordinateDimension-one>
+	a sh:NodeShape ;
+	sh:property <S10-many-coordinateDimension-one-sub> ;
+	sh:targetSubjectsOf geo:coordinateDimension ;
+.
+	
+<S10-many-coordinateDimension-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:coordinateDimension ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:coordinateDimension property."@en ;
+	skos:example
+		"""
+		# A valid example: the subject of a geo:coordinateDimension property has no other properties with the same name
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		
+		<feature-x>
+			geo:hasGeometry [
+				geo:coordinateDimension 2 ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:dggsLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the subject of a geo:coordinateDimension property has also another property with with the same property name but a different value
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		
+		<feature-y>
+			geo:hasGeometry [
+				geo:coordinateDimension 2 , 3 ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:dggsLiteral ;
+			] ;
+		.
+		""" ;
+.	
+	
+<S11-many-dimension-one>
+	a sh:NodeShape ;
+	sh:property <S11-many-dimension-one-sub> ;
+	sh:targetSubjectsOf geo:dimension ;
+.
+	
+<S11-many-dimension-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:dimension ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:dimension property."@en ;
+.	
+
+<S12-many-isEmpty-one>
+	a sh:NodeShape ;
+	sh:property <S12-many-isEmpty-one-sub> ;
+	sh:targetSubjectsOf geo:isEmpty ;
+.
+	
+<S12-many-isEmpty-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:isEmpty ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:isEmpty property."@en ;
+.	
+
+<S13-many-isSimple-one>
+	a sh:NodeShape ;
+	sh:property <S13-many-isSimple-one-sub> ;
+	sh:targetSubjectsOf geo:isSimple ;
+.
+	
+<S13-many-isSimple-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:isSimple ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have a maximum one outgoing geo:isSimple property."@en ;
+.	
+
+<S14-many-spatialDimension-one>
+	a sh:NodeShape ;
+	sh:property <S14-many-spatialDimension-one-sub> ;
+	sh:targetSubjectsOf geo:spatialDimension ;
+.
+	
+<S14-many-spatialDimension-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:spatialDimension ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:spatialDimension property."@en ;
+.	
+
+
+<S15a-many-hasSpatialResolution-one>
+	a sh:NodeShape ;
+	sh:property <S15a-many-hasSpatialResolution-one-sub> ;
+	sh:targetSubjectsOf geo:hasSpatialResolution ;
+.
+	
+<S15a-many-hasSpatialResolution-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasSpatialResolution ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution property."@en ;
+.	
+
+<S15b-many-hasSpatialAccuracy-one>
+	a sh:NodeShape ;
+	sh:property <S15b-many-hasSpatialAccuracy-one-sub> ;
+	sh:targetSubjectsOf geo:hasSpatialAccuracy ;
+.
+	
+<S15b-many-hasSpatialAccuracy-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasSpatialAccuracy ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy property."@en ;
+.	
+
+<S15c-many-hasMetricAccuracy-one>
+	a sh:NodeShape ;
+	sh:property <S15c-many-hasMetricAccuracy-one-sub> ;
+	sh:targetSubjectsOf geo:hasMetricAccuracy ;
+.
+	
+<S15c-many-hasMetricAccuracy-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasMetricAccuracy ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricAccuracy property."@en ;
+.
+
+<S15d-many-hasMetricResolution-one>
+	a sh:NodeShape ;
+	sh:property <S15d-many-hasMetricResolution-one-sub> ;
+	sh:targetSubjectsOf geo:hasMetricResolution ;
+.
+	
+<S15d-many-hasMetricResolution-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasMetricResolution ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricResolution property."@en ;
+.	
+
+#################################################
+# Shape 16-17-18-19-20
+#################################################
+# regex to check if content of WKT/GeoJSON/KML/GML literals complies with the basic patterns of such geometries, if possible (check start and/or end to find e.g. copy/paste errors with GeoSPARQL properties and datatypes, not to check if the content of a literal is fully compliant to the geometry format specification)
+
+<S16-wkt-content>
+	a sh:NodeShape ;
+	sh:property <S16-wkt-content-sub-start> ; # the example in the SHACL spec (https://www.w3.org/TR/shacl/#constraints) refers to two property shapes: one for the start and one for the end
+	sh:targetSubjectsOf geo:asWKT ;
+.
+
+<S16-wkt-content-sub-start>
+	a sh:PropertyShape ;
+	sh:path geo:asWKT ;
+	sh:pattern "^(P|C|S|L|T|<)" ;  # starts with P, C, S, L, T, or < for Point, TIN etc. or IRI
+	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
+	skos:example 
+		"""
+		# A valid example: the RDF literal with an incoming geo:asWKT has a well-formed WKT string as its content
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the RDF literal with an incoming geo:asWKT does not have a well-formed WKT string as its content, but rather a GeoJSON string
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ;
+.
+
+<S17-gml-content>
+	a sh:NodeShape ;
+	sh:property <S17-gml-content-sub-start> ; # the example in the SHACL spec (https://www.w3.org/TR/shacl/#constraints) refers to two property shapes: one for the start and one for the end
+	sh:targetSubjectsOf geo:asGML ;
+.
+
+<S17-gml-content-sub-start>
+	a sh:PropertyShape ;
+	sh:path geo:asGML ;
+	sh:pattern "^(<)(.+)(>)$" ;  # starts with < ends with >
+	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification."@en ;
+.
+
+<S18-geojson-content>
+	a sh:NodeShape ;
+	sh:property <S18-geojson-content-sub-start> ; # the example in the SHACL spec (https://www.w3.org/TR/shacl/#constraints) refers to two property shapes: one for the start and one for the end
+	sh:targetSubjectsOf geo:asGeoJSON ;
+.
+
+<S18-geojson-content-sub-start>
+	a sh:PropertyShape ;
+	sh:path geo:asGeoJSON ;
+	sh:pattern "^({)(.*)(})$" ;  # starts with { ends with }
+	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
+.
+
+<S19-kml-content>
+	a sh:NodeShape ;
+	sh:property <S19-kml-content-sub-start> ; # the example in the SHACL spec (https://www.w3.org/TR/shacl/#constraints) refers to two property shapes: one for the start and one for the end
+	sh:targetSubjectsOf geo:asKML ;
+.
+
+<S19-kml-content-sub-start>
+	a sh:PropertyShape ;
+	sh:path geo:asKML ;
+	sh:pattern "^(<)(.+)(>)$" ;  # starts with < ends with >
+	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
+.
+
+#################################################
+# Shape 21
+#################################################
+
+<S21-featureClass-hasGeometry>
+	a sh:NodeShape ;
+	sh:property <S21-featureClass-hasGeometry-sub> ;
+	sh:targetClass geo:Feature ;
+.
+
+<S21-featureClass-hasGeometry-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			geo:hasGeometry
+			geo:hasDefaultGeometry
+			geo:defaultGeometry
+		)
+	] ;
+	sh:minCount 1 ;
+	sh:message "A geo:Feature node (inferred or asserted) should have at least one outgoing geo:hasGeometry relation, or a specialization of it."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:Feature instance node has one outgoing geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> a geo:Feature ;
+			geo:hasGeometry <feature-x-geom1> ;
+		.
+		""" ,
+		"""
+		# An invalid example: the geo:Feature instance node has no outgoing geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> a geo:Feature .
+		""" ;
+.
+
+#################################################
+# Shape 30
+#################################################
+
+<S30-dimension-coordinateDimension>
+	a sh:NodeShape ;
+	sh:property <S30-dimension-coordinateDimension-sub> ;
+	sh:targetSubjectsOf geo:dimension ;
+.
+
+<S30-dimension-coordinateDimension-sub>
+	a sh:PropertyShape ;
+	sh:path geo:coordinateDimension ;
+	sh:sparql [
+		sh:message "If both geo:dimension and geo:coordinateDimension properties are asserted, the value of geo:dimension should be less than or equal to the value of geo:coordinateDimension"@en ;
+		sh:select """
+			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+			SELECT $this
+			WHERE {
+				$this geo:dimension ?dim ;
+					geo:coordinateDimension ?coordDim .
+				FILTER ( ?dim > ?coordDim )
+			}
+		""" ;
+	] ;
+	skos:example 
+		"""
+		# A valid example: the geo:dimension has value is 2 while the geo:coordinateDimension has value 2
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		<feature-x-geom1> geo:dimension 2 ;
+			geo:coordinateDimension 2 ;
+		.
+		""" ,
+		"""
+		# A valid example: the geo:dimension has value is 2 while there is no geo:coordinateDimension
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		<feature-x-geom1> geo:dimension 2 ;
+		.
+		""" ,
+		"""
+		# An invalid example: the geo:dimension has value is 3 while the geo:coordinateDimension has value 2
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		<feature-x-geom1> geo:dimension 3 ;
+			geo:coordinateDimension 2 ;
+		.
+		""" ;
+.
+
+#################################################
+# Shape 32
+#################################################
+
+<S32-geometryClass-hasGeometry-hasSerialization>
+	a sh:NodeShape ;
+	sh:property <S32-geometryClass-hasGeometry-sub> , <S32-geometryClass-hasSerialization-sub> ;
+	sh:targetClass geo:Geometry ;
+.
+
+<S32-geometryClass-hasGeometry-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			[ sh:inversePath geo:hasGeometry ]
+			[ sh:inversePath geo:hasDefaultGeometry ]
+			[ sh:inversePath geo:defaultGeometry ]
+		)
+	] ;
+	sh:minCount 1 ;
+	sh:message "A geo:Geometry node (inferred or asserted) should always have at least one incoming geo:hasGeometry relation, or a specialization of it."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		<feature-x-geom1> a geo:Geometry .
+		""" ,
+		"""
+		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x-geom1> a geo:Geometry .
+		""" ;
+.
+
+<S32-geometryClass-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path [ 
+		sh:alternativePath (
+			geo:hasSerialization
+			geo:asGML
+			geo:asWKT
+			geo:asGeoJSON
+			geo:asKML
+			geo:asDGGS
+		) 
+	] ;
+	sh:minCount 1 ;
+	sh:maxCount 1 ; # should be the same as shape 1 (under discussion)
+	sh:message "A geo:Geometry node (inferred or asserted) should have exactly one outgoing geo:hasSerialization relation, or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		<feature-x-geom1> a geo:Geometry .
+		""" ,
+		"""
+		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x-geom1> a geo:Geometry .
+		""" ;
+.
+
+#################################################
+# Shape 33 - geo:FeatureCollection
+#################################################
+
+<S33-FeatureCollectionClass-member-feature>
+	a sh:NodeShape ;
+	sh:property <S33-FeatureCollectionClass-minOneMember-feature-sub> , <S33-FeatureCollectionClass-member-onlyFeature-sub> ;
+	sh:targetClass geo:FeatureCollection ;
+.
+
+<S33-FeatureCollectionClass-minOneMember-feature-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:minCount 1 ;
+	sh:message "An instance of geo:FeatureCollection should have at least one outgoing rdfs:member relation."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<featureCollection-x> 
+		    a geo:FeatureCollection ;
+		    rdfs:member <feature-x> ;
+		.
+		
+		<feature-x>
+		    a geo:Feature ;
+		    geo:hasGeometry <feature-x-geom1> ;
+		.
+		""" ,
+		"""
+		# An invalid example: the geo:FeatureCollection instance node has no outgoing rdfs:member relations
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<featureCollection-x> a geo:FeatureCollection .
+		""" ;
+.
+
+<S33-FeatureCollectionClass-member-onlyFeature-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:sparql [
+		sh:message "An instance of geo:FeatureCollection should only have outgoing rdfs:member going to geo:Feature instances."@en ;
+		sh:select """
+			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT $this
+			WHERE {
+				$this rdfs:member ?feature .
+				FILTER NOT EXISTS {
+					?feature geo:hasGeometry ?geometry .
+				}
+			}
+		""" ;
+	] ;
+	skos:example 
+		"""
+		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<featureCollection-x>
+		    a geo:FeatureCollection ;
+		    rdfs:member <feature-x>
+		.
+		
+		<feature-x>
+		    a geo:Feature ;
+		    geo:hasGeometry <feature-x-geom1> ;
+		.
+		""" ,
+		"""
+		# An invalid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node and another to a geo:Geometry node
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<featureCollection-x> 
+		    a geo:FeatureCollection ;
+		    rdfs:member <featureCollection-x> , <geometry-x> ;
+		.
+		
+		<feature-x> geo:hasGeometry <feature-x-geom1> .
+		
+		<geometry-x> a geo:Geometry .			
+		""" ;
+.
+
+#################################################
+# Shape 34 - geo:GeometryCollection
+#################################################
+
+<S34-GeometryCollectionClass-member-geometry>
+	a sh:NodeShape ;
+	sh:property <S34-GeometryCollectionClass-minOneMember-geometry-sub> , <S34-GeometryCollectionClass-member-onlyGeometry-sub> ;
+	sh:targetClass geo:GeometryCollection ;
+.
+
+<S34-GeometryCollectionClass-minOneMember-geometry-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:minCount 1 ;
+	sh:message "An instance of geo:GeometryCollection should have at least one outgoing rdfs:member relation."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.
+				
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ,
+		"""
+		# An invalid example: the geo:GeometryCollection instance node has no outgoing rdfs:member relations
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<geometryCollection-x> a geo:GeometryCollection .
+		""" ;
+.
+
+<S34-GeometryCollectionClass-member-onlyGeometry-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:sparql [
+		sh:message "An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances."@en ;
+		sh:select """
+			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT $this
+			WHERE {
+				$this rdfs:member ?geometry .
+				FILTER NOT EXISTS {
+					?feature geo:hasGeometry ?geometry .
+				}
+			}
+		""" ;
+	] ;
+	skos:example 
+		"""
+		# A valid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.		
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ,
+		"""
+		# An invalid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to geo:Geometry node and one to a non-geo:Geometry node (a geo:Feature)
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<geometryCollection-x> 
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> , <feature-x> ;
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ;
+.
+
+#################################################
+# Shape 35 - geo:SpatialObjectCollection
+#################################################
+
+<S35-SpatialObjectCollection-member-spatialObject>
+	a sh:NodeShape ;
+	sh:property <S35-SpatialObjectCollection-minOneMember-spatialObject-sub> , <S35-SpatialObjectCollection-member-onlySpatialObject-sub> ;
+	sh:targetClass geo:SpatialObjectCollection ;
+.
+
+<S35-SpatialObjectCollection-minOneMember-spatialObject-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:minCount 1 ;
+	sh:message "An instance of geo:SpatialObjectCollection should have at least one outgoing rdfs:member relation."@en ;
+	skos:example 
+		"""
+		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <feature-x>
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ,
+		"""
+		# An invalid example: the geo:SpatialObjectCollection instance node has no incoming rdfs:member relations
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		.
+		""" ;
+.
+
+<S35-SpatialObjectCollection-member-onlySpatialObject-sub>
+	a sh:PropertyShape ;
+	sh:path rdfs:member ;
+	sh:sparql [
+		sh:message "An instance of geo:SpatialObjectCollection should only have outgoing rdfs:member relations going to geo:SpatialObject instances, or subclasses of them."@en ;
+		sh:select """
+			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT $this
+			WHERE {
+				$this rdfs:member ?spatialObject .
+				FILTER NOT EXISTS {
+					?spatialObject geo:hasGeometry|^geo:hasGeometry ?geometryOrFeature .
+				}
+			}
+		""" ;
+	] ;
+	skos:example 
+		"""
+		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node and one to a geo:Feature node
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <geometry-x> , <feature-y> ;
+		.
+		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		<feature-y> geo:hasGeometry <geometry-y> .
+		""" ,
+		"""
+		# An invalid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node, one outgoing rdfs:member relation to a geo:Feature node and a third outgoing rdfs:member relation from a node of another type (ex:Thing)
+		@prefix ex: <http://example.com/> .
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+		<spatialObjectCollection-x>
+		    a geo:SpatialObjectCollection ;
+		    rdfs:member <geometry-x> , <feature-y> , <thing-x> ;
+		.
+		
+		<thing-x> a ex:Thing .		
+		<feature-x> geo:hasGeometry <geometry-x> .
+		<feature-y> geo:hasGeometry <geometry-y> .
+		""" ;
+.
