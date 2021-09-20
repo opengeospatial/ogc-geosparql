@@ -1097,15 +1097,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasLength</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohaslength">Section 6.3.6</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohaslength">Section 6.3.7</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasArea</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.3.7</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasarea">Section 6.3.9</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">hasVolume</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.3.8</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasvolume">Section 6.3.10</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><em>Geometry Serializations</em></p></td>
@@ -2001,7 +2001,7 @@ The IRI <a href="http://www.opengis.net/def/asGeomLiteral"><code>ogc:asGeomLiter
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricSize"><code>geo:hasMetricSize</code></a> is the superproperty of all properties that can be used to indicate the size of a Spatial Object using metric units (meter, square meter or cubic meter). Using a subproperty of this property is the recommended way to specify size, because using a standard unit of length (meter) benefits data interoperability and simplicity. Subproperties of <a href="#_property_geohassize"><code>geo:hasSize</code></a> can be used if more complex expressions are necessary, for example if the unit of length can not be converted to meter, or if additional data are needed to describe the measurement or estimate of size.</p>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL 1.1 defines the following subproperties of this property: <a href="#_property_geohasmetriclength"><code>geo:hasMetricLength</code></a>, <a href="#_property_geohasmetricarea"><code>geo:hasMetricArea</code></a> and <a href="#_property_geohasmetricvolume"><code>geo:hasMetricVolume</code></a>.</p>
+<p>GeoSPARQL 1.1 defines the following subproperties of this property: <a href="#_property_geohasmetriclength"><code>geo:hasMetricLength</code></a>, <a href="#_property_geohasmetricperimeter"><code>geo:hasMetricPerimeter</code></a>, <a href="#_property_geohasmetricarea"><code>geo:hasMetricArea</code></a> and <a href="#_property_geohasmetricvolume"><code>geo:hasMetricVolume</code></a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2018,7 +2018,7 @@ The IRI <a href="http://www.opengis.net/def/asGeomLiteral"><code>ogc:asGeomLiter
 <div class="sect3">
 <h4 id="_property_geohasmetriclength"><a class="anchor" href="#_property_geohasmetriclength"></a>6.3.2. Property: geo:hasMetricLength</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricLength"><code>geo:hasMetricLength</code></a> can be used to indicate the length of a Spatial Object in meters (m). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>. A Spatial Object can be either a <a href="#_class_geofeature"><code>geo:Feature</code></a> or a <a href="#_class_geogeometry"><code>geo:Geometry</code></a>. In the case of a one-dimensional Feature, it is the simple length. In the case of a two-dimensional Feature, it is interpreted to mean the perimeter length.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricLength"><code>geo:hasMetricLength</code></a> can be used to indicate the length of a Spatial Object in meters (m). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>. This property can be used for Spatial Objects having one, two, or three dimensions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2028,6 +2028,20 @@ The IRI <a href="http://www.opengis.net/def/asGeomLiteral"><code>ogc:asGeomLiter
 	skos:prefLabel "has length in meters"@en .</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasmetricperimeter"><a class="anchor" href="#_property_geohasmetricperimeter"></a>6.3.3. Property: geo:hasMetricPerimeter</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricPerimeter"><code>geo:hasMetricPerimeter</code></a> can be used to indicate the length of the outer boundary of a Spatial Object in meters (m). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>. Circumference is considered a type of perimeter, so this property can be used for circular or curved objects too. This property can be used for Spatial Objects having two or three dimensions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">:hasMetricPerimeter a owl:DatatypeProperty ;
+	rdfs:subPropertyOf :hasMetricSize ;
+	skos:definition "The perimeter of a Spatial Object in meters."@en ;
+	skos:prefLabel "has perimeter in meters"@en .</code></pre>
+</div>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
@@ -2035,7 +2049,7 @@ The IRI <a href="http://www.opengis.net/def/asGeomLiteral"><code>ogc:asGeomLiter
 <div class="title">Tip</div>
 </td>
 <td class="content">
-A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer  1 or 2. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
+A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
 </td>
 </tr>
 </table>
@@ -2045,18 +2059,18 @@ A consistency check can be applied to Geometry instances indicating both this pr
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
     ASK
     WHERE {
-        ?g geo:hasLength ?l ;
+        ?g geo:hasMetricPerimeter ?p ;
            geo:dimension ?d .
 
-        FILTER (?d &gt; 2)
+        FILTER (?d &lt; 2)
     }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasmetricarea"><a class="anchor" href="#_property_geohasmetricarea"></a>6.3.3. Property: geo:hasMetricArea</h4>
+<h4 id="_property_geohasmetricarea"><a class="anchor" href="#_property_geohasmetricarea"></a>6.3.4. Property: geo:hasMetricArea</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricArea"><code>geo:hasMetricArea</code></a> can be used to indicate the area of a Spatial Object in square meters (m<sup>2</sup>). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricArea"><code>geo:hasMetricArea</code></a> can be used to indicate the area of a Spatial Object in square meters (m<sup>2</sup>). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>. This property can be used for Spatial Objects having two or three dimensions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2073,7 +2087,7 @@ A consistency check can be applied to Geometry instances indicating both this pr
 <div class="title">Tip</div>
 </td>
 <td class="content">
-A consistency check can be applied to geometries indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
+A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
 </td>
 </tr>
 </table>
@@ -2083,18 +2097,18 @@ A consistency check can be applied to geometries indicating both this property a
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
     ASK
     WHERE {
-        ?g geo:hasArea ?a ;
+        ?g geo:hasMetricArea ?a ;
            geo:dimension ?d .
 
-        FILTER (?d != 2)
+        FILTER (?d &lt; 2)
     }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasmetricvolume"><a class="anchor" href="#_property_geohasmetricvolume"></a>6.3.4. Property: geo:hasMetricVolume</h4>
+<h4 id="_property_geohasmetricvolume"><a class="anchor" href="#_property_geohasmetricvolume"></a>6.3.5. Property: geo:hasMetricVolume</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricVolume"><code>geo:hasMetricVolume</code></a> can be used to indicate the volume of a Spatial Object in cubic meters (m<sup>3</sup>). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricVolume"><code>geo:hasMetricVolume</code></a> can be used to indicate the volume of a Spatial Object in cubic meters (m<sup>3</sup>). It is a subproperty of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a>. This property can be used for Spatial Objects having three dimensions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2121,7 +2135,7 @@ A consistency check can be applied to Geometries indicating both this property a
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
     ASK
     WHERE {
-        ?g geo:hasVolume ?a ;
+        ?g geo:hasMetricVolume ?v ;
            geo:dimension ?d .
 
         FILTER (?d != 3)
@@ -2130,13 +2144,13 @@ A consistency check can be applied to Geometries indicating both this property a
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohassize"><a class="anchor" href="#_property_geohassize"></a>6.3.5. Property: geo:hasSize</h4>
+<h4 id="_property_geohassize"><a class="anchor" href="#_property_geohassize"></a>6.3.6. Property: geo:hasSize</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasSize"><code>geo:hasSize</code></a> is the superproperty of all properties that can be used to indicate the size of a Spatial Object in case (only) metric units (meter, square meter or cubic meter) can not be used. If it is possible to express size in metric units, subproperties of <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a> should be used.
 This property has not range specification. This makes it possible to use other vocabularies for expressions of size, for example vocabularies for units of measurment or vocabularies for specifying measurement quality.</p>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL 1.1 defines the following subproperties of this property: <a href="#_property_geohaslength"><code>geo:hasLength</code></a>, <a href="#Property: geo:hasMArea"><code>geo:hasArea</code></a> and <a href="#_property_geohasvolume"><code>geo:hasVolume</code></a>.</p>
+<p>GeoSPARQL 1.1 defines the following subproperties of this property: <a href="#_property_geohaslength"><code>geo:hasLength</code></a>, <a href="#_property_geohasperimeter"><code>geo:hasPerimter</code></a>, <a href="#_property_geohasarea"><code>geo:hasArea</code></a> and <a href="#_property_geohasvolume"><code>geo:hasVolume</code></a>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2149,7 +2163,7 @@ This property has not range specification. This makes it possible to use other v
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>6.3.6. Property: geo:hasLength</h4>
+<h4 id="_property_geohaslength"><a class="anchor" href="#_property_geohaslength"></a>6.3.7. Property: geo:hasLength</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasLength"><code>geo:hasLength</code></a> can be used to indicate the length of a Spatial Object if it is not possible to use the property <a href="#_property_geohasmetriclength"><code>geo:hasMetricLength</code></a>. It is a subproperty of <a href="#_property_geohassize"><code>geo:hasSize</code></a>.</p>
 </div>
@@ -2163,7 +2177,21 @@ This property has not range specification. This makes it possible to use other v
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>6.3.7. Property: geo:hasArea</h4>
+<h4 id="_property_geohasperimeter"><a class="anchor" href="#_property_geohasperimeter"></a>6.3.8. Property: geo:hasPerimeter</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasPerimeter"><code>geo:hasPerimeter</code></a> can be used to indicate the length of a Spatial Object if it is not possible to use the property <a href="#_property_geohasmetricperimeter"><code>geo:hasMetricPerimeter</code></a>. It is a subproperty of <a href="#_property_geohassize"><code>geo:hasSize</code></a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">:hasLength a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	skos:definition """The perimeter of a Spatial Object."""@en ;
+	skos:prefLabel "has perimeter"@en .</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_property_geohasarea"><a class="anchor" href="#_property_geohasarea"></a>6.3.9. Property: geo:hasArea</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasArea"><code>geo:hasArea</code></a> can be used to indicate the area of a Spatial Object if it is not possible to use the property <a href="#_property_geohasmetricarea"><code>geo:hasMetricArea</code></a>. It is a subproperty of <a href="#_property_geohassize"><code>geo:hasSize</code></a>.</p>
 </div>
@@ -2177,7 +2205,7 @@ This property has not range specification. This makes it possible to use other v
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>6.3.8. Property: geo:hasVolume</h4>
+<h4 id="_property_geohasvolume"><a class="anchor" href="#_property_geohasvolume"></a>6.3.10. Property: geo:hasVolume</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasVolume"><code>geo:hasVolume</code></a> can be used to indicate the volume of a Spatial Object if it is not possible to use the property <a href="#_property_geohasmetricvolume"><code>geo:hasMetricVolume</code></a>. It is a subproperty of <a href="#_property_geohassize"><code>geo:hasSize</code></a>.</p>
 </div>
@@ -2206,6 +2234,7 @@ This property has not range specification. This makes it possible to use other v
 <a href="#_property_geohasgeometry"><code>geo:hasGeometry</code></a>,
 <a href="#_property_geohasdefaultgeometry"><code>geo:hasDefaultGeometry</code></a>,
 <a href="#_property_geohaslength"><code>geo:hasLength</code></a>,
+<a href="#_property_geohasperimeter"><code>geo:hasPerimeter</code></a>,
 <a href="#_property_geohasarea"><code>geo:hasArea</code></a>,
 <a href="#_property_geohasvolume"><code>geo:hasVolume</code></a>
 <a href="#_property_geohascentroid"><code>geo:hasCentroid</code></a>,
@@ -6798,7 +6827,7 @@ eg:x
 </div>
 </div>
 <div class="paragraph">
-<p>Here a <a href="#_class_geofeature">Section 6.2.2</a> is described as per the previous example but its area is expressed in non-metric units. The unit international acre is expressed using the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup>. The use of QUDT and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of a subproperty of <a href="#_property_geohassize">Section 6.3.5</a>.</p>
+<p>Here a <a href="#_class_geofeature">Section 6.2.2</a> is described as per the previous example but its area is expressed in non-metric units. The unit international acre is expressed using the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup>. The use of QUDT and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of a subproperty of <a href="#_property_geohassize">Section 6.3.6</a>.</p>
 </div>
 </div>
 <div class="sect4">
@@ -7870,7 +7899,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-15 11:25:56 UTC
+Last updated 2021-09-20 11:05:45 UTC
 </div>
 </div>
 </body>
