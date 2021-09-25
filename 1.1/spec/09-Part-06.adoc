@@ -121,7 +121,41 @@ The restriction imposed on the more general <<Class: SpatialObjectCollection, Sp
 
 === Standard Properties for geo:SpatialObject
 
+Properties are defined for associating Spatial Objects with scalar spatial measurements (sizes) .
+
+|===
+| *Req 7* Implementations shall allow the properties 
+<<Property: geo:hasSize, `geo:hasSize`>>,
+<<Property: geo:hasMetricSize, `geo:hasMetricSize`>>,
+<<Property: geo:hasLength, `geo:hasLength`>>, 
+<<Property: geo:hasMetricLength, `geo:hasMetricLength`>>,
+<<Property: geo:hasPerimeter, `geo:hasPerimeter`>>, 
+<<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>, 
+<<Property: geo:hasArea, `geo:hasArea`>>,
+<<Property: geo:hasMetricArea, `geo:hasMetricArea`>>,
+<<Property: geo:hasVolume, `geo:hasVolume`>> and
+<<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>.
+to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties`]
+|===
+
+==== Property: geo:hasSize
+
+The property http://www.opengis.net/ont/geosparql#hasSize[`geo:hasSize`] is the superproperty of all properties that can be used to indicate the size of a Spatial Object in case (only) metric units (meter, square meter or cubic meter) can not be used. If it is possible to express size in metric units, subproperties of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> should be used.
+This property has not range specification. This makes it possible to use other vocabularies for expressions of size, for example vocabularies for units of measurment or vocabularies for specifying measurement quality.
+
+GeoSPARQL 1.1 defines the following subproperties of this property: <<Property: geo:hasLength, `geo:hasLength`>>, <<Property: geo:hasPerimeter, `geo:hasPerimter`>>, <<Property: geo:hasArea, `geo:hasArea`>> and <<Property: geo:hasVolume, `geo:hasVolume`>>.
+
+```turtle
+:hasSize a owl:ObjectProperty ;
+	rdfs:domain :SpatialObject ;
+	skos:definition "Subproperties of this property are used to indicate the size of a Spatial Object
+	as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence."@en ;
+	skos:prefLabel "has size"@en .
+```
+
 ==== Property: geo:hasMetricSize
+
 The property http://www.opengis.net/ont/geosparql#hasMetricSize[`geo:hasMetricSize`] is the superproperty of all properties that can be used to indicate the size of a Spatial Object using metric units (meter, square meter or cubic meter). Using a subproperty of this property is the recommended way to specify size, because using a standard unit of length (meter) benefits data interoperability and simplicity. Subproperties of <<Property: geo:hasSize, `geo:hasSize`>> can be used if more complex expressions are necessary, for example if the unit of length can not be converted to meter, or if additional data are needed to describe the measurement or estimate of size.
 
 GeoSPARQL 1.1 defines the following subproperties of this property: <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>, <<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>, <<Property: geo:hasMetricArea, `geo:hasMetricArea`>> and <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>.
@@ -136,7 +170,19 @@ GeoSPARQL 1.1 defines the following subproperties of this property: <<Property: 
 	skos:prefLabel "has metric size"@en .
 ```
 
+==== Property: geo:hasLength
+
+The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] can be used to indicate the length of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+
+```turtle
+:hasLength a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	skos:definition """The length of a Spatial Object."""@en ;
+	skos:prefLabel "has length"@en .
+```
+
 ==== Property: geo:hasMetricLength
+
 The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetricLength`] can be used to indicate the length of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having one, two, or three dimensions.
 
 ```turtle
@@ -146,7 +192,19 @@ The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetric
 	skos:prefLabel "has length in meters"@en .
 ```
 
+==== Property: geo:hasPerimeter
+
+The property http://www.opengis.net/ont/geosparql#hasPerimeter[`geo:hasPerimeter`] can be used to indicate the length of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+
+```turtle
+:hasLength a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	skos:definition """The perimeter of a Spatial Object."""@en ;
+	skos:prefLabel "has perimeter"@en .
+```
+
 ==== Property: geo:hasMetricPerimeter
+
 The property http://www.opengis.net/ont/geosparql#hasMetricPerimeter[`geo:hasMetricPerimeter`] can be used to indicate the length of the outer boundary of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. Circumference is considered a type of perimeter, so this property can be used for circular or curved objects too. This property can be used for Spatial Objects having two or three dimensions.
 
 ```turtle
@@ -169,7 +227,20 @@ TIP: A consistency check can be applied to Geometry instances indicating both th
     }
 ```
 
+
+==== Property: geo:hasArea
+
+The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] can be used to indicate the area of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+
+```turtle
+:hasArea a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	skos:definition """The area of a Spatial Object."""@en ;
+	skos:prefLabel "has area"@en .
+```
+
 ==== Property: geo:hasMetricArea
+
 The property http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricArea`] can be used to indicate the area of a Spatial Object in square meters (m^2^). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having two or three dimensions.
 
 ```turtle
@@ -191,7 +262,19 @@ TIP: A consistency check can be applied to Geometry instances indicating both th
     }
 ```
 
+==== Property: geo:hasVolume
+
+The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] can be used to indicate the volume of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+
+```turtle
+:hasVolume a owl:ObjectProperty ;
+	rdfs:subPropertyOf :hasSize ;
+	skos:definition """The volume of a three-dimensional Spatial Object."""@en ;
+	skos:prefLabel "has volume"@en .
+```
+
 ==== Property: geo:hasMetricVolume
+
 The property http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetricVolume`] can be used to indicate the volume of a Spatial Object in cubic meters (m^3^). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having three dimensions.
 
 ```turtle
@@ -213,75 +296,16 @@ TIP: A consistency check can be applied to Geometries indicating both this prope
     }
 ```
 
-==== Property: geo:hasSize
-The property http://www.opengis.net/ont/geosparql#hasSize[`geo:hasSize`] is the superproperty of all properties that can be used to indicate the size of a Spatial Object in case (only) metric units (meter, square meter or cubic meter) can not be used. If it is possible to express size in metric units, subproperties of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> should be used.
-This property has not range specification. This makes it possible to use other vocabularies for expressions of size, for example vocabularies for units of measurment or vocabularies for specifying measurement quality.
-
-GeoSPARQL 1.1 defines the following subproperties of this property: <<Property: geo:hasLength, `geo:hasLength`>>, <<Property: geo:hasPerimeter, `geo:hasPerimter`>>, <<Property: geo:hasArea, `geo:hasArea`>> and <<Property: geo:hasVolume, `geo:hasVolume`>>.
-
-```turtle
-:hasSize a owl:ObjectProperty ;
-	rdfs:domain :SpatialObject ;
-	skos:definition "Subproperties of this property are used to indicate the size of a Spatial Object
-	as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence."@en ;
-	skos:prefLabel "has size"@en .
-```
-
-==== Property: geo:hasLength
-The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] can be used to indicate the length of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
-
-```turtle
-:hasLength a owl:ObjectProperty ;
-	rdfs:subPropertyOf :hasSize ;
-	skos:definition """The length of a Spatial Object."""@en ;
-	skos:prefLabel "has length"@en .
-```
-
-==== Property: geo:hasPerimeter
-The property http://www.opengis.net/ont/geosparql#hasPerimeter[`geo:hasPerimeter`] can be used to indicate the length of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
-
-```turtle
-:hasLength a owl:ObjectProperty ;
-	rdfs:subPropertyOf :hasSize ;
-	skos:definition """The perimeter of a Spatial Object."""@en ;
-	skos:prefLabel "has perimeter"@en .
-```
-
-==== Property: geo:hasArea
-The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] can be used to indicate the area of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
-
-```turtle
-:hasArea a owl:ObjectProperty ;
-	rdfs:subPropertyOf :hasSize ;
-	skos:definition """The area of a Spatial Object."""@en ;
-	skos:prefLabel "has area"@en .
-```
-
-==== Property: geo:hasVolume
-The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] can be used to indicate the volume of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
-
-```turtle
-:hasVolume a owl:ObjectProperty ;
-	rdfs:subPropertyOf :hasSize ;
-	skos:definition """The volume of a three-dimensional Spatial Object."""@en ;
-	skos:prefLabel "has volume"@en .
-```
-
 === Standard Properties for geo:Feature
 
-Properties are defined for associating geometries with features.
+Properties are defined for associating <<Class: geo:Feature, `geo:Feature`>> instances with <<Class: geo:Geometry, `geo:Geometry`>> instances.
 
 |===
 | *Req 7* Implementations shall allow the properties 
 <<Property: geo:hasGeometry, `geo:hasGeometry`>>, 
 <<Property: geo:hasDefaultGeometry, `geo:hasDefaultGeometry`>>, 
-<<Property: geo:hasLength, `geo:hasLength`>>, 
-<<Property: geo:hasPerimeter, `geo:hasPerimeter`>>, 
-<<Property: geo:hasArea, `geo:hasArea`>>, 
-<<Property: geo:hasVolume, `geo:hasVolume`>> 
-<<Property: geo:hasCentroid, `geo:hasCentroid`>>, 
-<<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> and 
-<<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>> 
+<<Property: geo:hasCentroid, `geo:hasCentroid`>> and 
+<<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>>
 to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties`]
 |===
