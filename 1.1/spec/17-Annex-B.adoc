@@ -21,6 +21,9 @@ _New Features checklist - to be removed when all examples are complete:_
 ==== B.1.1.1 `SpatialObject`
 The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
 
+[[annexB_exampleB.1.1.1.1]]
+===== B.1.1.1.1 Basic use
+
 Basic use (as per the example in the class definition)
 
 ```turtle
@@ -31,6 +34,42 @@ eg:x
 ```
 
 NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> as its two more concrete subclasses, <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>>, are more directly relatable to real-world phenomena and use.
+
+[[annexB_exampleB.1.1.1.2]]
+===== B.1.1.1.2 Size Properties
+
+The "size" properties - <<Property: geo:hasSize, `geo:hasSize`>>,
+<<Property: geo:hasMetricSize, `geo:hasMetricSize`>>,
+<<Property: geo:hasLength, `geo:hasLength`>>, 
+<<Property: geo:hasMetricLength, `geo:hasMetricLength`>>,
+<<Property: geo:hasPerimeter, `geo:hasPerimeter`>>, 
+<<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>, 
+<<Property: geo:hasArea, `geo:hasArea`>>,
+<<Property: geo:hasMetricArea, `geo:hasMetricArea`>>,
+<<Property: geo:hasVolume, `geo:hasVolume`>> and
+<<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>> - are all applicable to instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> although, as per the note in the section above, they are likely to be used with <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>> instances.
+
+```turtle
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+
+eg:moreton-island
+    a geo:SpatialObject ;
+    
+    skos:prefLabel "Moreton Island" ;
+    rdfs:seeAlso "https://en.wikipedia.org/wiki/Moreton_Island"^^xsd:anyURI ;
+
+    geo:hasPerimeter [
+        qudt:numericValue "92.367"^^xsd:float ;
+        qudt:unit unit:KiloM ;
+    ];
+    geo:hasMetricPerimeter "92367"^^xsd:double ;
+.
+```
+
+Here a spatial object, Moreton Island, has the distance of its coastline given with two properties: <<Property: geo:hasPerimeter, `geo:hasPerimeter`>> & <<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>. The object for the first is a Blank Node with a QUDT value property of 92.367 and a QUDT unit property of `unit:KiloM` (kilometre). The object for the second is the literal `92367` (a double) which is, by the property's definition, a number of metres.
+
+The use of the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of <<Property: geo:hasPerimeter, `geo:hasPerimeter`>> and any subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
 
 [[annexB_exampleB.1.1.2]]
 ==== B.1.1.2 `Feature`
@@ -99,7 +138,7 @@ eg:x
 .
 ```
 
-Here a <<Class: geo:Feature>> is described as per the previous example but its area is expressed in non-metric units. The unit international acre is expressed using the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org]. The use of QUDT and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of a subproperty of <<Property: geo:hasSize>>.
+Here a <<Class: geo:Feature>> is described as per the previous example but its area is expressed in non-metric units: the acre.
 
 
 [[annexB_exampleB.1.1.2.5]]
