@@ -1276,16 +1276,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <a href="#IETF3987">[IETF3987]</a>, which globally and uniqueliy identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necissarily, resolvable which means a person or machine can "dereference" them (<em>click on them</em> or otherwise action them) and be taken to more information about the resource, perhaps in a web browser.</p>
 </div>
 <div class="paragraph">
-<p>Subjects and objects within an RDF triple are called nodes and can also be be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <a href="#XSD2">[XSD2]</a> but the basic types can be extended for specialised purposes and in this specification are, for geometry data.</p>
-</div>
-<div class="paragraph">
-<p>Note that the same node may be a subject in some triples, and tan object in others.</p>
+<p>Subjects and objects within an RDF triple are called nodes and can also be be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <a href="#XSD2">[XSD2]</a> but the basic types can be extended for specialised purposes and in this specification are, for geometry data. The figure below shows a basic triple.</p>
 </div>
 <div id="img-rdf" class="imageblock text-center">
 <div class="content">
 <img src="img/01.png" alt="RDF Triple" width="600" height="400">
 </div>
-<div class="title">Figure 1. RDF Triple</div>
+<div class="title">Figure 1. An RDF Triple</div>
+</div>
+<div class="paragraph">
+<p>Note that the same node may be a subject in some triples, and an object in others.</p>
 </div>
 <div class="paragraph">
 <p>Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <a href="#ISO19109">[ISO19109]</a>, and for the relational model as (table primary key, column, value).</p>
@@ -1837,7 +1837,16 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <h2 id="_core"><a class="anchor" href="#_core"></a>6. Core</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This clause establishes the <strong>core</strong> requirements class, with IRI <code>/req/core</code>, which has a single corresponding conformance class, <strong>core</strong>, with IRI <code>/conf/core</code>. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.</p>
+<p>This clause establishes the <strong>core</strong> requirements class, with IRI <code>/req/core</code>, which has a single corresponding conformance class, <strong>core</strong>, with IRI <code>/conf/core</code>. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary - an ontology - can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.</p>
+</div>
+<div class="paragraph">
+<p>The figure below overviews the classes and properties defined by GeoSPARQL in the <strong>core</strong>, <strong>Topology Vocabulary Extension</strong> and <strong>Geometry Extension</strong>, <strong>Geometry Topology Extension</strong> and <strong>RDFS Entailment Extension</strong> requirements classes.</p>
+</div>
+<div id="ont-overview" class="imageblock text-center">
+<div class="content">
+<img src="img/ont-overview.png" alt="GeoSPARQL Ontology overview">
+</div>
+<div class="title">Figure 3. An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, theier prefixed ontology identities (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of <code>geo:hasSize</code>, its metric equivalent and <code>geo:hasSerialization</code> are not shown for clarity.</div>
 </div>
 <div class="sect2">
 <h3 id="_sparql_3"><a class="anchor" href="#_sparql_3"></a>6.1. SPARQL</h3>
@@ -7416,7 +7425,7 @@ eg:x
 <div class="sect2">
 <h3 id="_b_2_1_example_data"><a class="anchor" href="#_b_2_1_example_data"></a>B.2.1 Example Data</h3>
 <div class="paragraph">
-<p>The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in Figure 3. The RDF statements define the feature class <code>my:PlaceOfInterest</code>, and two properties are created for associating geometries with features: <code>my:hasExactGeometry</code> and <code>my:hasPointGeometry</code>. <code>my:hasExactGeometry</code> is designated as the default geometry for the <code>my:PlaceOfInterest</code> feature class.</p>
+<p>The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in the figure below. The RDF statements define the feature class <code>my:PlaceOfInterest</code>, and two properties are created for associating geometries with features: <code>my:hasExactGeometry</code> and <code>my:hasPointGeometry</code>. <code>my:hasExactGeometry</code> is designated as the default geometry for the <code>my:PlaceOfInterest</code> feature class.</p>
 </div>
 <div class="paragraph">
 <p>All the following examples use the parameter values relation_family = Simple Features, serialization = WKT, and version = 1.0.</p>
@@ -7425,7 +7434,7 @@ eg:x
 <div class="content">
 <img src="img/03.png" alt="600" width="400">
 </div>
-<div class="title">Figure 3. Illustration of spatial data</div>
+<div class="title">Figure 4. Illustration of spatial data</div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8055,7 +8064,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-28 00:40:24 UTC
+Last updated 2021-09-28 12:59:47 UTC
 </div>
 </div>
 </body>
