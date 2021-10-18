@@ -135,8 +135,8 @@ Properties are defined for associating Spatial Objects with scalar spatial measu
 <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>,
 <<Property: geo:hasLength, `geo:hasLength`>>, 
 <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>,
-<<Property: geo:hasPerimeter, `geo:hasPerimeter`>>, 
-<<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>, 
+<<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>>, 
+<<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>, 
 <<Property: geo:hasArea, `geo:hasArea`>>,
 <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>,
 <<Property: geo:hasVolume, `geo:hasVolume`>> and
@@ -152,7 +152,7 @@ This property has not range specification. This makes it possible to use other v
 
 GeoSPARQL 1.1 defines the following subproperties of this property: 
 <<Property: geo:hasLength, `geo:hasLength`>>, 
-<<Property: geo:hasPerimeter, `geo:hasPerimter`>>, 
+<<Property: geo:hasPerimeterLength, `geo:hasPerimterLength`>>, 
 <<Property: geo:hasArea, `geo:hasArea`>> and 
 <<Property: geo:hasVolume, `geo:hasVolume`>>.
 
@@ -174,7 +174,7 @@ The property http://www.opengis.net/ont/geosparql#hasMetricSize[`geo:hasMetricSi
 
 GeoSPARQL 1.1 defines the following subproperties of this property: 
 <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>, 
-<<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>, 
+<<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>, 
 <<Property: geo:hasMetricArea, `geo:hasMetricArea`>> and 
 <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>.
 
@@ -220,31 +220,31 @@ geo:hasMetricLength
 .
 ```
 
-==== Property: geo:hasPerimeter
+==== Property: geo:hasPerimeterLength
 
-The property http://www.opengis.net/ont/geosparql#hasPerimeter[`geo:hasPerimeter`] can be used to indicate the length of the outer boundary of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricPerimeter, `geo:hasMetricPerimeter`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+The property http://www.opengis.net/ont/geosparql#hasPerimeterLength[`geo:hasPerimeterLength`] can be used to indicate the length of the outer boundary of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
 
 ```turtle
-geo:hasPerimeter
+geo:hasPerimeterLength
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasSize ;
-	skos:definition """The perimeter of a Spatial Object."""@en ;
-	skos:prefLabel "has perimeter"@en ;
+	skos:definition """The length of the perimeter of a Spatial Object."""@en ;
+	skos:prefLabel "has perimeter length"@en ;
 .
 ```
 
-==== Property: geo:hasMetricPerimeter
+==== Property: geo:hasMetricPerimeterLength
 
-The property http://www.opengis.net/ont/geosparql#hasMetricPerimeter[`geo:hasMetricPerimeter`] can be used to indicate the length of the outer boundary of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. Circumference is considered a type of perimeter, so this property can be used for circular or curved objects too. This property can be used for Spatial Objects having two or three dimensions.
+The property http://www.opengis.net/ont/geosparql#hasMetricPerimeterLength[`geo:hasMetricPerimeterLength`] can be used to indicate the length of the outer boundary of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. Circumference is considered a type of perimeter, so this property can be used for circular or curved objects too. This property can be used for Spatial Objects having two or three dimensions.
 
 ```turtle
-geo:hasMetricPerimeter
+geo:hasMetricPerimeterLength
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasMetricSize ;
-	skos:definition "The perimeter of a Spatial Object in meters."@en ;
-	skos:prefLabel "has perimeter in meters"@en ;
+	skos:definition "The length of the perimeter of a Spatial Object in meters."@en ;
+	skos:prefLabel "has perimeter length in meters"@en ;
 .
 ```
 
@@ -254,7 +254,7 @@ TIP: A consistency check can be applied to Geometry instances indicating both th
     PREFIX geo: <http://www.opengis.net/ont/geosparql#>
     ASK 
     WHERE {
-        ?g geo:hasMetricPerimeter ?p ;
+        ?g geo:hasMetricPerimeterLength ?p ;
            geo:dimension ?d .
             
         FILTER (?d < 2)
