@@ -2,81 +2,18 @@
 
 This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided seperately by the GeoSPARQL 1.1 profile, see the <<GeoSPARQL Standard structure>> for the link to those examples.
 
-== B.0 Function Overview ==
-
-[cols="1,1,1,1,1,1,1,1,1"]
-|===
-| Function Name  | Input  Parameters | Valid Input Types | Output  Datatype | Output Datatype Subtypes | 2D  | 3D  | Comment |
-| geof:aggBoundingBox | 1 or more ogc:geomLiteral | | ogc:geomLiteral | square Polygon(GeoJSON,WKT,GML,KML), CellList (DGGS) | Yes | Yes | |
-| geof:aggBoundingCircle | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon(GeoJSON,WKT,GML,KML) CellList(DGGS) | Yes | Yes | |
-| geof:aggCentroid | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Point(GeoJSON,WKT,GML,KML Cell(DGGS) | Yes | Yes | |
-| geof:aggConcatLines | 1 or more ogc:geomLiteral | | ogc:geomLiteral | square LineString(GeoJSON,WKT,GML,KML OrderedCellList(DGGS) | Yes | Yes | |
-| geof:aggConcaveHull | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon(GeoJSON,WKT,GML,KML CellList(DGGS) | Yes | Yes | |
-| geof:aggConvexHull | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon(GeoJSON,WKT,GML,KML CellList(DGGS) | Yes | Yes | |
-| geof:aggUnion  | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon(GeoJSON,WKT,GML,KML CellList(DGGS) | Yes | Yes | |
-| geof:area  | 1x ogc:geomLiteral  | Polygon(GeoJSON,WKT,GML,KML) | xsd:double | xsd:double  | Yes  |  No | |
-| geof:asDGGS  | 1x ogc:geomLiteral  | Geometry | geo:dggsLiteral | geo:dggsLiteral  | Yes  |  Yes | |
-| geof:asGeoJSON  | 1x ogc:geomLiteral | Geometry | geo:geoJSONLiteral | geo:geoJSONLiteral  | Yes  |  Yes | |
-| geof:asGML  | 1x ogc:geomLiteral, 1x  xsd:string | Geometry | geo:gmlLiteral | geo:gmlLiteral  | Yes  |  Yes | |
-| geof:asKML  | 1x ogc:geomLiteral  | Geometry | geo:kmlLiteral | geo:kmlLiteral  | Yes  |  Yes | |
-| geof:asWKT  | 1x ogc:geomLiteral  | Geometry | geo:wktLiteral | geo:wktLiteral  | Yes  |  Yes | |
-| geof:boundary | 1x ogc:geomLiteral  | Polygon(GeoJSON,WKT,GML,KML) | ogc:geomLiteral | LineString(GeoJSON,WKT,GML,KML)   | Yes  |  Yes | |
-| geof:buffer | 1x ogc:geomLiteral, 1x xsd:double, 1x xsd:anyURI | Geometry | ogc:geomLiteral | (Multi)Polygon(GeoJSON,WKT,GML,KML) | Yes  |  Yes | |
-| geof:difference | 2x ogc:geomLiteral |  | ogc:geomLiteral | (Multi)Polygon(GeoJSON,WKT,GML,KML)   | Yes  |  Yes | |
-| geof:dimension  | 1x ogc:geomLiteral | Geometry | xsd:double | xsd:double  | Yes  |  Yes | |
-| geof:distance  | 2x ogc:geomLiteral, 1x xsd:anyURI | Geometry | xsd:double | xsd:double  | Yes  |  Yes | |
-| geof:ehContains  | 2x ogc:geomLiteral  | 1x Polygon, 1x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehCoveredBy  | 2x ogc:geomLiteral  | 1x Polygon, 1x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehCovers  | 2x ogc:geomLiteral  | 1x Polygon, 1x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehDisjoint  | 2x ogc:geomLiteral  | 2x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehEquals  | 2x ogc:geomLiteral  | 2x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehMeet  | 2x ogc:geomLiteral | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehOverlap  | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:ehInside  | 2x ogc:geomLiteral | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:envelope | 1x ogc:geomLiteral, 1x xsd:anyURI | | ogc:geomLiteral | (Multi)Polygon(GeoJSON,WKT,GML,KML)   | Yes  |  Yes | |
-| geof:getSRID  | 1x ogc:geomLiteral  | Geometry | xsd:anyURI |  xsd:anyURI | Yes | Yes | |
-| geof:intersection  | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | Polygon(GeoJSON,WKT,GML,KML)  | Yes  |  Yes | |
-| geof:isEmpty | 1x ogc:geomLiteral  | Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:isSimple | 1x ogc:geomLiteral  | Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:maxX | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:maxY | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:maxZ | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:minX | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:minY | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:minZ | 1x ogc:geomLiteral  | Geometry | xsd:double  | xsd:double  | Yes | Yes | |
-| geof:union  | 2x ogc:geomLiteral  | 2x Geometry | ogc:geomLiteral  | Polygon(GeoJSON,WKT,GML,KML)  | Yes | Yes | |
-| geof:rcc8dcc  | 2x ogc:geomLiteral  |  | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8ecc  | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8eq  | 2x ogc:geomLiteral | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8ntpp  | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8ntppi  | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8po | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8tpp | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:rcc8tppi  | 2x ogc:geomLiteral  | | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:relate  | 2x ogc:geomLiteral  | | xsd:string |  xsd:string | Yes | Yes | |
-| geof:sfContains  | 2x ogc:geomLiteral | 1x Polygon(GeoJSON,WKT,GML,KML), 1x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfCrosses  | 2x ogc:geomLiteral | 2x LineString(GeoJSON,WKT,GML,KML) | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfDisjoint  | 2x ogc:geomLiteral  | 2x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfEquals  | 2x ogc:geomLiteral | 2x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfIntersects  | 2x ogc:geomLiteral  | 2x Polygon(GeoJSON,WKT,GML,KML) | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfOverlaps  | 2x ogc:geomLiteral | 2x Polygon(GeoJSON,WKT,GML,KML) | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfTouches  | 2x ogc:geomLiteral  | 2x Geometry | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:sfWithin  | 2x ogc:geomLiteral  | 1x Geometry, 1x Polygon(GeoJSON,WKT,GML,KML) | xsd:boolean |  true,false,1,0 | Yes | Yes | |
-| geof:symDifference | 2x ogc:geomLiteral | 2x Geometry | (Multi)Polygon(GeoJSON,WKT,GML,KML)   | Yes  |  Yes | |
-|===
-
-== B.1 RDF Examples
+== C.1 RDF Examples
 
 This Section illustrates GeoSPARQL ontology modelling with extended examples.
 
-=== B.1.1 Classes
+=== C.1.1 Classes
 
-[[B.1.1.1]]
-==== B.1.1.1 `SpatialObject`
+[[C.1.1.1]]
+==== C.1.1.1 `SpatialObject`
 The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
 
-[[B.1.1.1.1]]
-===== B.1.1.1.1 Basic use
+[[C.1.1.1.1]]
+===== C.1.1.1.1 Basic use
 
 Basic use (as per the example in the class definition)
 
@@ -89,8 +26,8 @@ eg:x
 
 NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> as its two more concrete subclasses, <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>>, are more directly relatable to real-world phenomena and use.
 
-[[B.1.1.1.2]]
-===== B.1.1.1.2 Size Properties
+[[C.1.1.1.2]]
+===== C.1.1.1.2 Size Properties
 
 The "size" properties - <<Property: geo:hasSize, `geo:hasSize`>>,
 <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>,
@@ -125,13 +62,13 @@ Here a spatial object, Moreton Island, has the distance of its coastline given w
 
 The use of the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> and any subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
 
-[[B.1.1.2]]
-==== B.1.1.2 `Feature`
+[[C.1.1.2]]
+==== C.1.1.2 `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
 
 
-[[B.1.1.2.1]]
-===== B.1.1.2.1 Basic use
+[[C.1.1.2.1]]
+===== C.1.1.2.1 Basic use
 
 ```turtle
 eg:x 
@@ -142,8 +79,8 @@ eg:x
 
 Here a `Feature` is declared and given a preferred label.
 
-[[B.1.1.2.2]]
-===== B.1.1.2.2 A `Feature` related to a `Geometry`
+[[C.1.1.2.2]]
+===== C.1.1.2.2 A `Feature` related to a `Geometry`
 
 ```turtle
 eg:x 
@@ -158,8 +95,8 @@ eg:x
 Here a <<Class: geo:Feature, `geo:Feature`>> is declared, given a preferred label and a Geometry for that <<Class: geo:Feature, `geo:Feature`>> is indicated with the use of <<Property: geo:hasGeometry, `geo:hasGeometry`>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property <<Property: geo:asWKT, `geo:asWKT`>> and the literal type `geo:wktLiteral`.
 
 
-[[B.1.1.2.3]]
-===== B.1.1.2.3 `Feature` with `Geometry` and size (area)
+[[C.1.1.2.3]]
+===== C.1.1.2.3 `Feature` with `Geometry` and size (area)
 
 ```turtle
 eg:x 
@@ -173,8 +110,8 @@ eg:x
 ```
 This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize>> (in this case, <<Property: geo:MetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
 
-[[B.1.1.2.4]]
-===== B.1.1.2.4 `Feature` with `Geometry` and non-metric size
+[[C.1.1.2.4]]
+===== C.1.1.2.4 `Feature` with `Geometry` and non-metric size
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -195,8 +132,8 @@ eg:x
 Here a <<Class: geo:Feature>> is described as per the previous example but its area is expressed in non-metric units: the acre.
 
 
-[[B.1.1.2.5]]
-===== B.1.1.2.5 `Feature` with two different `Geometry` instances indicated
+[[C.1.1.2.5]]
+===== C.1.1.2.5 `Feature` with two different `Geometry` instances indicated
 
 ```turtle
 
@@ -218,8 +155,8 @@ eg:x
 
 In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No GeoSPARQL ontology properties are used to indicate a difference in these `Geometry` instances thus machine use of this `Feature` woud not be easily able to differentiate them.
 
-[[B.1.1.2.6]]
-===== B.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
+[[C.1.1.2.6]]
+===== C.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
 
 ```turtle
 
@@ -240,8 +177,8 @@ eg:x
 In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. 
 Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<.
 
-[[B.1.1.2.7]]
-===== B.1.1.2.7 `Feature` with non-metric size
+[[C.1.1.2.7]]
+===== C.1.1.2.7 `Feature` with non-metric size
 
 ```turtle
 @prefix dbp: <http://dbpedia.org/resource/> .
@@ -263,8 +200,8 @@ ex:Schoenus
 
 In this example it is not possible to convert the length of the feature to meters, because the historical length unit does not have a known precise conversion factor. 
 
-[[B.1.1.2.8]]
-===== B.1.1.2.8 `Feature` with two different types of `Geometry` instances
+[[C.1.1.2.8]]
+===== C.1.1.2.8 `Feature` with two different types of `Geometry` instances
 
 ```turtle
 eg:x 
@@ -281,8 +218,8 @@ eg:x
 
 Here a `Feature` instance has two geometries, one indicated with the general property `hasGeometry` and a second indicated with the specialised property `hasCentroid` which suggests the role that the indicated geometry plays. Note that while `hasGeometry` may indicate any type of `Geometry`, `hasCentroid` should only be used to indicate a point geometry. It may be informally inferred that the polygonal geometry is the `Feature` instance's boundary.
 
-[[B.1.1.2.9]]
-===== B.1.1.2.9 `Feature` with multiple sizes
+[[C.1.1.2.9]]
+===== C.1.1.2.9 `Feature` with multiple sizes
 
 ```turtle
 ex:lake-x
@@ -296,11 +233,11 @@ ex:lake-x
 
 This example shows a `Feature` instance with area and volume declared. A categorization of the Feature is given through the use of the `eg:hasFeatureCategory` dummy property which, along with the Feature's preferred label, indicate that this Feature is a lake. Having both an area and a volume makes sense for a lake.
 
-==== B.1.1.3 `Geometry`
+==== C.1.1.3 `Geometry`
 The `Geometry` class is defined in <<Class: geo:Geometry>>.
 
-[[B.1.1.3.1]]
-===== B.1.1.3.1 Basic Use
+[[C.1.1.3.1]]
+===== C.1.1.3.1 Basic Use
 
 ```turtle
 eg:y a geo:Geometry ;
@@ -323,8 +260,8 @@ From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in rel
 Here the `Geometry` instance has data in WKT form and, since no CRS is declared, WGS84 is the assumed, default, CRS.
 
 
-[[B.1.1.3.2]]
-===== B.1.1.3.2 A `Geometry` with multiple serializations
+[[C.1.1.3.2]]
+===== C.1.1.3.2 A `Geometry` with multiple serializations
 
 ```turtle
 eg:x
@@ -339,8 +276,8 @@ eg:x
 
 Here a single `Geometry`, linked to a `Feature` instance, is expressed using two different serializations: Well-known Text and the example AusPIX DGGS. Note that the latter is not formally defined in GeoSPARQL.
 
-[[B.1.1.3.3]]
-===== B.1.1.3.3 `Geometry` with scalar spatial property
+[[C.1.1.3.3]]
+===== C.1.1.3.3 `Geometry` with scalar spatial property
 
 ```turtle
 eg:x 
@@ -397,16 +334,16 @@ ex:gc-x
 
 As per `FeatureCollection`, the `GeometryCollection` itse;f doesn't impose any ordering on its member `Geometry` instances, however there are many ways to order them, based on their own properties.
 
-=== B.1.2 Properties
+=== C.1.2 Properties
 
-==== B.1.2.1 Spatial Object Properties
+==== C.1.2.1 Spatial Object Properties
 
-See the section <<B.1.1.1.2 Size Properties>> above.
+See the section <<C.1.1.1.2 Size Properties>> above.
 
-==== B.1.2.2 Feature Properties
+==== C.1.2.2 Feature Properties
 
 This example shows a <<Class: geo:Feature, `geo:Feature`>> instance with each of the properties defined in <<Standard Properties for geo:Feature>> used, except for the properties
-<<Property: geo:hasMetricSize, `geo:hasMetricSize`>> and <<Property: geo:hasSize, `geo:hasSize`>>, that are intended to be used through their subproperties and <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>> and <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> which are examplified in <<B.1.1.1.2 Size Properties>>.
+<<Property: geo:hasMetricSize, `geo:hasMetricSize`>> and <<Property: geo:hasSize, `geo:hasSize`>>, that are intended to be used through their subproperties and <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>> and <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> which are examplified in <<C.1.1.1.2 Size Properties>>.
 
 ```turtle
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -451,7 +388,7 @@ eg:x
 
 The properties defined for this example's `Feature` instance are vaguely aligned in that the values are not real but are not unrealistic either. It is outside the scope of GeoSPARQL to validate `Feature` instances' property values.
 
-==== B.1.2.3 Geometry Properties
+==== C.1.2.3 Geometry Properties
 
 This example shows a `Geometry` instance, a Blank Node, declared in relation to a `Feature` instance, with each of the properties defined in <<Standard Properties for geo:Geometry>> used.
 
@@ -480,7 +417,7 @@ eg:x
 
 In this example, each of the standards properties defined for a `Geometry` instance has realistic values, for example, the <<Property: geo:isEmpty, is empty>> is set to `false` since the `Geometry` contains information.
 
-==== B.1.2.4 Geometry Serializations
+==== C.1.2.4 Geometry Serializations
 
 This section shows a `Geometry` instance for a `Feature` instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
 
@@ -596,11 +533,11 @@ eg:x
 .
 ```
 
-== B.2 Example SPARQL Queries & Rules 
+== C.2 Example SPARQL Queries & Rules 
 
 This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
 
-=== B.2.1 Example Data
+=== C.2.1 Example Data
 
 The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in the figure below. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
 
@@ -694,12 +631,12 @@ my:FExactGeom a sf:Point ;
                  Point(-83.4 34.4)"""^^geo:wktLiteral.
 ```
 
-=== B.2.2 Example Queries
+=== C.2.2 Example Queries
 
 This Section illustrates the use of GeoSPARQL functions through a series of example queries.
 
-[[B.2.2.1]]
-==== B.2.2.1
+[[C.2.2.1]]
+==== C.2.2.1
 
 _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
 
@@ -730,8 +667,8 @@ WHERE {
 |`my:F`
 |===
 
-[[B.2.2.2]]
-==== B.2.2.2
+[[C.2.2.2]]
+==== C.2.2.2
 
 _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
 
@@ -763,8 +700,8 @@ WHERE {
 |`my:D`
 |===
 
-[[B.2.2.3]]
-==== B.2.2.3
+[[C.2.2.3]]
+==== C.2.2.3
 
 _Find all features that touch the union of feature `my:A` and feature `my:D`, where computations are based on_ `my:hasExactGeometry`.
 
@@ -797,8 +734,8 @@ WHERE {
 |`my:C`
 |===
 
-[[B.2.2.4]]
-==== B.2.2.4
+[[C.2.2.4]]
+==== C.2.2.4
 
 _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
 
@@ -829,8 +766,8 @@ LIMIT 3
 |`my:E`
 |===
 
-[[B.2.2.5]]
-==== B.2.2.5
+[[C.2.2.5]]
+==== C.2.2.5
 
 _Find the maximum and minimum coordinates of a given set of geometries._
 
@@ -861,12 +798,12 @@ WHERE {
 |===
 
 
-=== B.2.3 Example Rule Application
+=== C.2.3 Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
-[[B.2.3.1]]
-==== B.2.3.1
+[[C.2.3.1]]
+==== C.2.3.1
 
 _Find all features or geometries that overlap feature_ `my:A`.
 
@@ -931,12 +868,12 @@ WHERE {
 |===
 
 
-=== B.2.4 Example Geometry Serialization Conversion Functions
+=== C.2.4 Example Geometry Serialization Conversion Functions
 
-==== B.1.2.2.1 `geof:asWKT`
+==== C.1.2.2.1 `geof:asWKT`
 
-For the geometry literal values in <<B.1.2.3 Geometry Serializations>>:
+For the geometry literal values in <<C.1.2.3 Geometry Serializations>>:
 
 Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].
 
-Note that the application of http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<B.1.2.3 Geometry Serializations>>, this value would be `eg:auspixDggsLiteral`, the example datatype of the AusPIX DGGS.
+Note that the application of http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] requires a `specificDggsDatatype` parameter which indicates the particular DGGS literal form being converted to. In the case of <<C.1.2.3 Geometry Serializations>>, this value would be `eg:auspixDggsLiteral`, the example datatype of the AusPIX DGGS.
