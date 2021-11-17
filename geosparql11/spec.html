@@ -1968,9 +1968,9 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:SpatialObjectCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Collection of spatial objects" ;
-  skos:definition "The class Spatial Object Collection represents any collection of things that
-                  can have a spatial representation. It is superclass of Feature Collection
+  skos:prefLabel "Spatial Object Collection" ;
+  skos:definition "The class Spatial Object Collection represents any collection of
+                  individual Spatial Objects. It is superclass of Feature Collection
                   and Geometry Collection."@en ;
   rdfs:subClassOf rdfs:Container ;
   rdfs:subClassOf [
@@ -2008,7 +2008,7 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:FeatureCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Collection of geospatial features" ;
+  skos:prefLabel "Feature Collection" ;
   skos:definition "The class Feature Collection represents
                   any collection of individual Features."@en ;
   rdfs:subClassOf geo:SpatialObjectCollection ;
@@ -2359,7 +2359,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geohasgeometry"><a class="anchor" href="#_property_geohasgeometry"></a>6.4.1. Property: geo:hasGeometry</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a> is used to link a feature with a geometry that represents its spatial extent. A given feature may have many associated geometries.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasGeometry"><code>geo:hasGeometry</code></a> is used to link a Feature with a Geometry that represents its spatial extent. A given Feature may have many associated geometries.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2367,7 +2367,7 @@ to be used in SPARQL graph patterns.</p></td>
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has Geometry"@en ;
-    skos:definition "A spatial representation for a given feature."@en ;
+    skos:definition "A spatial representation for a given Feature."@en ;
     rdfs:domain geo:Feature;
     rdfs:range geo:Geometry ;
 .</code></pre>
@@ -2377,7 +2377,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geohasdefaultgeometry"><a class="anchor" href="#_property_geohasdefaultgeometry"></a>6.4.2. Property: geo:hasDefaultGeometry</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a> is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasDefaultGeometry"><code>geo:hasDefaultGeometry</code></a> is used to link a Feature with its default Geometry. The default geometry is the Geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2394,7 +2394,7 @@ to be used in SPARQL graph patterns.</p></td>
 </div>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohasdefaultgeometry">has default geometry</a> property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature <code>my:f1</code> has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule <a href="http://www.opengis.net/def/rule/geosparql/sfDisjoint"><code>geor:sfDisjoint</code></a>).</p>
+<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohasdefaultgeometry">has default geometry</a> property. It is thus possible for a Feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a Feature <code>my:f1</code> has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule <a href="http://www.opengis.net/def/rule/geosparql/sfDisjoint"><code>geor:sfDisjoint</code></a>).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2411,7 +2411,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 <div class="sect3">
 <h4 id="_property_geohasboundingbox"><a class="anchor" href="#_property_geohasboundingbox"></a>6.4.3. Property: geo:hasBoundingBox</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasBoundingBox"><code>geo:hasBoundingBox</code></a> is used to link a Feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2420,23 +2420,23 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
     rdfs:isDefinedBy geo: ;
     rdfs:subPropertyOf geo:hasGeometry;
     skos:prefLabel "has bounding box"@en ;
-    skos:definition "The minimum or smallest bounding or enclosing box of a given feature."@en ;
+    skos:definition "The minimum or smallest bounding or enclosing box of a given Feature."@en ;
     skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are
                     aligned with the axes of the coordinate reference system, which exactly
-                    contains the geometry or feature e.g. sf:Envelope"@en ;
+                    contains the geometry or Feature e.g. sf:Envelope"@en ;
     rdfs:domain geo:Feature ;
     rdfs:range geo:Geometry ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohasboundingbox"><code>geo:hasBoundingBox</code></a> property. A feature may be associated with more than one bounding-box, for example in different coordinate reference systems.</p>
+<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohasboundingbox"><code>geo:hasBoundingBox</code></a> property. A Feature may be associated with more than one bounding-box, for example in different coordinate reference systems.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_property_geohascentroid"><a class="anchor" href="#_property_geohascentroid"></a>6.4.4. Property: geo:hasCentroid</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasCentroid"><code>geo:hasCentroid</code></a> is used to link a Feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2446,7 +2446,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
     rdfs:subPropertyOf geo:hasGeometry;
     skos:prefLabel "has centroid"@en ;
     skos:definition "The arithmetic mean position of all the geometry points
-                    of a given feature."@en ;
+                    of a given Feature."@en ;
     skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
     rdfs:domain geo:Feature ;
     rdfs:range geo:Geometry ;
@@ -2454,7 +2454,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohascentroid"><code>geo:hasCentroid</code></a> property. A feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.</p>
+<p>GeoSPARQL does not restrict the cardinality of the <a href="#_property_geohascentroid"><code>geo:hasCentroid</code></a> property. A Feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.</p>
 </div>
 </div>
 </div>
@@ -2969,8 +2969,8 @@ a serialization strongly affects the geometry conceptualization. The WKT seriali
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:GeometryCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Collection of geometry entities"@en ;
-  skos:definition "The class Geometry Collection represents any collection of Geometry entities."@en ;
+  skos:prefLabel "Geometry Collection"@en ;
+  skos:definition "The class Geometry Collection represents any collection of individual Geometries."@en ;
   rdfs:subClassOf geo:SpatialObjectCollection ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -3030,7 +3030,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geodimension"><a class="anchor" href="#_property_geodimension"></a>8.3.1. Property: geo:dimension</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a> is used to link the a geometry object to its topological dimension, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a> is used to link the a Geometry object to its topological dimension, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3051,7 +3051,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geocoordinatedimension"><a class="anchor" href="#_property_geocoordinatedimension"></a>8.3.2. Property: geo:coordinateDimension</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a> is defined to link a geometry object to the dimension of direct positions (coordinate tuples) used in the geometry&#8217;s definition.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a> is defined to link a Geometry object to the dimension of direct positions (coordinate tuples) used in the Geometry&#8217;s definition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3060,7 +3060,7 @@ to be used in SPARQL graph patterns.</p></td>
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "coordinate dimension"@en ;
     skos:definition "The number of measurements or axes needed to describe the
-                    position of this geometry in a coordinate system."@en ;
+                    position of this Geometry in a coordinate system."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range xsd:integer ;
 .</code></pre>
@@ -3070,7 +3070,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geospatialdimension"><a class="anchor" href="#_property_geospatialdimension"></a>8.3.3. Property: geo:spatialDimension</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a> is defined to link a geometry object to the dimension of the spatial portion of the direct positions (coordinate tuples) used in its serializations. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a> is defined to link a Geometry object to the dimension of the spatial portion of the direct positions (coordinate tuples) used in its serializations. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3079,7 +3079,7 @@ to be used in SPARQL graph patterns.</p></td>
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "spatial dimension"@en ;
     skos:definition "The number of measurements or axes needed to describe the
-                    spatial position of this geometry in a coordinate system."@en ;
+                    spatial position of this Geometry in a coordinate system."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range xsd:integer ;
 .</code></pre>
@@ -3162,7 +3162,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.3.8. Property: geo:isEmpty</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a> will indicate a Boolean object set to <code>true</code> if and only if the geometry contains no information.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a> will indicate a Boolean object set to <code>true</code> if and only if the Geometry contains no information.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3182,7 +3182,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.3.9. Property: geo:isSimple</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> will indicate a Boolean object set to <code>true</code>, only if the geometry contains no self-intersections, with the possible exception of its boundary.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> will indicate a Boolean object set to <code>true</code>, only if the Geometry contains no self-intersections, with the possible exception of its boundary.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3201,7 +3201,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect3">
 <h4 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.3.10. Property: geo:hasSerialization</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> is defined to connect a geometry with its text-based serialization (e.g., its WKT serialization).</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> is defined to connect a Geometry with its text-based serialization (e.g., its WKT serialization).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3209,7 +3209,7 @@ to be used in SPARQL graph patterns.</p></td>
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has serialization"@en ;
-    skos:definition "Connects a geometry object with its text-based serialization."@en ;
+    skos:definition "Connects a Geometry object with its text-based serialization."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range rdfs:Literal ;
 .</code></pre>
@@ -3222,7 +3222,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="title">Note</div>
 </td>
 <td class="content">
-this property is the generic property used to connect a geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <a href="#_property_geoasgeojson">as GeoJSON</a> which can be used for GeoJSON <a href="#GEOJSON">[GEOJSON]</a> literals.
+this property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <a href="#_property_geoasgeojson">as GeoJSON</a> which can be used for GeoJSON <a href="#GEOJSON">[GEOJSON]</a> literals.
 </td>
 </tr>
 </table>
@@ -3232,17 +3232,17 @@ this property is the generic property used to connect a geometry with its serial
 <div class="sect2">
 <h3 id="_geometry_serializations"><a class="anchor" href="#_geometry_serializations"></a>8.4. Geometry Serializations</h3>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on different systems.</p>
+<p>This section establishes the requirements for representing Geometry data in RDF based on different systems.</p>
 </div>
 <div class="sect3">
 <h4 id="_well_known_text_serializationwkt"><a class="anchor" href="#_well_known_text_serializationwkt"></a>8.4.1. Well-Known Text (serialization=WKT)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
+<p>This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.4.1.1. RDFS Datatype: geo:wktLiteral</h5>
 <div class="paragraph">
-<p>The datatype <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> is used to contain the Well-Known Text (WKT) serialization of a geometry.</p>
+<p>The datatype <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> is used to contain the Well-Known Text (WKT) serialization of a Geometry.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3250,7 +3250,7 @@ this property is the generic property used to connect a geometry with its serial
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "Well-known Text literal"@en ;
-    skos:definition "A Well-known Text serialization of a geometry object."@en ;
+    skos:definition "A Well-known Text serialization of a Geometry object."@en ;
 .</code></pre>
 </div>
 </div>
@@ -3278,7 +3278,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The token <code>opt-iri-and-space</code> may be either an IRI and space or nothing (<code>""</code>), the token <code>IRI</code> (Internationalized Resource Identifier) is essentially a web address and is defined in <a href="#IETF3987">[IETF3987]</a> and the token <code>LWSP</code>, is one or more white space characters, as defined in <a href="#IETF5234">[IETF5234]</a>. <code>geometric-data</code> is the Well-Known Text representation of the geometry, defined in <a href="#ISO13249">[ISO13249]</a>.</p>
+<p>The token <code>opt-iri-and-space</code> may be either an IRI and space or nothing (<code>""</code>), the token <code>IRI</code> (Internationalized Resource Identifier) is essentially a web address and is defined in <a href="#IETF3987">[IETF3987]</a> and the token <code>LWSP</code>, is one or more white space characters, as defined in <a href="#IETF5234">[IETF5234]</a>. <code>geometric-data</code> is the Well-Known Text representation of the Geometry, defined in <a href="#ISO13249">[ISO13249]</a>.</p>
 </div>
 <div class="paragraph">
 <p>In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code></a>. This IRI denotes WGS 84 longitude-latitude.</p>
@@ -3313,7 +3313,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
+<p>The example <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3334,7 +3334,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geowktliteral"><code>geo:wktLiteral</code></a> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 17</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geowktliteral"><code>geo:wktLiteral</code></a> shall be interpreted as an empty Geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty</code></a></p></td>
@@ -3345,7 +3345,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect4">
 <h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.4.1.2. Property: geo:asWKT</h5>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> is defined to link a geometry with its WKT serialization.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> is defined to link a Geometry with its WKT serialization.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3367,7 +3367,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as WKT"@en ;
-    skos:definition "The WKT serialization of a geometry."@en ;
+    skos:definition "The WKT serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:wktLiteral ;
 .</code></pre>
@@ -3402,13 +3402,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect3">
 <h4 id="_geography_markup_language_serializationgml"><a class="anchor" href="#_geography_markup_language_serializationgml"></a>8.4.2. Geography Markup Language (serialization=GML)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>. It defines one RDFS Datatype:
+<p>This section establishes requirements for representing Geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> and one property, <a href="#_function_geofasgml">as GML</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.4.2.1. RDFS Datatype: geo:gmlLiteral</h5>
 <div class="paragraph">
-<p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> is used to contain the Geography Markup Language (GML) serialization of a geometry.</p>
+<p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> is used to contain the Geography Markup Language (GML) serialization of a Geometry.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3421,7 +3421,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances are formed by encoding geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
+<p>Valid <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances are formed by encoding Geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3437,7 +3437,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> below encodes a point geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
+<p>The example <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3456,7 +3456,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> An empty <a href="#_rdfs_datatype_geogmlliteral"><code>geo:gmlLiteral</code></a> shall be interpreted as an empty geometry.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 21</strong> An empty <a href="#_rdfs_datatype_geogmlliteral"><code>geo:gmlLiteral</code></a> shall be interpreted as an empty Geometry.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty</code></a></p></td>
@@ -3480,7 +3480,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect4">
 <h5 id="_property_geoasgml"><a class="anchor" href="#_property_geoasgml"></a>8.4.2.2. Property: geo:asGML</h5>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> is defined to link a geometry with its GML serialization.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> is defined to link a Geometry with its GML serialization.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3502,7 +3502,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as GML"@en ;
-    skos:definition "The GML serialization of a geometry."@en ;
+    skos:definition "The GML serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:gmlLiteral ;
 .</code></pre>
@@ -3537,24 +3537,24 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect3">
 <h4 id="_geojson_serializationgeojson"><a class="anchor" href="#_geojson_serializationgeojson"></a>8.4.3. GeoJSON (serialization=GEOJSON)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
+<p>This section establishes requirements for representing Geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.4.3.1. RDFS Datatype: geo:geoJSONLiteral</h5>
 <div class="paragraph">
-<p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:geoJSONLiteral</code></a> is used to contain the Geo JavaScript Object Notation (GeoJSON) serialization of a geometry.</p>
+<p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:geoJSONLiteral</code></a> is used to contain the Geo JavaScript Object Notation (GeoJSON) serialization of a Geometry.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:geoJSONLiteral a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "GeoJSON Literal"@en ;
-    skos:definition "A GeoJSON serialization of a geometry object."@en .</code></pre>
+    skos:definition "A GeoJSON serialization of a Geometry object."@en .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances are formed by encoding geometry information as a Geometry object as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p>
+<p>Valid <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances are formed by encoding Geometry information as a Geometry object as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3583,7 +3583,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
+<p>The example <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3598,7 +3598,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geogeojsonliteral"><code>geo:geoJSONLiteral</code></a> shall be interpreted as an empty geometry, i.e. <code>{"geometry": null}</code> in GeoJSON .</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 27</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geogeojsonliteral"><code>geo:geoJSONLiteral</code></a> shall be interpreted as an empty Geometry, i.e. <code>{"geometry": null}</code> in GeoJSON .</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty</code></a></p></td>
@@ -3609,7 +3609,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect4">
 <h5 id="_property_geoasgeojson"><a class="anchor" href="#_property_geoasgeojson"></a>8.4.3.2. Property: geo:asGeoJSON</h5>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> is defined to link a geometry with its GeoJSON serialization.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> is defined to link a Geometry with its GeoJSON serialization.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3631,7 +3631,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as GeoJSON"@en ;
-    skos:definition "The GeoJSON serialization of a geometry."@en ;
+    skos:definition "The GeoJSON serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:geoJSONLiteral ;
 .</code></pre>
@@ -3666,13 +3666,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect3">
 <h4 id="_keyhole_markup_language_serializationkml"><a class="anchor" href="#_keyhole_markup_language_serializationkml"></a>8.4.4. Keyhole Markup Language (serialization=KML)</h4>
 <div class="paragraph">
-<p>This section establishes requirements for representing geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
+<p>This section establishes requirements for representing Geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> and one property, <a href="#_function_geofaskml">as KML</a>.</p>
 </div>
 <div class="sect4">
 <h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.4.4.1. RDFS Datatype: geo:kmlLiteral</h5>
 <div class="paragraph">
-<p>The datatype <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> is used to contain the Keyhole Markup Language (KML) serialization of a geometry.</p>
+<p>The datatype <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> is used to contain the Keyhole Markup Language (KML) serialization of a Geometry.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3680,12 +3680,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "KML Literal"@en ;
-    skos:definition "A KML serialization of a geometry object."@en ;
+    skos:definition "A KML serialization of a Geometry object."@en ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances are formed by encoding geometry information as a Geometry object as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p>
+<p>Valid <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances are formed by encoding Geometry information as a Geometry object as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3714,7 +3714,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 <div class="paragraph">
-<p>The example <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> below encodes a point geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
+<p>The example <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3731,7 +3731,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geokmlliteral"><code>geo:kmlLiteral</code></a> shall be interpreted as an empty geometry .</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 32</strong> An empty RDFS Literal of type <a href="#_rdfs_datatype_geokmlliteral"><code>geo:kmlLiteral</code></a> shall be interpreted as an empty Geometry .</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty</code></a></p></td>
@@ -3742,7 +3742,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect4">
 <h5 id="_property_geoaskml"><a class="anchor" href="#_property_geoaskml"></a>8.4.4.2. Property: geo:asKML</h5>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> is defined to link a geometry with its KML serialization.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> is defined to link a Geometry with its KML serialization.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3767,7 +3767,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as KML"@en ;
-    skos:definition "The KML serialization of a geometry."@en ;
+    skos:definition "The KML serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:kmlLiteral ;
 .</code></pre>
@@ -3802,7 +3802,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <div class="sect3">
 <h4 id="_discrete_global_grid_system_serializationdggs"><a class="anchor" href="#_discrete_global_grid_system_serializationdggs"></a>8.4.5. Discrete Global Grid System (serialization=DGGS)</h4>
 <div class="paragraph">
-<p>This section establishes the requirements for representing Discrete Global Grid System (DGGS) geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
+<p>This section establishes the requirements for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
 </div>
 <div class="paragraph">
 <p>Here is defined one RDFS Datatypes:
@@ -3823,7 +3823,7 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 <div class="sect4">
 <h5 id="_rdfs_datatype_geodggsliteral"><a class="anchor" href="#_rdfs_datatype_geodggsliteral"></a>8.4.5.1. RDFS Datatype: geo:dggsLiteral</h5>
 <div class="paragraph">
-<p>The datatype <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> is used to contain the Discrete Global Grid System (DGGS) serialization of a geometry.</p>
+<p>The datatype <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> is used to contain the Discrete Global Grid System (DGGS) serialization of a Geometry.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3831,12 +3831,12 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "DGGS Literal"@en ;
-    skos:definition "A textual serialization of a Discrete Global Grid System (DGGS) geometry object."@en
+    skos:definition "A textual serialization of a Discrete Global Grid System (DGGS) Geometry object."@en
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Valid <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> instances are formed by encoding geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
+<p>Valid <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> instances are formed by encoding Geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3844,7 +3844,7 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 35</strong> All RDFS Literals of type <a href="#_rdfs_datatype_geodggsliteral"><code>geo:dggsLiteral</code></a> shall consist of a DGGS geometry serialization formulated according to a specific DGGS.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 35</strong> All RDFS Literals of type <a href="#_rdfs_datatype_geodggsliteral"><code>geo:dggsLiteral</code></a> shall consist of a DGGS Geometry serialization formulated according to a specific DGGS.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal</code></a></p></td>
@@ -3872,12 +3872,12 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">ex:auspixDggsLiteral
     a rdfs:Datatype ;
     skos:prefLabel "AusPIX DGGS Literal"@en ;
-    skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) geometry object."@en ;
+    skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) Geometry object."@en ;
 .</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>A single <em>Cell</em> geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries.</p>
+<p>A single <em>Cell</em> Geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3891,7 +3891,7 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 <div class="title">Note</div>
 </td>
 <td class="content">
-What <code>R3234</code> means, or the meaning of any other element within a concrete DGGS literal is not handled by GeoSPARQL but is expected to be handled by that DGGS' specification, just as GeoPSARQL does not delve into the internals of other geometry formats such as WKT or GeoJSON.
+What <code>R3234</code> means, or the meaning of any other element within a concrete DGGS literal is not handled by GeoSPARQL but is expected to be handled by that DGGS' specification, just as GeoPSARQL does not delve into the internals of other Geometry formats such as WKT or GeoJSON.
 </td>
 </tr>
 </table>
@@ -3900,7 +3900,7 @@ What <code>R3234</code> means, or the meaning of any other element within a conc
 <div class="sect4">
 <h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.4.5.2. Property: geo:asDGGS</h5>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> is defined to link a geometry with its DGGS serialization.</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> is defined to link a Geometry with its DGGS serialization.</p>
 </div>
 <table class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -3924,7 +3924,7 @@ to be used in SPARQL graph patterns.</p></td>
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "as DGGS"@en ;
-    skos:definition "A DGGS serialization of a geometry."@en ;
+    skos:definition "A DGGS serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:dggsLiteral ;
 .</code></pre>
@@ -8769,7 +8769,7 @@ WHERE {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-10-23 06:27:31 UTC
+Last updated 2021-11-17 22:39:00 UTC
 </div>
 </div>
 </body>
