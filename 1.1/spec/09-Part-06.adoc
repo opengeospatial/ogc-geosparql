@@ -78,9 +78,9 @@ The class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:Spat
 geo:SpatialObjectCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Collection of spatial objects" ;
-  skos:definition "The class Spatial Object Collection represents any collection of things that 
-                  can have a spatial representation. It is superclass of Feature Collection
+  skos:prefLabel "Spatial Object Collection" ;
+  skos:definition "The class Spatial Object Collection represents any collection of 
+                  individual Spatial Objects. It is superclass of Feature Collection 
                   and Geometry Collection."@en ;  
   rdfs:subClassOf rdfs:Container ;
   rdfs:subClassOf [
@@ -106,7 +106,7 @@ The class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCol
 geo:FeatureCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Collection of geospatial features" ;
+  skos:prefLabel "Feature Collection" ;
   skos:definition "The class Feature Collection represents 
                   any collection of individual Features."@en ;  
   rdfs:subClassOf geo:SpatialObjectCollection ;
@@ -360,14 +360,14 @@ to be used in SPARQL graph patterns.
 
 ==== Property: geo:hasGeometry
 
-The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`] is used to link a feature with a geometry that represents its spatial extent. A given feature may have many associated geometries.
+The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`] is used to link a Feature with a Geometry that represents its spatial extent. A given Feature may have many associated geometries.
 
 ```turtle
 geo:hasGeometry 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "has Geometry"@en ;
-    skos:definition "A spatial representation for a given feature."@en ;     
+    skos:definition "A spatial representation for a given Feature."@en ;     
     rdfs:domain geo:Feature;
     rdfs:range geo:Geometry ;
 .
@@ -375,7 +375,7 @@ geo:hasGeometry
 
 ==== Property: geo:hasDefaultGeometry
 
-The property http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`] is used to link a feature with its default geometry. The default geometry is the geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).
+The property http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`] is used to link a Feature with its default Geometry. The default geometry is the Geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).
 
 ```turtle
 geo:hasDefaultGeometry 
@@ -390,7 +390,7 @@ geo:hasDefaultGeometry
 .
 ```
 
-GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasDefaultGeometry, has default geometry>> property. It is thus possible for a feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a feature `my:f1` has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule http://www.opengis.net/def/rule/geosparql/sfDisjoint[`geor:sfDisjoint`]).
+GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasDefaultGeometry, has default geometry>> property. It is thus possible for a Feature to have more than one distinct default geometry or to have no default geometry. This situation does not result in a query processing error; SPARQL graph pattern matching simply proceeds as normal. Certain queries may, however, give logically inconsistent results. For example, if a Feature `my:f1` has two asserted default geometries, and those two geometries are disjoint polygons, the query below could return a non-zero count on a system supporting the GeoSPARQL Query Rewrite Extension (rule http://www.opengis.net/def/rule/geosparql/sfDisjoint[`geor:sfDisjoint`]).
 
 ```sparql
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -403,7 +403,7 @@ Such cases are application-specific data modeling errors and are therefore outsi
 
 ==== Property: geo:hasBoundingBox
 
-The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
+The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
 
 ```turtle
 geo:hasBoundingBox 
@@ -411,20 +411,20 @@ geo:hasBoundingBox
     rdfs:isDefinedBy geo: ;
     rdfs:subPropertyOf geo:hasGeometry;    
     skos:prefLabel "has bounding box"@en ;
-    skos:definition "The minimum or smallest bounding or enclosing box of a given feature."@en ; 
+    skos:definition "The minimum or smallest bounding or enclosing box of a given Feature."@en ; 
     skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are 
                     aligned with the axes of the coordinate reference system, which exactly 
-                    contains the geometry or feature e.g. sf:Envelope"@en ;
+                    contains the geometry or Feature e.g. sf:Envelope"@en ;
     rdfs:domain geo:Feature ;      
     rdfs:range geo:Geometry ;
 .
 ```
 
-GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> property. A feature may be associated with more than one bounding-box, for example in different coordinate reference systems.
+GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> property. A Feature may be associated with more than one bounding-box, for example in different coordinate reference systems.
 
 ==== Property: geo:hasCentroid
 
-The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions. 
+The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a Feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions. 
 
 ```turtle
 geo:hasCentroid 
@@ -433,11 +433,11 @@ geo:hasCentroid
     rdfs:subPropertyOf geo:hasGeometry;    
     skos:prefLabel "has centroid"@en ;
     skos:definition "The arithmetic mean position of all the geometry points 
-                    of a given feature."@en ; 
+                    of a given Feature."@en ; 
     skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
     rdfs:domain geo:Feature ;     
     rdfs:range geo:Geometry ;
 .
 ```
 
-GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasCentroid, `geo:hasCentroid`>> property. A feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.
+GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasCentroid, `geo:hasCentroid`>> property. A Feature may be associated with more than one centroid, for example computed using different rules or in different coordinate reference systems.
