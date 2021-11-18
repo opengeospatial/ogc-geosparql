@@ -35,9 +35,9 @@ The LOCN specification provides notes on the use of GeoSPARQL literals (see http
 | From Element | Mapping relation | To Element | Notes
 
 | `geo:Feature` | `rdfs:subClassOf` | `dcterms:Location` | LOCN states that `dcterms:Location` "represents any location, irrespective of size or other restriction", thus it is a superclass of `geo:Feature` 
-| `locn:Address` | `rdfs:subClassOf` | `geo:Feature` | Although LOCN indicates no spatial or geometry properties for `locn:Address`, `locn:Address` is clearly some specailized form of a Feature
-| `geo:Geometry` | `rdfs:subClassOf` | `locn:Geometry` | The LOCN class "defines the notion of "geometry" at the conceptual level, and it shall be encoded by using different formats", so GeoSPARQL's class is more specialised.
-| `geo:hasGeometry` | `rdfs:subPropertyOf` | `locn:geometry` | The LOCN property notes say "Depending on how a geometry is encoded, the range of this property may be one of..." so GeoSPARQL's proerty is learly more specialized.
+| `locn:Address` | `rdfs:subClassOf` | `geo:Feature` | Although LOCN indicates no spatial or geometry properties for `locn:Address`, `locn:Address` is clearly some specialized form of a Feature
+| `geo:Geometry` | `owl:equivalentClass` | `locn:Geometry` | The LOCN class "defines the notion of "geometry" at the conceptual level, and it shall be encoded by using different formats", so GeoSPARQL's class is equivalent.
+| `geo:hasGeometry` | `owl:equivalent` | `locn:geometry` | The LOCN property notes say "Depending on how a geometry is encoded, the range of this property may be one of..." so GeoSPARQL's property is clearly more specialized.
 |===
 
 == E.2 WGS84 Geo Positioning: an RDF vocabulary (POS)
@@ -49,7 +49,7 @@ POS Source: http://www.w3.org/2003/01/geo/
 
 | `geo:SpatialObject` | `owl:equivalentClass` | `pos:SpatialThing` | Both classes are unrestricted, essentially abstract classes
 | `pos:Point` | `rdfs:subClassOf` | `geo:Geometry` | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since `pos:Point` usage notes indicate sirect postitioning, it is a form of geometry
-| `pos:Point` | `rdfs:subClassOf` | `sf:Point` | 
+| `pos:Point` | `owl:equivalentClass` | `sf:Point` | 
 | `pos:lat_long` | `rdfs:subPropertyOf` | `geo:hasSerialization` | A special datatype is not indicated for use with this proeprty by POS, unlike GeoSPARQL's `geo:hasSerialization` object literals
 | `pos:location` | `rdfs:subPropertyOf` | `rdfs:hasGeometry` |
 |===
@@ -63,7 +63,7 @@ Geonames source: http://www.geonames.org/ontology/documentation.html
 
 | `gn:Feature` | `owl:equivalentClass` | `geo:Feature` |
 | `gn:GeonamesFeature` | `rdfs:subClassOf` | `geo:Feature` | The GN class is defined as "A feature described in geonames database..."
-| `geo:Feature | `rdfs:subClassOf` | `gn:Class` | The GN class' definition reads "A class of features"
+| `geo:Feature` | `rdfs:subClassOf` | `gn:Class` | The GN class' definition reads "A class of features"
 | `gn:locatedIn` | `owl:equivalentProperty` | `geo:sfWithin` | 
 | `gn:nearby` | `rdfs:subPropertyOf` | `geo:sfDisjoint` | A `gn:nearby` B means A is not within or touching B. The only close SF property is disjoint
 | `gn:neighbour` | `owl:equivalentProperty` | `geo:sfTouches` | 
@@ -222,9 +222,11 @@ DCTERMS Source: https://www.dublincore.org/specifications/dublin-core/dcmi-terms
 | From Element | Mapping relation | To Element | Notes
 
 | `geo:Feature` | `rdfs:SubClassOf` | `dcterms:Location` | A Location is a "A spatial region or named place."
-| `dcterms:coverage` - | - | coverage is extremely generic - "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant." - but DCTERMS indicates its range includes a `dcterms:Location`, so it is a property for indicating a `geo:Feature`, not a `geo:Geometry` and for which GeoSPARQL has no equivalent
+| `dcterms:coverage` | - | - | See note below table
 | `dcterms:spatial` - | - | Since coverage is a sub property of `dcterms:coverage`
 |===
+
+`dcterms:coverage` is extremely generic - "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant." - but DCTERMS indicates its range includes a `dcterms:Location`, so it is a property for indicating a `geo:Feature`, not a `geo:Geometry` and for which GeoSPARQL has no equivalent. Often, `dcterms:coverage` is used to indicate a spatial extent such as a bounding box. GeoSPARQL now provides a `geo:hasBoundingBox` property, so such a property could be used if a Bounding Box is wanted to be indicated.
 
 DCTERMS-related geometry literals, such as the _DCMI Box Encoding Scheme_footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-box/] and the _DCMI Point Encoding Scheme_footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-point/] 
 could be indicated as GeoSPARQL geometry literals if a literal datatype were created for each. For example, the _DCMI Point Encoding Scheme_ example of "The highest point in Australia" with the literal value 
@@ -235,13 +237,15 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
     a geo:Feature ;
     geo:hasGeometry [
         a geo:Geometry ;
-        geo:hasSerilization "east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko"^^ex:dcmiPoint ;        
+        geo:hasSerialization "east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko"^^ex:dcmiPoint ;        
     ] ;
 .
 ```
 
 
 == E.10 The Provenance Ontology (PROV)
+
+PROV Source: https://www.w3.org/TR/prov-o/
 
 From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with more abstract concepts - and only one of PROV's three main classes of object, `Entity`, `Activity` & `Agent` has direct relations to GeoSPARQL classes: `Entity`.
 
@@ -253,8 +257,20 @@ From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with m
 | `prov:atLocation` | - | - | The PROV property indicates a `prov:Location`, so perhaps a `geo:Feature`, but GeoSPARQL has no property to indicate a `geo:Feature`
 |===
 
-Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as haveing been derived from a Polygn like this:app-name: 
+Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as haveing been derived from a Polygon like this:
 
 ```turtle
 :bounding-box-y prov:wasDerivedFrom :polygon-x .
 ```
+
+== E.11 WikiData
+
+== E.12 OpenStreetMap
+
+== E.13 German Building Types (Timo)
+
+INSIPRE building types...
+
+== E.14 GRM Geo
+
+https://cidoc-crm.org/crmgeo/
