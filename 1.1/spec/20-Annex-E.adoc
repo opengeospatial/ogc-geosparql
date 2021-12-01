@@ -285,11 +285,13 @@ Derivative relations between GeoSPARQL objects could be modelled using PROV, for
 
 == E.12 OpenStreetMap Ontologies
 There are several approaches to make OpenStreetMap data accessible in the linked open data cloud.
+
 === E.12.1 LinkedGeoData
 LinkedGeoData emerged from a resarch project linking 
     
 |===
 | From Element | Mapping relation | To Element | Notes
+| Any LGD Class | `rdfs:subClassOf` | `geo:Feature` | Any class defined in the LinkedGeoData ontology is a subclass of geo:Feature
 |===
     
 === E.12.2 OpenStreetMap RDF (Sophox)
@@ -301,6 +303,9 @@ https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
 | `osmm:type` 'n' | `owl:equivalentClass` | `sf:Point` | The OpenStreetMap RDF property osmm:type with value 'n' describes an OSM Node which is equivalent to a sf:Point
 | `osmm:type` 'w' | `owl:equivalentClass` | `sf:LineString` | The OpenStreetMap RDF property osmm:type with value 'w' describes an OSM Way which is equivalent to a sf:LineString
 | `osmm:type` 'r' | `owl:equivalentClass` | `sf:GeometryCollection` | The OpenStreetMap RDF property osmm:type with value 'r' describes an OSM relation Way which is equivalent to a sf:GeometryCollection
+| `osmm:has` | `owl:equivalentProperty` | `geo:sfContains`, `geo:ehContains`, `geo:rcc8ntpp` | The OpenStreetMap RDF property osmm:has describes that a relation contains a way or that a way contains a node
+| `osmm:isClosed` true | `owl:equivalentClass` | `sf:Polygon` | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
+| `osmm:isClosed` false | `owl:equivalentClass` | `sf:LineString` | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
 |===
     
 === E.13.3 Routable Tiles Ontology
@@ -309,9 +314,6 @@ https://github.com/openplannerteam/routable-tiles-ontology
 | From Element | Mapping relation | To Element | Notes 
 |===
     
-== E.1 LinkedGeoData
-
-
 
 == E.13 German Building Types (Timo)
 
