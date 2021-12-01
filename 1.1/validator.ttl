@@ -217,60 +217,6 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 2
-#################################################
-
-<S2-hasSerialization-hasGeometry>
-    a sh:NodeShape ;
-	sh:targetSubjectsOf     	
-		geo:hasSerialization ,
-		geo:asGML ,
-		geo:asWKT ,
-		geo:asGeoJSON ,
-		geo:asKML ,
-		geo:asDGGS ;
-	sh:property <S2-hasSerialization-hasGeometry-sub> ;
-.
-
-<S2-hasSerialization-hasGeometry-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			[ sh:inversePath geo:hasGeometry ]
-			[ sh:inversePath geo:hasDefaultGeometry ]
-			[ sh:inversePath geo:defaultGeometry ]
-		)
-	] ;
-	sh:minCount 1 ;
-	sh:message "Each node with one or more outgoing relations that are either geo:hasSerialization, or a specialization of it, should have at least one incoming geo:hasGeometry relation or a specialization of it."@en ;
-	skos:example 
-		"""
-		# A valid example: outgoing from the Geometry Blank Node is geo:asWKT, incoming is geo:hasGeometry
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
-			] ;
-		.
-		""" ,
-		"""
-		# A valid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there are two incoming geo:hasGeometry
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-z> geo:hasGeometry <geometry-x> .
-		<feature-w> geo:hasGeometry <geometry-x> .
-		<geometry-x> geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
-		""" ,
-		"""
-		# An invalid example: outgoing from the Geometry Blank Node is geo:asGeoJSON, there is no incoming geo:hasGeometry
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		[] geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [149.06017784, -35.23612321] }"^^geo:geoJSONLiteral .
-		""" ;
-.
-
-#################################################
 # Shape 3 + 3b + 3c
 #################################################
 
@@ -672,44 +618,6 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 21
-#################################################
-
-<S21-featureClass-hasGeometry>
-	a sh:NodeShape ;
-	sh:property <S21-featureClass-hasGeometry-sub> ;
-	sh:targetClass geo:Feature ;
-.
-
-<S21-featureClass-hasGeometry-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			geo:hasGeometry
-			geo:hasDefaultGeometry
-			geo:defaultGeometry
-		)
-	] ;
-	sh:minCount 1 ;
-	sh:message "A geo:Feature node (inferred or asserted) should have at least one outgoing geo:hasGeometry relation, or a specialization of it."@en ;
-	skos:example 
-		"""
-		# A valid example: the geo:Feature instance node has one outgoing geo:hasGeometry relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x> a geo:Feature ;
-			geo:hasGeometry <feature-x-geom1> ;
-		.
-		""" ,
-		"""
-		# An invalid example: the geo:Feature instance node has no outgoing geo:hasGeometry relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x> a geo:Feature .
-		""" ;
-.
-
-#################################################
 # Shape 30
 #################################################
 
@@ -769,35 +677,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S32-geometryClass-hasGeometry-hasSerialization>
 	a sh:NodeShape ;
-	sh:property <S32-geometryClass-hasGeometry-sub> , <S32-geometryClass-hasSerialization-sub> ;
+	sh:property <S32-geometryClass-hasSerialization-sub> ;
 	sh:targetClass geo:Geometry ;
-.
-
-<S32-geometryClass-hasGeometry-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			[ sh:inversePath geo:hasGeometry ]
-			[ sh:inversePath geo:hasDefaultGeometry ]
-			[ sh:inversePath geo:defaultGeometry ]
-		)
-	] ;
-	sh:minCount 1 ;
-	sh:message "A geo:Geometry node (inferred or asserted) should always have at least one incoming geo:hasGeometry relation, or a specialization of it."@en ;
-	skos:example 
-		"""
-		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x> geo:hasGeometry <feature-x-geom1> .
-		<feature-x-geom1> a geo:Geometry .
-		""" ,
-		"""
-		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x-geom1> a geo:Geometry .
-		""" ;
 .
 
 <S32-geometryClass-hasSerialization-sub>
@@ -817,17 +698,33 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	sh:message "A geo:Geometry node (inferred or asserted) should have exactly one outgoing geo:hasSerialization relation, or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
 	skos:example 
 		"""
-		# A valid example: the geo:Geometry instance node has one incoming geo:hasGeometry relation
+		# A valid example: the Geometry Blank Node has a single geo:hasSerialization or a specialization of it, geo:asWKT in this case
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
-		<feature-x> geo:hasGeometry <feature-x-geom1> .
-		<feature-x-geom1> a geo:Geometry .
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
 		""" ,
 		"""
-		# An invalid example: the geo:geometry instance node has no incoming geo:hasGeometry relation
+		# An invalid example: the Geometry Blank Node has no outgoing geo:hasSerialization or a specialization of it
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
-		<feature-x-geom1> a geo:Geometry .
+		<feature-x>
+			geo:hasGeometry [] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the Geometry Blank Node is has more than one geo:hasSerialization or a specialization of it
+		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+		<feature-x>
+			geo:hasDefaultGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ; 
+				geo:asWKT "POINT (153.0 -27.0)"^^geo:wktLiteral ;
+			] ;
+		.
 		""" ;
 .
 
