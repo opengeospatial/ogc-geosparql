@@ -23,6 +23,8 @@ The prefixes used for the ontologies mapped to in all following sections are giv
 | rdfs: | http://www.w3.org/2000/01/rdf-schema#
 | sdo: | https://schema.org
 | sosa: | http://www.w3.org/ns/sosa/
+| spatialuk: | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/
+| spatialukgeom: | http://data.ordnancesurvey.co.uk/ontology/geometry/
 | spatial: | http://geovocab.org/spatial#
 | ssn: | http://www.w3.org/ns/ssn/
 | time: | http://www.w3.org/2006/time#
@@ -311,16 +313,29 @@ https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
 | `osmm:isClosed` false | `owl:equivalentClass` | `sf:LineString` | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
 |===
     
-=== E.13.3 Routable Tiles Ontology
+=== E.12.3 Routable Tiles Ontology
 https://github.com/openplannerteam/routable-tiles-ontology
 |===
 | From Element | Mapping relation | To Element | Notes 
 |===
 
 == E.13 Ordnance Survey UK Spatial Ontology
+
+Source: http://www.ordnancesurvey.co.uk/legacy/ontologies/spatialrelations.owl
+http://www.ordnancesurvey.co.uk/legacy/ontologies/geometry.owl
+
 |===
 | From Element | Mapping relation | To Element | Notes 
-
+| `spatialuk:contains` | `owl:equivalentProperty` | `geo:sfContains` |
+| `spatialuk:disjoint` | `owl:equivalentProperty` | `geo:sfDisjoint` |
+| `spatialuk:easting` | `owl:equivalentProperty` | - | Easting describes a latitude coordinate east of the national UK grid
+| `spatialuk:equals` | `owl:equivalentProperty` | `geo:sfEquals` |
+| `spatialuk:northing` | `owl:equivalentProperty` | - | Easting describes a longitude coordinate north of the national UK grid
+| `spatialuk:touches` | `owl:equivalentProperty` | `geo:sfTouches` |
+| `spatialuk:within` | `owl:equivalentProperty` | `geo:sfWithin` |
+| `spatialukgeom:AbstractGeometry` | `owl:equivalentProperty` | `geo:Geometry` |
+| `spatialukgeom:extent` | `owl:equivalentProperty` | `geo:hasBoundingBox` |
+| `spatialukgeom:asGML` | `owl:equivalentProperty` | `geo:asGML` | The properties are equivalent, but the range of spatialukgeom:asGML is more general: An rdf:XMLLiteral
 |===
 
 
