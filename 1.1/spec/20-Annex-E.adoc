@@ -8,6 +8,7 @@ The prefixes used for the ontologies mapped to in all following sections are giv
 
 [frame=none, grid=none, cols="1, 6"]
 |===
+| bfo: http://www.ifomis.org/bfo/1.1#
 | dcterms: | http://purl.org/dc/terms/
 | geo: | http://www.opengis.net/ont/geosparql#
 | geom: | http://geovocab.org/geometry#
@@ -23,7 +24,9 @@ The prefixes used for the ontologies mapped to in all following sections are giv
 | rdf: | http://www.w3.org/1999/02/22-rdf-syntax-ns# 
 | rdfs: | http://www.w3.org/2000/01/rdf-schema#
 | sdo: | https://schema.org
+| snap: http://www.ifomis.org/bfo/1.1/snap#
 | sosa: | http://www.w3.org/ns/sosa/
+| span: http://www.ifomis.org/bfo/1.1/span#
 | spatialuk: | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/
 | spatialukgeom: | http://data.ordnancesurvey.co.uk/ontology/geometry/
 | spatial: | http://geovocab.org/spatial#
@@ -290,7 +293,7 @@ Derivative relations between GeoSPARQL objects could be modelled using PROV, for
 |===
 
 == E.12 OpenStreetMap Ontologies
-There are several approaches to make OpenStreetMap data accessible in the linked open data cloud.
+There are several approaches to make OpenStreetMap data accessible in the Linked Open Data cloud.
 
 === E.12.1 LinkedGeoData
 LinkedGeoData emerged from a resarch project linking 
@@ -359,3 +362,13 @@ CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pd
 | `cidoc:SP15_Geometry`  | `rdfs:subClassOf` | `geo:Geometry` | The CIDOC CRMgeo class SP15_Geometry is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
 |===
 
+== E.15 Basic Formal Ontology (BOF)
+
+BFO Source: http://www.ifomis.org/bfo/1.1
+
+|===
+| From Element | Mapping relation | To Element | Notes 
+| `snap:Site` | `owl:equivalentClass` | `geo:Feature` | BFO's Site is generic and seemingly the same in intention as a GEO Feature
+| `snap:SpatialRegion` | `owl:equivalentClass` | `geo:Geometry` | BFO's SpatialRegion is described as a region of space, presumably, but not definitively an imaginary one. Geometry could be anything so these classes appear equivalent.
+| `geo:Geometry` | `rdfs:subClassOf` | `span:SpatiotemporalRegion` | GEO Geometry doesn't contain temporality but all GEO Geometry instances can sensibly be assumed to be within time, even if imaginary, so the BFO class is the superclass.
+|===
