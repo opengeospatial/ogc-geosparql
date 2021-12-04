@@ -25,73 +25,80 @@ The following sections elaborate on the kind of shapes and their purposes.
 
 == D.2 Scope of SHACL shapes provided with GeoSPARQL
 
+The SHACL shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but except very few cases do not validate the content of literal types.
+In particular, the following attributes of the graph are validated:
+
+* *Proper usage of GeoSPARQL classes*: These shapes check for a proper usage of instances of GeoSPARQL classes. For example, we check that instances of collection classes should at least have one element and that instances of Geometry classes should at least have one serilization to avoid creating graphs which contain nodes without necessary information.
+* *Geometry property consistency*: Certain checks are applied for properties describing geometries. For example we check dimensionality properties for corresponding values
+* *Rudimentary checks of literal contents*: The SHACL shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification)
+
 == D.3 Table of SHACL shapes
 
 [cols="1,1,1,1"]
 |===
 |SHACL Shape ID | Severity | Test purpose | Requirements tested 
 
-|Shape 1a
+|http://www.opengis.net/def/geosparql/validator/S1-a-hasGeometry-hasSerialization-sub[Shape 1a]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, should have minimum one outgoing relation that is either http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization], or a specialization of it.
 | <<req_core_sparql-protocol>> <<Req 7, `Requirement 7`>>
 
-|Shape 1b
+|http://www.opengis.net/def/geosparql/validator/S1-b-hasGeometry-hasSerialization-sub[Shape 1b]
 | Warning
 | Tests for many serializations attached to one instances of http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry]. It is recommended, that only one serialization is attached to a Geometry. If not, the user should ensure, that the serializations are equivalent.
 | <<Req 13, `Requirement 13`>>
 
-|Shape 1c
+|http://www.opengis.net/def/geosparql/validator/S1-c-hasGeometry-hasSerialization-sub[Shape 1c]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] relation.
 | 
 
-|Shape 1d
+|http://www.opengis.net/def/geosparql/validator/S1-d-hasGeometry-hasSerialization-sub[Shape 1d]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asGML[geo:asGML] relation.
 | 
 
-|Shape 1e
+|http://www.opengis.net/def/geosparql/validator/S1-e-hasGeometry-hasSerialization-sub[Shape 1e]
 | Violation 
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing  http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON]  relation.
 | 
 
-|Shape 1f
+|http://www.opengis.net/def/geosparql/validator/S1-f-hasGeometry-hasSerialization-sub[Shape 1f]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asKML[geo:asKML] relation.
 | 
 
-|Shape 2
+|http://www.opengis.net/def/geosparql/validator/S2-hasSerialization-hasGeometry[Shape 2]
 | Violation
 | Each node with one or more outgoing relations that are either http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization], or a specialization of it, should have at least one incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relation or a specialization of it.
 | 
 
-|Shape 3a-c
+|http://www.opengis.net/def/geosparql/validator/S3-hasGeometry-hasGeometry[Shape 3a-c]
 | Violation
 | A node that has an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] property, or specialization of it, cannot have an outgoing http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] property, or a specialization of, it at the same time (a http://www.opengis.net/ont/geosparql#Feature[geo:Feature] cannot be a http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] at the same time)
 | 
 
-|Shape 4
+|http://www.opengis.net/def/geosparql/validator/S4-hasSerialization-literal[Shape 4]
 | Violation
 | The target of a http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization] property, or a specialization of, it should be an RDF literal
 | 
 
-|Shape 5
+|http://www.opengis.net/def/geosparql/validator/S5-asWKT-wktLiteral[Shape 5]
 | Violation
 | The target of a http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#wktLiteral[geo:wktLiteral]
 | 
 
-|Shape 6
+|http://www.opengis.net/def/geosparql/validator/S6-asGML-gmlLiteral[Shape 6]
 | Violation
 | The target of a http://www.opengis.net/ont/geosparql#asGML[geo:asGML] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#gmlLiteral[geo:gmlLiteral]
 | 
 
-|Shape 7
+|http://www.opengis.net/def/geosparql/validator/S7-asGeoJSON-geoJSONLiteral[Shape 7]
 | Violation
 | The target of a http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#geoJSONLiteral[geo:geoJSONLiteral]
 | 
 
-|Shape 8
+|http://www.opengis.net/def/geosparql/validator/S8-asKML-kmlLiteral[Shape 8]
 | Violation
 | The target of a http://www.opengis.net/ont/geosparql#asKML[geo:asKML] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#kmlLiteral[geo:kmlLiteral]
 | 
