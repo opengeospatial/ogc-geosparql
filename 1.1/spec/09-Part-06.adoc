@@ -201,6 +201,7 @@ geo:hasLength
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasSize ;
+	rdfs:domain geo:SpatialObject ;    
 	skos:definition "The length of a Spatial Object."@en ;
 	skos:prefLabel "has length"@en ;
 .
@@ -215,6 +216,8 @@ geo:hasMetricLength
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasMetricSize ;
+	rdfs:domain geo:SpatialObject ;
+	rdfs:range xsd:double ;    
 	skos:definition "The length of a Spatial Object in meters."@en ;
 	skos:prefLabel "has length in meters"@en ;
 .
@@ -243,6 +246,8 @@ geo:hasMetricPerimeterLength
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasMetricSize ;
+	rdfs:domain geo:SpatialObject ;
+	rdfs:range xsd:double ;    
 	skos:definition "The length of the perimeter of a Spatial Object in meters."@en ;
 	skos:prefLabel "has perimeter length in meters"@en ;
 .
@@ -271,6 +276,7 @@ geo:hasArea
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasSize ;
+	rdfs:domain geo:SpatialObject ;    
 	skos:definition "The area of a Spatial Object."@en ;
 	skos:prefLabel "has area"@en ;
 .
@@ -285,6 +291,8 @@ geo:hasMetricArea
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasMetricSize ;
+	rdfs:domain geo:SpatialObject ;
+	rdfs:range xsd:double ;    
 	skos:definition "The area of a Spatial Object in square meters."@en ;
 	skos:prefLabel "has area in meters"@en ;
 .
@@ -312,6 +320,7 @@ geo:hasVolume
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf geo:hasSize ;
+	rdfs:domain geo:SpatialObject ;    
 	skos:definition "The volume of a three-dimensional Spatial Object."@en ;
 	skos:prefLabel "has volume"@en ;
 .
@@ -326,6 +335,8 @@ geo:hasMetricVolume
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
 	rdfs:subPropertyOf :hasMetricSize ;
+	rdfs:domain geo:SpatialObject ;
+	rdfs:range xsd:double ;    
 	skos:definition "The volume of a Spatial Object in cubic meters."@en ;
 	skos:prefLabel "has area in meters"@en ;
 .
@@ -366,10 +377,10 @@ The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`]
 geo:hasGeometry 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:Geometry ;    
     skos:prefLabel "has Geometry"@en ;
-    skos:definition "A spatial representation for a given Feature."@en ;     
-    rdfs:domain geo:Feature;
-    rdfs:range geo:Geometry ;
+    skos:definition "A spatial representation for a given Feature."@en ;
 .
 ```
 
@@ -381,12 +392,12 @@ The property http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDef
 geo:hasDefaultGeometry 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
+    rdfs:domain geo:Feature ;
+    rdfs:range geo:Geometry ;    
     skos:prefLabel "has Default Geometry"@en ;
     skos:definition "The default geometry to be used in spatial calculations, 
                     usually the most detailed geometry."@en ; 
-    rdfs:subPropertyOf geo:hasGeometry;
-    rdfs:domain geo:Feature; 
-    rdfs:range geo:Geometry ;
+    rdfs:subPropertyOf geo:hasGeometry ;
 .
 ```
 
@@ -409,14 +420,14 @@ The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundin
 geo:hasBoundingBox 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
-    rdfs:subPropertyOf geo:hasGeometry;    
+    rdfs:subPropertyOf geo:hasGeometry ;
+    rdfs:domain geo:Feature ;      
+    rdfs:range geo:Geometry ;    
     skos:prefLabel "has bounding box"@en ;
     skos:definition "The minimum or smallest bounding or enclosing box of a given Feature."@en ; 
     skos:scopeNote "The target is a geometry that defines a rectilinear region whose edges are 
                     aligned with the axes of the coordinate reference system, which exactly 
                     contains the geometry or Feature e.g. sf:Envelope"@en ;
-    rdfs:domain geo:Feature ;      
-    rdfs:range geo:Geometry ;
 .
 ```
 
@@ -430,13 +441,13 @@ The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`]
 geo:hasCentroid 
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
-    rdfs:subPropertyOf geo:hasGeometry;    
+    rdfs:subPropertyOf geo:hasGeometry ;
+    rdfs:domain geo:Feature ;     
+    rdfs:range geo:Geometry ;    
     skos:prefLabel "has centroid"@en ;
     skos:definition "The arithmetic mean position of all the geometry points 
                     of a given Feature."@en ; 
     skos:scopeNote "The target geometry shall describe a point, e.g. sf:Point"@en ;
-    rdfs:domain geo:Feature ;     
-    rdfs:range geo:Geometry ;
 .
 ```
 
