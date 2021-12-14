@@ -123,6 +123,14 @@ conf10core:spatial-object-class rdf:type
                                 skos:definition "Verify that queries involving geo:SpatialObject return the correct result on a test dataset" ;
                                 skos:prefLabel "GeoSPARQL 1.0 Conformance Test: Spatial Object Class"@en .
 
+conf11core:spatial-object-properties rdf:type 
+                                         spec:ConformanceTest ;
+                                spec:testPurpose "check conformance with this requirement" ;
+                                spec:testType spec:Capabilities ;
+                                rdfs:seeAlso reqs11core:spatial-object-properties ;
+                                skos:definition "Verify that queries involving these properties return the correct result for a test dataset" ;
+                                skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Object Properties"@en .
+
 conf10gx:feature-properties rdf:type 
                                      spec:ConformanceTest ;
                             spec:testPurpose "check conformance with this requirement" ;
@@ -561,9 +569,10 @@ reqs10tve:sf-spatial-relations rdf:type
 confs11:core rdf:type 
                       spec:ConformanceClass, skos:Collection ;
              skos:member conf11core:feature-collection-class ,
-                         conf11core:geometry-collection-class ,
+                         conf11core:spatial-object-class ,
                          conf11core:sparql-protocol ,
-                         conf11core:spatial-object-collection-class ;
+                         conf11core:spatial-object-collection-class ,
+                         conf11core:spatial-object-properties ;
              skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Core"@en .
 
 confs11:geometry-extension rdf:type 
@@ -602,6 +611,13 @@ confs11:topology-vocab-extension rdf:type
                                           spec:ConformanceClass, skos:Collection ;
                                  dcterms:requires confs11:core ;
                                  skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Topology Vocabulary Extension"@en .
+
+conf11core:spatial-object-collection-class rdf:type 
+                                             spec:ConformanceTest ;
+                                    spec:testPurpose "check conformance with this requirement" ;
+                                    spec:testType spec:Capabilities ;
+                                    skos:definition "Verify that queries involving geo:SpatialObjectCollection return the correct result on a test dataset" ;
+                                    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Object Collection Class"@en .
 
 conf11core:feature-collection-class rdf:type 
                                              spec:ConformanceTest ;
@@ -791,6 +807,11 @@ conf11qre: rdf:type
            dcterms:requires confs11:geometry-topology-extension ;
            skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Query Rewrite Extension"@en .
 
+reqs11core:spatial-object-collection-class rdf:type 
+                                                    spec:Requirement ;
+                                           skos:definition "Implementations shall allow the RDFS class geo:SpatialObjectCollection to be used in SPARQL graph patterns" ;
+                                           skos:prefLabel "GeoSPARQL 1.1 Requirement: Spatial Object Collection Class"@en .
+
 reqs11core:feature-collection-class rdf:type 
                                              spec:Requirement ;
                                     skos:definition "Implementations shall allow the RDFS class geo:FeatureCollection to be used in SPARQL graph patterns" ;
@@ -806,11 +827,6 @@ reqs11core:sparql-protocol rdf:type
                            skos:definition "Implementations shall support the SPARQL Query Language for RDF [SPARQL], the SPARQL Protocol [SPARQLPROT] and the SPARQL Query Results XML [SPARQLRESX] and JSON [SPARQLRESJ] Formats" ;
                            skos:prefLabel "GeoSPARQL 1.1 Requirement: SPARQL Protocol"@en ;
                            prov:wasDerivedFrom reqs10core:sparql-protocol .
-
-reqs11core:spatial-object-collection-class rdf:type 
-                                                    spec:Requirement ;
-                                           skos:definition "Implementations shall allow the RDFS class geo:SpatialObjectCollection to be used in SPARQL graph patterns" ;
-                                           skos:prefLabel "GeoSPARQL 1.1 Requirement: Spatial Object Collection Class"@en .
 
 reqs11gx:dggs-literal rdf:type 
                                spec:Requirement ;
