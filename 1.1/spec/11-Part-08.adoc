@@ -714,7 +714,7 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 <<Function: geof:spatialDimension, `geof:spatialDimension`>>, 
 <<Function: geof:symDifference, `geof:symDifference`>>, 
 <<Function: geof:transform, `geof:transform`>> and
-<<Function: geof:union, `geof:union`>>, 
+<<Function: geof:union, `geof:union`>>
 as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<ISO19125-1>>
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions`]
 |===
@@ -730,7 +730,8 @@ as SPARQL extension functions, consistent with definitions of these functions in
 <<Function: geof:minX, `geof:minX`>>, 
 <<Function: geof:minY, `geof:minY`>>,
 <<Function: geof:minZ, `geof:minZ`>>,
-<<Function: geof:numGeometries, `geof:numGeometries`>>
+<<Function: geof:numGeometries, `geof:numGeometries`>> and
+<<Function: geof:projectTo, `geof:projectTo`>>, 
 as SPARQL extension functions which are defined in this standard
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/non-sf-query-functions[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/non-sf-query-functions`]
 |===
@@ -845,15 +846,6 @@ geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the minimum bounding box - a rectangle - of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
-==== Function: geof:geometryType
-
-```
-geof:geometryType (geom1: ogc:geomLiteral): xsd:string
-```
-
-Returns the name of the subtype of Geometry of which this geometric object is an member. The name of the subtype of Geometry is returned as a string. No attempt to reconcile different geometry subtypes across all support literals need be made.
-
-
 ==== Function: geof:geometryN
 
 ```
@@ -861,6 +853,14 @@ geof:geometryN (geom1: ogc:geomLiteral): xsd:integer
 ```
 
 Returns the nth geometry of `geom1` if it is a GeometryCollection or `geom1` if it is a Geometry.
+
+==== Function: geof:geometryType
+
+```
+geof:geometryType (geom1: ogc:geomLiteral): xsd:string
+```
+
+Returns the name of the subtype of Geometry of which this geometric object is an member. The name of the subtype of Geometry is returned as a string. No attempt to reconcile different geometry subtypes across all support literals need be made.
 
 ==== Function: geof:getSRID
 
@@ -917,7 +917,7 @@ Returns true if `geom1` is a simple geometry, i.e. has no anomalous geometric po
 geof:length (geom1: ogc:geomLiteral): xsd:double
 ```
 
-Returns the length of `geom1` in meters.
+Returns the length of `geom1` in meters. The longest length from any one dimension is returned.
 
 ==== Function: geof:maxX
 
@@ -974,6 +974,22 @@ geof:numGeometries (geom1: ogc:geomLiteral): xsd:integer
 ```
 
 Returns the number of geometries of `geom1`.
+
+==== Function: geof:projectTo
+
+```
+geof:projectTo (geom1:  ogc:geomLiteral,
+                dimVec: xsd:integer): ogc:geomLiteral
+```
+
+Projects the elements of geometry `geom1` to the dimensions specified by the `dimVec` "dimensional vector". 
+
+`dimVec` is a binary number indicating which dimensions to project to (retain) from the `geom`, for example, using dimensions x, y & z:
+
+* "010" projects to the y dimension, only
+* "110" projects to the x and y dimensions
+
+A projection may only occur from a geometry to a geometry of equal or fewer dimensions and, so far, GeoSPARQL only allos 1-, 2- & 3-dimensional objects, thus `projectTo` can only be specified from 3 to 2, 2 to 1 or 1 to 0 dimensions.
 
 ==== Function: geof:spatialDimension
 
