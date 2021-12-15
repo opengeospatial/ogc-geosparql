@@ -2,37 +2,37 @@
 
 == D.0 Overview
 
-This Annex provides guidance on the usage of the SHACL shapes shipped with the GeoSPARQL specification. 
+This Annex provides guidance on the usage of the SHACL shapes included with GeoSPARQL 1.1. 
 
-The Shape Constraint Language https://www.w3.org/TR/shacl/[SHACL] allows to specify constraints on RDF data, phrased as a set of conditions modeled in shape graphs.
+The Shapes Constraint Language https://www.w3.org/TR/shacl/[SHACL] allows the specification of constraints on RDF data, phrased as a set of conditions modeled in "Shape" graphs.
 
-In the GeoSPARQL standard we define SHACL shapes in such a way that they validate teh anticipated graph structure defined by the requirements defined in the standard specification. In this way, users may validate a given RDF document against this shape graphs to correct mistakes in their data model.
+In GeoSPARQL 1.1, SHACL Shapes area defined in such a way that they validate anticipated graph structures expected by requirements defined in the standard. Users may validate a given RDF document claiming conformance to GeoSPARQL 1.1 by using these Shapes and use the validation results to correct any mistakes.
 
-== D.1 Foundations
+== D.1 Tools
 
-https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/validator.ttl[SHACL shapes provided with GeoSPARQL] are used to verify the graph structure of GeoSPARQL graphs. 
-There are several SHACL verification tools that one might consider using to validate their graph.
+https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/validator.ttl[SHACL Shapes provided with GeoSPARQL] are used to verify the graph structure of GeoSPARQL graphs. 
+There are several SHACL tools that one can using to validate data using this Shapes information:
 
-https://github.com/RDFLib/pySHACL[PySHACL] is a python implementation based on RDFlib which is able to validate graphs.
+* https://github.com/RDFLib/pySHACL[PySHACL]: A Python implementation based on the RDF library https://rdflib.dev/[RDFlib]
+* https://jena.apache.org/documentation/shacl/index.html[Apache Jena SHACL]: a Java implementation, based on https://jena.apache.org[Apache Jena]
+* https://shacl.org/playground/[SHACL Playground]: An online, JavaScript-based implementation that allows validation without local tools
+* Triple Stores: SHACL validation is part of many triple store implementations:
+** https://www.ontotext.com/products/graphdb/[GraphDB]
+** https://rdf4j.org[RDF4J]
+** https://jena.apache.org/documentation/fuseki2/[Apache Jena Fuseki]
 
-https://jena.apache.org/documentation/shacl/index.html[Apache Jena SHACL] might be used to validate graphs as well.
+Validators produce error messages and arnings based on the SHACL standard's defined reporting structure.
 
-The previous implementations require to load the SHACL shape set of GeoSPARQL and the graph to be tested. A test result will be generated which describes the success or failure of predefined tests encoded in the GeoSPARQL SHACL shapes.
+== D.2 Scope of SHACL Shapes provided with GeoSPARQL
 
-In addition, SHACL is part of many triple store implementations such as https://www.ontotext.com/products/graphdb/[GraphDB], https://rdf4j.org[RDF4J] and https://jena.apache.org/documentation/fuseki2/[Apache Jena Fuseki], which may also be used for graph verification.
-
-The following sections elaborate on the kind of shapes and their purposes.
-
-== D.2 Scope of SHACL shapes provided with GeoSPARQL
-
-The SHACL shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but except very few cases do not validate the content of literal types.
+The SHACL Shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but except very few cases do not validate the content of literal types.
 In particular, the following attributes of the graph are validated:
 
-* *Proper usage of GeoSPARQL classes*: These shapes check for a proper usage of instances of GeoSPARQL classes. For example, we check that instances of collection classes should at least have one element and that instances of Geometry classes should at least have one serilization to avoid creating graphs which contain nodes without necessary information.
+* *Proper usage of GeoSPARQL classes*: These Shapes check for a proper usage of instances of GeoSPARQL classes. For example, we check that instances of collection classes should at least have one element and that instances of Geometry classes should at least have one serilization to avoid creating graphs which contain nodes without necessary information.
 * *Geometry property consistency*: Certain checks are applied for properties describing geometries. For example we check dimensionality properties for corresponding values
-* *Rudimentary checks of literal contents*: The SHACL shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification)
+* *Rudimentary checks of literal contents*: The SHACL Shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification)
 
-== D.3 Table of SHACL shapes
+== D.3 Table of SHACL Shapes
 
 [cols="1,1,1,1"]
 |===
