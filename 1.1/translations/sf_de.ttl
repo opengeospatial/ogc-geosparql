@@ -7,18 +7,7 @@
 @prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
 
-
-<http://www.opengis.net/ont/sf> a owl:Ontology ;
-    owl:imports <http://www.opengis.net/ont/geosparql> ;
-    dc:title "Simple Features Vocabulary" ;
-	dc:creator "Open Geospatial Consortium"^^xsd:string ;
-	dc:date "2012-09-11"^^xsd:date ;
-	dc:modified "2022-06-03"^^xsd:date ;
-	dc:description "An RDF/OWL vocabulary for defining SimpleFeature geometry types"^^xsd:string ;
-	owl:versionInfo "OGC GeoSPARQL 1.1"^^xsd:string .
-
-sf:Curve a rdfs:Class,
-        owl:Class ;
+sf:Curve
     rdfs:label "Kurve (sf:Curve)"@de ;
     rdfs:comment """Eine sf:Curve ist ein eindimensionales geometrisches Objekt welches üblicherweise als eine Sequenz von Punkten gespeichert wird. Der Typ sf:Curve bestimmt hierbei die Form der Interpolierung zwischen den Punkten. Diese Spezifikation definiert einzig eine Unterklasse von sf:Curve, sf:LineString. Diese verwendet einer lineare Interpolierung zwischen Punkten.
 
@@ -34,201 +23,140 @@ Eine einfache und geschlossene Kurve wird als Ring bezeichnet.
 
 Die Begrenzung einer nicht geschlossenen Kurve besteht aus den beiden Endpunkten.
 
-Eine Kurve wird asl topologisch geschlossen definiert wenn sie die Endpunkte f(a) und f(b) beinhaltet."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Geometry .
+Eine Kurve wird als topologisch geschlossen definiert wenn sie die Endpunkte f(a) und f(b) beinhaltet."""@de .
 
 sf:Envelope
-  a rdfs:Class ;
-  a owl:Class ;
-  rdfs:comment """Shape defined by the corner points of the bounding box of a geometry.
-The corner points may be in any dimension (usually 2D or 3D) but the two corners must have the same dimension. """ ;
-  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-  rdfs:label "Envelope or Bounding Box"@en ;
-  rdfs:subClassOf sf:Geometry ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty sf:maximum ;
-    ] ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:cardinality "1"^^xsd:nonNegativeInteger ;
-      owl:onProperty sf:minimum ;
-    ] ;
+  rdfs:comment """Geometrische Form, die durch die Eckpunkte der Begrenzung einer Geometrie definiert ist.
+Die Eckpunkte können in jeder beliebigen Dimension liegen (in der Regel 2D oder 3D), aber die beiden Ecken müssen dieselbe Dimension haben. """@de ;
+  rdfs:label "Envelope oder Bounding Box"@de 
 .
 
 sf:maximum
-  a owl:ObjectProperty ;
-  rdfs:comment "Der Punkt mit den maximalen Koordinatenwerten einer Bounding Box" ;
-  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-  rdfs:domain sf:Envelope ;
-  rdfs:label "maximum" ;
-  rdfs:range sf:Point ;
+  rdfs:comment "Der Punkt mit den maximalen Koordinatenwerten einer Bounding Box"@de ;
+  rdfs:label "maximum"@de 
 .
+
 sf:minimum
-  a owl:ObjectProperty ;
-  rdfs:comment "Point containing the minimum values of the coordinates of an envelope or bounding box" ;
-  rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-  rdfs:domain sf:Envelope ;
-  rdfs:label "minimum" ;
-  rdfs:range sf:Point ;
+  rdfs:comment "Der Punkt mit den maximalen Koordinatenwerten einer Bounding Box"@de ;
+  rdfs:label "minimum"@de 
 .
 
-sf:Geometry a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Geometry"@en ;
-    rdfs:comment """Geometry is the root class of the hierarchy.
+sf:Geometry 
+    rdfs:label "Geometrie"@de ;
+    rdfs:comment """Die Klasse Geometrie die ist die Ursprungslasse der Klassenhierarchie.
 
-The instantiable subclasses of Geometry are restricted to 0, 1 and 2-dimensional geometric objects that exist in 2, 3 or 4-dimensional coordinate space (R2, R3 or R4). Geometry values in R2 have points with coordinate values for x and y. Geometry values in R3 have points with coordinate values for x, y and z or for x, y and m. Geometry values in R4 have points with coordinate values for x, y, z and m.
+Die instanziierbaren Unterklassen der Klasse geometrie sind auf 0, 1 und 2-dimensionale geometrische Objekte in einem 2, 3 oder vierdimensionalem Koordinatenraum (R2,R3,R4) begrenzt. Geometrien in R2 haben einen X und einen Y Koordinatenwert. Geometiren in R3 haben X, Y und Z Koordinatenwerte oder X, Y und M Koordinatenwerte. Geometrien in R4 beinhalten Punkte mit Koordinatenwerten für X, Y, Z und M.
 
-The interpretation of the coordinates is subject to the coordinate reference systems associated to the point. All coordinates within a geometry object should be in the same coordinate reference systems. Each coordinate shall be unambiguously associated to a coordinate reference system either directly or through its containing geometry. The z coordinate of a point is typically, but not necessarily, represents altitude or elevation. The m coordinate represents a measurement.
+Die Interpretation der Koordinaten erfolgt mittels des Koordinatenreferenzsystems welches der jeweiligen Geometrie zugeordnet wurde. Alle Koordinaten innerhalb eines geometrischen Objekts sollten im gleichen Koordinatenreferenzsystem definiert sein. Jede Koordinate soll eindeutig zu einem Koordinatenreferenzsystem bezogen sein. Dies kann durch einen direkten Verweis oder über die beschreibende Geometrie geschehen. Die Z Koordinate einer Geometrie repräsentiert typischerweise, aber nicht notwendigerweise eine Erhebungsgröße oder eine Höhenbeschreibung. Die M Koordinate repräsentiert einen Messwert.
 
-All Geometry classes described in this specification are defined so that instances of Geometry are topologically closed, i.e. all represented geometries include their boundary as point sets. This does not affect their representation, and open version of the same classes may be used in other circumstances, such as topological representations."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf geo:Geometry .
+Alle Geometrieklassen in dieser Spezifikation sind so definiert, dass ihre Instanzen topologisch geschlossen sind. Dies bedeutet, dass alle Geometrien ihre Begrenzungen als Punktmenge mitbeinhalten. Dies hat keinen Einfluss auf ihre Repräsentierung und topologisch nicht geschlossene Geometrien könnten durch ähnliche Klassen modelliert werden falls die Notwendigkeit besteht."""@de .
 
-sf:GeometryCollection a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Geometry Collection"@en ;
-    rdfs:comment """A GeometryCollection is a geometric object that is a collection of some number of geometric objects.
+sf:GeometryCollection 
+    rdfs:label "Geometriesammlung (sf:GeometryCollection)"@de ;
+    rdfs:comment """Eine Sammlung von Geometrien ist ein geometrisches Objekt die eine Sammlung von weiteren nicht notwendigerweise gleichartigen anderen geometrischen Objekten beinhaltet.
 
-All the elements in a GeometryCollection shall be in the same Spatial Reference System. This is also the Spatial Reference System for the GeometryCollection.
-GeometryCollection places no other constraints on its elements. Subclasses of GeometryCollection may restrict membership based on dimension and may also place other constraints on the degree of spatial overlap between elements."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Geometry , geo:GeometryCollection .
+Alle Elemente einer Geometriesammlung sollen im gleichen räumlichen Bezugssystem definiert sein. Man bezeichnet dieses Bezugssystem das räumliche Bezugssystem der Geometriesammlung.
+Die Geometriesammlung definiert keine weiteren Beschränkungen in Bezug auf die in ihr enthaltenen geometrischen Objekte. Unterklassen der Klasse sf:GeometryCollection können weitere Restriktionen basierend auf der räumlichen Dimension oder auf der Basis von Beziehungen der Geometrien untereinander definieren."""@de .
 
-sf:Line a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Line"@en ;
-    rdfs:comment """A Line is a LineString with exactly 2 Points."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:LineString .
+sf:Line
+    rdfs:label "Linie (sf:Line)"@de ;
+    rdfs:comment """Eine Linie ist ein LineString mit genau zwei Punkten."""@de .
 
-sf:LineString a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Line String"@en ;
-    rdfs:comment """A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Curve .
+sf:LineString 
+    rdfs:label "LineString (sf:LineString)"@de ;
+    rdfs:comment """Ein sf:LineString ist eine Kurve mit einer linearen Interpolation zwischen ihren zugehörigen Punkten. Jedes aufeinanderfolgende Paar von Punkten definiert ein Liniensegment."""@de .
 
-sf:LinearRing a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Linear Ring"@en ;
-    rdfs:comment """A LinearRing is a LineString that is both closed and simple."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:LineString .
+sf:LinearRing 
+    rdfs:label "Linearer Ring (sf:LinearRing)"@de ;
+    rdfs:comment """Ein linearer Ring ist eine Linie die einfach und geschlossen ist."""@de .
 
-sf:MultiCurve a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Multi Curve"@en ;
-    rdfs:comment """A MultiCurve is a 1-dimensional GeometryCollection whose elements are Curves.
+sf:MultiCurve 
+    rdfs:label "MultiCurve (sf:MultiCurve)"@de ;
+    rdfs:comment """Eine MultiCurve ist eine eindimensionale Geometriesammlung, deren Elemente Kurven sind.
 
-A MultiCurve defines a set of methods for its subclasses and is included for reasons of extensibility.
+Eine MultiCurve definiert eine Menge von Methoden für ihre Unterklassen und ist aus Gründen der Erweiterbarkeit in dieses Vokabular integriert.
 
-A MultiCurve is simple if and only if all of its elements are simple and the only intersections between any two elements occur at Points that are on the boundaries of both elements.
+Eine MultiCurve ist einfach wenn und nur wenn alle zu ihr assoziierten Element einfach sind und die einzigen Überschneidungen zwischen zwei beliebigen Elementen einzig an ihren Begrenzungen existieren.
 
-The boundary of a MultiCurve is obtained by applying the mod 2 union rule: A Point is in the boundary of a MultiCurve if it is in the boundaries of an odd number of elements of the MultiCurve.
+Die Begrenzung einer MultiCurve wird durch Anwendung der mod 2 union Regel ermittelt: Ein Punkt ist in der Begrenzung einer MultiCurve wenn er in den Begrenzungen einer ungeraden Anzahl von Elementen der MultiCurve definiert ist.
 
-A MultiCurve is closed if all of its elements are closed. The boundary of a closed MultiCurve is always empty.
+Eine MultiCurve ist geschlossen wenn alle ihre Elemente geschlossen sind. Die Begrenzung einer geschlossenen MultiCurve ist immer die leere Menge.
 
-A MultiCurve is defined as topologically closed."""@en ;
+Eine MultiCurve wird als topologisch geschlossen definiert."""@de  .
+
+sf:MultiLineString 
+    rdfs:label "Multi Line String"@de ;
+    rdfs:comment """Ein MultiLineString ist eine MultiCurve, deren Elemente LineStrings sind."""@de  .
+
+sf:MultiPoint 
+    rdfs:label "MultiPoint"@de ;
+    rdfs:comment """Ein MultiPoint ist eine 0-dimensionale GeometryCollection. Die Elemente eines MultiPoints sind auf Punkte beschränkt. DiePunkte sind nicht verbunden oder in irgendeiner semantisch wichtigen Weise geordnet.
+	
+Ein MultiPoint ist einfach, wenn keine zwei Punkte innerhalb der MultiPoint Definition gleich sind (d.h. identische Koordinatenwerte in X und Y haben).
+
+Jeder MultiPoint ist räumlich gleich zu einem einfachen MultiPoint.
+
+Die Begrenzung eines MultiPoint ist die leere Menge."""@de ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
     rdfs:subClassOf sf:GeometryCollection .
 
-sf:MultiLineString a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Multi Line String"@en ;
-    rdfs:comment """A MultiLineString is a MultiCurve whose elements are LineStrings."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:MultiCurve .
+sf:MultiPolygon 
+    rdfs:label "Multi Polygon"@de ;
+    rdfs:comment """Ein MultiPolygon is ein MultiSurface dessen Elemente alle Polygone sind.
 
-sf:MultiPoint a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Multi Point"@en ;
-    rdfs:comment """A MultiPoint is a 0-dimensional GeometryCollection. The elements of a MultiPoint are restricted to Points. ThePoints are not connected or ordered in any semantically important way.
+Die folgenden Annahmen gelten für gültige MultiPolygone:
 
-A MultiPoint is simple if no two Points in the MultiPoint are equal (have identical coordinate values in X and Y).
+a) Die Innenräume von 2 Polygonen, die Elemente eines MultiPolygons sind, dürfen sich nicht überschneiden.
+b) Die Grenzen von 2 beliebigen Polygonen, die Elemente eines MultiPolygons sind, dürfen sich nicht kreuzen und nur an einer endlichen Anzahl von Punkten berühren.
+c) Ein MultiPolygon ist als topologisch geschlossen definiert.
+d) Ein MultiPolygon darf keine Schnittlinien, Zacken oder Löcher haben, ein MultiPolygon ist eine regelmäßige geschlossene Punktmenge
+e) Das Innere eines MultiPolygons mit mehr als einem Polygon ist nicht verbunden; die Anzahl der verbundenen Komponenten des Inneren eines MultiPolygons ist gleich der Anzahl der Polygone im MultiPolygon
 
-Every MultiPoint is spatially equal to a simple Multipoint.
+Die Begrenzung eines MultiPolygons ist eine Menge geschlossener Kurven (LineStrings), die den Begrenzungen seiner Elementpolygone entsprechen. Jede Kurve in der Begrenzung des MultiPolygons befindet sich in der Begrenzung von genau einem Element-Polygon, und jede Kurve in der Begrenzung eines Element-Polygons befindet sich in der Begrenzung des MultiPolygons."""@de .
 
-The boundary of a MultiPoint is the empty set."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:GeometryCollection .
+sf:MultiSurface 
+    rdfs:label "Multi Surface"@de ;
+    rdfs:comment """Ein MultiSurface ist eine 2-dimensionale Geometriesammlung, deren Elemente Flächen sind, die alle Koordinaten desselben Koordinatenreferenzsystems verwenden. Die geometrischen Innenräume von zwei beliebigen Flächen in einer MultiSurface dürfen sich im vollständigen Koordinatensystem nicht schneiden. Die Begrenzungen zweier koplanarer Elemente einer MultiSurface können sich höchstens in einer endlichen Anzahl von Punkten schneiden. Würden sie sich entlang einer Kurve treffen, könnten sie zu einer einzigen Fläche verschmolzen werden.
 
-sf:MultiPolygon a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Multi Polygon"@en ;
-    rdfs:comment """A MultiPolygon is a MultiSurface whose elements are Polygons.
+Ein MultiSurface kann verwendet werden, um heterogene Flächenansammlungen aus Polygonen und polyedrischen Flächen darzustellen. Sie definiert eine Reihe von Methoden für ihre Unterklassen. Die Unterklasse von MultiSurface ist MultiPolygon, die einer Sammlung von einzig Polygonen entspricht. Andere Sammlungen sollten MultiSurface verwenden."""@de .
 
-The assertions for MultiPolygons are as follows.
+sf:Point 
+    rdfs:label "Punkt (sf:Point)"@de ;
+    rdfs:comment """Ein Punkt ist ein 0-dimensionales geometrischen Objekt und repräsentiert einen einzelnen Standort in einem Koordinatenraum. 
+Ein Punkt hat eine X Koordinate und eine Y Koordinate. Sofern vom zugehörigen Raumbezugssystem gefordert, kann der Punkt auch Z und/oder M Koordinaten enthalten.
+Die Begrenzung eines Punktes ist die leere Menge."""@de .
 
-a) The interiors of 2 Polygons that are elements of a MultiPolygon may not intersect.
-b) The boundaries of any 2 Polygons that are elements of a MultiPolygon may not cross and may touch at only a finite number of Points.
-c) A MultiPolygon is defined as topologically closed.
-d) A MultiPolygon may not have cut lines, spikes or punctures, a MultiPolygon is a regular closed Point set,
-e) The interior of a MultiPolygon with more than 1 Polygon is not connected; the number of connected components of the interior of a MultiPolygon is equal to the number of Polygons in the MultiPolygon. 
+sf:Polygon 
+    rdfs:label "Polygon"@de ;
+    rdfs:comment """Ein Polygon ist eine ebene Oberfläche welche durch eine äußere Begrenzung und 0 oder mehr innere Begrenzungen definiert ist. Jede innere Begrenzung definiert ein Loch im Polygon.
+Die äußere Begrenzung, welche die Oberseite der Oberfläche definiert, ist ein LinearRing welcher The exterior boundary LinearRing defines the top of the surface which is the side of the surface from which the exterior boundary appears to traverse the boundary in a counter clockwise direction. The interior LinearRings will have the opposite orientation, and appear as clockwise when viewed from the top,
+Die folgenden Annahmen gelten für gültige (valide) Polygone:
 
-The boundary of a MultiPolygon is a set of closed Curves (LineStrings) corresponding to the boundaries of its element Polygons. Each Curve in the boundary of the MultiPolygon is in the boundary of exactly 1 element Polygon, and every Curve in the boundary of an element Polygon is in the boundary of the MultiPolygon."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:MultiSurface .
+a) Polygone sind topologisch geschlossen;
+b) Die Begrenzung eines Polygons besteht aus einer Menge von LinearRings, die die inneren und äußeren Begrezungen des Polygons beschreiben;
+c) Keine zwei Ringe der Begrenzung dürfen sich überschneiden und die Ringe im Rand eines Polygons dürfen sich lediglich in einem Punkt als Tangente schneiden.
+d) Eine Polygon darf keine Schnittlinien, Zacken oder kleinere Löcher aufweisen.
+e) Das Innere eines jeden Polygons ist eine zusammenhängende Punktmenge;
+f) Das Äußere eines Polygons mit einem oder mehreren Löchern ist nicht zusammenhängend. Jedes Loch definiert eine zusammenhängende Komponente des Äußeren des Polygons."""@de  .
 
-sf:MultiSurface a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Multi Surface"@en ;
-    rdfs:comment """A MultiSurface is a 2-dimensional GeometryCollection whose elements are Surfaces, all using coordinates from the same coordinate reference system. The geometric interiors of any two Surfaces in a MultiSurface may not intersect in the full coordinate system. The boundaries of any two coplanar elements in a MultiSurface may intersect, at most, at a finite number of Points. If they were to meet along a curve, they could be merged into a single surface.
+sf:PolyhedralSurface 
+    rdfs:label "Polyedrische Oberfläche"@de ;
+    rdfs:comment """Eine polyedrische Oberfläche ist eine zusammenhängende Sammlung von Polygonen, die gemeinsame Begrenzungssegmente aufweisen. Für jedes Paar von Polygonen, die sich berühren, muss die gemeinsame Begrenzung als endliche Sammlung von LineStrings ausgedrückt werden können.  Jeder dieser LineStrings muss Teil der Begrenzung von höchstens 2 Polygonfeldern sein. 
 
-A MultiSurface may be used to represent heterogeneous surfaces collections of polygons and polyhedral surfaces. It defines a set of methods for its subclasses. The subclass of MultiSurface is MultiPolygon corresponding to a collection of Polygons only. Other collections shall use MultiSurface."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:GeometryCollection .
+Bei zwei Polygonen, die eine gemeinsame Begrenzung haben, muss der obere Teil des Polygons konsistent sein. Das bedeutet, dass zwei LinearRings aus diesen beiden Polygonen das gemeinsame Begrenzungssegment in entgegengesetzten Richtungen überqueren. Da die Polyederfläche zusammenhängend ist, sind alle Polygone konsistent ausgerichtet. Dies bedeutet, dass eine nicht orientierte Fläche (wie z. B. ein Möbius-Band) keine Einzelflächendarstellung haben darf. Diese Geometrien können durch ein MultiSurface dargestellt werden.
 
-sf:Point a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Point"@en ;
-    rdfs:comment """A Point is a 0-dimensional geometric object and represents a single location in coordinate space. 
-A Point has an x-coordinate value, a y-coordinate value. If called for by the associated Spatial Reference System, it may also have coordinate values for z and m.
-The boundary of a Point is the empty set."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Geometry .
+Wenn jeder so definierte LineString die Begrenzung von genau 2 Polygonfeldern ist, dann ist die polyedrische Oberfläche ein einfaches, geschlossenes Polyeder und ist topologisch isomorph zur Oberfläche einer Kugel. Nach dem Jordan Surface Theorem (Jordans Theorem für 2-Kugeln) umschließen solche Polyeder einen Körper, der topologisch isomorph zum Inneren einer Kugel ist; die Kugel. In diesem Fall zeigt die Oberseite der Oberfläche entweder ins Innere oder ins Äußere des eingeschlossenen endlichen Körpers. Wenn sie nach außen zeigt, ist die Oberfläche die äußere Begrenzung der eingeschlossenen Fläche. Wenn sie nach innen zeigt, ist die Oberfläche das Innere des unendlichen Komplements des eingeschlossenen Festkörpers. Eine Kugel mit einer gewissen Anzahl von Hohlräumen (Löchern) im Inneren kann somit als eine äußere Begrenzungsschale und eine gewisse Anzahl von inneren Begrenzungsschalen dargestellt werden."""@de . .
 
-sf:Polygon a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Polygon"@en ;
-    rdfs:comment """A Polygon is a planar Surface defined by 1 exterior boundary and 0 or more interior boundaries. Each interior boundary defines a hole in the Polygon.
-The exterior boundary LinearRing defines the top of the surface which is the side of the surface from which the exterior boundary appears to traverse the boundary in a counter clockwise direction. The interior LinearRings will have the opposite orientation, and appear as clockwise when viewed from the top,
-The assertions for Polygons (the rules that define valid Polygons) are as follows:
-
-a) Polygons are topologically closed;
-b) The boundary of a Polygon consists of a set of LinearRings that make up its exterior and interior boundaries;
-c) No two Rings in the boundary cross and the Rings in the boundary of a Polygon may intersect at a Point but only as a tangent.
-d) A Polygon may not have cut lines, spikes or punctures.
-e) The interior of every Polygon is a connected point set;
-f) The exterior of a Polygon with 1 or more holes is not connected. Each hole defines a connected component of the exterior."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Surface .
-
-sf:PolyhedralSurface a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Polyhedral Surface"@en ;
-    rdfs:comment """A PolyhedralSurface is a contiguous collection of polygons, which share common boundary segments. For each pair of polygons that touch, the common boundary shall be expressible as a finite collection of LineStrings. Each such LineString shall be part of the boundary of at most 2 Polygon patches. 
-
-For any two polygons that share a common boundary, the top of the polygon shall be consistent. This means that when two LinearRings from these two Polygons traverse the common boundary segment, they do so in opposite directions. Since the Polyhedral surface is contiguous, all polygons will be thus consistently oriented. This means that a non-oriented surface (such as Mbius band) shall not have single surface representations. They may be represented by a MultiSurface.
-
-If each such LineString is the boundary of exactly 2 Polygon patches, then the PolyhedralSurface is a simple, closed polyhedron and is topologically isomorphic to the surface of a sphere. By the Jordan Surface Theorem (Jordans Theorem for 2-spheres), such polyhedrons enclose a solid topologically isomorphic to the interior of a sphere; the ball. In this case, the top of the surface will either point inward or outward of the enclosed finite solid. If outward, the surface is the exterior boundary of the enclosed surface. If inward, the surface is the interior of the infinite complement of the enclosed solid. A Ball with some number of voids (holes) inside can thus be presented as one exterior boundary shell, and some number in interior boundary shells."""@en ;
-    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf sf:Surface .
-
-sf:Surface a rdfs:Class,
-        owl:Class ;
-    rdfs:label "Oberfläche"@en ;
+sf:Surface
+    rdfs:label "Oberfläche"@de ;
     rdfs:comment """Eine Oberfläche ist ein zweidimensionales geometrisches Objekt.
 Eine einfache Oberfläche besteht aus einer einfachen Fläche die mit einer externen Begrenzung und 0 oder mehr internen Begrenzungen. Eine einzige solche Oberfläche im dreidimensionalen Raum ist isometrisch gegenüber ebenen Flächen planar Surfaces, by a simple affine rotation matrix that rotates the patch onto the plane z = 0. If the patch is not vertical, the projection onto the same plane is an isomorphism, and can be represented as a linear transformation, i.e. an affine.
 
-Polyhedrische Oberflächen werden Polyhedral Surfaces are formed by stitching together such simple Surfaces patches along their common boundaries. Such polyhedral Surfaces in a 3-dimensional space may not be planar as a whole, depending on the orientation of their planar normals. If all the patches are in alignment (their normals are parallel), then the whole stitched polyhedral surface is co-planar and can be represented as a single patch if it is connected.
+Polyedrische Flächen werden gebildet, indem solche einfachen Flächenstücke entlang ihrer gemeinsamen Grenzen zusammengefügt werden. Solche polyedrischen Flächen in einem dreidimensionalen Raum sind je nach der Ausrichtung ihrer Flächennormalen nicht unbedingt in ihrer Gesamtheit planar. Wenn alle Flächen ausgerichtet sind (ihre Normalen sind parallel), dann ist die gesamte zusammengesetzte polyedrische Fläche koplanar und kann als eine einzige Fläche dargestellt werden, wenn sie verbunden ist.
 
-The boundary of a simple Surface is the set of closed Curves corresponding to its exterior and interior boundaries.
+Die Begrenzung einer einfachen Fläche ist die Menge der geschlossenen Kurven, die ihrer äußeren und inneren Begrenzung entsprechen.
 
-Ein Polygon ist eine einfache ebene Oberfläche. Eine polyhedrische Oberfläche ist eine einfache Oberfläche welche aus einer Anzahl von Polygonbestandteilen aufgebaut ist. Wenn die polyhedrische Oberfläche geschlossen ist, dann begrenzt sie einen Festkörper. Eine mehrflächige Oberfläche welche eine Menge von polyhedrischen Oberflächen beinhaltet repräsentiert einen Festkörper mit Löchern."""@en ;
+Ein Polygon ist eine einfache ebene Oberfläche. Eine Polyedrische Oberfläche ist eine einfache Oberfläche welche aus einer Anzahl von Polygonbestandteilen aufgebaut ist. Wenn die Polyedrische Oberfläche geschlossen ist, dann begrenzt sie einen Festkörper. Eine mehrflächige Oberfläche welche eine Menge von Polyedrischen Oberflächen beinhaltet repräsentiert einen Festkörper mit Löchern."""@de ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
     rdfs:subClassOf sf:Geometry .
 
