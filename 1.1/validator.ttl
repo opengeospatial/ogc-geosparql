@@ -100,61 +100,6 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S1-b-hasGeometry-hasSerialization-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			geo:hasSerialization
-			geo:asGML
-			geo:asWKT
-			geo:asGeoJSON
-			geo:asKML
-			geo:asDGGS
-		) 
-	] ;
-	sh:maxCount 1 ;
-	sh:severity sh:Warning ;
-	sh:message """It seems like more then one geometry serialization (outgoing geo:hasSerialization or a specialization of it) exist for this geometry node (incoming geo:hasGeometry or a specialization of it). 
-	A data publisher should assure that the CRS/SRS and the actual coordinates are equivalent for each serialization of the same geometry, but this might not be the case.
-	A single GeoSPARQL engine might treat different geometry serializations (with the same coordinates and CRS) differently by using distinct geometry loaders and processers internally, resulting in potentially conflicting GeoSPARQL spatial relations delivered by the engine for the multiple serializations. 
-	Before using the data, you might want to evaluate if the published data and the operations of the GeoSPARQL engine are correct.
-	If you trust the data publisher in this, you can deactivate this shape using sh:deactivated equal to true.
-	Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."""@en ;
-	skos:example 
-		"""
-		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
-			] ;
-		.
-		""" ,
-		"""
-		# A valid example but a warning will be raised: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT and geo:asGeoJSON. A check by the user is thus recommended. Since both serializations use the same CRS (WGS84, as resp. defined by the GeoSPARL specification for WKT and the GeoJSON specification) and the exact same coordinates, this pattern is in fact allowed and the warning can be ignored. 
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
-				geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [153.084230, -27.322738] }"^^geo:geoJSONLiteral ;
-			] ;
-		.
-		""" ,
-		"""
-		# An invalid example (warning will be raised): incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is geo:asWKT and geo:asGeoJSON. A check by the user is thus recommended. Since both serializations don't use the exact same coordinates, this pattern is not allowed. 
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
-				geo:asGeoJSON "{ \"type\": \"Point\", \"coordinates\": [153.08, -27.32] }"^^geo:geoJSONLiteral ;
-			] ;
-		.
-		""" ;
-.
-
 <S1-c-hasGeometry-hasSerialization-sub>
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
@@ -671,74 +616,18 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
+
 #################################################
-# Shape 21
+# Shape 21 - geo:FeatureCollection
 #################################################
 
-<S21-geometryClass-hasGeometry-hasSerialization>
+<S21-FeatureCollectionClass-member-feature>
 	a sh:NodeShape ;
-	sh:property <S21-geometryClass-hasSerialization-sub> ;
-	sh:targetClass geo:Geometry ;
-.
-
-<S21-geometryClass-hasSerialization-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			geo:hasSerialization
-			geo:asGML
-			geo:asWKT
-			geo:asGeoJSON
-			geo:asKML
-			geo:asDGGS
-		) 
-	] ;
-	sh:minCount 1 ;
-	sh:maxCount 1 ; # should be the same as shape 1 (under discussion)
-	sh:message "A geo:Geometry node (inferred or asserted) should have exactly one outgoing geo:hasSerialization relation, or a specialization of it. Note: don't use this shape with reasoning, as the use of a specialization of geo:hasSerialization will result in at least two outgoing relations that match the constraint."@en ;
-	skos:example 
-		"""
-		# A valid example: the Geometry Blank Node has a single geo:hasSerialization or a specialization of it, geo:asWKT in this case
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
-			] ;
-		.
-		""" ,
-		"""
-		# An invalid example: the Geometry Blank Node has no outgoing geo:hasSerialization or a specialization of it
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasGeometry [] ;
-		.
-		""" ,
-		"""
-		# An invalid example: the Geometry Blank Node is has more than one geo:hasSerialization or a specialization of it
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-
-		<feature-x>
-			geo:hasDefaultGeometry [
-				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ; 
-				geo:asWKT "POINT (153.0 -27.0)"^^geo:wktLiteral ;
-			] ;
-		.
-		""" ;
-.
-
-#################################################
-# Shape 22 - geo:FeatureCollection
-#################################################
-
-<S22-FeatureCollectionClass-member-feature>
-	a sh:NodeShape ;
-	sh:property <S22-FeatureCollectionClass-minOneMember-feature-sub> , <S22-FeatureCollectionClass-member-onlyFeature-sub> ;
+	sh:property <S21-FeatureCollectionClass-minOneMember-feature-sub> , <S21-FeatureCollectionClass-member-onlyFeature-sub> ;
 	sh:targetClass geo:FeatureCollection ;
 .
 
-<S22-FeatureCollectionClass-minOneMember-feature-sub>
+<S21-FeatureCollectionClass-minOneMember-feature-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -768,7 +657,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S22-FeatureCollectionClass-member-onlyFeature-sub>
+<S21-FeatureCollectionClass-member-onlyFeature-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
@@ -818,16 +707,16 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 23 - geo:GeometryCollection
+# Shape 22 - geo:GeometryCollection
 #################################################
 
-<S23-GeometryCollectionClass-member-geometry>
+<S22-GeometryCollectionClass-member-geometry>
 	a sh:NodeShape ;
-	sh:property <S23-GeometryCollectionClass-minOneMember-geometry-sub> , <S23-GeometryCollectionClass-member-onlyGeometry-sub> ;
+	sh:property <S22-GeometryCollectionClass-minOneMember-geometry-sub> , <S22-GeometryCollectionClass-member-onlyGeometry-sub> ;
 	sh:targetClass geo:GeometryCollection ;
 .
 
-<S23-GeometryCollectionClass-minOneMember-geometry-sub>
+<S22-GeometryCollectionClass-minOneMember-geometry-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -854,7 +743,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S23-GeometryCollectionClass-member-onlyGeometry-sub>
+<S22-GeometryCollectionClass-member-onlyGeometry-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
@@ -899,16 +788,16 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 24 - geo:SpatialObjectCollection
+# Shape 23 - geo:SpatialObjectCollection
 #################################################
 
-<S24-SpatialObjectCollection-member-spatialObject>
+<S23-SpatialObjectCollection-member-spatialObject>
 	a sh:NodeShape ;
-	sh:property <S24-SpatialObjectCollection-minOneMember-spatialObject-sub> , <S24-SpatialObjectCollection-member-onlySpatialObject-sub> ;
+	sh:property <S23-SpatialObjectCollection-minOneMember-spatialObject-sub> , <S23-SpatialObjectCollection-member-onlySpatialObject-sub> ;
 	sh:targetClass geo:SpatialObjectCollection ;
 .
 
-<S24-SpatialObjectCollection-minOneMember-spatialObject-sub>
+<S23-SpatialObjectCollection-minOneMember-spatialObject-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -937,7 +826,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S24-SpatialObjectCollection-member-onlySpatialObject-sub>
+<S23-SpatialObjectCollection-member-onlySpatialObject-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
