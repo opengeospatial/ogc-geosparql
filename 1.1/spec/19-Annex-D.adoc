@@ -44,26 +44,21 @@ In particular, the following attributes of the graph are validated:
 | <<req_geometry-extension_feature_properties>>, <<req_geometry-extension_geometry_properties>>
 
 |http://www.opengis.net/def/geosparql/validator/S1-b-hasGeometry-hasSerialization-sub[Shape 1b]
-| Warning
-| Tests for many serializations attached to one instances of http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry]. It is recommended, that only one serialization is attached to a Geometry. If not, the user should ensure, that the serializations are equivalent.
-| <<req_geometry-extension_geometry_properties>>
-
-|http://www.opengis.net/def/geosparql/validator/S1-c-hasGeometry-hasSerialization-sub[Shape 1c]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] relation.
 | <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-wkt-literal>>
 
-|http://www.opengis.net/def/geosparql/validator/S1-d-hasGeometry-hasSerialization-sub[Shape 1d]
+|http://www.opengis.net/def/geosparql/validator/S1-c-hasGeometry-hasSerialization-sub[Shape 1c]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asGML[geo:asGML] relation.
 | <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-gml-literal>>
 
-|http://www.opengis.net/def/geosparql/validator/S1-e-hasGeometry-hasSerialization-sub[Shape 1e]
+|http://www.opengis.net/def/geosparql/validator/S1-d-hasGeometry-hasSerialization-sub[Shape 1d]
 | Violation 
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing  http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON]  relation.
 | <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-geojson-literal>>
 
-|http://www.opengis.net/def/geosparql/validator/S1-f-hasGeometry-hasSerialization-sub[Shape 1f]
+|http://www.opengis.net/def/geosparql/validator/S1-e-hasGeometry-hasSerialization-sub[Shape 1e]
 | Violation
 | Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asKML[geo:asKML] relation.
 | <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-kml-literal>>
@@ -173,37 +168,32 @@ In particular, the following attributes of the graph are validated:
 | If both geo:dimension and http://www.opengis.net/ont/geosparql#coordinateDimension[geo:coordinateDimension] properties are asserted, the value of http://www.opengis.net/ont/geosparql#dimension[geo:dimension] should be less than or equal to the value of geo:coordinateDimension
 | <<req_geometry-extension_geometry-properties>>
 
-|http://www.opengis.net/def/geosparql/validator/S21-geometryClass-hasGeometry-hasSerialization[Shape 21]
-| Violation
-| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node (inferred or asserted) should always have at least one incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relation, or a specialization of it
-| <<req_geometry-extension_geometry-class>> <<req_geometry-extension_feature-properties>>
-
-|http://www.opengis.net/def/geosparql/validator/S22-FeatureCollectionClass-minOneMember-feature-sub[Shape 22a]
+|http://www.opengis.net/def/geosparql/validator/S21-FeatureCollectionClass-minOneMember-feature-sub[Shape 21a]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#FeatureCollection[geo:FeatureCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
 | <<req_core_spatial-feature-collection-class>>
 
-|http://www.opengis.net/def/geosparql/validator/S22-FeatureCollectionClass-member-onlyFeature-sub[Shape 22b]
+|http://www.opengis.net/def/geosparql/validator/S21-FeatureCollectionClass-member-onlyFeature-sub[Shape 21b]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#FeatureCollection[geo:FeatureCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] going to geo:Feature instances
 | <<req_core_spatial-feature-collection-class>>
 
-|http://www.opengis.net/def/geosparql/validator/S23-GeometryCollectionClass-minOneMember-geometry-sub[Shape 23a]
+|http://www.opengis.net/def/geosparql/validator/S22-GeometryCollectionClass-minOneMember-geometry-sub[Shape 22a]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#GeometryCollection[geo:GeometryCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
 | <<req_core_spatial-geometry-collection-class>>
 
-|http://www.opengis.net/def/geosparql/validator/S23-GeometryCollectionClass-member-onlyGeometry-sub[Shape 23b]
+|http://www.opengis.net/def/geosparql/validator/S22-GeometryCollectionClass-member-onlyGeometry-sub[Shape 22b]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#GeometryCollection[geo:GeometryCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relations to http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] instances
 | <<req_core_spatial-geometry-collection-class>>
 
-|http://www.opengis.net/def/geosparql/validator/S24-SpatialObjectCollection-minOneMember-spatialObject-sub[Shape 24a]
+|http://www.opengis.net/def/geosparql/validator/S23-SpatialObjectCollection-minOneMember-spatialObject-sub[Shape 23a]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#SpatialObjectCollection[geo:SpatialObjectCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
 | <<req_core_spatial-object-collection-class>>
 
-|http://www.opengis.net/def/geosparql/validator/S24-SpatialObjectCollection-member-onlySpatialObject-sub[Shape 24b]
+|http://www.opengis.net/def/geosparql/validator/S23-SpatialObjectCollection-member-onlySpatialObject-sub[Shape 23b]
 | Violation
 | An instance of http://www.opengis.net/ont/geosparql#SpatialObjectCollection[geo:SpatialObjectCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relations going to http://www.opengis.net/ont/geosparql#SpatialObject[geo:SpatialObject] instances, or subclasses of them
 | <<req_core_spatial-object-collection-class>>
