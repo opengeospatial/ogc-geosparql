@@ -4,4 +4,4 @@ import sys
 
 g = Graph().parse(sys.argv[1], format='turtle')
 
-g.serialize(format='json-ld', indent=2,destination=sys.argv[2])
+g.serialize(format='json-ld', indent=2, destination=sys.argv[2])

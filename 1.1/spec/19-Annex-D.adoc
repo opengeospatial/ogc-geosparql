@@ -1,0 +1,200 @@
+= Annex D - Usage of SHACL shapes (informative)
+
+== D.0 Overview
+
+This Annex provides guidance on the usage of the SHACL shapes included with GeoSPARQL 1.1. 
+
+The Shapes Constraint Language https://www.w3.org/TR/shacl/[SHACL] allows the specification of constraints on RDF data, phrased as a set of conditions modeled in "Shape" graphs.
+
+In GeoSPARQL 1.1, SHACL Shapes area defined in such a way that they validate anticipated graph structures expected by requirements defined in the standard. Users may validate a given RDF document claiming conformance to GeoSPARQL 1.1 by using these Shapes and use the validation results to correct any mistakes.
+
+== D.1 Tools
+
+https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/validator.ttl[SHACL Shapes provided with GeoSPARQL] are used to verify the graph structure of GeoSPARQL graphs. 
+There are several SHACL tools that one can using to validate data using this Shapes information:
+
+* https://github.com/RDFLib/pySHACL[PySHACL]: A Python implementation based on the RDF library https://rdflib.dev/[RDFlib]
+* https://jena.apache.org/documentation/shacl/index.html[Apache Jena SHACL]: a Java implementation, based on https://jena.apache.org[Apache Jena]
+* https://shacl.org/playground/[SHACL Playground]: An online, JavaScript-based implementation that allows validation without local tools
+* Triple Stores: SHACL validation is part of many triple store implementations:
+** https://www.ontotext.com/products/graphdb/[GraphDB]
+** https://rdf4j.org[RDF4J]
+** https://jena.apache.org/documentation/fuseki2/[Apache Jena Fuseki]
+
+Validators produce error messages and warnings based on the SHACL standard's defined reporting structure.
+
+== D.2 Scope of SHACL Shapes provided with GeoSPARQL
+
+The SHACL Shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but except very few cases do not validate the content of literal types.
+In particular, the following attributes of the graph are validated:
+
+* *Proper usage of GeoSPARQL classes*: These Shapes check for a proper usage of instances of GeoSPARQL classes. For example, we check that instances of collection classes should at least have one element and that instances of Geometry classes should at least have one serilization to avoid creating graphs which contain nodes without necessary information.
+* *Geometry property consistency*: Certain checks are applied for properties describing geometries. For example we check dimensionality properties for corresponding values
+* *Rudimentary checks of literal contents*: The SHACL Shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification)
+
+== D.3 Table of SHACL Shapes
+
+[cols="1,1,1,1"]
+|===
+|SHACL Shape ID | Severity | Test purpose | Requirements tested 
+
+|http://www.opengis.net/def/geosparql/validator/S1-a-hasGeometry-hasSerialization-sub[Shape 1a]
+| Violation
+| Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, should have minimum one outgoing relation that is either http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization], or a specialization of it.
+| <<req_geometry-extension_feature_properties>>, <<req_geometry-extension_geometry_properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S1-b-hasGeometry-hasSerialization-sub[Shape 1b]
+| Violation
+| Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] relation.
+| <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-wkt-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S1-c-hasGeometry-hasSerialization-sub[Shape 1c]
+| Violation
+| Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asGML[geo:asGML] relation.
+| <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-gml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S1-d-hasGeometry-hasSerialization-sub[Shape 1d]
+| Violation 
+| Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing  http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON]  relation.
+| <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-geojson-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S1-e-hasGeometry-hasSerialization-sub[Shape 1e]
+| Violation
+| Each node with an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry], or a specialization of it, can have a maximum of one outgoing http://www.opengis.net/ont/geosparql#asKML[geo:asKML] relation.
+| <<req_geometry-extension_geometry_properties>> <<req_geometry-extension_geometry-as-kml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S2-hasSerialization-hasGeometry[Shape 2]
+| Violation
+| Each node with one or more outgoing relations that are either http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization], or a specialization of it, should have at least one incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] relation or a specialization of it.
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S3-hasGeometry-hasGeometry[Shape 3a-c]
+| Violation
+| A node that has an incoming http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] property, or specialization of it, cannot have an outgoing http://www.opengis.net/ont/geosparql#hasGeometry[geo:hasGeometry] property, or a specialization of, it at the same time (a http://www.opengis.net/ont/geosparql#Feature[geo:Feature] cannot be a http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] at the same time)
+| <<req_geometry-extension_feature-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S4-hasSerialization-literal[Shape 4]
+| Violation
+| The target of a http://www.opengis.net/ont/geosparql#hasSerialization[geo:hasSerialization] property, or a specialization of, it should be an RDF literal
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S5-asWKT-wktLiteral[Shape 5]
+| Violation
+| The target of a http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#wktLiteral[geo:wktLiteral]
+| <<req_geometry-extension_wkt-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S6-asGML-gmlLiteral[Shape 6]
+| Violation
+| The target of a http://www.opengis.net/ont/geosparql#asGML[geo:asGML] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#gmlLiteral[geo:gmlLiteral]
+| <<req_geometry-extension_gml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S7-asGeoJSON-geoJSONLiteral[Shape 7]
+| Violation
+| The target of a http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#geoJSONLiteral[geo:geoJSONLiteral]
+| <<req_geometry-extension_geojson-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S8-asKML-kmlLiteral[Shape 8]
+| Violation
+| The target of a http://www.opengis.net/ont/geosparql#asKML[geo:asKML] property should be an RDF literal with datatype http://www.opengis.net/ont/geosparql#kmlLiteral[geo:kmlLiteral]
+| <<req_geometry-extension_kml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S9-many-coordinateDimension-one[Shape 9]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#coordinateDimension[geo:coordinateDimension] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S10-many-dimension-one[Shape 10]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#dimension[geo:dimension] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S11-many-isEmpty-one[Shape 11]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#isEmpty[geo:isEmpty] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S12-many-isSimple-one[Shape 12]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have a maximum one outgoing http://www.opengis.net/ont/geosparql#isSimple[geo:isSimple] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S13-many-spatialDimension-one[Shape 13]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#spatialDimension[geo:spatialDimension] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S14a-many-hasSpatialResolution-one[Shape 14a]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#hasSpatialResolution[geo:hasSpatialResolution] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S14b-many-hasSpatialAccuracy-one[Shape 14b]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[geo:hasSpatialAccuracy] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S14c-many-hasMetricAccuracy-one[Shape 14c]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#hasMetricSpatialAccuracy[geo:hasMetricSpatialAccuracy] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S14d-many-hasMetricResolution-one[Shape 14d]
+| Violation
+| A http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[geo:hasMetricSpatialResolution] property
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S15-wkt-content[Shape 15]
+| Violation
+| The content of an RDF literal with an incoming http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)
+| <<req_geometry-extension_wkt-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S16-gml-content[Shape 16]
+| Violation
+| The content of an RDF literal with an incoming http://www.opengis.net/ont/geosparql#asWKT[geo:asWKT] relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)
+| <<req_geometry-extension_gml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S17-geojson-content[Shape 17]
+| Violation
+| The content of an RDF literal with an incoming http://www.opengis.net/ont/geosparql#asGeoJSON[geo:asGeoJSON] relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification
+| <<req_geometry-extension_geojson-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S18-kml-content[Shape 18]
+| Violation
+| The content of an RDF literal with an incoming http://www.opengis.net/ont/geosparql#asKML[geo:asKML] relation must conform to a well-formed KML geometry XML string, as defined by its official specification
+| <<req_geometry-extension_kml-literal>>
+
+|http://www.opengis.net/def/geosparql/validator/S20-dimension-coordinateDimension[Shape 20]
+| Violation
+| If both geo:dimension and http://www.opengis.net/ont/geosparql#coordinateDimension[geo:coordinateDimension] properties are asserted, the value of http://www.opengis.net/ont/geosparql#dimension[geo:dimension] should be less than or equal to the value of geo:coordinateDimension
+| <<req_geometry-extension_geometry-properties>>
+
+|http://www.opengis.net/def/geosparql/validator/S21-FeatureCollectionClass-minOneMember-feature-sub[Shape 21a]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#FeatureCollection[geo:FeatureCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
+| <<req_core_spatial-feature-collection-class>>
+
+|http://www.opengis.net/def/geosparql/validator/S21-FeatureCollectionClass-member-onlyFeature-sub[Shape 21b]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#FeatureCollection[geo:FeatureCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] going to geo:Feature instances
+| <<req_core_spatial-feature-collection-class>>
+
+|http://www.opengis.net/def/geosparql/validator/S22-GeometryCollectionClass-minOneMember-geometry-sub[Shape 22a]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#GeometryCollection[geo:GeometryCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
+| <<req_core_spatial-geometry-collection-class>>
+
+|http://www.opengis.net/def/geosparql/validator/S22-GeometryCollectionClass-member-onlyGeometry-sub[Shape 22b]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#GeometryCollection[geo:GeometryCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relations to http://www.opengis.net/ont/geosparql#Geometry[geo:Geometry] instances
+| <<req_core_spatial-geometry-collection-class>>
+
+|http://www.opengis.net/def/geosparql/validator/S23-SpatialObjectCollection-minOneMember-spatialObject-sub[Shape 23a]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#SpatialObjectCollection[geo:SpatialObjectCollection] should have at least one outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relation
+| <<req_core_spatial-object-collection-class>>
+
+|http://www.opengis.net/def/geosparql/validator/S23-SpatialObjectCollection-member-onlySpatialObject-sub[Shape 23b]
+| Violation
+| An instance of http://www.opengis.net/ont/geosparql#SpatialObjectCollection[geo:SpatialObjectCollection] should only have outgoing http://www.w3.org/2000/01/rdf-schema#member[rdfs:member] relations going to http://www.opengis.net/ont/geosparql#SpatialObject[geo:SpatialObject] instances, or subclasses of them
+| <<req_core_spatial-object-collection-class>>
+|===
