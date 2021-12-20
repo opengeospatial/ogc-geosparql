@@ -1,0 +1,383 @@
+# baseURI: http://www.opengis.net/ont/geosparql
+
+@base <http://www.opengis.net/ont/geosparql> .
+
+@prefix : <http://www.opengis.net/ont/geosparql#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdo: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spec11: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> . # TODO: use PID IRI
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://www.opengis.net/ont/geosparql> 
+	dcterms:description "Een vocabulaire in RDF/OWL voor ruimtelijke gegevens."@nl ;
+.
+
+
+# #################################################################
+# #
+# #    Datatypes
+# #
+# #################################################################
+
+:gmlLiteral
+	skos:definition """Een GML-serialisatie van een Geometrie-instantie"""@nl ;
+	skos:prefLabel "GML Literal"@nl ;
+	skos:definition """A GML serialization of a Geometry object."""@en ;
+	skos:prefLabel "GML Literal"@en ;
+.
+
+:wktLiteral
+	skos:definition """A Well-known Text serialization of a Geometry object."""@en ;
+	skos:prefLabel "Well-known Text Literal"@en ;
+.
+
+:geoJSONLiteral
+	skos:definition """A GeoJSON serialization of a Geometry object."""@en ;
+	skos:prefLabel "GeoJSON Literal"@en ;	
+.
+
+:kmlLiteral
+	skos:definition """A KML serialization of a Geometry object."""@en ;
+	skos:prefLabel "KML Literal"@en ;
+.
+
+:dggsLiteral
+	skos:definition """A textual serialization of a Discrete Global Grid (DGGS) Geometry object."""@en ;
+	skos:prefLabel "DGGS Literal"@en ;
+	skos:scopeNote "This datatype is not expected to be used directly but to serve as an abstract datatype for a series of specific DGGS literal types, for specific DGGS implementations" ;
+.
+
+# #################################################################
+# #
+# #    Object Properties
+# #
+# #################################################################
+
+:defaultGeometry
+	skos:definition """The default Geometry to be used in spatial calculations. It is usually the most detailed Geometry."""@en ;
+	skos:note """Duplicate properties defaultGeometry and hasDefaultGeometry exist because of an inconsistency between ontology and documentation in GeoSPARQL 1.0. Only hasDefaultGeometry is described in the documention.""" ;
+	skos:prefLabel "default geometry"@en ;
+.
+
+:hasDefaultGeometry 
+	skos:definition """The default Geometry to be used in spatial calculations. It is usually the most detailed Geometry."""@en ;;
+	skos:note """Duplicate properties defaultGeometry and hasDefaultGeometry exist because of an inconsistency between ontology and documentation in GeoSPARQL 1.0. Only hasDefaultGeometry is described in the documention.""" ;
+	skos:prefLabel "has default geometry"@en ;
+.
+
+:ehContains 
+	skos:definition """States that the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: T*TFF*FF*"""@en ;
+	skos:prefLabel "contains"@en ;
+.
+
+:ehCoveredBy	
+	skos:definition """States that the subject SpatialObject is spatially covered by the object SpatialObject. DE-9IM: TFF*TFT**"""@en ;
+	skos:prefLabel "covered by"@en ;
+.
+
+:ehCovers
+	skos:definition """States that the subject SpatialObject spatially covers the object SpatialObject. DE-9IM: T*TFT*FF*"""@en ;
+	skos:prefLabel "covers"@en ;
+.
+
+:ehDisjoint
+	skos:definition """States that the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FF*FF****"""@en ;
+	skos:prefLabel "disjoint"@en ;
+.
+
+:ehEquals
+	skos:definition """States that the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
+	skos:prefLabel "equals"@en ;
+.
+
+:ehInside
+	skos:definition """States that the subject SpatialObject is spatially inside the object SpatialObject. DE-9IM: TFF*FFT**"""@en ;
+	skos:prefLabel "inside"@en ;
+.
+
+:ehMeet	
+	skos:definition """States that the subject SpatialObject spatially meets the object SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
+	skos:prefLabel "meet"@en ;
+.
+
+:ehOverlap
+	skos:definition """States that the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: T*T***T**"""@en ;
+	skos:prefLabel "overlap"@en ;
+.
+
+:hasGeometry
+	skos:definition """A spatial representation for a given Feature."""@en ;
+	skos:prefLabel "has geometry"@en ;
+.
+
+:hasBoundingBox
+	skos:definition """The minimum or smallest bounding or enclosing box of a given Feature."""@en ;
+	skos:prefLabel "has bounding box"@en ;
+	skos:scopeNote "The target is a Geometry that defines a rectilinear region whose edges are aligned with the axes of the coordinate reference system, which exactly contains the Geometry or Feature e.g. sf:Envelope."@en ;
+.
+
+:hasCentroid
+	skos:definition """The arithmetic mean position of all the Geometry points of a given Feature."""@en ;
+	skos:prefLabel "has centroid"@en ;
+	skos:scopeNote "The target Geometry shall describe a point, e.g. sf:Point."@en ;
+.
+
+:hasLength
+	skos:definition """The length of a Spatial Object."""@en ;
+	skos:prefLabel "has length"@en ;
+.
+
+:hasPerimeterLength
+	skos:definition """The length of the perimeter of a Spatial Object."""@en ;
+	skos:prefLabel "has perimeter length"@en ;
+.
+
+:hasArea
+	skos:definition """The area of a Spatial Object."""@en ;
+	skos:prefLabel "has area"@en ;
+.
+
+:hasVolume
+	skos:definition """The volume of a three-dimensional Spatial Object."""@en ;
+	skos:prefLabel "has volume"@en ;
+.	
+
+:hasSpatialResolution
+	skos:definition """The spatial resolution of a Geometry."""@en ;
+	skos:note """Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinguishable distance between spatially adjacent coordinates."""@en;
+	skos:prefLabel "has spatial resolution"@en ;
+.
+
+:hasSpatialAccuracy
+	skos:definition """The positional accuracy of the coordinates of a Geometry."""@en ;
+	skos:note """Spatial accuracy is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension)."""@en;
+	skos:prefLabel "has spatial accuracy"@en ;
+.
+
+:rcc8dc
+	skos:definition """States that the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FFTFFTTTT"""@en ;
+	skos:prefLabel "disconnected"@en ;
+.
+
+:rcc8ec
+	skos:definition """States that the subject SpatialObject spatially meets the object SpatialObject. DE-9IM: FFTFTTTTT"""@en ;
+	skos:prefLabel "externally connected"@en ;
+.
+
+:rcc8eq
+	skos:definition """States that the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
+	skos:prefLabel "equals"@en ;
+.
+
+:rcc8ntpp
+	skos:definition """States that the subject SpatialObject is spatially inside the object SpatialObject. DE-9IM: TFFTFFTTT"""@en ;
+	skos:prefLabel "non-tangential proper part"@en ;
+.
+
+:rcc8ntppi
+	skos:definition """States that the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: TTTFFTFFT"""@en ;
+	skos:prefLabel "non-tangential proper part inverse"@en ;
+.
+
+:rcc8po
+	skos:definition """States that the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: TTTTTTTTT"""@en ;
+	skos:prefLabel "partially overlapping"@en ;
+.
+
+:rcc8tpp
+	skos:definition """States that the subject SpatialObject is spatially covered by the object SpatialObject. DE-9IM: TFFTTFTTT"""@en ;
+	skos:prefLabel "tangential proper part"@en ;
+.
+
+:rcc8tppi
+	skos:definition """States that the subject SpatialObject spatially covers the object SpatialObject. DE-9IM: TTTFTTFFT"""@en ;
+	skos:prefLabel "tangential proper part inverse"@en ;
+.
+
+:sfContains
+	skos:definition """States that the subject SpatialObject spatially contains the object SpatialObject. DE-9IM: T*****FF*"""@en ;
+	skos:prefLabel "contains"@en ;
+.
+
+:sfCrosses
+	skos:definition """States that the subject SpatialObject spatially crosses the object SpatialObject. DE-9IM: T*T******"""@en ;
+	skos:prefLabel "crosses"@en ;
+.
+
+:sfDisjoint
+	skos:definition """States that the subject SpatialObject is spatially disjoint from the object SpatialObject. DE-9IM: FF*FF****"""@en ;
+	skos:prefLabel "disjoint"@en ;
+.
+
+:sfEquals
+	skos:definition """States that the subject SpatialObject spatially equals the object SpatialObject. DE-9IM: TFFFTFFFT"""@en ;
+	skos:prefLabel "equals"@en ;
+.
+
+:sfIntersects
+	skos:definition """States that the subject SpatialObject is not spatially disjoint from the object SpatialObject. DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T****"""@en ;
+	skos:prefLabel "intersects"@en ;
+.
+
+:sfOverlaps
+	skos:definition """States that the subject SpatialObject spatially overlaps the object SpatialObject. DE-9IM: T*T***T**"""@en ;
+	skos:prefLabel "overlaps"@en ;
+.
+
+:sfTouches
+	skos:definition """States that the subject SpatialObject spatially touches the object SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
+	skos:prefLabel "touches"@en ;
+.
+
+:sfWithin
+	skos:definition """States that the subject SpatialObject is spatially within the object SpatialObject. DE-9IM: T*F**F***"""@en ;
+	skos:prefLabel "within"@en ;
+.
+
+:hasSize
+	skos:definition """Subproperties of this property are used to indicate the size of a Spatial Object as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence."""@en ;
+	skos:note """The recommended way to specify size is by using a subproperty of hasMetricSize. Subproperties of hasSize can be used if more complex expressions are necessary, for example if the unit of length can not be converted to meter, or if additional data are needed to describe the measurement or estimate."""@en ;
+	skos:prefLabel "has size"@en ;
+.
+
+# #################################################################
+# #
+# #    Data properties
+# #
+# #################################################################
+
+:asGML
+	skos:definition """The GML serialization of a Geometry"""@en ;
+	skos:prefLabel "as GML"@en ;
+.
+
+:asWKT
+	skos:definition """The WKT serialization of a Geometry"""@en ;
+	skos:prefLabel "as WKT"@en ;
+.
+
+:asGeoJSON
+	skos:definition """The GeoJSON serialization of a Geometry"""@en ;
+	skos:prefLabel "as GeoJSON"@en ;
+.	
+
+:asKML
+	skos:definition """The KML serialization of a Geometry"""@en ;
+	skos:prefLabel "as KML"@en ;
+.	
+
+:asDGGS
+	skos:definition """The Discrete Global Grid System (DGGS) serialization of a Geometry"""@en ;	
+	skos:prefLabel "as DGGS"@en ;
+.	
+
+:coordinateDimension
+	skos:definition """The number of measurements or axes needed to describe the position of this Geometry in a coordinate system."""@en ;
+	skos:prefLabel "coordinate dimension"@en ;
+.
+
+:dimension
+	skos:definition """The topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects."""@en ;
+	skos:prefLabel "dimension"@en ;	
+.
+
+:hasSerialization
+	skos:definition """Connects a Geometry object with its text-based serialization."""@en ;
+	skos:prefLabel "has serialization"@en ;	
+.
+
+:isEmpty
+	skos:definition """(true) if this geometric object is the empty Geometry. If true, then this geometric object represents the empty point set for the coordinate space."""@en ;
+	skos:prefLabel "is empty"@en ;	
+.
+
+:isSimple
+	skos:definition """(true) if this geometric object has no anomalous geometric points, such as self intersection or self tangency."""@en ;
+	skos:prefLabel "is simple"@en ;	
+.
+
+:spatialDimension
+	skos:definition """The number of measurements or axes needed to describe the spatial position of this Geometry in a coordinate system."""@en ;
+	skos:prefLabel "spatial dimension"@en ;	
+.
+
+:hasMetricSpatialResolution
+	skos:definition """The spatial resolution of a Geometry in meters."""@en ;
+	skos:note """Spatial resolution specifies the level of detail of a Geometry. It the smallest dinstinguishable distance between spatially adjacent coordinates."""@en;
+	skos:prefLabel "has spatial resolution in meters"@en ;
+.
+
+:hasMetricSpatialAccuracy
+	skos:definition """The positional accuracy of the coordinates of a Geometry in meters."""@en ;
+	skos:note """Spatial accuracy is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfullness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension)."""@en;
+	skos:prefLabel "has spatial accuracy in meters"@en ;
+.
+
+:hasMetricLength
+	skos:definition """The length of a Spatial Object in meters."""@en ;
+	skos:prefLabel "has length in meters"@en ;
+.
+
+:hasMetricPerimeterLength
+	skos:definition """The length of the perimeter of a Spatial Object in meters."""@en ;
+	skos:prefLabel "has perimeter length in meters"@en ;		
+.
+
+:hasMetricArea
+	skos:definition """The area of a Spatial Object in square meters."""@en ;
+	skos:prefLabel "has area in square meters"@en ;
+.
+
+:hasMetricVolume
+	skos:definition """The volume of a Spatial Object in cubic meters."""@en ;
+	skos:prefLabel "has volume in cubic meters"@en ;
+.
+
+:hasMetricSize
+	skos:definition """Subproperties of this property are used to indicate the size of a Spatial Object, as a measurement or estimate of one or more dimensions of the Spatial Object's spatial presence. Units are always metric (meter, square meter or cubic meter)."""@en ;
+	skos:prefLabel "has metric size"@en ;
+.
+
+# #################################################################
+# #
+# #    Classes
+# #
+# #################################################################
+
+:Feature
+	skos:definition """A discrete spatial phenomenon in a universe of discourse."""@en ;
+	skos:note """A Feature represents a uniquely identifiable phenomenon, for example a river or an apple. While such phenomena (and therefore the Features used to represent them) are bounded, their boundaries may be crisp (e.g., the declared boundaries of a state), vague (e.g., the delineation of a valley versus its neighboring mountains), and change with time (e.g., a storm front). While discrete in nature, Features may be created from continuous observations, such as an isochrone that determines the region that can be reached by ambulance within 5 minutes."""@en ;
+	skos:prefLabel "Feature"@en ;
+.
+
+:FeatureCollection
+	skos:prefLabel "Feature Collection"@en ;
+	skos:definition "The class Feature Collection represents any collection of individual Features."@en ;
+.
+
+:Geometry
+	skos:definition """A coherent set of direct positions in Euclidian space. A direct position holds the coordinates for a position within a Coordinate Reference System (CRS)."""@en ;
+	skos:note """Geometry can be used as a representation of the shape, extent or location of a Feature, or can exist as a self-contained entity."""@en ;
+	skos:prefLabel "Geometry"@en ;
+.
+
+:GeometryCollection
+	skos:definition "The class Geometry Collection represents any collection of individual Geometries."@en ;
+	skos:prefLabel "Geometry Collection"@en ;
+.
+
+:SpatialObject
+	skos:definition """Anything spatial (having or being a shape, position or an extent)."""@en ;
+	skos:note """Subclasses are expected to be used for instance data."""@en ;
+	skos:prefLabel "Spatial Object"@en ;
+.
+
+:SpatialObjectCollection
+	skos:prefLabel "Spatial Object Collection"@en ;
+	skos:definition """The class Spatial Object Collection represents any collection of individual Spatial Objects. It is superclass of Feature Collection and Geometry Collection."""@en ;
+.
