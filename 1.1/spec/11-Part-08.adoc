@@ -77,6 +77,17 @@ geo:GeometryCollection
 
 The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Geometry, Geometry>> are allowed to be members of it and these are to be indicated with the `rdfs:member` property.
 
+[NOTE]
+====
+There is no RDF/ontology relationship between this `geo:GeometryCollection` class and the Simple Features Vocabulary's `sf:GeometryCollection` class since the former is a collection of `geo:Geometry` objects and the latter is to be used for compound geometry literals.
+
+`sf:GeometryCollection` instances can act as input or output of GeoSPARQL functions whereas `geo:GeometryCollection` instances are more likely to be used for grouping `geo:Geometry` objects for other purposes.
+
+Many geometry literal formats also have the ability to represent multiple geometries. GML & KML use a _MultiGeometry_ type and WKT & GeoJSON use a _GeometryCollection_ type. While the names of some of these objects is the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization. 
+
+As per the expected use of `sf:GeometryCollection` instances mentioned above: the uses of multi-geometry literals and `geo:GeometryCollection` instances is expected to be different too.
+====
+
 [#req_core_geometry-collection-class]
 |===
 | *Req 13* Implementations shall allow the RDFS class <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> to be used in SPARQL graph patterns.
