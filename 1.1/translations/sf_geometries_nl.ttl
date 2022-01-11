@@ -52,22 +52,53 @@ A Curve is defined as topologically closed, that is, it contains its endpoints f
 .
 
 sf:Envelope
+  rdfs:comment """Een figuut dat wordt gevormd door de hoekpunten van de rechthoekige omhullende van een Geometrie.
+De twee hoekpunten moeten in hetzelfde aantal dimensies worden uitgedrukt (meestal twee of drie)."""@nl ;
+  rdfs:label "Begrenzingsvak"@nl ;
   rdfs:comment """Shape defined by the corner points of the bounding box of a geometry.
 The corner points may be in any dimension (usually 2D or 3D) but the two corners must have the same dimension. """ ;
   rdfs:label "Envelope or Bounding Box"@en ;
 .
 
 sf:maximum
+  rdfs:comment "Punt met de maximale coördinaten van een Begrenzingsvak."@nl ;
+  rdfs:label "maximum"@nl ;
   rdfs:comment "Point containing the maximum values of the coordinates of an envelope or bounding box" ;
   rdfs:label "maximum" ;
 .
 
 sf:minimum
+  rdfs:comment "Punt met de minimale coördinaten van een Begrenzingsvak."@nl ;
+  rdfs:label "minimum"@nl ;
   rdfs:comment "Point containing the minimum values of the coordinates of an envelope or bounding box" ;
   rdfs:label "minimum" ;
 .
 
 sf:Geometry
+    rdfs:label "Geometrie"@nl ;
+    rdfs:comment """Geometrie is de basisklasse van de hiërarchie.
+
+De instanieerbare subklassen van Geometrie zijn beperkt tot geometrische objecten van 0, 1 of 2 dimensies en bestaan in een coördinaatruimte
+van 2,3, of 4 dimensies (R2, R3 of R4). Geometrie in R2 heeft punten met coördinaatwaarden voor x en y. 
+Geometrie in R3 heeft punten met coördinaatwaarden voor x, y en z of x, y en m. Geometrie in R4 heeft punten met coördinaatwaarden voor x, y, z en m.
+
+Interpratie van de coördinaten is afhankelijk van het met het punt geassocieerde coördinaatreferentiesysteem. Alle punten van een Geometrie moeten worden uitgedrukt
+in hetzelfde coördinaatreferentiesysteem. Elk coördinaat wordt ondubbelzinnig gekoppeld aan een coördinaatreferentiesysteem, direct of via de omvattende Geometrie.
+De z-coördinaat duidt meestal, maar niet noodzakelijkerwijs, hoogte aan. De m-coördinaat duidt een meting aan.
+
+Alle instanties van (subklassen van) Geometrie moeten topologisch gesloren zijn, dat wil zeggen dat begrenzing onderdeel van de Geometrie is, in de vorm van puntenverzamelingen.
+
+This does not affect their representation, 
+and open version of the same classes may be used in other circumstances, such as topological representations."""@en ;
+ .
+
+sf:GeometryCollection
+    rdfs:label "Geometry Collection"@en ;
+    rdfs:comment """A GeometryCollection is a geometric object that is a collection of some number of geometric objects.
+
+All the elements in a GeometryCollection shall be in the same Spatial Reference System. This is also the Spatial Reference System for the GeometryCollection.
+GeometryCollection places no other constraints on its elements. Subclasses of GeometryCollection may restrict membership based on dimension and may also place other constraints on the degree of spatial overlap between elements."""@en ;
+
     rdfs:label "Geometry"@en ;
     rdfs:comment """Geometry is the root class of the hierarchy.
 
