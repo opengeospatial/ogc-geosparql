@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoSPARQL 1.1 Requirements and Conformance Class Register</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1Sew
+EAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://www.opengis.net/def/geosparql/reqs",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification</p>"
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@id": "https://www.ogc.org/license"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "GeoSPARQL 1.1 Requirements and Conformance Class Register"
+      }
+    ],
+    "https://schema.org/rights": [
+      {
+        "@value": "&copy; 2021 Open Geospatial Consortium"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.13.2</span>
+  </div>
+  <h1>GeoSPARQL 1.1 Requirements and Conformance Class Register</h1>
+<h3><em>A taxonomy</em></h3>
+  <section id="conceptscheme">
+      <h2 style="display:none;">Concept Scheme</h2>
+      <dl>
+          <dt>URI</dt>
+          <dd><code>http://www.opengis.net/def/geosparql/reqs</code></dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/created">Created</a></dt>
+          <dd>2021-06-28</dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+          <dd>2021-07-13</dd>
+          <dt>License &amp; Rights</dt>
+          <dd>
+              <a href="https://www.ogc.org/license">https://www.ogc.org/license</a><br />
+              &copy; 2021 Open Geospatial Consortium
+          </dd>
+          <dt>Ontology RDF</dt>
+          <dd><a href="reqs.ttl">RDF (turtle)</a></dd>
+      </dl>
+      <h2>Description</h2>
+      <div id="description">
+          <p>A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification</p>
+      </div>
+  </section>
+  <section id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#namespaces">Namespaces</a></li>
+          <li><a href="#legend">Legend</a></li>
+      </ol>
+  </section>
+  <section id="overview">
+      <h2>Overview</h2>
+      <div class="figure">
+          <div style="width:500px; height:500px; background-color: black;">&nbsp;</div>
+          <div class="caption"><strong>Figure 1:</strong> Taxonomy overview</div>
+      </div>
+  </section>
+  <section id="collections">
+    <h2>Collections <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#GeoSPARQL1.0ConformanceClass:Core">GeoSPARQL 1.0 Conformance Class: Core</a></li>
+        <li><a href="#GeoSPARQL1.0ConformanceClass:GeometryExtension">GeoSPARQL 1.0 Conformance Class: Geometry Extension</a></li>
+        <li><a href="#GeoSPARQL1.0ConformanceClass:GeometryTopologyExtension">GeoSPARQL 1.0 Conformance Class: Geometry Topology Extension</a></li>
+        <li><a href="#GeoSPARQL1.0ConformanceClass:QueryRewriteExtension">GeoSPARQL 1.0 Conformance Class: Query Rewrite Extension</a></li>
+        <li><a href="#GeoSPARQL1.0ConformanceClass:RDFSEntailmentExtension">GeoSPARQL 1.0 Conformance Class: RDFS Entailment Extension</a></li>
+        <li><a href="#GeoSPARQL1.0ConformanceClass:TopologyVocabularyExtension">GeoSPARQL 1.0 Conformance Class: Topology Vocabulary Extension</a></li>
+        <li><a href="#GeoSPARQL1.0Requirements">None</a></li>
+        <li><a href="#GeoSPARQL1.1Requirements">None</a></li>
+        <li><a href="#GeoSPARQL1.1ConformanceClass:Core">GeoSPARQL 1.1 Conformance Class: Core</a></li>
+        <li><a href="#GeoSPARQL1.1ConformanceClass:GeometryExtension">GeoSPARQL 1.1 Conformance Class: Geometry Extension</a></li>
+        <li><a href="#GeoSPARQL1.1ConformanceClass:GeometryTopologyExtension">GeoSPARQL 1.1 Conformance Class: Geometry Topology Extension</a></li>
+        <li><a href="#GeoSPARQL1.1ConformanceClass:RDFSEntailmentExtension">GeoSPARQL 1.1 Conformance Class: RDFS Entailment Extension</a></li>
+        <li><a href="#GeoSPARQL1.1ConformanceClass:TopologyVocabularyExtension">GeoSPARQL 1.1 Conformance Class: Topology Vocabulary Extension</a></li>
+    </ul>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:Core">
+        <h3>GeoSPARQL 1.0 Conformance Class: Core<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/core</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/spatial-object-class">conf10core:spatial-object-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/feature-class">conf10core:feature-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/core/sparql-protocol">conf10core:sparql-protocol</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:GeometryExtension">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-properties">conf10gx:geometry-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-profile">conf10gx:gml-profile</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal">conf10gx:wkt-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/feature-properties">conf10gx:feature-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/query-functions">conf10gx:query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-wkt-literal">conf10gx:geometry-as-wkt-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-axis-order">conf10gx:wkt-axis-order</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-default-srs">conf10gx:wkt-literal-default-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal-empty">conf10gx:gml-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-as-gml-literal">conf10gx:geometry-as-gml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/wkt-literal-empty">conf10gx:wkt-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/srid-function">conf10gx:srid-function</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/gml-literal">conf10gx:gml-literal</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:GeometryTopologyExtension">
+        <h3>GeoSPARQL 1.0 Conformance Class: Geometry Topology Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/relate-query-function">conf10gtx:relate-query-function</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/rcc8-query-functions">conf10gtx:rcc8-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/eh-query-functions">conf10gtx:eh-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/sf-query-functions">conf10gtx:sf-query-functions</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:QueryRewriteExtension">
+        <h3>GeoSPARQL 1.0 Conformance Class: Query Rewrite Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension:</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/sf-query-rewrite">conf10qre:sf-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/rcc8-query-rewrite">conf10qre:rcc8-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/eh-query-rewrite">conf10qre:eh-query-rewrite</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:RDFSEntailmentExtension">
+        <h3>GeoSPARQL 1.0 Conformance Class: RDFS Entailment Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/rdfs-entailment-extension</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/sf-query-rewrite">conf10qre:sf-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/rcc8-query-rewrite">conf10qre:rcc8-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/eh-query-rewrite">conf10qre:eh-query-rewrite</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0ConformanceClass:TopologyVocabularyExtension">
+        <h3>GeoSPARQL 1.0 Conformance Class: Topology Vocabulary Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/rcc8-query-functions">conf10gtx:rcc8-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/relate-query-function">conf10gtx:relate-query-function</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/sf-query-functions">conf10gtx:sf-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/eh-query-functions">conf10gtx:eh-query-functions</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.0Requirements">
+        <h3>GeoSPARQL 1.0 Requirements<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geosparql10reqs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Requirements defined within the GeoSPARQL 1.0 specification</p></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment-extension/wkt-geometry-types">reqs10ree:wkt-geometry-types</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations">reqs10tve:sf-spatial-relations</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/core/feature-class">reqs10core:feature-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function">reqs10gtx:relate-query-function</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal">reqs10gx:gml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/query-functions">reqs10gx:query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-empty">reqs10gx:wkt-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-profile">reqs10gx:gml-profile</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/srid-function">reqs10gx:srid-function</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal-empty">reqs10gx:gml-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment-extension/gml-geometry-types">reqs10ree:gml-geometry-types</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties">reqs10gx:geometry-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/feature-properties">reqs10gx:feature-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal">reqs10gx:wkt-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/eh-spatial-relations">reqs10tve:eh-spatial-relations</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment-extension/bgp-rdfs-ent">reqs10ree:bgp-rdfs-ent</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/rcc8-query-rewrite">reqs10qre:rcc8-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-class">reqs10gx:geometry-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/eh-query-rewrite">reqs10qre:eh-query-rewrite</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions">reqs10gtx:rcc8-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/core/sparql-protocol">reqs10core:sparql-protocol</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions">reqs10gtx:eh-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gml-literal">reqs10gx:geometry-as-gml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations">reqs10tve:rcc8-spatial-relations</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs">reqs10gx:wkt-literal-default-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkt-literal">reqs10gx:geometry-as-wkt-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/core/spatial-object-class">reqs10core:spatial-object-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions">reqs10gtx:sf-query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order">reqs10gx:wkt-axis-order</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/sf-query-rewrite">reqs10qre:sf-query-rewrite</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1Requirements">
+        <h3>GeoSPARQL 1.1 Requirements<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.0/req/geosparql11reqs</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Requirements defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties">reqs11gx:geometry-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-dggs">reqs11gx:query-functions-dggs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal">reqs11gx:geojson-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-literal">reqs11gx:geometry-as-dggs-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions">reqs11gx:query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/core/sparql-protocol">reqs11core:sparql-protocol</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs">reqs11gx:kml-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/feature-properties">reqs11gx:feature-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf">reqs11gx:query-functions-non-sf</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/core/feature-collection-class">reqs11core:feature-collection-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty">reqs11gx:dggs-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-srs">reqs11gx:dggs-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal">reqs11gx:dggs-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal">reqs11gx:kml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs">reqs11gx:geojson-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-literal">reqs11gx:geometry-as-kml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class">reqs11core:geometry-collection-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf-dggs">reqs11gx:query-functions-non-sf-dggs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/reqs11gx:sa-functions">reqs11gx:reqs11gx:sa-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-literal">reqs11gx:geometry-as-geojson-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-empty">reqs11gx:kml-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/core/spatial-object-collection-class">reqs11core:spatial-object-collection-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-empty">reqs11gx:geojson-literal-empty</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1ConformanceClass:Core">
+        <h3>GeoSPARQL 1.1 Conformance Class: Core<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/core</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/feature-collection-class">conf11core:feature-collection-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-properties">conf11core:spatial-object-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-collection-class">conf11core:spatial-object-collection-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/sparql-protocol">conf11core:sparql-protocol</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/core/spatial-object-class">conf11core:spatial-object-class</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1ConformanceClass:GeometryExtension">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension</code></td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal">conf11gx:geojson-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-dggs-literal">conf11gx:geometry-as-dggs-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/sa-functions">conf11gx:sa-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/feature-properties">conf11gx:feature-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-geojson-literal">conf11gx:geometry-as-geojson-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal">conf11gx:dggs-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-as-kml-literal">conf11gx:geometry-as-kml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-srs">conf11gx:geojson-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal">conf11gx:kml-literal</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/geometry-class">conf10gx:geometry-class</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geometry-properties">conf11gx:geometry-properties</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-empty">conf11gx:kml-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/query-functions-non-sf">conf11gx:query-functions-non-sf</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal-empty">conf11gx:dggs-literal-empty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/dggs-literal-srs">conf11gx:dggs-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/kml-literal-srs">conf11gx:kml-literal-srs</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/query-functions">conf11gx:query-functions</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/geojson-literal-empty">conf11gx:geojson-literal-empty</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1ConformanceClass:GeometryTopologyExtension">
+        <h3>GeoSPARQL 1.1 Conformance Class: Geometry Topology Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension</code></td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1ConformanceClass:RDFSEntailmentExtension">
+        <h3>GeoSPARQL 1.1 Conformance Class: RDFS Entailment Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/rdfs-entailment-extension</code></td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQL1.1ConformanceClass:TopologyVocabularyExtension">
+        <h3>GeoSPARQL 1.1 Conformance Class: Topology Vocabulary Extension<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension</code></td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>default (:)</dt>
+        <dd><code>http://www.opengis.net/def/geosparql/reqs</code></dd>
+        <dt>brick</dt>
+        <dd><code>https://brickschema.org/schema/Brick#</code></dd>
+        <dt>conf10core</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/core/</code></dd>
+        <dt>conf10gtx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/</code></dd>
+        <dt>conf10gx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/</code></dd>
+        <dt>conf10qre</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/</code></dd>
+        <dt>conf10ree</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/rdfs-entailment-extension/</code></dd>
+        <dt>conf10tve</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/</code></dd>
+        <dt>conf11core</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/core/</code></dd>
+        <dt>conf11gtx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/</code></dd>
+        <dt>conf11gx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/</code></dd>
+        <dt>conf11qre</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/</code></dd>
+        <dt>conf11ree</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/rdfs-entailment-extension/</code></dd>
+        <dt>conf11tve</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/</code></dd>
+        <dt>confs10</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/conf/</code></dd>
+        <dt>confs11</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/conf/</code></dd>
+        <dt>csvw</dt>
+        <dd><code>http://www.w3.org/ns/csvw#</code></dd>
+        <dt>dc</dt>
+        <dd><code>http://purl.org/dc/elements/1.1/</code></dd>
+        <dt>dcam</dt>
+        <dd><code>http://purl.org/dc/dcam/</code></dd>
+        <dt>dcat</dt>
+        <dd><code>http://www.w3.org/ns/dcat#</code></dd>
+        <dt>dcmitype</dt>
+        <dd><code>http://purl.org/dc/dcmitype/</code></dd>
+        <dt>dcterms</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>doap</dt>
+        <dd><code>http://usefulinc.com/ns/doap#</code></dd>
+        <dt>foaf</dt>
+        <dd><code>http://xmlns.com/foaf/0.1/</code></dd>
+        <dt>geo</dt>
+        <dd><code>http://www.opengis.net/ont/geosparql#</code></dd>
+        <dt>odrl</dt>
+        <dd><code>http://www.w3.org/ns/odrl/2/</code></dd>
+        <dt>org</dt>
+        <dd><code>http://www.w3.org/ns/org#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>prof</dt>
+        <dd><code>http://www.w3.org/ns/dx/prof/</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>prov1</dt>
+        <dd><code>http://www.w3.org/ns/prov-o/</code></dd>
+        <dt>qb</dt>
+        <dd><code>http://purl.org/linked-data/cube#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>reqs10</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/</code></dd>
+        <dt>reqs10core</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/core/</code></dd>
+        <dt>reqs10gtx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/</code></dd>
+        <dt>reqs10gx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/</code></dd>
+        <dt>reqs10qre</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/</code></dd>
+        <dt>reqs10ree</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment-extension/</code></dd>
+        <dt>reqs10tve</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/</code></dd>
+        <dt>reqs11core</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/core/</code></dd>
+        <dt>reqs11gtx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/</code></dd>
+        <dt>reqs11gx</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/</code></dd>
+        <dt>reqs11qre</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/</code></dd>
+        <dt>reqs11ree</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/rdfs-entailment-extension/</code></dd>
+        <dt>reqs11tve</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>sh</dt>
+        <dd><code>http://www.w3.org/ns/shacl#</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>sosa</dt>
+        <dd><code>http://www.w3.org/ns/sosa/</code></dd>
+        <dt>spec</dt>
+        <dd><code>http://www.opengis.net/def/spec-element/</code></dd>
+        <dt>ssn</dt>
+        <dd><code>http://www.w3.org/ns/ssn/</code></dd>
+        <dt>time</dt>
+        <dd><code>http://www.w3.org/2006/time#</code></dd>
+        <dt>vann</dt>
+        <dd><code>http://purl.org/vocab/vann/</code></dd>
+        <dt>void</dt>
+        <dd><code>http://rdfs.org/ns/void#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+
+  <section id="legend">
+    <h2>Legend</h2>
+    <table class="entity">
+      <tr><td><sup class="sup-col" title="Collections">col</sup></td><td>Collections</td></tr>
+      <tr><td><sup class="sup-con" title="Concepts">con</sup></td><td>Concepts</td></tr>
+    </table>
+  </section>
+</body>
+</html>
