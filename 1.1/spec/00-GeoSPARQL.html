@@ -5204,16 +5204,39 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <div class="sect3 data-line-25">
 <h4 id="_geometry_class_hierarchy"><a class="anchor" href="#_geometry_class_hierarchy"></a>10.3.1. Geometry Class Hierarchy</h4>
 <div class="paragraph data-line-27">
-<p>The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: <code>http://www.opengis.net/ont/sf#{geometry class}</code> and by asserting appropriate <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf" data-href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> statements.</p>
+<p>The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: <code>http://www.opengis.net/ont/sf#{geometry class}</code> and by asserting appropriate <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf" data-href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> statements. The <em>Simple Features Vocabulary</em> resource within GeoSPARQL 1.1 (simpling resource to this specification) does this. The following list gived the class hierarchy with each indented item being a subclass of the item in the line above. The class heirarchy starts with GeoSPARQL&#8217;s <code>geo:Geometry</code> class of which <code>sf:Geometry</code> is a subclass:</p>
 </div>
-<div class="paragraph data-line-29">
-<p>The example RDF snippet below encodes the Polygon class from Simple Features 1.0.</p>
+<div class="listingblock data-line-29">
+<div class="content">
+<pre class="highlight"><code>geo:Geometry
+    sf:Geometry
+        sf:Curve
+            sf:LineString
+                sf:Line
+                sf:LinearRing
+        sf:GeometryCollection
+            sf:MultiCurve
+                sf:MultiLineString
+            sf:MultiPoint
+            sf:MultiSurface
+                sf:MultiPolygon
+        sf:Point
+        sf:Surface
+            sf:Polygon
+                sf:Envelope
+                sf:Triangle
+            sf:PolyhedralSurface
+                sf:TIN</code></pre>
 </div>
-<div class="listingblock data-line-31">
+</div>
+<div class="paragraph data-line-51">
+<p>The following example RDF snippet below encodes the <em>Simple Features vocabulary</em> Polygon class:</p>
+</div>
+<div class="listingblock data-line-53">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">sf:Polygon
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/ont/sf&gt; ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf sf:Surface ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
@@ -5221,7 +5244,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 .</code></pre>
 </div>
 </div>
-<table id="req_rdfs_entailment_extension_wkt-geometry-types" class="tableblock frame-all grid-all stripes-odd stretch data-line-43">
+<table id="req_rdfs_entailment_extension_wkt-geometry-types" class="tableblock frame-all grid-all stripes-odd stretch data-line-67">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -5236,24 +5259,23 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 </table>
 </div>
 </div>
-<div class="sect2 data-line-48">
+<div class="sect2 data-line-72">
 <h3 id="_gml_serialization_serializationgml"><a class="anchor" href="#_gml_serialization_serializationgml"></a>10.4. GML Serialization (serialization=GML)</h3>
-<div class="paragraph data-line-50">
+<div class="paragraph data-line-74">
 <p>This section establishes requirements for representing geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>.</p>
 </div>
-<div class="sect3 data-line-52">
+<div class="sect3 data-line-76">
 <h4 id="_geometry_class_hierarchy_2"><a class="anchor" href="#_geometry_class_hierarchy_2"></a>10.4.1. Geometry Class Hierarchy</h4>
-<div class="paragraph data-line-54">
+<div class="paragraph data-line-78">
 <p>An RDF/OWL class hierarchy can be generated from the GML schema that implements <code>GM_Object</code> by constructing IRIs for geometry classes using the following pattern: <code>http://www.opengis.net/ont/gml#{GML Element}</code> and by asserting appropriate <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf" data-href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> statements.</p>
 </div>
-<div class="paragraph data-line-56">
+<div class="paragraph data-line-80">
 <p>The example RDF snippet below encodes the Polygon class from GML 3.2.</p>
 </div>
-<div class="listingblock data-line-58">
+<div class="listingblock data-line-82">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">gml:Polygon
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf gml:SurfacePatch ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
@@ -5261,7 +5283,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 .</code></pre>
 </div>
 </div>
-<table id="req_rdfs_entailment_extension_gml-geometry-types" class="tableblock frame-all grid-all stripes-odd stretch data-line-69">
+<table id="req_rdfs_entailment_extension_gml-geometry-types" class="tableblock frame-all grid-all stripes-odd stretch data-line-92">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -8459,13 +8481,13 @@ eg:x-geo
 </div>
 </div>
 <div class="sect3 data-line-301">
-<h4 id="_b_1_1_5_spatialobjectcollection"><a class="anchor" href="#_b_1_1_5_spatialobjectcollection"></a>B 1.1.5 <code>SpatialObjectCollection</code></h4>
+<h4 id="_c_1_1_4_spatialobjectcollection"><a class="anchor" href="#_c_1_1_4_spatialobjectcollection"></a>C.1.1.4 <code>SpatialObjectCollection</code></h4>
 <div class="paragraph data-line-303">
 <p><a href="#_class_geospatialobjectcollection"><code>geo:SpatialObjectCollection</code></a> isn&#8217;t really intended to be implemented - it&#8217;s essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <a href="#_class_geofeaturecollection"><code>geo:FeatureCollection</code></a> &amp; <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> classes.</p>
 </div>
 </div>
 <div class="sect3 data-line-305">
-<h4 id="_b_1_1_6_featurecollection"><a class="anchor" href="#_b_1_1_6_featurecollection"></a>B 1.1.6 <code>FeatureCollection</code></h4>
+<h4 id="_c_1_1_5_featurecollection"><a class="anchor" href="#_c_1_1_5_featurecollection"></a>C.1.1.5 <code>FeatureCollection</code></h4>
 <div class="paragraph data-line-307">
 <p>This example shows a <code>FeatureCollection</code> instance containing 3 <code>Feature</code> instances.</p>
 </div>
@@ -8486,7 +8508,7 @@ eg:x-geo
 </div>
 </div>
 <div class="sect3 data-line-322">
-<h4 id="_b_1_1_7_geometrycollection"><a class="anchor" href="#_b_1_1_7_geometrycollection"></a>B 1.1.7 <code>GeometryCollection</code></h4>
+<h4 id="_c_1_1_6_geometrycollection"><a class="anchor" href="#_c_1_1_6_geometrycollection"></a>C.1.1.6 <code>GeometryCollection</code></h4>
 <div class="paragraph data-line-324">
 <p>This example shows a <code>GeometryCollection</code> instance containing 3 <code>Geometry</code> instances.</p>
 </div>
@@ -8506,22 +8528,54 @@ eg:x-geo
 <p>As per <code>FeatureCollection</code>, the <code>GeometryCollection</code> itse;f doesn&#8217;t impose any ordering on its member <code>Geometry</code> instances, however there are many ways to order them, based on their own properties.</p>
 </div>
 </div>
+<div class="sect3 data-line-339">
+<h4 id="_c_1_1_7_simple_features_classes"><a class="anchor" href="#_c_1_1_7_simple_features_classes"></a>C.1.1.7 Simple Features classes</h4>
+<div class="paragraph data-line-341">
+<p>Most of the geometry seralizations used in GeoSPARQL define the geometry type - point, polygon etc. <em>within</em> the literal, e.g. WKT can encode <code>POLYGN(())</code> or 'POINT()', however the <em>Simple Features Vocabulary</em> resource within GeoSPARQL 1.1 contains specialised Geometry RDF classes such as <code>sf:Polygon</code>, <code>sf:PolyhedralSurface</code> and others.</p>
 </div>
-<div class="sect2 data-line-339">
-<h3 id="_c_1_2_properties"><a class="anchor" href="#_c_1_2_properties"></a>C.1.2 Properties</h3>
-<div class="sect3 data-line-341">
-<h4 id="_c_1_2_1_spatial_object_properties"><a class="anchor" href="#_c_1_2_1_spatial_object_properties"></a>C.1.2.1 Spatial Object Properties</h4>
 <div class="paragraph data-line-343">
+<p>It may be appropriate to use these specialised forms of Geometry in circumstances when geometry type differentiation is required within RDF and not withing specialised literal handling. This is the case when type differentiation must occur within plain SPARQL, not GeoSAPRQL.</p>
+</div>
+<div class="paragraph data-line-345">
+<p>The following example shows a <code>Feature</code> instance with two <code>Geometry</code> instances where the <em>Simple Features Vocabulary</em> classes are used to indicate the Geometry type:</p>
+</div>
+<div class="listingblock data-line-347">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">ex:x
+    a geo:Feature ;
+    rdfs:label "Feature X" ;
+    geo:hasGeometry [
+        a sf:Point ;
+        geo:asWKT "POINT(...)" ;
+        rdfs:comment "A point geometry for Feature X, possibly a centroid though not declared one" ;
+    ] ;
+    geo:hasGeometry [
+        a sf:Polygon ;
+        geo:asWKT "POLYGON((...))" ;
+        rdfs:comment "A polygon geometry for Feature X" ;
+    ] ;</code></pre>
+</div>
+</div>
+<div class="paragraph data-line-363">
+<p>There are several GeoSPARQL properties that suggest they could be used with particular <em>Simple Features Vocabulary</em> geometry types, for instance, <a href="#_property_geohascentroid"><code>geo:hasCentroid</code></a> indicates is could be used with a <code>sf:Point</code> and <a href="#_property_geohasboundingbox"><code>geo:hasBoundingBox</code></a> indicates use with an <code>sf:Envelope</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2 data-line-365">
+<h3 id="_c_1_2_properties"><a class="anchor" href="#_c_1_2_properties"></a>C.1.2 Properties</h3>
+<div class="sect3 data-line-367">
+<h4 id="_c_1_2_1_spatial_object_properties"><a class="anchor" href="#_c_1_2_1_spatial_object_properties"></a>C.1.2.1 Spatial Object Properties</h4>
+<div class="paragraph data-line-369">
 <p>See the section <a href="#C.1.1.1.2">C.1.1.1.2 Size Properties</a> above.</p>
 </div>
 </div>
-<div class="sect3 data-line-345">
+<div class="sect3 data-line-371">
 <h4 id="_c_1_2_2_feature_properties"><a class="anchor" href="#_c_1_2_2_feature_properties"></a>C.1.2.2 Feature Properties</h4>
-<div class="paragraph data-line-347">
+<div class="paragraph data-line-373">
 <p>This example shows a <a href="#_class_geofeature"><code>geo:Feature</code></a> instance with each of the properties defined in <a href="#_standard_properties_for_geofeature">Section 6.4</a> used, except for the properties
 <a href="#_property_geohasmetricsize"><code>geo:hasMetricSize</code></a> and <a href="#_property_geohassize"><code>geo:hasSize</code></a>, that are intended to be used through their subproperties and <a href="#_property_geohasmetricperimeterlength"><code>geo:hasMetricPerimeterLength</code></a> and <a href="#_property_geohasperimeterlength"><code>geo:hasPerimeterLength</code></a> which are examplified in <a href="#C.1.1.1.2">C.1.1.1.2 Size Properties</a>.</p>
 </div>
-<div class="listingblock data-line-350">
+<div class="listingblock data-line-376">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
 
@@ -8563,19 +8617,19 @@ eg:x
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-391">
+<div class="paragraph data-line-417">
 <p>The properties defined for this example&#8217;s <code>Feature</code> instance are vaguely aligned in that the values are not real but are not unrealistic either. It is outside the scope of GeoSPARQL to validate <code>Feature</code> instances' property values.</p>
 </div>
-<div class="paragraph data-line-393">
+<div class="paragraph data-line-419">
 <p>Note that this <code>Feature</code> has a 2D <code>Geometry</code> and yet a property indicating a scalar volume: <code>geo:hasVolume</code>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the <code>Feature</code> such as its geometry. Perhaps a volume for the feature has been esimated or measured in such a way that a 3D geometry was not created.</p>
 </div>
 </div>
-<div class="sect3 data-line-395">
+<div class="sect3 data-line-421">
 <h4 id="_c_1_2_3_geometry_properties"><a class="anchor" href="#_c_1_2_3_geometry_properties"></a>C.1.2.3 Geometry Properties</h4>
-<div class="paragraph data-line-397">
+<div class="paragraph data-line-423">
 <p>This example shows a <code>Geometry</code> instance, a Blank Node, declared in relation to a <code>Feature</code> instance, with each of the properties defined in <a href="#_standard_properties_for_geogeometry">Section 8.5</a> used.</p>
 </div>
-<div class="listingblock data-line-399">
+<div class="listingblock data-line-425">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix qudt: &lt;http://qudt.org/schema/qudt/&gt; .
 @prefix unit: &lt;http://qudt.org/vocab/unit/&gt; .
@@ -8599,19 +8653,19 @@ eg:x
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-422">
+<div class="paragraph data-line-448">
 <p>In this example, each of the standards properties defined for a <code>Geometry</code> instance has realistic values, for example, the <a href="#_property_geoisempty">is empty</a> is set to <code>false</code> since the <code>Geometry</code> contains information.</p>
 </div>
 </div>
-<div class="sect3 data-line-424">
+<div class="sect3 data-line-450">
 <h4 id="_c_1_2_4_geometry_serializations"><a class="anchor" href="#_c_1_2_4_geometry_serializations"></a>C.1.2.4 Geometry Serializations</h4>
-<div class="paragraph data-line-426">
+<div class="paragraph data-line-452">
 <p>This section shows a <code>Geometry</code> instance for a <code>Feature</code> instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate <a href="https://en.wikipedia.org/wiki/Moreton_Island" data-href="https://en.wikipedia.org/wiki/Moreton_Island">Moreton Island</a> in Queensland, Australia.</p>
 </div>
-<div class="paragraph data-line-428">
+<div class="paragraph data-line-454">
 <p>Note that the concrete DGGS serialization used is for example purposes only as it is not formally defined in GeoSPARQL.</p>
 </div>
-<div class="listingblock data-line-430">
+<div class="listingblock data-line-456">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">eg:x
     a geo:Feature ;
@@ -8726,27 +8780,27 @@ eg:x
 </div>
 </div>
 </div>
-<div class="sect1 data-line-540">
+<div class="sect1 data-line-566">
 <h2 id="_c_2_example_sparql_queries_rules"><a class="anchor" href="#_c_2_example_sparql_queries_rules"></a>C.2 Example SPARQL Queries &amp; Rules</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-542">
+<div class="paragraph data-line-568">
 <p>This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.</p>
 </div>
-<div class="sect2 data-line-544">
+<div class="sect2 data-line-570">
 <h3 id="_c_2_1_example_data"><a class="anchor" href="#_c_2_1_example_data"></a>C.2.1 Example Data</h3>
-<div class="paragraph data-line-546">
+<div class="paragraph data-line-572">
 <p>The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in the figure below. The RDF statements define the feature class <code>my:PlaceOfInterest</code>, and two properties are created for associating geometries with features: <code>my:hasExactGeometry</code> and <code>my:hasPointGeometry</code>. <code>my:hasExactGeometry</code> is designated as the default geometry for the <code>my:PlaceOfInterest</code> feature class.</p>
 </div>
-<div class="paragraph data-line-548">
+<div class="paragraph data-line-574">
 <p>All the following examples use the parameter values relation_family = Simple Features, serialization = WKT, and version = 1.0.</p>
 </div>
-<div id="img-illustration" class="imageblock text-center data-line-552">
+<div id="img-illustration" class="imageblock text-center data-line-578">
 <div class="content">
 <img src="img/03.png" alt="600" width="400">
 </div>
 <div class="title">Figure 4. Illustration of spatial data</div>
 </div>
-<div class="listingblock data-line-554">
+<div class="listingblock data-line-580">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">@prefix geo: &lt;http://www.opengis.net/ont/geosparql#&gt; .
 @prefix my: &lt;http://example.org/ApplicationSchema#&gt; .
@@ -8832,17 +8886,17 @@ my:FExactGeom a sf:Point ;
 </div>
 </div>
 </div>
-<div class="sect2 data-line-638">
+<div class="sect2 data-line-664">
 <h3 id="_c_2_2_example_queries"><a class="anchor" href="#_c_2_2_example_queries"></a>C.2.2 Example Queries</h3>
-<div class="paragraph data-line-640">
+<div class="paragraph data-line-666">
 <p>This Section illustrates the use of GeoSPARQL functions through a series of example queries.</p>
 </div>
-<div class="sect3 data-line-643">
+<div class="sect3 data-line-669">
 <h4 id="C.2.2.1"><a class="anchor" href="#C.2.2.1"></a>C.2.2.1</h4>
-<div class="paragraph data-line-645">
+<div class="paragraph data-line-671">
 <p><em>Find all features that feature <code>my:A</code> contains, where spatial calculations are based on</em> <code>my:hasExactGeometry</code>.</p>
 </div>
-<div class="listingblock data-line-647">
+<div class="listingblock data-line-673">
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
 PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
@@ -8862,10 +8916,10 @@ WHERE {
 )</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-666">
+<div class="paragraph data-line-692">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-667">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-693">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -8884,12 +8938,12 @@ WHERE {
 </tbody>
 </table>
 </div>
-<div class="sect3 data-line-675">
+<div class="sect3 data-line-701">
 <h4 id="C.2.2.2"><a class="anchor" href="#C.2.2.2"></a>C.2.2.2</h4>
-<div class="paragraph data-line-677">
+<div class="paragraph data-line-703">
 <p><em>Find all features that are within a transient bounding box geometry, where spatial calculations are based on</em> <code>my:hasPointGeometry</code>.</p>
 </div>
-<div class="listingblock data-line-679">
+<div class="listingblock data-line-705">
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
 PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
@@ -8911,10 +8965,10 @@ WHERE {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-700">
+<div class="paragraph data-line-726">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-701">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-727">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -8930,12 +8984,12 @@ WHERE {
 </tbody>
 </table>
 </div>
-<div class="sect3 data-line-708">
+<div class="sect3 data-line-734">
 <h4 id="C.2.2.3"><a class="anchor" href="#C.2.2.3"></a>C.2.2.3</h4>
-<div class="paragraph data-line-710">
+<div class="paragraph data-line-736">
 <p><em>Find all features that touch the union of feature <code>my:A</code> and feature <code>my:D</code>, where computations are based on</em> <code>my:hasExactGeometry</code>.</p>
 </div>
-<div class="listingblock data-line-712">
+<div class="listingblock data-line-738">
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
 PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
@@ -8958,10 +9012,11 @@ WHERE {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-734">
+<div class="paragraph data-line-760">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-735">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-761">
+
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -8977,12 +9032,13 @@ WHERE {
 </tbody>
 </table>
 </div>
-<div class="sect3 data-line-742">
+<div class="sect3 data-line-768">
 <h4 id="C.2.2.4"><a class="anchor" href="#C.2.2.4"></a>C.2.2.4</h4>
-<div class="paragraph data-line-744">
+<div class="paragraph data-line-770">
 <p><em>Find the 3 closest features to feature my:C, where computations are based on</em> <code>my:hasExactGeometry</code>.</p>
 </div>
-<div class="listingblock data-line-746">
+<div class="listingblock data-line-772">
+
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX uom: &lt;http://www.opengis.net/def/uom/OGC/1.0/&gt;
 PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
@@ -9001,10 +9057,12 @@ ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre))
 LIMIT 3</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-764">
+
+<div class="paragraph data-line-790">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-765">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-791">
+
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -9026,12 +9084,13 @@ LIMIT 3</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect3 data-line-774">
+<div class="sect3 data-line-800">
 <h4 id="C.2.2.5"><a class="anchor" href="#C.2.2.5"></a>C.2.2.5</h4>
-<div class="paragraph data-line-776">
+<div class="paragraph data-line-802">
 <p><em>Find the maximum and minimum coordinates of a given set of geometries.</em></p>
 </div>
-<div class="listingblock data-line-778">
+<div class="listingblock data-line-804">
+
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
@@ -9051,10 +9110,11 @@ WHERE {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-797">
+<div class="paragraph data-line-823">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-798">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-824">
+
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -9086,20 +9146,21 @@ WHERE {
 </table>
 </div>
 </div>
-<div class="sect2 data-line-805">
+<div class="sect2 data-line-831">
 <h3 id="_c_2_3_example_rule_application"><a class="anchor" href="#_c_2_3_example_rule_application"></a>C.2.3 Example Rule Application</h3>
-<div class="paragraph data-line-807">
+<div class="paragraph data-line-833">
 <p>This section illustrates the query transformation strategy for implementing GeoSPARQL rules.</p>
 </div>
-<div class="sect3 data-line-810">
+<div class="sect3 data-line-836">
 <h4 id="C.2.3.1"><a class="anchor" href="#C.2.3.1"></a>C.2.3.1</h4>
-<div class="paragraph data-line-812">
+<div class="paragraph data-line-838">
 <p><em>Find all features or geometries that overlap feature</em> <code>my:A</code>.</p>
 </div>
-<div class="paragraph data-line-814">
+<div class="paragraph data-line-840">
 <p><strong>Original Query</strong>:</p>
 </div>
-<div class="listingblock data-line-816">
+<div class="listingblock data-line-842">
+
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 
@@ -9107,10 +9168,11 @@ SELECT ?f
 WHERE { ?f geo:sfOverlaps my:A }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-823">
+<div class="paragraph data-line-849">
 <p><strong>Transformed Query (application of transformation rule geor:sfOverlaps)</strong>:</p>
 </div>
-<div class="listingblock data-line-825">
+<div class="listingblock data-line-851">
+
 <div class="content">
 <pre class="highlight"><code class="language-sparql" data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
 PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
@@ -9150,10 +9212,11 @@ WHERE {
     }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-864">
+<div class="paragraph data-line-890">
 <p><strong>Result</strong>:</p>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-865">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-891">
+
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -9179,16 +9242,20 @@ WHERE {
 </table>
 </div>
 </div>
-<div class="sect2 data-line-875">
+<div class="sect2 data-line-901">
 <h3 id="_c_2_4_example_geometry_serialization_conversion_functions"><a class="anchor" href="#_c_2_4_example_geometry_serialization_conversion_functions"></a>C.2.4 Example Geometry Serialization Conversion Functions</h3>
-<div class="paragraph data-line-877">
-<p>For the geometry literal values in <a href="#_c_1_2_4_geometry_serializations">C.1.2.4 Geometry Serializations</a>:</p>
+<div class="sect3 data-line-903">
+<h4 id="_c_1_2_2_1_geofaswkt"><a class="anchor" href="#_c_1_2_2_1_geofaswkt"></a>C.1.2.2.1 <code>geof:asWKT</code></h4>
+<div class="paragraph data-line-905">
+<p>For the geometry literal values in <a href="#C.1.2.3 Geometry Serializations">[C.1.2.3 Geometry Serializations]</a>:</p>
 </div>
-<div class="paragraph data-line-879">
+<div class="paragraph data-line-907">
 <p>Application of the function <a href="http://www.opengis.net/def/function/geosparql/asWKT" data-href="http://www.opengis.net/def/function/geosparql/asWKT"><code>geof:asWKT</code></a> to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, <a href="http://www.opengis.net/def/function/geosparql/asGML" data-href="http://www.opengis.net/def/function/geosparql/asGML"><code>geof:asGML</code></a>, <a href="http://www.opengis.net/def/function/geosparql/asKML" data-href="http://www.opengis.net/def/function/geosparql/asKML"><code>geof:asKML</code></a>, <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON" data-href="http://www.opengis.net/def/function/geosparql/asGeoJSON"><code>geof:asGeoJSON</code></a> &amp; <a href="http://www.opengis.net/def/function/geosparql/asDGGS" data-href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a>.</p>
 </div>
 <div class="paragraph data-line-137">
-<p>Note that the application of <a href="http://www.opengis.net/def/function/geosparql/asDGGS" data-href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> requires a <code>specificDggsDatatype</code> parameter which indicates the particular DGGS literal form being converted to. In the case of <a href="#_c_1_2_4_geometry_serializations">C.1.2.4 Geometry Serializations</a>, this value would be <code>eg:auspixDggsLiteral</code>, the example datatype of the AusPIX DGGS.</p>
+<p>Note that the application of <a href="http://www.opengis.net/def/function/geosparql/asDGGS" data-href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> requires a <code>specificDggsDatatype</code> parameter which indicates the particular DGGS literal form being converted to. In the case of <a href="#C.1.2.3 Geometry Serializations">[C.1.2.3 Geometry Serializations]</a>, this value would be <code>eg:auspixDggsLiteral</code>, the example datatype of the AusPIX DGGS.</p>
+</div>
+
 </div>
 </div>
 </div>
@@ -10994,7 +11061,8 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-02-09 20:49:09 01000
+Last updated 2022-02-09 21:48:53 01000
+
 </div>
 </div>
 </body>
