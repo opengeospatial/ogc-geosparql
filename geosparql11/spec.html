@@ -5209,16 +5209,39 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <div class="sect3">
 <h4 id="_geometry_class_hierarchy"><a class="anchor" href="#_geometry_class_hierarchy"></a>10.3.1. Geometry Class Hierarchy</h4>
 <div class="paragraph">
-<p>The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: <code>http://www.opengis.net/ont/sf#{geometry class}</code> and by asserting appropriate <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> statements.</p>
+<p>The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: <code>http://www.opengis.net/ont/sf#{geometry class}</code> and by asserting appropriate <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> statements. The <em>Simple Features Vocabulary</em> resource within GeoSPARQL 1.1 (simpling resource to this specification) does this. The following list gived the class hierarchy with each indented item being a subclass of the item in the line above. The class heirarchy starts with GeoSPARQL&#8217;s <code>geo:Geometry</code> class of which <code>sf:Geometry</code> is a subclass:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>geo:Geometry
+    sf:Geometry
+        sf:Curve
+            sf:LineString
+                sf:Line
+                sf:LinearRing
+        sf:GeometryCollection
+            sf:MultiCurve
+                sf:MultiLineString
+            sf:MultiPoint
+            sf:MultiSurface
+                sf:MultiPolygon
+        sf:Point
+        sf:Surface
+            sf:Polygon
+                sf:Envelope
+                sf:Triangle
+            sf:PolyhedralSurface
+                sf:TIN</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The example RDF snippet below encodes the Polygon class from Simple Features 1.0.</p>
+<p>The following example RDF snippet below encodes the <em>Simple Features vocabulary</em> Polygon class:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">sf:Polygon
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
+    rdfs:isDefinedBy &lt;http://www.opengis.net/ont/sf&gt; ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf sf:Surface ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
@@ -5258,7 +5281,6 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">gml:Polygon
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf gml:SurfacePatch ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
@@ -8464,13 +8486,13 @@ eg:x-geo
 </div>
 </div>
 <div class="sect3">
-<h4 id="_b_1_1_5_spatialobjectcollection"><a class="anchor" href="#_b_1_1_5_spatialobjectcollection"></a>B 1.1.5 <code>SpatialObjectCollection</code></h4>
+<h4 id="_c_1_1_4_spatialobjectcollection"><a class="anchor" href="#_c_1_1_4_spatialobjectcollection"></a>C.1.1.4 <code>SpatialObjectCollection</code></h4>
 <div class="paragraph">
 <p><a href="#_class_geospatialobjectcollection"><code>geo:SpatialObjectCollection</code></a> isn&#8217;t really intended to be implemented - it&#8217;s essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <a href="#_class_geofeaturecollection"><code>geo:FeatureCollection</code></a> &amp; <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> classes.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_b_1_1_6_featurecollection"><a class="anchor" href="#_b_1_1_6_featurecollection"></a>B 1.1.6 <code>FeatureCollection</code></h4>
+<h4 id="_c_1_1_5_featurecollection"><a class="anchor" href="#_c_1_1_5_featurecollection"></a>C.1.1.5 <code>FeatureCollection</code></h4>
 <div class="paragraph">
 <p>This example shows a <code>FeatureCollection</code> instance containing 3 <code>Feature</code> instances.</p>
 </div>
@@ -8491,7 +8513,7 @@ eg:x-geo
 </div>
 </div>
 <div class="sect3">
-<h4 id="_b_1_1_7_geometrycollection"><a class="anchor" href="#_b_1_1_7_geometrycollection"></a>B 1.1.7 <code>GeometryCollection</code></h4>
+<h4 id="_c_1_1_6_geometrycollection"><a class="anchor" href="#_c_1_1_6_geometrycollection"></a>C.1.1.6 <code>GeometryCollection</code></h4>
 <div class="paragraph">
 <p>This example shows a <code>GeometryCollection</code> instance containing 3 <code>Geometry</code> instances.</p>
 </div>
@@ -8509,6 +8531,38 @@ eg:x-geo
 </div>
 <div class="paragraph">
 <p>As per <code>FeatureCollection</code>, the <code>GeometryCollection</code> itse;f doesn&#8217;t impose any ordering on its member <code>Geometry</code> instances, however there are many ways to order them, based on their own properties.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_c_1_1_7_simple_features_classes"><a class="anchor" href="#_c_1_1_7_simple_features_classes"></a>C.1.1.7 Simple Features classes</h4>
+<div class="paragraph">
+<p>Most of the geometry seralizations used in GeoSPARQL define the geometry type - point, polygon etc. <em>within</em> the literal, e.g. WKT can encode <code>POLYGN(())</code> or 'POINT()', however the <em>Simple Features Vocabulary</em> resource within GeoSPARQL 1.1 contains specialised Geometry RDF classes such as <code>sf:Polygon</code>, <code>sf:PolyhedralSurface</code> and others.</p>
+</div>
+<div class="paragraph">
+<p>It may be appropriate to use these specialised forms of Geometry in circumstances when geometry type differentiation is required within RDF and not withing specialised literal handling. This is the case when type differentiation must occur within plain SPARQL, not GeoSAPRQL.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows a <code>Feature</code> instance with two <code>Geometry</code> instances where the <em>Simple Features Vocabulary</em> classes are used to indicate the Geometry type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">ex:x
+    a geo:Feature ;
+    rdfs:label "Feature X" ;
+    geo:hasGeometry [
+        a sf:Point ;
+        geo:asWKT "POINT(...)" ;
+        rdfs:comment "A point geometry for Feature X, possibly a centroid though not declared one" ;
+    ] ;
+    geo:hasGeometry [
+        a sf:Polygon ;
+        geo:asWKT "POLYGON((...))" ;
+        rdfs:comment "A polygon geometry for Feature X" ;
+    ] ;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are several GeoSPARQL properties that suggest they could be used with particular <em>Simple Features Vocabulary</em> geometry types, for instance, <a href="#_property_geohascentroid"><code>geo:hasCentroid</code></a> indicates is could be used with a <code>sf:Point</code> and <a href="#_property_geohasboundingbox"><code>geo:hasBoundingBox</code></a> indicates use with an <code>sf:Envelope</code>.</p>
 </div>
 </div>
 </div>
@@ -10999,7 +11053,7 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-02-09 22:53:15 UTC
+Last updated 2022-02-09 23:13:41 UTC
 </div>
 </div>
 </body>
