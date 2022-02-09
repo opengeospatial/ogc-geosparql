@@ -298,11 +298,11 @@ This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has bot
 
 This use of a scalar spatial measurement property with a Geometry, here `geo:hasMetricArea`, is possible since the domain of such properties is `geo:SpatialObject`, the superclass of both `geo:Feature` and `geo:Geometry`.
 
-==== B 1.1.5 `SpatialObjectCollection`
+==== C.1.1.4 `SpatialObjectCollection`
 
 <<Class: geo:SpatialObjectCollection, `geo:SpatialObjectCollection`>> isn't really intended to be implemented - it's essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> & <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> classes.
 
-==== B 1.1.6 `FeatureCollection`
+==== C.1.1.5 `FeatureCollection`
 
 This example shows a `FeatureCollection` instance containing 3 `Feature` instances.
 
@@ -319,7 +319,7 @@ ex:fc-x
 
 All of the GeoSPARQL collection classes are unordered since they are succlasses of the generic `rdfs:Container`, however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instances labels, their areas, geometries or any other property.
 
-==== B 1.1.7 `GeometryCollection`
+==== C.1.1.6 `GeometryCollection`
 
 This example shows a `GeometryCollection` instance containing 3 `Geometry` instances.
 
@@ -335,6 +335,32 @@ ex:gc-x
 ```
 
 As per `FeatureCollection`, the `GeometryCollection` itse;f doesn't impose any ordering on its member `Geometry` instances, however there are many ways to order them, based on their own properties.
+
+==== C.1.1.7 Simple Features classes
+
+Most of the geometry seralizations used in GeoSPARQL define the geometry type - point, polygon etc. _within_ the literal, e.g. WKT can encode `POLYGN(())` or 'POINT()', however the _Simple Features Vocabulary_ resource within GeoSPARQL 1.1 contains specialised Geometry RDF classes such as `sf:Polygon`, `sf:PolyhedralSurface` and others.
+
+It may be appropriate to use these specialised forms of Geometry in circumstances when geometry type differentiation is required within RDF and not withing specialised literal handling. This is the case when type differentiation must occur within plain SPARQL, not GeoSAPRQL.
+
+The following example shows a `Feature` instance with two `Geometry` instances where the _Simple Features Vocabulary_ classes are used to indicate the Geometry type:
+
+```turtle
+ex:x
+    a geo:Feature ;
+    rdfs:label "Feature X" ;
+    geo:hasGeometry [
+        a sf:Point ;
+        geo:asWKT "POINT(...)" ;
+        rdfs:comment "A point geometry for Feature X, possibly a centroid though not declared one" ;
+    ] ;
+    geo:hasGeometry [
+        a sf:Polygon ;
+        geo:asWKT "POLYGON((...))" ;
+        rdfs:comment "A polygon geometry for Feature X" ;
+    ] ;    
+```
+
+There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<Property: geo:hasCentroid, `geo:hasCentroid`>> indicates is could be used with a `sf:Point` and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> indicates use with an `sf:Envelope`.
 
 === C.1.2 Properties
 

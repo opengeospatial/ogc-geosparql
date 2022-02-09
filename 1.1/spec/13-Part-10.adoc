@@ -24,20 +24,44 @@ This section establishes the requirements for representing geometry data in RDF 
 
 ==== Geometry Class Hierarchy
 
-The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/sf#{geometry class}+` and by asserting appropriate http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] statements.
+The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/sf#{geometry class}+` and by asserting appropriate http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] statements. The _Simple Features Vocabulary_ resource within GeoSPARQL 1.1 (simpling resource to this specification) does this. The following list gived the class hierarchy with each indented item being a subclass of the item in the line above. The class heirarchy starts with GeoSPARQL's `geo:Geometry` class of which `sf:Geometry` is a subclass:
 
-The example RDF snippet below encodes the Polygon class from Simple Features 1.0.
+```
+geo:Geometry
+    sf:Geometry
+        sf:Curve
+            sf:LineString
+                sf:Line
+                sf:LinearRing
+        sf:GeometryCollection
+            sf:MultiCurve
+                sf:MultiLineString
+            sf:MultiPoint
+            sf:MultiSurface
+                sf:MultiPolygon
+        sf:Point
+        sf:Surface
+            sf:Polygon
+                sf:Envelope
+                sf:Triangle
+            sf:PolyhedralSurface
+                sf:TIN
+```
+
+The following example RDF snippet below encodes the _Simple Features vocabulary_ Polygon class:
 
 ```turtle
 sf:Polygon 
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf sf:Surface ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or 
                     more interior boundaries"@en ;
 .
 ```
+
+
 
 [#req_rdfs_entailment_extension_wkt-geometry-types]
 |===
@@ -58,7 +82,6 @@ The example RDF snippet below encodes the Polygon class from GML 3.2.
 ```turtle
 gml:Polygon 
     a rdfs:Class, owl:Class ;
-    rdfs:isDefinedBy geo: ;
     skos:prefLabel "Polygon"@en ;
     rdfs:subClassOf gml:SurfacePatch ;
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
