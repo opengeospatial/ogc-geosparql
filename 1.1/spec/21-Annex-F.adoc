@@ -1,0 +1,225 @@
+= Annex F - CQL / GeoSPARQL Mapping (informative)
+
+== F.0 Overview
+
+This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service <<WFS>> and OGC API Features <<OGCAPIF>> which implement CQL.
+
+== F.1 Accessing spatial Features in a SPARQL endpoint
+
+Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
+They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where `geo:FeatureCollection` is a new class in GeoSPARQL 1.1, specifically for the description of collections of `geo:Feature` instances.
+
+The following example SPARQL query retrieves all Features within the Feature Collection with the IRI `ex:x` within a given SPARQL endpoint.
+
+```turtle
+SELECT ?fcollection ?item ?rel ?val ?geom 
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+}
+```
+
+GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the ``rdf:member`` property. No inverse property is defined.
+
+[NOTE]
+====
+Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Collections and require that Features be members of exactly one Feature Collection. There is no such restriction in GeoSPARQL: Features may be members of one or more Feature Collections.
+====
+
+An extension to the above can retrieve any Geometry serializations for the Features within Feature Collection `ex:x`:
+
+```turtle
+SELECT ?fcollection ?item ?rel ?val ?geom 
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+
+  OPTIONAL {
+    ?item geo:hasGeometry/geo:hasSerialization ?geom
+  }
+}
+```
+
+Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collections mappings are:
+
+* APIs may need more information about the `geo:FeatureCollection` instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the `geo:FeatureCollection` instance then this may be queried for. If not, the API might need to create such data
+** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property `dcterms:identifier` may be used to store appropriate token-like identifiers
+* Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
+
+== F.2 Mappings from CQL2 statements to GeoSPARQL queries
+
+This section presents lists of equivalences between Common Query Language (CQL2) <<CQLDEF>> statements and GeoSPARQL statements.
+
+=== F.2.1 Query Parameters
+
+Several query parameters may be given as parameters to the HTTP request of CD-implementing systems, such as the OGC API Features service. These parameters have an influence on the SPARQL query to be executed for the retrieval of a FeatureCollection to be exposed using an OGC API Features service.
+
+[cols="1,1,1,1,3"]
+|===
+| Query Parameter | Example | SPARQL Expression | Example | Comment
+
+| limit  | limit=5 | LIMIT | LIMIT 5 |
+| offset  | offset=10 | OFFSET | OFFSET 10 |
+| bbox | ``bbox=
+160.6,-55.95,-170,-25.89`` | ``FILTER(
+geo:sfIntersects())`` | ``FILTER(geo:sfIntersects(?geom, "POLYGON( (160.6 -55.95,160.6 -25.89, -170 -25.89, -170 -55.95, 160.6 -55.95))"^^geo:wktLiteral)``
+) | WKT does not define a type boundingbox, therefore a bbox is converted to a Polygon
+| datetime | ``datetime= 2018-02-12 T23%3A20%3A52Z`` | - | - | GeoSPARQL doesn't detail temporal aspects of data. Filtering data using RDF temporal properties may be achieved using basic SPARQL queries and also OWL TIME <<TIME>>
+|===
+
+
+=== F.2.2 Literal Values
+
+CQL2 defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.
+
+|===
+| CQL2 literal | Examples  | (Geo)SPARQL literal | Examples
+
+| String  | "This is a string" | ``xsd:string`` | "This is a string"^^xsd:string 
+| Number  | -100  3.14159 | ``xsd:int``, ``xsd:integer``, ``xsd:double`` | "-100"^^xsd:integer  "3.14159"^^xsd:double 
+| Boolean  | true false | ``xsd:boolean`` | "true"^^xsd:boolean  "false"^^xsd:boolean 
+| Spatial Geometry (WKT)  | POINT(1 1) | <<RDFS Datatype: geo:wktLiteral, WKT Literal>> | "POINT(1 1)"^^geo:wktLiteral
+| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
+| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | ``xsd:date``, ``xsd:dateTime``, ``xsd:dateTimeStamp`` | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
+|===
+
+=== F.2.3 Property references
+
+CQL2 allows the referencing of properties in a Feature Collection it is targeting for filtering. A property reference is converted to a triple pattern as shown in the following example. A SPARQL variable ``?item`` is assumed to represent the Feature Collection.
+
+|===
+| Property Reference  | Triple pattern
+
+| name="OGC" | ``?item my:name "OGC"^^xsd:string``
+| number=5 | ``?item my:number "5"^^xsd:integer``
+| number>5 | ``?item my:number ?number . FILTER(?number>5)``
+|===
+
+=== F.2.4 Comparison Predicates
+
+CQL2 defines comparison predicates to compare two scalar expressions. A comparison predicate is converted to a triple pattern as shown in the following example. A SPARQL variable `?item` is assumed to represent the Feature Collection.
+
+|===
+| Comparison predicate  | Triple pattern | Comment
+
+| name="OGC" | `?item my:name "OGC"^^xsd:string` | Equality statements can be converted to a triple pattern
+| number=5 | ``?item my:number "5"^^xsd:integer`` | 
+| number>5 | ?item my:number ?number . FILTER(?number>5) | Arithmetic comparisons (<,>,>=,<=) are converted to filter expressions
+| number BETWEEN 5 AND 10 | `?item my:number ?number . FILTER(?number>=5 && ?number<=10)` | BETWEEN statements are converted to arithmetic expressions
+| name IN ("OGC","W3C") | `?item my:name IN ("OGC", "W3C")` | IN statements may also be expressed using SPARQL VALUES statements
+| name IS NOT NULL | `EXISTS {?item my:name ?name }` | NOT NULL statements are converted to EXIST statements
+| name LIKE "OGC." | `?item my:name ?name . FILTER(regex(?name, "OGC.", "i" ))` | LIKE statements are converted to SPARQL regex filters
+| INTERSECTS(geometry1, geometry2) | `FILTER(geof:sfIntersects(?geometry1,?geometry2))` | The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement
+|===
+
+There is no direct GeoSPARQL equivalent to a CRS-based CQL filter, however certain GeoSPARQL geometry literals have explicity CRS/SRS information that may be filtered using SPARQL `REGEX` operators.
+
+=== F.2.5 Spatial Operators
+
+GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in the table below.
+
+|===
+| CQL2 Filter Expression  | GeoSPARQL Filter Function 
+
+| CONTAINS(geometry1,geometry2)  | FILTER(geof:sfContains(?geometry1,?geometry2))  
+| CROSSES(geometry1,geometry2)  | FILTER(geof:sfCrosses(?geometry1,?geometry2))  
+| DISJOINT(geometry1,geometry2)  | FILTER(geof:sfDisjoint(?geometry1,?geometry2)) 
+| EQUALS(geometry1,geometry2)  | FILTER(geof:sfEquals(?geometry1,?geometry2))  
+| INTERSECTS(geometry1,geometry2)  | FILTER(geof:sfIntersects(?geometry1,?geometry2)) 
+| OVERLAPS(geometry1,geometry2)  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))  
+| TOUCHES(geometry1,geometry2)  | FILTER(geof:sfTouches(?geometry1,?geometry2))  
+| WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
+|===
+
+=== F.2.6 Temporal Operators
+
+Temporal operators are not part of the GeoSPARQL standard. 
+
+|===
+| CQL2 Filter Expression  | GeoSPARQL Filter Function 
+
+| beginTime AFTER 1969-07-16T13:32:00Z | N/A
+| beginTime BEFORE 1969-07-16T13:32:00Z | N/A
+| beginTime BEGINS 1969-07-16T13:32:00Z | N/A
+| beginTime BEGUNBY 1969-07-16T13:32:00Z | N/A
+| beginTime DURING 1969-07-16T13:32:00Z | N/A
+| beginTime ENDEDBY 1969-07-16T13:32:00Z | N/A
+| beginTime ENDS 1969-07-16T13:32:00Z | N/A
+| beginTime MEETS 1969-07-16T13:32:00Z | N/A
+| beginTime METBY 1969-07-16T13:32:00Z | N/A
+| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | N/A 
+| beginTime TCONTAINS 1969-07-16T13:32:00Z | N/A  
+| beginTime TEQUALS 1969-07-16T13:32:00Z | N/A 
+| beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
+|===
+
+As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (`xsd:date`, `xsd:dateTime` and `xsd:dateTimeStamp` literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
+
+== F.3 Mappings from Simple Features for SQL
+
+The following table maps the functions and properties from Simple Features for SQL <<ISO19125-1>> to GeoSPARQL.
+
+[cols="3,3,3,3,3"]
+|===
+| Simple Features for SQL | GeoSPARQL Equivalent | Since GeoSPARQL | Related Property Available | Since GeoSPARQL
+
+5+| **2.1.1.1 Basic Methods on Geometry**
+| Dimension(): Double | `geof:dimension` | - | `geo:dimension` | 1.0
+| GeometryType(): Integer | Class of geometry instance | 1.0 | N/A | -
+| SRID(): Integer | `geof:getSRID` | 1.0 | N/A | -
+| Envelope(): Geometry | `geof:envelope` | 1.0 | `geo:hasBoundingBox` | 1.1
+| AsText(): String | `geof:asWKT` | 1.1 | `geo:asWKT` | 1.0
+| AsBinary(): Binary | N/A | - | N/A | -
+| IsEmpty(): Integer | `geof:isEmpty` | - | `geo:isEmpty` | 1.0
+| IsSimple(): Integer | `geof:isEmpty` | - | `geo:isSimple` | 1.0
+| Boundary(): Geometry | `geof:boundary` | 1.0 | N/A | -
+5+| **2.1.1.2 Spatial Relations**
+| Equals(anotherGeometry: Geometry): Integer | `geof:sfEquals` | 1.0 | `geo:sfEquals` | 1.0
+| Disjoint(anotherGeometry: Geometry): Integer | `geof:sfDisjoint` | 1.0 | `geo:sfDisjoint` | 1.0
+| Intersects(anotherGeometry: Geometry): Integer | `geof:sfIntersects` | 1.0 | `geo:sfIntersects` | 1.0
+| Touches(anotherGeometry: Geometry): Integer | `geof:sfTouches` | 1.0 | `geo:sfTouches` | 1.0
+| Crosses(anotherGeometry: Geometry): Integer | `geof:sfCrosses` | 1.0 | `geo:sfCrosses` | 1.0
+| Within(anotherGeometry: Geometry): Integer | `geof:sfWithin` | 1.0 | `geo:sfWithin` | 1.0
+| Contains(anotherGeometry: Geometry): Integer | `geof:sfContains` | 1.0 | `geo:sfContains` | 1.0
+| Overlaps(anotherGeometry: Geometry): Integer | `geof:sfOverlaps` | 1.0 | `geo:sfOverlaps` | 1.0
+| Relate(anotherGeometry: Geometry, IntersectionPatternMatrix: String): Integer | `geof:relate` | 1.0 | N/A | -
+5+| **2.1.1.3 Spatial Analysis**
+| Buffer(distance: Double): Geometry | `geof:buffer` | 1.0 | N/A | -
+| ConvexHull(): Geometry | `geof:convexHull` | 1.0 | N/A | -
+| Intersection(anotherGeometry: Geometry): Geometry | `geof:intersection` | 1.0 | N/A | -
+| Union(anotherGeometry: Geometry): Geometry | `geof:union` | 1.0 | N/A | -
+| Difference(anotherGeometry: Geometry): Geometry | `geof:difference` | 1.0 | N/A | -
+| SymDifference(anotherGeometry: Geometry): Geometry | `geof:symDifference` | 1.0 | N/A | -
+5+| **2.1.2.1 GeometryCollection**
+| NumGeometries(): Integer | `geof:numGeometries` | - | N/A | -
+| GeometryN(N: Integer): Geometry | `geof:geometryN` | - | N/A | -
+5+| **2.1.3.1 Point**
+| X(): Double | N/A | - | N/A | -
+| Y(): Double | N/A | - | N/A | -
+| Z(): Double (not in the SQL spec, but a logical extension) | N/A | - | N/A | -
+| M(): Double (not in the SQL spec, but a logical extension) | N/A | - | N/A | -
+5+| **2.1.5.1 Curve**
+| Length(): Double | `geof:length` | - | `geo:hasLength` | 1.1
+| StartPoint(): Point | N/A | - | N/A | -
+| EndPoint(): Point | N/A | - | N/A | -
+| IsClosed(): Integer | N/A | - | N/A | -
+| IsRing(): Integer | N/A | - | N/A | -
+5+| **2.1.6.1 LineString**
+| NumPoints(): Integer | N/A | - | N/A | -
+| PointN(N: Integer): Point | N/A | - | N/A | -
+5+| **2.1.7.1 MultiCurve**
+| IsClosed(): Integer | N/A | - | N/A | -
+| Length(): Double | `geof:length` | - |  `geo:hasLength` | 1.1
+5+| **2.1.9.1 Surface**
+| Area(): Double | `geof:area` | - | `geo:hasArea` | 1.1
+| Centroid(): Point | `geof:centroid` | 1.1 | `geo:hasCentroid` | 1.1
+| PointOnSurface(): Point | N/A | - | N/A | -
+5+| **2.1.10.1 Polygon**
+| ExteriorRing(): LineString | N/A | - | N/A | -
+| NumInteriorRing(): Integer | N/A | - | N/A | -
+| InteriorRingN(N: Integer): LineString | N/A | - | N/A | -
+5+| **2.1.11.1 MultiSurface**
+| Area(): Double | `geof:area` | - | `geo:hasArea` | 1.1
+| Centroid(): Point | `geof:centroid` | 1.1 | `geo:hasCentroid` | 1.1
+| PointOnSurface(): Point | N/A | - | N/A | -
+|===
