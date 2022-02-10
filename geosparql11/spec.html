@@ -654,6 +654,23 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_e_15_basic_formal_ontology_bof">E.15 Basic Formal Ontology (BOF)</a></li>
 </ul>
 </li>
+<li><a href="#_annex_f_cql_geosparql_mapping_informative">Annex F - CQL / GeoSPARQL Mapping (informative)</a>
+<ul class="sectlevel1">
+<li><a href="#_f_0_overview">F.0 Overview</a></li>
+<li><a href="#_f_1_accessing_spatial_features_in_a_sparql_endpoint">F.1 Accessing spatial Features in a SPARQL endpoint</a></li>
+<li><a href="#_f_2_mappings_from_cql2_statements_to_geosparql_queries">F.2 Mappings from CQL2 statements to GeoSPARQL queries</a>
+<ul class="sectlevel2">
+<li><a href="#_f_2_1_query_parameters">F.2.1 Query Parameters</a></li>
+<li><a href="#_f_2_2_literal_values">F.2.2 Literal Values</a></li>
+<li><a href="#_f_2_3_property_references">F.2.3 Property references</a></li>
+<li><a href="#_f_2_4_comparison_predicates">F.2.4 Comparison Predicates</a></li>
+<li><a href="#_f_2_5_spatial_operators">F.2.5 Spatial Operators</a></li>
+<li><a href="#_f_2_6_temporal_operators">F.2.6 Temporal Operators</a></li>
+</ul>
+</li>
+<li><a href="#_f_3_mappings_from_simple_features_for_sql">F.3 Mappings from Simple Features for SQL</a></li>
+</ul>
+</li>
 <li><a href="#_bibliography">Bibliography</a></li>
 </ul>
 </div>
@@ -10866,6 +10883,835 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 </table>
 </div>
 </div>
+<h1 id="_annex_f_cql_geosparql_mapping_informative" class="sect0"><a class="anchor" href="#_annex_f_cql_geosparql_mapping_informative"></a>Annex F - CQL / GeoSPARQL Mapping (informative)</h1>
+<div class="sect1">
+<h2 id="_f_0_overview"><a class="anchor" href="#_f_0_overview"></a>F.0 Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This annex presents a mapping between the Common Query Language(CQL) <a href="#CQLDEF">[CQLDEF]</a> and GeoSPARQL as well as generic SPARQL <a href="#SPARQL">[SPARQL]</a>. This is likely of relevance to the the delivery of GeoSPARQL data via systems such as the OGC&#8217;s Web Feature Service <a href="#WFS">[WFS]</a> and OGC API Features <a href="#OGCAPIF">[OGCAPIF]</a> which implement CQL.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_f_1_accessing_spatial_features_in_a_sparql_endpoint"><a class="anchor" href="#_f_1_accessing_spatial_features_in_a_sparql_endpoint"></a>F.1 Accessing spatial Features in a SPARQL endpoint</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spatial <em>Features</em> accessed via SPARQL endpoints <a href="#SPARQLPROT">[SPARQLPROT]</a> are, as defined in the GeoSPARQL standard, instances of the OWL class <a href="#_class_geofeature"><code>geo:Feature</code></a> or of subclasses of it.
+They may have one or more <a href="#_property_geohasgeometry"><code>geo:hasGeometry</code></a> properties indicating <a href="#_class_geogeometry"><code>geo:Geometry</code></a> instances and other properties related to the Feature. They may also be grouped into <a href="#_class_geofeaturecollection"><code>geo:FeatureCollection</code></a> instances where <code>geo:FeatureCollection</code> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <code>geo:Feature</code> instances.</p>
+</div>
+<div class="paragraph">
+<p>The following example SPARQL query retrieves all Features within the Feature Collection with the IRI <code>ex:x</code> within a given SPARQL endpoint.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">SELECT ?fcollection ?item ?rel ?val ?geom
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>GeoSPARQL&#8217;s <a href="#_class_geofeaturecollection"><code>geo:FeatureCollection</code></a> definition requires that <a href="#_class_geofeature"><code>geo:Feature</code></a> instances are to be linked to the Collection by use of the <code>rdf:member</code> property. No inverse property is defined.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Collections and require that Features be members of exactly one Feature Collection. There is no such restriction in GeoSPARQL: Features may be members of one or more Feature Collections.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>An extension to the above can retrieve any Geometry serializations for the Features within Feature Collection <code>ex:x</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">SELECT ?fcollection ?item ?rel ?val ?geom
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+
+  OPTIONAL {
+    ?item geo:hasGeometry/geo:hasSerialization ?geom
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collections mappings are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>APIs may need more information about the <code>geo:FeatureCollection</code> instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the <code>geo:FeatureCollection</code> instance then this may be queried for. If not, the API might need to create such data</p>
+<div class="ulist">
+<ul>
+<li>
+<p>One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property <code>dcterms:identifier</code> may be used to store appropriate token-like identifiers</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_f_2_mappings_from_cql2_statements_to_geosparql_queries"><a class="anchor" href="#_f_2_mappings_from_cql2_statements_to_geosparql_queries"></a>F.2 Mappings from CQL2 statements to GeoSPARQL queries</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section presents lists of equivalences between Common Query Language (CQL2) <a href="#CQLDEF">[CQLDEF]</a> statements and GeoSPARQL statements.</p>
+</div>
+<div class="sect2">
+<h3 id="_f_2_1_query_parameters"><a class="anchor" href="#_f_2_1_query_parameters"></a>F.2.1 Query Parameters</h3>
+<div class="paragraph">
+<p>Several query parameters may be given as parameters to the HTTP request of CD-implementing systems, such as the OGC API Features service. These parameters have an influence on the SPARQL query to be executed for the retrieval of a FeatureCollection to be exposed using an OGC API Features service.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 14.2857%;">
+<col style="width: 42.8572%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Query Parameter</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Example</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">SPARQL Expression</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Example</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">limit</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">limit=5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">LIMIT</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">LIMIT 5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">offset</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">offset=10</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">OFFSET</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">OFFSET 10</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">bbox</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>bbox=
+160.6,-55.95,-170,-25.89</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>FILTER(
+geo:sfIntersects())</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>FILTER(geo:sfIntersects(?geom, "POLYGON( (160.6 -55.95,160.6 -25.89, -170 -25.89, -170 -55.95, 160.6 -55.95))"^^geo:wktLiteral)</code>
+)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">WKT does not define a type boundingbox, therefore a bbox is converted to a Polygon</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">datetime</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>datetime= 2018-02-12 T23%3A20%3A52Z</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">GeoSPARQL doesn&#8217;t detail temporal aspects of data. Filtering data using RDF temporal properties may be achieved using basic SPARQL queries and also OWL TIME <a href="#TIME">[TIME]</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_f_2_2_literal_values"><a class="anchor" href="#_f_2_2_literal_values"></a>F.2.2 Literal Values</h3>
+<div class="paragraph">
+<p>CQL2 defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">CQL2 literal</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Examples</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">(Geo)SPARQL literal</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"This is a string"</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>xsd:string</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"This is a string"^^xsd:string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Number</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-100  3.14159</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>xsd:int</code>, <code>xsd:integer</code>, <code>xsd:double</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"-100"^^xsd:integer  "3.14159"^^xsd:double</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Boolean</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">true false</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>xsd:boolean</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"true"^^xsd:boolean  "false"^^xsd:boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Spatial Geometry (WKT)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">POINT(1 1)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_rdfs_datatype_geowktliteral">WKT Literal</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"POINT(1 1)"^^geo:wktLiteral</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Spatial Geometry (JSON)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">{"type": "Point", "coordinates":[1,1]}</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Temporal Literal</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1969-07-20  1969-07-20T20:17:40Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>xsd:date</code>, <code>xsd:dateTime</code>, <code>xsd:dateTimeStamp</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">"1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_f_2_3_property_references"><a class="anchor" href="#_f_2_3_property_references"></a>F.2.3 Property references</h3>
+<div class="paragraph">
+<p>CQL2 allows the referencing of properties in a Feature Collection it is targeting for filtering. A property reference is converted to a triple pattern as shown in the following example. A SPARQL variable <code>?item</code> is assumed to represent the Feature Collection.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Property Reference</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Triple pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name="OGC"</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:name "OGC"^^xsd:string</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">number=5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:number "5"^^xsd:integer</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">number&gt;5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:number ?number . FILTER(?number&gt;5)</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_f_2_4_comparison_predicates"><a class="anchor" href="#_f_2_4_comparison_predicates"></a>F.2.4 Comparison Predicates</h3>
+<div class="paragraph">
+<p>CQL2 defines comparison predicates to compare two scalar expressions. A comparison predicate is converted to a triple pattern as shown in the following example. A SPARQL variable <code>?item</code> is assumed to represent the Feature Collection.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Comparison predicate</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Triple pattern</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name="OGC"</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:name "OGC"^^xsd:string</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Equality statements can be converted to a triple pattern</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">number=5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:number "5"^^xsd:integer</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">number&gt;5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">?item my:number ?number . FILTER(?number&gt;5)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Arithmetic comparisons (&lt;,&gt;,&gt;=,&#8656;) are converted to filter expressions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">number BETWEEN 5 AND 10</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:number ?number . FILTER(?number&gt;=5 &amp;&amp; ?number&#8656;10)</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BETWEEN statements are converted to arithmetic expressions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name IN ("OGC","W3C")</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:name IN ("OGC", "W3C")</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IN statements may also be expressed using SPARQL VALUES statements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name IS NOT NULL</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>EXISTS {?item my:name ?name }</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">NOT NULL statements are converted to EXIST statements</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name LIKE "OGC."</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>?item my:name ?name . FILTER(regex(?name, "OGC.", "i" ))</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">LIKE statements are converted to SPARQL regex filters</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">INTERSECTS(geometry1, geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>FILTER(geof:sfIntersects(?geometry1,?geometry2))</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>There is no direct GeoSPARQL equivalent to a CRS-based CQL filter, however certain GeoSPARQL geometry literals have explicity CRS/SRS information that may be filtered using SPARQL <code>REGEX</code> operators.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_f_2_5_spatial_operators"><a class="anchor" href="#_f_2_5_spatial_operators"></a>F.2.5 Spatial Operators</h3>
+<div class="paragraph">
+<p>GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in the table below.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">CQL2 Filter Expression</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">GeoSPARQL Filter Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CONTAINS(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfContains(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CROSSES(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfCrosses(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">DISJOINT(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfDisjoint(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">EQUALS(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfEquals(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">INTERSECTS(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfIntersects(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">OVERLAPS(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfOverlaps(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">TOUCHES(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfTouches(?geometry1,?geometry2))</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">WITHIN(geometry1,geometry2)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">FILTER(geof:sfWithin(?geometry1,?geometry2))</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_f_2_6_temporal_operators"><a class="anchor" href="#_f_2_6_temporal_operators"></a>F.2.6 Temporal Operators</h3>
+<div class="paragraph">
+<p>Temporal operators are not part of the GeoSPARQL standard.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">CQL2 Filter Expression</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">GeoSPARQL Filter Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime AFTER 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime BEFORE 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime BEGINS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime BEGUNBY 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime DURING 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime ENDEDBY 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime ENDS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime MEETS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime METBY 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime TCONTAINS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime TEQUALS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">beginTime TOVERLAPS 1969-07-16T13:32:00Z</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>As noted above in Section <a href="#_f_2_1_query_parameters">F.2.1 Query Parameters</a>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (<code>xsd:date</code>, <code>xsd:dateTime</code> and <code>xsd:dateTimeStamp</code> literals) and OWL TIME <a href="#TIME">[TIME]</a> may be used to assert temporal relations between objects.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_f_3_mappings_from_simple_features_for_sql"><a class="anchor" href="#_f_3_mappings_from_simple_features_for_sql"></a>F.3 Mappings from Simple Features for SQL</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following table maps the functions and properties from Simple Features for SQL <a href="#ISO19125-1">[ISO19125-1]</a> to GeoSPARQL.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Simple Features for SQL</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">GeoSPARQL Equivalent</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Since GeoSPARQL</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Related Property Available</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Since GeoSPARQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.1.1 Basic Methods on Geometry</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Dimension(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:dimension</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:dimension</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">GeometryType(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Class of geometry instance</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">SRID(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:getSRID</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Envelope(): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:envelope</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasBoundingBox</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">AsText(): String</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:asWKT</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:asWKT</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">AsBinary(): Binary</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IsEmpty(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:isEmpty</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:isEmpty</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IsSimple(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:isEmpty</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:isSimple</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Boundary(): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:boundary</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.1.2 Spatial Relations</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Equals(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfEquals</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfEquals</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Disjoint(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfDisjoint</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfDisjoint</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Intersects(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfIntersects</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfIntersects</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Touches(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfTouches</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfTouches</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Crosses(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfCrosses</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfCrosses</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Within(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfWithin</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfWithin</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Contains(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfContains</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfContains</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Overlaps(anotherGeometry: Geometry): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:sfOverlaps</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:sfOverlaps</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Relate(anotherGeometry: Geometry, IntersectionPatternMatrix: String): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:relate</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.1.3 Spatial Analysis</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Buffer(distance: Double): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:buffer</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ConvexHull(): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:convexHull</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Intersection(anotherGeometry: Geometry): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:intersection</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Union(anotherGeometry: Geometry): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:union</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Difference(anotherGeometry: Geometry): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:difference</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">SymDifference(anotherGeometry: Geometry): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:symDifference</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.0</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.2.1 GeometryCollection</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">NumGeometries(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:numGeometries</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">GeometryN(N: Integer): Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:geometryN</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.3.1 Point</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">X(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Y(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Z(): Double (not in the SQL spec, but a logical extension)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">M(): Double (not in the SQL spec, but a logical extension)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.5.1 Curve</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Length(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:length</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasLength</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">StartPoint(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">EndPoint(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IsClosed(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IsRing(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.6.1 LineString</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">NumPoints(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">PointN(N: Integer): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.7.1 MultiCurve</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">IsClosed(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Length(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:length</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasLength</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.9.1 Surface</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Area(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:area</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasArea</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Centroid(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:centroid</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasCentroid</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">PointOnSurface(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.10.1 Polygon</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ExteriorRing(): LineString</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">NumInteriorRing(): Integer</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">InteriorRingN(N: Integer): LineString</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="5" style="background-color: #FFFFFF;"><p class="tableblock"><strong>2.1.11.1 MultiSurface</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Area(): Double</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:area</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasArea</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Centroid(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geof:centroid</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>geo:hasCentroid</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1.1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">PointOnSurface(): Point</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div class="sect1">
 <h2 id="_bibliography"><a class="anchor" href="#_bibliography"></a>Bibliography</h2>
 <div class="sectionbody">
@@ -10929,7 +11775,10 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 <p><a id="DGGSAS"></a>[DGGSAS] Open Geospatial Consortium, <em>Abstract Standard Topic 21 - Discrete Global Grid Systems - Part 1 Core Reference system and Operations and Equal Area Earth Reference System</em>, Open Geospatial Consortium Standard (2021) <a href="https://docs.ogc.org/as/20-040r3/20-040r3.html">http://www.opengis.net/doc/AS/dggs/2.0</a></p>
 </li>
 <li>
-<p><a id="CQLDEF"></a> Open Geospatial Consortium, OGC API - Features - Part 3: Filtering and the Common Query Language (CQL2) (2021) <a href="https://docs.ogc.org/DRAFTS/19-079r1.html">http://www.opengis.net/doc/IS/ogcapi-features-3/1.0</a></p>
+<p><a id="CQLDEF"></a> Open Geospatial Consortium, <em>OGC API - Features - Part 3: Filtering and the Common Query Language (CQL2)</em> (2021) <a href="https://docs.ogc.org/DRAFTS/19-079r1.html">http://www.opengis.net/doc/IS/ogcapi-features-3/1.0</a></p>
+</li>
+<li>
+<p><a id="WFS"></a>[WFS] Open Geospatial Consortium, <em>OpenGIS Web Feature Service 2.0 Interface Standard</em> (2010). OGC Implementation Standard (2 November 2010). <a href="http://www.opengeospatial.org/standards/wfs" class="bare">http://www.opengeospatial.org/standards/wfs</a></p>
 </li>
 <li>
 <p><a id="LOGIC"></a>[LOGIC] Randell, D. A., Cui, Z. and Cohn, A. G.: A spatial logic based on regions and connection, Proc. 3rd Int. Conf. on Knowledge Representation and Reasoning, Morgan Kaufmann, San Mateo, pp. 165–176 (1992)</p>
@@ -10951,6 +11800,9 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 </li>
 <li>
 <p><a id="OWL2"></a>[OWL2] World Wide Web Consortium, <em>OWL 2 Web Ontology Language Document Overview (Second Edition)</em>, W3C Recommendation (11 December 2012). <a href="https://www.w3.org/TR/owl2-overview/" class="bare">https://www.w3.org/TR/owl2-overview/</a></p>
+</li>
+<li>
+<p><a id="TIME"></a>[TIME] World Wide Web Consortium, <em>Time Ontology in OWL</em>, W3C Candidate Recommendation (26 March 2020). <a href="https://www.w3.org/TR/owl-time/" class="bare">https://www.w3.org/TR/owl-time/</a></p>
 </li>
 <li>
 <p><a id="RIF"></a>[RIF] World Wide Web Consortium, <em>RIF Overview (Second Edition)</em>, W3C Working Group Note (5 February 2013). <a href="https://www.w3.org/TR/rif-overview/" class="bare">https://www.w3.org/TR/rif-overview/</a></p>
@@ -11053,7 +11905,7 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-02-09 23:13:41 UTC
+Last updated 2022-02-10 05:51:46 UTC
 </div>
 </div>
 </body>
