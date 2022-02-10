@@ -23,7 +23,7 @@ GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition
 
 [NOTE]
 ====
-Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Collections and require that Features be members of exactly on Feature Collection. There is no such restriction in GeoSPARQL: Features may be members of one or more Feature Collections.
+Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Collections and require that Features be members of exactly one Feature Collection. There is no such restriction in GeoSPARQL: Features may be members of one or more Feature Collections.
 ====
 
 An extension to the above can retrieve any Geometry serializations for the Features within Feature Collection `ex:x`:
@@ -106,7 +106,7 @@ CQL2 defines comparison predicates to compare two scalar expressions. A comparis
 | number=5 | ``?item my:number "5"^^xsd:integer`` | 
 | number>5 | ?item my:number ?number . FILTER(?number>5) | Arithmetic comparisons (<,>,>=,<=) are converted to filter expressions
 | number BETWEEN 5 AND 10 | `?item my:number ?number . FILTER(?number>=5 && ?number<=10)` | BETWEEN statements are converted to arithmetic expressions
-| name IN ("OGC","W3C") | `VALUES ?namevalues {"OGC" "W3C"} ?item my:name ?namevalues` | IN statements are expressed by VALUES statements
+| name IN ("OGC","W3C") | `?item my:name IN ("OGC", "W3C")` | IN statements may also be expressed using SPARQL VALUES statements
 | name IS NOT NULL | `EXISTS {?item my:name ?name }` | NOT NULL statements are converted to EXIST statements
 | name LIKE "OGC." | `?item my:name ?name . FILTER(regex(?name, "OGC.", "i" ))` | LIKE statements are converted to SPARQL regex filters
 | INTERSECTS(geometry1, geometry2) | `FILTER(geof:sfIntersects(?geometry1,?geometry2))` | The INTERSECTS filter statement is converted to a GeoSPARQL FILTER statement
@@ -153,7 +153,7 @@ Temporal operators are not part of the GeoSPARQL standard.
 | beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
 |===
 
-As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (`xsd:date`, `xsd:dateTime` and `xsd:dateTimeStamp` literals) and OWL TIME <<TIME>> may be used to asset temporal relations between objects.
+As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (`xsd:date`, `xsd:dateTime` and `xsd:dateTimeStamp` literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
 
 == F.3 Mappings from Simple Features for SQL
 
