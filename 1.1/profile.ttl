@@ -30,12 +30,17 @@
         <http://www.opengis.net/doc/IS/geosparql/1.1> ,
         <http://www.opengis.net/doc/IS/geosparql/1.1.pdf> ,
         <http://www.opengis.net/ont/geosparql> ,
-        <http://www.opengis.net/ont/geosparql/profile/validator> ,
-        <https://github.com/opengeospatial/ogc-geosparql> ,
+        <http://www.opengis.net/ont/geosparql.json> ,
+        <http://www.opengis.net/def/geosparql/validator> ,
+        <http://www.opengis.net/def/geosparql/repository> ,
         <http://www.opengis.net/def/geosparql/funcsrules> ,
+        <http://www.opengis.net/def/geosparql/safuncs> ,
         <http://www.opengis.net/ont/sf> ,
-        <http://www.opengis.net/def/geosparql/rules> ,
-        <http://www.opengis.net/def/geosparql/rules-script> ,
+        <http://www.opengis.net/def/geosparql/rifrules> ,
+        <http://www.opengis.net/def/geosparql/rifrules-script> ,
+        <http://www.opengis.net/def/geosparql/reqs> ,
+        <http://www.opengis.net/def/geosparql/geo-jsonldcontext> ,
+        <http://www.opengis.net/def/geosparql/sf-jsonldcontext> ,
         <http://www.opengis.net/def/geosparql/extended-examples> ;
 .
 
@@ -80,7 +85,7 @@
     prof:hasRole role:schema ;
 .
 
-<http://www.opengis.net/ont/geosparql/profile/validator>
+<http://www.opengis.net/def/geosparql/validator>
     a prof:ResourceDescriptor ;
     dcterms:title "GeoSPARQL RDF Shapes Validator"@en ;
     dcterms:description "A [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) file that specifies rules for RDF data that can be used to test the conformance of data to the GeoSPARQL standard."@en ;
@@ -90,7 +95,7 @@
     prof:hasRole role:validation ;
 .
 
-<https://github.com/opengeospatial/ogc-geosparql>
+<http://www.opengis.net/def/geosparql/repository>
     a prof:ResourceDescriptor ;
     dcterms:title "Profile code repository"@en ;
     dcterms:description "Code repository storing all Profile artifacts"@en ;
@@ -99,6 +104,7 @@
 .
 
 <http://www.opengis.net/def/geosparql/funcsrules>
+    a prof:ResourceDescriptor ;
     dcterms:title "GeoSPARQL Functions & Rules vocabulary"@en ;
     dcterms:description "all GeoSPARQL functions and rules presented as a SKOS vocabulary"@en ;
     dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
@@ -108,6 +114,7 @@
 .
 
 <http://www.opengis.net/def/geosparql/safuncs>
+    a prof:ResourceDescriptor ;
     dcterms:title "GeoSPARQL Spatial Aggregate Functions"@en ;
     dcterms:description "all GeoSPARQL Spatial Aggregate functions presented as a SKOS vocabulary"@en ;
     dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
@@ -117,6 +124,7 @@
 .
 
 <http://www.opengis.net/ont/sf>
+    a prof:ResourceDescriptor ;
     dcterms:title "Simple Features Vocabulary"@en ;
     dcterms:description "An OWL ontology (vocabulary) of the Simple Features geometry types"@en ;
     dcterms:conformsTo <http://www.w3.org/TR/owl2-rdf-based-semantics/> ;
@@ -125,7 +133,8 @@
     prof:hasRole role:vocabulary ;
 .
 
-<http://www.opengis.net/def/geosparql/rules>
+<http://www.opengis.net/def/geosparql/rifrules>
+    a prof:ResourceDescriptor ;
     dcterms:title "GeoSPARQL Rules in RIF"@en ;
     dcterms:description "This file contains Rules Interchange Format (RIF) rules for the GeoSPARQL rules defined in the Specification. These rules have been automatically generated using the 'Generator script for GeoSPARQL Rules in RIF' which, in turn, uses the RIF template provided in the Specification."@en ;
     dcterms:conformsTo <https://www.w3.org/TR/rif-bld/> ;
@@ -134,24 +143,27 @@
     prof:hasRole role:specification ;
 .
 
-<http://www.opengis.net/def/geosparql/rules-script>
+<http://www.opengis.net/def/geosparql/rifrules-script>
+    a prof:ResourceDescriptor ;
     dcterms:title "Generator script for GeoSPARQL Rules in RIF"@en ;
     dcterms:description "This is a Python script used to generate the 'GeoSPARQL Rules in RIF' artifact from templates specified in the 'Ontology specification in PDF'. This script is not indended to be executable 'on the web'. Its content is presented as plain text for reference"@en ;
     dcterms:format "text/plain" ;
     prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/rifgenerator.py"^^xsd:anyURI ;
     prof:hasRole role:script ;  # this may not be appropriate: we may need a new Role, see https://github.com/w3c/dx-prof/issues/41
-
 .
 
-<http://www.opengis.net/def/geosparql/sf-jsonldcontext>
-    dcterms:title "JSON-LD context for the sf namespace"@en ;
-    dcterms:description "This is a JSON-LD context which can be used to incorporate the Simple Features vocabulary in a JSON-LD file"@en ;
-    dcterms:format "text/json" ;
-    prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/contexts/sf-context.json"^^xsd:anyURI ;
-    prof:hasRole role:specification ;
+<http://www.opengis.net/def/geosparql/reqs>
+    a prof:ResourceDescriptor ;
+    dcterms:title "GeoSPARQL 1.1 Requirement and Conformance Class Vocabulary"@en ;
+    dcterms:description "A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification"@en ;
+    dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
+    dcterms:format "text/turtle" ;
+    prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/reqs.ttl"^^xsd:anyURI ;
+    prof:hasRole role:specification ;  # this may not be appropriate: we may need a new Role, see https://github.com/w3c/dx-prof/issues/41
 .
 
 <http://www.opengis.net/def/geosparql/geo-jsonldcontext>
+    a prof:ResourceDescriptor ;
     dcterms:title "JSON-LD context for the geo namespace"@en ;
     dcterms:description "This is a JSON-LD context which can be used to incorporate the GeoSPARQL vocabulary in a JSON-LD file"@en ;
     dcterms:format "text/json" ;
@@ -159,18 +171,19 @@
     prof:hasRole role:specification ;
 .
 
+<http://www.opengis.net/def/geosparql/sf-jsonldcontext>
+    a prof:ResourceDescriptor ;
+    dcterms:title "JSON-LD context for the sf namespace"@en ;
+    dcterms:description "This is a JSON-LD context which can be used to incorporate the Simple Features vocabulary in a JSON-LD file"@en ;
+    dcterms:format "text/json" ;
+    prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/contexts/sf-context.json"^^xsd:anyURI ;
+    prof:hasRole role:specification ;
+.
+
 <http://www.opengis.net/def/geosparql/extended-examples>
+    a prof:ResourceDescriptor ;
     dcterms:title "Extended Examples"@en ;
     dcterms:description "Examples that are too long to sensibly fit within the Specification's Annex B. They are presented as individual files within a version control repository directory."@en ;
     prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/tree/master/1.1/examples"^^xsd:anyURI ;
     prof:hasRole role:example ;
-.
-
-<http://www.opengis.net/def/geosparql/reqs>
-    dcterms:title "GeoSPARQL 1.1 Requirement and Conformance Class Vocabulary"@en ;
-    dcterms:description "A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification"@en ;
-    dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
-    dcterms:format "text/turtle" ;
-    prof:hasArtifact "https://github.com/opengeospatial/ogc-geosparql/blob/master/1.1/reqs.ttl"^^xsd:anyURI ;
-    prof:hasRole role:specification ;  # this may not be appropriate: we may need a new Role, see https://github.com/w3c/dx-prof/issues/41
 .
