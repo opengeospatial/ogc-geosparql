@@ -3447,27 +3447,33 @@ this property is the generic property used to connect a Geometry with its serial
 <div class="paragraph data-line-284">
 <p>This section establishes the requirements for representing Geometry data in RDF literals, according to different non-RDF systems.</p>
 </div>
-<div id="NOTE" class="exampleblock data-line-287">
-<div class="content">
+<div class="paragraph data-line-286">
+<p>GeoSPARQL presents specializations of the <code>geo:hasSerilization</code> property for indicating particular serializations and specialized datatype literals for containing them but does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.</p>
+</div>
 <div class="paragraph data-line-288">
-<p>GeoSPARQL&#8217;s RDF literal representations of geometry data are derived from the <em>Simple Features Access</em> (SFA) <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of spatial objects which it presents in a class hierarchy. It defines classes such as <code>Point</code>, <code>Curve</code> and <code>Surface</code> and specialised variants of them. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
+<p>GeoSPARWL does present some requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.</p>
 </div>
-<div class="paragraph data-line-290">
-<p>Objects characterised by SFA can be represented in GeoSPARQL literals according to multiple representation systems. For example, SFA defines a</p>
+<div id="NOTE" class="exampleblock data-line-291">
+<div class="content">
+<div class="paragraph data-line-292">
+<p>GeoSPARQL&#8217;s expectation of RDF literal representations of geometry data is that it is related to the <em>Simple Features Access</em> (SFA) <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of spatial objects which defines classes such as <code>Point</code>, <code>Curve</code> and <code>Surface</code> and specialised variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
+</div>
+<div class="paragraph data-line-294">
+<p>Some geometry represenation systems given here do not use the same terminology as SFA, in particular the Discrete Global Grid rrepresentation. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.</p>
 </div>
 </div>
 </div>
-<div class="sect3 data-line-293">
+<div class="sect3 data-line-297">
 <h4 id="_well_known_text_serializationwkt"><a class="anchor" href="#_well_known_text_serializationwkt"></a>8.6.1. Well-Known Text (serialization=WKT)</h4>
-<div class="paragraph data-line-295">
+<div class="paragraph data-line-299">
 <p>This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by <em>Simple Features Access</em> <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
 </div>
-<div class="sect4 data-line-297">
+<div class="sect4 data-line-301">
 <h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.6.1.1. RDFS Datatype: geo:wktLiteral</h5>
-<div class="paragraph data-line-299">
+<div class="paragraph data-line-303">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#wktLiteral" data-href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> is used to contain the Well-Known Text (WKT) serialization of a Geometry.</p>
 </div>
-<div class="listingblock data-line-301">
+<div class="listingblock data-line-305">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:wktLiteral
     a rdfs:Datatype ;
@@ -3477,7 +3483,7 @@ this property is the generic property used to connect a Geometry with its serial
 .</code></pre>
 </div>
 </div>
-<table id="req_geometry_extension_wkt-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-310">
+<table id="req_geometry_extension_wkt-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-314">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3490,23 +3496,23 @@ this property is the generic property used to connect a Geometry with its serial
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-315">
+<div class="paragraph data-line-319">
 <p>The following <em>ABNF</em> <a href="#IETF5234">[IETF5234]</a> syntax specification formally defines this literal:</p>
 </div>
-<div class="listingblock data-line-317">
+<div class="listingblock data-line-321">
 <div class="content">
 <pre class="highlight"><code>wktLiteral ::= opt-iri-and-space geometric-data
 
 opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-323">
+<div class="paragraph data-line-327">
 <p>The token <code>opt-iri-and-space</code> may be either an IRI and space or nothing (<code>""</code>), the token <code>IRI</code> (Internationalized Resource Identifier) is essentially a web address and is defined in <a href="#IETF3987">[IETF3987]</a> and the token <code>LWSP</code>, is one or more white space characters, as defined in <a href="#IETF5234">[IETF5234]</a>. <code>geometric-data</code> is the Well-Known Text representation of the Geometry, defined in <a href="#ISO13249">[ISO13249]</a>.</p>
 </div>
-<div class="paragraph data-line-325">
+<div class="paragraph data-line-329">
 <p>In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: <a href="http://www.opengis.net/def/crs/OGC/1.3/CRS84" data-href="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><code>&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;</code></a>. This IRI denotes WGS 84 longitude-latitude.</p>
 </div>
-<table id="req_geometry_extension_wkt-literal-default-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-328">
+<table id="req_geometry_extension_wkt-literal-default-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-332">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3519,10 +3525,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-333">
+<div class="paragraph data-line-337">
 <p>The OGC maintains a set of SRS IRIs under the <code>http://www.opengis.net/def/crs/</code> namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.</p>
 </div>
-<table id="req_geometry_extension_wkt-axis-order" class="tableblock frame-all grid-all stripes-odd stretch data-line-336">
+<table id="req_geometry_extension_wkt-axis-order" class="tableblock frame-all grid-all stripes-odd stretch data-line-340">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3535,23 +3541,23 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-341">
+<div class="paragraph data-line-345">
 <p>The example <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:</p>
 </div>
-<div class="listingblock data-line-343">
+<div class="listingblock data-line-347">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"Point(-83.38 33.95)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-347">
+<div class="paragraph data-line-351">
 <p>A second example below encodes the same point as encoded in the example above but using a SRS identified by <a href="http://www.opengis.net/def/SRS/EPSG/0/4326" data-href="http://www.opengis.net/def/SRS/EPSG/0/4326"><code>http://www.opengis.net/def/SRS/EPSG/0/4326</code></a>: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):</p>
 </div>
-<div class="listingblock data-line-349">
+<div class="listingblock data-line-353">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"&lt;http://www.opengis.net/def/crs/EPSG/0/4326&gt; Point(33.95 -83.38)"^^&lt;http://www.opengis.net/ont/geosparql#wktLiteral&gt;</code></pre>
 </div>
 </div>
-<table id="req_geometry_extension_wkt-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-355">
+<table id="req_geometry_extension_wkt-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-359">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3565,12 +3571,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect4 data-line-360">
+<div class="sect4 data-line-364">
 <h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.6.1.2. Property: geo:asWKT</h5>
-<div class="paragraph data-line-362">
+<div class="paragraph data-line-366">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asWKT" data-href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> is defined to link a Geometry with its WKT serialization.</p>
 </div>
-<table id="req_geometry_extension_geometry-as-wkt-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-365">
+<table id="req_geometry_extension_geometry-as-wkt-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-369">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3583,7 +3589,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="listingblock data-line-370">
+<div class="listingblock data-line-374">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asWKT
     a rdf:Property, owl:DatatypeProperty ;
@@ -3597,17 +3603,17 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4 data-line-382">
+<div class="sect4 data-line-386">
 <h5 id="_function_geofaswkt"><a class="anchor" href="#_function_geofaswkt"></a>8.6.1.3. Function: geof:asWKT</h5>
-<div class="listingblock data-line-384">
+<div class="listingblock data-line-388">
 <div class="content">
 <pre class="highlight"><code>geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-388">
+<div class="paragraph data-line-392">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/asWKT" data-href="http://www.opengis.net/def/function/geosparql/asWKT"><code>geof:asWKT</code></a> converts <code>geom</code> to an equivalent WKT representation preserving the coordinate reference system.</p>
 </div>
-<table id="req_geometry_extension_asWKT-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-391">
+<table id="req_geometry_extension_asWKT-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-395">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3622,18 +3628,18 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 </div>
-<div class="sect3 data-line-396">
+<div class="sect3 data-line-400">
 <h4 id="_geography_markup_language_serializationgml"><a class="anchor" href="#_geography_markup_language_serializationgml"></a>8.6.2. Geography Markup Language (serialization=GML)</h4>
-<div class="paragraph data-line-398">
+<div class="paragraph data-line-402">
 <p>This section establishes requirements for representing Geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> and one property, <a href="#_function_geofasgml">as GML</a>.</p>
 </div>
-<div class="sect4 data-line-401">
+<div class="sect4 data-line-405">
 <h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.6.2.1. RDFS Datatype: geo:gmlLiteral</h5>
-<div class="paragraph data-line-403">
+<div class="paragraph data-line-407">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral" data-href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> is used to contain the Geography Markup Language (GML) serialization of a Geometry.</p>
 </div>
-<div class="listingblock data-line-405">
+<div class="listingblock data-line-409">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:gmlLiteral
     a rdfs:Datatype ;
@@ -3643,10 +3649,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-414">
+<div class="paragraph data-line-418">
 <p>Valid <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> instances are formed by encoding Geometry information as a valid element from the GML schema that implements a subtype of <code>GM_Object</code>. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml/3.2}AbstractGeometry</code>. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element <code>{http://www.opengis.net/ont/gml}_Geometry</code>.</p>
 </div>
-<table id="req_geometry_extension_gml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-417">
+<table id="req_geometry_extension_gml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-421">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3659,10 +3665,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-422">
+<div class="paragraph data-line-426">
 <p>The example <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:</p>
 </div>
-<div class="listingblock data-line-424">
+<div class="listingblock data-line-428">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"""
 &lt;gml:Point
@@ -3673,7 +3679,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 """^^&lt;http://www.opengis.net/ont/geosparql#gmlLiteral&gt;</code></pre>
 </div>
 </div>
-<table id="req_geometry_extension_gml-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-435">
+<table id="req_geometry_extension_gml-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-439">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3686,7 +3692,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<table id="req_geometry_extension_gml-profile" class="tableblock frame-all grid-all stripes-odd stretch data-line-441">
+<table id="req_geometry_extension_gml-profile" class="tableblock frame-all grid-all stripes-odd stretch data-line-445">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3700,12 +3706,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect4 data-line-446">
+<div class="sect4 data-line-450">
 <h5 id="_property_geoasgml"><a class="anchor" href="#_property_geoasgml"></a>8.6.2.2. Property: geo:asGML</h5>
-<div class="paragraph data-line-448">
+<div class="paragraph data-line-452">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asGML" data-href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> is defined to link a Geometry with its GML serialization.</p>
 </div>
-<table id="req_geometry_extension_geometry-as-gml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-451">
+<table id="req_geometry_extension_geometry-as-gml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-455">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3718,7 +3724,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="listingblock data-line-456">
+<div class="listingblock data-line-460">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asGML
     a rdf:Property ;
@@ -3732,17 +3738,17 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4 data-line-468">
+<div class="sect4 data-line-472">
 <h5 id="_function_geofasgml"><a class="anchor" href="#_function_geofasgml"></a>8.6.2.3. Function: geof:asGML</h5>
-<div class="listingblock data-line-470">
+<div class="listingblock data-line-474">
 <div class="content">
 <pre class="highlight"><code>geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-474">
+<div class="paragraph data-line-478">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/asGML" data-href="http://www.opengis.net/def/function/geosparql/asGML"><code>geof:asGML</code></a> converts <code>geom</code> to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system.</p>
 </div>
-<table id="req_geometry_extension_asGML-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-477">
+<table id="req_geometry_extension_asGML-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-481">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3757,18 +3763,18 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 </div>
-<div class="sect3 data-line-482">
+<div class="sect3 data-line-486">
 <h4 id="_geojson_serializationgeojson"><a class="anchor" href="#_geojson_serializationgeojson"></a>8.6.3. GeoJSON (serialization=GEOJSON)</h4>
-<div class="paragraph data-line-484">
+<div class="paragraph data-line-488">
 <p>This section establishes requirements for representing Geometry data in RDF based on GeoJSON as defined by <a href="#GeoJSON">[GeoJSON]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
 </div>
-<div class="sect4 data-line-487">
+<div class="sect4 data-line-491">
 <h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.6.3.1. RDFS Datatype: geo:geoJSONLiteral</h5>
-<div class="paragraph data-line-489">
+<div class="paragraph data-line-493">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral" data-href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:geoJSONLiteral</code></a> is used to contain the Geo JavaScript Object Notation (GeoJSON) serialization of a Geometry.</p>
 </div>
-<div class="listingblock data-line-491">
+<div class="listingblock data-line-495">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:geoJSONLiteral a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
@@ -3776,10 +3782,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
     skos:definition "A GeoJSON serialization of a Geometry object."@en .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-498">
+<div class="paragraph data-line-502">
 <p>Valid <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> instances are formed by encoding Geometry information as a Geometry object as defined in the GeoJSON specification <a href="#GEOJSON">[GEOJSON]</a>.</p>
 </div>
-<table id="req_geometry_extension_geojson-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-501">
+<table id="req_geometry_extension_geojson-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-505">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3792,7 +3798,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<table id="req_geometry_extension_geojson-literal-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-507">
+<table id="req_geometry_extension_geojson-literal-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-511">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3805,17 +3811,17 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-512">
+<div class="paragraph data-line-516">
 <p>The example <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
-<div class="listingblock data-line-514">
+<div class="listingblock data-line-518">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"""
 {"type": "Point", "coordinates": [-83.38,33.95]}
 """^^&lt;http://www.opengis.net/ont/geosparql#geoJSONLiteral&gt;</code></pre>
 </div>
 </div>
-<table id="req_geometry_extension_geojson-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-521">
+<table id="req_geometry_extension_geojson-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-525">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3829,12 +3835,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect4 data-line-526">
+<div class="sect4 data-line-530">
 <h5 id="_property_geoasgeojson"><a class="anchor" href="#_property_geoasgeojson"></a>8.6.3.2. Property: geo:asGeoJSON</h5>
-<div class="paragraph data-line-528">
+<div class="paragraph data-line-532">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON" data-href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> is defined to link a Geometry with its GeoJSON serialization.</p>
 </div>
-<table id="req_geometry_extension_geojson-as-geojson-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-531">
+<table id="req_geometry_extension_geojson-as-geojson-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-535">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3847,7 +3853,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="listingblock data-line-536">
+<div class="listingblock data-line-540">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asGeoJSON
     a rdf:Property, owl:DatatypeProperty ;
@@ -3861,17 +3867,17 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4 data-line-548">
+<div class="sect4 data-line-552">
 <h5 id="_function_geofasgeojson"><a class="anchor" href="#_function_geofasgeojson"></a>8.6.3.3. Function: geof:asGeoJSON</h5>
-<div class="listingblock data-line-550">
+<div class="listingblock data-line-554">
 <div class="content">
 <pre class="highlight"><code>geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-554">
+<div class="paragraph data-line-558">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON" data-href="http://www.opengis.net/def/function/geosparql/asGeoJSON"><code>geof:asGeoJSON</code></a> converts <code>geom</code> to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal.</p>
 </div>
-<table id="req_geometry_extension_asGeoJSON-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-557">
+<table id="req_geometry_extension_asGeoJSON-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-561">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3886,18 +3892,18 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 </div>
-<div class="sect3 data-line-562">
+<div class="sect3 data-line-566">
 <h4 id="_keyhole_markup_language_serializationkml"><a class="anchor" href="#_keyhole_markup_language_serializationkml"></a>8.6.4. Keyhole Markup Language (serialization=KML)</h4>
-<div class="paragraph data-line-564">
+<div class="paragraph data-line-568">
 <p>This section establishes requirements for representing Geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> and one property, <a href="#_function_geofaskml">as KML</a>.</p>
 </div>
-<div class="sect4 data-line-567">
+<div class="sect4 data-line-571">
 <h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.6.4.1. RDFS Datatype: geo:kmlLiteral</h5>
-<div class="paragraph data-line-569">
+<div class="paragraph data-line-573">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#kmlLiteral" data-href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> is used to contain the Keyhole Markup Language (KML) serialization of a Geometry.</p>
 </div>
-<div class="listingblock data-line-571">
+<div class="listingblock data-line-575">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:kmlLiteral
     a rdfs:Datatype ;
@@ -3907,10 +3913,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-580">
+<div class="paragraph data-line-584">
 <p>Valid <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> instances are formed by encoding Geometry information as a Geometry object as defined in the KML specification <a href="#OGCKML">[OGCKML]</a>.</p>
 </div>
-<table id="req_geometry_extension_kml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-584">
+<table id="req_geometry_extension_kml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-588">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3923,7 +3929,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<table id="req_geometry_extension_kml-literal-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-590">
+<table id="req_geometry_extension_kml-literal-srs" class="tableblock frame-all grid-all stripes-odd stretch data-line-594">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3936,10 +3942,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-595">
+<div class="paragraph data-line-599">
 <p>The example <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:</p>
 </div>
-<div class="listingblock data-line-597">
+<div class="listingblock data-line-601">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"""
 &lt;Point xmlns=\"http://www.opengis.net/kml/2.2\"&gt;
@@ -3948,7 +3954,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 """^^&lt;http://www.opengis.net/ont/geosparql#kmlLiteral&gt;</code></pre>
 </div>
 </div>
-<table id="req_geometry_extension_kml-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-607">
+<table id="req_geometry_extension_kml-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-611">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3962,12 +3968,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tbody>
 </table>
 </div>
-<div class="sect4 data-line-612">
+<div class="sect4 data-line-616">
 <h5 id="_property_geoaskml"><a class="anchor" href="#_property_geoaskml"></a>8.6.4.2. Property: geo:asKML</h5>
-<div class="paragraph data-line-614">
+<div class="paragraph data-line-618">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asKML" data-href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> is defined to link a Geometry with its KML serialization.</p>
 </div>
-<table id="req_geometry_extension_as-kml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-617">
+<table id="req_geometry_extension_as-kml-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-621">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -3980,10 +3986,10 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-622">
+<div class="paragraph data-line-626">
 <p>The property <a href="#_property_geoaskml">as KML</a> is used to link a geometric element with its KML serialization.</p>
 </div>
-<div class="listingblock data-line-624">
+<div class="listingblock data-line-628">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asKML
     a rdf:Property, owl:DatatypeProperty;
@@ -3997,17 +4003,17 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4 data-line-636">
+<div class="sect4 data-line-640">
 <h5 id="_function_geofaskml"><a class="anchor" href="#_function_geofaskml"></a>8.6.4.3. Function: geof:asKML</h5>
-<div class="listingblock data-line-638">
+<div class="listingblock data-line-642">
 <div class="content">
 <pre class="highlight"><code>geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-642">
+<div class="paragraph data-line-646">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/asKML" data-href="http://www.opengis.net/def/function/geosparql/asKML"><code>geof:asKML</code></a> converts <code>geom</code> to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal.</p>
 </div>
-<table id="req_geometry_extension_asKML-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-645">
+<table id="req_geometry_extension_asKML-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-649">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4022,16 +4028,16 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 </div>
-<div class="sect3 data-line-650">
+<div class="sect3 data-line-654">
 <h4 id="_discrete_global_grid_system_serializationdggs"><a class="anchor" href="#_discrete_global_grid_system_serializationdggs"></a>8.6.5. Discrete Global Grid System (serialization=DGGS)</h4>
-<div class="paragraph data-line-652">
+<div class="paragraph data-line-656">
 <p>This section establishes the requirements for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
 </div>
-<div class="paragraph data-line-654">
+<div class="paragraph data-line-658">
 <p>Here is defined one RDFS Datatypes:
 <a href="http://www.opengis.net/ont/geosparql#dggsLiteral" data-href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>http://www.opengis.net/ont/geosparql#dggsLiteral</code></a> and one property, <a href="http://www.opengis.net/ont/geosparql#asDGGS" data-href="http://www.opengis.net/ont/geosparql#asDGGS"><code>http://www.opengis.net/ont/geosparql#asDGGS</code></a>.</p>
 </div>
-<div class="admonitionblock note data-line-657">
+<div class="admonitionblock note data-line-661">
 <table>
 <tr>
 <td class="icon">
@@ -4043,12 +4049,12 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 </tr>
 </table>
 </div>
-<div class="sect4 data-line-659">
+<div class="sect4 data-line-663">
 <h5 id="_rdfs_datatype_geodggsliteral"><a class="anchor" href="#_rdfs_datatype_geodggsliteral"></a>8.6.5.1. RDFS Datatype: geo:dggsLiteral</h5>
-<div class="paragraph data-line-661">
+<div class="paragraph data-line-665">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#dggsLiteral" data-href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> is used to contain the Discrete Global Grid System (DGGS) serialization of a Geometry.</p>
 </div>
-<div class="listingblock data-line-663">
+<div class="listingblock data-line-667">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:dggsLiteral
     a rdfs:Datatype ;
@@ -4058,10 +4064,10 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-672">
+<div class="paragraph data-line-676">
 <p>Valid <a href="#_rdfs_datatype_geodggsliteral">DGGS Literal</a> instances are formed by encoding Geometry information according to specific DGGS implementation. The specific implementation should be indicated by use of a subclass of the <code>geo:dggsLiteral</code> datatype.</p>
 </div>
-<table id="req_geometry_extension_dggs-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-675">
+<table id="req_geometry_extension_dggs-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-679">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4074,7 +4080,7 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 </tr>
 </tbody>
 </table>
-<table id="req_geometry_extension_dggs-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-681">
+<table id="req_geometry_extension_dggs-literal-empty" class="tableblock frame-all grid-all stripes-odd stretch data-line-685">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4087,10 +4093,10 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-686">
+<div class="paragraph data-line-690">
 <p>An example of a literal for concrete DGGS, AusPIX, could be</p>
 </div>
-<div class="listingblock data-line-688">
+<div class="listingblock data-line-692">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">ex:auspixDggsLiteral
     a rdfs:Datatype ;
@@ -4099,15 +4105,15 @@ The datatype defined here is for an abstract DGGS implementation (<a href="#_rdf
 .</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-696">
+<div class="paragraph data-line-700">
 <p>A single <em>Cell</em> Geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of <em>R3234</em> is analogous to either a <code>Point</code> or simple <code>Polygon</code> in WKT geometries.</p>
 </div>
-<div class="listingblock data-line-698">
+<div class="listingblock data-line-702">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">"CellList (R3234)"^^&lt;http://example.com#auspixDggsLiteral&gt;</code></pre>
 </div>
 </div>
-<div class="admonitionblock note data-line-702">
+<div class="admonitionblock note data-line-706">
 <table>
 <tr>
 <td class="icon">
@@ -4120,12 +4126,12 @@ What <code>R3234</code> means, or the meaning of any other element within a conc
 </table>
 </div>
 </div>
-<div class="sect4 data-line-704">
+<div class="sect4 data-line-708">
 <h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.6.5.2. Property: geo:asDGGS</h5>
-<div class="paragraph data-line-706">
+<div class="paragraph data-line-710">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asDGGS" data-href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> is defined to link a Geometry with its DGGS serialization.</p>
 </div>
-<table id="req_geometry_extension_geometry-as-dggs-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-709">
+<table id="req_geometry_extension_geometry-as-dggs-literal" class="tableblock frame-all grid-all stripes-odd stretch data-line-713">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4140,7 +4146,7 @@ to be used in SPARQL graph patterns.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="listingblock data-line-716">
+<div class="listingblock data-line-720">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:asDGGS
     a rdf:Property, owl:DatatypeProperty ;
@@ -4153,7 +4159,7 @@ to be used in SPARQL graph patterns.</p></td>
 .</code></pre>
 </div>
 </div>
-<div class="admonitionblock note data-line-728">
+<div class="admonitionblock note data-line-732">
 <table>
 <tr>
 <td class="icon">
@@ -4166,17 +4172,17 @@ It is expected that this property will be used to indicate specific DGGS data ty
 </table>
 </div>
 </div>
-<div class="sect4 data-line-730">
+<div class="sect4 data-line-734">
 <h5 id="_function_geofasdggs"><a class="anchor" href="#_function_geofasdggs"></a>8.6.5.3. Function: geof:asDGGS</h5>
-<div class="listingblock data-line-732">
+<div class="listingblock data-line-736">
 <div class="content">
 <pre class="highlight"><code>geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-736">
+<div class="paragraph data-line-740">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/asDGGS" data-href="http://www.opengis.net/def/function/geosparql/asDGGS"><code>geof:asDGGS</code></a> converts <code>geom</code> to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the <code>specificDggsDatatype</code> parameter.</p>
 </div>
-<table id="req_geometry_extension_asDGGS-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-739">
+<table id="req_geometry_extension_asDGGS-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-743">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4192,12 +4198,12 @@ It is expected that this property will be used to indicate specific DGGS data ty
 </div>
 </div>
 </div>
-<div class="sect2 data-line-744">
+<div class="sect2 data-line-748">
 <h3 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.7. Non-topological Query Functions</h3>
-<div class="paragraph data-line-746">
+<div class="paragraph data-line-750">
 <p>This clause defines SPARQL functions for performing non-topological spatial operations.</p>
 </div>
-<table id="req_geometry_extension_query-functions" class="tableblock frame-all grid-all stripes-odd stretch data-line-749">
+<table id="req_geometry_extension_query-functions" class="tableblock frame-all grid-all stripes-odd stretch data-line-753">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4230,7 +4236,7 @@ as SPARQL extension functions, consistent with definitions of these functions in
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-774">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-778">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4255,7 +4261,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 </tr>
 </tbody>
 </table>
-<div class="admonitionblock note data-line-791">
+<div class="admonitionblock note data-line-795">
 <table>
 <tr>
 <td class="icon">
@@ -4269,7 +4275,7 @@ literals and thus the lack of existing software libraries for their manipulation
 </tr>
 </table>
 </div>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-795">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-799">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4283,7 +4289,7 @@ as SPARQL extension functions, consistent with definitions of these functions in
 </tr>
 </tbody>
 </table>
-<table class="tableblock frame-all grid-all stripes-odd stretch data-line-801">
+<table class="tableblock frame-all grid-all stripes-odd stretch data-line-805">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4297,70 +4303,70 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 </tr>
 </tbody>
 </table>
-<div class="paragraph data-line-807">
+<div class="paragraph data-line-811">
 <p>Functions from both requirements above are listed below, alphabetically.</p>
 </div>
-<div class="sect3 data-line-809">
+<div class="sect3 data-line-813">
 <h4 id="_function_notes"><a class="anchor" href="#_function_notes"></a>8.7.1. Function notes</h4>
-<div class="paragraph data-line-810">
+<div class="paragraph data-line-814">
 <p>These notes apply to all of the following functions in this section.</p>
 </div>
-<div class="paragraph data-line-812">
+<div class="paragraph data-line-816">
 <p>An invocation of any of the following functions with invalid arguments produces an error. An invalid argument includes any of the following:</p>
 </div>
-<div class="ulist data-line-814">
+<div class="ulist data-line-818">
 <ul>
-<li class="data-line-814">
+<li class="data-line-818">
 <p>An argument of an unexpected type</p>
 </li>
-<li class="data-line-815">
+<li class="data-line-819">
 <p>An invalid geometry literal value</p>
 </li>
-<li class="data-line-816">
+<li class="data-line-820">
 <p>An non-fitting geometry type for the given function</p>
 </li>
-<li class="data-line-817">
+<li class="data-line-821">
 <p>A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations</p>
 </li>
-<li class="data-line-818">
+<li class="data-line-822">
 <p>An invalid units IRI</p>
 </li>
 </ul>
 </div>
-<div class="paragraph data-line-820">
+<div class="paragraph data-line-824">
 <p>A more detailed description of expected inputs and expected outputs of the given functions is shown in Annex B.</p>
 </div>
-<div class="paragraph data-line-822">
+<div class="paragraph data-line-826">
 <p>Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard:</p>
 </div>
-<div class="ulist data-line-824">
+<div class="ulist data-line-828">
 <ul>
-<li class="data-line-824">
+<li class="data-line-828">
 <p>Functions returning a new geometry literal should follow the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a WKT literal shall be returned</p>
 </li>
-<li class="data-line-825">
+<li class="data-line-829">
 <p>Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 coordinate reference system</p>
 </li>
 </ul>
 </div>
-<div class="paragraph data-line-827">
+<div class="paragraph data-line-831">
 <p>For further discussion of the effects of errors during FILTER evaluation, consult Section 17<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>.</p>
 </div>
-<div class="paragraph data-line-829">
+<div class="paragraph data-line-833">
 <p>Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.</p>
 </div>
-<div class="paragraph data-line-831">
+<div class="paragraph data-line-835">
 <p>From Section 17.3.1<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>:</p>
 </div>
-<div class="quoteblock data-line-834">
+<div class="quoteblock data-line-838">
 <blockquote>
 SPARQL language extensions may provide additional associations between operators and operator functions; &#8230;&#8203; No additional operator may yield a result that replaces any result other &#8230;&#8203; . The consequence of this rule is that SPARQL <code>FILTER</code> s will produce at least the same intermediate bindings after applying a <code>FILTER</code> as an unextended implementation.
 </blockquote>
 </div>
-<div class="paragraph data-line-836">
+<div class="paragraph data-line-840">
 <p>This extension mechanism enables GeoSPARQL implementations to simultaneously support multiple geometry serializations. For example, a system that supports <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> serializations may also support <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> serializations and consequently would not raise an error if it encounters multiple geometry datatypes while processing a given query.</p>
 </div>
-<div class="admonitionblock note data-line-838">
+<div class="admonitionblock note data-line-842">
 <table>
 <tr>
 <td class="icon">
@@ -4373,351 +4379,351 @@ Several non-topological query functions use a unit of measure IRI. The OGC has r
 </table>
 </div>
 </div>
-<div class="sect3 data-line-840">
+<div class="sect3 data-line-844">
 <h4 id="_function_geofarea"><a class="anchor" href="#_function_geofarea"></a>8.7.2. Function: geof:area</h4>
-<div class="listingblock data-line-842">
+<div class="listingblock data-line-846">
 <div class="content">
 <pre class="highlight"><code>geof:area (geom1: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-846">
+<div class="paragraph data-line-850">
 <p>Returns the area of <code>geom1</code> in square meters. Must return zero for all geometry types other than Polygon.</p>
 </div>
 </div>
-<div class="sect3 data-line-848">
+<div class="sect3 data-line-852">
 <h4 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.7.3. Function: geof:boundary</h4>
-<div class="listingblock data-line-850">
+<div class="listingblock data-line-854">
 <div class="content">
 <pre class="highlight"><code>geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-854">
+<div class="paragraph data-line-858">
 <p>This function returns the closure of the boundary of <code>geom1</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-856">
+<div class="sect3 data-line-860">
 <h4 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.7.4. Function: geof:buffer</h4>
-<div class="listingblock data-line-858">
+<div class="listingblock data-line-862">
 <div class="content">
 <pre class="highlight"><code>geof:buffer (geom: ogc:geomLiteral,
              radius: xsd:double,
              units: xsd:anyURI): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-864">
+<div class="paragraph data-line-868">
 <p>Returns a geometric object that represents all Points whose distance from <code>geom1</code> is less than or equal to the <code>radius</code> measured in <code>units</code>. Calculations are in the spatial reference system of <code>geom1</code>.
 NOTE: See the <a href="#_recommendation_for_specification_of_units_of_measurement">Section 8.1</a>.</p>
 </div>
 </div>
-<div class="sect3 data-line-867">
+<div class="sect3 data-line-871">
 <h4 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.7.5. Function: geof:convexHull</h4>
-<div class="listingblock data-line-869">
+<div class="listingblock data-line-873">
 <div class="content">
 <pre class="highlight"><code>geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-873">
+<div class="paragraph data-line-877">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/convexHull" data-href="http://www.opengis.net/def/function/geosparql/convexHull"><code>geof:convexHull</code></a> returns a geometric object that represents all Points in the convex hull of <code>geom1</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-875">
+<div class="sect3 data-line-879">
 <h4 id="_function_geofcoordinatedimension"><a class="anchor" href="#_function_geofcoordinatedimension"></a>8.7.6. Function: geof:coordinateDimension</h4>
-<div class="listingblock data-line-877">
+<div class="listingblock data-line-881">
 <div class="content">
 <pre class="highlight"><code>geof:coordinateDimension (geom1: ogc:geomLiteral): xsd:integer</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-881">
+<div class="paragraph data-line-885">
 <p>Returns the coordinate dimension of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-883">
+<div class="sect3 data-line-887">
 <h4 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.7.7. Function: geof:difference</h4>
-<div class="listingblock data-line-885">
+<div class="listingblock data-line-889">
 <div class="content">
 <pre class="highlight"><code>geof:difference (geom1: ogc:geomLiteral,
                  geom2: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-890">
+<div class="paragraph data-line-894">
 <p>This function returns a geometric object that represents all Points in the set difference of <code>geom1</code> with <code>geom2</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-892">
+<div class="sect3 data-line-896">
 <h4 id="_function_geofdimension"><a class="anchor" href="#_function_geofdimension"></a>8.7.8. Function: geof:dimension</h4>
-<div class="listingblock data-line-894">
+<div class="listingblock data-line-898">
 <div class="content">
 <pre class="highlight"><code>geof:dimension (geom1: ogc:geomLiteral): xsd:integer</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-898">
+<div class="paragraph data-line-902">
 <p>Returns the dimension of <code>geom1</code>. In non-homogeneous geometry collections, this will return the largest topological dimension of the contained objects.</p>
 </div>
 </div>
-<div class="sect3 data-line-900">
+<div class="sect3 data-line-904">
 <h4 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.7.9. Function: geof:distance</h4>
-<div class="listingblock data-line-902">
+<div class="listingblock data-line-906">
 <div class="content">
 <pre class="highlight"><code>geof:distance (geom1: ogc:geomLiteral,
                geom2: ogc:geomLiteral,
                units: xsd:anyURI): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-908">
+<div class="paragraph data-line-912">
 <p>Returns the shortest distance in <code>units</code> between any two Points in the two geometric objects. Calculations are in spatial reference system of <code>geom1</code>.
 NOTE: See the <a href="#_recommendation_for_specification_of_units_of_measurement">Section 8.1</a>.</p>
 </div>
 </div>
-<div class="sect3 data-line-911">
+<div class="sect3 data-line-915">
 <h4 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.7.10. Function: geof:envelope</h4>
-<div class="listingblock data-line-913">
+<div class="listingblock data-line-917">
 <div class="content">
 <pre class="highlight"><code>geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-917">
+<div class="paragraph data-line-921">
 <p>This function returns the minimum bounding box - a rectangle - of <code>geom1</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-919">
+<div class="sect3 data-line-923">
 <h4 id="_function_geofgeometryn"><a class="anchor" href="#_function_geofgeometryn"></a>8.7.11. Function: geof:geometryN</h4>
-<div class="listingblock data-line-921">
+<div class="listingblock data-line-925">
 <div class="content">
 <pre class="highlight"><code>geof:geometryN (geom1: ogc:geomLiteral): xsd:integer</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-925">
+<div class="paragraph data-line-929">
 <p>Returns the nth geometry of <code>geom1</code> if it is a GeometryCollection or <code>geom1</code> if it is a Geometry.</p>
 </div>
 </div>
-<div class="sect3 data-line-927">
+<div class="sect3 data-line-931">
 <h4 id="_function_geofgeometrytype"><a class="anchor" href="#_function_geofgeometrytype"></a>8.7.12. Function: geof:geometryType</h4>
-<div class="listingblock data-line-929">
+<div class="listingblock data-line-933">
 <div class="content">
 <pre class="highlight"><code>geof:geometryType (geom1: ogc:geomLiteral): xsd:string</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-933">
+<div class="paragraph data-line-937">
 <p>Returns the name of the subtype of Geometry of which this geometric object is an member. The name of the subtype of Geometry is returned as a string. No attempt to reconcile different geometry subtypes across all support literals need be made.</p>
 </div>
 </div>
-<div class="sect3 data-line-935">
+<div class="sect3 data-line-939">
 <h4 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.7.13. Function: geof:getSRID</h4>
-<div class="listingblock data-line-937">
+<div class="listingblock data-line-941">
 <div class="content">
 <pre class="highlight"><code>geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-941">
+<div class="paragraph data-line-945">
 <p>Returns the spatial reference system IRI for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-943">
+<div class="sect3 data-line-947">
 <h4 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.7.14. Function: geof:intersection</h4>
-<div class="listingblock data-line-945">
+<div class="listingblock data-line-949">
 <div class="content">
 <pre class="highlight"><code>geof:intersection (geom1: ogc:geomLiteral,
                    geom2: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-950">
+<div class="paragraph data-line-954">
 <p>Returns a geometric object that represents all Points in the intersection of <code>geom1</code> with <code>geom2</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-952">
+<div class="sect3 data-line-956">
 <h4 id="_function_geofis3d"><a class="anchor" href="#_function_geofis3d"></a>8.7.15. Function: geof:is3D</h4>
-<div class="listingblock data-line-954">
+<div class="listingblock data-line-958">
 <div class="content">
 <pre class="highlight"><code>geof:is3D (geom1: ogc:geomLiteral): xsd:boolean</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-958">
+<div class="paragraph data-line-962">
 <p>Returns true if <code>geom1</code> has z coordinate values.</p>
 </div>
 </div>
-<div class="sect3 data-line-960">
+<div class="sect3 data-line-964">
 <h4 id="_function_geofisempty"><a class="anchor" href="#_function_geofisempty"></a>8.7.16. Function: geof:isEmpty</h4>
-<div class="listingblock data-line-962">
+<div class="listingblock data-line-966">
 <div class="content">
 <pre class="highlight"><code>geof:isEmpty (geom1: ogc:geomLiteral): xsd:boolean</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-966">
+<div class="paragraph data-line-970">
 <p>Returns true if <code>geom1</code> is an empty geometry, i.e. contains no coordinates.</p>
 </div>
 </div>
-<div class="sect3 data-line-968">
+<div class="sect3 data-line-972">
 <h4 id="_function_geofismeasured"><a class="anchor" href="#_function_geofismeasured"></a>8.7.17. Function: geof:isMeasured</h4>
-<div class="listingblock data-line-970">
+<div class="listingblock data-line-974">
 <div class="content">
 <pre class="highlight"><code>geof:isMeasured (geom1: ogc:geomLiteral): xsd:boolean</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-974">
+<div class="paragraph data-line-978">
 <p>Returns true if <code>geom1</code> has m coordinate values.</p>
 </div>
 </div>
-<div class="sect3 data-line-976">
+<div class="sect3 data-line-980">
 <h4 id="_function_geofissimple"><a class="anchor" href="#_function_geofissimple"></a>8.7.18. Function: geof:isSimple</h4>
-<div class="listingblock data-line-978">
+<div class="listingblock data-line-982">
 <div class="content">
 <pre class="highlight"><code>geof:isSimple (geom1: ogc:geomLiteral): xsd:boolean</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-982">
+<div class="paragraph data-line-986">
 <p>Returns true if <code>geom1</code> is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.</p>
 </div>
 </div>
-<div class="sect3 data-line-984">
+<div class="sect3 data-line-988">
 <h4 id="_function_geoflength"><a class="anchor" href="#_function_geoflength"></a>8.7.19. Function: geof:length</h4>
-<div class="listingblock data-line-986">
+<div class="listingblock data-line-990">
 <div class="content">
 <pre class="highlight"><code>geof:length (geom1: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-990">
+<div class="paragraph data-line-994">
 <p>Returns the length of <code>geom1</code> in meters. The longest length from any one dimension is returned.</p>
 </div>
 </div>
-<div class="sect3 data-line-992">
+<div class="sect3 data-line-996">
 <h4 id="_function_geofmaxx"><a class="anchor" href="#_function_geofmaxx"></a>8.7.20. Function: geof:maxX</h4>
-<div class="listingblock data-line-994">
+<div class="listingblock data-line-998">
 <div class="content">
 <pre class="highlight"><code>geof:maxX (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-998">
+<div class="paragraph data-line-1002">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/maxX" data-href="http://www.opengis.net/def/function/geosparql/maxX"><code>geof:maxX</code></a> returns the maximum X coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1000">
+<div class="sect3 data-line-1004">
 <h4 id="_function_geofmaxy"><a class="anchor" href="#_function_geofmaxy"></a>8.7.21. Function: geof:maxY</h4>
-<div class="listingblock data-line-1002">
+<div class="listingblock data-line-1006">
 <div class="content">
 <pre class="highlight"><code>geof:maxY (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1006">
+<div class="paragraph data-line-1010">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/maxY" data-href="http://www.opengis.net/def/function/geosparql/maxY"><code>geof:maxY</code></a> returns the maximum Y coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1008">
+<div class="sect3 data-line-1012">
 <h4 id="_function_geofmaxz"><a class="anchor" href="#_function_geofmaxz"></a>8.7.22. Function: geof:maxZ</h4>
-<div class="listingblock data-line-1010">
+<div class="listingblock data-line-1014">
 <div class="content">
 <pre class="highlight"><code>geof:maxZ (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1014">
+<div class="paragraph data-line-1018">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/maxZ" data-href="http://www.opengis.net/def/function/geosparql/maxZ"><code>geof:maxZ</code></a> returns the maximum Z coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1016">
+<div class="sect3 data-line-1020">
 <h4 id="_function_geofminx"><a class="anchor" href="#_function_geofminx"></a>8.7.23. Function: geof:minX</h4>
-<div class="listingblock data-line-1018">
+<div class="listingblock data-line-1022">
 <div class="content">
 <pre class="highlight"><code>geof:minX (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1022">
+<div class="paragraph data-line-1026">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/minX" data-href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:minX</code></a> returns the minimum X coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1024">
+<div class="sect3 data-line-1028">
 <h4 id="_function_geofminy"><a class="anchor" href="#_function_geofminy"></a>8.7.24. Function: geof:minY</h4>
-<div class="listingblock data-line-1026">
+<div class="listingblock data-line-1030">
 <div class="content">
 <pre class="highlight"><code>geof:minY (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1030">
+<div class="paragraph data-line-1034">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/minY" data-href="http://www.opengis.net/def/function/geosparql/minY"><code>geof:minY</code></a> returns the minimum Y coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1032">
+<div class="sect3 data-line-1036">
 <h4 id="_function_geofminz"><a class="anchor" href="#_function_geofminz"></a>8.7.25. Function: geof:minZ</h4>
-<div class="listingblock data-line-1034">
+<div class="listingblock data-line-1038">
 <div class="content">
 <pre class="highlight"><code>geof:minZ (geom: ogc:geomLiteral): xsd:double</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1038">
+<div class="paragraph data-line-1042">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/minZ" data-href="http://www.opengis.net/def/function/geosparql/minZ"><code>geof:minZ</code></a> returns the minimum Z coordinate for <code>geom</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1040">
+<div class="sect3 data-line-1044">
 <h4 id="_function_geofnumgeometries"><a class="anchor" href="#_function_geofnumgeometries"></a>8.7.26. Function: geof:numGeometries</h4>
-<div class="listingblock data-line-1042">
+<div class="listingblock data-line-1046">
 <div class="content">
 <pre class="highlight"><code>geof:numGeometries (geom1: ogc:geomLiteral): xsd:integer</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1046">
+<div class="paragraph data-line-1050">
 <p>Returns the number of geometries of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1048">
+<div class="sect3 data-line-1052">
 <h4 id="_function_geofprojectto"><a class="anchor" href="#_function_geofprojectto"></a>8.7.27. Function: geof:projectTo</h4>
-<div class="listingblock data-line-1050">
+<div class="listingblock data-line-1054">
 <div class="content">
 <pre class="highlight"><code>geof:projectTo (geom1:  ogc:geomLiteral,
                 dimVec: xsd:integer): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1055">
+<div class="paragraph data-line-1059">
 <p>Projects the elements of geometry <code>geom1</code> to the dimensions specified by the <code>dimVec</code> "dimensional vector".</p>
 </div>
-<div class="paragraph data-line-1057">
+<div class="paragraph data-line-1061">
 <p><code>dimVec</code> is a binary number indicating which dimensions to project to (retain) from the <code>geom</code>, for example, using dimensions x, y &amp; z:</p>
 </div>
-<div class="ulist data-line-1059">
+<div class="ulist data-line-1063">
 <ul>
-<li class="data-line-1059">
+<li class="data-line-1063">
 <p>"010" projects to the y dimension, only</p>
 </li>
-<li class="data-line-1060">
+<li class="data-line-1064">
 <p>"110" projects to the x and y dimensions</p>
 </li>
 </ul>
 </div>
-<div class="paragraph data-line-1062">
+<div class="paragraph data-line-1066">
 <p>A projection may only occur from a geometry to a geometry of equal or fewer dimensions and, so far, GeoSPARQL only allos 1-, 2- &amp; 3-dimensional objects, thus <code>projectTo</code> can only be specified from 3 to 2, 2 to 1 or 1 to 0 dimensions.</p>
 </div>
 </div>
-<div class="sect3 data-line-1064">
+<div class="sect3 data-line-1068">
 <h4 id="_function_geofspatialdimension"><a class="anchor" href="#_function_geofspatialdimension"></a>8.7.28. Function: geof:spatialDimension</h4>
-<div class="listingblock data-line-1066">
+<div class="listingblock data-line-1070">
 <div class="content">
 <pre class="highlight"><code>geof:spatialDimension (geom1: ogc:geomLiteral): xsd:integer</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1070">
+<div class="paragraph data-line-1074">
 <p>Returns the spatial dimension of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1072">
+<div class="sect3 data-line-1076">
 <h4 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.7.29. Function: geof:symDifference</h4>
-<div class="listingblock data-line-1074">
+<div class="listingblock data-line-1078">
 <div class="content">
 <pre class="highlight"><code>geof:symDifference (geom1: ogc:geomLiteral,
                     geom2: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1079">
+<div class="paragraph data-line-1083">
 <p>This function returns a geometric object that represents all Points in the set symmetric difference of <code>geom1</code> with <code>geom2</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
 </div>
-<div class="sect3 data-line-1081">
+<div class="sect3 data-line-1085">
 <h4 id="_function_geoftransform"><a class="anchor" href="#_function_geoftransform"></a>8.7.30. Function: geof:transform</h4>
-<div class="listingblock data-line-1083">
+<div class="listingblock data-line-1087">
 <div class="content">
 <pre class="highlight"><code>geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1087">
+<div class="paragraph data-line-1091">
 <p><a href="http://www.opengis.net/def/function/geosparql/transform" data-href="http://www.opengis.net/def/function/geosparql/transform">geof:transform</a> converts <code>geom</code> to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.</p>
 </div>
-<div class="admonitionblock note data-line-1089">
+<div class="admonitionblock note data-line-1093">
 <table>
 <tr>
 <td class="icon">
@@ -4730,18 +4736,18 @@ We recommend that implementers use the same literal type as a result of this fun
 </table>
 </div>
 </div>
-<div class="sect3 data-line-1091">
+<div class="sect3 data-line-1095">
 <h4 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.7.31. Function: geof:union</h4>
-<div class="listingblock data-line-1093">
+<div class="listingblock data-line-1097">
 <div class="content">
 <pre class="highlight"><code>geof:union (geom1: ogc:geomLiteral,
             geom2: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1098">
+<div class="paragraph data-line-1102">
 <p>This function returns a geometric object that represents all Points in the union of <code>geom1</code> with <code>geom2</code>. Calculations are in the spatial reference system of <code>geom1</code>.</p>
 </div>
-<table id="req_geometry_extension_srid-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-1101">
+<table id="req_geometry_extension_srid-function" class="tableblock frame-all grid-all stripes-odd stretch data-line-1105">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4756,12 +4762,12 @@ We recommend that implementers use the same literal type as a result of this fun
 </table>
 </div>
 </div>
-<div class="sect2 data-line-1106">
+<div class="sect2 data-line-1110">
 <h3 id="_spatial_aggregate_functions"><a class="anchor" href="#_spatial_aggregate_functions"></a>8.8. Spatial Aggregate Functions</h3>
-<div class="paragraph data-line-1107">
+<div class="paragraph data-line-1111">
 <p>This clause defines SPARQL functions for performing spatial aggregations of data.</p>
 </div>
-<table id="req_geometry_extension_sa-functions" class="tableblock frame-all grid-all stripes-odd stretch data-line-1110">
+<table id="req_geometry_extension_sa-functions" class="tableblock frame-all grid-all stripes-odd stretch data-line-1114">
 <colgroup>
 <col style="width: 100%;">
 </colgroup>
@@ -4782,72 +4788,72 @@ as a SPARQL extension functions.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="sect3 data-line-1123">
+<div class="sect3 data-line-1127">
 <h4 id="_function_geofaggboundingbox"><a class="anchor" href="#_function_geofaggboundingbox"></a>8.8.1. Function: geof:aggBoundingBox</h4>
-<div class="listingblock data-line-1124">
+<div class="listingblock data-line-1128">
 <div class="content">
 <pre class="highlight"><code>geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1128">
+<div class="paragraph data-line-1132">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggBoundingBox" data-href="http://www.opengis.net/def/function/geosparql/aggBoundingBox"><code>geof:aggBoundingBox</code></a> calculates a minimum bounding box - rectangle - of the set of given geometries.</p>
 </div>
 </div>
-<div class="sect3 data-line-1130">
+<div class="sect3 data-line-1134">
 <h4 id="_function_geofaggboundingcircle"><a class="anchor" href="#_function_geofaggboundingcircle"></a>8.8.2. Function: geof:aggBoundingCircle</h4>
-<div class="listingblock data-line-1131">
+<div class="listingblock data-line-1135">
 <div class="content">
 <pre class="highlight"><code>geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1135">
+<div class="paragraph data-line-1139">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggBoundingCircle" data-href="http://www.opengis.net/def/function/geosparql/aggBoundingCircle"><code>geof:aggBoundingCircle</code></a> calculates a minimum bounding circle of the set of given geometries.</p>
 </div>
 </div>
-<div class="sect3 data-line-1137">
+<div class="sect3 data-line-1141">
 <h4 id="_function_geofaggcentroid"><a class="anchor" href="#_function_geofaggcentroid"></a>8.8.3. Function: geof:aggCentroid</h4>
-<div class="listingblock data-line-1139">
+<div class="listingblock data-line-1143">
 <div class="content">
 <pre class="highlight"><code>geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1143">
+<div class="paragraph data-line-1147">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggCentroid" data-href="http://www.opengis.net/def/function/geosparql/aggCentroid"><code>geof:aggCentroid</code></a> valculates the centroid of the set of given geometries.</p>
 </div>
 </div>
-<div class="sect3 data-line-1145">
+<div class="sect3 data-line-1149">
 <h4 id="_function_geofaggconcatlines"><a class="anchor" href="#_function_geofaggconcatlines"></a>8.8.4. Function: geof:aggConcatLines</h4>
-<div class="listingblock data-line-1147">
+<div class="listingblock data-line-1151">
 <div class="content">
 <pre class="highlight"><code>geof:aggConcatLines (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1151">
+<div class="paragraph data-line-1155">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggConcatLines" data-href="http://www.opengis.net/def/function/geosparql/aggConcatLines"><code>geof:aggConcatLines</code></a>  Concatenates a set of LineStrings.</p>
 </div>
 </div>
-<div class="sect3 data-line-1153">
+<div class="sect3 data-line-1157">
 <h4 id="_function_geofaggconcavehull"><a class="anchor" href="#_function_geofaggconcavehull"></a>8.8.5. Function: geof:aggConcaveHull</h4>
-<div class="listingblock data-line-1155">
+<div class="listingblock data-line-1159">
 <div class="content">
 <pre class="highlight"><code>geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1159">
+<div class="paragraph data-line-1163">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggConcaveHull" data-href="http://www.opengis.net/def/function/geosparql/aggConcaveHull"><code>geof:aggConcaveHull</code></a> calculates the concave hull of the set of given geometries.</p>
 </div>
 </div>
-<div class="sect3 data-line-1161">
+<div class="sect3 data-line-1165">
 <h4 id="_function_geofaggconvexhull"><a class="anchor" href="#_function_geofaggconvexhull"></a>8.8.6. Function: geof:aggConvexHull</h4>
-<div class="listingblock data-line-1163">
+<div class="listingblock data-line-1167">
 <div class="content">
 <pre class="highlight"><code>geof:aggConvexHull (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1167">
+<div class="paragraph data-line-1171">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggConvexHull" data-href="http://www.opengis.net/def/function/geosparql/aggConvexHull"><code>geof:aggConvexHull</code></a> calculates the convex hull of the set of given geometries.</p>
 </div>
-<div class="admonitionblock note data-line-1169">
+<div class="admonitionblock note data-line-1173">
 <table>
 <tr>
 <td class="icon">
@@ -4860,14 +4866,14 @@ This function is similar in name to <a href="#_function_geofaggconvexhull">geof:
 </table>
 </div>
 </div>
-<div class="sect3 data-line-1171">
+<div class="sect3 data-line-1175">
 <h4 id="_function_geofaggunion"><a class="anchor" href="#_function_geofaggunion"></a>8.8.7. Function: geof:aggUnion</h4>
-<div class="listingblock data-line-1173">
+<div class="listingblock data-line-1177">
 <div class="content">
 <pre class="highlight"><code>geof:aggUnion (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-1177">
+<div class="paragraph data-line-1181">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggUnion" data-href="http://www.opengis.net/def/function/geosparql/aggUnion"><code>geof:aggUnion</code></a> calculates the union of the set of given geometries.</p>
 </div>
 <div class="admonitionblock note data-line-121">
@@ -11946,7 +11952,7 @@ geo:sfIntersects())</code></p></td>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-02-23 23:02:28 01000
+Last updated 2022-02-23 23:34:55 01000
 </div>
 </div>
 </body>
