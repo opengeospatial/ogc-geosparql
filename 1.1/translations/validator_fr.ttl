@@ -15,7 +15,7 @@
 	dcterms:description """Ce fichier [Shapes Constraint Language (SHACL)](https://www.w3.org/TR/shacl/) définit des restrictions sur les données RDF.
 Il peut être utilisé pour vérifier la conformité à la norme GeoSPARQL.
 
-Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera la base pour les validateurs normatifs futurs."""@de ;
+Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera la base pour les validateurs normatifs futurs."""@fr ;
 .
 
 #################################################
@@ -23,7 +23,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 #################################################
 
 <S1-a-hasGeometry-hasSerialization-sub>
-	sh:message "Chaque noeud avec un geo:hasGeometry, ou une spécialisation de, devrait avoir au minimum une relation sortante geo:hasSerialization ou une spécialisation de celle-ci."@de ;
+	sh:message "Chaque noeud avec un geo:hasGeometry, ou une spécialisation de, devrait avoir au minimum une relation sortante geo:hasSerialization ou une spécialisation de celle-ci."@fr ;
 	skos:example 
 		"""
                 # Exemple valide: Entrant dans le noeud de géométrie est geo:hasGeometry avec geo:asWKT en sortant.
@@ -69,10 +69,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
 	sh:maxCount 1 ;
-	sh:message "Jeder Knoten mit einer eingehenden geo:hasGeometry oder einer Spezialisierung davon kann maximal eine ausgehende geo:asWKT-Beziehung haben."@de ;
+	sh:message "Chaque noeud avec un instance geo:hasGeometry, ou une spécialisation de celui-ci, peut avoir un maximum de une relation geo:asWKT."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Eine in einen Geometry Blank node eingehende Beziehung geo:hasGeometry mit einer ausgehenden geo:asWKT Beziehung
+		# Un exemple valide: L'entrée dans le neoud de géométrie geo:hasGeometry et sortant est une relation geo:asWKT.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -82,7 +82,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein gültiges Beispiel: Eine in einen Geometry Blank node eingehende Beziehung geo:hasGeometry mit einer ausgehenden geo:asWKT Beziehung. RDF behandelt beide Einträge als ein Tripel, da sie identisch sind.
+		# Un exemple valide:  L'entrée dans le neoud de géométrie vierge est geo:hasGeometry, sortant est une relation geo:asWKT. RDF traite les deux inscriptions comme un triple car ils sont identiques. 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -93,7 +93,8 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Eine in einen Geometry Blank node eingehende Beziehung geo:hasGeometry mit zwei ausgehenden geo:asWKT Beziehungen
+		# Un exemple non valide: l'entrant dans le neoud de géométrie vierge est geo:hasGeometry avec deux relations
+		# geo:asWKT.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -109,64 +110,40 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asGML ;
 	sh:maxCount 1 ;
-	sh:message "Jeder Knoten mit einer eingehenden geo:hasGeometry oder einer Spezialisierung davon kann maximal eine ausgehende geo:asGML-Beziehung aufweisen."@de ;
+	sh:message "Chaque neoud avec un geo:hasGeometry entrante, ou une spécialisation de celui-ci, peut avoir un maximum d'une relation asGML."@fr ;
 .
 
 <S1-d-hasGeometry-hasSerialization-sub>
 	a sh:PropertyShape ;
 	sh:path geo:asGeoJSON ;
 	sh:maxCount 1 ;
-	sh:message "Jeder Knoten mit einer eingehenden geo:hasGeometry oder einer Spezialisierung davon kann maximal eine ausgehende geo:asGeoJSON-Beziehung aufweisen."@de ;
+	sh:message "Chaque neoud avec un geo:hasGeometry entrante, ou une spécialisation de celui-ci, peut avoir un maximum d'une relation geo:asGeoJSON."@fr ;
 .
 
 <S1-e-hasGeometry-hasSerialization-sub>
 	a sh:PropertyShape ;
 	sh:path geo:asKML ;
 	sh:maxCount 1 ;
-	sh:message "Jeder Knoten mit einer eingehenden geo:hasGeometry oder einer Spezialisierung davon kann maximal eine ausgehende geo:asKML-Beziehung aufweisen."@de ;
+	sh:message "Chaque neoud avec un geo:hasGeometry entrante, ou une spécialisation de celui-ci, peut avoir un maximum d'une relation geo:asKML."@fr ;
 .
 
 #################################################
 # Shape 3 + 3b + 3c
 #################################################
 
-<S3-hasGeometry-hasGeometry>
-    a sh:NodeShape ;
-	sh:targetObjectsOf geo:hasGeometry ;
-	sh:property <S3-hasGeometry-hasGeometry-sub> ;
-.
-<S3-b-hasDefaultGeometry-hasGeometry>
-    a sh:NodeShape ;
-	sh:targetObjectsOf geo:hasDefaultGeometry ;
-	sh:property <S3-hasGeometry-hasGeometry-sub> ;
-.
-<S3-c-defaultGeometry-hasGeometry>
-    a sh:NodeShape ;
-	sh:targetObjectsOf geo:defaultGeometry ;
-	sh:property <S3-hasGeometry-hasGeometry-sub> ;
-.
-
 <S3-hasGeometry-hasGeometry-sub>
-	a sh:PropertyShape ;
-	sh:path [ 
-		sh:alternativePath (
-			geo:hasGeometry
-			geo:hasDefaultGeometry
-			geo:defaultGeometry
-		)
-	] ;
 	sh:maxCount 0 ;
-	sh:message "Ein Knoten, der eine eingehende geo:hasGeometry-Eigenschaft oder eine Spezialisierung davon hat, kann nicht gleichzeitig eine ausgehende geo:hasGeometry-Eigenschaft oder eine Spezialisierung davon haben (ein geo:Feature kann nicht gleichzeitig eine geo:Geometry sein)"@de ;
+	sh:message "Un noeud qui a une propriété geo:hasGeometry entrante,ou une spécialisation de celui-ci, ne peu posséder une propriété geo:hasGeometry, ou une spécialisation de, en même temps (un noeuf geo:Feature ne peu être un noeud geo:Geometry en même temps)."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Die Ressourceninstanz <resource-x-geom1> hat eine eingehende Eigenschaft geo:hasGeometry und keine ausgehende Eigenschaft geo:hasGeometry oder eine Spezialisierung davon
+		# Un exemple valide: l'instance de ressource <ressource-x-geom1> a une propriété entrante geo:hasGeometry et aucune propriété geo:hasGeometry ou spécialisation de celui-ci.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<resource-x> geo:hasGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Die Resourceninstanz <resource-x> hat sowohl eine ausgehende als auch eine eingehende geo:hasGeometry-Eigenschaft (d.h. sie ist gleichzeitig ein geo:Feature und eine geo:Geometry)
+		# Un exemple non valide: l'instance de ressource <ressource-x> a à la fois une propriété sortante et entrante geo:hasGeometry (c'est-à-dire un geo:Feature et un geo:Geometry en même temps) 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<resource-y>
@@ -180,14 +157,14 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.		
 		""" ,
 		"""
-		# Ein gültiges Beispiel: Die Ressourceninstanz <resource-x-geom1> hat eine eingehende Eigenschaft geo:hasDefaultGeometry und keine ausgehende Eigenschaft geo:hasGeometry oder eine Spezialisierung davon
+		# Exemple valide: l'instance de ressource <Resource-X-Geom1> a une propriété entrante geo:hasDefaultGeometry et aucune propriété geo:hasDefaultGeometry (ou ses spécialisations)
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<resource-x> geo:hasDefaultGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Die Resourceninstanz <resource-x> hat eine eingehende Eigenschaft geo:hasDefaultGeometry und eine ausgehende Eigenschaft geo:hasGeometry (d.h. sie ist gleichzeitig ein geo:Feature und eine geo:Geometry)
+		# Un exemple non valide: l'instance de ressource <ressource-x> a une propriété de geo:hasDefaultGeometry entrante et une propriété de geo:hasDefaultGeometry sortante (c'est-à-dire une noeud geo:Feature et geo:Geometry) 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<resource-y>
@@ -216,10 +193,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		geo:asKML ,
 		geo:asDGGS ;
 	sh:nodeKind sh:Literal ;
-	sh:message "Das Ziel einer geo:hasSerialization-Eigenschaft, oder eine Spezialisierung davon, sollte ein RDF-Literal sein."@de ;
+	sh:message "La cible d'une propriété geo:hasSerialization, ou sa spécialisation, devrait être un littéral RDF."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Das Ziel einer geo:asWKT-Eigenschaft ist ein RDF-Literal
+		# Un exemple valide: la cible d'une propriété geo:asWKT est un littéral RDF 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -229,7 +206,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Das Ziel einer geo:asWKT-Eigenschaft ist kein RDF-Literal
+		# Un exemple invalide: la cible d'une propriété geo:asWKT n'est pas un littéral RDF
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-y>
@@ -248,10 +225,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asWKT ;
 	sh:datatype geo:wktLiteral ;
-	sh:message "Das Ziel einer geo:asWKT-Eigenschaft sollte ein RDF-Literal mit dem Datentyp geo:wktLiteral sein."@de ;
+	sh:message "La cible d'une propriété geo:asWKT devrait être un littéral RDF avec un type geo:wktLiteral"@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Das Ziel einer geo:asWKT-Eigenschaft ist ein RDF-Literal mit dem Datentyp geo:wktLiteral
+		# Un exemple valide: la cible d'une propriété geo:asWKT est un littéral RDF avec type geo:wktLiteral 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -261,7 +238,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Das Ziel einer geo:asWKT-Eigenschaft ist kein RDF-Literal
+		# Un exemple invalide: la cible d'une propriété geo:asWKT est un littéral RDF sans type geo:wktLiteral 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-y>
@@ -271,7 +248,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.		
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Das Ziel einer geo:asWKT-Eigenschaft ist ein RDF-Literal, aber mit dem falschen Datentyp (xsd:string)
+		# Un exemple non valide: la cible d'une propriété geo:asWKT est un littéral RDF mais avec le mauvais type de données (xsd:String) 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-z>
@@ -286,21 +263,21 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asGML ;
 	sh:datatype geo:gmlLiteral ;
-	sh:message "Das Ziel einer geo:asGML-Eigenschaft sollte ein RDF-Literal mit dem Datentyp geo:gmlLiteral sein."@de ;
+	sh:message "La cible d'une propriété geo:asGML devrait être un littéral RDF avec type geo:gmlLiteral"@fr ;
 .
 
 <S7-asGeoJSON-geoJSONLiteral>
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asGeoJSON ;
 	sh:datatype geo:geoJSONLiteral ;
-	sh:message "Das Ziel einer geo:asGML-Eigenschaft sollte ein RDF-Literal mit dem Datentyp geo:gmlLiteral sein."@de ;
+	sh:message "La cible d'une propriété geo:asGeoJSON devrait être un littéral RDF avec type geo:geoJSONliteral."@fr ;
 .
 
 <S8-asKML-kmlLiteral>
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asKML ;
 	sh:datatype geo:kmlLiteral ;
-	sh:message "Das Ziel einer geo:asKML-Eigenschaft sollte ein RDF-Literal mit dem Datentyp geo:kmlLiteral sein."@de ;
+	sh:message "La cible d'une propriété geo:asKML devrait être un littéral RDF avec type geo:kmlLiteral. "@fr ;
 .
 
 #################################################
@@ -318,10 +295,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:coordinateDimension ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:coordinateDimension-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:coordinateDimension."@fr ;
 	skos:example
 		"""
-		# Ein gültiges Beispiel: Das Subjekt einer geo:coordinateDimension-Eigenschaft hat keine anderen Eigenschaften mit demselben Namen
+		# Un exemple valide: le sujet d'une propriété geo:coordinateDimension n'a aucune autre propriété avec le même nom 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		
 		<feature-x>
@@ -332,7 +309,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Das Subjekt einer geo:coordinateDimension-Eigenschaft hat auch eine andere Eigenschaft mit demselben Eigenschaftsnamen, aber einem anderen Wert
+		# Un exemple non valide: le sujet d'une propriété geo:coordinateDimension a une autre propriété avec le même nom mais une valeur différente.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		
 		<feature-y>
@@ -354,7 +331,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:dimension ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:dimension-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:dimension. "@fr ;
 .	
 
 <S11-many-isEmpty-one>
@@ -367,7 +344,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:isEmpty ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry Knoten sollte maximal eine ausgehende geo:isEmpty Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:isEmpty."@fr ;
 .	
 
 <S12-many-isSimple-one>
@@ -380,7 +357,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:isSimple ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry Knoten sollte maximal eine ausgehende geo:isSimple Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:isSimple."@fr ;
 .	
 
 <S13-many-spatialDimension-one>
@@ -393,7 +370,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:spatialDimension ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:spatialDimension-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:spatialDimension."@fr ;
 .	
 
 
@@ -407,7 +384,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:hasSpatialResolution ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:hasSpatialResolution-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:hasSpatialResolution."@fr ;
 .	
 
 <S14b-many-hasSpatialAccuracy-one>
@@ -420,7 +397,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:hasSpatialAccuracy ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:hasSpatialAccuracy-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:hasSpatialAccuracy."@fr ;
 .	
 
 <S14c-many-hasMetricSpatialAccuracy-one>
@@ -433,7 +410,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:hasMetricSpatialAccuracy ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende Eigenschaft geo:hasMetricSpatialAccuracy haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:hasMetricSpatialAccuracy."@fr ;
 .
 
 <S14d-many-hasMetricSpatialResolution-one>
@@ -446,7 +423,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:hasMetricSpatialResolution ;
 	sh:maxCount 1 ;
-	sh:message "Ein geo:Geometry-Knoten sollte maximal eine ausgehende geo:hasMetricSpatialResolution-Eigenschaft haben."@de ;
+	sh:message "Un geo:Geometry doit avoir au maximum une propriété geo:hasMetricSpatialResolution."@fr ;
 .	
 
 #################################################
@@ -464,10 +441,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
 	sh:pattern "^\\s*$|^\\s*(P|C|S|L|T|<)" ;  # starts with P, C, S, L, T, or < for Point, TIN etc. or IRI
-	sh:message "Der Inhalt eines RDF-Literals mit einer eingehenden geo:asWKT-Relation muss einer gültigen WKT-Zeichenkette entsprechen, wie sie in der offiziellen Spezifikation definiert ist (Simple Features Access)."@de ;
+	sh:message "Le contenu d'un littéral RDF d'une relation entrante geo:asWKT doit être conforme à une chaîne WKT bien formée, telle que définie par sa spécification officielle (accès simple des fonctionnalités)."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Das RDF-Literal mit einem eingehenden geo:asWKT hat einen gültigen WKT-String als Inhalt
+		# Un exemple valide: le littéral RDF d'une geo:asWKT entrante est une chaîne WKT bien formée.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -477,7 +454,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Das RDF-Literal mit einer eingehenden geo:asWKT Beziehung hat keinen gültigen WKT-String als Inhalt, sondern einen GeoJSON-String
+		#Un exemple non valide: le littéral RDF d'un geo:asWKT n'a pas de chaîne WKT bien formée comme contenu, mais plutôt une chaîne de Geojson 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x>
@@ -498,7 +475,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asGML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
-	sh:message "Der Inhalt eines RDF-Literals mit einer eingehenden geo:asGML-Relation muss einem wohlgeformten GML-Geometrie-XML-String entsprechen, wie er in der offiziellen Spezifikation definiert ist."@de ;
+	sh:message "Le contenu d'un littéral RDF avec une relation entrante geo:asGML doit être conforme à une chaîne XML GML géométrie bien formée, telle que définie par sa spécification officielle."@fr ;
 .
 
 <S17-geojson-content>
@@ -511,7 +488,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asGeoJSON ;
 	sh:pattern "^\\s*$|^\\s*({)(.*)(})\\s*$" ;  # starts with { ends with }
-	sh:message "Der Inhalt eines RDF-Literals mit einer eingehenden geo:asGeoJSON-Relation muss einem wohlgeformten GeoJSON-Geometrie-String entsprechen, wie er in seiner offiziellen Spezifikation definiert ist."@de ;
+	sh:message "Le contenu d'un littéral RDF avec une relation entrante geo:asGeoJSON doit être conforme à une chaîne de géométrie geojson bien formée, telle que définie par sa spécification officielle."@fr ;
 .
 
 <S18-kml-content>
@@ -524,7 +501,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:asKML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
-	sh:message "Der Inhalt eines RDF-Literals mit einer eingehenden geo:asKML-Relation muss einem wohlgeformten KML-Geometrie-XML-String entsprechen, wie er in der offiziellen Spezifikation definiert ist."@de ;
+	sh:message "Le contenu d'un littéral RDF avec une relation entrante geo:asKML doit être conforme à une chaîne XML de géométrie KML bien formée, telle que définie par sa spécification officielle."@fr ;
 .
 
 #################################################
@@ -541,7 +518,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path geo:coordinateDimension ;
 	sh:sparql [
-		sh:message "Wenn sowohl die Eigenschaften geo:dimension als auch geo:coordinateDimension angegeben werden, sollte der Wert von geo:dimension kleiner oder gleich dem Wert von geo:coordinateDimension sein"@de ;
+		sh:message "Si les deux propriétés geo:dimension et geo:coordinateDimension sont affirmées, la valeur de geo:dimension doit être inférieure ou égale à la valeur de geo:coordinateDimension."@fr ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			SELECT $this
@@ -554,7 +531,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	] ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Die Eigenschaft geo:dimension hat den Wert 2 und die Eigenschaft geo:coordinateDimension den Wert 2
+		# Un exemple valide: geo:dimension a la valeur est 2 tandis que le geo:coordinateDimension a une valeur 2 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
@@ -563,7 +540,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein gültiges Beispiel: Die Eigenschaft geo:dimension hat den Wert 2 und es gibt keine Eigenschaft geo:coordinateDimension
+		# Un exemple valide: geo:dimension a la valeur est 2 tandis qu'il n'a pas de geo:coordinateDimension.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
@@ -571,7 +548,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Die Eigenschaft geo:dimension hat den Wert 3 und die Eigenschaft geo:coordinateDimension den Wert 2
+		# Un exemple non valide: la valeur de geo:dimension est 3 tandis que geo:coordinateDimension a une valeur 2 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
@@ -596,10 +573,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "Eine Instanz von geo:FeatureCollection sollte mindestens eine ausgehende rdfs:member-Beziehung aufweisen."@de ;
+	sh:message "Une instance de Geo:FeatureCollection devrait avoir au moins une relation rdfs:member."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der geo:FeatureCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung
+		# Un exemple valide: Le noeud geo:FeatureCollection  possède une relation rdfs:member 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -614,7 +591,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der geo:FeatureCollection-Instanzknoten hat keine ausgehenden rdfs:member-Beziehungen
+                # Un exemple invalide: Le noeud geo:FeatureCollection ne possède pas de relation rdfs:member 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -626,7 +603,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "Eine Instanz von geo:FeatureCollection sollte nur ausgehende rdfs:member haben, die zu geo:Feature-Instanzen verbunden sind."@de ;
+		sh:message "Une instance de geo:FeatureCollection ne doit avoir que des rdfs:member sortant qui n'ont que de geo:Feature."@fr ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -641,7 +618,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	] ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der geo:FeatureCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Feature-Knoten
+		# Un exemple valide: le noeud geo:FeatureCollection a un rdfs:membre qui pointe a un noeud geo:Feature 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -656,7 +633,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		.
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der geo:FeatureCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Feature-Knoten und eine weitere zu einem geo:Geometry-Knoten
+		# Un exemple non valide: Le noeud Geo:FeatureCollection possède un rdfs:membre de la relation avec un noeud geo:Feature et une autre geo:Geometry
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -685,10 +662,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "Eine Instanz von geo:GeometryCollection sollte mindestens eine ausgehende rdfs:member-Beziehung haben."@de ;
+	sh:message "Une instance de geo:GeometryCollection doit avoir au moins une relation sortante rdfs:member."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der geo:GeometryCollection-Instanzknoten hat eine eingehende rdfs:member-Beziehung
+		#Exemple valide: Le noeud geo:GeometryCollection possède un rdfs:member
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -700,7 +677,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der geo:GeometryCollection-Instanzknoten hat keine ausgehenden rdfs:member-Beziehungen
+		# Exemple valide: Le noeud geo:GeometryCollection ne possède pas un rdfs:member
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -712,7 +689,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "Eine Instanz von geo:GeometryCollection sollte nur ausgehende rdfs:member-Beziehungen zu geo:Geometry-Instanzen haben."@de ;
+		sh:message "Une instance de geo:GeometryCollection ne doit avoir que des relations rdfs:member sortante aux instances de geo:Geometry."@fr ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -727,7 +704,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	] ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der geo:GeometryCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Geometry-Knoten
+		# Exemple valide: le noeud geo:GeometryCollection comporte un rdfs:membre sortant qui pointe à un noeud geo:Geometry 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -739,7 +716,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der geo:GeometryCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Geometry-Knoten und eine zu einem Nicht-geo:Geometry-Knoten (einem geo:Feature)
+		# Un exemple non valide: le noeud d'instance geo:GeometryCollection comporte un rdfs:membre sortant qui pointe a un noeud geo:Geometry and un autre noeud qui n'est pas un geo:Geometry 
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -766,10 +743,10 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
-	sh:message "An instance of geo:SpatialObjectCollection should have at least one outgoing rdfs:member relation."@de ;
+	sh:message "Une instance de geo:eo:SpatialObjectCollection doit avoir au moins une relation sortante rdfs:member."@fr ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der Instanzknoten geo:SpatialObjectCollection hat eine ausgehende rdfs:member-Beziehung
+		# Un exemple valide: Le noeud geo:SpatialObjectCollection a une relation sortante rdfs:member.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -781,7 +758,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		<feature-x> geo:hasGeometry <geometry-x> .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der Instanzknoten geo:SpatialObjectCollection hat keine eingehenden rdfs:member-Beziehungen
+		# Un exemple valide: Le noeud geo:SpatialObjectCollection n'a pas une relation sortante rdfs:member.
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -795,7 +772,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
-		sh:message "Eine Instanz von geo:SpatialObjectCollection sollte nur ausgehende rdfs:member-Beziehungen aufweisen, die zu geo:SpatialObject-Instanzen oder deren Unterklassen verbunden sind."@de ;
+		sh:message "Une instance de geo:SpatialObjectCollection ne doit avoir que des relations sortante rdfs:member qui pointes à des instances geo:SpatialObject ou ses sous-classes."@fr ;
 		sh:select """
 			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -810,7 +787,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 	] ;
 	skos:example 
 		"""
-		# Ein gültiges Beispiel: Der geo:SpatialObjectCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Geometry-Knoten und eine zu einem geo:Feature-Knoten
+		# Exemple valide: Le noeud geo:SpatialObjectCollection a des relations sortante rdfs:member qui pointes à des instances geo:SpatialObject
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -823,7 +800,7 @@ Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera l
 		<feature-y> geo:hasGeometry <geometry-y> .
 		""" ,
 		"""
-		# Ein ungültiges Beispiel: Der geo:SpatialObjectCollection-Instanzknoten hat eine ausgehende rdfs:member-Beziehung zu einem geo:Geometry-Knoten, eine ausgehende rdfs:member-Beziehung zu einem geo:Feature-Knoten und eine dritte ausgehende rdfs:member-Beziehung von einem Knoten eines anderen Typs (z. B. Thing)
+		# Un Exemple invalide: Le noeud geo:SpatialObjectCollection a des relations sortante rdfs:member qui pointes à des instances geo:Geometry, a une instance geo:Feature et une instance ex:Thing.
 		@prefix ex: <http://example.com/> .
 		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
 		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
