@@ -16,13 +16,52 @@
 Il peut être utilisé pour vérifier la conformité à la norme GeoSPARQL.
 
 Pour GeoSPARQL 1.1, ce validateur n'est pas normatif, mais informatif. Il sera la base pour les validateurs normatifs futurs."""@fr ;
+        dcterms:publisher [
+                a sdo:Organization ;
+                sdo:name "Open Geospatial Consortium" ;
+                sdo:url "https://www.ogc.org"^^xsd:anyURI ;
+        ] ;
+        dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
+        dcterms:created "2021-06-13"^^xsd:date ;
+        dcterms:modified "2021-08-12"^^xsd:date ;
+        dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+        dcterms:rights "(c) 2021 Open Geospatial Consortium" ;  
+        owl:versionInfo "OGC GeoSPARQL 1.1" ;
+        owl:versionIRI <http://www.opengis.net/def/geosparql/validator/1.1> ;
 .
 
 #################################################
 # Shape 1 (1a-1e)
 #################################################
 
+<S1-hasGeometry-hasSerialization>
+    a sh:NodeShape ;
+        sh:targetObjectsOf geo:hasGeometry ;
+        sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> ;
+.
+<S1-hasDefaultGeometry-hasSerialization>
+    a sh:NodeShape ;
+        sh:targetObjectsOf geo:hasDefaultGeometry ;
+        sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> ;
+.
+<S1-cefaultGeometry-hasSerialization>
+    a sh:NodeShape ;
+        sh:targetObjectsOf geo:defaultGeometry ;
+        sh:property <S1-a-hasGeometry-hasSerialization-sub> , <S1-b-hasGeometry-hasSerialization-sub> , <S1-c-hasGeometry-hasSerialization-sub> , <S1-d-hasGeometry-hasSerialization-sub> , <S1-e-hasGeometry-hasSerialization-sub> ;
+.
 <S1-a-hasGeometry-hasSerialization-sub>
+        a sh:PropertyShape ;
+        sh:path [ 
+                sh:alternativePath (
+                        geo:hasSerialization
+                        geo:asGML
+                        geo:asWKT
+                        geo:asGeoJSON
+                        geo:asKML
+                        geo:asDGGS
+                ) 
+        ] ;
+        sh:minCount 1 ;
 	sh:message "Chaque noeud avec un geo:hasGeometry, ou une spécialisation de, devrait avoir au minimum une relation sortante geo:hasSerialization ou une spécialisation de celle-ci."@fr ;
 	skos:example 
 		"""
