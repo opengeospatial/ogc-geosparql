@@ -281,11 +281,22 @@ geo:hasSerialization
 NOTE: this property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <<Property: geo:asGeoJSON, as GeoJSON>> which can be used for GeoJSON <<GEOJSON>> literals.
 
 === Geometry Serializations
-This section establishes the requirements for representing Geometry data in RDF based on different systems.
+This section establishes the requirements for representing Geometry data in RDF literals, according to different non-RDF systems.
+
+GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them but does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
+
+GeoSPARQL does present some requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.
+
+[[NOTE]]
+====
+GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialised variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+
+Some geometry represenation systems given here do not use the same terminology as SFA, in particular the Discrete Global Grid System representation. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
+====
 
 ==== Well-Known Text (serialization=WKT)
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by Simple Features <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
+This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
 
 ===== RDFS Datatype: geo:wktLiteral
 
