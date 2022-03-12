@@ -419,69 +419,43 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	sh:message "A geo:Geometry node should have maximum of one outgoing geo:spatialDimension property."@en ;
 .	
 
-<S14a-many-hasSpatialResolution-one>
+<S14-many-hasSpatialResolution-one>
 	a sh:NodeShape ;
-	sh:property <S14a-many-hasSpatialResolution-one-sub> ;
+	sh:property <S14-many-hasSpatialResolution-one-sub> ;
 	sh:targetSubjectsOf geo:hasSpatialResolution ;
 .
 	
-<S14a-many-hasSpatialResolution-one-sub>
+<S14-many-hasSpatialResolution-one-sub>
 	a sh:PropertyShape ;
-	sh:path geo:hasSpatialResolution ;
+	sh:alternativePath ( geo:hasSpatialResolution geo:hasMetricSpatialResolution  ) ;
 	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution and one outgoing geo:hasMetricSpatialResolution property."@en ;
 .	
 
-<S14b-many-hasSpatialAccuracy-one>
+<S15-many-hasSpatialAccuracy-one>
 	a sh:NodeShape ;
-	sh:property <S14b-many-hasSpatialAccuracy-one-sub> ;
+	sh:property <S15-many-hasSpatialAccuracy-one-sub> ;
 	sh:targetSubjectsOf geo:hasSpatialAccuracy ;
 .
 	
-<S14b-many-hasSpatialAccuracy-one-sub>
+<S15-many-hasSpatialAccuracy-one-sub>
 	a sh:PropertyShape ;
-	sh:path geo:hasSpatialAccuracy ;
+	sh:alternativePath ( geo:hasSpatialAccuracy geo:hasMetricSpatialAccuracy  ) ;
 	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy property."@en ;
-.	
-
-<S14c-many-hasMetricSpatialAccuracy-one>
-	a sh:NodeShape ;
-	sh:property <S14c-many-hasMetricSpatialAccuracy-one-sub> ;
-	sh:targetSubjectsOf geo:hasMetricSpatialAccuracy ;
-.
-	
-<S14c-many-hasMetricSpatialAccuracy-one-sub>
-	a sh:PropertyShape ;
-	sh:path geo:hasMetricSpatialAccuracy ;
-	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialAccuracy property."@en ;
-.
-
-<S14d-many-hasMetricSpatialResolution-one>
-	a sh:NodeShape ;
-	sh:property <S14d-many-hasMetricSpatialResolution-one-sub> ;
-	sh:targetSubjectsOf geo:hasMetricSpatialResolution ;
-.
-	
-<S14d-many-hasMetricSpatialResolution-one-sub>
-	a sh:PropertyShape ;
-	sh:path geo:hasMetricSpatialResolution ;
-	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialResolution property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy and one outgoing geo:hasMetricSpatialAccuracy property."@en ;
 .	
 
 #################################################
-# Shape 15-16-17-18-19 - basic geometry serialization pattern matching
+# Shape 16-17-18-19-20 - basic geometry serialization pattern matching
 #################################################
 
-<S15-wkt-content>
+<S16-wkt-content>
 	a sh:NodeShape ;
-	sh:property <S15-wkt-content-sub-start> ;
+	sh:property <S16-wkt-content-sub-start> ;
 	sh:targetSubjectsOf geo:asWKT ;
 .
 
-<S15-wkt-content-sub-start>
+<S16-wkt-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
 	sh:pattern "^\\s*$|^\\s*(P|C|S|L|T|<)" ; # starts with space, < or P, C etc.
@@ -489,54 +463,54 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
 .
 
-<S16-gml-content>
+<S17-gml-content>
 	a sh:NodeShape ;
-	sh:property <S16-gml-content-sub-start> ;
+	sh:property <S17-gml-content-sub-start> ;
 	sh:targetSubjectsOf geo:asGML ;
 .
 
-<S16-gml-content-sub-start>
+<S17-gml-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asGML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
 	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification."@en ;
 .
 
-<S17-geojson-content>
+<S18-geojson-content>
 	a sh:NodeShape ;
-	sh:property <S17-geojson-content-sub-start> ;
+	sh:property <S18-geojson-content-sub-start> ;
 	sh:targetSubjectsOf geo:asGeoJSON ;
 .
 
-<S17-geojson-content-sub-start>
+<S18-geojson-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asGeoJSON ;
 	sh:pattern "^\\s*$|^\\s*({)(.*)(})\\s*$" ;  # starts with { ends with }
 	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
 .
 
-<S18-kml-content>
+<S19-kml-content>
 	a sh:NodeShape ;
-	sh:property <S18-kml-content-sub-start> ;
+	sh:property <S19-kml-content-sub-start> ;
 	sh:targetSubjectsOf geo:asKML ;
 .
 
-<S18-kml-content-sub-start>
+<S19-kml-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asKML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
 	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
 .
 
-<S19-dggs-content>
+<S20-dggs-content>
 	a sh:NodeShape ;
-	sh:property <S19-dggs-content-sub-start> ;
+	sh:property <S20-dggs-content-sub-start> ;
 	sh:targetSubjectsOf geo:asDGGS ;
 	sh:deactivated true ;
 	rdfs:comment "This shape is deactivated since the precise syntax of DGGS literals is now known"@en ;
 .
 
-<S19-dggs-content-sub-start>
+<S20-dggs-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asDGGS ;
 	sh:pattern "^$" ;
@@ -546,16 +520,16 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 20 - dimension checks
+# Shape 21 - dimension checks
 #################################################
 
-<S20-dimension-coordinateDimension>
+<S21-dimension-coordinateDimension>
 	a sh:NodeShape ;
-	sh:property <S20-dimension-coordinateDimension-sub> ;
+	sh:property <S21-dimension-coordinateDimension-sub> ;
 	sh:targetSubjectsOf geo:dimension ;
 .
 
-<S20-dimension-coordinateDimension-sub>
+<S21-dimension-coordinateDimension-sub>
 	a sh:PropertyShape ;
 	sh:path geo:coordinateDimension ;
 	sh:sparql [
@@ -600,16 +574,18 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 21 - geo:FeatureCollection
+# Shape 22 - geo:FeatureCollection
 #################################################
 
-<S21-FeatureCollectionClass-member-feature>
+<S22-FeatureCollectionClass-member-feature>
 	a sh:NodeShape ;
-	sh:property <S21-FeatureCollectionClass-minOneMember-feature-sub> , <S21-FeatureCollectionClass-member-onlyFeature-sub> ;
+	sh:property
+	    <S22-FeatureCollectionClass-minOneMember-feature-sub> ,
+	    <S22-FeatureCollectionClass-member-onlyFeature-sub> ;
 	sh:targetClass geo:FeatureCollection ;
 .
 
-<S21-FeatureCollectionClass-minOneMember-feature-sub>
+<S22-FeatureCollectionClass-minOneMember-feature-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -639,7 +615,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S21-FeatureCollectionClass-member-onlyFeature-sub>
+<S22-FeatureCollectionClass-member-onlyFeature-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
@@ -689,18 +665,18 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 22 - geo:GeometryCollection
+# Shape 23 - geo:GeometryCollection
 #################################################
 
-<S22-GeometryCollectionClass-member-geometry>
+<S23-GeometryCollectionClass-member-geometry>
 	a sh:NodeShape ;
 	sh:property 
-		<S22-GeometryCollectionClass-minOneMember-geometry-sub> , 
-		<S22-GeometryCollectionClass-member-onlyGeometry-sub> ;
+		<S23-GeometryCollectionClass-minOneMember-geometry-sub> ,
+		<S23-GeometryCollectionClass-member-onlyGeometry-sub> ;
 	sh:targetClass geo:GeometryCollection ;
 .
 
-<S22-GeometryCollectionClass-minOneMember-geometry-sub>
+<S23-GeometryCollectionClass-minOneMember-geometry-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -727,7 +703,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S22-GeometryCollectionClass-member-onlyGeometry-sub>
+<S23-GeometryCollectionClass-member-onlyGeometry-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
@@ -772,18 +748,18 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 .
 
 #################################################
-# Shape 23 - geo:SpatialObjectCollection
+# Shape 24 - geo:SpatialObjectCollection
 #################################################
 
-<S23-SpatialObjectCollection-member-spatialObject>
+<S24-SpatialObjectCollection-member-spatialObject>
 	a sh:NodeShape ;
 	sh:property 
-		<S23-SpatialObjectCollection-minOneMember-spatialObject-sub> , 
-		<S23-SpatialObjectCollection-member-onlySpatialObject-sub> ;
+		<S24-SpatialObjectCollection-minOneMember-spatialObject-sub> ,
+		<S24-SpatialObjectCollection-member-onlySpatialObject-sub> ;
 	sh:targetClass geo:SpatialObjectCollection ;
 .
 
-<S23-SpatialObjectCollection-minOneMember-spatialObject-sub>
+<S24-SpatialObjectCollection-minOneMember-spatialObject-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:minCount 1 ;
@@ -812,7 +788,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ;
 .
 
-<S23-SpatialObjectCollection-member-onlySpatialObject-sub>
+<S24-SpatialObjectCollection-member-onlySpatialObject-sub>
 	a sh:PropertyShape ;
 	sh:path rdfs:member ;
 	sh:sparql [
