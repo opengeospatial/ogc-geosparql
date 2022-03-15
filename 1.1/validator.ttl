@@ -40,6 +40,12 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		geo:hasGeometry , 
 		geo:hasDefaultGeometry ,
 		geo:defaultGeometry ;
+	sh:targetSubjectsOf 
+		geo:asWKT ,
+		geo:asGML ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
 	sh:property 
 		<S1-a-hasGeometry-hasSerialization-sub> , 
 		<S1-b-hasGeometry-hasSerialization-sub> , 
@@ -304,25 +310,31 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S8-asDGGS-dggsLiteral>
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asDGGS ;
-	sh:not [
+	sh:property [
 		a sh:PropertyShape ;
 		sh:path geo:asDGGS ;
-		sh:datatype geo:wktLiteral ;
-	] ,
-	[
-		a sh:PropertyShape ;
-		sh:path geo:asDGGS ;
-		sh:datatype geo:gmlLiteral ;
-	] ,
-	[
-		a sh:PropertyShape ;
-		sh:path geo:asDGGS ;
-		sh:datatype geo:geoJSONLiteral ;
-	] ,
-	[
-		a sh:PropertyShape ;
-		sh:path geo:asDGGS ;
-		sh:datatype geo:asKML ;
+		sh:and (
+			[
+				sh:not [
+					sh:datatype geo:wktLiteral ;
+				] 
+			]
+			[
+				sh:not [
+					sh:datatype geo:gmlLiteral ;
+				] 
+			]
+			[
+				sh:not [
+					sh:datatype geo:geoJSONLiteral ;
+				] 
+			]
+			[
+				sh:not [
+					sh:datatype geo:asKML ;
+				] 
+			]						
+		 ) ;
 	] ;		
 	sh:message "The target of a geo:asDGGS property must not be an RDF literal with datatype of one of the other non-DGGS geometry literal types. It must be eithr geo:dggsLiteral or specialised version of geo:dggsLiteral but this is un-testable so only the excluded type test is performed."@en ;
 .
@@ -421,28 +433,50 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 
 <S14-many-hasSpatialResolution-one>
 	a sh:NodeShape ;
-	sh:property <S14-many-hasSpatialResolution-one-sub> ;
-	sh:targetSubjectsOf geo:hasSpatialResolution ;
+	sh:property 
+		<S14-many-hasSpatialResolution-one-sub> ,
+		<S14-many-hasMetricSpatialResolution-one-sub> ;
+	sh:targetSubjectsOf 
+		geo:hasSpatialResolution ,
+		geo:hasMetricSpatialResolution ;
 .
 	
 <S14-many-hasSpatialResolution-one-sub>
 	a sh:PropertyShape ;
-	sh:alternativePath ( geo:hasSpatialResolution geo:hasMetricSpatialResolution  ) ;
+	sh:path geo:hasSpatialResolution ;
 	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution and one outgoing geo:hasMetricSpatialResolution property."@en ;
-.	
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution property."@en ;
+.
+
+<S14-many-hasMetricSpatialResolution-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasMetricSpatialResolution ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialResolution property."@en ;
+.
 
 <S15-many-hasSpatialAccuracy-one>
 	a sh:NodeShape ;
-	sh:property <S15-many-hasSpatialAccuracy-one-sub> ;
-	sh:targetSubjectsOf geo:hasSpatialAccuracy ;
+	sh:property 
+		<S15-many-hasSpatialAccuracy-one-sub> ,
+		<S15-many-hasMetricSpatialAccuracy-one-sub> ;
+	sh:targetSubjectsOf 
+		geo:hasSpatialAccuracy ,
+		geo:hasMetricSpatialAccuracy ;
 .
 	
 <S15-many-hasSpatialAccuracy-one-sub>
 	a sh:PropertyShape ;
-	sh:alternativePath ( geo:hasSpatialAccuracy geo:hasMetricSpatialAccuracy  ) ;
+	sh:path geo:hasSpatialAccuracy ; 
 	sh:maxCount 1 ;
-	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy and one outgoing geo:hasMetricSpatialAccuracy property."@en ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy property."@en ;
+.
+
+<S15-many-hasMetricSpatialAccuracy-one-sub>
+	a sh:PropertyShape ;
+	sh:path geo:hasMetricSpatialAccuracy ; 
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialAccuracy."@en ;
 .	
 
 #################################################
@@ -458,8 +492,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S16-wkt-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asWKT ;
-	sh:pattern "^\\s*$|^\\s*(P|C|S|L|T|<)" ; # starts with space, < or P, C etc.
-	sh:flags "i" ;
+	sh:pattern "^\\s*$|^\\s*(P|C|S|L|T|<|p|c|s|l|t)" ; # starts with space, < or P, C etc.
+	sh:flags "m" ;
 	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
 .
 
@@ -473,6 +507,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:asGML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
+	sh:flags "m" ;
 	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification."@en ;
 .
 
@@ -486,6 +521,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:asGeoJSON ;
 	sh:pattern "^\\s*$|^\\s*({)(.*)(})\\s*$" ;  # starts with { ends with }
+	sh:flags "s" ;
 	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
 .
 
@@ -499,6 +535,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	a sh:PropertyShape ;
 	sh:path geo:asKML ;
 	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
+	sh:flags "m" ;
 	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
 .
 

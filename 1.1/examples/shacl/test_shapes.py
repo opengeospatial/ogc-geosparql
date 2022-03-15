@@ -1,9 +1,10 @@
 """
 This is a small test suite for GeoSPARQL's SHACL validator.
 
-This small Python script uses the pySHACL tool (https://pypi.org/project/pyshacl/) to test that example data in this
+This Python script uses the pySHACL tool (https://pypi.org/project/pyshacl/) to test that example data in this
 folder with the GeoSPARQL 1.1 SHACL validator (validator.ttl in the GeoSPARQL 1.1 repository). The data files indicate
-with comments in them and also with file naming conventions whether they are expected to pass or fail validation.
+with comments in them and also with file naming conventions whether they are expected to be valid or invalid - 
+pass or fail validation.
 
 Files ending _valid.ttl are expected to be valid. Files ending _invalid.ttl are expected to be _invalid_. The files
 start with the ID of the SHACL rule they are testing. The IDs are present in the IRIs of the SHACL shapes in the
@@ -43,7 +44,78 @@ def validator_graph():
         exit()
 
 
-def test_valid(validator_graph):
-    for f in Path(".").glob("*-valid.ttl"):
-        v = validate(str(f), shacl_graph=validator_graph, allow_warnings=True, meta_shacl=True)
-        assert v[0], f"File {f.name}, expected to be valid, failed validation with error messages:\n\n{v[2]}"
+@pytest.mark.parametrize(
+    "data_file_path", 
+    [
+        Path(".") / "S01-valid.ttl",
+        Path(".") / "S02-valid.ttl",
+        Path(".") / "S03-valid.ttl",
+        Path(".") / "S04-valid.ttl",
+        # Path(".") / "S05-valid.ttl", -- not tested
+        # Path(".") / "S06-valid.ttl", -- not tested
+        # Path(".") / "S07-valid.ttl", -- not tested
+        # Path(".") / "S08-valid.ttl", -- not tested
+        Path(".") / "S09-valid.ttl",
+        Path(".") / "S10-valid.ttl",
+        Path(".") / "S11-valid.ttl",
+        Path(".") / "S12-valid.ttl",
+        Path(".") / "S13-valid.ttl",
+        Path(".") / "S14-valid.ttl",
+        Path(".") / "S15-valid.ttl",
+        Path(".") / "S16-valid.ttl",
+        Path(".") / "S17-valid.ttl",
+        Path(".") / "S18-valid.ttl",
+        Path(".") / "S19-valid.ttl",
+        Path(".") / "S20-valid.ttl",
+        Path(".") / "S21-valid.ttl",
+        Path(".") / "S22-valid.ttl",
+        Path(".") / "S23-valid.ttl",
+        Path(".") / "S24-valid.ttl",
+    ]
+)
+def test_valid(validator_graph, data_file_path):      
+    v = validate(str(data_file_path), shacl_graph=validator_graph, allow_warnings=True, meta_shacl=True)
+    assert v[0], f"File {data_file_path.name}, expected to be valid, failed validation with error messages:\n\n{v[2]}"
+
+
+@pytest.mark.parametrize(
+    "data_file_path", 
+    [
+        Path(".") / "S01-invalid-01.ttl",
+        Path(".") / "S01-invalid-02.ttl",
+        Path(".") / "S01-invalid-03.ttl",
+        Path(".") / "S02-invalid-01.ttl",
+        Path(".") / "S02-invalid-02.ttl",
+        Path(".") / "S03-invalid.ttl",
+        Path(".") / "S04-invalid-01.ttl",
+        Path(".") / "S04-invalid-02.ttl",
+        # Path(".") / "S05-invalid.ttl", -- not tested
+        # Path(".") / "S06-invalid.ttl", -- not tested
+        # Path(".") / "S07-invalid.ttl", -- not tested
+        # Path(".") / "S08-invalid.ttl", -- not tested
+        Path(".") / "S09-invalid.ttl",
+        Path(".") / "S10-invalid.ttl",
+        Path(".") / "S11-invalid.ttl",
+        Path(".") / "S12-invalid.ttl",
+        Path(".") / "S13-invalid.ttl",
+        Path(".") / "S14-invalid-01.ttl",
+        Path(".") / "S14-invalid-02.ttl",
+        Path(".") / "S15-invalid-01.ttl",
+        Path(".") / "S15-invalid-02.ttl",
+        Path(".") / "S16-invalid.ttl",
+        Path(".") / "S17-invalid.ttl",
+        Path(".") / "S18-invalid.ttl",
+        Path(".") / "S19-invalid.ttl",
+        # Path(".") / "S20-invalid.ttl", -- no invalid example
+        Path(".") / "S21-invalid.ttl",
+        Path(".") / "S22-invalid-01.ttl",
+        Path(".") / "S22-invalid-02.ttl",
+        Path(".") / "S23-invalid-01.ttl",
+        Path(".") / "S23-invalid-02.ttl",
+        Path(".") / "S24-invalid-01.ttl",
+        Path(".") / "S24-invalid-02.ttl",
+    ]
+)
+def test_invalid(validator_graph, data_file_path):      
+    v = validate(str(data_file_path), shacl_graph=validator_graph, allow_warnings=True, meta_shacl=True)
+    assert not v[0], f"File {data_file_path.name}, expected to be invalid, failed validation with error messages:\n\n{v[2]}"
