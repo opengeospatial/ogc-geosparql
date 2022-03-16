@@ -27,6 +27,10 @@ Installing pytest results in a python script called pytest that can be used in t
 The --disable-pytest-warnings flag is to hide deeper Python warning messages not needed for general use.
 
 As long as you see no errors, things are working well! Warnings are OK.
+
+To see each file being processed, use the -s flag to allow the testing functions to print the file value:
+
+~$ pytest test_shapes.py --disable-pytest-warnings -s
 """
 import pytest
 from pathlib import Path
@@ -73,7 +77,8 @@ def validator_graph():
         Path(".") / "S24-valid.ttl",
     ]
 )
-def test_valid(validator_graph, data_file_path):      
+def test_valid(validator_graph, data_file_path):
+    print(f"\nTesting {data_file_path}...")
     v = validate(str(data_file_path), shacl_graph=validator_graph, allow_warnings=True, meta_shacl=True)
     assert v[0], f"File {data_file_path.name}, expected to be valid, failed validation with error messages:\n\n{v[2]}"
 
@@ -116,6 +121,7 @@ def test_valid(validator_graph, data_file_path):
         Path(".") / "S24-invalid-02.ttl",
     ]
 )
-def test_invalid(validator_graph, data_file_path):      
+def test_invalid(validator_graph, data_file_path):
+    print(f"\nTesting {data_file_path}...")
     v = validate(str(data_file_path), shacl_graph=validator_graph, allow_warnings=True, meta_shacl=True)
     assert not v[0], f"File {data_file_path.name}, expected to be invalid, failed validation with error messages:\n\n{v[2]}"
