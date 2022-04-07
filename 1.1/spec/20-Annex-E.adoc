@@ -44,10 +44,10 @@ The LOCN specification provides notes on the use of GeoSPARQL literals (see http
 |===
 | From Element | Mapping relation | To Element | Notes
 
-| `geo:Feature` | `rdfs:subClassOf` | `dcterms:Location` | LOCN states that `dcterms:Location` "represents any location, irrespective of size or other restriction", thus it is a superclass of `geo:Feature` 
-| `locn:Address` | `rdfs:subClassOf` | `geo:Feature` | Although LOCN indicates no spatial or geometry properties for `locn:Address`, `locn:Address` is clearly some specialized form of a Feature
-| `geo:Geometry` | `owl:equivalentClass` | `locn:Geometry` | The LOCN class "defines the notion of "geometry" at the conceptual level, and it shall be encoded by using different formats", so GeoSPARQL's class is equivalent.
-| `geo:hasGeometry` | `owl:subPropertyOf` | `locn:geometry` | The LOCN property notes say "Depending on how a geometry is encoded, the range of this property may be one of...". GeoSPARQL's property is indicates only a `geo:Geometry` class instances, not a Literal for instnace, so GeoSPARQL's property is clearly more narrowly defined.
+| `geo:Feature` | `rdfs:subClassOf` | `dcterms:Location` | LOCN states that `dcterms:Location` "represents any location, irrespective of size or other restriction". As such, it can be considered as a superclass of `geo:Feature`. 
+| `locn:Address` | `rdfs:subClassOf` | `geo:Feature` | Although LOCN does not explicitly indicate spatial or geometry properties for `locn:Address`, this class can be considered as a specialized form of a `geo:Feature`.
+| `geo:Geometry` | `rdfs:subClassOf` | `locn:Geometry` | In LOCN, class `locn:Geometry` "[...] defines the notion of geometry at the conceptual level, and it shall be encoded by using different formats". More precisely, its instances can be either literals or individuals. The GeoSPARQL's class `geo:Geometry` is more narrowly defined, as its instances can only be individuals, and not literals.
+| `geo:hasGeometry` | `rdfs:subPropertyOf` | `locn:geometry` | In LOCN, the usage note to property `locn:geometry` states that "Depending on how a geometry is encoded, the range of this property may be one of the following: a literal [...], an instance of a geometry class [...], geocoded URIs [...]". The GeoSPARQL's property `geo:hasGeometry` is more narrowly defined, as it can only be used with instances of `geo:Geometry`, and not with literals.
 |===
 
 == E.2 WGS84 Geo Positioning: an RDF vocabulary (POS)
