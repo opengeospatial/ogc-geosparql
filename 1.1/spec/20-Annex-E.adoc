@@ -257,14 +257,14 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 
 PROV Source: https://www.w3.org/TR/prov-o/
 
-From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with more abstract concepts - and only one of PROV's three main classes of object, `Entity`, `Activity` & `Agent` has direct relations to GeoSPARQL classes: `Entity`.
+From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with more abstract concepts - and only one of PROV's three main classes of object - `Entity`, `Activity` & `Agent` - has direct relations to GeoSPARQL classes and that is `Entity`. This is because GeoSPARQL characterises things - spatial objects - which are a kind of `Entity` but does not deal with events (`Activity`) or things with agency (`Agent`).
 
 |===
 | From Element | Mapping relation | To Element | Notes
 
 | `geo:SpatialObject` | `rdfs:subClassOf` | `prov:Entity` | All SpatialObjects fit within PROV's Entity's definition: "An entity is a physical, digital, conceptual, or other kind of thing with some fixed aspects; entities may be real or imaginary." 
 | `geo:Feature` | `rdfs:subClassOf` | `prov:Location` | A Location "...can be an identifiable geographic place (ISO 19112), but it can also be a non-geographic place such as a directory, row, or column" so seem to be wider in scope than GeoSPARQL's Feature although a Feature could indeed be something such as a "directory, row, or column"
-| `prov:atLocation` | - | - | The PROV property indicates a `prov:Location`, so perhaps a `geo:Feature`, but GeoSPARQL has no property to indicate a `geo:Feature`
+| `prov:atLocation` | - | - | The PROV property indicates `prov:Location` instances, which may be `geo:Feature` instnaces, but GeoSPARQL has no property to indicate a `geo:Feature`, so no mapping is possible. Indicating features is commonly done in ontologies used GeoSPARQL but not within GeoSPARQL.
 |===
 
 Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as haveing been derived from a Polygon like this:
