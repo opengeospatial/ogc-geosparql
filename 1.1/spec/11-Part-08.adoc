@@ -295,7 +295,7 @@ This section establishes the requirements for representing Geometry data in RDF 
 
 GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them but does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
 
-GeoSPARQL does present some requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.
+GeoSPARQL does present some requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of coordinate reference systems within WKT geometry representations.
 
 [[NOTE]]
 ====
@@ -336,29 +336,29 @@ opt-iri-and-space = "<" IRI ">" LWSP / ""
 
 The token `opt-iri-and-space` may be either an IRI and space or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the Geometry, defined in <<ISO13249>>.
 
-In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
+In the absence of a leading coordinate reference system IRI, the following coordinate reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
 [#req_geometry_extension_wkt-literal-default-srs]
 |===
-| *Req 16* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances that do not specify an explicit spatial reference system IRI.
+| *Req 16* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the coordinate reference system for <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances that do not specify an explicit coordinate reference system IRI.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs`]
 |===
 
-The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
+The OGC maintains a set of CRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
 
 [#req_geometry_extension_wkt-axis-order]
 |===
-| *Req 17* Coordinate tuples within <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+| *Req 17* Coordinate tuples within <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall be interpreted using the axis order defined in the coordinate reference system used.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-axis-order`]
 |===
 
-The example <<RDFS Datatype: geo:wktLiteral, WKT Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatype: geo:wktLiteral, WKT Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude coordinate reference system:
 
 ```turtle
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ```
 
-A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
+A second example below encodes the same point as encoded in the example above but using a CRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude coordinate reference system (note that this coordinate reference system defines a different axis order):
 
 ```turtle
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
@@ -433,7 +433,7 @@ Valid <<RDFS Datatype: geo:gmlLiteral, GML Literal>> instances are formed by enc
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gml-literal`]
 |===
 
-The example <<RDFS Datatype: geo:gmlLiteral, GML Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
+The example <<RDFS Datatype: geo:gmlLiteral, GML Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude coordinate reference system using GML version 3.2:
 
 ```turtle
 """
@@ -519,11 +519,11 @@ Valid <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> instances are forme
 
 [#req_geometry_extension_geojson-literal-srs]
 |===
-| *Req 27* RDFS Literals of type <<RDFS Datatype: geo:geoJSONLiteral, `geo:geoJSONLiteral`>> do not contain a SRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
+| *Req 27* RDFS Literals of type <<RDFS Datatype: geo:geoJSONLiteral, `geo:geoJSONLiteral`>> do not contain a CRS definition. All literals of this type shall, according to the GeoJSON specification, be encoded only in, and be assumed to use, the WGS84 geodetic longitude-latitude coordinate reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geojson-literal-srs`]
 |===
 
-The example <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+The example <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude coordinate reference system for Simple Features 1.0:
 
 ```turtle
 """
@@ -602,11 +602,11 @@ Valid <<RDFS Datatype: geo:kmlLiteral, KML Literal>> instances are formed by enc
 
 [#req_geometry_extension_kml-literal-srs]
 |===
-| *Req 32* RDFS Literals of type <<RDFS Datatype: geo:kmlLiteral, `geo:kmlLiteral`>> do not contain a SRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
+| *Req 32* RDFS Literals of type <<RDFS Datatype: geo:kmlLiteral, `geo:kmlLiteral`>> do not contain a CRS definition. All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude coordinate reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/kml-literal-srs`]
 |===
 
-The example <<RDFS Datatype: geo:kmlLiteral, KML Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
+The example <<RDFS Datatype: geo:kmlLiteral, KML Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude coordinate reference system for Simple Features 1.0:
 
 ```turtle
 """
@@ -828,7 +828,7 @@ An invocation of any of the following functions with invalid arguments produces 
 * An argument of an unexpected type
 * An invalid geometry literal value
 * An non-fitting geometry type for the given function
-* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
+* A geometry literal from a coordinate reference system that is incompatible with the coordinate reference system used for calculations
 * An invalid units IRI
 
 A more detailed description of expected inputs and expected outputs of the given functions is shown in Annex B.
@@ -865,7 +865,7 @@ Returns the area of `geom1` in square meters. Must return zero for all geometry 
 geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
+This function returns the closure of the boundary of `geom1`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:buffer
 
@@ -875,7 +875,7 @@ geof:buffer (geom: ogc:geomLiteral,
              units: xsd:anyURI): ogc:geomLiteral
 ```
 
-Returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
+Returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the coordinate reference system of `geom1`.
 NOTE: See the <<Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:convexHull
@@ -884,7 +884,7 @@ NOTE: See the <<Recommendation for specification of units of measurement>>.
 geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:coordinateDimension
 
@@ -901,7 +901,7 @@ geof:difference (geom1: ogc:geomLiteral,
                  geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points in the set difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+This function returns a geometric object that represents all Points in the set difference of `geom1` with `geom2`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:dimension
 
@@ -919,7 +919,7 @@ geof:distance (geom1: ogc:geomLiteral,
                units: xsd:anyURI): xsd:double
 ```
 
-Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in spatial reference system of `geom1`.
+Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in coordinate reference system of `geom1`.
 NOTE: See the <<Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:envelope
@@ -928,7 +928,7 @@ NOTE: See the <<Recommendation for specification of units of measurement>>.
 geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns the minimum bounding box - a rectangle - of `geom1`. Calculations are in the spatial reference system of `geom1`.
+This function returns the minimum bounding box - a rectangle - of `geom1`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:geometryN
 
@@ -952,7 +952,7 @@ Returns the name of the subtype of Geometry of which this geometric object is an
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ```
 
-Returns the spatial reference system IRI for `geom`.
+Returns the coordinate reference system IRI for `geom`.
 
 ==== Function: geof:intersection
 
@@ -961,7 +961,7 @@ geof:intersection (geom1: ogc:geomLiteral,
                    geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-Returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+Returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:is3D
 
@@ -1090,15 +1090,15 @@ geof:symDifference (geom1: ogc:geomLiteral,
                     geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+This function returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the coordinate reference system of `geom1`.
 
 ==== Function: geof:transform
 
 ```
-geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
+geof:transform (geom: ogc:geomLiteral, crsIRI: xsd:anyURI): ogc:geomLiteral
 ```
 
-http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a coordinate reference system defined by crsIRI. The function raises an error if a transformation is not mathematically possible.
 
 NOTE: We recommend that implementers use the same literal type as a result of this function that is passed as a parameter to this function.
 
@@ -1109,7 +1109,7 @@ geof:union (geom1: ogc:geomLiteral,
             geom2: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+This function returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the coordinate reference system of `geom1`.
 
 [#req_geometry_extension_srid-function]
 |===
