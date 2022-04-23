@@ -44,7 +44,7 @@ The LOCN specification provides notes on the use of GeoSPARQL literals (see http
 
 | `geo:Feature` | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `dcterms:Location` | LOCN states that `dcterms:Location` "represents any location, irrespective of size or other restriction". As such, it can be considered as a superclass of `geo:Feature`. 
 | `locn:Address` | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Feature` | Although LOCN does not explicitly indicate spatial or geometry properties for `locn:Address`, this class can be considered as a specialized form of a `geo:Feature`.
-| `geo:Geometry` | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `locn:Geometry` | In LOCN, class `locn:Geometry` "[...] defines the notion of geometry at the conceptual level, and it shall be encoded by using different formats". More precisely, its instances can be either literals or individuals. The GeoSPARQL's class `geo:Geometry` is more narrowly defined, as its instances can only be individuals, and not literals.
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `locn:Geometry` | In LOCN, class `locn:Geometry` "[...] defines the notion of geometry at the conceptual level, and it shall be encoded by using different formats". More precisely, its instances can be either literals or individuals. The GeoSPARQL's class <<Class: geo:Geometry, `geo:Geometry`>> is more narrowly defined, as its instances can only be individuals, and not literals.
 | `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `locn:geometry` | In LOCN, the usage note to property `locn:geometry` states that "Depending on how a geometry is encoded, the range of this property may be one of the following: a literal [...], an instance of a geometry class [...], geocoded URIs [...]". The GeoSPARQL's property `geo:hasGeometry` is more narrowly defined, as it can only be used with instances of `geo:Geometry`, and not with literals.
 |===
 
@@ -102,13 +102,13 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry` |
 | http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundigBox` property
 | http://geovocab.org/geometry#GeometryCollection[`geom:GeometryCollection`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:GeometryCollection` |
-| http://geovocab.org/geometry#LineString[`geom:LineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:LineString` |
-| http://geovocab.org/geometry#LinearString[`geom:LinearRing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:LinearRing` |
-| http://geovocab.org/geometry#MultiLineString[`geom:MultiLineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:MultiLineString` |
-| http://geovocab.org/geometry#MultiPoint[`geom:MultiPoint`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:MultiPoint` |
-| http://geovocab.org/geometry#MultiPolygon[`geom:MultiPolygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:MultiPolygon` |
-| http://geovocab.org/geometry#Polygon[`geom:Polygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Polygon` |
-| http://geovocab.org/geometry#Point[`geom:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Point` |
+| http://geovocab.org/geometry#LineString[`geom:LineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] |
+| http://geovocab.org/geometry#LinearString[`geom:LinearRing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LinearRing[`sf:LinearRing`] |
+| http://geovocab.org/geometry#MultiLineString[`geom:MultiLineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiLineString[`sf:MultiLineString`] |
+| http://geovocab.org/geometry#MultiPoint[`geom:MultiPoint`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPoint[`sf:MultiPoint`] |
+| http://geovocab.org/geometry#MultiPolygon[`geom:MultiPolygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`] |
+| http://geovocab.org/geometry#Polygon[`geom:Polygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] |
+| http://geovocab.org/geometry#Point[`geom:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] |
 | `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictve domain
 |===
 
@@ -127,7 +127,7 @@ Juso contains mappings to GeoSPARQL but uses `owl:sameAs` which it should instea
 | http://rdfs.co/juso/SpatialThing[`juso:SpatialThing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:SpatialObject`
 | http://rdfs.co/juso/Feature[`juso:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Feature`
 | http://rdfs.co/juso/Geometry[`juso:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry`
-| http://rdfs.co/juso/Point[`juso:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Point`
+| http://rdfs.co/juso/Point[`juso:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`]
 | http://rdfs.co/juso/geometry[`juso:geometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:hasGeometry`
 | http://rdfs.co/juso/parent[`juso:parent`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfWithin`
 | http://rdfs.co/juso/division[`juso:political_division`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfContains`
@@ -316,12 +316,12 @@ https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
 | From Element | Mapping relation | To Element | Notes 
 
 | https://www.openstreetmap.org/meta/loc[`osmm:loc`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:asWKT` | The OpenStreetMap RDF property osmm:loc includes WKTliterals which depending on the type of the subject instance describe an OSM node or the centroid of a way or OSM relation
-| https://www.openstreetmap.org/meta/type[`osmm:type`] 'n' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Point` | The OpenStreetMap RDF property osmm:type with value 'n' describes an OSM Node which is equivalent to a sf:Point
-| https://www.openstreetmap.org/meta/type[`osmm:type`] 'w' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:LineString` | The OpenStreetMap RDF property osmm:type with value 'w' describes an OSM Way which is equivalent to a sf:LineString
-| https://www.openstreetmap.org/meta/type[`osmm:type`] 'r' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:GeometryCollection` | The OpenStreetMap RDF property osmm:type with value 'r' describes an OSM relation Way which is equivalent to a sf:GeometryCollection
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'n' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | The OpenStreetMap RDF property osmm:type with value 'n' describes an OSM Node which is equivalent to a sf:Point
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'w' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The OpenStreetMap RDF property osmm:type with value 'w' describes an OSM Way which is equivalent to a sf:LineString
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'r' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The OpenStreetMap RDF property osmm:type with value 'r' describes an OSM relation Way which is equivalent to a sf:GeometryCollection
 | https://www.openstreetmap.org/meta/has[`osmm:has`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:sfContains`, `geo:ehContains`, `geo:rcc8ntpp` | The OpenStreetMap RDF property osmm:has describes that a relation contains a way or that a way contains a node
-| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] true | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Polygon` | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
-| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] false | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:LineString` | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
+| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] true | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
+| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] false | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The OpenStreetMap RDF property osmm:isClosed  indicates whether a Way is closed, i.e. if it constitutes a Polygon
 |===
     
 === E.12.3 Routable Tiles Ontology
@@ -330,9 +330,9 @@ https://github.com/openplannerteam/routable-tiles-ontology
 | From Element | Mapping relation | To Element | Notes 
 
 | `osm:Element` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry` | The class osm:Element is equivalent to a geo:Geometry
-| `osm:Node` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:Point` | The class osm:Node is equivalent to a sf:Point
-| `osm:Way` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:LineString` | The class osm:Way is equivalent to a sf:LineString
-| `osm:Relation` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `sf:GeometryCollection` | The class osm:Relation is equivalent to a sf:GeometryCollection
+| `osm:Node` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | The class osm:Node is equivalent to a sf:Point
+| `osm:Way` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The class osm:Way is equivalent to a sf:LineString
+| `osm:Relation` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The class osm:Relation is equivalent to a sf:GeometryCollection
 |===
 
 == E.13 Ordnance Survey UK Spatial Ontology
@@ -395,6 +395,6 @@ BFO Source: https://basic-formal-ontology.org/bfo-2020.html, and from there, an 
 | `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `obo:BFO_0000210` "occupies spatial region at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
 | `geo:sfWithin` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `obo:BFO_0000082` "located in at all times" | The BFO property "located in at all times" is a super property of `geo:sfWithin` when the thing located in the spatial region are defined to both be instances of `geo:Feature`. Since GeoSPARQL natively supplies no temporal qualifiers, pure GeoSPARQL assertions are assumed to be eternal: "...at all times"
 | `geo:sfWithin` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `obo:BFO_0000171` "located in at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
-| `obo:BFO_0000066` "occurs in" | `rdfs:range` | `geo:SpatialObject` | The BFO property relates a temporal activity to a spatial region but since GeoSPARQL has no notion of events, no mapping to this property can be made. However, BFO indicates this property should be used with a BFO "spatial region" (`geo:Geometry`) range value but from GeoSPARQL's point of view, it could also be used with a `geo:Feature` where the "in" would be taken to be within the feature's geometry, so the superclass of feature and geometry is given as the range
-| `obo:BFO_0000216` "spatially projects onto at some time" | `rdfs:range` | `geo:SpatialObject` | The reasoning is the same as for "occurs in"
+| `obo:BFO_0000066` "occurs in" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | `geo:SpatialObject` | The BFO property relates a temporal activity to a spatial region but since GeoSPARQL has no notion of events, no mapping to this property can be made. However, BFO indicates this property should be used with a BFO "spatial region" (`geo:Geometry`) range value but from GeoSPARQL's point of view, it could also be used with a `geo:Feature` where the "in" would be taken to be within the feature's geometry, so the superclass of feature and geometry is given as the range
+| `obo:BFO_0000216` "spatially projects onto at some time" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | `geo:SpatialObject` | The reasoning is the same as for "occurs in"
 |===
