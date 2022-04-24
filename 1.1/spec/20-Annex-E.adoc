@@ -99,8 +99,8 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | http://geovocab.org/spatial#Pi[`spatial:Pi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfContains` |
 | http://geovocab.org/spatial#TPP[`spatial:TPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8tpp` |
 | http://geovocab.org/spatial#TPPi[`spatial:TPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo::rcc8tppi` |
-| http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry` |
-| http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundigBox` property
+| http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> |
+| http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundigBox` property
 | http://geovocab.org/geometry#GeometryCollection[`geom:GeometryCollection`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:GeometryCollection` |
 | http://geovocab.org/geometry#LineString[`geom:LineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] |
 | http://geovocab.org/geometry#LinearString[`geom:LinearRing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LinearRing[`sf:LinearRing`] |
@@ -113,7 +113,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 |===
 
 * The `geom:bbox` property relates a Geometry to another Geometry and is thus not equivalent to GeoSPARQL's Feature-to-Geometry `geo:hasBoundingBox`.
-** An equivalent to `geo:bbox` could be made using a <<Class: geo:Feature, `geo:Feature`>> with a `geo:Geometry`, indicated by `geo:hasGeometry` and a second, specialised Bounding Box `geo:Geometry` indicated with `geo:hasBoundingBox`
+** An equivalent to `geo:bbox` could be made using a <<Class: geo:Feature, `geo:Feature`>> with a <<Class: geo:Geometry, `geo:Geometry`>>, indicated by `geo:hasGeometry` and a second, specialised Bounding Box <<Class: geo:Geometry, `geo:Geometry`>> indicated with `geo:hasBoundingBox`
 
 == E.5 Juso Ontology
 
@@ -126,7 +126,7 @@ Juso contains mappings to GeoSPARQL but uses `owl:sameAs` which it should instea
 
 | http://rdfs.co/juso/SpatialThing[`juso:SpatialThing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>
 | http://rdfs.co/juso/Feature[`juso:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>>
-| http://rdfs.co/juso/Geometry[`juso:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry`
+| http://rdfs.co/juso/Geometry[`juso:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>>
 | http://rdfs.co/juso/Point[`juso:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`]
 | http://rdfs.co/juso/geometry[`juso:geometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:hasGeometry`
 | http://rdfs.co/juso/parent[`juso:parent`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfWithin`
@@ -169,9 +169,9 @@ OWL TIME sets no domain for `time:hasTime` thus this property may be used with a
 .    
 ```
 
-In the above example, `:flooded-area-x` is a spatio-temporal Feature that has both a GeoSPARQL spatial projection - a `geo:Geometry` - and a temporal projection - a `time:ProperInterval` which is a specailised form of `time:TemporalEntity`.
+In the above example, `:flooded-area-x` is a spatio-temporal Feature that has both a GeoSPARQL spatial projection - a <<Class: geo:Geometry, `geo:Geometry`>> - and a temporal projection - a `time:ProperInterval` which is a specailised form of `time:TemporalEntity`.
 
-Another possible use of TIME with GeoSPARQL is to assign temporality to individual `geo:Geometry` instances. This is allowed given `time:hasTime`'s open domain:
+Another possible use of TIME with GeoSPARQL is to assign temporality to individual <<Class: geo:Geometry, `geo:Geometry`>> instances. This is allowed given `time:hasTime`'s open domain:
 
 
 ```turtle
@@ -195,10 +195,10 @@ schema.org Source: https://schema.org
 |===
 | From Element | Mapping relation | To Element | Notes
 
-| `geo:Geometry` | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | 	
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | 	
 https://schema.org/GeoShape[`sdo:GeoShape`] | A GeoShape can various literal geometry representation
 | https://schema.org/GeospatialGeometry[`sdo:GeospatialGeometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | Since GeospatialGeometry is the domain of SimpleFeature-like properties and a superclass of GeoShape
-| https://schema.org/GeoCoordinates[`sdo:GeoCoordinates`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | GoCoordinates uses direct lat, long, elevation etc properties to indicate position, not a while geometry serialization but it is nevertheless a form of a Geometry
+| https://schema.org/GeoCoordinates[`sdo:GeoCoordinates`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GoCoordinates uses direct lat, long, elevation etc properties to indicate position, not a while geometry serialization but it is nevertheless a form of a Geometry
 | https://schema.org/geo[`sdo:geo`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:hasGeometry` |
 | https://schema.org/geoCoveredBy[`sdo:geoCoveredBy`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:ehCoveredBy` | 
 | https://schema.org/geoCovers[`sdo:geoCovers`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:ehCovers` | 
@@ -237,7 +237,7 @@ DCTERMS Source: https://www.dublincore.org/specifications/dublin-core/dcmi-terms
 | `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `dcterms:spatial` | `dcterms:spatial` indicates the "Spatial characteristics of the resource", thus it is a more general form of GeoSPARQL's `geo:hasGeometry` which indicates geometry spatial information
 |===
 
-* `dcterms:coverage` is extremely generic - "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant." - but DCTERMS indicates its range includes a `dcterms:Location`, so it is a property for indicating a <<Class: geo:Feature, `geo:Feature`>>, not a `geo:Geometry` and for which GeoSPARQL has no equivalent. Often, `dcterms:coverage` is used to indicate a spatial extent such as a bounding box but `dcterms:spatial` could be used for this with more precsision. GeoSPARQL now provides a `geo:hasBoundingBox` property, so such a property could be used if a Bounding Box is wanted to be indicated.
+* `dcterms:coverage` is extremely generic - "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant." - but DCTERMS indicates its range includes a `dcterms:Location`, so it is a property for indicating a <<Class: geo:Feature, `geo:Feature`>>, not a <<Class: geo:Geometry, `geo:Geometry`>> and for which GeoSPARQL has no equivalent. Often, `dcterms:coverage` is used to indicate a spatial extent such as a bounding box but `dcterms:spatial` could be used for this with more precsision. GeoSPARQL now provides a `geo:hasBoundingBox` property, so such a property could be used if a Bounding Box is wanted to be indicated.
 
 DCTERMS-related geometry literals, such as the _DCMI Box Encoding Scheme_footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-box/] and the _DCMI Point Encoding Scheme_footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-point/] 
 could be indicated as GeoSPARQL geometry literals if a literal datatype were created for each. For example, the _DCMI Point Encoding Scheme_ example of "The highest point in Australia" with the literal value 
@@ -330,7 +330,7 @@ https://github.com/openplannerteam/routable-tiles-ontology
 |===
 | From Element | Mapping relation | To Element | Notes 
 
-| `osm:Element` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | `geo:Geometry` | The class osm:Element is equivalent to a geo:Geometry
+| `osm:Element` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> | The class osm:Element is equivalent to a <<Class: geo:Geometry, `geo:Geometry`>>
 | `osm:Node` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | The class osm:Node is equivalent to a sf:Point
 | `osm:Way` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The class osm:Way is equivalent to a sf:LineString
 | `osm:Relation` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The class osm:Relation is equivalent to a sf:GeometryCollection
@@ -353,7 +353,7 @@ The ontology authors note: "We are pleased to have contributed to the discussion
 | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing[`spatialuk:northing`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | - | Distance in metres north of National Grid origin
 | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/touches[`spatialuk:touches`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:sfTouches` |
 | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within[`spatialuk:within`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:sfWithin` |
-| http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry[`spatialukgeom:AbstractGeometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:Geometry` |
+| http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry[`spatialukgeom:AbstractGeometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Class: geo:Geometry, `geo:Geometry`>> |
 | http://data.ordnancesurvey.co.uk/ontology/geometry/extent[`spatialukgeom:extent`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:hasGeometry` | The range of spatialukgeom:extent is constrained to 2D geometries
 | http://data.ordnancesurvey.co.uk/ontology/geometry/asGML[`spatialukgeom:asGML`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:asGML` | The properties are equivalent, but the range of http://data.ordnancesurvey.co.uk/ontology/geometry/asGML[`spatialukgeom:asGML] is more general: An rdf:XMLLiteral
 |===
@@ -370,12 +370,12 @@ CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pd
 
 | http://www.cidoc-crm.org/cidoc-crm/SP1_PhenomenalSpaceTimeVolume[`cidoc:SP1_PhenomenalSpaceTimeVolume`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The CIDOC CRMgeo class SP1_PhenomenalSpaceTimeVolume is a subclass of geo:Feature as described in the CRMgeo 1.2 specification document.
 | http://www.cidoc-crm.org/cidoc-crm/SP2_PhenomenalPlace[`cidoc:SP2_PhenomenalPlace`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The CIDOC CRMgeo class SP2_PhenomenalPlace is a subclass of <<Class: geo:Feature, `geo:Feature`>> as described in the CRMgeo 1.2 specification document.
-| http://www.cidoc-crm.org/cidoc-crm/SP5_GeometricPlaceExpression[`cidoc:SP5_GeometricPlaceExpression`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP5_GeometricPlaceExpression is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
-| `cidoc:SP6_DeclarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP6_DeclarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
-| `cidoc:SP7_DelcarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP7_DelcarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
-| `cidoc:SP10_DeclarativeTimeSpan`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP10_DeclarativeTimeSpan is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
-| `cidoc:SP14_TimeExpression`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP14_TimeExpression is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
-| `cidoc:SP15_Geometry`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | The CIDOC CRMgeo class SP15_Geometry is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP5_GeometricPlaceExpression[`cidoc:SP5_GeometricPlaceExpression`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP5_GeometricPlaceExpression is a subclass of <<Class: geo:Geometry, `geo:Geometry`>> as described in the CRMgeo 1.2 specification document.
+| `cidoc:SP6_DeclarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP6_DeclarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| `cidoc:SP7_DelcarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP7_DelcarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP10_DeclarativeTimeSpan[`cidoc:SP10_DeclarativeTimeSpan`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP10_DeclarativeTimeSpan is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP14_TimeExpression[`cidoc:SP14_TimeExpression`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP14_TimeExpression is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP15_Geometry[`cidoc:SP15_Geometry`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP15_Geometry is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
 |===
 
 == E.15 Basic Formal Ontology (BFO)
