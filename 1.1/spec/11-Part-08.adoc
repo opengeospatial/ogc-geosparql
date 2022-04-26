@@ -90,13 +90,13 @@ geo:GeometryCollection
 .
 ```
 
-The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Geometry, Geometry>> are allowed to be members of it and these are to be indicated with the `rdfs:member` property.
+The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Geometry, Geometry>> are allowed to be members of it and these are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
 
 [NOTE]
 ====
-There is no RDF/ontology relationship between this `geo:GeometryCollection` class and the Simple Features Vocabulary's `sf:GeometryCollection` class since the former is a collection of `geo:Geometry` objects and the latter is to be used for compound geometry literals.
+There is no RDF/ontology relationship between this <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> class and the Simple Features Vocabulary's http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] class since the former is a collection of `geo:Geometry` objects and the latter is to be used for compound geometry literals.
 
-`sf:GeometryCollection` instances can act as input or output of GeoSPARQL functions whereas `geo:GeometryCollection` instances are more likely to be used for grouping `geo:Geometry` objects for other purposes.
+http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances can act as input or output of GeoSPARQL functions whereas <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> instances are more likely to be used for grouping `geo:Geometry` objects for other purposes.
 
 Many geometry literal formats also have the ability to represent multiple geometries. GML & KML use a _MultiGeometry_ type and WKT & GeoJSON use a _GeometryCollection_ type. While the names of some of these objects is the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization. 
 
@@ -991,42 +991,42 @@ Returns a geometric object that represents all Points in the intersection of `ge
 ==== Function: geof:is3D
 
 ```
-geof:is3D (geom1: ogc:geomLiteral): xsd:boolean
+geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-Returns true if `geom1` has z coordinate values.
+Returns true if `geom` has z coordinate values.
 
 ==== Function: geof:isEmpty
 
 ```
-geof:isEmpty (geom1: ogc:geomLiteral): xsd:boolean
+geof:isEmpty (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-Returns true if `geom1` is an empty geometry, i.e. contains no coordinates.
+Returns true if `geom` is an empty geometry, i.e. contains no coordinates.
 
 ==== Function: geof:isMeasured
 
 ```
-geof:isMeasured (geom1: ogc:geomLiteral): xsd:boolean
+geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-Returns true if `geom1` has m coordinate values.
+Returns true if `geom` has m coordinate values.
 
 ==== Function: geof:isSimple
 
 ```
-geof:isSimple (geom1: ogc:geomLiteral): xsd:boolean
+geof:isSimple (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-Returns true if `geom1` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
+Returns true if `geom` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
 
 ==== Function: geof:length
 
 ```
-geof:length (geom1: ogc:geomLiteral): xsd:double
+geof:length (geom: ogc:geomLiteral): xsd:double
 ```
 
-Returns the length of `geom1` in meters. The longest length from any one dimension is returned.
+Returns the length of `geom` in meters. The longest length from any one dimension is returned.
 
 ==== Function: geof:maxX
 
@@ -1079,19 +1079,19 @@ The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] ret
 ==== Function: geof:numGeometries
 
 ```
-geof:numGeometries (geom1: ogc:geomLiteral): xsd:integer
+geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
 ```
 
-Returns the number of geometries of `geom1`.
+Returns the number of geometries of `geom`.
 
 ==== Function: geof:projectTo
 
 ```
-geof:projectTo (geom1:  ogc:geomLiteral,
+geof:projectTo (geom:  ogc:geomLiteral,
                 dimVec: xsd:integer): ogc:geomLiteral
 ```
 
-Projects the elements of geometry `geom1` to the dimensions specified by the `dimVec` "dimensional vector". 
+Projects the elements of geometry `geom` to the dimensions specified by the `dimVec` "dimensional vector". 
 
 `dimVec` is a binary number indicating which dimensions to project to (retain) from the `geom`, for example, using dimensions x, y & z:
 
@@ -1103,10 +1103,10 @@ A projection may only occur from a geometry to a geometry of equal or fewer dime
 ==== Function: geof:spatialDimension
 
 ```
-geof:spatialDimension (geom1: ogc:geomLiteral): xsd:integer
+geof:spatialDimension (geom: ogc:geomLiteral): xsd:integer
 ```
 
-Returns the spatial dimension of `geom1`.
+Returns the spatial dimension of `geom`.
 
 ==== Function: geof:symDifference
 
