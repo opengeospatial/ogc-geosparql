@@ -29,6 +29,7 @@
 		funcs:asGML,
 		funcs:asWKT,
         funcs:boundary,
+	funcs:boundingCircle,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
@@ -113,8 +114,10 @@ funcs: a skos:Collection ;
 		funcs:asGML,
 		funcs:asWKT,
         funcs:boundary,
+        funcs:boundingCircle,
         funcs:metricBuffer,
         funcs:buffer,
+        funcs:concaveHull,
         funcs:convexHull,
         funcs:difference,
         funcs:dimension,
@@ -212,7 +215,9 @@ funcs:nonTopo a skos:Collection ;
     skos:member
         funcs:area,
         funcs:boundary,
+	funcs:boundingCircle,
         funcs:buffer,
+	funcs:metricBuffer,
         funcs:convexHull,
         funcs:difference,
         funcs:dimension,
@@ -247,11 +252,11 @@ funcs:sa a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:member
-        funcs:boundingCircle,
-        funcs:centroid,
-        funcs:concatLines,
-        funcs:concaveHull,
-        funcs:union2;
+        funcs:aggBoundingCircle,
+	funcs:aggBoundingBox,
+        funcs:aggCentroid,
+        funcs:aggConcaveHull,
+        funcs:aggUnion;
     skos:prefLabel "GeoSPARQL Spatial Aggregate Functions"@en .
 
 rules: a skos:Collection ;
@@ -414,6 +419,28 @@ funcs:boundingCircle a skos:Concept ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that calculates the minimum bounding circle of set of geometries."@en ;
+    skos:prefLabel "bounding circle"@en .
+
+funcs:aggboundingBox a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the minimum bounding box of set of geometries."@en ;
+    skos:prefLabel "bounding box"@en .
+
+funcs:aggboundingCircle a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A spatial aggregate function that calculates the minimum bounding circle of set of geometries."@en ;
     skos:prefLabel "bounding circle"@en .
 
@@ -450,7 +477,7 @@ funcs:centroid a skos:Concept ;
     skos:definition "A spatial aggregate function that calculates a centroid of a set of geometries."@en ;
     skos:prefLabel "centroid"@en .
 
-funcs:concatLines a skos:Concept ;
+funcs:concaveHull a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -458,10 +485,10 @@ funcs:concatLines a skos:Concept ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
-    skos:definition "A spatial aggregate function that calculates a concatenated line of a set of lines."@en ;
-    skos:prefLabel "concat lines"@en .
+    skos:definition "A query function that calculates the concave hull of a set of geometries."@en ;
+    skos:prefLabel "concave hull"@en .
 
-funcs:concaveHull a skos:Concept ;
+funcs:aggConcaveHull a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -1047,7 +1074,7 @@ funcs:union a skos:Concept ;
     skos:prefLabel "union"@en ;
     skos:example spec11:B.2.2.3 .
 
-funcs:union2 a skos:Concept ;
+funcs:aggUnion a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -1056,7 +1083,7 @@ funcs:union2 a skos:Concept ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A spatial aggregate function that calculates the union of a set of geometries."@en ;
-    skos:prefLabel "union2"@en .
+    skos:prefLabel "aggregate union"@en .
 
 rules:ehContains a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
