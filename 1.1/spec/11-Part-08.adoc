@@ -768,6 +768,7 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 <<Function: geof:metricBuffer, `geof:metricBuffer`>>, 
 <<Function: geof:buffer, `geof:buffer`>>, 
 <<Function: geof:convexHull, `geof:convexHull`>>, 
+<<Function: geof:concaveHull, `geof:concaveHull`>>, 
 <<Function: geof:coordinateDimension, `geof:coordinateDimension`>>, 
 <<Function: geof:difference, `geof:difference`>>, 
 <<Function: geof:dimension, `geof:dimension`>>, 
@@ -858,18 +859,18 @@ NOTE: Several non-topological query functions use a unit of measure IRI. The OGC
 ==== Function: geof:area
 
 ```
-geof:area (geom1: ogc:geomLiteral): xsd:double
+geof:area (geom: ogc:geomLiteral): xsd:double
 ```
 
-Returns the area of `geom1` in square meters. Must return zero for all geometry types other than Polygon.
+Returns the area of `geom` in square meters. Must return zero for all geometry types other than Polygon.
 
 ==== Function: geof:boundary
 
 ```
-geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
+geof:boundary (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
+This function returns the closure of the boundary of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:metricBuffer
 
@@ -898,15 +899,23 @@ NOTE: See the <<Recommendation for specification of units of measurement,  Recom
 geof:convexHull (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom`.
+The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom`. Calculations are in the spatial reference system of `geom`.
+
+==== Function: geof:concaveHull
+
+```
+geof:concaveHull (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`] returns a geometric object that represents all Points in the concave hull of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:coordinateDimension
 
 ```
-geof:coordinateDimension (geom1: ogc:geomLiteral): xsd:integer
+geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 ```
 
-Returns the coordinate dimension of `geom1`.
+Returns the coordinate dimension of `geom`.
 
 ==== Function: geof:difference
 
@@ -920,10 +929,10 @@ This function returns a geometric object that represents all Points in the set d
 ==== Function: geof:dimension
 
 ```
-geof:dimension (geom1: ogc:geomLiteral): xsd:integer
+geof:dimension (geom: ogc:geomLiteral): xsd:integer
 ```
 
-Returns the dimension of `geom1`. In non-homogeneous geometry collections, this will return the largest topological dimension of the contained objects.
+Returns the dimension of `geom`. In non-homogeneous geometry collections, this will return the largest topological dimension of the contained objects.
 
 ==== Function: geof:metricDistance
 
@@ -950,10 +959,10 @@ NOTE: See the <<Recommendation for specification of units of measurement, Recomm
 ==== Function: geof:envelope
 
 ```
-geof:envelope (geom1: ogc:geomLiteral): ogc:geomLiteral
+geof:envelope (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-This function returns the minimum bounding box - a rectangle - of `geom1`. Calculations are in the spatial reference system of `geom1`.
+This function returns the minimum bounding box - a rectangle - of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:geometryN
 
@@ -966,7 +975,7 @@ Returns the nth geometry of `geom` if it is a GeometryCollection that is defined
 ==== Function: geof:geometryType
 
 ```
-geof:geometryType (geom1: ogc:geomLiteral): xsd:anyURI
+geof:geometryType (geom: ogc:geomLiteral): xsd:anyURI
 ```
 
 Returns the URI of the subtype of Geometry of which this geometric object is an member. No attempt to reconcile different geometry subtypes across all support literals need be made.
