@@ -8,6 +8,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix spec: <http://www.opengis.net/def/spec-element/> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
 @prefix reqs10: <http://www.opengis.net/spec/geosparql/1.0/req/> .
 @prefix confs10: <http://www.opengis.net/spec/geosparql/1.0/conf/> .
 @prefix confs11: <http://www.opengis.net/spec/geosparql/1.1/conf/> .
@@ -51,14 +52,14 @@
                                                      skos:ConceptScheme .
 
 confs10:core rdf:type 
-                      spec:ConformanceClass, skos:Collection ;
+                      spec:ConformanceClass, skos:Collection, sd:Feature ;
              skos:member conf10core:feature-class ,
                          conf10core:sparql-protocol ,
                          conf10core:spatial-object-class ;
              skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Core"@en .
 
 confs10:geometry-extension rdf:type 
-                                    spec:ConformanceClass, skos:Collection ;
+                                    spec:ConformanceClass, skos:Collection, sd:Feature ;
                            dcterms:requires confs10:core ;
                            skos:member conf10gx:feature-properties ,
                                        conf10gx:geometry-as-gml-literal ,
@@ -76,7 +77,7 @@ confs10:geometry-extension rdf:type
                            skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Extension"@en .
 
 confs10:geometry-topology-extension rdf:type 
-                                             spec:ConformanceClass, skos:Collection ;
+                                             spec:ConformanceClass, skos:Collection, sd:Feature ;
                                     dcterms:requires confs10:topology-vocab-extension, confs10:geometry-extension ;
                                     skos:member conf10gtx:eh-query-functions ,
                                                 conf10gtx:rcc8-query-functions ,
@@ -85,7 +86,7 @@ confs10:geometry-topology-extension rdf:type
                                     skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Topology Extension"@en .
 
 confs10:rdfs-entailment-extension rdf:type 
-                                           spec:ConformanceClass, skos:Collection ;
+                                           spec:ConformanceClass, skos:Collection, sd:Feature ;
                                   dcterms:requires confs10:geometry-topology-extension ;
                                   skos:member conf10qre:eh-query-rewrite ,
                                               conf10qre:rcc8-query-rewrite ,
@@ -93,7 +94,7 @@ confs10:rdfs-entailment-extension rdf:type
                                   skos:prefLabel "GeoSPARQL 1.0 Conformance Class: RDFS Entailment Extension"@en .
 
 confs10:topology-vocab-extension rdf:type 
-                                          spec:ConformanceClass, skos:Collection ;
+                                          spec:ConformanceClass, skos:Collection, sd:Feature ;
                                  dcterms:requires confs10:core ;
                                  skos:member conf10gtx:eh-query-functions ,
                                              conf10gtx:rcc8-query-functions ,
@@ -278,7 +279,7 @@ conf10gtx:sf-query-functions rdf:type
                              skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SF Query Functions"@en .
 
 confs10:query-rewrite-extension: rdf:type 
-                    spec:ConformanceClass, skos:Collection ;
+                    spec:ConformanceClass, skos:Collection, sd:Feature ;
            dcterms:requires confs10:geometry-topology-extension ;
            skos:member conf10qre:eh-query-rewrite ,
                        conf10qre:rcc8-query-rewrite ,
@@ -572,7 +573,7 @@ reqs10tve:sf-spatial-relations rdf:type
                                skos:prefLabel "GeoSPARQL 1.0 Requirement: SF Spatial Relations"@en .
 
 confs11:core rdf:type 
-                      spec:ConformanceClass, skos:Collection ;
+                      spec:ConformanceClass, skos:Collection, sd:Feature ;
              skos:member conf11core:feature-collection-class ,
                          conf11core:spatial-object-class ,
                          conf11core:sparql-protocol ,
@@ -581,7 +582,7 @@ confs11:core rdf:type
              skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Core"@en .
 
 confs11:geometry-extension rdf:type 
-                                    spec:ConformanceClass, skos:Collection ;
+                                    spec:ConformanceClass, skos:Collection, sd:Feature ;
                             dcterms:requires confs11:geometry-extension ;
                            skos:member conf10gx:geometry-class ,
                                        conf11gx:dggs-literal ,
@@ -604,17 +605,17 @@ confs11:geometry-extension rdf:type
                            skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension"@en .
 
 confs11:geometry-topology-extension rdf:type 
-                                             spec:ConformanceClass, skos:Collection ;
+                                             spec:ConformanceClass, skos:Collection, sd:Feature ;
                                     dcterms:requires confs11:geometry-extension, confs11:topology-vocab-extension ;
                                     skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Topology Extension"@en .
 
 confs11:rdfs-entailment-extension rdf:type 
-                                           spec:ConformanceClass, skos:Collection ;
+                                           spec:ConformanceClass, skos:Collection, sd:Feature ;
                                   dcterms:requires confs11:geometry-topology-extension ;
                                   skos:prefLabel "GeoSPARQL 1.1 Conformance Class: RDFS Entailment Extension"@en .
 
 confs11:topology-vocab-extension rdf:type 
-                                          spec:ConformanceClass, skos:Collection ;
+                                          spec:ConformanceClass, skos:Collection, sd:Feature ;
                                  dcterms:requires confs11:core ;
                                  skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Topology Vocabulary Extension"@en .
 
@@ -833,7 +834,7 @@ conf11gx:sa-functions rdf:type
                       skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Aggregate Functions"@en .
 
 conf11qre: rdf:type 
-                    spec:ConformanceClass ;
+                    spec:ConformanceClass, sd:Feature ;
            dcterms:requires confs11:geometry-topology-extension ;
            skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Query Rewrite Extension"@en .
 
