@@ -4,6 +4,8 @@ This clause establishes the _Geometry Extension (serialization, version)_ parame
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
+=== Rationale
+
 Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabularyfootnote:[http://www.w3.org/2003/01/geo/] was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things, using WGS84 as a reference datum" and many widely used Semantic Web vocabularies contain some spatial data support. For example, _Dublin Core Terms_ provides a _Location_ classfootnote:[http://purl.org/dc/terms/Location] for "A spatial region or named place." and _schema.org_ provides a number of spatial object and geometry classes, such as `GeoCoordinates` footnote:[https://schema.org/GeoCoordinates] and `GeoShape` footnote:[https://schema.org/GeoShape]. 
 
 Many vocabularies, such as these two, provide little specific support for detailed geometries and only support the WGS84 Coordinate Reference System (CRS).
@@ -763,11 +765,13 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 |===
 | *Req 40* Implementations shall support the functions 
 <<Function: geof:boundary, `geof:boundary`>> 
+<<Function: geof:metricBuffer, `geof:metricBuffer`>>, 
 <<Function: geof:buffer, `geof:buffer`>>, 
 <<Function: geof:convexHull, `geof:convexHull`>>, 
 <<Function: geof:coordinateDimension, `geof:coordinateDimension`>>, 
 <<Function: geof:difference, `geof:difference`>>, 
 <<Function: geof:dimension, `geof:dimension`>>, 
+<<Function: geof:metricDistance, `geof:metricDistance`>>, 
 <<Function: geof:distance, `geof:distance`>>, 
 <<Function: geof:envelope, `geof:envelope`>>,
 <<Function: geof:geometryType, `geof:geometryType`>>, 
@@ -867,6 +871,15 @@ geof:boundary (geom1: ogc:geomLiteral): ogc:geomLiteral
 
 This function returns the closure of the boundary of `geom1`. Calculations are in the spatial reference system of `geom1`.
 
+==== Function: geof:metricBuffer
+
+```
+geof:metricBuffer (geom: ogc:geomLiteral, 
+                   radius: xsd:double): ogc:geomLiteral
+```
+
+Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in meters. Calculations are in the coordinate reference system of `geom`. This function is similar to <<Function: geof:buffer, `geof:buffer`>>, but does not need a specification of distance unit.
+
 ==== Function: geof:buffer
 
 ```
@@ -875,16 +888,17 @@ geof:buffer (geom: ogc:geomLiteral,
              units: xsd:anyURI): ogc:geomLiteral
 ```
 
-Returns a geometric object that represents all Points whose distance from `geom1` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom1`.
-NOTE: See the <<Recommendation for specification of units of measurement>>.
+Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom`. This function is similar to <<Function: geof:metricBuffer, `geof:metricBuffer`>>, which does not need a specification of distance unit.
+
+NOTE: See the <<Recommendation for specification of units of measurement,  Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:convexHull
 
 ```
-geof:convexHull (geom1: ogc:geomLiteral): ogc:geomLiteral
+geof:convexHull (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom1`.
+The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom1`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:coordinateDimension
 
@@ -911,6 +925,16 @@ geof:dimension (geom1: ogc:geomLiteral): xsd:integer
 
 Returns the dimension of `geom1`. In non-homogeneous geometry collections, this will return the largest topological dimension of the contained objects.
 
+==== Function: geof:metricDistance
+
+```
+geof:metricDistance (geom1: ogc:geomLiteral, 
+                     geom2: ogc:geomLiteral): xsd:double
+```
+
+Returns the shortest distance in meters between any two Points in the two geometric objects. Calculations are in coordinate reference system of `geom1`. This function is similar to <<Function: geof:distance, `geof:distance`>>, but does not need a specification of distance unit.
+
+
 ==== Function: geof:distance
 
 ```
@@ -919,8 +943,9 @@ geof:distance (geom1: ogc:geomLiteral,
                units: xsd:anyURI): xsd:double
 ```
 
-Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in spatial reference system of `geom1`.
-NOTE: See the <<Recommendation for specification of units of measurement>>.
+Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in spatial reference system of `geom1`. This function is similar to <<Function: geof:metricDistance, `geof:metricDistance`>>, which does not need a specification of distance unit.
+
+NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:envelope
 
@@ -941,10 +966,10 @@ Returns the nth geometry of `geom1` if it is a GeometryCollection or `geom1` if 
 ==== Function: geof:geometryType
 
 ```
-geof:geometryType (geom1: ogc:geomLiteral): xsd:string
+geof:geometryType (geom1: ogc:geomLiteral): xsd:anyURI
 ```
 
-Returns the name of the subtype of Geometry of which this geometric object is an member. The name of the subtype of Geometry is returned as a string. No attempt to reconcile different geometry subtypes across all support literals need be made.
+Returns the URI of the subtype of Geometry of which this geometric object is an member. No attempt to reconcile different geometry subtypes across all support literals need be made.
 
 ==== Function: geof:getSRID
 
