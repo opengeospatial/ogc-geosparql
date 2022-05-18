@@ -29,6 +29,7 @@
 		funcs:asGML,
 		funcs:asWKT,
         funcs:boundary,
+	funcs:boundingCircle,
         funcs:buffer,
         funcs:convexHull,
         funcs:difference,
@@ -99,7 +100,7 @@
         rules:sfOverlaps,
         rules:sfTouches,
         rules:sfWithin ;
-    skos:prefLabel "GeoSPARQL Functions and Rules Register" .
+    skos:prefLabel "GeoSPARQL Functions and Rules Register"@en .
 
 funcs: a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -113,8 +114,10 @@ funcs: a skos:Collection ;
 		funcs:asGML,
 		funcs:asWKT,
         funcs:boundary,
+        funcs:boundingCircle,
         funcs:metricBuffer,
         funcs:buffer,
+        funcs:concaveHull,
         funcs:convexHull,
         funcs:difference,
         funcs:dimension,
@@ -158,7 +161,7 @@ funcs: a skos:Collection ;
         funcs:sfWithin,
         funcs:symDifference,
         funcs:union ;
-    skos:prefLabel "GeoSPARQL Functions" .
+    skos:prefLabel "GeoSPARQL Functions"@en .
 
 funcs:eh a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -188,7 +191,7 @@ funcs:rcc a skos:Collection ;
         funcs:rcc8po,
         funcs:rcc8tpp,
         funcs:rcc8tppi ;
-    skos:prefLabel "GeoSPARQL RCC8 Topological Functions" .
+    skos:prefLabel "GeoSPARQL RCC8 Topological Functions"@en .
 
 funcs:sf a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -203,7 +206,7 @@ funcs:sf a skos:Collection ;
         funcs:sfOverlaps,
         funcs:sfTouches,
         funcs:sfWithin ;
-    skos:prefLabel "GeoSPARQL Simple Features Functions" .
+    skos:prefLabel "GeoSPARQL Simple Features Functions"@en .
 
 funcs:nonTopo a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -212,7 +215,9 @@ funcs:nonTopo a skos:Collection ;
     skos:member
         funcs:area,
         funcs:boundary,
+	funcs:boundingCircle,
         funcs:buffer,
+	funcs:metricBuffer,
         funcs:convexHull,
         funcs:difference,
         funcs:dimension,
@@ -233,7 +238,7 @@ funcs:nonTopo a skos:Collection ;
         funcs:intersection,
         funcs:symDifference,
         funcs:union ;
-    skos:prefLabel "GeoSPARQL Non-topological Query Functions" .
+    skos:prefLabel "GeoSPARQL Non-topological Query Functions"@en .
 
 funcs:common a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -241,18 +246,18 @@ funcs:common a skos:Collection ;
     skos:definition """All the GeoSPARQL Common Query Functions defined within the GeoSPARQL 1.1 specification"""@en ;
     skos:member 
         funcs:relate ;
-    skos:prefLabel "GeoSPARQL Common Query Functions" .    
+    skos:prefLabel "GeoSPARQL Common Query Functions"@en .    
 
 funcs:sa a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:member
-        funcs:boundingCircle,
-        funcs:centroid,
-        funcs:concatLines,
-        funcs:concaveHull,
-        funcs:union2;
-    skos:prefLabel "GeoSPARQL Spatial Aggregate Functions" .
+        funcs:aggBoundingCircle,
+	funcs:aggBoundingBox,
+        funcs:aggCentroid,
+        funcs:aggConcaveHull,
+        funcs:aggUnion;
+    skos:prefLabel "GeoSPARQL Spatial Aggregate Functions"@en .
 
 rules: a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -282,7 +287,7 @@ rules: a skos:Collection ;
         rules:sfOverlaps,
         rules:sfTouches,
         rules:sfWithin ;
-    skos:prefLabel "GeoSPARQL Rules" .
+    skos:prefLabel "GeoSPARQL Rules"@en .
 
 rules:eh a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -297,7 +302,7 @@ rules:eh a skos:Collection ;
         rules:ehInside,
         rules:ehMeet,
         rules:ehOverlap ;
-    skos:prefLabel "GeoSPARQL Egenhofer Topological Rules" .
+    skos:prefLabel "GeoSPARQL Egenhofer Topological Rules"@en .
 
 rules:rcc a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -312,7 +317,7 @@ rules:rcc a skos:Collection ;
         rules:rcc8po,
         rules:rcc8tpp,
         rules:rcc8tppi ;
-    skos:prefLabel "GeoSPARQL RCC8 Topological Rules" .
+    skos:prefLabel "GeoSPARQL RCC8 Topological Rules"@en .
 
 rules:sf a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -327,7 +332,7 @@ rules:sf a skos:Collection ;
         rules:sfOverlaps,
         rules:sfTouches,
         rules:sfWithin ;
-    skos:prefLabel "GeoSPARQL Simple Features Rules" .
+    skos:prefLabel "GeoSPARQL Simple Features Rules"@en .
 
 funcs:area a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
@@ -414,6 +419,28 @@ funcs:boundingCircle a skos:Concept ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that calculates the minimum bounding circle of set of geometries."@en ;
+    skos:prefLabel "bounding circle"@en .
+
+funcs:aggboundingBox a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the minimum bounding box of set of geometries."@en ;
+    skos:prefLabel "bounding box"@en .
+
+funcs:aggboundingCircle a skos:Concept ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A spatial aggregate function that calculates the minimum bounding circle of set of geometries."@en ;
     skos:prefLabel "bounding circle"@en .
 
@@ -450,7 +477,7 @@ funcs:centroid a skos:Concept ;
     skos:definition "A spatial aggregate function that calculates a centroid of a set of geometries."@en ;
     skos:prefLabel "centroid"@en .
 
-funcs:concatLines a skos:Concept ;
+funcs:concaveHull a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -458,10 +485,10 @@ funcs:concatLines a skos:Concept ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
-    skos:definition "A spatial aggregate function that calculates a concatenated line of a set of lines."@en ;
-    skos:prefLabel "concat lines"@en .
+    skos:definition "A query function that calculates the concave hull of a set of geometries."@en ;
+    skos:prefLabel "concave hull"@en .
 
-funcs:concaveHull a skos:Concept ;
+funcs:aggConcaveHull a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -1047,7 +1074,7 @@ funcs:union a skos:Concept ;
     skos:prefLabel "union"@en ;
     skos:example spec11:B.2.2.3 .
 
-funcs:union2 a skos:Concept ;
+funcs:aggUnion a skos:Concept ;
     dcterms:contributor "Timo Homburg" ;
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-02-25"^^xsd:date ;
@@ -1056,7 +1083,7 @@ funcs:union2 a skos:Concept ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A spatial aggregate function that calculates the union of a set of geometries."@en ;
-    skos:prefLabel "union2"@en .
+    skos:prefLabel "aggregate union"@en .
 
 rules:ehContains a skos:Concept ;
     dcterms:contributor "Matthew Perry" ;
