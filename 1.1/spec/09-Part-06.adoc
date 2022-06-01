@@ -31,9 +31,9 @@ geo:SpatialObject
     a rdfs:Class, owl:Class ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "Spatial Object"@en ;
-    skos:definition "The class Spatial Object represents everything that can 
-                    have a spatial representation. It is superclass of feature 
-                    and geometry"@en .
+    skos:definition "Anything spatial (bing or having a shape, position or an extent)."@en ;
+    skos:note "Subclasses of this class are expected to be used for instance data."@en ;
+.
 ```
 [#req_core_spatial_object_class]
 |===
@@ -61,9 +61,17 @@ geo:Feature
     skos:prefLabel "Feature"@en ;
     rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Geometry ;
-    skos:definition "This class represents the top-level feature type. This
-                    class is equivalent to GFI_Feature defined in ISO 19156, 
-                    and it is superclass of all feature types."@en .
+    skos:definition "A discrete spatial phenomenon in a universe of discourse."@en ;
+    skos:note "A Feature represents a uniquely identifiable phenomenon, for example 
+              a river or an apple. While such phenomena (and therefore the Features 
+              used to represent them) are bounded, their boundaries may be crisp 
+              (e.g., the declared boundaries of a state), vague (e.g., the 
+              delineation of a valley versus its neighboring mountains), and change 
+              with time (e.g., a storm front). While discrete in nature, Features 
+              may be created from continuous observations, such as an isochrone 
+              that determines the region that can be reached by ambulance within 
+              5 minutes."@en ;
+.
 ```
 
 [#req_core_feature-class]
@@ -78,17 +86,19 @@ The class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:Spat
 
 ```turtle
 geo:SpatialObjectCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Spatial Object Collection" ;
-  skos:definition "The class Spatial Object Collection represents any collection of 
-                  individual Spatial Objects. It is superclass of Feature Collection 
-                  and Geometry Collection."@en ;  
-  rdfs:subClassOf rdfs:Container ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom geo:SpatialObject ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Spatial Object Collection" ;
+    skos:definition "A collection of individual Spatial Objects. This is the 
+                    superclass of Feature Collection and Geometry 
+                    Collection."@en ;  
+    skos:note "This is the superclass of Feature Collection and Geometry 
+              Collection."@en ;                
+    rdfs:subClassOf rdfs:Container ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom geo:SpatialObject ;
+        owl:onProperty rdfs:member ;
     ] ;
 .
 ```
@@ -107,16 +117,16 @@ The class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCol
 
 ```turtle
 geo:FeatureCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Feature Collection" ;
-  skos:definition "The class Feature Collection represents 
-                  any collection of individual Features."@en ;  
-  rdfs:subClassOf geo:SpatialObjectCollection ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom :Feature ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Feature Collection" ;
+    skos:definition "The class Feature Collection represents 
+                  any collection of individual Features."@en ;
+    rdfs:subClassOf geo:SpatialObjectCollection ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom :Feature ;
+        owl:onProperty rdfs:member ;
     ] ;
 .
 ```
@@ -193,7 +203,7 @@ geo:hasMetricSize
 	skos:definition "Subproperties of this property are used to indicate the size of a 
                     Spatial Object, as a measurement or estimate of one or more dimensions 
                     of the Spatial Object's spatial presence. Units are always metric 
-                    (meter, square meter or cubic meter)."@en ;
+                    (meter, square meter or cubic meter)."@en ;                  
 	skos:prefLabel "has metric size"@en ;
 .
 ```

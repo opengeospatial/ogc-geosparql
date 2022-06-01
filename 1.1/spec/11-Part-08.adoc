@@ -59,9 +59,11 @@ geo:Geometry
     skos:prefLabel "Geometry"@en ;
     rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Feature;
-    skos:definition "The class represents the top-level geometry type. This class 
-                    is equivalent to the UML class GM_Object defined in ISO 19107, 
-                    and it is superclass of all geometry types."@en ;
+    skos:definition "A coherent set of direct positions in space. The positions 
+                    are held within a Spatial Reference System (SRS)."@en ;
+    skos:note "Geometry can be used as a representation of the shape, extent or 
+              location of a Feature, or can exist as a self-contained 
+              entity."""@en ;
 .
 ```
 
@@ -80,7 +82,7 @@ geo:GeometryCollection
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
   skos:prefLabel "Geometry Collection"@en ;
-  skos:definition "The class Geometry Collection represents any collection of individual Geometries."@en ;
+  skos:definition "A collection of individual Geometries."@en ;
   rdfs:subClassOf geo:SpatialObjectCollection ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -842,7 +844,7 @@ A more detailed description of expected inputs and expected outputs of the given
 Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard:
 
 * Functions returning a new geometry literal should follow the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a WKT literal shall be returned
-* Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 coordinate reference system
+* Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 SRS
 
 For further discussion of the effects of errors during FILTER evaluation, consult Section 17footnote:[<https://www.w3.org/TR/sparql11-query/#expressions>] of the SPARQL specification <<SPARQL>>.
 
