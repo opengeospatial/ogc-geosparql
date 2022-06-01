@@ -768,6 +768,8 @@ This clause defines SPARQL functions for performing non-topological spatial oper
 <<Function: geof:boundingCircle, `geof:boundingCircle`>>, 
 <<Function: geof:metricBuffer, `geof:metricBuffer`>>, 
 <<Function: geof:buffer, `geof:buffer`>>, 
+<<Function: geof:metricDWithin, `geof:metricDWithin`>>, 
+<<Function: geof:DWithin, `geof:DWithin`>>, 
 <<Function: geof:convexHull, `geof:convexHull`>>, 
 <<Function: geof:concaveHull, `geof:concaveHull`>>, 
 <<Function: geof:coordinateDimension, `geof:coordinateDimension`>>, 
@@ -925,6 +927,24 @@ geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 ```
 
 Returns the coordinate dimension of `geom`.
+
+==== Function: geof:metricDWithin
+
+```
+geof:DWithin (geom: ogc:geomLiteral, 
+                 distance: xsd:double): ogc:geomLiteral
+```
+
+This function returns all geometric objects located within a distance measured in meter around `geom`. Calculations are in the spatial reference system of `geom`. The triple store implementation needs to take care of a conversion between the unit given as a parameter and the unit of the spatial rereference system.
+
+==== Function: geof:DWithin
+
+```
+geof:DWithin (geom: ogc:geomLiteral, 
+                 distance: xsd:double, unit: xsd:anyURI): ogc:geomLiteral
+```
+
+This function returns all geometric objects located within a distance measured in a given unit around `geom`. Calculations are in the spatial reference system of `geom`. The triple store implementation needs to take care of a conversion between the unit given as a parameter and the unit of the spatial rereference system.
 
 ==== Function: geof:difference
 
