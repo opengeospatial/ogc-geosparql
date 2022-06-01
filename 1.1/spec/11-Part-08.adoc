@@ -1,6 +1,6 @@
 == Geometry Extension
 
-This clause establishes the _Geometry Extension_ parameterized requirements class, with IRI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension_, with IRI `/conf/geometry-extension`. This requirements class defines a vocabulary for asserting and querying information about geometry data, and it defines query functions for operating on geometry data.
+This clause establishes the _Geometry Extension_ parameterized Requirements with base IRI `/req/geometry-extension`, which have a single corresponding conformance class _Geometry Extension_, with IRI `/conf/geometry-extension`. These Requirements defines a vocabulary for asserting and querying information about geometry data, and defines query functions for operating on geometry data.
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
@@ -34,7 +34,7 @@ To avoid erroneous computations involving Geometry, data publishers are recommen
 
 === Parameters
 
-The following parameters are defined for the _Geometry Extension_ requirements class.
+The following parameters are defined for the _Geometry Extension_ Requirements.
 
 serialization:: Specifies the serialization standard to use when generating geometry literals and also the supported geometry types.
 
@@ -293,22 +293,22 @@ geo:hasSerialization
 NOTE: this property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this one for connecting serializations of common types with geometries, for example <<Property: geo:asGeoJSON, as GeoJSON>> which can be used for GeoJSON <<GEOJSON>> literals.
 
 === Geometry Serializations
-This section establishes the requirements for representing Geometry data in RDF literals, according to different non-RDF systems.
+This section establishes the Requirements for representing Geometry data in RDF literals, according to different non-RDF systems.
 
 GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them but does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
 
-GeoSPARQL does present some requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.
+GeoSPARQL does present some Requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.
 
 [[NOTE]]
 ====
-GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialised variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+GeoSPARQL's expectation of most RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialised variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
 
-Some geometry represenation systems given here do not use the same terminology as SFA, in particular the Discrete Global Grid System representation. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
+Some geometry represenation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
 ====
 
 ==== Well-Known Text (serialization=WKT)
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
+This section establishes the Requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
 
 ===== RDFS Datatype: geo:wktLiteral
 
@@ -411,7 +411,7 @@ The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] c
 
 ==== Geography Markup Language (serialization=GML)
 
-This section establishes requirements for representing Geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
+This section establishes Requirements for representing Geometry data in RDF based on GML as defined by Geography Markup Language Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
 <<RDFS Datatype: geo:gmlLiteral, GML Literal>> and one property, <<Function: geof:asGML, as GML>>.
 
 ===== RDFS Datatype: geo:gmlLiteral
@@ -497,7 +497,7 @@ The function http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] c
 
 ==== GeoJSON (serialization=GEOJSON)
 
-This section establishes requirements for representing Geometry data in RDF based on GeoJSON as defined by <<GeoJSON>>. It defines one RDFS Datatype:
+This section establishes Requirements for representing Geometry data in RDF based on GeoJSON as defined by <<GeoJSON>>. It defines one RDFS Datatype:
 <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> and one property, <<Function: geof:asGeoJSON, as GeoJSON>>.
 
 ===== RDFS Datatype: geo:geoJSONLiteral
@@ -577,7 +577,7 @@ The function http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeo
 
 ==== Keyhole Markup Language (serialization=KML)
 
-This section establishes requirements for representing Geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
+This section establishes Requirements for representing Geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
 <<RDFS Datatype: geo:kmlLiteral, KML Literal>> and one property, <<Function: geof:asKML, as KML>>.
 
 ===== RDFS Datatype: geo:kmlLiteral
@@ -665,7 +665,7 @@ The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] c
 
 ==== Discrete Global Grid System (serialization=DGGS)
 
-This section establishes the requirements for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar. 
+This section establishes the Requirements for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar. 
 
 Here is defined one RDFS Datatypes:
 http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`]. 
@@ -808,7 +808,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf`]
 |===
 
-NOTE: The requirements to support non-topological query functions for DGGS geometry literals are separated from the requirements to support them for traditional 
+NOTE: The Requirements to support non-topological query functions for DGGS geometry literals are separated from the Requirements to support them for traditional 
 geometry literals as it is expected that implementing these functions for DGGS literals will be significantly more difficult. This is due to the novelty of DGGS 
 literals and thus the lack of existing software libraries for their manipulation.
 
@@ -824,7 +824,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf-dggs[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf-dggs`]
 |===
 
-Functions from both requirements above are listed below, alphabetically.
+Functions from both Requirements above are listed below, alphabetically.
 
 ==== Function notes
 These notes apply to all of the following functions in this section.
