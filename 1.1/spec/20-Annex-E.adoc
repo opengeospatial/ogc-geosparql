@@ -56,10 +56,10 @@ POS Source: http://www.w3.org/2003/01/geo/
 | From Element | Mapping relation | To Element | Notes
 
 | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.w3.org/2003/01/geo/SpatialThing[`pos:SpatialThing`] | Both classes are unrestricted, essentially abstract classes
-| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | `geo:Geometry` | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since `pos:Point` usage notes indicates direct postitioning, it is a form of geometry
+| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct postitioning, it is a form of geometry
 | http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | 
-| http://www.w3.org/2003/01/geo/lat_long[`pos:lat_long`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:hasSerialization` | A special datatype is not indicated for use with this property by POS, unlike GeoSPARQL's `geo:hasSerialization` object literals
-| http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:hasGeometry` |
+| http://www.w3.org/2003/01/geo/lat_long[`pos:lat_long`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | A special datatype is not indicated for use with this property by POS, unlike GeoSPARQL's <<Property: geo:hasSerialization,`geo:hasSerialization`>> object literals
+| http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry,`geo:hasGeometry`>> |
 |===
 
 == E.3 Geonames Ontology (GN)
@@ -72,9 +72,9 @@ Geonames source: http://www.geonames.org/ontology/documentation.html
 | https://www.geonames.org/ontology#Feature[`gn:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> |
 | https://www.geonames.org/ontology#GeonamesFeature[`gn:GeonamesFeature`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The GN class is defined as "A feature described in geonames database..."
 | <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | https://www.geonames.org/ontology#Class[`gn:Class`] | The GN class' definition reads "A class of features"
-| https://www.geonames.org/ontology#locatedIn[`gn:locatedIn`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:sfWithin` | 
-| https://www.geonames.org/ontology#nearby[`gn:nearby`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfDisjoint` | A https://www.geonames.org/ontology#nearby[`gn:nearby`] B means A is not within or touching B. The only close SF property is disjoint
-| https://www.geonames.org/ontology#neighbour[`gn:neighbour`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | `geo:sfTouches` | 
+| https://www.geonames.org/ontology#locatedIn[`gn:locatedIn`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:sfWithin,`geo:sfWithin`>> | 
+| https://www.geonames.org/ontology#nearby[`gn:nearby`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfDisjoint, `geo:sfDisjoint`>> | A https://www.geonames.org/ontology#nearby[`gn:nearby`] B means A is not within or touching B. The only close SF property is disjoint
+| https://www.geonames.org/ontology#neighbour[`gn:neighbour`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:sfTouches, `geo:sfTouches`>> | 
 |===
 
 == E.4 NeoGeo Vocabulary
@@ -85,18 +85,18 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | From Element | Mapping relation | To Element | Notes
 
 | http://geovocab.org/spatial#Feature[`spatial:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> |
-| http://geovocab.org/spatial#C[`spatial:C`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8ec` | Sub proerty not equivalent property since the NeoGeo property has more restrictive domain & range
-| http://geovocab.org/spatial#DR[`spatial:DR`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8dc` |
-| http://geovocab.org/spatial#EC[`spatial:EC`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8ec` |
-| http://geovocab.org/spatial#EQ[`spatial:EQ`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8eq` |
-| http://geovocab.org/spatial#NTPP[`spatial:NTPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8ntpp` |
-| http://geovocab.org/spatial#NTPPi[`spatial:NTPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8ntppi` |
-| http://geovocab.org/spatial#O[`spatial:O`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfOverlaps` |
-| http://geovocab.org/spatial#P[`spatial:P`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfWithin` |
-| http://geovocab.org/spatial#PO[`spatial:PO`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8po` |
-| http://geovocab.org/spatial#PP[`spatial:PP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfWithin` |
-| http://geovocab.org/spatial#PPi[`spatial:PPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfContains` |
-| http://geovocab.org/spatial#Pi[`spatial:Pi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:sfContains` |
+| http://geovocab.org/spatial#C[`spatial:C`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ec, `geo:rcc8ec`>> | Sub proerty not equivalent property since the NeoGeo property has more restrictive domain & range
+| http://geovocab.org/spatial#DR[`spatial:DR`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8dc, `geo:rcc8dc`>> |
+| http://geovocab.org/spatial#EC[`spatial:EC`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ec, `geo:rcc8ec`>> |
+| http://geovocab.org/spatial#EQ[`spatial:EQ`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8eq, `geo:rcc8eq`>> |
+| http://geovocab.org/spatial#NTPP[`spatial:NTPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ntpp, `geo:rcc8ntpp`>> |
+| http://geovocab.org/spatial#NTPPi[`spatial:NTPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ntppi, `geo:rcc8ntppi`>> |
+| http://geovocab.org/spatial#O[`spatial:O`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfOverlaps, `geo:sfOverlaps`>> |
+| http://geovocab.org/spatial#P[`spatial:P`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfWithin, `geo:sfWithin`>> |
+| http://geovocab.org/spatial#PO[`spatial:PO`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8po, `geo:rcc8po`>> |
+| http://geovocab.org/spatial#PP[`spatial:PP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfWithin, `geo:sfWithin`>> |
+| http://geovocab.org/spatial#PPi[`spatial:PPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfContains, `geo:sfContains`>> |
+| http://geovocab.org/spatial#Pi[`spatial:Pi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:sfContains, `geo:sfContains`>> |
 | http://geovocab.org/spatial#TPP[`spatial:TPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo:rcc8tpp` |
 | http://geovocab.org/spatial#TPPi[`spatial:TPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | `geo::rcc8tppi` |
 | http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> |
