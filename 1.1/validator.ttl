@@ -1,12 +1,13 @@
-@prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix sdo: <https://schema.org/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.opengis.net/def/geosparql/validator/> .
+BASE <http://www.opengis.net/def/geosparql/validator/>
+
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX sdo: <https://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 
 <http://www.opengis.net/def/geosparql/validator>
@@ -62,7 +63,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is one geo:asWKT relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x>
 			geo:hasGeometry [
@@ -72,7 +73,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# A valid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing is one geo:asWKT relation. RDF treats both entries as one triple since they are identical.
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x>
 			geo:hasGeometry [
@@ -83,7 +84,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing are two geo:asWKT relations
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x>
 			geo:hasGeometry [
@@ -164,14 +165,14 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasGeometry property and no outgoing geo:hasGeometry or specialization of it
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<resource-x> geo:hasGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
 		""" ,
 		"""
 		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property (i.e. it's a geo:Feature and a geo:Geometry at the same time)
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<resource-y>
 			geo:hasGeometry <resource-x> ;
@@ -185,14 +186,14 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasDefaultGeometry property and no outgoing geo:hasGeometry or specialization of it
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<resource-x> geo:hasDefaultGeometry <resource-x-geom1> .
 		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
 		""" ,
 		"""
 		# An invalid example: the Resource instance <resource-x> has an incoming geo:hasDefaultGeometry property and an outgoing geo:hasGeometry (i.e. it's a geo:Feature and a geo:Geometry at the same time)
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<resource-y>
 			geo:hasDefaultGeometry <resource-x> ;
@@ -224,7 +225,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the target of a geo:asWKT property is an RDF literal
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x>
 			geo:hasGeometry [
@@ -234,7 +235,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is not an RDF literal
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-y>
 			geo:hasGeometry [
@@ -256,7 +257,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the target of a geo:asWKT property is an RDF literal with datatype geo:wktLiteral
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x>
 			geo:hasGeometry [
@@ -266,7 +267,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is not an RDF literal
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-y>
 			geo:hasGeometry [
@@ -276,7 +277,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the target of a geo:asWKT property is an RDF literal but with the wrong datatype (xsd:string)
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-z>
 			geo:hasGeometry [
@@ -357,7 +358,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example
 		"""
 		# A valid example: the subject of a geo:coordinateDimension property has no other properties with the same name
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 		
 		<feature-x>
 			geo:hasGeometry [
@@ -368,7 +369,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the subject of a geo:coordinateDimension property has also another property with with the same property name but a different value
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 		
 		<feature-y>
 			geo:hasGeometry [
@@ -584,7 +585,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:dimension has value is 2 while the geo:coordinateDimension has value 2
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> geo:dimension 2 ;
@@ -593,7 +594,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# A valid example: the geo:dimension has value is 2 while there is no geo:coordinateDimension
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> geo:dimension 2 ;
@@ -601,7 +602,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:dimension has value is 3 while the geo:coordinateDimension has value 2
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
 		<feature-x> geo:hasGeometry <feature-x-geom1> .
 		<feature-x-geom1> geo:dimension 3 ;
@@ -630,8 +631,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<featureCollection-x> 
 		    a geo:FeatureCollection ;
@@ -645,8 +646,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:FeatureCollection instance node has no outgoing rdfs:member relations
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<featureCollection-x> a geo:FeatureCollection .
 		""" ;
@@ -672,8 +673,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<featureCollection-x>
 		    a geo:FeatureCollection ;
@@ -687,8 +688,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:FeatureCollection instance node has one outgoing rdfs:member relation to a geo:Feature node and another to a geo:Geometry node
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<featureCollection-x> 
 		    a geo:FeatureCollection ;
@@ -721,8 +722,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<geometryCollection-x> 
 		    a geo:GeometryCollection ;
@@ -733,8 +734,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:GeometryCollection instance node has no outgoing rdfs:member relations
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<geometryCollection-x> a geo:GeometryCollection .
 		""" ;
@@ -760,8 +761,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<geometryCollection-x> 
 		    a geo:GeometryCollection ;
@@ -772,8 +773,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to geo:Geometry node and one to a non-geo:Geometry node (a geo:Feature)
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<geometryCollection-x> 
 		    a geo:GeometryCollection ;
@@ -804,8 +805,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<spatialObjectCollection-x>
 		    a geo:SpatialObjectCollection ;
@@ -816,8 +817,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:SpatialObjectCollection instance node has no incoming rdfs:member relations
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<spatialObjectCollection-x>
 		    a geo:SpatialObjectCollection ;
@@ -845,8 +846,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	skos:example 
 		"""
 		# A valid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node and one to a geo:Feature node
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<spatialObjectCollection-x>
 		    a geo:SpatialObjectCollection ;
@@ -858,9 +859,9 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		""" ,
 		"""
 		# An invalid example: the geo:SpatialObjectCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node, one outgoing rdfs:member relation to a geo:Feature node and a third outgoing rdfs:member relation from a node of another type (ex:Thing)
-		@prefix ex: <http://example.com/> .
-		@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-		@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+		PREFIX ex: <http://example.com/>
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		<spatialObjectCollection-x>
 		    a geo:SpatialObjectCollection ;
