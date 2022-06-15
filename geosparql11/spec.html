@@ -2049,9 +2049,9 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
     a rdfs:Class, owl:Class ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "Spatial Object"@en ;
-    skos:definition "The class Spatial Object represents everything that can
-                    have a spatial representation. It is superclass of feature
-                    and geometry"@en .</code></pre>
+    skos:definition "Anything spatial (being or having a shape, position or an extent)."@en ;
+    skos:note "Subclasses of this class are expected to be used for instance data."@en ;
+.</code></pre>
 </div>
 </div>
 <table id="req_core_spatial_object_class" class="tableblock frame-all grid-all stripes-odd stretch">
@@ -2092,9 +2092,17 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
     skos:prefLabel "Feature"@en ;
     rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Geometry ;
-    skos:definition "This class represents the top-level feature type. This
-                    class is equivalent to GFI_Feature defined in ISO 19156,
-                    and it is superclass of all feature types."@en .</code></pre>
+    skos:definition "A discrete spatial phenomenon in a universe of discourse."@en ;
+    skos:note "A Feature represents a uniquely identifiable phenomenon, for example
+              a river or an apple. While such phenomena (and therefore the Features
+              used to represent them) are bounded, their boundaries may be crisp
+              (e.g., the declared boundaries of a state), vague (e.g., the
+              delineation of a valley versus its neighboring mountains), and change
+              with time (e.g., a storm front). While discrete in nature, Features
+              may be created from continuous observations, such as an isochrone
+              that determines the region that can be reached by ambulance within
+              5 minutes."@en ;
+.</code></pre>
 </div>
 </div>
 <table id="req_core_feature-class" class="tableblock frame-all grid-all stripes-odd stretch">
@@ -2119,17 +2127,17 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:SpatialObjectCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Spatial Object Collection" ;
-  skos:definition "The class Spatial Object Collection represents any collection of
-                  individual Spatial Objects. It is superclass of Feature Collection
-                  and Geometry Collection."@en ;
-  rdfs:subClassOf rdfs:Container ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom geo:SpatialObject ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Spatial Object Collection" ;
+    skos:definition "A collection of individual Spatial Objects. This is the
+                    superclass of Feature Collection and Geometry Collection."@en ;
+    skos:note "This is the superclass of Feature Collection and Geometry Collection."@en ;
+    rdfs:subClassOf rdfs:Container ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom geo:SpatialObject ;
+        owl:onProperty rdfs:member ;
     ] ;
 .</code></pre>
 </div>
@@ -2159,16 +2167,15 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:FeatureCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Feature Collection" ;
-  skos:definition "The class Feature Collection represents
-                  any collection of individual Features."@en ;
-  rdfs:subClassOf geo:SpatialObjectCollection ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom :Feature ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Feature Collection" ;
+    skos:definition "A collection of individual Features."@en ;
+    rdfs:subClassOf geo:SpatialObjectCollection ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom :Feature ;
+        owl:onProperty rdfs:member ;
     ] ;
 .</code></pre>
 </div>
@@ -3136,9 +3143,10 @@ a serialization strongly affects the geometry conceptualization. The WKT seriali
     skos:prefLabel "Geometry"@en ;
     rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Feature;
-    skos:definition "The class represents the top-level geometry type. This class
-                    is equivalent to the UML class GM_Object defined in ISO 19107,
-                    and it is superclass of all geometry types."@en ;
+    skos:definition "A coherent set of direct positions in space. The positions
+                    are held within a Spatial Reference System (SRS)."@en ;
+    skos:note "Geometry can be used as a representation of the shape, extent or
+              location of a Feature, or can exist as a self-contained entity."""@en ;
 .</code></pre>
 </div>
 </div>
@@ -3167,7 +3175,7 @@ a serialization strongly affects the geometry conceptualization. The WKT seriali
   a owl:Class ;
   rdfs:isDefinedBy geo: ;
   skos:prefLabel "Geometry Collection"@en ;
-  skos:definition "The class Geometry Collection represents any collection of individual Geometries."@en ;
+  skos:definition "A collection of individual Geometries."@en ;
   rdfs:subClassOf geo:SpatialObjectCollection ;
   rdfs:subClassOf [
       a owl:Restriction ;
@@ -4379,7 +4387,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 <p>Functions returning a new geometry literal should follow the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a WKT literal shall be returned</p>
 </li>
 <li>
-<p>Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 coordinate reference system</p>
+<p>Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 SRS</p>
 </li>
 </ul>
 </div>
@@ -11997,7 +12005,7 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-15 20:16:25 UTC
+Last updated 2022-06-15 20:45:30 UTC
 </div>
 </div>
 </body>
