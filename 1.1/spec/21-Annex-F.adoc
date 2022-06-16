@@ -7,7 +7,7 @@ This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> 
 == F.1 Accessing spatial Features in a SPARQL endpoint
 
 Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
-They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where `geo:FeatureCollection` is a new class in GeoSPARQL 1.1, specifically for the description of collections of `geo:Feature` instances.
+They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where <<Property: geo:FeatureCollection, `geo:FeatureCollection`>> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <<Class: geo:Feature, `geo:Feature`>> instances.
 
 The following example SPARQL query retrieves all Features within the Feature Collection with the IRI `ex:x` within a given SPARQL endpoint.
 
@@ -19,7 +19,7 @@ WHERE {
 }
 ```
 
-GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the ``rdf:member`` property. No inverse property is defined.
+GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the http://www.w3.org/1999/02/22-rdf-syntax-ns#member[``rdf:member``] property. No inverse property is defined.
 
 [NOTE]
 ====
@@ -42,8 +42,8 @@ WHERE {
 
 Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collections mappings are:
 
-* APIs may need more information about the `geo:FeatureCollection` instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the `geo:FeatureCollection` instance then this may be queried for. If not, the API might need to create such data
-** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property `dcterms:identifier` may be used to store appropriate token-like identifiers
+* APIs may need more information about the <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instance then this may be queried for. If not, the API might need to create such data
+** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property http://purl.org/dc/terms/identifier[`dcterms:identifier`] may be used to store appropriate token-like identifiers
 * Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
 
 == F.2 Mappings from CQL2 statements to GeoSPARQL queries
@@ -75,12 +75,12 @@ CQL2 defines literal values for a variety of datatypes. The following table show
 |===
 | CQL2 literal | Examples  | (Geo)SPARQL literal | Examples
 
-| String  | "This is a string" | ``xsd:string`` | "This is a string"^^xsd:string 
-| Number  | -100  3.14159 | ``xsd:int``, ``xsd:integer``, ``xsd:double`` | "-100"^^xsd:integer  "3.14159"^^xsd:double 
-| Boolean  | true false | ``xsd:boolean`` | "true"^^xsd:boolean  "false"^^xsd:boolean 
+| String  | "This is a string" | http://www.w3.org/2001/XMLSchema#string[``xsd:string``] | "This is a string"^^xsd:string 
+| Number  | -100  3.14159 | http://www.w3.org/2001/XMLSchema#int[``xsd:int``], http://www.w3.org/2001/XMLSchema#integer[``xsd:integer``], http://www.w3.org/2001/XMLSchema#double[``xsd:double``] | "-100"^^xsd:integer  "3.14159"^^xsd:double 
+| Boolean  | true false | http://www.w3.org/2001/XMLSchema#boolean[``xsd:boolean``] | "true"^^xsd:boolean  "false"^^xsd:boolean 
 | Spatial Geometry (WKT)  | POINT(1 1) | <<RDFS Datatype: geo:wktLiteral, WKT Literal>> | "POINT(1 1)"^^geo:wktLiteral
 | Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
-| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | ``xsd:date``, ``xsd:dateTime``, ``xsd:dateTimeStamp`` | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
+| Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | http://www.w3.org/2001/XMLSchema#date[``xsd:date``], http://www.w3.org/2001/XMLSchema#dateTime[``xsd:dateTime``], http://www.w3.org/2001/XMLSchema#dateTimeStamp[``xsd:dateTimeStamp``] | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |===
 
 === F.2.3 Property references
@@ -153,11 +153,11 @@ Temporal operators are not part of the GeoSPARQL standard.
 | beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
 |===
 
-As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (`xsd:date`, `xsd:dateTime` and `xsd:dateTimeStamp` literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
+As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
 
 == F.3 Mappings from Simple Features for SQL
 
-The following table maps the functions and properties from Simple Features for SQL <<ISO19125-1>> to GeoSPARQL.
+The following table maps the functions and properties from Simple Features for SQL <<OGCSFACA>> <<ISO19125-1>> to GeoSPARQL.
 
 [cols="3,3,3,3,3"]
 |===

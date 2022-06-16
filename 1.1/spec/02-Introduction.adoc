@@ -54,12 +54,12 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** **http://www.opengis.net/doc/IS/geosparql/1.1**
 ** **defines many of the standard's parts**
 ** **includes normative RDF/OWL <<RDF>>,<<OWL2>> ontology element definitions, conformance requirements and function signatures**
-*** based on the General Feature Model <<ISO19109>>, Simple Features <<ISO19125-1>> and SQL MM <<ISO13249>>
+*** based on the General Feature Model <<ISO19109>>, Simple Features <<OGCSFACA>> <<ISO19125-1>> and SQL MM <<ISO13249>>
 ** **also includes non-normative examples and mappings to other modelling and function systems**
 3. domain model RDF/OWL <<RDF>>,<<OWL2>> ontology
 ** http://www.opengis.net/ont/geosparql
 ** for geographic information representation
-** based on the General Feature Model <<ISO19109>>, Simple Features Access <<ISO19125-1>>, Feature Geometry <<ISO19107>> and SQL MM <<ISO13249>>
+** based on the General Feature Model <<ISO19109>>, Simple Features Access <<OGCSFACA>> <<ISO19125-1>>, Feature Geometry <<ISO19107>> and SQL MM <<ISO13249>>
 ** defined within the specification document and delivered in RDF also
 4. Functions & Rules vocabulary
 ** http://www.opengis.net/def/geosparql/funcsrules
@@ -67,7 +67,7 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** presented as a <<SKOS>> taxonomy
 5. Simple Features vocabulary
 ** http://www.opengis.net/ont/sf
-** derived from Simple Features Access <<ISO19125-1>>'s class model
+** derived from Simple Features Access <<OGCSFACA>> <<ISO19125-1>>'s class model
 ** presented as an <<OWL>> ontology
 6. SPARQL <<SPARQL>> extension functions
 ** defined within this specification document
@@ -92,6 +92,6 @@ This specification document follows a modular design and contains the following 
 * an _RDFS entailment_ component defining mechanisms for matching implicit RDF triples that are derived based on RDF and RDFS semantics
 * a _query rewrite_ component defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions
 
-Each of these specification components forms a _requirements class_ (a set of requirements) for GeoSPARQL. Implementations can provide various levels of functionality by choosing which requirements classes to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary components.
+Each of these specification components forms a set of _Requirements_ known as a _Conformance Class_ for GeoSPARQL. Implementations can provide various levels of functionality by choosing which _Conformance Classes to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary Classes.
 
 In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g. those based on the Region Connection Calculus <<QUAL>>, <<LOGIC>>) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relations between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relations between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.
