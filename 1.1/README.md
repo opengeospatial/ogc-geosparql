@@ -9,8 +9,8 @@ This folder contains the working copy of OGC's GeoSPARQL standard, expected to b
 
 * **Specification**
     * [spec/](spec/) - folder containing ASCII Doc source files. images and build scripts
-    * [_11-052r4.html](_11-052r4.html) - specification document in HTML
-    * [_11-052r4.pdf](_11-052r4.pdf) - specification document as a PDF
+    * [_11-052r4.html](https://opengeospatial.github.io/ogc-geosparql/geosparql11/spec.html) - specification document in HTML
+    * [_11-052r4.pdf](https://opengeospatial.github.io/ogc-geosparql/geosparql11/spec.pdf) - specification document as a PDF
     * *files starting 00- to 18-* - the ASCII Doc master source files to build the specification documents
     * HTML_Gen.bat & PDF_Gen.bat - script files to generate HTML & PDF spc docs from ASCIIDoc source files
 
