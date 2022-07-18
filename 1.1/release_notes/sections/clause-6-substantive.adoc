@@ -1,9 +1,95 @@
 [[Clause_Substantive]]
 == Description of Substantive Changes
 
-=== <short name for the change>
-<details of the change>
+=== Collection classes
+GeoSPARQL 1.1 adds three classes for collection types:
+* `SpatialObjectCollection`
+* `FeatureCollection`
+* `GeometryCollection`
 
-//If no substantive changes are present, use the phrase below.
+These classes allow the organization of spatial objects, features and geometries in collections and are added to support OGC APIs. 
 
-There are no substantive changes in this release.
+=== New size properties
+
+GeoSPARQL 1.1. includes several new Spatial Object properties related to size for indicating spatial resolution, areas, and proportional relations (e.g. area overlaps): 
+
+* `hasSize`
+* `hasLength`
+* `hasArea`
+* `hasVolume`
+* `hasSpatialResolution`
+
+=== Metric properties
+GeoSPARQL 1.1 adds several convenience Spatial Object properties for working with geometries in metres, eliminating the need to indicate units when working with metres.
+
+The properties are: 
+* `hasMetricSize`
+* `hasMetricLength`
+* `hasMetricPerimeterLength`
+* `hasMetricArea`
+* `hasMetricVolume`
+
+=== Perimeter properties
+GeoSPARQL 1.1 adds a Spatial Object property `hasPerimeterLength` (and its companion property `hasMetricPerimeterLength`) to indicate the length of the outer boundary of a Spatial Object. 
+
+Note that a property `hasLength` was already present in GeoSPARQL 1.0; `hasPerimeterLength` was added to distinguish between length (e.g. the length of a football field) and perimeter (i.e. the added lengths of all sides, in the case of a polygon) of a thing.
+
+=== New Feature properties
+
+GeoSPARQL 1.1. includes two new properties `hasCentroid` and `hasBoundingBox`. These can be used to link a Feature with a point geometry corresponding with the centroid of its geometry, or with a simplified geometry-representation corresponding to the envelope of its geometry, respectively. The centroid is typically used to show location on a low-resolution image, and both centroid and bounding box are useful for indexing and discovery functions.
+
+=== New geometry serializations
+GeoSPARQL 1.1 includes support for representing geometry data in RDF in several additional formats:
+
+* GeoJSON
+* Keyhole Markup Language (KML) 
+* Discrete Global Grid System (DGGS) 
+
+As with the geometry serializations that were already supported in v1.0, for each new serialization an RDFS Datatype, a property and a function are defined:
+
+* `geoJSONLiteral`
+* `asGeoJSON`
+* `asGeoJSON` function
+* `kmlLiteral`
+* `asKML`
+* `asKML` function
+* `dggsLiteral`
+* `asDGGS`
+* `asDGGS` function
+
+=== Extra functions for performing non-topological spatial operations
+
+GeoSPARQL 1.1 adds several new functions for performing spatial operations: 
+
+* `isEmpty`
+* `isSimple`
+* `dimension`
+* `length`
+* `area`
+
+=== Functions for geometry collections
+GeoSPARQL 1.1 adds two functions for working with geometries in collections: 
+* `numGeometries` 
+* `geometryN`
+
+These functions can be used to get the number of geometries in a collection, and to get the nth geometry in a collection. 
+
+=== Spatial aggregate functions
+
+GeoSPARQL 1.1 defines a set of functions for performing spatial aggregations of data: 
+* `aggBoundingBox`
+* `aggBoundingCircle`
+* `aggCentroid`
+* `aggConcaveHull`
+* `aggConvexHull`
+* `aggUnion`
+
+These functions support working with sets of geometries, e.g. to calculate the minimum bounding box or centroid of a set of geometries. 
+
+=== Metric buffer and distance functions
+To accompany metric properties, GeoSPARQL 1.1 also adds several functions that assume metres. These functions can be used without unit argument, and were added to simplify implementation and use. 
+
+The functions are: 
+* `metricBuffer`
+* `metricDistance`
+
