@@ -17,7 +17,7 @@ If you want to cite the living document of the in-progress standard we encourage
 ```bibtex
 @techreport{ogcgeosparql11,
   title={OGC GeoSPARQL - A geographic query language for RDF data: GeoSPARQL 1.1 draft},
-  author={Perry, Matthew and Herring, John and Car, Nicholas J. and Homburg, Timo and J.D. Cox, Simon},
+  author={Nicholas J. Car and Timo Homburg and Matthew Perry and John Herring and Frans Knibbe and Simon J.D. Cox and Joseph Abhayaratna and Mathias Bonduel},
   journal={OGC implementation standard draft},
   url={https://opengeospatial.github.io/ogc-geosparql/}
 }
@@ -36,6 +36,10 @@ Not all change requests will be acted upon immediately. At least two updated ver
 An index of the working artefacts can be found <a href="https://opengeospatial.github.io/ogc-geosparql/">here</a>. These are built automatically as updates occur. 
 
 *Note: These are only working documents. Approved documents are <a href="https://www.ogc.org/standards/geosparql">published on the OGC Website</a>.*
+
+Extended GeoSPARQL work can also be found in the following OGC code repositories:
+
+* [OGC GeoSPARQL Extended Shapes](https://github.com/opengeospatial/ogc-geosparql-shapes)
 
 ### How to get involved
 It is the SWG's intention to operate as open and transparent as possible. Different communities or knowledge domains use spatial data on the web and/or in graphs, in one way or another. They all stand to benefit from improvement of the GeoSPARQL standard, so participation in development is highly recommended.
