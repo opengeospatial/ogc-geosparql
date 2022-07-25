@@ -10628,7 +10628,10 @@ rivers, these can be defined as subclasses of <a href="#_class_geofeature"><code
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://purl.org/dc/terms/coverage"><code>dcterms:coverage</code></a> is extremely generic - "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant." - but DCTERMS indicates its range includes a <a href="http://purl.org/dc/terms/Location"><code>dcterms:Location</code></a>, so it is a property for indicating a <a href="#_class_geofeature"><code>geo:Feature</code></a>, not a <a href="#_class_geogeometry"><code>geo:Geometry</code></a> and for which GeoSPARQL has no equivalent. Often, <a href="http://purl.org/dc/terms/coverage"><code>dcterms:coverage</code></a> is used to indicate a spatial extent such as a bounding box but <a href="http://purl.org/dc/terms/spatial"><code>dcterms:spatial</code></a> could be used for this with more precsision. GeoSPARQL now provides a <a href="#_property_geohasboundingbox"><code>geo:hasBoundingBox</code></a> property, so such a property could be used if a Bounding Box is wanted to be indicated.</p>
+<p><a href="http://purl.org/dc/terms/spatial"><code>dcterms:spatial</code></a>: "Spatial characteristics of the resource". The range of this property includes a <a href="http://purl.org/dc/terms/Location"><code>dcterms:Location</code></a>, so it is a property for indicating a <a href="#_class_geofeature"><code>geo:Feature</code></a>, for which GeoSPARQL has no equivalent, but perhaps also for indicating a <a href="#_class_geogeometry"><code>geo:Geometry</code></a>, thus the subPropertyOf mapping above.</p>
+</li>
+<li>
+<p><a href="http://purl.org/dc/terms/coverage"><code>dcterms:coverage</code></a>: "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant". This is a more generic form of <a href="http://purl.org/dc/terms/spatial"><code>dcterms:spatial</code></a> but, since there is no direct GeoSPARQL mapping for <a href="http://purl.org/dc/terms/spatial"><code>dcterms:spatial</code></a>, there is no direct mapping for this property either.</p>
 </li>
 </ul>
 </div>
@@ -11171,6 +11174,18 @@ Hence, every linked geodata class can be considered a <a href="#_class_geofeatur
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BFO&#8217;s "independent continuant" is the superclass of "material entity" &amp; "immaterial entity" which are mapped to Feature &amp; Geometry respectively, so at least some independent continuants must be Spatial Objects</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geofeature"><code>geo:Feature</code></a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2002/07/owl#equivalentClass"><code>owl:equivalentClass</code></a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://purl.obolibrary.org/obo/BFO_0000006"><code>obo:BFO_0000006</code></a> "spatial region"</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BFO&#8217;s "spatial region" class is described as a "spatial projection of a portion of spacetime" so Feature appears to be equivalent since Feature is "A discrete spatial phenomenon in a universe of discourse". The BFO example indicates it&#8217;s for 1-, 2- &amp; 3-D spatial regions, as Feature is.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geogeometry"><code>geo:Geometry</code></a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://purl.obolibrary.org/obo/IAO_0000030"><code>obo:IAO_0000030</code></a> "information content entity"</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BFO&#8217;s "information content entity" class is described as "an entity that represents information about some other entity", so Geometry appears to be equivalent since in GeoSPARQL, Geometry gives the details of the spatial project of a Feature.</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://purl.obolibrary.org/obo/BFO_0000040"><code>obo:BFO_0000040</code></a> "material entity"</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geofeature"><code>geo:Feature</code></a></p></td>
@@ -11181,18 +11196,6 @@ Hence, every linked geodata class can be considered a <a href="#_class_geofeatur
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geofeature"><code>geo:Feature</code></a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BFO&#8217;s sites either covert the same areas as or have locations determined in relation to material entities so sites are Features but not necissarily the other way around</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geogeometry"><code>geo:Geometry</code></a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2002/07/owl#equivalentClass"><code>owl:equivalentClass</code></a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://purl.obolibrary.org/obo/BFO_0000006"><code>obo:BFO_0000006</code></a> "spatial region"</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">BFO&#8217;s "spatial region" class is described as a "spatial projection of a portion of spacetime" so Geometry appears to be equivalent. The BFO example indicates it&#8217;s for 1-, 2- &amp; 3-D spatial regions, as Geometry is.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_class_geogeometry"><code>geo:Geometry</code></a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://purl.obolibrary.org/obo/BFO_0000011"><code>obo:BFO_0000011</code></a> "spatiotemporal region"</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">GEO Geometry doesn&#8217;t contain temporality but all GEO Geometry instances can sensibly be assumed to be within time, even if imaginary, so the BFO class is the superclass. Note that this mapping is also inherited from <a href="#_class_geogeometry"><code>geo:Geometry</code></a> being an equivalent class of <a href="http://purl.obolibrary.org/obo/BFO_0000006"><code>obo:BFO_0000006</code></a>, so consistency of alignment is retained. This mapping is made to highlight GeoSPARQL&#8217;s lack of temporality representation</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_property_geohasgeometry"><code>geo:hasGeometry</code></a></p></td>
@@ -11232,6 +11235,20 @@ Hence, every linked geodata class can be considered a <a href="#_class_geofeatur
 </tr>
 </tbody>
 </table>
+<div class="ulist">
+<ul>
+<li>
+<p>BFO distinguishes between <em>continuants</em> &amp; <em>occurrants</em>, which <em>spatial region</em> &amp; <em>spatiotemporal region</em> are subclasses of, respectively. GeoSPARQL has no handling of temporality, so cannot yet map to any <em>continuants</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>a future version of GeoSPARQL that handled spatio-temporal Features could perhaps claim that <a href="#_class_geofeature"><code>geo:Feature</code></a> is a <a href="http://www.w3.org/2000/01/rdf-schema#subClassOf"><code>rdfs:subClassOf</code></a> <a href="http://purl.obolibrary.org/obo/BFO_0000011"><code>obo:BFO_0000011</code></a> "spatiotemporal region", however inconsistencies from this mapping will occur due to the current Feature/"spatial region" mapping above and this will need to be handled</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <h1 id="_annex_f_cql_geosparql_mapping_informative" class="sect0"><a class="anchor" href="#_annex_f_cql_geosparql_mapping_informative"></a>Annex F - CQL / GeoSPARQL Mapping (informative)</h1>
@@ -12263,7 +12280,7 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-21 03:50:17 UTC
+Last updated 2022-07-25 06:01:01 UTC
 </div>
 </div>
 </body>
