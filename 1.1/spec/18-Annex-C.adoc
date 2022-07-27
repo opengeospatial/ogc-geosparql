@@ -2,7 +2,7 @@
 
 == C.0 Overview
 
-This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided seperately by the GeoSPARQL 1.1 profile, see the <<GeoSPARQL Standard structure>> for the link to those examples.
+This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <<GeoSPARQL Standard structure>> for the link to those examples.
 
 == C.1 RDF Examples
 
@@ -110,7 +110,7 @@ eg:x
     geo:hasMetricArea "8.9E4"^^xsd:double ;
 .
 ```
-This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize>> (in this case, <<Property: geo:MetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
+This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature, `geo:Feature`>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> (in this case, <<Property: geo:MetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
 
 [[C.1.1.2.4]]
 ===== C.1.1.2.4 `Feature` with `Geometry` and non-metric size
@@ -131,7 +131,7 @@ eg:x
 .
 ```
 
-Here a <<Class: geo:Feature>> is described as per the previous example but its area is expressed in non-metric units: the acre.
+Here a <<Class: geo:Feature, `geo:Feature`>> is described as per the previous example but its area is expressed in non-metric units: the acre.
 
 
 [[C.1.1.2.5]]
@@ -155,7 +155,7 @@ eg:x
 .
 ```
 
-In this example, `Feature X` has two different `Geometry` instances indicated with their different explained in annotation properties. No GeoSPARQL ontology properties are used to indicate a difference in these `Geometry` instances thus machine use of this `Feature` woud not be easily able to differentiate them.
+In this example, `Feature X` has two different `Geometry` instances indicated with their difference explained in annotation properties. No GeoSPARQL ontology properties are used to indicate a difference in these `Geometry` instances thus machine use of this `Feature` woud not be easily able to differentiate them.
 
 [[C.1.1.2.6]]
 ===== C.1.1.2.6 `Feature` with two different `Geometry` instances with different property values
@@ -177,7 +177,7 @@ eg:x
 ```
 
 In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<.
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<Property: geo:hasMetricSpatialResolution, geo:hasMetricSpatialResolution`>>.
 
 [[C.1.1.2.7]]
 ===== C.1.1.2.7 `Feature` with non-metric size
@@ -218,7 +218,7 @@ eg:x
 .
 ```
 
-Here a `Feature` instance has two geometries, one indicated with the general property `hasGeometry` and a second indicated with the specialised property `hasCentroid` which suggests the role that the indicated geometry plays. Note that while `hasGeometry` may indicate any type of `Geometry`, `hasCentroid` should only be used to indicate a point geometry. It may be informally inferred that the polygonal geometry is the `Feature` instance's boundary.
+Here a `Feature` instance has two geometries, one indicated with the general property `hasGeometry` and a second indicated with the specialized property `hasCentroid` which suggests the role that the indicated geometry plays. Note that while `hasGeometry` may indicate any type of `Geometry`, `hasCentroid` should only be used to indicate a point geometry. It may be informally inferred that the polygonal geometry is the `Feature` instance's boundary.
 
 [[C.1.1.2.9]]
 ===== C.1.1.2.9 `Feature` with multiple sizes
@@ -249,7 +249,7 @@ eg:y a geo:Geometry ;
 
 Here a `Geometry` is declared and given a preferred label. 
 
-From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<B 1.1.2.2 A `Feature` related to a `Geometry`>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node, however it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an demonstration absolute URI and data.
+From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<B 1.1.2.2 A `Feature` related to a `Geometry`>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node. However, it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an absolute URI and data.
 
 ```turtle
 <https://example.com/geometry/y> 
@@ -294,7 +294,7 @@ eg:x-geo
     geo:hasMetricArea "8.7E4"^^xsd:double;
 .
 ```
-This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has both a serilization (WKT) indicated with the predicate <<Property: geo:asWKT, `geo:asWKT`>> and a scalar area indicated with the predicate <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a pre-calculated scalar area in addition to the polygon. Perhaps the polygon is large and detailed and a one-time calculation with results stored is efficient for repeated use.
+This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has both a serialization (WKT) indicated with the predicate <<Property: geo:asWKT, `geo:asWKT`>> and a scalar area indicated with the predicate <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a pre-calculated scalar area in addition to the polygon. Perhaps the polygon is large and detailed and a one-time calculation with results stored is efficient for repeated use.
 
 This use of a scalar spatial measurement property with a Geometry, here <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>, is possible since the domain of such properties is <<Class: geo:SpatialObject, `geo:SpatialObject`>>, the superclass of both <<Class: geo:Feature, `geo:Feature`>> and <<Class: geo:Geometry, `geo:Geometry`>>.
 
@@ -317,7 +317,7 @@ ex:fc-x
 .
 ```
 
-All of the GeoSPARQL collection classes are unordered since they are succlasses of the generic http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`], however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instances labels, their areas, geometries or any other property.
+All of the GeoSPARQL collection classes are unordered since they are subclasses of the generic http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`], however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instance labels, their areas, geometries or any other property.
 
 ==== C.1.1.6 `GeometryCollection`
 
@@ -340,7 +340,7 @@ As per `FeatureCollection`, the `GeometryCollection` itself doesn't impose any o
 
 Most of the geometry seralizations used in GeoSPARQL define the geometry type - point, polygon etc. _within_ the literal, e.g. WKT can encode `POLYGON(())` or 'POINT()', however the _Simple Features Vocabulary_ resource within GeoSPARQL 1.1 contains specialised Geometry RDF classes such as http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`], http://www.opengis.net/ont/sf#PolyhedralSurface[`sf:PolyhedralSurface`] and others.
 
-It may be appropriate to use these specialised forms of Geometry in circumstances when geometry type differentiation is required within RDF and not withing specialised literal handling. This is the case when type differentiation must occur within plain SPARQL, not GeoSPARQL.
+It may be appropriate to use these specialized forms of Geometry in circumstances when geometry type differentiation is required within RDF and not withing specialized literal handling. This is the case when type differentiation must occur within plain SPARQL, not GeoSPARQL.
 
 The following example shows a `Feature` instance with two `Geometry` instances where the _Simple Features Vocabulary_ classes are used to indicate the Geometry type:
 
@@ -416,7 +416,7 @@ eg:x
 
 The properties defined for this example's `Feature` instance are vaguely aligned in that the values are not real but are not unrealistic either. It is outside the scope of GeoSPARQL to validate `Feature` instances' property values.
 
-Note that this `Feature` has a 2D `Geometry` and yet a property indicating a scalar volume: <<Property: geo:hasVolume, `geo:hasVolume`>>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the `Feature` such as its geometry. Perhaps a volume for the feature has been esimated or measured in such a way that a 3D geometry was not created.
+Note that this `Feature` has a 2D `Geometry` and yet a property indicating a scalar volume: <<Property: geo:hasVolume, `geo:hasVolume`>>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the `Feature` such as its geometry. Perhaps a volume for the feature has been estimated or measured in such a way that a 3D geometry was not created.
 
 ==== C.1.2.3 Geometry Properties
 
@@ -445,7 +445,7 @@ eg:x
 . 
 ```
 
-In this example, each of the standards properties defined for a `Geometry` instance has realistic values, for example, the <<Property: geo:isEmpty, is empty>> is set to `false` since the `Geometry` contains information.
+In this example, each of the properties defined for a `Geometry` instance has realistic values. For example, the <<Property: geo:isEmpty, is empty>> property is set to `false` since the `Geometry` contains information.
 
 ==== C.1.2.4 Geometry Serializations
 
