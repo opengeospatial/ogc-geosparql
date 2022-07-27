@@ -1,6 +1,6 @@
 [
   {
-    "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface",
+    "@id": "http://www.opengis.net/ont/sf#Surface",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -12,19 +12,48 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Surface"
+        "@id": "http://www.opengis.net/ont/sf#Geometry"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A PolyhedralSurface is a contiguous collection of polygons, which share common boundary segments. For each pair of polygons that touch, the common boundary shall be expressible as a finite collection of LineStrings. Each such LineString shall be part of the boundary of at most 2 Polygon patches. \n\nFor any two polygons that share a common boundary, the top of the polygon shall be consistent. This means that when two LinearRings from these two Polygons traverse the common boundary segment, they do so in opposite directions. Since the Polyhedral surface is contiguous, all polygons will be thus consistently oriented. This means that a non-oriented surface (such as Mbius band) shall not have single surface representations. They may be represented by a MultiSurface.\n\nIf each such LineString is the boundary of exactly 2 Polygon patches, then the PolyhedralSurface is a simple, closed polyhedron and is topologically isomorphic to the surface of a sphere. By the Jordan Surface Theorem (Jordans Theorem for 2-spheres), such polyhedrons enclose a solid topologically isomorphic to the interior of a sphere; the ball. In this case, the top of the surface will either point inward or outward of the enclosed finite solid. If outward, the surface is the exterior boundary of the enclosed surface. If inward, the surface is the interior of the infinite complement of the enclosed solid. A Ball with some number of voids (holes) inside can thus be presented as one exterior boundary shell, and some number in interior boundary shells."
+        "@value": "A Surface is a 2-dimensional geometric object.\nA simple Surface may consists of a single patch that is associated with one exterior boundary and 0 or more interior boundaries. A single such Surface patch in 3-dimensional space is isometric to planar Surfaces, by a simple affine rotation matrix that rotates the patch onto the plane z = 0. If the patch is not vertical, the projection onto the same plane is an isomorphism, and can be represented as a linear transformation, i.e. an affine.\n\nPolyhedral Surfaces are formed by stitching together such simple Surfaces patches along their common boundaries. Such polyhedral Surfaces in a 3-dimensional space may not be planar as a whole, depending on the orientation of their planar normals. If all the patches are in alignment (their normals are parallel), then the whole stitched polyhedral surface is co-planar and can be represented as a single patch if it is connected.\n\nThe boundary of a simple Surface is the set of closed Curves corresponding to its exterior and interior boundaries.\n\nA Polygon is a simple Surface that is planar. A PolyhedralSurface is a simple surface, consisting of some number of Polygon patches or facets. If a PolyhedralSurface is closed, then it bounds a solid. A MultiSurface containing a set of closed PolyhedralSurfaces can be used to represent a Solid object with holes."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Polyhedral Surface"
+        "@value": "Surface"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#Line",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#LineString"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A Line is a LineString with exactly 2 Points."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Line"
       }
     ]
   },
@@ -54,6 +83,93 @@
       {
         "@language": "en",
         "@value": "Line String"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Surface"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A PolyhedralSurface is a contiguous collection of polygons, which share common boundary segments. For each pair of polygons that touch, the common boundary shall be expressible as a finite collection of LineStrings. Each such LineString shall be part of the boundary of at most 2 Polygon patches. \n\nFor any two polygons that share a common boundary, the top of the polygon shall be consistent. This means that when two LinearRings from these two Polygons traverse the common boundary segment, they do so in opposite directions. Since the Polyhedral surface is contiguous, all polygons will be thus consistently oriented. This means that a non-oriented surface (such as Mbius band) shall not have single surface representations. They may be represented by a MultiSurface.\n\nIf each such LineString is the boundary of exactly 2 Polygon patches, then the PolyhedralSurface is a simple, closed polyhedron and is topologically isomorphic to the surface of a sphere. By the Jordan Surface Theorem (Jordans Theorem for 2-spheres), such polyhedrons enclose a solid topologically isomorphic to the interior of a sphere; the ball. In this case, the top of the surface will either point inward or outward of the enclosed finite solid. If outward, the surface is the exterior boundary of the enclosed surface. If inward, the surface is the interior of the infinite complement of the enclosed solid. A Ball with some number of voids (holes) inside can thus be presented as one exterior boundary shell, and some number in interior boundary shells."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Polyhedral Surface"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#Geometry",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/geosparql#Geometry"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "Geometry is the root class of the hierarchy.\n\nThe instantiable subclasses of Geometry are restricted to 0, 1 and 2-dimensional geometric objects that exist in 2, 3 or 4-dimensional coordinate space (R2, R3 or R4). Geometry values in R2 have points with coordinate values for x and y. Geometry values in R3 have points with coordinate values for x, y and z or for x, y and m. Geometry values in R4 have points with coordinate values for x, y, z and m.\n\nThe interpretation of the coordinates is subject to the coordinate reference systems associated to the point. All coordinates within a geometry object should be in the same coordinate reference systems. Each coordinate shall be unambiguously associated to a coordinate reference system either directly or through its containing geometry. The z coordinate of a point is typically, but not necessarily, represents altitude or elevation. The m coordinate represents a measurement.\n\nAll Geometry classes described in this specification are defined so that instances of Geometry are topologically closed, i.e. all represented geometries include their boundary as point sets. This does not affect their representation, and open version of the same classes may be used in other circumstances, such as topological representations."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Geometry"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#MultiPolygon",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#MultiSurface"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A MultiPolygon is a MultiSurface whose elements are Polygons.\n\nThe assertions for MultiPolygons are as follows.\n\na) The interiors of 2 Polygons that are elements of a MultiPolygon may not intersect.\nb) The boundaries of any 2 Polygons that are elements of a MultiPolygon may not cross and may touch at only a finite number of Points.\nc) A MultiPolygon is defined as topologically closed.\nd) A MultiPolygon may not have cut lines, spikes or punctures, a MultiPolygon is a regular closed Point set,\ne) The interior of a MultiPolygon with more than 1 Polygon is not connected; the number of connected components of the interior of a MultiPolygon is equal to the number of Polygons in the MultiPolygon. \n\nThe boundary of a MultiPolygon is a set of closed Curves (LineStrings) corresponding to the boundaries of its element Polygons. Each Curve in the boundary of the MultiPolygon is in the boundary of exactly 1 element Polygon, and every Curve in the boundary of an element Polygon is in the boundary of the MultiPolygon."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Multi Polygon"
       }
     ]
   },
@@ -116,6 +232,97 @@
     ]
   },
   {
+    "@id": "http://www.opengis.net/ont/sf#maximum",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Envelope"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Point"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "Point containing the maximum values of the coordinates of an envelope or bounding box"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "maximum"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#Polygon",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Surface"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A Polygon is a planar Surface defined by 1 exterior boundary and 0 or more interior boundaries. Each interior boundary defines a hole in the Polygon.\nThe exterior boundary LinearRing defines the top of the surface which is the side of the surface from which the exterior boundary appears to traverse the boundary in a counter clockwise direction. The interior LinearRings will have the opposite orientation, and appear as clockwise when viewed from the top,\nThe assertions for Polygons (the rules that define valid Polygons) are as follows:\n\na) Polygons are topologically closed;\nb) The boundary of a Polygon consists of a set of LinearRings that make up its exterior and interior boundaries;\nc) No two Rings in the boundary cross and the Rings in the boundary of a Polygon may intersect at a Point but only as a tangent.\nd) A Polygon may not have cut lines, spikes or punctures.\ne) The interior of every Polygon is a connected point set;\nf) The exterior of a Polygon with 1 or more holes is not connected. Each hole defines a connected component of the exterior."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Polygon"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#Triangle",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Polygon"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "A Triangle is a polygon with 3 distinct, non-collinear vertices and no interior boundary."
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "Triangle"
+      }
+    ]
+  },
+  {
     "@id": "http://www.opengis.net/ont/sf#MultiLineString",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
@@ -145,7 +352,40 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#MultiPolygon",
+    "@id": "http://www.opengis.net/ont/sf#minimum",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#ObjectProperty"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#domain": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Envelope"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#range": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Point"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#definition": [
+      {
+        "@language": "en",
+        "@value": "Point containing the minimum values of the coordinates of an envelope or bounding box"
+      }
+    ],
+    "http://www.w3.org/2004/02/skos/core#prefLabel": [
+      {
+        "@language": "en",
+        "@value": "minimum"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#GeometryCollection",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -157,24 +397,24 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#MultiSurface"
+        "@id": "http://www.opengis.net/ont/sf#Geometry"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A MultiPolygon is a MultiSurface whose elements are Polygons.\n\nThe assertions for MultiPolygons are as follows.\n\na) The interiors of 2 Polygons that are elements of a MultiPolygon may not intersect.\nb) The boundaries of any 2 Polygons that are elements of a MultiPolygon may not cross and may touch at only a finite number of Points.\nc) A MultiPolygon is defined as topologically closed.\nd) A MultiPolygon may not have cut lines, spikes or punctures, a MultiPolygon is a regular closed Point set,\ne) The interior of a MultiPolygon with more than 1 Polygon is not connected; the number of connected components of the interior of a MultiPolygon is equal to the number of Polygons in the MultiPolygon. \n\nThe boundary of a MultiPolygon is a set of closed Curves (LineStrings) corresponding to the boundaries of its element Polygons. Each Curve in the boundary of the MultiPolygon is in the boundary of exactly 1 element Polygon, and every Curve in the boundary of an element Polygon is in the boundary of the MultiPolygon."
+        "@value": "A GeometryCollection is a geometric object that is a collection of some number of geometric objects.\n\nAll the elements in a GeometryCollection shall be in the same Spatial Reference System. This is also the Spatial Reference System for the GeometryCollection.\nGeometryCollection places no other constraints on its elements. Subclasses of GeometryCollection may restrict membership based on dimension and may also place other constraints on the degree of spatial overlap between elements."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Multi Polygon"
+        "@value": "Geometry Collection"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#Line",
+    "@id": "http://www.opengis.net/ont/sf#LinearRing",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -192,18 +432,18 @@
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A Line is a LineString with exactly 2 Points."
+        "@value": "A LinearRing is a LineString that is both closed and simple."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Line"
+        "@value": "Linear Ring"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#TIN",
+    "@id": "http://www.opengis.net/ont/sf#MultiSurface",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -215,19 +455,19 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface"
+        "@id": "http://www.opengis.net/ont/sf#GeometryCollection"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A TIN (triangulated irregular network) is a PolyhedralSurface consisting only of Triangle patches."
+        "@value": "A MultiSurface is a 2-dimensional GeometryCollection whose elements are Surfaces, all using coordinates from the same coordinate reference system. The geometric interiors of any two Surfaces in a MultiSurface may not intersect in the full coordinate system. The boundaries of any two coplanar elements in a MultiSurface may intersect, at most, at a finite number of Points. If they were to meet along a curve, they could be merged into a single surface.\n\nA MultiSurface may be used to represent heterogeneous surfaces collections of polygons and polyhedral surfaces. It defines a set of methods for its subclasses. The subclass of MultiSurface is MultiPolygon corresponding to a collection of Polygons only. Other collections shall use MultiSurface."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Triangulated Irregular Network"
+        "@value": "Multi Surface"
       }
     ]
   },
@@ -260,7 +500,7 @@
     ],
     "http://purl.org/dc/terms/publisher": [
       {
-        "@id": "_:n5a07cf2636b74b9da4da155357d4a692b1"
+        "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b1"
       }
     ],
     "http://purl.org/dc/terms/rights": [
@@ -280,7 +520,7 @@
     ]
   },
   {
-    "@id": "_:n5a07cf2636b74b9da4da155357d4a692b1",
+    "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b1",
     "@type": [
       "https://schema.org/Organization"
     ],
@@ -326,7 +566,7 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#Polygon",
+    "@id": "http://www.opengis.net/ont/sf#Envelope",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -338,53 +578,64 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Surface"
+        "@id": "http://www.opengis.net/ont/sf#Polygon"
+      },
+      {
+        "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b2"
+      },
+      {
+        "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b3"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A Polygon is a planar Surface defined by 1 exterior boundary and 0 or more interior boundaries. Each interior boundary defines a hole in the Polygon.\nThe exterior boundary LinearRing defines the top of the surface which is the side of the surface from which the exterior boundary appears to traverse the boundary in a counter clockwise direction. The interior LinearRings will have the opposite orientation, and appear as clockwise when viewed from the top,\nThe assertions for Polygons (the rules that define valid Polygons) are as follows:\n\na) Polygons are topologically closed;\nb) The boundary of a Polygon consists of a set of LinearRings that make up its exterior and interior boundaries;\nc) No two Rings in the boundary cross and the Rings in the boundary of a Polygon may intersect at a Point but only as a tangent.\nd) A Polygon may not have cut lines, spikes or punctures.\ne) The interior of every Polygon is a connected point set;\nf) The exterior of a Polygon with 1 or more holes is not connected. Each hole defines a connected component of the exterior."
+        "@value": "Shape defined by the corner points of the bounding box of a geometry.\nThe corner points may be in any dimension (usually 2D or 3D) but the two corners must have the same dimension."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Polygon"
+        "@value": "Envelope or Bounding Box"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#MultiSurface",
+    "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b2",
     "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
+      "http://www.w3.org/2002/07/owl#Restriction"
     ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+    "http://www.w3.org/2002/07/owl#cardinality": [
       {
-        "@id": "http://www.opengis.net/ont/sf"
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "1"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+    "http://www.w3.org/2002/07/owl#onProperty": [
       {
-        "@id": "http://www.opengis.net/ont/sf#GeometryCollection"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A MultiSurface is a 2-dimensional GeometryCollection whose elements are Surfaces, all using coordinates from the same coordinate reference system. The geometric interiors of any two Surfaces in a MultiSurface may not intersect in the full coordinate system. The boundaries of any two coplanar elements in a MultiSurface may intersect, at most, at a finite number of Points. If they were to meet along a curve, they could be merged into a single surface.\n\nA MultiSurface may be used to represent heterogeneous surfaces collections of polygons and polyhedral surfaces. It defines a set of methods for its subclasses. The subclass of MultiSurface is MultiPolygon corresponding to a collection of Polygons only. Other collections shall use MultiSurface."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Multi Surface"
+        "@id": "http://www.opengis.net/ont/sf#maximum"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#GeometryCollection",
+    "@id": "_:n3d85adf5f9364ed485da5f92aaf137e8b3",
+    "@type": [
+      "http://www.w3.org/2002/07/owl#Restriction"
+    ],
+    "http://www.w3.org/2002/07/owl#cardinality": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
+        "@value": "1"
+      }
+    ],
+    "http://www.w3.org/2002/07/owl#onProperty": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#minimum"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#TIN",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -396,19 +647,19 @@
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Geometry"
+        "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface"
       }
     ],
     "http://www.w3.org/2004/02/skos/core#definition": [
       {
         "@language": "en",
-        "@value": "A GeometryCollection is a geometric object that is a collection of some number of geometric objects.\n\nAll the elements in a GeometryCollection shall be in the same Spatial Reference System. This is also the Spatial Reference System for the GeometryCollection.\nGeometryCollection places no other constraints on its elements. Subclasses of GeometryCollection may restrict membership based on dimension and may also place other constraints on the degree of spatial overlap between elements."
+        "@value": "A TIN (triangulated irregular network) is a PolyhedralSurface consisting only of Triangle patches."
       }
     ],
     "http://www.w3.org/2004/02/skos/core#prefLabel": [
       {
         "@language": "en",
-        "@value": "Geometry Collection"
+        "@value": "Triangulated Irregular Network"
       }
     ]
   },
@@ -438,257 +689,6 @@
       {
         "@language": "en",
         "@value": "Multi Point"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#Geometry",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/geosparql#Geometry"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "Geometry is the root class of the hierarchy.\n\nThe instantiable subclasses of Geometry are restricted to 0, 1 and 2-dimensional geometric objects that exist in 2, 3 or 4-dimensional coordinate space (R2, R3 or R4). Geometry values in R2 have points with coordinate values for x and y. Geometry values in R3 have points with coordinate values for x, y and z or for x, y and m. Geometry values in R4 have points with coordinate values for x, y, z and m.\n\nThe interpretation of the coordinates is subject to the coordinate reference systems associated to the point. All coordinates within a geometry object should be in the same coordinate reference systems. Each coordinate shall be unambiguously associated to a coordinate reference system either directly or through its containing geometry. The z coordinate of a point is typically, but not necessarily, represents altitude or elevation. The m coordinate represents a measurement.\n\nAll Geometry classes described in this specification are defined so that instances of Geometry are topologically closed, i.e. all represented geometries include their boundary as point sets. This does not affect their representation, and open version of the same classes may be used in other circumstances, such as topological representations."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Geometry"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#Surface",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Geometry"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A Surface is a 2-dimensional geometric object.\nA simple Surface may consists of a single patch that is associated with one exterior boundary and 0 or more interior boundaries. A single such Surface patch in 3-dimensional space is isometric to planar Surfaces, by a simple affine rotation matrix that rotates the patch onto the plane z = 0. If the patch is not vertical, the projection onto the same plane is an isomorphism, and can be represented as a linear transformation, i.e. an affine.\n\nPolyhedral Surfaces are formed by stitching together such simple Surfaces patches along their common boundaries. Such polyhedral Surfaces in a 3-dimensional space may not be planar as a whole, depending on the orientation of their planar normals. If all the patches are in alignment (their normals are parallel), then the whole stitched polyhedral surface is co-planar and can be represented as a single patch if it is connected.\n\nThe boundary of a simple Surface is the set of closed Curves corresponding to its exterior and interior boundaries.\n\nA Polygon is a simple Surface that is planar. A PolyhedralSurface is a simple surface, consisting of some number of Polygon patches or facets. If a PolyhedralSurface is closed, then it bounds a solid. A MultiSurface containing a set of closed PolyhedralSurfaces can be used to represent a Solid object with holes."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Surface"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#Triangle",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Polygon"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A Triangle is a polygon with 3 distinct, non-collinear vertices and no interior boundary."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Triangle"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#Envelope",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Polygon"
-      },
-      {
-        "@id": "_:n5a07cf2636b74b9da4da155357d4a692b2"
-      },
-      {
-        "@id": "_:n5a07cf2636b74b9da4da155357d4a692b3"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "Shape defined by the corner points of the bounding box of a geometry.\nThe corner points may be in any dimension (usually 2D or 3D) but the two corners must have the same dimension."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Envelope or Bounding Box"
-      }
-    ]
-  },
-  {
-    "@id": "_:n5a07cf2636b74b9da4da155357d4a692b2",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Restriction"
-    ],
-    "http://www.w3.org/2002/07/owl#cardinality": [
-      {
-        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
-        "@value": "1"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#onProperty": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#maximum"
-      }
-    ]
-  },
-  {
-    "@id": "_:n5a07cf2636b74b9da4da155357d4a692b3",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Restriction"
-    ],
-    "http://www.w3.org/2002/07/owl#cardinality": [
-      {
-        "@type": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger",
-        "@value": "1"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#onProperty": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#minimum"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#LinearRing",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#LineString"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "A LinearRing is a LineString that is both closed and simple."
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "Linear Ring"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#minimum",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Envelope"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Point"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "Point containing the minimum values of the coordinates of an envelope or bounding box"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "minimum"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#maximum",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#ObjectProperty"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#domain": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Envelope"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#range": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Point"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#definition": [
-      {
-        "@language": "en",
-        "@value": "Point containing the maximum values of the coordinates of an envelope or bounding box"
-      }
-    ],
-    "http://www.w3.org/2004/02/skos/core#prefLabel": [
-      {
-        "@language": "en",
-        "@value": "maximum"
       }
     ]
   }
