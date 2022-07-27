@@ -26,7 +26,9 @@ jobs:
          mkdir docs/bestpractice/
          cp index.html docs/index.html
          cd docs/geosparql10/
+         mkdir servicedescription
          cp ../../1.0/geo.ttl ../../1.0/profile.ttl ../../1.0/funcsrules.ttl ../../1.0/sf_geometries.ttl ../../1.0/11-052r4_OGC_GeoSPARQL.pdf ../../1.0/citeme.bib . 
+         cp ../../1.0/servicedescription/servicedescription_all_functions.ttl ../../1.0/servicedescription/servicedescription_conformanceclasses.ttl ../../1.0/servicedescription/servicedescription_extensions.ttl  servicedescription/ 
          echo "Generating documentation for GeoSPARQL 1.0 ontology"
          pylode -i ../../1.0/geo.ttl -o index.html
          python3 ../../convertjsonld.py geo.ttl geo.json
@@ -39,10 +41,19 @@ jobs:
          pylode -i ../../1.0/sf_geometries.ttl -o sf_geometries.html -p vocpub
          python3 ../../convertjsonld.py sf_geometries.ttl sf_geometries.json
          # pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
-         cd ../geosparql11/
+         cd servicedescription
+         pylode -i ../../1.0/servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
+         pylode -i ../../1.0/servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
+         pylode -i ../../1.0/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
+         cd ../../geosparql11/
+         mkdir servicedescription
          asciidoctor --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
          asciidoctor-pdf --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
          cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/reqs.ttl  ../../1.1/spec/citeme.bib .
+         cp ../../1.1/servicedescription/servicedescription_all_functions.ttl ../../1.1/servicedescription/servicedescription_conformanceclasses.ttl ../../1.1/servicedescription/servicedescription_extensions.ttl  servicedescription/
          # ../../1.1/validation.ttl
          cp -r ../../1.1/spec/img .
          echo "Generating documentation for GeoSPARQL 1.1 ontology"
@@ -60,6 +71,13 @@ jobs:
          pylode -i ../../1.1/reqs.ttl -o reqs.html -p vocpub
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
          #pylode -i ../../1.1/validation.ttl -o validation.html
+         cd servicedescription
+         pylode -i ../../1.1/servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
+         pylode -i ../../1.1/servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
+         pylode -i ../../1.1/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:

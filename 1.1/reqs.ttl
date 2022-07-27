@@ -14,6 +14,7 @@ PREFIX prov1: <http://www.w3.org/ns/prov-o/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sdo: <https://schema.org/>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#> 
 PREFIX reqs10: <http://www.opengis.net/spec/geosparql/1.0/req/>
 PREFIX reqs10core: <http://www.opengis.net/spec/geosparql/1.0/req/core/>
 PREFIX reqs10gtx: <http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/>
@@ -26,6 +27,7 @@ PREFIX reqs11gx: <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extensi
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX spec: <http://www.opengis.net/def/spec-element/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
 
 <http://www.opengis.net/def/geosparql/reqs> rdf:type skos:ConceptScheme ;
                                              dcterms:created "2021-06-28"^^xsd:date ;
@@ -42,10 +44,11 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	                                     dcterms:rights "(c) 2022 Open Geospatial Consortium" ;
                                              skos:prefLabel "GeoSPARQL 1.1 Requirements and Conformance Class Register"@en .
 
+
 confs10:core
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     skos:member
         conf10core:sparql-protocol ,
         conf10core:spatial-object-class ,
@@ -56,7 +59,7 @@ confs10:core
 confs11:core
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs10:core ;        
     skos:member          
         conf11core:feature-collection-class ,
@@ -70,7 +73,7 @@ confs11:core
 confs10:topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs10:core ;
     skos:member
         conf10gtx:eh-query-functions ,
@@ -83,7 +86,7 @@ confs10:topology-extension
 confs11:topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires 
         confs11:core ,
         confs10:topology-extension ;          
@@ -93,7 +96,7 @@ confs11:topology-extension
 confs10:geometry-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs10:core ;
     skos:member
         conf10gx:feature-properties ,
@@ -115,7 +118,7 @@ confs10:geometry-extension
 confs11:geometry-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires 
         confs11:core ,
         confs10:geometry-extension ;
@@ -138,7 +141,7 @@ confs11:geometry-extension
 confs11:geometry-extension-dggs
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs11:core ;
     skos:member
         conf10gx:geometry-class ,
@@ -157,7 +160,7 @@ confs11:geometry-extension-dggs
 confs10:geometry-topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires
         confs10:geometry-extension ,
         confs10:topology-extension ;
@@ -172,7 +175,7 @@ confs10:geometry-topology-extension
 confs11:geometry-topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires
         confs11:geometry-extension ,
         confs11:topology-extension ,
@@ -183,7 +186,7 @@ confs11:geometry-topology-extension
 confs10:query-rewrite-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs10:geometry-topology-extension ;
     skos:member
         conf10qre:eh-query-rewrite ,
@@ -196,7 +199,7 @@ confs10:query-rewrite-extension
 conf11qre:query-rewrite-extension
     a 
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires 
         confs11:geometry-topology-extension ,
         confs10:query-rewrite-extension ;
@@ -206,7 +209,7 @@ conf11qre:query-rewrite-extension
 confs10:rdfs-entailment-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;
+        skos:Collection, sd:Feature ;
     dcterms:requires confs10:geometry-topology-extension ;
     skos:member
         conf10ree:bgp-rdfs-ent ,
@@ -218,7 +221,7 @@ confs10:rdfs-entailment-extension
 confs11:rdfs-entailment-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ;      
+        skos:Collection, sd:Feature ;      
     dcterms:requires 
         confs11:geometry-topology-extension ,
         confs10:rdfs-entailment-extension ;
@@ -1161,3 +1164,4 @@ reqs10gx:query-functions
     skos:definition "Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1]"@en ;
     skos:prefLabel "GeoSPARQL 1.0 Requirement: Query Functions"@en ;
 .
+
