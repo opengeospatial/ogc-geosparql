@@ -25,12 +25,11 @@ Validators produce error messages and warnings based on the SHACL standard's def
 
 == D.2 Scope of SHACL Shapes provided with GeoSPARQL
 
-The SHACL Shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but except very few cases do not validate the content of literal types.
-In particular, the following attributes of the graph are validated:
+The SHACL Shapes defined in the GeoSPARQL 1.1 standard all target the verification of specific graph structures, but only in very few cases validate the content of literal types. In particular, the following attributes of the graph are validated:
 
 * *Proper usage of GeoSPARQL classes*: These Shapes check for a proper usage of instances of GeoSPARQL classes. For example, we check that instances of collection classes should at least have one element and that instances of Geometry classes should at least have one serilization to avoid creating graphs which contain nodes without necessary information.
-* *Geometry property consistency*: Certain checks are applied for properties describing geometries. For example we check dimensionality properties for corresponding values
-* *Rudimentary checks of literal contents*: The SHACL Shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification)
+* *Geometry property consistency*: Certain checks are applied for properties describing geometries. For example we check dimensionality properties for corresponding values.
+* *Rudimentary checks of literal contents*: The SHACL Shapes defined in this standard do not substitute a verification of literal contents by validators of the respective data formats. However, they define checks using regular expressions to detect a falsely formatted geospatial literal. For example, if a GeoJSON literal is declared using its literal type, a SHACL shape will check for curly brackets to be present (as they are part of the JSON specification).
 
 == D.3 Table of SHACL Shapes
 
@@ -40,7 +39,7 @@ In particular, the following attributes of the graph are validated:
 
 |http://www.opengis.net/def/geosparql/validator/S1-a-hasGeometry-hasSerialization-sub[Shape 1a]
 | Violation
-| Each node with an incoming <<Property: geo:hasGeometry, geo:hasGeometry>>, or a specialization of it, should have minimum one outgoing relation that is either <<Property: geo:hasSerialization, geo:hasSerialization>>, or a specialization of it.
+| Each node with an incoming <<Property: geo:hasGeometry, geo:hasGeometry>>, or a specialization of it, should have at minimum one outgoing relation that is either <<Property: geo:hasSerialization, geo:hasSerialization>>, or a specialization of it.
 | <<req_geometry-extension_feature_properties>>, <<req_geometry-extension_geometry_properties>>
 
 |http://www.opengis.net/def/geosparql/validator/S1-b-hasGeometry-hasSerialization-sub[Shape 1b]
@@ -100,17 +99,17 @@ In particular, the following attributes of the graph are validated:
 
 |http://www.opengis.net/def/geosparql/validator/S9-many-coordinateDimension-one[Shape 9]
 | Violation
-| A <<Class: geo:Geometry, geo:Geometry>> node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#coordinateDimension[geo:coordinateDimension] property
+| A <<Class: geo:Geometry, geo:Geometry>> node should have a maximum of one outgoing http://www.opengis.net/ont/geosparql#coordinateDimension[geo:coordinateDimension] property
 | <<req_geometry-extension_geometry-properties>>
 
 |http://www.opengis.net/def/geosparql/validator/S10-many-dimension-one[Shape 10]
 | Violation
-| A <<Class: geo:Geometry, geo:Geometry>> node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#dimension[geo:dimension] property
+| A <<Class: geo:Geometry, geo:Geometry>> node should have a maximum of one outgoing http://www.opengis.net/ont/geosparql#dimension[geo:dimension] property
 | <<req_geometry-extension_geometry-properties>>
 
 |http://www.opengis.net/def/geosparql/validator/S11-many-isEmpty-one[Shape 11]
 | Violation
-| A <<Class: geo:Geometry, geo:Geometry>> node should have maximum of one outgoing http://www.opengis.net/ont/geosparql#isEmpty[geo:isEmpty] property
+| A <<Class: geo:Geometry, geo:Geometry>> node should have a maximum of one outgoing http://www.opengis.net/ont/geosparql#isEmpty[geo:isEmpty] property
 | <<req_geometry-extension_geometry-properties>>
 
 |http://www.opengis.net/def/geosparql/validator/S12-many-isSimple-one[Shape 12]

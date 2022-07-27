@@ -10,9 +10,9 @@ RDF is, among other things, a data model built on edge-node "graphs." Each link 
 * Predicate (verb, property, attribute, relation, member, link, reference)
 * Object (value, end node, non-literal values can be used as a Subject)
 
-Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniqueliy identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necissarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser. 
+Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser. 
 
-Subjects and objects within an RDF triple are called nodes and can also be be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialised purposes and in this specification are, for geometry data. The figure below shows a basic triple.
+Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialized purposes and in this specification are, for geometry data. The figure below shows a basic triple.
 
 [#img-rdf]
 .An RDF Triple  
@@ -20,7 +20,7 @@ image::img/01.png[RDF Triple,600,400,align="center"]
 
 Note that the same node may be a subject in some triples, and an object in others.
 
-Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <<ISO19109>>, and for the relational model as (table primary key, column, value).
+Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <<ISO19109>>, and for the relational model as well (table primary key, column, value).
 
 === SPARQL
 
@@ -59,7 +59,7 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 3. domain model RDF/OWL <<RDF>>,<<OWL2>> ontology
 ** http://www.opengis.net/ont/geosparql
 ** for geographic information representation
-** based on the General Feature Model <<ISO19109>>, Simple Features Access <<OGCSFACA>> <<ISO19125-1>>, Feature Geometry <<ISO19107>> and SQL MM <<ISO13249>>
+** based on the General Feature Model <<ISO19109>>, Simple Features Access <<OGCSFACA>> <<ISO19125-1>>, Geography Markup Language <<GML>> and SQL MM <<ISO13249>>
 ** defined within the specification document and delivered in RDF also
 4. Functions & Rules vocabulary
 ** http://www.opengis.net/def/geosparql/funcsrules
@@ -68,27 +68,30 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 5. Simple Features vocabulary
 ** http://www.opengis.net/ont/sf
 ** derived from Simple Features Access <<OGCSFACA>> <<ISO19125-1>>'s class model
-** presented as an <<OWL>> ontology
+** presented as an OWL <<OWL>> ontology
 6. SPARQL <<SPARQL>> extension functions
 ** defined within this specification document
 7. RIF <<RIFCORE>> rules
 ** http://www.opengis.net/def/geosparql/rifrules
 ** templated within the specification document
-** also delivered as a RIF document also
+** also delivered as a RIF document
 8. RDF data validator
 ** http://www.opengis.net/def/geosparql/validator
-** pefined using SHACL <<SHACL>>
+** defined using SHACL <<SHACL>>
 ** presented within a single RDF file
+9. SPARQL 1.1 Service description for GeoSPARQL
+** http://www.opengis.net/def/geosparql/servicedescription
+** Defined using <<SPARQLSERVDESC>>
 
 This specification document follows a modular design and contains the following components:
 
 * a _core_ component defining the top-level RDFS/OWL classes for spatial objects 
 * a _topology vocabulary_ component defining the RDF properties for asserting and querying topological relations between spatial objects
-* a _geometry_ component defines RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects
+* a _geometry_ component defining RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects
 * a _geometry topology_ component defining topological query functions
 * an _RDFS entailment_ component defining mechanisms for matching implicit RDF triples that are derived based on RDF and RDFS semantics
 * a _query rewrite_ component defining rules for transforming a simple triple pattern that tests a topological relation between two features into an equivalent query involving concrete geometries and topological query functions
 
-Each of these specification components forms a set of _Requirements_ known as a _Conformance Class_ for GeoSPARQL. Implementations can provide various levels of functionality by choosing which _Conformance Classes to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary Classes.
+Each of these specification components forms a set of _Requirements_ known as a _Conformance Class_ for GeoSPARQL. Implementations can provide various levels of functionality by choosing which _Conformance Classes_ to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary Classes.
 
 In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g. those based on the Region Connection Calculus <<QUAL>>, <<LOGIC>>) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relations between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relations between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.

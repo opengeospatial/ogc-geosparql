@@ -311,33 +311,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S8-asDGGS-dggsLiteral>
 	a sh:NodeShape ;
 	sh:targetObjectsOf geo:asDGGS ;
-	sh:property [
-		a sh:PropertyShape ;
-		sh:path geo:asDGGS ;
-		sh:and (
-			[
-				sh:not [
-					sh:datatype geo:wktLiteral ;
-				] 
-			]
-			[
-				sh:not [
-					sh:datatype geo:gmlLiteral ;
-				] 
-			]
-			[
-				sh:not [
-					sh:datatype geo:geoJSONLiteral ;
-				] 
-			]
-			[
-				sh:not [
-					sh:datatype geo:asKML ;
-				] 
-			]						
-		 ) ;
-	] ;		
-	sh:message "The target of a geo:asDGGS property must not be an RDF literal with datatype of one of the other non-DGGS geometry literal types. It must be eithr geo:dggsLiteral or specialised version of geo:dggsLiteral but this is un-testable so only the excluded type test is performed."@en ;
+	sh:datatype geo:kmlLiteral ;
+	sh:message "The target of a geo:asDGGS property should be an RDF literal with datatype geo:dggsLiteral."@en ;
 .
 
 #################################################
@@ -551,10 +526,8 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 <S20-dggs-content-sub-start>
 	a sh:PropertyShape ;
 	sh:path geo:asDGGS ;
-	sh:pattern "^$" ;
-	sh:message "The content of an RDF literal with an incoming geo:asDGGS relation must conform to DGGS literals, as defined by their specifications."@en ;
-	sh:deactivated true ;
-	rdfs:comment "This shape is deactivated since the precise syntax of DGGS literals is now known"@en ;
+	sh:pattern "^\\s*(<(.+)>(\\s+(.+))?)?\\s*$" ;  # starts with space, <, then IRI, then > then DGGS literal content
+	sh:message "The content of an RDF literal with an incoming geo:asDGGS relation must conform to DGGS literals, as defined by their specifications, however GeoSPARQL requires all DGGS Literals to start by indicating the specific DGGS used with an IRI for that DGGS enclosed n < & >"@en ;
 .
 
 #################################################
