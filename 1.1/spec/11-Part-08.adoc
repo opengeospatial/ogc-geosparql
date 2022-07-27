@@ -50,7 +50,7 @@ One container class is defined: <<Class: geo:GeometryCollection, Geometry Collec
 
 ==== Class: geo:Geometry
 
-The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is equivalent to `GM_Object` <<ISO19107>> and is defined by the following:
+The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is conceptually derived from UML class `Geometry` in <<ISO19107>> which is that standard's "root class of the geometric object taxonomy and supports interfaces common to all geographically referenced geometric objects". `geo:Geometry` is defined by the following:
 
 ```turtle
 geo:Geometry 
@@ -62,7 +62,7 @@ geo:Geometry
     skos:definition "A coherent set of direct positions in space. The positions 
                     are held within a Spatial Reference System (SRS)."@en ;
     skos:note "Geometry can be used as a representation of the shape, extent or 
-              location of a Feature, or can exist as a self-contained entity."""@en ;
+              location of a Feature and may exist as a self-contained entity."""@en ;
 .
 ```
 
@@ -325,19 +325,19 @@ geo:wktLiteral
 ```
 [#req_geometry_extension_wkt-literal]
 |===
-| *Req 15* All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<` & `>`) followed by a single space (Unicode U+0020 character) as a separator, and a WKT string as defined in <<ISO13249>>.
+| *Req 15* All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal`]
 |===
 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 ```
-wktLiteral ::= opt-iri-and-space geometric-data
+wktLiteral ::= opt-iri-and-whitespace geometry-data
 
 opt-iri-and-space = "<" IRI ">" LWSP / ""
 ```
 
-The token `opt-iri-and-space` may be either an IRI and space or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometric-data` is the Well-Known Text representation of the Geometry, defined in <<ISO13249>>.
+The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometry-data` is the Well-Known Text representation of the Geometry, defined in <<ISO13249>>.
 
 In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
@@ -402,7 +402,7 @@ geo:asWKT
 geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] converts `geom` to an equivalent WKT representation preserving the coordinate reference system. 
+The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] converts `geom` to an equivalent WKT representation preserving the spatial reference system. 
 
 [#req_geometry_extension_asWKT-function]
 |===
@@ -666,12 +666,10 @@ The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] c
 
 ==== Discrete Global Grid System
 
-This section establishes the Requirements class for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar. 
+This section establishes the Requirements class for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of geometry data representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar. 
 
 The Requirements class defines one RDFS Datatype
 http://www.opengis.net/ont/geosparql#dggsLiteral[`+http://www.opengis.net/ont/geosparql#dggsLiteral+`] and one property, http://www.opengis.net/ont/geosparql#asDGGS[`+http://www.opengis.net/ont/geosparql#asDGGS+`]. 
-
-NOTE: The datatype defined here is for an abstract DGGS implementation (<<RDFS Datatype: geo:dggsLiteral, DGGS Literal>>) but concrete ones should be used in real implementations. For example, the AusPIX DGGS <<AUSPIX>> might implement something similar to `ex:auspixDggsLiteral`.
 
 ===== RDFS Datatype: geo:dggsLiteral
 
@@ -690,33 +688,45 @@ Valid <<RDFS Datatype: geo:dggsLiteral, DGGS Literal>> instances are formed by e
 
 [#req_geometry_extension_dggs-literal]
 |===
-| *Req 36* All RDFS Literals of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral`>> shall consist of a DGGS Geometry serialization formulated according to a specific DGGS.
+| *Req 36* All RDFS Literals of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral`>> shall consist of an IRI identifying the specific DGGS and a representation of the DGGS geometry data. The IRI shall be enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator, and then the DGGS geometry data, formulated according to the identified DGGS.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal`]
 |===
 
+The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
+
+```
+dggsLiteral ::= iri-and-whitespace dggs-geomety-data
+
+iri-and-whitespace = "<" IRI ">" LWSP 
+```
+
+The token `iri-and-whitespace` is an IRI and whitespace, the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `dggs-geometry-data` is geometry data formulated according to the DGGS identified by `IRI`.
+
+An example of a DGGS literal for the, AusPIX DGGS, could be:
+
+```turtle
+"<https://w3id.org/dggs/auspix> CELL (R3234)"^^geo:dggsLiteral
+```
+
+Where AusPIX is identified with the IRI `+https://w3id.org/dggs/auspix+` and `CELL (R3234)` is the representation of a geometry according to AusPIX.
+
+NOTE: What `R3234` means, or the meaning of any other element within a DGGS' geometry data is not handled by GeoSPARQL, just as GeoPSARQL does not delve into the internals of other Geometry formats such as WKT or GeoJSON.
+
 [#req_geometry_extension_dggs-literal-empty]
 |===
-| *Req 37* An empty RDFS Literal of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral`>>, or one of its data subtypes, shall be interpreted as an empty `geo:Geometry`.
+| *Req 37* An empty RDFS Literal of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral`>>, shall be interpreted as an empty `geo:Geometry`.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/dggs-literal-empty`]
 |===
 
-An example of a literal for a concrete DGGS, AusPIX, could be
+The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
-```turtle
-ex:auspixDggsLiteral 
-    a rdfs:Datatype ;
-    skos:prefLabel "AusPIX DGGS Literal"@en ;
-    skos:definition "A textual serialization of an AusPIX Discrete Global Grid System (DGGS) Geometry object."@en ;
-.
+```
+dggsLiteral ::= iri-and-space dggs-geometry-data
+
+iri-and-whitespace = "<" IRI ">" LWSP / ""
 ```
 
-A single _Cell_ Geometry encoded according to the AusPIX DGGS using the example literal above is given below. The single cell value of _R3234_ is analogous to either a `Point` or simple `Polygon` in WKT geometries.
-
-```turtle
-"CellList (R3234)"^^<http://example.com#auspixDggsLiteral>
-```
-
-NOTE: What `R3234` means, or the meaning of any other element within a concrete DGGS literal is not handled by GeoSPARQL but is expected to be handled by the specification of that DGGS , just as GeoSPARQL does not specify the internals of other Geometry formats such as WKT or GeoJSON.
+The tokens used above are as per the DGGS _ABNF_ above.
 
 ===== Property: geo:asDGGS
 
@@ -742,15 +752,13 @@ geo:asDGGS
 .
 ```
 
-NOTE: It is expected that this property will be used to indicate specific DGGS data types, such as the example `ex:auspixDggsLiteral`, described above, as opposed to the generic <<RDFS Datatype: geo:dggsLiteral, DGGS Literal>>.
-
 ===== Function: geof:asDGGS
 
 ```
 geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the `specificDggsDatatype` parameter.
+The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated by the IRI required to be present in the DGGS literal.
 
 [#req_geometry_extension_asDGGS-function]
 |===
