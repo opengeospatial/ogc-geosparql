@@ -8,7 +8,28 @@ GeoSPARQL 1.1 adds three classes for collection types:
 * `FeatureCollection`
 * `GeometryCollection`
 
-These classes allow the organization of spatial objects, features and geometries in collections and are added to support OGC APIs. 
+These classes allow the organization of spatial objects, features and geometries in collections and are added to support the sorts of data models used by systems such as OGC APIs. 
+
+[NOTE]
+====
+The collection class and the object class, such as `FeatureCollection` & `Feature` class, are related by the standard RDFS property `rdfs:member` whereby the collection class _has as a member_ the object.
+
+In RDF, an example of this for `FeatureCollection` / `Feature` may look like this:
+
+```
+ex:col-1
+    a geo:FeatureCollection ;
+    rdfs:member ex:feature-a ;
+.
+
+ex:feature-a
+    a geo:Feature ;
+.
+```
+
+This is noted here to avoid confusion as to the direction of the object/collection relation.
+====
+
 
 === New size properties
 
