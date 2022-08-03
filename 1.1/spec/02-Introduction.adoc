@@ -1,6 +1,6 @@
 == Introduction
 
-The W3C Semantic Web Activity is defining a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the RDF (Resource Description Framework) data model <<RDF>>, <<RDFS>>, the OWL Web Ontology Language <<OWL2>> and the SPARQL protocol and RDF query language <<SPARQL>>.
+The W3C Semantic Web Activity defines a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the RDF (Resource Description Framework) data model <<RDF>>, <<RDFS>>, the OWL Web Ontology Language <<OWL2>> and the SPARQL Protocol and RDF Query Language <<SPARQL>>.
 
 === RDF
 
@@ -10,9 +10,9 @@ RDF is, among other things, a data model built on edge-node "graphs." Each link 
 * Predicate (verb, property, attribute, relation, member, link, reference)
 * Object (value, end node, non-literal values can be used as a Subject)
 
-Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser. 
+Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise execute them) and be taken to more information about the resource, perhaps in a web browser. 
 
-Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialized purposes and in this specification are, for geometry data. The figure below shows a basic triple.
+Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialized purposes. Indeed, this specification extends the basic types to include geometry data. The figure below shows a basic triple.
 
 [#img-rdf]
 .An RDF Triple  
@@ -20,7 +20,7 @@ image::img/01.png[RDF Triple,600,400,align="center"]
 
 Note that the same node may be a subject in some triples, and an object in others.
 
-Almost all data can be presented or represented in RDF. In particular, it is an easy match to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <<ISO19109>>, and for the relational model as well (table primary key, column, value).
+Almost all data can be presented or represented in RDF. In particular, there are similarities to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <<ISO19109>>, and to the relational model as well (table primary key, column, value).
 
 === SPARQL
 
@@ -36,15 +36,15 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 
 SPARQL queries work on RDF representations of data by finding patterns that match templates in the query, in effect finding information graphs in the RDF data based on the templates and filters (constraints on nodes and edges) expressed in the query. This query template is represented in the SPARQL query by a set of parameterized “query variables” appearing in a sequence of RDF triples and filters. If the query processor finds a set of triples in the data (converted to an RDF graph in some predetermined standard manner) then the values that the “query variables” take on in those triples become a solution to the query request. The values of the variables are returned in the query result in a format based on the “SELECT” clause of the query (similar to SQL).
 
-In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. The SPARQL specification <<SPARQL>> in section 17.6footnote:[https://www.w3.org/TR/sparql11-query/#extensionFunctions] describes the mechanism for invocation of such a filter function.
+In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. Section 17.6footnote:[https://www.w3.org/TR/sparql11-query/#extensionFunctions] of the SPARQL specification <<SPARQL>> describes the mechanism for invocation of such a filter function.
 
 The OGC GeoSPARQL standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF, and it defines extensions to the SPARQL query language for processing geospatial data.
 
-GeoSPARQL does not provide support for spatiotemporal data. Predicates for temporal relations may be used from the OWL Time ontology <<TIME>>, but query extension functions for spatiotemporal operations are not present in the GeoSPARQL standard.
+GeoSPARQL does not provide support for spatiotemporal data. Predicates for temporal relations may be used from the OWL Time Ontology <<TIME>>, but query extension functions for spatiotemporal operations are not present in the GeoSPARQL standard.
 
 === GeoSPARQL Standard structure
 
-The GeoSPARQL standard comprises multiple parts, or _profile resources_. The comprehensive listing of them is given not here but in the standard's _profile definition_, see http://www.opengis.net/def/geosparql. Here is an overview of the major parts:
+The GeoSPARQL standard comprises multiple parts, or _profile resources_. The comprehensive listing of them is given in the standard's _profile definition_, see http://www.opengis.net/def/geosparql. An overview of the major parts is provided below:
 
 1. _profile definition_
 ** http://www.opengis.net/def/geosparql
@@ -67,13 +67,13 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** presented as a <<SKOS>> taxonomy
 5. Simple Features vocabulary
 ** http://www.opengis.net/ont/sf
-** derived from Simple Features Access <<OGCSFACA>> <<ISO19125-1>>'s class model
+** derived from the class model defined in Simple Features Access <<OGCSFACA>> <<ISO19125-1>>
 ** presented as an OWL <<OWL>> ontology
 6. SPARQL <<SPARQL>> extension functions
 ** defined within this specification document
 7. RIF <<RIFCORE>> rules
 ** http://www.opengis.net/def/geosparql/rifrules
-** templated within the specification document
+** templated within this specification document
 ** also delivered as a RIF document
 8. RDF data validator
 ** http://www.opengis.net/def/geosparql/validator
