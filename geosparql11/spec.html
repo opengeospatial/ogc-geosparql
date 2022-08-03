@@ -854,9 +854,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>a Simple Features geometry types vocabulary</p>
 </li>
 <li>
-<p>a set of RIF rules, and</p>
-</li>
-<li>
 <p>SHACL shapes for RDF data validation</p>
 </li>
 </ul>
@@ -1116,10 +1113,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Profile definition</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/def/geosparql" class="bare">http://www.opengis.net/def/geosparql</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">GeoSPARQL Rules in RIF</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/def/geosparql-rifrules" class="bare">http://www.opengis.net/def/geosparql-rifrules</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">RDF validation file</p></td>
@@ -1579,22 +1572,6 @@ SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Prot
 <ul>
 <li>
 <p>defined within this specification document</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>RIF <a href="#RIFCORE">[RIFCORE]</a> rules</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/def/geosparql/rifrules" class="bare">http://www.opengis.net/def/geosparql/rifrules</a></p>
-</li>
-<li>
-<p>templated within the specification document</p>
-</li>
-<li>
-<p>also delivered as a RIF document</p>
 </li>
 </ul>
 </div>
@@ -5498,52 +5475,43 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <p>This clause establishes the <em>Query Rewrite Extension</em> parameterized Requirements class with base IRI <code>/req/query-rewrite-extension</code>, which has a single corresponding conformance class <em>Query Rewrite Extension</em>, with IRI <code>/conf/query-rewrite-extension</code>. These Requirements define a set of RIF rules <a href="#RIF">[RIF]</a> that use topological extension functions defined in Clause 9 to establish the existence of direct topological predicates defined in Clause 7. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.</p>
 </div>
 <div class="paragraph">
-<p>The following rule specified using the RIF Core Dialect <a href="#RIFCORE">[RIFCORE]</a> is used as a template to describe rules in the remainder of this clause. <a href="http://www.opengis.net/def/relation"><code>ogc:relation</code></a> is used as a placeholder for the spatial relation IRIs defined in Clause 7, and <a href="http://www.opengis.net/def/function"><code>ogc:function</code></a> is used as a placeholder for the spatial functions defined in <a href="#geometry_extension">Clause 9</a>.</p>
+<p>The following rule specified using the RIF Core Dialect <a href="#RIFCORE">[RIFCORE]</a> and shown in <em>Presentation Syntax</em> is used as a template to describe rules in the remainder of this clause. <code>ogc:relation</code> is used as a placeholder for the spatial relation IRIs defined in Clause 7, and <code>ogc:function</code> is used as a placeholder for the spatial functions defined in <a href="#geometry_extension">Clause 9</a>. <code>ogc:asGeomLiteral</code> is used to indicate one of the properties that link <code>geo:Geometry</code> instances to serialisations, such as <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> or <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a>. The variables <code>?so1</code> &amp; <code>?so2</code> represent <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> instances (either <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances), <code>?g1</code> &amp; <code>?g2</code> <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances only and <code>?g1Serial</code> &amp; <code>?g2Serial</code> represent <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instance serializations, e.g. <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> etc. literals.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-rif" data-lang="rif">Forall ?f1 ?f2 ?g1 ?g2 ?g1Serial ?g2Serial
-    (?f1[ogc:relation-&gt;?f2] :-
-        Or(
-            And
-                # feature – feature rule
-                (?f1[geo:hasDefaultGeometry-&gt;?g1]
-                 ?f2[geo:hasDefaultGeometry-&gt;?g2]
-                 ?g1[ogc:asGeomLiteral-&gt;?g1Serial]
-                 ?g2[ogc:asGeomLiteral-&gt;?g2Serial]
-                 External(ogc:function (?g1Serial,?g2Serial)))
-            And
-                # feature – geometry rule
-                (?f1[geo:hasDefaultGeometry-&gt;?g1]
-                 ?g1[ogc:asGeomLiteral-&gt;?g1Serial]
-                 ?f2[ogc:asGeomLiteral-&gt;?g2Serial]
-                 External(ogc:function (?g1Serial,?g2Serial)))
-            And
-                # geometry - feature rule
-                (?f2[geo:hasDefaultGeometry-&gt;?g2]
-                 ?f1[ogc:asGeomLiteral-&gt;?g1Serial]
-                 ?g2[ogc:asGeomLiteral-&gt;?g2Serial]
-                 External(ogc:function (?g1Serial,?g2Serial)))
-            And
-                # geometry - geometry rule
-                (?f1[ogc:asGeomLiteral-&gt;?g1Serial]
-                 ?f2[ogc:asGeomLiteral-&gt;?g2Serial]
-                 External(ogc:function (?g1Serial,?g2Serial)))
+<pre class="highlight"><code class="language-rif" data-lang="rif">Forall ?so1 ?so2 ?g1 ?g2 ?g1Serial ?g2Serial (
+    ?so1[ogc:relation-&gt;?so2] :- Or (
+        And (
+            # feature - feature rule
+            ?so1[geo:hasDefaultGeometry-&gt;?g1]
+                ?so2[geo:hasDefaultGeometry-&gt;?g2]
+                ?g1[ogc:asGeomLiteral-&gt;?g1Serial]
+                ?g2[ogc:asGeomLiteral-&gt;?g2Serial]
+                External(ogc:function(?g1Serial, ?g2Serial))
+        )
+        And (
+            # feature - geometry rule
+            ?so1[geo:hasDefaultGeometry-&gt;?g1]
+                ?g1[ogc:asGeomLiteral-&gt;?g1Serial]
+                ?so2[ogc:asGeomLiteral-&gt;?g2Serial]
+                External(ogc:function(?g1Serial, ?g2Serial))
+        )
+        And (
+            # geometry - feature rule
+            ?so1[ogc:asGeomLiteral-&gt;?g1Serial]
+                ?so2[geo:hasDefaultGeometry-&gt;?g2]
+                ?g2[ogc:asGeomLiteral-&gt;?g2Serial]
+                External(ogc:function(?g1Serial, ?g2Serial))
+        )
+        And (
+            # geometry - geometry rule
+            ?so1[ogc:asGeomLiteral-&gt;?g1Serial]
+                ?so2[ogc:asGeomLiteral-&gt;?g2Serial]
+                External(ogc:function(?g1Serial, ?g2Serial))
+        )
     )
 )</code></pre>
 </div>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Note</div>
-</td>
-<td class="content">
-The GeoSPARQL 1.1 Standard contains a RIF rules artefact expanded for all function generated from this template and Python software for re-issuing the expanded artefact. See <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.
-</td>
-</tr>
-</table>
 </div>
 <div class="sect2">
 <h3 id="_parameters_5"><a class="anchor" href="#_parameters_5"></a>11.1. Parameters</h3>
@@ -12432,7 +12400,7 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-08-03 03:38:22 UTC
+Last updated 2022-08-03 03:50:39 UTC
 </div>
 </div>
 </body>
