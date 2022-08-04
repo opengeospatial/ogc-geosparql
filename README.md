@@ -35,7 +35,7 @@ GeoSPARQL 1.0 was published in 2012. Since then the standard has seen considerab
 
 ### Process
 The primary set of tasks for the SWG is [the set of change requests for GeoSPARQL in the OGC Issue Tracker](http://ogc.standardstracker.org/requestlist.cgi?component=11-052r4&list_id=1094&product=OGC). All issues reported in the OGC issue tracker should have duplicates in this repository and should be labelled 'change request'.
-Not all change requests will be acted upon immediately. At least two updated versions of GeoSPARQL are expected to be released. A first set of change requests will be handled for GeoSPARQL 1.1. This set consists of changes that should only have a minor impact on existing implementations of the standard. More comprehensive changes will be made in later stages, resulting in additional releases. See the [milestones](milestones) for an overview of issues by iteration. 
+Not all change requests will be acted upon immediately. At least two updated versions of GeoSPARQL are expected to be released. A first set of change requests will be handled for GeoSPARQL 1.1. This set consists of changes that should only have a minor impact on existing implementations of the standard. More comprehensive changes will be made in later stages, resulting in additional releases. See the [milestones](https://github.com/opengeospatial/ogc-geosparql/milestones) for an overview of issues by iteration. 
 
 ## Working documents
 An index of the working artefacts can be found <a href="https://opengeospatial.github.io/ogc-geosparql/">here</a>. These are built automatically as updates occur. 
