@@ -10,11 +10,9 @@ PREFIX conf11qre: <http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-
 PREFIX confs10: <http://www.opengis.net/spec/geosparql/1.0/conf/>
 PREFIX confs11: <http://www.opengis.net/spec/geosparql/1.1/conf/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX prov1: <http://www.w3.org/ns/prov-o/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX sdo: <https://schema.org/>
-PREFIX sd: <http://www.w3.org/ns/sparql-service-description#> 
 PREFIX reqs10: <http://www.opengis.net/spec/geosparql/1.0/req/>
 PREFIX reqs10core: <http://www.opengis.net/spec/geosparql/1.0/req/core/>
 PREFIX reqs10gtx: <http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/>
@@ -24,237 +22,29 @@ PREFIX reqs10ree: <http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment
 PREFIX reqs10tve: <http://www.opengis.net/spec/geosparql/1.0/req/topology-extension/>
 PREFIX reqs11core: <http://www.opengis.net/spec/geosparql/1.1/req/core/>
 PREFIX reqs11gx: <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX sdo: <https://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX spec: <http://www.opengis.net/def/spec-element/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-
-<http://www.opengis.net/def/geosparql/reqs> rdf:type skos:ConceptScheme ;
-                                             dcterms:created "2021-06-28"^^xsd:date ;
-                                             dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
-                                             dcterms:modified "2022-06-16"^^xsd:date ;
-                                             rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
-                                             skos:definition "A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification"@en ;
-                                             dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
-                                             dcterms:publisher [
-                                                a sdo:Organization ;
-                                                sdo:name "Open Geospatial Consortium" ;
-                                                sdo:url "https://www.ogc.org"^^xsd:anyURI ;
-                                             ] ;                                             
-	                                         dcterms:rights "(c) 2022 Open Geospatial Consortium" ;
-                                             skos:prefLabel "GeoSPARQL 1.1 Requirements and Conformance Class Register"@en ;
-                                             owl:versionInfo "OGC GeoSPARQL 1.1" ;
-                                             owl:versionIRI <http://www.opengis.net/def/geosparql/reqs/1.1> .
-
-
-confs10:core
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    skos:member
-        conf10core:sparql-protocol ,
-        conf10core:spatial-object-class ,
-        conf10core:feature-class ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Core"@en ;
-.
-
-confs11:core
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs10:core ;        
-    skos:member          
-        conf11core:feature-collection-class ,
-        conf11core:sparql-protocol ,
-        conf11core:spatial-object-class ,
-        conf11core:spatial-object-collection-class ,
-        conf11core:spatial-object-properties ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Core"@en ;
-.
-
-confs10:topology-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs10:core ;
-    skos:member
-        conf10gtx:eh-query-functions ,
-        conf10gtx:rcc8-query-functions ,
-        conf10gtx:relate-query-function ,
-        conf10gtx:sf-query-functions ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Topology Extension"@en ;
-.
-
-confs11:topology-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires 
-        confs11:core ,
-        confs10:topology-extension ;          
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Topology Extension"@en ;
-.
-
-confs10:geometry-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs10:core ;
-    skos:member
-        conf10gx:feature-properties ,
-        conf10gx:geometry-as-gml-literal ,
-        conf10gx:geometry-as-wkt-literal ,
-        conf10gx:geometry-properties ,
-        conf10gx:gml-literal ,
-        conf10gx:gml-literal-empty ,
-        conf10gx:gml-profile ,
-        conf10gx:query-functions ,
-        conf10gx:srid-function ,
-        conf10gx:wkt-axis-order ,
-        conf10gx:wkt-literal ,
-        conf10gx:wkt-literal-default-srs ,
-        conf10gx:wkt-literal-empty ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Extension"@en ;
-.
-
-confs11:geometry-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires 
-        confs11:core ,
-        confs10:geometry-extension ;
-    skos:member
-        conf11gx:geojson-literal ,
-        conf11gx:geojson-literal-empty ,
-        conf11gx:geojson-literal-srs ,
-        conf11gx:geometry-as-geojson-literal ,
-        conf11gx:geometry-as-kml-literal ,
-        conf11gx:geometry-properties ,
-        conf11gx:kml-literal ,
-        conf11gx:kml-literal-empty ,
-        conf11gx:kml-literal-srs ,
-        conf11gx:query-functions ,
-        conf11gx:query-functions-non-sf ,
-        conf11gx:sa-functions ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension"@en ;
-.
-
-confs11:geometry-extension-dggs
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs11:core ;
-    skos:member
-        conf10gx:geometry-class ,
-        conf10gx:query-functions ,
-        conf10gx:srid-function ,        
-        conf11gx:dggs-literal ,
-        conf11gx:dggs-literal-empty ,
-        conf11gx:dggs-literal-srs ,
-        conf11gx:feature-properties ,
-        conf11gx:query-functions ,
-        conf11gx:query-functions-non-sf ,
-        conf11gx:sa-functions ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension - DGGS"@en ;
-.
-
-confs10:geometry-topology-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires
-        confs10:geometry-extension ,
-        confs10:topology-extension ;
-    skos:member
-        conf10gtx:eh-query-functions ,
-        conf10gtx:rcc8-query-functions ,
-        conf10gtx:relate-query-function ,
-        conf10gtx:sf-query-functions ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Topology Extension"@en ;
-.
-
-confs11:geometry-topology-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires
-        confs11:geometry-extension ,
-        confs11:topology-extension ,
-        confs10:geometry-topology-extension ;       
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Topology Extension"@en ;
-.
-
-confs10:query-rewrite-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs10:geometry-topology-extension ;
-    skos:member
-        conf10qre:eh-query-rewrite ,
-        conf10qre:rcc8-query-rewrite ,
-        conf10qre:sf-query-rewrite ;
-    skos:notation "" ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Query Rewrite Extension"@en ;
-.
-
-conf11qre:query-rewrite-extension
-    a 
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires 
-        confs11:geometry-topology-extension ,
-        confs10:query-rewrite-extension ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Query Rewrite Extension"@en ;
-.
-
-confs10:rdfs-entailment-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;
-    dcterms:requires confs10:geometry-topology-extension ;
-    skos:member
-        conf10ree:bgp-rdfs-ent ,
-        conf10ree:gml-geometry-types ,
-        conf10ree:wkt-geometry-types ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: RDFS Entailment Extension"@en ;
-.
-
-confs11:rdfs-entailment-extension
-    a
-        spec:ConformanceClass ,
-        skos:Collection, sd:Feature ;      
-    dcterms:requires 
-        confs11:geometry-topology-extension ,
-        confs10:rdfs-entailment-extension ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: RDFS Entailment Extension"@en ;
-.
-
-conf10ree:bgp-rdfs-ent
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10ree:bgp-rdfs-ent ;
-    skos:definition "Verify that a set of SPARQL queries involving entailed RDF triples returns the correct result for a test dataset using the specified serialization, version and relation_family"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: BGP RDFS Entailment"@en ;
-.
-
-conf10ree:gml-geometry-types
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10ree:gml-geometry-types ;
-    skos:definition "Verify that a set of SPARQL queries involving GML Geometry types returns the correct result for a test dataset using the specified version of GML"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: GML Geometry Types"@en ;
-.
-
-conf10ree:wkt-geometry-types
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10ree:wkt-geometry-types ;
-    skos:definition "Verify that a set of SPARQL queries involving WKT Geometry types returns the correct result for a test dataset using the specified version of Simple Features"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: WKT Geometry Types"@en ;
+<http://www.opengis.net/def/geosparql/reqs>
+    a skos:ConceptScheme ;
+    dcterms:created "2021-06-28"^^xsd:date ;
+    dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
+    dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+    dcterms:modified "2022-06-16"^^xsd:date ;
+    dcterms:publisher [
+            a sdo:Organization ;
+            sdo:name "Open Geospatial Consortium" ;
+            sdo:url "https://www.ogc.org"^^xsd:anyURI
+        ] ;
+    dcterms:rights "(c) 2022 Open Geospatial Consortium" ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    owl:versionIRI <http://www.opengis.net/def/geosparql/reqs/1.1> ;
+    owl:versionInfo "OGC GeoSPARQL 1.1" ;
+    skos:definition "A vocabulary of the requirements and conformance classes in the GeoSPARQL 1.1 specification"@en ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements and Conformance Class Register"@en ;
 .
 
 conf10tve:eh-spatial-relations
@@ -359,6 +149,26 @@ conf11core:geometry-collection-class
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Geometry Collection Class"@en ;
 .
 
+confs11:geometry-extension-dggs
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs11:core ;
+    skos:member
+        conf10gx:geometry-class ,
+        conf10gx:query-functions ,
+        conf10gx:srid-function ,
+        conf11gx:dggs-literal ,
+        conf11gx:dggs-literal-empty ,
+        conf11gx:dggs-literal-srs ,
+        conf11gx:feature-properties ,
+        conf11gx:query-functions ,
+        conf11gx:query-functions-non-sf ,
+        conf11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension - DGGS"@en ;
+.
+
 conf11gx:geometry-as-dggs-function
     a spec:ConformanceTest ;
     spec:testPurpose "check conformance with this requirement"@en ;
@@ -366,6 +176,15 @@ conf11gx:geometry-as-dggs-function
     rdfs:seeAlso reqs11gx:geometry-as-dggs-function ;
     skos:definition "Verify that a set of SPARQL queries involving the geof:asDGGS function returns the correct result for a test dataset when using the specified serialization and version"@en ;
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: asDGGS Function"@en ;
+.
+
+conf11gx:geometry-as-dggs-literal
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement" ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs11gx:geometry-as-dggs-literal ;
+    skos:definition "Verify that queries involving the geo:asDGGS property return the correct result for a test dataset"@en ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Geometry asDGGS Literal"@en ;
 .
 
 conf11gx:geometry-as-geojson-function
@@ -420,6 +239,28 @@ conf11gx:query-functions-non-sf-dggs
     rdfs:seeAlso reqs11gx:query-functions-non-sf-dggs ;
     skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries and geof:projectTo for DGGS geometry literals"@en ;
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions, non Simple Features, DGGS"@en ;
+.
+
+conf11qre:query-rewrite-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:query-rewrite-extension ,
+        confs11:geometry-topology-extension ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Query Rewrite Extension"@en ;
+.
+
+confs11:rdfs-entailment-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:rdfs-entailment-extension ,
+        confs11:geometry-topology-extension ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: RDFS Entailment Extension"@en ;
 .
 
 conf10core:feature-class
@@ -512,24 +353,6 @@ conf10gx:gml-profile
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: GML Profile"@en ;
 .
 
-conf10gx:query-functions
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10gx:query-functions ;
-    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference,geof:symDifference, geof:envelope and geof:boundary"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: Query Functions"@en ;
-.
-
-conf10gx:srid-function
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10gx:srid-function ;
-    skos:definition "Verify that a SPARQL query involving the geof:getSRID function returns the correct result for a test dataset when using the specified serialization and version"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SRID Function"@en ;
-.
-
 conf10gx:wkt-axis-order
     a spec:ConformanceTest ;
     spec:testPurpose "check conformance with this requirement"@en ;
@@ -566,6 +389,87 @@ conf10gx:wkt-literal-empty
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: WKT Literal Empty"@en ;
 .
 
+confs10:query-rewrite-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs10:geometry-topology-extension ;
+    skos:member
+        conf10qre:eh-query-rewrite ,
+        conf10qre:rcc8-query-rewrite ,
+        conf10qre:sf-query-rewrite ;
+    skos:notation "" ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Query Rewrite Extension"@en ;
+.
+
+conf10qre:eh-query-rewrite
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10qre:eh-query-rewrite ;
+    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: EH Query Rewrite"@en ;
+.
+
+conf10qre:rcc8-query-rewrite
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10qre:rcc8-query-rewrite ;
+    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: RCC8 Query Rewrite"@en ;
+.
+
+conf10qre:sf-query-rewrite
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10qre:sf-query-rewrite ;
+    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains and geor:sfOverlaps"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SF Query Rewrite"@en ;
+.
+
+confs10:rdfs-entailment-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs10:geometry-topology-extension ;
+    skos:member
+        conf10ree:bgp-rdfs-ent ,
+        conf10ree:gml-geometry-types ,
+        conf10ree:wkt-geometry-types ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: RDFS Entailment Extension"@en ;
+.
+
+conf10ree:bgp-rdfs-ent
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10ree:bgp-rdfs-ent ;
+    skos:definition "Verify that a set of SPARQL queries involving entailed RDF triples returns the correct result for a test dataset using the specified serialization, version and relation_family"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: BGP RDFS Entailment"@en ;
+.
+
+conf10ree:gml-geometry-types
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10ree:gml-geometry-types ;
+    skos:definition "Verify that a set of SPARQL queries involving GML Geometry types returns the correct result for a test dataset using the specified version of GML"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: GML Geometry Types"@en ;
+.
+
+conf10ree:wkt-geometry-types
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10ree:wkt-geometry-types ;
+    skos:definition "Verify that a set of SPARQL queries involving WKT Geometry types returns the correct result for a test dataset using the specified version of Simple Features"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: WKT Geometry Types"@en ;
+.
+
 conf11core:feature-collection-class
     a spec:ConformanceTest ;
     spec:testPurpose "check conformance with this requirement"@en ;
@@ -599,6 +503,30 @@ conf11core:spatial-object-properties
     rdfs:seeAlso reqs11core:spatial-object-properties ;
     skos:definition "Verify that queries involving these properties return the correct result for a test dataset"@en ;
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Object Properties"@en ;
+.
+
+confs11:geometry-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:geometry-extension ,
+        confs11:core ;
+    skos:member
+        conf11gx:geojson-literal ,
+        conf11gx:geojson-literal-empty ,
+        conf11gx:geojson-literal-srs ,
+        conf11gx:geometry-as-geojson-literal ,
+        conf11gx:geometry-as-kml-literal ,
+        conf11gx:geometry-properties ,
+        conf11gx:kml-literal ,
+        conf11gx:kml-literal-empty ,
+        conf11gx:kml-literal-srs ,
+        conf11gx:query-functions ,
+        conf11gx:query-functions-non-sf ,
+        conf11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension"@en ;
 .
 
 conf11gx:dggs-literal
@@ -655,15 +583,6 @@ conf11gx:geojson-literal-srs
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: GeoJSON Literal Default SRS"@en ;
 .
 
-conf11gx:geometry-as-dggs-literal
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement" ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs11gx:geometry-as-dggs-literal ;
-    skos:definition "Verify that queries involving the geo:asDGGS property return the correct result for a test dataset"@en ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Geometry asDGGS Literal"@en ;
-.
-
 conf11gx:geometry-as-geojson-literal
     a spec:ConformanceTest ;
     spec:testPurpose "check conformance with this requirement"@en ;
@@ -718,31 +637,15 @@ conf11gx:kml-literal-srs
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: KML Literal Default SRS"@en ;
 .
 
-conf11gx:query-functions
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs11gx:query-functions ;
-    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:boundary geof:buffer, geof:convexHull, geof:coordinateDimension, geof:difference, geof:dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform and geof:union  for non-DGGS geometry literals"@en ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions"@en ;
-.
-
-conf11gx:query-functions-non-sf
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs11gx:query-functions-non-sf ;
-    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries and geof:projectTo for non-DGGS geometry literals" ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions, non Simple Features"@en ;
-.
-
-conf11gx:sa-functions
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement" ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs11gx:sa-functions ;
-    skos:definition "Verify that queries involving these functions return the correct result for a test dataset"@en ;
-    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Aggregate Functions"@en ;
+confs11:topology-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:topology-extension ,
+        confs11:core ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Topology Extension"@en ;
 .
 
 reqs11core:feature-collection-class
@@ -808,6 +711,47 @@ conf10core:sparql-protocol
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SPARQL Protocol"@en ;
 .
 
+confs10:geometry-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs10:core ;
+    skos:member
+        conf10gx:feature-properties ,
+        conf10gx:geometry-as-gml-literal ,
+        conf10gx:geometry-as-wkt-literal ,
+        conf10gx:geometry-properties ,
+        conf10gx:gml-literal ,
+        conf10gx:gml-literal-empty ,
+        conf10gx:gml-profile ,
+        conf10gx:query-functions ,
+        conf10gx:srid-function ,
+        conf10gx:wkt-axis-order ,
+        conf10gx:wkt-literal ,
+        conf10gx:wkt-literal-default-srs ,
+        conf10gx:wkt-literal-empty ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Extension"@en ;
+.
+
+conf10gx:query-functions
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10gx:query-functions ;
+    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference,geof:symDifference, geof:envelope and geof:boundary"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: Query Functions"@en ;
+.
+
+conf10gx:srid-function
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs10gx:srid-function ;
+    skos:definition "Verify that a SPARQL query involving the geof:getSRID function returns the correct result for a test dataset when using the specified serialization and version"@en ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SRID Function"@en ;
+.
+
 conf10gtx:eh-query-functions
     a spec:ConformanceTest ;
     spec:testPurpose "check conformance with this requirement"@en ;
@@ -844,31 +788,18 @@ conf10gtx:sf-query-functions
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SF Query Functions"@en ;
 .
 
-conf10qre:eh-query-rewrite
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10qre:eh-query-rewrite ;
-    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: EH Query Rewrite"@en ;
-.
-
-conf10qre:rcc8-query-rewrite
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10qre:rcc8-query-rewrite ;
-    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp, geor:rcc8ntppi"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: RCC8 Query Rewrite"@en ;
-.
-
-conf10qre:sf-query-rewrite
-    a spec:ConformanceTest ;
-    spec:testPurpose "check conformance with this requirement"@en ;
-    spec:testType spec:Capabilities ;
-    rdfs:seeAlso reqs10qre:sf-query-rewrite ;
-    skos:definition "Verify that queries involving the following query transformation rules return the correct result for a test dataset when using the specified serialization and version: geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains and geor:sfOverlaps"@en ;
-    skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SF Query Rewrite"@en ;
+confs10:topology-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs10:core ;
+    skos:member
+        conf10gtx:eh-query-functions ,
+        conf10gtx:rcc8-query-functions ,
+        conf10gtx:relate-query-function ,
+        conf10gtx:sf-query-functions ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Topology Extension"@en ;
 .
 
 reqs10core:feature-class
@@ -1022,6 +953,45 @@ reqs10tve:sf-spatial-relations
     skos:prefLabel "GeoSPARQL 1.0 Requirement: SF Spatial Relations"@en ;
 .
 
+conf11gx:query-functions
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs11gx:query-functions ;
+    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:boundary geof:buffer, geof:convexHull, geof:coordinateDimension, geof:difference, geof:dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform and geof:union  for non-DGGS geometry literals"@en ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions"@en ;
+.
+
+conf11gx:query-functions-non-sf
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement"@en ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs11gx:query-functions-non-sf ;
+    skos:definition "Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries and geof:projectTo for non-DGGS geometry literals" ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions, non Simple Features"@en ;
+.
+
+conf11gx:sa-functions
+    a spec:ConformanceTest ;
+    spec:testPurpose "check conformance with this requirement" ;
+    spec:testType spec:Capabilities ;
+    rdfs:seeAlso reqs11gx:sa-functions ;
+    skos:definition "Verify that queries involving these functions return the correct result for a test dataset"@en ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Spatial Aggregate Functions"@en ;
+.
+
+confs11:geometry-topology-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:geometry-topology-extension ,
+        confs11:geometry-extension ,
+        confs11:topology-extension ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Topology Extension"@en ;
+.
+
 reqs11core:sparql-protocol
     a spec:Requirement ;
     skos:definition "Implementations shall support the SPARQL Query Language for RDF [SPARQL], the SPARQL Protocol [SPARQLPROT] and the SPARQL Query Results XML [SPARQLRESX] and JSON [SPARQLRESJ] Formats"@en ;
@@ -1137,6 +1107,34 @@ reqs11gx:query-functions-non-sf-dggs
     prov1:wasDerivedFrom reqs10gx:query-functions ;
 .
 
+confs10:core
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    skos:member
+        conf10core:feature-class ,
+        conf10core:sparql-protocol ,
+        conf10core:spatial-object-class ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Core"@en ;
+.
+
+confs10:geometry-topology-extension
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        confs10:geometry-extension ,
+        confs10:topology-extension ;
+    skos:member
+        conf10gtx:eh-query-functions ,
+        conf10gtx:rcc8-query-functions ,
+        conf10gtx:relate-query-function ,
+        conf10gtx:sf-query-functions ;
+    skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Geometry Topology Extension"@en ;
+.
+
 reqs10core:sparql-protocol
     a spec:Requirement ;
     skos:definition "Implementations shall support the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and the SPARQL Query Results XML Format"@en ;
@@ -1161,9 +1159,23 @@ reqs10gx:gml-literal
     skos:prefLabel "GeoSPARQL 1.0 Requirement: GML Literal"@en ;
 .
 
+confs11:core
+    a
+        spec:ConformanceClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs10:core ;
+    skos:member
+        conf11core:feature-collection-class ,
+        conf11core:sparql-protocol ,
+        conf11core:spatial-object-class ,
+        conf11core:spatial-object-collection-class ,
+        conf11core:spatial-object-properties ;
+    skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Core"@en ;
+.
+
 reqs10gx:query-functions
     a spec:Requirement ;
     skos:definition "Implementations shall support geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference, geof:symDifference, geof:envelope and geof:boundary as SPARQL extension functions, consistent with the definitions of the corresponding functions (distance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary respectively) in Simple Features [ISO 19125-1]"@en ;
     skos:prefLabel "GeoSPARQL 1.0 Requirement: Query Functions"@en ;
 .
-
