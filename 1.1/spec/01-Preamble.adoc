@@ -7,7 +7,6 @@ The GeoSPARQL standard defines:
 * a set of SPARQL extension functions
 * a Functions & Rules vocabulary, derived from the ontology
 * a Simple Features geometry types vocabulary
-* a set of RIF rules, and
 * SHACL shapes for RDF data validation
 
 This document has the role of _specification_ and authoritatively defines many of the standard's elements, including the ontology classes and properties, SPARQL functions and function and rule vocabulary concepts. Complete descriptions of the standard's parts and their roles are given in the Introduction in the section <<GeoSPARQL Standard structure>>.
@@ -75,7 +74,7 @@ to
 |===
 
 === Major changes between versions 1.0 and 1.1
-Version 1.1 of GeoSPARQL was released approximately 9 years after version 1.0. It contains no breaking changes to 1.0, but does contain new features including: whole new profile resources, new ontology elements and new functions. The major changes are summarized in the tables below.
+Version 1.1 of GeoSPARQL was released approximately 9 years after version 1.0. It contains no breaking changes to 1.0, but does contain additions and clarifications. Profile resources, new ontology elements and new functions were added. The major changes are summarized in the tables below.
 
 The new profile resources are separate from this specification. The new _profile definition_ lists all the GeoSPARQL 1.1 resources.
 
@@ -83,9 +82,10 @@ The new profile resources are separate from this specification. The new _profile
 |New resource | Location
 
 |Profile definition | http://www.opengis.net/def/geosparql
-|GeoSPARQL Rules in RIF | http://www.opengis.net/def/geosparql-rifrules
 |RDF validation file | http://www.opengis.net/def/geosparql-shapes
 |===
+
+==== Ontology elements and functions
 
 These new ontology elements and new functions are normatively defined in this specification document.
 
@@ -122,6 +122,8 @@ These new ontology elements and new functions are normatively defined in this sp
 |asDGGS function | <<Function: geof:asDGGS>>
 2+|_**Non-topological Query Functions**_
 |area | <<Function: geof:area>>
+|boundingCircle | <<Function: geof:boundingCircle>>
+|concaveHull | <<Function: geof:concaveHull>>
 |coordinateDimension | <<Function: geof:coordinateDimension>>
 |dimension | <<Function: geof:dimension>>
 |geometryN | <<Function: geof:geometryN>>
@@ -134,6 +136,8 @@ These new ontology elements and new functions are normatively defined in this sp
 |maxX | <<Function: geof:maxX>>
 |maxY | <<Function: geof:maxY>>
 |maxZ | <<Function: geof:maxZ>>
+|metricArea | <<Function: geof:metricArea>>
+|metricDistance | <<Function: geof:metricDistance>>
 |minX | <<Function: geof:minX>>
 |minY | <<Function: geof:minY>>
 |minZ | <<Function: geof:minZ>>
@@ -145,8 +149,16 @@ These new ontology elements and new functions are normatively defined in this sp
 |aggBoundingCircle | <<Function: geof:aggBoundingCircle>>
 |aggCentroid | <<Function: geof:aggCentroid>>
 |aggConcaveHull | <<Function: geof:aggConcaveHull>>
+|aggConvexHull | <<Function: geof:aggConvexHull>>
 |aggUnion | <<Function: geof:aggUnion>>
 |===
+
+==== Clarifications
+
+* The terms <<spatial reference system, Spatial Reference System (SRS)>> and <<coordinate reference system, Coordinate Reference System (CRS)>> are no longer interchangeable. Spatial Reference System is now taken to be a broader category than Coordinate Reference System, and we have provided the definitions we are using for each, linked to from the terms above, in the <<Terms and definitions>> section.
+* Class definitions were updated to be more self-contained and easier to understand for people without a background in geoinformatics. They are no longer dependent on other standards' definitions, only informed by them.
+* A section was added on <<Recommendation for specification of units of measurement,the specification of units of measurement>>.
+* A section was added on the <<Influence of Coordinate Reference Systems on geometric computations>>.
 
 == v. Changes to the OGC® Abstract Specification
 The OGC® Abstract Specification does not require changes to accommodate this OGC® standard.

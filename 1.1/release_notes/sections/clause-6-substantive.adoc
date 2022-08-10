@@ -2,45 +2,61 @@
 == Description of Substantive Changes
 
 === Collection classes
+
 GeoSPARQL 1.1 adds three classes for collection types:
 
 * `SpatialObjectCollection`
 * `FeatureCollection`
 * `GeometryCollection`
 
-These classes allow the organization of spatial objects, features and geometries in collections and are added to support OGC APIs. 
+These classes allow the organization of spatial objects, features and geometries in collections and are added to support the sorts of data models used by systems such as OGC APIs. 
+
+[NOTE]
+====
+The collection class and the object class, such as `FeatureCollection` & `Feature` class, are related by the standard RDFS property `rdfs:member` whereby the collection class _has as a member_ the object.
+
+In RDF, an example of this for `FeatureCollection` / `Feature` may look like this:
+
+```
+ex:col-1
+    a geo:FeatureCollection ;
+    rdfs:member ex:feature-a ;
+.
+
+ex:feature-a
+    a geo:Feature ;
+.
+```
+
+This is noted here to avoid confusion as to the direction of the object/collection relation.
+====
+
 
 === New size properties
 
-GeoSPARQL 1.1. includes several new Spatial Object properties related to size for indicating spatial resolution, areas, and proportional relations (e.g. area overlaps): 
+GeoSPARQL 1.1. includes several new scalar Spatial Object properties related to size for indicating spatial resolution, areas, and proportional relations (e.g. area overlaps): 
 
 * `hasSize`
 * `hasLength`
+* `hasPerimeterLength`
 * `hasArea`
 * `hasVolume`
 * `hasSpatialResolution`
 
-=== Metric properties
-GeoSPARQL 1.1 adds several convenience Spatial Object properties for working with geometries in metres, eliminating the need to indicate units when working with metres.
-
-The properties are: 
-
-* `hasMetricSize`
-* `hasMetricLength`
-* `hasMetricPerimeterLength`
-* `hasMetricArea`
-* `hasMetricVolume`
-
-=== Perimeter properties
-GeoSPARQL 1.1 adds a Spatial Object property `hasPerimeterLength` (and its companion property `hasMetricPerimeterLength`) to indicate the length of the outer boundary of a Spatial Object. 
-
 Note that a property `hasLength` was already present in GeoSPARQL 1.0; `hasPerimeterLength` was added to distinguish between length (e.g. the length of a football field) and perimeter (i.e. the added lengths of all sides, in the case of a polygon) of a thing.
+
+These properties do not have tightly defined range values so that they may be used with any RDF measurement/metrology system although GeoSPARQL makes a recommendation to use https://www.qudt.org[QUDT] for measurements and units of measure. Annex C exemplifies these properties with QUDT.
+
+=== Metric properties
+
+GeoSPARQL 1.1 also adds convenience properties for working with scalar values in metres as datatype properties, not value/unit properties as per QUDT standard use. For each `has...` property in the section above, there is a `hasMetric...` property with a datatyle range specified to be in metres. For example `hasMetricArea` in m^2 for `hasArea`.
 
 === New Feature properties
 
 GeoSPARQL 1.1. includes two new properties `hasCentroid` and `hasBoundingBox`. These can be used to link a Feature with a point geometry corresponding with the centroid of its geometry, or with a simplified geometry-representation corresponding to the envelope of its geometry, respectively. The centroid is typically used to show location on a low-resolution image, and both centroid and bounding box are useful for indexing and discovery functions.
 
 === New geometry serializations
+
 GeoSPARQL 1.1 includes support for representing geometry data in RDF in several additional formats:
 
 * GeoJSON
@@ -70,6 +86,7 @@ GeoSPARQL 1.1 adds several new functions for performing spatial operations:
 * `area`
 
 === Functions for geometry collections
+
 GeoSPARQL 1.1 adds two functions for working with geometries in collections: 
 
 * `numGeometries` 
@@ -91,6 +108,7 @@ GeoSPARQL 1.1 defines a set of functions for performing spatial aggregations of 
 These functions support working with sets of geometries, e.g. to calculate the minimum bounding box or centroid of a set of geometries. 
 
 === Metric buffer and distance functions
+
 To accompany metric properties, GeoSPARQL 1.1 also adds several functions that assume metres. These functions can be used without unit argument, and were added to simplify implementation and use. 
 
 The functions are: 
