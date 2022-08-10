@@ -1,76 +1,77 @@
-@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix ent: <http://www.w3.org/ns/entailment/> .
-@prefix prof: <http://www.w3.org/ns/owl-profile/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix conf10core: <http://www.opengis.net/spec/geosparql/1.0/conf/core/> .
-@prefix conf11core: <http://www.opengis.net/spec/geosparql/1.1/conf/core/> .
-@prefix conf10gx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/> .
-@prefix conf11gx: <http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/> .
-@prefix conf10gtx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/> .
-@prefix conf11gtx: <http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/> .
-@prefix conf10qre: <http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/> .
-@prefix conf11qre: <http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/> .
-@prefix conf10ree: <http://www.opengis.net/spec/geosparql/1.0/conf/rdfs-entailment-extension/> .
-@prefix conf11ree: <http://www.opengis.net/spec/geosparql/1.1/conf/rdfs-entailment-extension/> .
-@prefix conf10tve: <http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/> .
-@prefix conf11tve: <http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/> .
-@prefix void: <http://rdfs.org/ns/void#> .
+PREFIX conf10core: <http://www.opengis.net/spec/geosparql/1.0/conf/core/>
+PREFIX conf10gtx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/>
+PREFIX conf10gx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/>
+PREFIX conf10qre: <http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/>
+PREFIX conf11core: <http://www.opengis.net/spec/geosparql/1.1/conf/core/>
+PREFIX conf11gx: <http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/>
+PREFIX ent: <http://www.w3.org/ns/entailment/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-<http://www.opengis.net/def/geosparql/servicedescconformanceclasses> a sd:Service, skos:ConceptScheme ;
+<http://www.opengis.net/def/geosparql/servicedescconformanceclasses>
+    a
+        skos:ConceptScheme ,
+        sd:Service ;
+    owl:versionIRI <http://www.opengis.net/def/geosparql/servicedescconformanceclasses/1.1> ;
+    owl:versionInfo "OGC GeoSPARQL 1.1" ;
     skos:prefLabel "GeoSPARQL 1.1 SPARQL Service Description: All Conformance Classes" ;
+    sd:defaultEntailmentRegime ent:RDFS ;
+    sd:feature
+        conf10core:feature-class ,
+        conf10core:spatial-object-class ,
+        conf10gx:feature-properties ,
+        conf10gx:geometry-as-gml-literal ,
+        conf10gx:geometry-as-wkt-literal ,
+        conf10gx:geometry-class ,
+        conf10gx:geometry-properties ,
+        conf10gx:gml-literal ,
+        conf10gx:gml-literal-empty ,
+        conf10gx:gml-profile ,
+        conf10gx:query-functions ,
+        conf10gx:srid-function ,
+        conf10gx:wkt-axis-order ,
+        conf10gx:wkt-literal ,
+        conf10gx:wkt-literal-default-srs ,
+        conf10gx:wkt-literal-empty ,
+        conf10gtx:eh-query-functions ,
+        conf10gtx:rcc8-query-functions ,
+        conf10gtx:relate-query-function ,
+        conf10gtx:sf-query-functions ,
+        conf10qre:eh-query-rewrite ,
+        conf10qre:rcc8-query-rewrite ,
+        conf10qre:sf-query-rewrite ,
+        conf11core:feature-collection-class ,
+        conf11core:sparql-protocol ,
+        conf11core:spatial-object-class ,
+        conf11core:spatial-object-collection-class ,
+        conf11core:spatial-object-properties ,
+        conf11gx:dggs-literal ,
+        conf11gx:dggs-literal-empty ,
+        conf11gx:dggs-literal-srs ,
+        conf11gx:feature-properties ,
+        conf11gx:geojson-literal ,
+        conf11gx:geojson-literal-empty ,
+        conf11gx:geojson-literal-srs ,
+        conf11gx:geometry-as-dggs-function ,
+        conf11gx:geometry-as-dggs-literal ,
+        conf11gx:geometry-as-geojson-function ,
+        conf11gx:geometry-as-geojson-literal ,
+        conf11gx:geometry-as-gml-function ,
+        conf11gx:geometry-as-kml-function ,
+        conf11gx:geometry-as-kml-literal ,
+        conf11gx:geometry-as-wkt-function ,
+        conf11gx:geometry-properties ,
+        conf11gx:kml-literal ,
+        conf11gx:kml-literal-empty ,
+        conf11gx:kml-literal-srs ,
+        conf11gx:query-functions ,
+        conf11gx:query-functions-dggs ,
+        conf11gx:query-functions-non-sf ,
+        conf11gx:query-functions-non-sf-dggs ,
+        conf11gx:sa-functions ;
+    sd:resultFormat
+        <http://www.w3.org/ns/formats/RDF_XML> ,
+        <http://www.w3.org/ns/formats/Turtle> ;
     sd:supportedLanguage sd:SPARQL11Query ;
-    sd:feature conf11core:feature-collection-class ;
-    sd:feature conf11core:spatial-object-class ;
-    sd:feature conf11core:sparql-protocol ;
-    sd:feature conf11core:spatial-object-collection-class ;
-    sd:feature conf11core:spatial-object-properties ;
-    sd:feature conf11gx:dggs-literal ;
-    sd:feature conf11gx:dggs-literal-empty ;
-    sd:feature conf11gx:dggs-literal-srs ;
-    sd:feature conf11gx:geometry-as-dggs-function ;
-    sd:feature conf11gx:feature-properties ;
-    sd:feature conf11gx:geometry-as-wkt-function ;
-    sd:feature conf11gx:geometry-as-gml-function ;
-    sd:feature conf11gx:geojson-literal ;
-    sd:feature conf11gx:geojson-literal-empty ;
-    sd:feature conf11gx:geojson-literal-srs ;
-    sd:feature conf11gx:geometry-as-geojson-function ;
-    sd:feature conf11gx:geometry-as-dggs-literal ;
-    sd:feature conf11gx:geometry-as-geojson-literal ;
-    sd:feature conf11gx:geometry-as-kml-literal ;
-    sd:feature conf11gx:geometry-properties ;
-    sd:feature conf11gx:kml-literal ;
-    sd:feature conf11gx:kml-literal-empty ;
-    sd:feature conf11gx:kml-literal-srs ;
-    sd:feature conf11gx:geometry-as-kml-function ;
-    sd:feature conf11gx:query-functions ;
-    sd:feature conf11gx:query-functions-non-sf ;
-    sd:feature conf11gx:sa-functions ;
-    sd:feature conf10core:feature-class ;
-    sd:feature conf10core:spatial-object-class ;
-    sd:feature conf10gx:geometry-class ;
-    sd:feature conf10gx:geometry-properties ;
-    sd:feature conf10gx:feature-properties ;
-    sd:feature conf10gx:geometry-as-gml-literal ;
-    sd:feature conf10gx:geometry-as-wkt-literal ;
-    sd:feature conf10gx:gml-literal ;
-    sd:feature conf10gx:gml-literal-empty ;
-    sd:feature conf10gx:gml-profile ;
-    sd:feature conf10gx:query-functions ;
-    sd:feature conf11gx:query-functions-dggs ;
-    sd:feature conf11gx:query-functions-non-sf-dggs ;
-    sd:feature conf10gx:srid-function ;
-    sd:feature conf10gx:wkt-axis-order ;
-    sd:feature conf10gx:wkt-literal ;
-    sd:feature conf10gx:wkt-literal-default-srs ;
-    sd:feature conf10gx:wkt-literal-empty ;
-    sd:feature conf10gtx:eh-query-functions ;
-    sd:feature conf10gtx:rcc8-query-functions ;
-    sd:feature conf10gtx:relate-query-function ;
-    sd:feature conf10gtx:sf-query-functions ;
-    sd:feature conf10qre:eh-query-rewrite ;
-    sd:feature conf10qre:rcc8-query-rewrite ;
-    sd:feature conf10qre:sf-query-rewrite ;
-    sd:resultFormat <http://www.w3.org/ns/formats/RDF_XML>, <http://www.w3.org/ns/formats/Turtle> ;
-    sd:defaultEntailmentRegime ent:RDFS .
+.
