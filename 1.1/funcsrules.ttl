@@ -911,7 +911,7 @@ funcs:distance_param2 a fno:Parameter ;
     skos:prefLabel "geom2"@en .
 
 funcs:distance_param3 a fno:Parameter ;
-    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:type xsd:anyURI  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
@@ -1636,7 +1636,7 @@ funcs:relate_param2 a fno:Parameter ;
 funcs:relate_param3 a fno:Parameter ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean ;
-    skos:prefLabel "geom2"@en .
+    skos:prefLabel "pattern-matrix"@en .
 
 funcs:relate_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
@@ -1873,7 +1873,7 @@ funcs:symDifference
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (funcs:symDifference_param1 ) ;
+    fno:expects (funcs:symDifference_param1 funcs:symDifference_param2 ) ;
     fno:returns (funcs:symDifference_output ) ; 
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -1886,7 +1886,12 @@ funcs:symDifference_param1 a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-funcs:sfWithin_output a fno:Output ;
+funcs:symDifference_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+funcs:symDifference_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
