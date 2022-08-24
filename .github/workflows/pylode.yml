@@ -41,18 +41,26 @@ jobs:
          pylode -i ../../1.0/sf_geometries.ttl -o sf_geometries.html -p vocpub
          python3 ../../convertjsonld.py sf_geometries.ttl sf_geometries.json
          # pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
+         echo "Generating documentation for GeoSPARQL 1.0 Service Description Extensions"
          pylode -i ../../1.0/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
+         echo "Generating documentation for GeoSPARQL 1.0 Service Description Conformance Classes"
          pylode -i ../../1.0/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
+         echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
          pylode -i ../../1.0/servicedescription_allfunctions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_allfunctions.ttl servicedescription_all_functions.json
          cd ../geosparql11/
          mkdir servicedescription
+         echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC HTML"
          asciidoctor --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
+         echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC PDF"
          asciidoctor-pdf --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
+         echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC HTML"
          asciidoctor --attribute docinfo=shared ../../1.1/release_notes/releasenotes.adoc -o releasenotes.html
-         #asciidoctor-pdf ../../1.1/release_notes/releasenotes.adoc -o releasenotes.pdf
+         echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC PDF"
+         asciidoctor-pdf --attribute docinfo=shared ../../1.1/release_notes/releasenotes.adoc -o releasenotes.pdf
+         echo "Copying over 1.1 RDF files"
          cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/reqs.ttl  ../../1.1/spec/citeme.bib .
          cp ../../1.1/servicedescription/servicedescription_all_functions.ttl ../../1.1/servicedescription/servicedescription_conformanceclasses.ttl ../../1.1/servicedescription/servicedescription_extensions.ttl .
          # ../../1.1/validation.ttl
@@ -72,10 +80,13 @@ jobs:
          pylode -i ../../1.1/reqs.ttl -o reqs.html -p vocpub
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
          #pylode -i ../../1.1/validation.ttl -o validation.html
+         echo "Generating documentation for GeoSPARQL 1.1 Service Description Extensions"
          pylode -i ../../1.1/servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
+         echo "Generating documentation for GeoSPARQL 1.1 Service Conformance Classes"
          pylode -i ../../1.1/servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
+         echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
          pylode -i ../../1.1/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
     - name: Deploy 🚀
