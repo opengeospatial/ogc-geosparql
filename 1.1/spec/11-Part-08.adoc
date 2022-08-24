@@ -16,7 +16,7 @@ Some of the properties defined in these vocabularies, such as DCAT2's https://ww
 
 === GeoSPARQL and Simple Features (SFA-CA)
 
-The GeoSPARQL Geometry Extension is largely based on the specification Simple Features Access - Common Architecture (SFA-CA) <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry, not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (lineair interpolations) between points. Within a single Geometry, these lines may not cross.
+The GeoSPARQL Geometry Extension is largely based on the specification Simple Features Access - Common Architecture (SFA-CA) <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry, not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
 
 Neither GeoSPARQL nor SFA-CA support full three dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
 
@@ -62,7 +62,7 @@ geo:Geometry
     skos:definition "A coherent set of direct positions in space. The positions 
                     are held within a Spatial Reference System (SRS)."@en ;
     skos:note "Geometry can be used as a representation of the shape, extent or 
-              location of a Feature and may exist as a self-contained entity."""@en ;
+              location of a Feature and may exist as a self-contained entity."@en ;
 .
 ```
 
@@ -325,7 +325,7 @@ geo:wktLiteral
 ```
 [#req_geometry_extension_wkt-literal]
 |===
-| *Req 15* All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclose in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
+| *Req 15* All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal`]
 |===
 
@@ -984,7 +984,7 @@ This function returns the minimum bounding box - a rectangle - of `geom`. Calcul
 ==== Function: geof:geometryN
 
 ```
-geof:geometryN (geom: ogc:geomLiteral): xsd:integer
+geof:geometryN (geom: ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
 ```
 
 Returns the nth geometry of `geom` if it is a GeometryCollection that is defined in a literal type (such as in the case of a sf:GeometryCollection) or `geom` if it is a Geometry. This function is not applicable to the type geo:GeometryCollection, as elements in geo:GeometryCollection are not guaranteed to be ordered.
