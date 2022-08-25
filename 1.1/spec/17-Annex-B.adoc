@@ -65,7 +65,8 @@ CellList (DGGS)
 CellList (DGGS) 
 5+| **Non-topological Query Functions**
 | *Function* | *Input Datatypes* | *Input Subtypes* | *Output Datatype* | *Output Subtype* 
-| <<Function: geof:area, area>> | 1x ogc:geomLiteral | Polygon | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
+| <<Function: geof:metricArea, metricArea>> | 1x ogc:geomLiteral | Polygon | http://www.w3.org/2001/XMLSchema#double[xsd:double] |
+| <<Function: geof:area, area>> | 1x ogc:geomLiteral | Polygon | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:boundary, boundary>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | LineString (not DGGS),
 
 OrderedCellList (DGGS) 
@@ -81,16 +82,19 @@ CellList (DGGS)
 | <<Function: geof:difference, difference>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | (Multi)Polygon (not DGGS),
 
 CellList (DGGS) 
-| <<Function: geof:dimension, dimension>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
+| <<Function: geof:dimension, dimension>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
+| <<Function: geof:metricDistance, metricDistance>> | 2x ogc:geomLiteral, 
+
+1x xsd:anyURI | 2x Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:distance, distance>> | 2x ogc:geomLiteral, 
 
-1x xsd:anyURI | 2x Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
+1x xsd:anyURI | 2x Geometry | http://www.w3.org/2000/01/rdf-schema#Resource[rdfs:Resource] | 
 | <<Function: geof:envelope, envelope>> | 1x ogc:geomLiteral, 
 
 1x xsd:anyURI | Geometry | ogc:geomLiteral | (Multi)Polygon (not DGGS),
 
 CellList (DGGS) 
-| <<Function: geof:geometryN, geometryN>> | 1x ogc:geomLiteral | GeometryCollection (not DGGS) | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
+| <<Function: geof:geometryN, geometryN>> | 1x ogc:geomLiteral | GeometryCollection (not DGGS) | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:geometryType, geometryType>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | 
 | <<Function: geof:getSRID, getSRID>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | 
 | <<Function: geof:intersection, intersection>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | Polygon (not DGGS),
@@ -100,8 +104,11 @@ CellList (DGGS)
 | <<Function: geof:isEmpty, isEmpty>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] | 
 | <<Function: geof:isMeasured, isMeasured>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] | 
 | <<Function: geof:isSimple, isSimple>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] | 
-| <<Function: geof:length, length>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
-| <<Function: geof:numGeometries, numGeometries>> | 1x ogc:geomLiteral | Geometry (not DGGS) | http://www.w3.org/2001/XMLSchema#double[xsd:double] | http://www.w3.org/2001/XMLSchema#double[xsd:double] 
+| <<Function: geof:metricLength, metricLength>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
+| <<Function: geof:length, length>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2000/01/rdf-schema#Resource[rdfs:Resource] |
+| <<Function: geof:numGeometries, numGeometries>> | 1x ogc:geomLiteral | Geometry (not DGGS) | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
+| <<Function: geof:metricPerimeter, metricPerimeter>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
+| <<Function: geof:perimeter, perimeter>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2000/01/rdf-schema#Resource[rdfs:Resource] |
 | <<Function: geof:spatialDimension, spatialDimension>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#integer[xsd:integer] | 
 | <<Function: geof:symDifference, symDifference>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | (Multi)Polygon (not DGGS),
 
@@ -141,37 +148,54 @@ Where the Simple Features Access function has the same name as the GeoSPARQL fun
 |===
 | GeoSPARQL Function | in 1.0 | in 1.1 | SFA
 
-| area | | x | 
-| | | | asBinary
-| asWKT* | x | x | asText
-| boundary | x | x | x
-| buffer | x | x | x
-| convexHull | x | x | x
-| coordinateDimension | | x | x
-| difference | x | x | x
-| dimension | | x | x
-| distance | x | x | x
-| envelope | x | x | x
-| geometryN | | x | 
-| geometryType | | x | x
+| metricArea | | x | Area
+| area | | x | Area
+| | | | AsBinary
+| asWKT* | x | x | AsText
+| boundary | x | x | Boundary
+| buffer | x | x | Buffer
+| | | | Centroid
+| convexHull | x | x | ConvexHull
+| coordinateDimension | | x | 
+| difference | x | x | Difference
+| dimension | | x | Dimension
+| metricDistance | | x | Distance
+| distance | x | x | Distance
+| | | | EndPoint
+| envelope | x | x | Envelope
+| geometryN | | x | GeometryN
+| geometryType | | x | GeometryType
 | getSRID | x | x | SRID
-| intersection | x | x | x
-| is3D | | | x
-| isEmpty | | x | x
-| isMeasured | | x | x
-| isSimple | | x | x
-| length | | x | 
+| | | | InteriorRingN
+| intersection | x | x | Intersection
+| is3D | | x | 
+| | | | IsClosed
+| isEmpty | | x | IsEmpty
+| isMeasured | | x | 
+| | | | IsRing
+| isSimple | | x | IsSimple
+| metricLength | | x | Length
+| length | | x | Length
 | maxX | | x | 
 | maxY | | x | 
 | maxZ | | x | 
 | minX | | x | 
 | minY | | x | 
 | minZ | | x | 
-| numGeometries | | x |  
-| spatialDimension | | x | x 
-| symDifference | x | x | x
-| transform | | x | x
-| union | x | x | x
+| numGeometries | | x | NumGeometries 
+| | | | NumInteriorRing
+| | | | NumPoints
+| perimeterLength | | x | 
+| perimeter | | x | 
+| | | | PointN
+| | | | PointOnSurface
+| spatialDimension | | x |
+| | | | StartPoint
+| symDifference | x | x | SymDifference
+| transform | | x | 
+| union | x | x | Union
+| | | | X
+| | | | Y
 |===
 
 $$*$$ GeoSPARQL's `asWKT` is only a partial implementation of `asText` since `asWKT` only returns WKT, not textual geometry literal data in general.
