@@ -50,8 +50,10 @@ funcs:
         funcs:maxx ,
         funcs:maxy ,
         funcs:maxz ,
+        funcs:metricArea ,
         funcs:metricBuffer ,
         funcs:metricDistance ,
+        funcs:metricLength ,
         funcs:minx ,
         funcs:miny ,
         funcs:minz ,
@@ -164,6 +166,10 @@ funcs:nonTopo
         funcs:envelope ,
         funcs:geometryN ,
         funcs:getSRID ,
+        funcs:metricArea ,
+        funcs:metricBuffer ,
+        funcs:metricDistance ,
+        funcs:metricLength ,
         funcs:intersection ,
         funcs:isEmpty ,
         funcs:isSimple ,
@@ -455,11 +461,32 @@ funcs:concaveHull_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
+funcs:metricLength
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (funcs:metricLength_param1 ) ;
+    fno:returns (funcs:metricLength_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the length of a geometry in meters."@en ;
+    skos:prefLabel "metric length"@en ;
+.
+
+funcs:metricLength_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+funcs:metricLength_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
 funcs:length
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (funcs:length_param1 ) ;
+    fno:expects (funcs:length_param1 funcs:length_param2) ;
     fno:returns (funcs:length_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -469,6 +496,11 @@ funcs:length
 
 funcs:length_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+funcs:length_param1 a fno:Parameter ;
+    fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
@@ -723,11 +755,33 @@ funcs:numGeometries_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:integer  .
 
+funcs:metricArea
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (funcs:metricArea_param1 ) ;
+    fno:returns (funcs:metricArea_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in squaremeters."@en ;
+    skos:prefLabel "metric area"@en ;
+.
+
+funcs:metricArea_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "units"@en .
+
+funcs:metricArea_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
 funcs:area
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (funcs:area_param1 ) ;
+    fno:expects (funcs:area_param1 funcs:area_param2) ;
     fno:returns (funcs:area_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -739,6 +793,11 @@ funcs:area_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
+
+funcs:area_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "units"@en .
 
 funcs:area_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
