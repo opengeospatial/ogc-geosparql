@@ -802,9 +802,13 @@ as SPARQL extension functions, consistent with definitions of these functions in
 
 |===
 | *Req 41* Implementations shall support the functions 
+<<Function: geof:metricLength, `geof:metricLength`>>,
+<<Function: geof:length, `geof:length`>>,
+<<Function: geof:metricPerimeter, `geof:metricPerimeter`>>,
+<<Function: geof:perimeter, `geof:perimeter`>>,
+<<Function: geof:metricArea, `geof:metricArea`>>, 
 <<Function: geof:area, `geof:area`>>, 
 <<Function: geof:geometryN, `geof:geometryN`>>, 
-<<Function: geof:length, `geof:length`>>,
 <<Function: geof:maxX, `geof:maxX`>>,
 <<Function: geof:maxY, `geof:maxY`>>, 
 <<Function: geof:maxZ, `geof:maxZ`>>,  
@@ -865,13 +869,23 @@ This extension mechanism enables GeoSPARQL implementations to simultaneously sup
 
 NOTE: Several non-topological query functions use a unit of measure IRI. See the <<Recommendation for specification of units of measurement,  Recommendation for specification of units of measurement>>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
 
+==== Function: geof:metricArea
+
+```
+geof:metricArea (geom: ogc:geomLiteral): xsd:double
+```
+
+Returns the area of `geom` in square meters. Must return zero for all geometry types other than Polygon. This function is similar to <<Function: geof:area, `geof:area`>> but does not need a specification of measurement unit.
+
 ==== Function: geof:area
 
 ```
-geof:area (geom: ogc:geomLiteral): xsd:double
+geof:area (geom: ogc:geomLiteral, units: xsd:anyURI): rdf:Resource
 ```
 
-Returns the area of `geom` in square meters. Must return zero for geometries that are not geometrically closed.
+Returns the area of `geom`. Must return zero for all geometry types other than Polygon. This function is similar to <<Function: geof:metricArea, `geof:metricArea`>>, which does not need a specification of measurement unit.
+
+NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:boundary
 
@@ -896,7 +910,7 @@ geof:metricBuffer (geom: ogc:geomLiteral,
                    radius: xsd:double): ogc:geomLiteral
 ```
 
-Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in meters. Calculations are in the coordinate reference system of `geom`. This function is similar to <<Function: geof:buffer, `geof:buffer`>>, but does not need a specification of distance unit.
+Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in meters. Calculations are in the coordinate reference system of `geom`. This function is similar to <<Function: geof:buffer, `geof:buffer`>>, but does not need a specification of measurement unit.
 
 ==== Function: geof:buffer
 
@@ -906,7 +920,7 @@ geof:buffer (geom: ogc:geomLiteral,
              units: xsd:anyURI): ogc:geomLiteral
 ```
 
-Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom`. This function is similar to <<Function: geof:metricBuffer, `geof:metricBuffer`>>, which does not need a specification of distance unit.
+Returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom`. This function is similar to <<Function: geof:metricBuffer, `geof:metricBuffer`>>, which does not need a specification of measurement unit.
 
 NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
 
@@ -958,7 +972,7 @@ geof:metricDistance (geom1: ogc:geomLiteral,
                      geom2: ogc:geomLiteral): xsd:double
 ```
 
-Returns the shortest distance in meters between any two Points in the two geometric objects. Calculations are in the coordinate reference system of `geom1`. This function is similar to <<Function: geof:distance, `geof:distance`>>, but does not need a specification of distance unit.
+Returns the shortest distance in meters between any two Points in the two geometric objects. Calculations are in the coordinate reference system of `geom1`. This function is similar to <<Function: geof:distance, `geof:distance`>>, but does not need a specification of measurement unit.
 
 
 ==== Function: geof:distance
@@ -969,7 +983,7 @@ geof:distance (geom1: ogc:geomLiteral,
                units: xsd:anyURI): xsd:double
 ```
 
-Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in the spatial reference system of `geom1`. This function is similar to <<Function: geof:metricDistance, `geof:metricDistance`>>, which does not need a specification of distance unit.
+Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in the spatial reference system of `geom1`. This function is similar to <<Function: geof:metricDistance, `geof:metricDistance`>>, which does not need a specification of measurement unit.
 
 NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
 
@@ -1046,13 +1060,23 @@ geof:isSimple (geom: ogc:geomLiteral): xsd:boolean
 
 Returns true if `geom` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
 
+==== Function: geof:metricLength
+
+```
+geof:metricLength (geom: ogc:geomLiteral): xsd:double
+```
+
+Returns the length of `geom` in meters. The longest length from any one dimension is returned. This function is similar to <<Function: geof:length, `geof:length`>> but does not need a specification of measurement unit.
+
 ==== Function: geof:length
 
 ```
-geof:length (geom: ogc:geomLiteral): xsd:double
+geof:length (geom: ogc:geomLiteral, units: xsd:anyURI): xsd:double
 ```
 
-Returns the length of `geom` in meters. The longest length from any one dimension is returned.
+Returns the length of `geom`. The longest length from any one dimension is returned. This function is similar to <<Function: geof:metricLength, `geof:metricLength`>>, which does not need a specification of measurement unit.
+
+NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
 
 ==== Function: geof:maxX
 
