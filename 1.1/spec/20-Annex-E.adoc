@@ -8,6 +8,7 @@ The prefixes used for the ontologies mapped to in all following sections are giv
 
 [frame=none, grid=none, cols="1, 6"]
 |===
+| as: | https://www.w3.org/ns/activitystreams#
 | dcterms: | http://purl.org/dc/terms/
 | geo: | http://www.opengis.net/ont/geosparql#
 | geom: | http://geovocab.org/geometry#
@@ -62,7 +63,21 @@ POS Source: http://www.w3.org/2003/01/geo/
 | http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry,`geo:hasGeometry`>> |
 |===
 
-== E.3 Geonames Ontology (GN)
+== E.3 W3C Activity Streams Vocabulary
+
+AS Source: https://www.w3.org/TR/activitystreams-vocabulary/
+
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| https://www.w3.org/ns/activitystreams#Place[`as:Place`] |http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> | AS places are only defined for point geometries
+| https://www.w3.org/ns/activitystreams#accuracy[`as:accuracy`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSpatialAccuracy,`geo:hasSpatialAccuracy`>> | AS expresses the accuracy in percent
+| https://www.w3.org/ns/activitystreams#altitude[`as:altitude`] | | | The altitude property can be expressed as a Z coordinate in GeoSPARQL-compatible literals
+| https://www.w3.org/ns/activitystreams#latitude[`as:latitude`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | AS defines the range of this property as xsd:float
+| https://www.w3.org/ns/activitystreams#longitude[`as:longitude`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | AS defines the range of this property as xsd:float
+|===
+
+== E.4 Geonames Ontology (GN)
 
 Geonames source: http://www.geonames.org/ontology/documentation.html
 
@@ -77,7 +92,7 @@ Geonames source: http://www.geonames.org/ontology/documentation.html
 | https://www.geonames.org/ontology#neighbour[`gn:neighbour`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:sfTouches, `geo:sfTouches`>> | 
 |===
 
-== E.4 NeoGeo Vocabulary
+== E.5 NeoGeo Vocabulary
 
 NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 
@@ -115,7 +130,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 * The `geom:bbox` property relates a Geometry to another Geometry and is thus not equivalent to GeoSPARQL's Feature-to-Geometry `geo:hasBoundingBox`.
 ** An equivalent to `geo:bbox` could be made using a <<Class: geo:Feature, `geo:Feature`>> with a <<Class: geo:Geometry, `geo:Geometry`>>, indicated by `geo:hasGeometry` and a second, specialised Bounding Box <<Class: geo:Geometry, `geo:Geometry`>> indicated with `geo:hasBoundingBox`
 
-== E.5 Juso Ontology
+== E.6 Juso Ontology
 
 Juso Source: http://rdfs.co/juso/
 
@@ -134,7 +149,7 @@ Juso contains mappings to GeoSPARQL but uses http://www.w3.org/2002/07/owl#sameA
 | http://rdfs.co/juso/within[`juso:within`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:sfWithin, `geo:sfWithin`>>
 |===
 
-== E.6 Time Ontology in OWL (TIME)
+== E.7 Time Ontology in OWL (TIME)
 
 TIME Source: https://www.w3.org/TR/owl-time/
 
@@ -188,7 +203,7 @@ Another possible use of TIME with GeoSPARQL is to assign temporality to individu
 In contrast to the first example, `:flooded-area-x` is inferred to be a spatio-temporal Feature but since it is the Geometry of `:flooded-area-x` that has a temporality, it is possible to describe other Geometries of `:flooded-area-x` with other temporalities.
 
 
-== E.7 schema.org
+== E.8 schema.org
 
 schema.org Source: https://schema.org
 
@@ -214,7 +229,7 @@ https://schema.org/GeoShape[`sdo:GeoShape`] | A GeoShape can various literal geo
 |===
 
 
-== E.8 Semantic Sensor Network Ontology (SSN)
+== E.9 Semantic Sensor Network Ontology (SSN)
 
 SSN Source: https://www.w3.org/TR/vocab-ssn/
 
@@ -226,7 +241,7 @@ declared as instances of <<Class: geo:Feature, `geo:Feature`>> and geometries ca
 rivers, these can be defined as subclasses of <<Class: geo:Feature, `geo:Feature`>>.
 
 
-== E.9 DCMI Metadata Terms (DCTERMS)
+== E.10 DCMI Metadata Terms (DCTERMS)
 
 DCTERMS Source: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
 
@@ -255,7 +270,7 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 ```
 
 
-== E.10 The Provenance Ontology (PROV)
+== E.11 The Provenance Ontology (PROV)
 
 PROV Source: https://www.w3.org/TR/prov-o/
 
@@ -277,7 +292,7 @@ From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with m
 :bounding-box-y prov:wasDerivedFrom :polygon-x .
 ```
 
-== E.11 WikiData
+== E.12 WikiData
 
 |===
 | From Element | Mapping relation | To Element | Notes 
@@ -297,10 +312,10 @@ From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with m
 | http://www.wikidata.org/prop/direct/P2046[`wdt:P2046`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:hasArea, `geo:hasArea`>> | The Wikidata property is labeled "area". It indicates a microformat - NUMBER + SPACE + ALLOWED_UNIT_LABEL - with a fixed set of ALLOWED_UNIT_LABELs to present values and units of measure.
 |===
 
-== E.12 OpenStreetMap Ontologies
+== E.13 OpenStreetMap Ontologies
 There are several approaches to make OpenStreetMap data accessible in the Linked Open Data cloud.
 
-=== E.12.1 LinkedGeoData
+=== E.13.1 LinkedGeoData
 LinkedGeoData emerged from a research project connecting OpenStreetMap representations to an ontology model.
 In this model, specific values of OpenStreetMap tags, e.g. the values of amenity tags are converted to http://www.w3.org/2002/07/owl#Class[owl:Class] representations using an automated process.
 Every class defined in this way represented a <<Class: geo:Feature, `geo:Feature`>> and is linked to either a Geometry or a latitude longitude representation.
@@ -311,7 +326,7 @@ Hence, every linked geodata class can be considered a <<Class: geo:Feature, `geo
 | Any LGD Class | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | Any class defined in the LinkedGeoData ontology is a subclass of <<Class: geo:Feature, `geo:Feature`>>
 |===
     
-=== E.12.2 OpenStreetMap RDF (Sophox)
+=== E.13.2 OpenStreetMap RDF (Sophox)
 https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
     
 |===
@@ -326,7 +341,7 @@ https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
 | https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] false | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`]  indicates whether a Way is closed, i.e. if it constitutes a Polygon
 |===
     
-=== E.12.3 Routable Tiles Ontology
+=== E.13.3 Routable Tiles Ontology
 https://github.com/openplannerteam/routable-tiles-ontology
 |===
 | From Element | Mapping relation | To Element | Notes 
@@ -337,7 +352,7 @@ https://github.com/openplannerteam/routable-tiles-ontology
 | `osm:Relation` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The class osm:Relation is equivalent to a http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`]
 |===
 
-== E.13 Ordnance Survey UK Spatial Ontology
+== E.14 Ordnance Survey UK Spatial Ontology
 http://www.ordnancesurvey.co.uk/legacy/ontologies/spatialrelations.owl & http://www.ordnancesurvey.co.uk/legacy/ontologies/geometry.owl
 
 [[NOTE]]: These two ontologies will be withdrawn during 2022.
@@ -362,7 +377,7 @@ The ontology authors note: "We are pleased to have contributed to the discussion
 * http://data.ordnancesurvey.co.uk/ontology/spatialrelations/easting[`spatialuk:easting`] describes a latitude coordinate east of the national UK grid and GeoSPARQL does not contain modelling of individual coordinate reference system elements
 * http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing[`spatialuk:northing`] describes a longitude coordinate north of the national UK grid so, as above, has not GeoSPARQL equivalent
 
-== E.14 CIDOC CRM Geo
+== E.15 CIDOC CRM Geo
 
 CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pdf
 
@@ -379,7 +394,7 @@ CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pd
 | http://www.cidoc-crm.org/cidoc-crm/SP15_Geometry[`cidoc:SP15_Geometry`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP15_Geometry is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
 |===
 
-== E.15 Basic Formal Ontology (BFO)
+== E.16 Basic Formal Ontology (BFO)
 
 BFO Source: https://basic-formal-ontology.org/bfo-2020.html, and from there, an OWL ontology of BFO2020 at https://github.com/BFO-ontology/BFO-2020
 
