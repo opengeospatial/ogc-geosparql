@@ -1,6 +1,6 @@
 == Geometry Extension
 
-This clause establishes the _Geometry Extension_ parameterized Requirements class with base IRI `/req/geometry-extension`, which have a single corresponding conformance class _Geometry Extension_, with IRI `/conf/geometry-extension`. These Requirements define a vocabulary for asserting and querying information about geometry data, and define query functions for operating on geometry data.
+This clause establishes the _Geometry Extension_ parameterized Requirements class with base IRI `/req/geometry-extension`, which has a single corresponding conformance class _Geometry Extension_, with IRI `/conf/geometry-extension`. These Requirements define a vocabulary for asserting and querying information about geometry data, and define query functions for operating on geometry data.
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
@@ -182,7 +182,7 @@ geo:spatialDimension
 
 ==== Property: geo:hasSpatialResolution
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is defined to indicate spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It is the smallest distinguishable distance between adjacent coordinate sets. This property is not applicable to a point Geometry, because a point consists of a single coordinate set.
+The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is defined to indicate the spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It is the smallest distinguishable distance between adjacent coordinate sets. This property is not applicable to a point Geometry, because a point consists of a single coordinate set.
 
 Since this property is defined for a <<Class: geo:Geometry, `geo:Geometry`>>, all literal representations of that Geometry instance must have the same spatial resolution.
 
@@ -215,7 +215,7 @@ geo:hasMetricSpatialResolution
 
 ==== Property: geo:hasSpatialAccuracy
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
+The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
 
 ```turtle
 geo:hasSpatialAccuracy 
@@ -262,7 +262,7 @@ geo:isEmpty
 
 ==== Property: geo:isSimple
 
-The property http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] will indicate a Boolean object set to `true`, only if the Geometry contains no self-intersections, with the possible exception of its boundary.
+The property http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] will indicate a Boolean object set to `true` if and only if the Geometry contains no self-intersections, with the possible exception of its boundary.
 
 ```turtle
 geo:isSimple 
@@ -347,7 +347,7 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs`]
 |===
 
-The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
+The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use. However others may also be used, as long as they are valid IRIs.
 
 [#req_geometry_extension_wkt-axis-order]
 |===
@@ -700,9 +700,9 @@ dggsLiteral ::= iri-and-whitespace dggs-geomety-data
 iri-and-whitespace = "<" IRI ">" LWSP 
 ```
 
-The token `iri-and-whitespace` is an IRI and whitespace, the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `dggs-geometry-data` is geometry data formulated according to the DGGS identified by `IRI`.
+The token `iri-and-whitespace` is an IRI and whitespace. The token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>>. The token `LWSP` is one or more whitespace characters, as defined in <<IETF5234>>. `dggs-geometry-data` is geometry data formulated according to the DGGS identified by `IRI`.
 
-An example of a DGGS literal for the, AusPIX DGGS, could be:
+An example of a DGGS literal for the AusPIX DGGS could be:
 
 ```turtle
 "<https://w3id.org/dggs/auspix> CELL (R3234)"^^geo:dggsLiteral
