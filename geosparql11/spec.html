@@ -507,9 +507,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_influence_of_reference_systems_on_computations">8.4. Influence of Reference Systems on computations</a></li>
 <li><a href="#_parameters_2">8.5. Parameters</a></li>
 <li><a href="#_geometry_class">8.6. Geometry Class</a></li>
-<li><a href="#_geometry_serializations">8.7. Geometry Serializations</a></li>
-<li><a href="#_non_topological_query_functions">8.8. Non-topological Query Functions</a></li>
-<li><a href="#_spatial_aggregate_functions">8.9. Spatial Aggregate Functions</a></li>
+<li><a href="#_standard_properties_for_geogeometry">8.7. Standard Properties for geo:Geometry</a></li>
+<li><a href="#_geometry_serializations">8.8. Geometry Serializations</a></li>
+<li><a href="#_non_topological_query_functions">8.9. Non-topological Query Functions</a></li>
+<li><a href="#_spatial_aggregate_functions">8.10. Spatial Aggregate Functions</a></li>
 </ul>
 </li>
 <li><a href="#geometry_extension">9. Geometry Topology Extension</a>
@@ -1990,7 +1991,7 @@ This property has no range specification. This makes it possible to use other vo
 <div class="title">Tip</div>
 </td>
 <td class="content">
-A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#Property: geo:dimension"><code>geo:dimension</code></a>: if supplied, the <a href="#Property: geo:dimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
+A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
 </td>
 </tr>
 </table>
@@ -2051,7 +2052,7 @@ A consistency check can be applied to Geometry instances indicating both this pr
 <div class="title">Tip</div>
 </td>
 <td class="content">
-A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#Property: geo:dimension"><code>geo:dimension</code></a>: if supplied, the <a href="#Property: geo:dimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
+A consistency check can be applied to Geometry instances indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 2 or 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
 </td>
 </tr>
 </table>
@@ -2113,7 +2114,7 @@ A consistency check can be applied to Geometry instances indicating both this pr
 <div class="title">Tip</div>
 </td>
 <td class="content">
-A consistency check can be applied to Geometries indicating both this property and the property <a href="#Property: geo:dimension"><code>geo:dimension</code></a>: if supplied, the property <a href="#Property: geo:dimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
+A consistency check can be applied to Geometries indicating both this property and the property <a href="#_property_geodimension"><code>geo:dimension</code></a>: if supplied, the property <a href="#_property_geodimension"><code>geo:dimension</code></a> property&#8217;s range value must be the literal integer 3. The following SPARQL query will return <code>true</code> if applied to a graph where this is not the case for all Geometries:
 </td>
 </tr>
 </table>
@@ -2815,59 +2816,83 @@ A serialization strongly affects the geometry conceptualization. The WKT seriali
 </div>
 </div>
 <div class="paragraph">
-<p>Restriction ;
-        owl:allValuesFrom geo:SpatialObject ;
-        owl:onProperty rdfs:member ;
-    ] ;
-.</p>
+<p>Membership of the general <a href="#Class: SpatialObjectCollection">Spatial Object Collection</a> that defines this class is restricted to instances of <a href="#Class: Geometry">Geometry</a>. <code>geo:GeometryCollection</code> members are to be indicated with the <a href="http://www.w3.org/2000/01/rdf-schema#member"><code>rdfs:member</code></a> property.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is no RDF/ontology relationship between this <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> class and the Simple Features Vocabulary&#8217;s <a href="http://www.opengis.net/ont/sf#GeometryCollection"><code>sf:GeometryCollection</code></a> class since the former is a collection of <code>geo:Geometry</code> objects and the latter is to be used for compound geometry literals.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://www.opengis.net/ont/sf#GeometryCollection"><code>sf:GeometryCollection</code></a> instances can act as input or output of GeoSPARQL functions whereas <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> instances are more likely to be used for grouping <code>geo:Geometry</code> objects for other purposes.</p>
+</div>
+<div class="paragraph">
+<p>Many geometry literal formats also have the ability to represent multiple geometries. Both the OGC Geography Markup Language (GML) and KML use a <em>MultiGeometry</em> type and Well Known Text (WKT) and GeoJSON use a <em>GeometryCollection</em> type. While the names of some of these objects are the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole <code>geo:Geometry</code> instances, which may have more information within them than just a geometry serialization.</p>
+</div>
+<div class="paragraph">
+<p>As per the expected use of <a href="http://www.opengis.net/ont/sf#GeometryCollection"><code>sf:GeometryCollection</code></a> instances mentioned above: the uses of multi-geometry literals and <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> instances is expected to be different too.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table id="req_core_geometry-collection-class" class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 13</strong> Implementations shall allow the RDFS class <a href="#_class_geogeometrycollection"><code>geo:GeometryCollection</code></a> to be used in SPARQL graph patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class"><code>http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class</code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_standard_properties_for_geogeometry"><a class="anchor" href="#_standard_properties_for_geogeometry"></a>8.7. Standard Properties for geo:Geometry</h3>
+<div class="paragraph">
+<p>Properties are defined for describing geometry metadata.</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-odd stretch">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Req 14</strong> Implementations shall allow the properties
+<a href="#_property_geodimension"><code>geo:dimension</code></a>,
+<a href="#_property_geocoordinatedimension"><code>geo:coordinateDimension</code></a>,
+<a href="#_property_geospatialdimension"><code>geo:spatialDimension</code></a>,
+<a href="#_property_geohasspatialresolution"><code>geo:hasSpatialResolution</code></a>,
+<a href="#_property_geohasmetricspatialresolution"><code>geo:hasMetricSpatialResolution</code></a>,
+<a href="#_property_geohasspatialaccuracy"><code>geo:hasSpatialAccuracy</code></a>,
+<a href="#_property_geohasmetricspatialaccuracy"><code>geo:hasMetricSpatialAccuracy</code></a>,
+<a href="#_property_geoisempty"><code>geo:isEmpty</code></a>,
+<a href="#_property_geoissimple"><code>geo:isSimple</code></a> and
+<a href="#_property_geohasserialization"><code>geo:hasSerialization</code></a>
+to be used in SPARQL graph patterns.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties"><code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties</code></a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_property_geodimension"><a class="anchor" href="#_property_geodimension"></a>8.7.1. Property: geo:dimension</h4>
+<div class="paragraph">
+<p>The property <a href="http://www.opengis.net/ont/geosparql#dimension"><code>geo:dimension</code></a> is used to link a Geometry object to its topological dimension, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>Membership of the general &lt;&lt;Class: SpatialObjectCollection, Spatial Object Collection&gt;&gt; that defines this class is restricted to instances of &lt;&lt;Class: Geometry, Geometry&gt;&gt;. `geo:GeometryCollection` members are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
-
-[NOTE]
-====
-There is no RDF/ontology relationship between this &lt;&lt;Class: geo:GeometryCollection, `geo:GeometryCollection`&gt;&gt; class and the Simple Features Vocabulary's http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] class since the former is a collection of `geo:Geometry` objects and the latter is to be used for compound geometry literals.
-
-http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances can act as input or output of GeoSPARQL functions whereas &lt;&lt;Class: geo:GeometryCollection, `geo:GeometryCollection`&gt;&gt; instances are more likely to be used for grouping `geo:Geometry` objects for other purposes.
-
-Many geometry literal formats also have the ability to represent multiple geometries. Both the OGC Geography Markup Language (GML) and KML use a _MultiGeometry_ type and Well Known Text (WKT) and GeoJSON use a _GeometryCollection_ type. While the names of some of these objects are the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization.
-
-As per the expected use of http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances mentioned above: the uses of multi-geometry literals and &lt;&lt;Class: geo:GeometryCollection, `geo:GeometryCollection`&gt;&gt; instances is expected to be different too.
-====
-
-[#req_core_geometry-collection-class]
-|===
-| *Req 13* Implementations shall allow the RDFS class &lt;&lt;Class: geo:GeometryCollection, `geo:GeometryCollection`&gt;&gt; to be used in SPARQL graph patterns.
-|http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class[`http://www.opengis.net/spec/geosparql/1.1/req/core/geometry-collection-class`]
-|===
-
-=== Standard Properties for geo:Geometry
-
-Properties are defined for describing geometry metadata.
-
-|===
-| *Req 14* Implementations shall allow the properties
-&lt;&lt;Property: geo:dimension, `geo:dimension`&gt;&gt;,
-&lt;&lt;Property: geo:coordinateDimension, `geo:coordinateDimension`&gt;&gt;,
-&lt;&lt;Property: geo:spatialDimension, `geo:spatialDimension`&gt;&gt;,
-&lt;&lt;Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`&gt;&gt;,
-&lt;&lt;Property: geo:hasMetricSpatialResolution, `geo:hasMetricSpatialResolution`&gt;&gt;,
-&lt;&lt;Property: geo:hasSpatialAccuracy, `geo:hasSpatialAccuracy`&gt;&gt;,
-&lt;&lt;Property: geo:hasMetricSpatialAccuracy, `geo:hasMetricSpatialAccuracy`&gt;&gt;,
-&lt;&lt;Property: geo:isEmpty, `geo:isEmpty`&gt;&gt;,
-&lt;&lt;Property: geo:isSimple, `geo:isSimple`&gt;&gt; and
-&lt;&lt;Property: geo:hasSerialization, `geo:hasSerialization`&gt;&gt;
-to be used in SPARQL graph patterns.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties`]
-|===
-
-==== Property: geo:dimension
-
-The property http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`] is used to link a Geometry object to its topological dimension, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.
-
-```turtle
-geo:dimension
+<pre class="highlight"><code class="language-turtle" data-lang="turtle">geo:dimension
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "dimension"@en ;
@@ -2882,7 +2907,7 @@ geo:dimension
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geocoordinatedimension"><a class="anchor" href="#_property_geocoordinatedimension"></a>8.6.3. Property: geo:coordinateDimension</h4>
+<h4 id="_property_geocoordinatedimension"><a class="anchor" href="#_property_geocoordinatedimension"></a>8.7.2. Property: geo:coordinateDimension</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#coordinateDimension"><code>geo:coordinateDimension</code></a> is defined to link a Geometry object to the dimension of direct positions (coordinate tuples) used in the Geometry&#8217;s definition.</p>
 </div>
@@ -2901,7 +2926,7 @@ geo:dimension
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geospatialdimension"><a class="anchor" href="#_property_geospatialdimension"></a>8.6.4. Property: geo:spatialDimension</h4>
+<h4 id="_property_geospatialdimension"><a class="anchor" href="#_property_geospatialdimension"></a>8.7.3. Property: geo:spatialDimension</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#spatialDimension"><code>geo:spatialDimension</code></a> is defined to link a Geometry object to the dimension of the spatial portion of the direct positions (coordinate tuples) used in its serializations. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.</p>
 </div>
@@ -2920,7 +2945,7 @@ geo:dimension
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasspatialresolution"><a class="anchor" href="#_property_geohasspatialresolution"></a>8.6.5. Property: geo:hasSpatialResolution</h4>
+<h4 id="_property_geohasspatialresolution"><a class="anchor" href="#_property_geohasspatialresolution"></a>8.7.4. Property: geo:hasSpatialResolution</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> is defined to indicate the spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It is the smallest distinguishable distance between adjacent coordinate sets. This property is not applicable to a point Geometry, because a point consists of a single coordinate set.</p>
 </div>
@@ -2952,7 +2977,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasmetricspatialresolution"><a class="anchor" href="#_property_geohasmetricspatialresolution"></a>8.6.6. Property: geo:hasMetricSpatialResolution</h4>
+<h4 id="_property_geohasmetricspatialresolution"><a class="anchor" href="#_property_geohasmetricspatialresolution"></a>8.7.5. Property: geo:hasMetricSpatialResolution</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution"><code>geo:hasMetricSpatialResolution</code></a> is similar to <a href="#_property_geohasspatialresolution"><code>geo:hasSpatialResolution</code></a>, except that the unit of resolution is always meter (the standard distance unit of the International System of Units).</p>
 </div>
@@ -2970,7 +2995,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasspatialaccuracy"><a class="anchor" href="#_property_geohasspatialaccuracy"></a>8.6.7. Property: geo:hasSpatialAccuracy</h4>
+<h4 id="_property_geohasspatialaccuracy"><a class="anchor" href="#_property_geohasspatialaccuracy"></a>8.7.6. Property: geo:hasSpatialAccuracy</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialAccuracy"><code>geo:hasSpatialAccuracy</code></a> is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).</p>
 </div>
@@ -2999,7 +3024,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasmetricspatialaccuracy"><a class="anchor" href="#_property_geohasmetricspatialaccuracy"></a>8.6.8. Property: geo:hasMetricSpatialAccuracy</h4>
+<h4 id="_property_geohasmetricspatialaccuracy"><a class="anchor" href="#_property_geohasmetricspatialaccuracy"></a>8.7.7. Property: geo:hasMetricSpatialAccuracy</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasMetricSpatialAccuracy"><code>geo:hasMetricSpatialAccuracy</code></a> is similar to <a href="#_property_geohasspatialaccuracy">has spatial accuracy</a>, but is easier to specify and use because the unit of distance is always meter (the standard distance unit of the International System of Units).</p>
 </div>
@@ -3017,7 +3042,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.6.9. Property: geo:isEmpty</h4>
+<h4 id="_property_geoisempty"><a class="anchor" href="#_property_geoisempty"></a>8.7.8. Property: geo:isEmpty</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#isEmpty"><code>geo:isEmpty</code></a> will indicate a Boolean object set to <code>true</code> if and only if the Geometry contains no information.</p>
 </div>
@@ -3037,7 +3062,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.6.10. Property: geo:isSimple</h4>
+<h4 id="_property_geoissimple"><a class="anchor" href="#_property_geoissimple"></a>8.7.9. Property: geo:isSimple</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#isSimple"><code>geo:isSimple</code></a> will indicate a Boolean object set to <code>true</code> if and only if the Geometry contains no self-intersections, with the possible exception of its boundary.</p>
 </div>
@@ -3056,7 +3081,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 </div>
 </div>
 <div class="sect3">
-<h4 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.6.11. Property: geo:hasSerialization</h4>
+<h4 id="_property_geohasserialization"><a class="anchor" href="#_property_geohasserialization"></a>8.7.10. Property: geo:hasSerialization</h4>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#hasSerialization"><code>geo:hasSerialization</code></a> is defined to connect a Geometry with its text-based serialization (e.g., its WKT serialization).</p>
 </div>
@@ -3087,7 +3112,7 @@ this property is the generic property used to connect a Geometry with its serial
 </div>
 </div>
 <div class="sect2">
-<h3 id="_geometry_serializations"><a class="anchor" href="#_geometry_serializations"></a>8.7. Geometry Serializations</h3>
+<h3 id="_geometry_serializations"><a class="anchor" href="#_geometry_serializations"></a>8.8. Geometry Serializations</h3>
 <div class="paragraph">
 <p>This section establishes the Requirements class for representing Geometry data in RDF literals, according to different non-RDF systems.</p>
 </div>
@@ -3108,12 +3133,12 @@ this property is the generic property used to connect a Geometry with its serial
 </div>
 </div>
 <div class="sect3">
-<h4 id="_well_known_text"><a class="anchor" href="#_well_known_text"></a>8.7.1. Well-Known Text</h4>
+<h4 id="_well_known_text"><a class="anchor" href="#_well_known_text"></a>8.8.1. Well-Known Text</h4>
 <div class="paragraph">
 <p>This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by <em>Simple Features Access</em> <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> and one property, <a href="#_function_geofaswkt">as WKT</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.7.1.1. RDFS Datatype: geo:wktLiteral</h5>
+<h5 id="_rdfs_datatype_geowktliteral"><a class="anchor" href="#_rdfs_datatype_geowktliteral"></a>8.8.1.1. RDFS Datatype: geo:wktLiteral</h5>
 <div class="paragraph">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#wktLiteral"><code>geo:wktLiteral</code></a> is used to contain the Well-Known Text (WKT) serialization of a Geometry.</p>
 </div>
@@ -3216,7 +3241,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.7.1.2. Property: geo:asWKT</h5>
+<h5 id="_property_geoaswkt"><a class="anchor" href="#_property_geoaswkt"></a>8.8.1.2. Property: geo:asWKT</h5>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> is defined to link a Geometry with its WKT serialization.</p>
 </div>
@@ -3248,7 +3273,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofaswkt"><a class="anchor" href="#_function_geofaswkt"></a>8.7.1.3. Function: geof:asWKT</h5>
+<h5 id="_function_geofaswkt"><a class="anchor" href="#_function_geofaswkt"></a>8.8.1.3. Function: geof:asWKT</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral</code></pre>
@@ -3273,13 +3298,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_geography_markup_language"><a class="anchor" href="#_geography_markup_language"></a>8.7.2. Geography Markup Language</h4>
+<h4 id="_geography_markup_language"><a class="anchor" href="#_geography_markup_language"></a>8.8.2. Geography Markup Language</h4>
 <div class="paragraph">
 <p>This section establishes a Requirements class for representing Geometry data in RDF based on GML as defined by the Geography Markup Language Encoding Standard <a href="#OGC07-036">[OGC07-036]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geogmlliteral">GML Literal</a> and one property, <a href="#_function_geofasgml">as GML</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.7.2.1. RDFS Datatype: geo:gmlLiteral</h5>
+<h5 id="_rdfs_datatype_geogmlliteral"><a class="anchor" href="#_rdfs_datatype_geogmlliteral"></a>8.8.2.1. RDFS Datatype: geo:gmlLiteral</h5>
 <div class="paragraph">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:gmlLiteral</code></a> is used to contain the Geography Markup Language (GML) serialization of a Geometry.</p>
 </div>
@@ -3351,7 +3376,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasgml"><a class="anchor" href="#_property_geoasgml"></a>8.7.2.2. Property: geo:asGML</h5>
+<h5 id="_property_geoasgml"><a class="anchor" href="#_property_geoasgml"></a>8.8.2.2. Property: geo:asGML</h5>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asGML"><code>geo:asGML</code></a> is defined to link a Geometry with its GML serialization.</p>
 </div>
@@ -3383,7 +3408,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofasgml"><a class="anchor" href="#_function_geofasgml"></a>8.7.2.3. Function: geof:asGML</h5>
+<h5 id="_function_geofasgml"><a class="anchor" href="#_function_geofasgml"></a>8.8.2.3. Function: geof:asGML</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral</code></pre>
@@ -3408,12 +3433,12 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_geojson"><a class="anchor" href="#_geojson"></a>8.7.3. GeoJSON</h4>
+<h4 id="_geojson"><a class="anchor" href="#_geojson"></a>8.8.3. GeoJSON</h4>
 <div class="paragraph">
-<p>This section establishes a Requirements class for representing Geometry data in RDF based on Geographic JavaScript Object Notation (GeoJSON) as defined by <a href="#_geojson">Section 8.7.3</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
+<p>This section establishes a Requirements class for representing Geometry data in RDF based on Geographic JavaScript Object Notation (GeoJSON) as defined by <a href="#_geojson">Section 8.8.3</a>. It defines one RDFS Datatype: <a href="#_rdfs_datatype_geogeojsonliteral">GeoJSON Literal</a> and one property, <a href="#_function_geofasgeojson">as GeoJSON</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.7.3.1. RDFS Datatype: geo:geoJSONLiteral</h5>
+<h5 id="_rdfs_datatype_geogeojsonliteral"><a class="anchor" href="#_rdfs_datatype_geogeojsonliteral"></a>8.8.3.1. RDFS Datatype: geo:geoJSONLiteral</h5>
 <div class="paragraph">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#gmlLiteral"><code>geo:geoJSONLiteral</code></a> is used to contain the GeoJSON serialization of a Geometry.</p>
 </div>
@@ -3479,7 +3504,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasgeojson"><a class="anchor" href="#_property_geoasgeojson"></a>8.7.3.2. Property: geo:asGeoJSON</h5>
+<h5 id="_property_geoasgeojson"><a class="anchor" href="#_property_geoasgeojson"></a>8.8.3.2. Property: geo:asGeoJSON</h5>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a> is defined to link a Geometry with its GeoJSON serialization.</p>
 </div>
@@ -3511,7 +3536,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofasgeojson"><a class="anchor" href="#_function_geofasgeojson"></a>8.7.3.3. Function: geof:asGeoJSON</h5>
+<h5 id="_function_geofasgeojson"><a class="anchor" href="#_function_geofasgeojson"></a>8.8.3.3. Function: geof:asGeoJSON</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral</code></pre>
@@ -3536,13 +3561,13 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_keyhole_markup_language"><a class="anchor" href="#_keyhole_markup_language"></a>8.7.4. Keyhole Markup Language</h4>
+<h4 id="_keyhole_markup_language"><a class="anchor" href="#_keyhole_markup_language"></a>8.8.4. Keyhole Markup Language</h4>
 <div class="paragraph">
 <p>This section establishes the Requirements class for representing Geometry data in RDF based on KML as defined by <a href="#OGCKML">[OGCKML]</a>. It defines one RDFS Datatype:
 <a href="#_rdfs_datatype_geokmlliteral">KML Literal</a> and one property, <a href="#_function_geofaskml">as KML</a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.7.4.1. RDFS Datatype: geo:kmlLiteral</h5>
+<h5 id="_rdfs_datatype_geokmlliteral"><a class="anchor" href="#_rdfs_datatype_geokmlliteral"></a>8.8.4.1. RDFS Datatype: geo:kmlLiteral</h5>
 <div class="paragraph">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#kmlLiteral"><code>geo:kmlLiteral</code></a> is used to contain the Keyhole Markup Language (KML) serialization of a Geometry.</p>
 </div>
@@ -3612,7 +3637,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_property_geoaskml"><a class="anchor" href="#_property_geoaskml"></a>8.7.4.2. Property: geo:asKML</h5>
+<h5 id="_property_geoaskml"><a class="anchor" href="#_property_geoaskml"></a>8.8.4.2. Property: geo:asKML</h5>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asKML"><code>geo:asKML</code></a> is defined to link a Geometry with its KML serialization.</p>
 </div>
@@ -3647,7 +3672,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofaskml"><a class="anchor" href="#_function_geofaskml"></a>8.7.4.3. Function: geof:asKML</h5>
+<h5 id="_function_geofaskml"><a class="anchor" href="#_function_geofaskml"></a>8.8.4.3. Function: geof:asKML</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral</code></pre>
@@ -3672,7 +3697,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_discrete_global_grid_system_2"><a class="anchor" href="#_discrete_global_grid_system_2"></a>8.7.5. Discrete Global Grid System</h4>
+<h4 id="_discrete_global_grid_system_2"><a class="anchor" href="#_discrete_global_grid_system_2"></a>8.8.5. Discrete Global Grid System</h4>
 <div class="paragraph">
 <p>This section establishes the Requirements class for representing Discrete Global Grid System (DGGS) Geometry data as RDF literals. The form of geometry data representation is specific to individual DGGS implementations: known DGGSes are not compatible or even very similar.</p>
 </div>
@@ -3681,7 +3706,7 @@ opt-iri-and-space = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>http://www.opengis.net/ont/geosparql#dggsLiteral</code></a> and one property, <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>http://www.opengis.net/ont/geosparql#asDGGS</code></a>.</p>
 </div>
 <div class="sect4">
-<h5 id="_rdfs_datatype_geodggsliteral"><a class="anchor" href="#_rdfs_datatype_geodggsliteral"></a>8.7.5.1. RDFS Datatype: geo:dggsLiteral</h5>
+<h5 id="_rdfs_datatype_geodggsliteral"><a class="anchor" href="#_rdfs_datatype_geodggsliteral"></a>8.8.5.1. RDFS Datatype: geo:dggsLiteral</h5>
 <div class="paragraph">
 <p>The datatype <a href="http://www.opengis.net/ont/geosparql#dggsLiteral"><code>geo:dggsLiteral</code></a> is used to contain the Discrete Global Grid System (DGGS) serialization of a Geometry.</p>
 </div>
@@ -3775,7 +3800,7 @@ iri-and-whitespace = "&lt;" IRI "&gt;" LWSP / ""</code></pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.7.5.2. Property: geo:asDGGS</h5>
+<h5 id="_property_geoasdggs"><a class="anchor" href="#_property_geoasdggs"></a>8.8.5.2. Property: geo:asDGGS</h5>
 <div class="paragraph">
 <p>The property <a href="http://www.opengis.net/ont/geosparql#asDGGS"><code>geo:asDGGS</code></a> is defined to link a Geometry with its DGGS serialization.</p>
 </div>
@@ -3809,7 +3834,7 @@ to be used in SPARQL graph patterns.</p></td>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_function_geofasdggs"><a class="anchor" href="#_function_geofasdggs"></a>8.7.5.3. Function: geof:asDGGS</h5>
+<h5 id="_function_geofasdggs"><a class="anchor" href="#_function_geofasdggs"></a>8.8.5.3. Function: geof:asDGGS</h5>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral</code></pre>
@@ -3835,7 +3860,7 @@ to be used in SPARQL graph patterns.</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.8. Non-topological Query Functions</h3>
+<h3 id="_non_topological_query_functions"><a class="anchor" href="#_non_topological_query_functions"></a>8.9. Non-topological Query Functions</h3>
 <div class="paragraph">
 <p>This Requirements class defines SPARQL functions for performing non-topological spatial operations.</p>
 </div>
@@ -3950,7 +3975,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 <p>Functions from this Requirements class are listed below, alphabetically.</p>
 </div>
 <div class="sect3">
-<h4 id="_function_notes"><a class="anchor" href="#_function_notes"></a>8.8.1. Function notes</h4>
+<h4 id="_function_notes"><a class="anchor" href="#_function_notes"></a>8.9.1. Function notes</h4>
 <div class="paragraph">
 <p>These notes apply to all of the following functions in this section.</p>
 </div>
@@ -4023,7 +4048,7 @@ Several non-topological query functions use a unit of measure IRI. See the <a hr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmetricarea"><a class="anchor" href="#_function_geofmetricarea"></a>8.8.2. Function: geof:metricArea</h4>
+<h4 id="_function_geofmetricarea"><a class="anchor" href="#_function_geofmetricarea"></a>8.9.2. Function: geof:metricArea</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:metricArea (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4034,7 +4059,7 @@ Several non-topological query functions use a unit of measure IRI. See the <a hr
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofarea"><a class="anchor" href="#_function_geofarea"></a>8.8.3. Function: geof:area</h4>
+<h4 id="_function_geofarea"><a class="anchor" href="#_function_geofarea"></a>8.9.3. Function: geof:area</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:area (geom: ogc:geomLiteral, units: xsd:anyURI): rdf:Resource</code></pre>
@@ -4057,7 +4082,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.8.4. Function: geof:boundary</h4>
+<h4 id="_function_geofboundary"><a class="anchor" href="#_function_geofboundary"></a>8.9.4. Function: geof:boundary</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:boundary (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4068,7 +4093,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofboundingcircle"><a class="anchor" href="#_function_geofboundingcircle"></a>8.8.5. Function: geof:boundingCircle</h4>
+<h4 id="_function_geofboundingcircle"><a class="anchor" href="#_function_geofboundingcircle"></a>8.9.5. Function: geof:boundingCircle</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4079,7 +4104,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmetricbuffer"><a class="anchor" href="#_function_geofmetricbuffer"></a>8.8.6. Function: geof:metricBuffer</h4>
+<h4 id="_function_geofmetricbuffer"><a class="anchor" href="#_function_geofmetricbuffer"></a>8.9.6. Function: geof:metricBuffer</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:metricBuffer (geom: ogc:geomLiteral,
@@ -4091,7 +4116,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.8.7. Function: geof:buffer</h4>
+<h4 id="_function_geofbuffer"><a class="anchor" href="#_function_geofbuffer"></a>8.9.7. Function: geof:buffer</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:buffer (geom: ogc:geomLiteral,
@@ -4116,7 +4141,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.8.8. Function: geof:convexHull</h4>
+<h4 id="_function_geofconvexhull"><a class="anchor" href="#_function_geofconvexhull"></a>8.9.8. Function: geof:convexHull</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:convexHull (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4127,7 +4152,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofconcavehull"><a class="anchor" href="#_function_geofconcavehull"></a>8.8.9. Function: geof:concaveHull</h4>
+<h4 id="_function_geofconcavehull"><a class="anchor" href="#_function_geofconcavehull"></a>8.9.9. Function: geof:concaveHull</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:concaveHull (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4138,7 +4163,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofcoordinatedimension"><a class="anchor" href="#_function_geofcoordinatedimension"></a>8.8.10. Function: geof:coordinateDimension</h4>
+<h4 id="_function_geofcoordinatedimension"><a class="anchor" href="#_function_geofcoordinatedimension"></a>8.9.10. Function: geof:coordinateDimension</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer</code></pre>
@@ -4149,7 +4174,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.8.11. Function: geof:difference</h4>
+<h4 id="_function_geofdifference"><a class="anchor" href="#_function_geofdifference"></a>8.9.11. Function: geof:difference</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:difference (geom1: ogc:geomLiteral,
@@ -4161,7 +4186,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofdimension"><a class="anchor" href="#_function_geofdimension"></a>8.8.12. Function: geof:dimension</h4>
+<h4 id="_function_geofdimension"><a class="anchor" href="#_function_geofdimension"></a>8.9.12. Function: geof:dimension</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:dimension (geom: ogc:geomLiteral): xsd:integer</code></pre>
@@ -4172,7 +4197,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmetricdistance"><a class="anchor" href="#_function_geofmetricdistance"></a>8.8.13. Function: geof:metricDistance</h4>
+<h4 id="_function_geofmetricdistance"><a class="anchor" href="#_function_geofmetricdistance"></a>8.9.13. Function: geof:metricDistance</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:metricDistance (geom1: ogc:geomLiteral,
@@ -4184,7 +4209,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.8.14. Function: geof:distance</h4>
+<h4 id="_function_geofdistance"><a class="anchor" href="#_function_geofdistance"></a>8.9.14. Function: geof:distance</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:distance (geom1: ogc:geomLiteral,
@@ -4209,7 +4234,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.8.15. Function: geof:envelope</h4>
+<h4 id="_function_geofenvelope"><a class="anchor" href="#_function_geofenvelope"></a>8.9.15. Function: geof:envelope</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:envelope (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4220,7 +4245,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofgeometryn"><a class="anchor" href="#_function_geofgeometryn"></a>8.8.16. Function: geof:geometryN</h4>
+<h4 id="_function_geofgeometryn"><a class="anchor" href="#_function_geofgeometryn"></a>8.9.16. Function: geof:geometryN</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:geometryN (geom: ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral</code></pre>
@@ -4231,7 +4256,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofgeometrytype"><a class="anchor" href="#_function_geofgeometrytype"></a>8.8.17. Function: geof:geometryType</h4>
+<h4 id="_function_geofgeometrytype"><a class="anchor" href="#_function_geofgeometrytype"></a>8.9.17. Function: geof:geometryType</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:geometryType (geom: ogc:geomLiteral): xsd:anyURI</code></pre>
@@ -4242,7 +4267,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.8.18. Function: geof:getSRID</h4>
+<h4 id="_function_geofgetsrid"><a class="anchor" href="#_function_geofgetsrid"></a>8.9.18. Function: geof:getSRID</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI</code></pre>
@@ -4253,7 +4278,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.8.19. Function: geof:intersection</h4>
+<h4 id="_function_geofintersection"><a class="anchor" href="#_function_geofintersection"></a>8.9.19. Function: geof:intersection</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:intersection (geom1: ogc:geomLiteral,
@@ -4265,7 +4290,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofis3d"><a class="anchor" href="#_function_geofis3d"></a>8.8.20. Function: geof:is3D</h4>
+<h4 id="_function_geofis3d"><a class="anchor" href="#_function_geofis3d"></a>8.9.20. Function: geof:is3D</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:is3D (geom: ogc:geomLiteral): xsd:boolean</code></pre>
@@ -4276,7 +4301,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofisempty"><a class="anchor" href="#_function_geofisempty"></a>8.8.21. Function: geof:isEmpty</h4>
+<h4 id="_function_geofisempty"><a class="anchor" href="#_function_geofisempty"></a>8.9.21. Function: geof:isEmpty</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:isEmpty (geom: ogc:geomLiteral): xsd:boolean</code></pre>
@@ -4287,7 +4312,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofismeasured"><a class="anchor" href="#_function_geofismeasured"></a>8.8.22. Function: geof:isMeasured</h4>
+<h4 id="_function_geofismeasured"><a class="anchor" href="#_function_geofismeasured"></a>8.9.22. Function: geof:isMeasured</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean</code></pre>
@@ -4298,7 +4323,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofissimple"><a class="anchor" href="#_function_geofissimple"></a>8.8.23. Function: geof:isSimple</h4>
+<h4 id="_function_geofissimple"><a class="anchor" href="#_function_geofissimple"></a>8.9.23. Function: geof:isSimple</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:isSimple (geom: ogc:geomLiteral): xsd:boolean</code></pre>
@@ -4309,7 +4334,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmetriclength"><a class="anchor" href="#_function_geofmetriclength"></a>8.8.24. Function: geof:metricLength</h4>
+<h4 id="_function_geofmetriclength"><a class="anchor" href="#_function_geofmetriclength"></a>8.9.24. Function: geof:metricLength</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:metricLength (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4320,7 +4345,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geoflength"><a class="anchor" href="#_function_geoflength"></a>8.8.25. Function: geof:length</h4>
+<h4 id="_function_geoflength"><a class="anchor" href="#_function_geoflength"></a>8.9.25. Function: geof:length</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:length (geom: ogc:geomLiteral, units: xsd:anyURI): xsd:double</code></pre>
@@ -4343,7 +4368,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmaxx"><a class="anchor" href="#_function_geofmaxx"></a>8.8.26. Function: geof:maxX</h4>
+<h4 id="_function_geofmaxx"><a class="anchor" href="#_function_geofmaxx"></a>8.9.26. Function: geof:maxX</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:maxX (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4354,7 +4379,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmaxy"><a class="anchor" href="#_function_geofmaxy"></a>8.8.27. Function: geof:maxY</h4>
+<h4 id="_function_geofmaxy"><a class="anchor" href="#_function_geofmaxy"></a>8.9.27. Function: geof:maxY</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:maxY (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4365,7 +4390,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofmaxz"><a class="anchor" href="#_function_geofmaxz"></a>8.8.28. Function: geof:maxZ</h4>
+<h4 id="_function_geofmaxz"><a class="anchor" href="#_function_geofmaxz"></a>8.9.28. Function: geof:maxZ</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:maxZ (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4376,7 +4401,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofminx"><a class="anchor" href="#_function_geofminx"></a>8.8.29. Function: geof:minX</h4>
+<h4 id="_function_geofminx"><a class="anchor" href="#_function_geofminx"></a>8.9.29. Function: geof:minX</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:minX (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4387,7 +4412,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofminy"><a class="anchor" href="#_function_geofminy"></a>8.8.30. Function: geof:minY</h4>
+<h4 id="_function_geofminy"><a class="anchor" href="#_function_geofminy"></a>8.9.30. Function: geof:minY</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:minY (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4398,7 +4423,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofminz"><a class="anchor" href="#_function_geofminz"></a>8.8.31. Function: geof:minZ</h4>
+<h4 id="_function_geofminz"><a class="anchor" href="#_function_geofminz"></a>8.9.31. Function: geof:minZ</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:minZ (geom: ogc:geomLiteral): xsd:double</code></pre>
@@ -4409,7 +4434,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofnumgeometries"><a class="anchor" href="#_function_geofnumgeometries"></a>8.8.32. Function: geof:numGeometries</h4>
+<h4 id="_function_geofnumgeometries"><a class="anchor" href="#_function_geofnumgeometries"></a>8.9.32. Function: geof:numGeometries</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:numGeometries (geom: ogc:geomLiteral): xsd:integer</code></pre>
@@ -4420,7 +4445,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofspatialdimension"><a class="anchor" href="#_function_geofspatialdimension"></a>8.8.33. Function: geof:spatialDimension</h4>
+<h4 id="_function_geofspatialdimension"><a class="anchor" href="#_function_geofspatialdimension"></a>8.9.33. Function: geof:spatialDimension</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:spatialDimension (geom: ogc:geomLiteral): xsd:integer</code></pre>
@@ -4431,7 +4456,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.8.34. Function: geof:symDifference</h4>
+<h4 id="_function_geofsymdifference"><a class="anchor" href="#_function_geofsymdifference"></a>8.9.34. Function: geof:symDifference</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:symDifference (geom1: ogc:geomLiteral,
@@ -4443,7 +4468,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geoftransform"><a class="anchor" href="#_function_geoftransform"></a>8.8.35. Function: geof:transform</h4>
+<h4 id="_function_geoftransform"><a class="anchor" href="#_function_geoftransform"></a>8.9.35. Function: geof:transform</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral</code></pre>
@@ -4466,7 +4491,7 @@ We recommend that implementers use the same literal type as a result of this fun
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.8.36. Function: geof:union</h4>
+<h4 id="_function_geofunion"><a class="anchor" href="#_function_geofunion"></a>8.9.36. Function: geof:union</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:union (geom1: ogc:geomLiteral,
@@ -4492,7 +4517,7 @@ We recommend that implementers use the same literal type as a result of this fun
 </div>
 </div>
 <div class="sect2">
-<h3 id="_spatial_aggregate_functions"><a class="anchor" href="#_spatial_aggregate_functions"></a>8.9. Spatial Aggregate Functions</h3>
+<h3 id="_spatial_aggregate_functions"><a class="anchor" href="#_spatial_aggregate_functions"></a>8.10. Spatial Aggregate Functions</h3>
 <div class="paragraph">
 <p>This clause defines SPARQL functions for performing spatial aggregations of data.</p>
 </div>
@@ -4517,7 +4542,7 @@ as a SPARQL extension functions.</p></td>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_function_geofaggboundingbox"><a class="anchor" href="#_function_geofaggboundingbox"></a>8.9.1. Function: geof:aggBoundingBox</h4>
+<h4 id="_function_geofaggboundingbox"><a class="anchor" href="#_function_geofaggboundingbox"></a>8.10.1. Function: geof:aggBoundingBox</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4528,7 +4553,7 @@ as a SPARQL extension functions.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofaggboundingcircle"><a class="anchor" href="#_function_geofaggboundingcircle"></a>8.9.2. Function: geof:aggBoundingCircle</h4>
+<h4 id="_function_geofaggboundingcircle"><a class="anchor" href="#_function_geofaggboundingcircle"></a>8.10.2. Function: geof:aggBoundingCircle</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4539,7 +4564,7 @@ as a SPARQL extension functions.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofaggcentroid"><a class="anchor" href="#_function_geofaggcentroid"></a>8.9.3. Function: geof:aggCentroid</h4>
+<h4 id="_function_geofaggcentroid"><a class="anchor" href="#_function_geofaggcentroid"></a>8.10.3. Function: geof:aggCentroid</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4550,7 +4575,7 @@ as a SPARQL extension functions.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofaggconcavehull"><a class="anchor" href="#_function_geofaggconcavehull"></a>8.9.4. Function: geof:aggConcaveHull</h4>
+<h4 id="_function_geofaggconcavehull"><a class="anchor" href="#_function_geofaggconcavehull"></a>8.10.4. Function: geof:aggConcaveHull</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral</code></pre>
@@ -4561,7 +4586,7 @@ as a SPARQL extension functions.</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofaggconvexhull"><a class="anchor" href="#_function_geofaggconvexhull"></a>8.9.5. Function: geof:aggConvexHull</h4>
+<h4 id="_function_geofaggconvexhull"><a class="anchor" href="#_function_geofaggconvexhull"></a>8.10.5. Function: geof:aggConvexHull</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggConvexHull (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -4584,7 +4609,7 @@ This function is similar in name to <a href="#_function_geofconvexhull">geof:con
 </div>
 </div>
 <div class="sect3">
-<h4 id="_function_geofaggunion"><a class="anchor" href="#_function_geofaggunion"></a>8.9.6. Function: geof:aggUnion</h4>
+<h4 id="_function_geofaggunion"><a class="anchor" href="#_function_geofaggunion"></a>8.10.6. Function: geof:aggUnion</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>geof:aggUnion (geom: ogc:geomLiteral): ogc:geomLiteral</code></pre>
@@ -5844,7 +5869,7 @@ to be used in SPARQL graph patterns.</p>
 </div>
 <div class="paragraph">
 <p>Implementations shall allow the properties
-<a href="#Property: geo:dimension"><code>geo:dimension</code></a>,
+<a href="#_property_geodimension"><code>geo:dimension</code></a>,
 <a href="#_property_geocoordinatedimension"><code>geo:coordinateDimension</code></a>,
 <a href="#_property_geospatialdimension"><code>geo:spatialDimension</code></a>,
 <a href="#_property_geoisempty"><code>geo:isEmpty</code></a>,
@@ -5861,7 +5886,7 @@ to be used in SPARQL graph patterns.</p>
 <p><strong>Test method</strong>: Verify that queries involving these properties return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_standard_properties_for_geogeometry">[_standard_properties_for_geogeometry]</a></p>
+<p><strong>Reference</strong>: <a href="#_standard_properties_for_geogeometry">Section 8.7</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -5926,7 +5951,7 @@ SPARQL extension functions.</p>
 <a href="#_function_geofboundary"><code>geof:boundary</code></a>.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_non_topological_query_functions">Section 8.8</a></p>
+<p><strong>Reference</strong>: <a href="#_non_topological_query_functions">Section 8.9</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -5953,7 +5978,7 @@ as a SPARQL extension function.</p>
 <p><strong>Test method</strong>: Verify that a SPARQL query involving the <a href="#_function_geofgetsrid">get SRID</a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofgetsrid">Section 8.8.18</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofgetsrid">Section 8.9.18</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -5985,7 +6010,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving these functions return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_spatial_aggregate_functions">Section 8.9</a></p>
+<p><strong>Reference</strong>: <a href="#_spatial_aggregate_functions">Section 8.10</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6013,7 +6038,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.7.1.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.8.1.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6038,7 +6063,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.7.1.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.8.1.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6063,7 +6088,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving  <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.7.1.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.8.1.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6088,7 +6113,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geowktliteral">WKT Literal</a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.7.1.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geowktliteral">Section 8.8.1.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6113,7 +6138,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoaswkt"><code>geo:asWKT</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoaswkt">Section 8.7.1.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoaswkt">Section 8.8.1.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6138,7 +6163,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofaswkt"><code>geof:asWKT</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofaswkt">Section 8.7.1.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofaswkt">Section 8.8.1.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6166,7 +6191,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogmlliteral"><code>geo:gmlLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.7.2.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.8.2.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6191,7 +6216,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geogmlliteral"><code>geo:gmlLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.7.2.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.8.2.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6216,7 +6241,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Examine the implementation’s documentation to verify that the supported GML profiles are documented.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.7.2.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogmlliteral">Section 8.8.2.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Documentation</p>
@@ -6241,7 +6266,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoaswkt"><code>geo:asGML</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasgml">Section 8.7.2.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasgml">Section 8.8.2.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6266,7 +6291,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasgml"><code>geof:asGML</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofasgml">Section 8.7.2.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofasgml">Section 8.8.2.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6294,7 +6319,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogeojsonliteral"><code>geo:geoJSONLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasgml">Section 8.7.2.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasgml">Section 8.8.2.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6319,7 +6344,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geogeojsonliteral"><code>geo:geoJSONLiteral</code></a> values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.7.3.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.8.3.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6344,7 +6369,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geogeojsonliteral"><code>geo:geoJSONLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.7.3.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geogeojsonliteral">Section 8.8.3.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6369,7 +6394,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoasgeojson"><code>geo:asGeoJSON</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasgeojson">Section 8.7.3.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasgeojson">Section 8.8.3.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6394,7 +6419,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasgeojson"><code>geof:asGeoJSON</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofasgeojson">Section 8.7.3.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofasgeojson">Section 8.8.3.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6422,7 +6447,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geokmlliteral"><code>geo:kmlLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.7.4.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.8.4.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6447,7 +6472,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving <a href="#_rdfs_datatype_geokmlliteral"><code>geo:kmlLiteral</code></a>  values without an explicit encoded SRS IRI return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.7.4.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.8.4.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6472,7 +6497,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geokmlliteral"><code>geo:kmlLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.7.4.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geokmlliteral">Section 8.8.4.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6497,7 +6522,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoaskml"><code>geo:asKML</code></a>  property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoaskml">Section 8.7.4.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoaskml">Section 8.8.4.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6522,7 +6547,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofaskml"><code>geof:asKML</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofaskml">Section 8.7.4.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofaskml">Section 8.8.4.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6550,7 +6575,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geodggsliteral"><code>geo:dggsLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.7.5.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.8.5.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6575,7 +6600,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geodggsliteral"><code>geo:dggsLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.7.5.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.8.5.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6600,7 +6625,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoasdggs"><code>geo:asDGGS</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.7.5.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.8.5.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6625,7 +6650,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasdggs"><code>geof:asDGGS</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofasdggs">Section 8.7.5.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofasdggs">Section 8.8.5.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6742,7 +6767,7 @@ to be used in SPARQL graph patterns.</p>
 </div>
 <div class="paragraph">
 <p>Implementations shall allow the properties
-<a href="#Property: geo:dimension"><code>geo:dimension</code></a>,
+<a href="#_property_geodimension"><code>geo:dimension</code></a>,
 <a href="#_property_geospatialdimension"><code>geo:spatialDimension</code></a>,
 <a href="#_property_geoisempty"><code>geo:isEmpty</code></a>,
 <a href="#_property_geoissimple"><code>geo:isSimple</code></a> and
@@ -6758,7 +6783,7 @@ to be used in SPARQL graph patterns.</p>
 <p><strong>Test method</strong>: Verify that queries involving these properties return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_standard_properties_for_geogeometry">[_standard_properties_for_geogeometry]</a></p>
+<p><strong>Reference</strong>: <a href="#_standard_properties_for_geogeometry">Section 8.7</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6816,7 +6841,7 @@ as SPARQL extension functions</p>
 <a href="#_function_geofboundary"><code>geof:boundary</code></a>.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_non_topological_query_functions">Section 8.8</a></p>
+<p><strong>Reference</strong>: <a href="#_non_topological_query_functions">Section 8.9</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6843,7 +6868,7 @@ as a SPARQL extension function.</p>
 <p><strong>Test method</strong>: Verify that a SPARQL query involving the <a href="#_function_geofgetsrid"><code>geof:getSRID</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofgetsrid">Section 8.8.18</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofgetsrid">Section 8.9.18</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6876,7 +6901,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving these functions return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_spatial_aggregate_functions">Section 8.9</a></p>
+<p><strong>Reference</strong>: <a href="#_spatial_aggregate_functions">Section 8.10</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6904,7 +6929,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries do not use use this datatype but instead use specializations of it.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.7.5.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.8.5.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6929,7 +6954,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving empty <a href="#_rdfs_datatype_geodggsliteral"><code>geo:dggsLiteral</code></a> values return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.7.5.1</a></p>
+<p><strong>Reference</strong>: <a href="#_rdfs_datatype_geodggsliteral">Section 8.8.5.1</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6954,7 +6979,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that queries involving the <a href="#_property_geoasdggs"><code>geo:asDGGS</code></a> property return the correct result for a test dataset.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.7.5.2</a></p>
+<p><strong>Reference</strong>: <a href="#_property_geoasdggs">Section 8.8.5.2</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -6979,7 +7004,7 @@ as a SPARQL extension functions.</p>
 <p><strong>Test method</strong>: Verify that a set of SPARQL queries involving the <a href="#_function_geofasdggs"><code>geof:asDGGS</code></a> function returns the correct result for a test dataset when using the specified serialization and version.</p>
 </li>
 <li>
-<p><strong>Reference</strong>: <a href="#_function_geofasdggs">Section 8.7.5.3</a></p>
+<p><strong>Reference</strong>: <a href="#_function_geofasdggs">Section 8.8.5.3</a></p>
 </li>
 <li>
 <p><strong>Test Type</strong>: Capabilities</p>
@@ -7358,7 +7383,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <p>The value <code>ogc:geomLiteral</code> indicates any one of the specific geometry serializations datatypes defined in this Specification, for example <a href="#_rdfs_datatype_geowktliteral"><code>geo:wktLiteral</code></a>.</p>
 </div>
 <div class="paragraph">
-<p>The geometry subtypes - Polygon, Point, CellList etc. - are the <em>Simple Features specification</em> <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> or DGGS types, as implemented by the various geometry serialization specifications referenced here. See <a href="#_geometry_serializations">Section 8.7</a> for the individual specification references.</p>
+<p>The geometry subtypes - Polygon, Point, CellList etc. - are the <em>Simple Features specification</em> <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> or DGGS types, as implemented by the various geometry serialization specifications referenced here. See <a href="#_geometry_serializations">Section 8.8</a> for the individual specification references.</p>
 </div>
 </div>
 </div>
@@ -8792,7 +8817,7 @@ eg:x
 <div class="sect3">
 <h4 id="_c_1_2_3_geometry_properties"><a class="anchor" href="#_c_1_2_3_geometry_properties"></a>C.1.2.3 Geometry Properties</h4>
 <div class="paragraph">
-<p>This example shows a <code>Geometry</code> instance, a Blank Node, declared in relation to a <code>Feature</code> instance, with each of the properties defined in <a href="#Standard Properties for geo:Geometry">[Standard Properties for geo:Geometry]</a> used.</p>
+<p>This example shows a <code>Geometry</code> instance, a Blank Node, declared in relation to a <code>Feature</code> instance, with each of the properties defined in <a href="#_standard_properties_for_geogeometry">Section 8.7</a> used.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -12341,7 +12366,7 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-02 19:13:21 UTC
+Last updated 2022-11-02 19:39:13 UTC
 </div>
 </div>
 </body>
