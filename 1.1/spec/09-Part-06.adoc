@@ -5,7 +5,7 @@ This clause establishes the *Core* Requirements class, with IRI `/req/core`, whi
 The figure below gives an overview of the classes and properties defined by GeoSPARQL in the *Core*, *Topology Vocabulary Extension* and *Geometry Extension*, *Geometry Topology Extension* and *RDFS Entailment Extension* Conformance Classes. 
 
 [#ont-overview]
-.An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, their prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of `geo:hasSize`, its metric equivalent and `geo:hasSerialization` are not shown for clarity.
+.An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of `geo:hasSize`, its metric equivalent and `geo:hasSerialization` are not shown for clarity.
 image::img/ont-overview.png[GeoSPARQL Ontology overview,align="center"]
 
 === SPARQL
@@ -18,7 +18,7 @@ image::img/ont-overview.png[GeoSPARQL Ontology overview,align="center"]
 
 === Classes
 
-Two main classes are defined: <<Class: geo:SpatialObject, `geo:SpatialObject`>> and <<Class: geo:Feature, `geo:Feature`>>. The class <<Class: geo:Feature, `geo:Feature`>> is equivalent to the UML class `Feature` defined in <<ISO19109>>.
+Two main classes are defined: <<Class: geo:SpatialObject, `geo:SpatialObject`>> and <<Class: geo:Feature, `geo:Feature`>>. 
 
 Two container classes are defined: <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> and <<Class: geo:FeatureCollection, Feature Collection>>. 
 
@@ -101,7 +101,7 @@ geo:SpatialObjectCollection
 .
 ```
 
-The restriction imposed on the generic `rdfs:Container` that defines this class is that only instances of <<Class: SpatialObject, Spatial Object>> are allowed to be members of it and these are indicated with the `rdfs:member` property.
+Membership of the generic `rdfs:Container` that defines this class is restricted to instances of <<Class: SpatialObject, Spatial Object>>. `geo:SpatialObjectCollection` members are to be indicated with the `rdfs:member` property.
 
 [#req_core_spatial-object-collection-class]
 |===
@@ -128,7 +128,7 @@ geo:FeatureCollection
 .
 ```
 
-The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Feature, Feature>> are allowed to be members of it and these are to be indicated with the `rdfs:member` property.
+Membership of the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: Feature, Feature>>. `geo:FeatureCollection` members are to be indicated with the `rdfs:member` property.
 
 [#req_core_feature-collection-class]
 |===
@@ -429,7 +429,7 @@ Such cases are application-specific data modeling errors and are therefore outsi
 
 ==== Property: geo:hasBoundingBox
 
-The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically used in indexing and discovery.
+The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of the feature's geometry. Bounding-boxes are typically used in indexing and discovery.
 
 ```turtle
 geo:hasBoundingBox 

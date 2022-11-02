@@ -1,34 +1,34 @@
 == Geometry Extension
 
-This clause establishes the _Geometry Extension_ parameterized Requirements class with base IRI `/req/geometry-extension`, which have a single corresponding conformance class _Geometry Extension_, with IRI `/conf/geometry-extension`. These Requirements define a vocabulary for asserting and querying information about geometry data, and define query functions for operating on geometry data.
+This clause defines the _Geometry Extension_ parameterized Requirements class with the base IRI `/req/geometry-extension`. There is a single corresponding conformance class _Geometry Extension_, with the IRI `/conf/geometry-extension`. These Requirements define a vocabulary for asserting and querying information about geometry data, and define query functions for operating on geometry data.
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
 
 === Rationale
 
-Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabularyfootnote:[http://www.w3.org/2003/01/geo/] was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things, using WGS84 as a reference datum" and many widely used Semantic Web vocabularies contain some spatial data support. For example, _Dublin Core Terms_ provides a _Location_ classfootnote:[http://purl.org/dc/terms/Location] for "A spatial region or named place." and _schema.org_ provides a number of spatial object and geometry classes, such as `GeoCoordinates` footnote:[https://schema.org/GeoCoordinates] and `GeoShape` footnote:[https://schema.org/GeoShape]. 
+Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabularyfootnote:[http://www.w3.org/2003/01/geo/] was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things. Geo specifies WGS84 as the reference datum". Further, many widely used Semantic Web vocabularies contain some spatial data support. For example, _Dublin Core Terms_ provides a _Location_ classfootnote:[http://purl.org/dc/terms/Location] for "A spatial region or named place." and _schema.org_ provides a number of spatial object and geometry classes, such as `GeoCoordinates` footnote:[https://schema.org/GeoCoordinates] and `GeoShape` footnote:[https://schema.org/GeoShape]. 
 
-Many vocabularies, such as these, provide little specific support for detailed geometries and only support the WGS84 Coordinate Reference System (CRS).
+Many vocabularies such as the above provide little specific support for detailed geometries and only specify using the WGS84 Coordinate Reference System (CRS).
 
-Since 2012 and the first version of GeoSPARQL, many ontologies have imported GeoSPARQL, for example, the _ISA Programme Location Core Vocabulary_ footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent _Data Catalog Vocabulary, Version 2_ (DCAT2) standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
+Since the first version of GeoSPARQL, many ontologies have imported GeoSPARQL. For example, the _ISA Programme Location Core Vocabulary_ footnote:[https://www.w3.org/ns/locn] whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL's "geometry class". The W3C's more recent _Data Catalog Vocabulary, Version 2_ (DCAT2) standardfootnote:[https://www.w3.org/TR/vocab-dcat/#spatial-properties] similarly contains usage notes for `geometry`, `bbox` and other properties that suggest the use of GeoSPARQL literals.
 
 Some of the properties defined in these vocabularies, such as DCAT2's https://www.w3.org/TR/vocab-dcat-2/#Property:dataset_spatial_resolution[`dcat:spatialResolution`] have motivated the inclusion of new properties in this version of GeoSPARQL. In this case the equivalent property is <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>. The GeoSPARQL 1.1 Standards Working Group charter <<CHARTER>> contains references to a number of vocabularies/ontologies that were influential in the generation of this version of GeoSPARQL.
 
 === GeoSPARQL and Simple Features (SFA-CA)
 
-The GeoSPARQL Geometry Extension is largely based on the specification Simple Features Access - Common Architecture (SFA-CA) <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry, not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
+The GeoSPARQL Geometry Extension is largely based on the ISO/OGC Simple Features Access - Common Architecture (SFA-CA) Standard <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry and not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
 
-Neither GeoSPARQL nor SFA-CA support full three dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
+Neither GeoSPARQL nor SFA-CA support full three dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This approach is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
 
 SFA-CA also describes M coordinate values that may be part of geometry encodings. The M value represents a measure, a value that can be used in information systems that support linear referencing. GeoSPARQL at the moment does not support linear referencing. Like Z values in coordinates, M values are to be ignored.
 
-SFA-CA specifies a class hierarchy for Geometry. Although these classes are not part of the GeoSPARQL ontology, the GeoSPARQL SWG does publish a vocabulary of Simple Features geometry: http://www.opengis.net/ont/sf. Geometry types defined in this vocabulary can be considered safe to use with GeoSPARQL. The two Geometry serializations that were specified in GeoSPARQL 1.0, WKT and GML, fully support all SFA-CA geometry types. However, the two Geometry serializations that were introduced in GeoSPARQL 1.1 do not. Some SFA-CA geometry types are not supported by the KML or GeoJSON format. For example, neither KML nor GeoJSON support the TIN or Triangle geometry types.
+SFA-CA specifies a class hierarchy for Geometry. Although these classes are not part of the GeoSPARQL ontology, the GeoSPARQL SWG does publish a vocabulary of Simple Features geometry: http://www.opengis.net/ont/sf. Geometry types defined in this vocabulary can be considered safe to use with GeoSPARQL. The two Geometry serializations that were specified in GeoSPARQL 1.0, WKT and GML, fully support all SFA-CA geometry types. However, the two Geometry serializations that were introduced in GeoSPARQL 1.1 do not. Some SFA-CA geometry types are not supported by either the OGC KML <<OGCKML>> or the GeoJSON format. For example, neither KML nor GeoJSON support the Triangulated Integrated Network (TIN) or Triangle geometry types.
 
 === Recommendation for units of measure
-For geometric data to be interpreted and used correctly, the unit of distance should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>> or the function <<Function: geof:buffer, `geof:buffer`>>. In those cases it is advisable to make use of a well known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] but others may be used, as long as they are well-described.
+For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>> or the function <<Function: geof:buffer, `geof:buffer`>>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] but others may be used, as long as they are well-described.
 
 === Influence of Reference Systems on computations
-Geometric computations must always be mindful of the kind of space that is described by a Spatial Reference System (SRS). A Geometry object consists of a set of coordinates and a specification on how the coordinates should be interpreted: the SRS, commonly a CRS. Taken together, coordinates and SRS allow performing computations on Geometry objects. For example, sizes can be calculated or new Geometry objects can be created. Some Spatial Reference Systems describe a two-dimensional flat space. In that case, coordinates are understood to be Cartesian, and Cartesian geometric computations can be performed. But Spatial Reference Systems can describe other types of spaces, to which Cartesian computations are not applicable. For example, if CRS http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] is used, coordinates are to be interpreted as degrees of latitude and longitude, designating positions on a spheroid. The distance between two points using this CRS is different from the distance between two points that have the same coordinates but are based on a Cartesian CRS or other SRS.
+A Geometry object consists of a set of coordinates and a specification on how the coordinates should be interpreted. This specification is known as a Spatial reference System (SRS). Taken together, coordinates and SRS allow performing computations on Geometry objects. For example, sizes can be calculated or new Geometry objects can be created. Some Spatial Reference Systems describe a two-dimensional flat space. In that case, coordinates are understood to be Cartesian, and Cartesian geometric computations can be performed. But Spatial Reference Systems can describe other types of spaces, to which Cartesian computations are not applicable. For example, if CRS http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] is used, coordinates are to be interpreted as decimal degrees of latitude and longitude, designating positions on a spheroid. The distance between two points using this CRS is different from the distance between two points that have the same coordinates but are based on a Cartesian CRS or other SRS.
 
 To avoid erroneous computations involving Geometry, data publishers are recommended to clearly indicate the type of space that is described by the SRS.
 
@@ -91,7 +91,14 @@ geo:GeometryCollection
 .
 ```
 
-The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Geometry, Geometry>> are allowed to be members of it and these are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
+Restriction ;
+        owl:allValuesFrom geo:SpatialObject ;
+        owl:onProperty rdfs:member ;
+    ] ;
+.
+```
+
+Membership of the general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: Geometry, Geometry>>. `geo:GeometryCollection` members are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
 
 [NOTE]
 ====
@@ -99,7 +106,7 @@ There is no RDF/ontology relationship between this <<Class: geo:GeometryCollecti
 
 http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances can act as input or output of GeoSPARQL functions whereas <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> instances are more likely to be used for grouping `geo:Geometry` objects for other purposes.
 
-Many geometry literal formats also have the ability to represent multiple geometries. GML & KML use a _MultiGeometry_ type and WKT & GeoJSON use a _GeometryCollection_ type. While the names of some of these objects is the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization. 
+Many geometry literal formats also have the ability to represent multiple geometries. Both the OGC Geography Markup Language (GML) and KML use a _MultiGeometry_ type and Well Known Text (WKT) and GeoJSON use a _GeometryCollection_ type. While the names of some of these objects are the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization. 
 
 As per the expected use of http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances mentioned above: the uses of multi-geometry literals and <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> instances is expected to be different too.
 ====
@@ -182,7 +189,7 @@ geo:spatialDimension
 
 ==== Property: geo:hasSpatialResolution
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is defined to indicate spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It is the smallest distinguishable distance between adjacent coordinate sets. This property is not applicable to a point Geometry, because a point consists of a single coordinate set.
+The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasSpatialResolution`] is defined to indicate the spatial resolution of the elements within a Geometry. Spatial resolution specifies the level of detail of a Geometry. It is the smallest distinguishable distance between adjacent coordinate sets. This property is not applicable to a point Geometry, because a point consists of a single coordinate set.
 
 Since this property is defined for a <<Class: geo:Geometry, `geo:Geometry`>>, all literal representations of that Geometry instance must have the same spatial resolution.
 
@@ -215,7 +222,7 @@ geo:hasMetricSpatialResolution
 
 ==== Property: geo:hasSpatialAccuracy
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within wich the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
+The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
 
 ```turtle
 geo:hasSpatialAccuracy 
@@ -262,7 +269,7 @@ geo:isEmpty
 
 ==== Property: geo:isSimple
 
-The property http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] will indicate a Boolean object set to `true`, only if the Geometry contains no self-intersections, with the possible exception of its boundary.
+The property http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] will indicate a Boolean object set to `true` if and only if the Geometry contains no self-intersections, with the possible exception of its boundary.
 
 ```turtle
 geo:isSimple 
@@ -347,7 +354,7 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkt-literal-default-srs`]
 |===
 
-The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use, however others may also be used, as long as they are valid IRIs.
+The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use. However others may also be used, as long as they are valid IRIs.
 
 [#req_geometry_extension_wkt-axis-order]
 |===
@@ -700,9 +707,9 @@ dggsLiteral ::= iri-and-whitespace dggs-geomety-data
 iri-and-whitespace = "<" IRI ">" LWSP 
 ```
 
-The token `iri-and-whitespace` is an IRI and whitespace, the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `dggs-geometry-data` is geometry data formulated according to the DGGS identified by `IRI`.
+The token `iri-and-whitespace` is an IRI and whitespace. The token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>>. The token `LWSP` is one or more whitespace characters, as defined in <<IETF5234>>. `dggs-geometry-data` is geometry data formulated according to the DGGS identified by `IRI`.
 
-An example of a DGGS literal for the, AusPIX DGGS, could be:
+An example of a DGGS literal for the AusPIX DGGS could be:
 
 ```turtle
 "<https://w3id.org/dggs/auspix> CELL (R3234)"^^geo:dggsLiteral

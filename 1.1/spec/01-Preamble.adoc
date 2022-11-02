@@ -1,18 +1,18 @@
 == i.    Preface
-The GeoSPARQL standard defines:
+The OGC GeoSPARQL Standard defines:
 
-* a formal _profile_
-* **this specification document**
-** a core RDF/OWL ontology for geographic information representation
-* a set of SPARQL extension functions
-* a Functions & Rules vocabulary, derived from the ontology
-* a Simple Features geometry types vocabulary
-* SHACL shapes for RDF data validation
+* A formal _profile_;
+* **this document;**
+* A core RDF/OWL ontology for geographic information representation;
+* A set of SPARQL extension functions;
+* A Functions & Rules vocabulary, derived from the ontology;
+* A Simple Features geometry types vocabulary;
+* SHACL shapes for RDF data validation.
 
-This document has the role of _specification_ and authoritatively defines many of the standard's elements, including the ontology classes and properties, SPARQL functions and function and rule vocabulary concepts. Complete descriptions of the standard's parts and their roles are given in the Introduction in the section <<GeoSPARQL Standard structure>>.
+This document authoritatively defines many of the Standard's elements, including the ontology classes and properties, SPARQL functions, and function and rule vocabulary concepts. Complete descriptions of the Standard's parts and their roles are given in the Introduction in the section <<GeoSPARQL Standard structure>>.
 
 == ii. Submitting organizations
-The following organizations submitted this Implementation Specification to the Open Geospatial Consortium Inc.:
+The following organizations submitted this Implementation Standard to the Open Geospatial Consortium Inc.:
 
 [loweralpha]
 .. CSIRO
@@ -46,119 +46,10 @@ All questions regarding this submission should be directed to the editor or the 
 | Nicholas J. Car | SURROUND Australia Pty Ltd.
 |===
 
-== iv. Revision history
+== Clarifications
 
-|===
-|Date | Release | Author | Paragraph modified | Description
-
-| 27 Oct. 2009 | Draft | Matthew Perry | Clause 6 | Technical Draft
-| 11 Nov. 2009 | Draft | John R. Herring | All | Creation
-| 06 Jan. 2010 | Draft | John R. Herring | All | Comment responses
-| 30 March 2010 | Draft | Matthew Perry | All | Comment responses
-| 26 Oct. 2010 | Draft | Matthew Perry | All | Revision based on working group discussion
-| 28 Jan. 2011 | Draft | Matthew Perry | All | Revision based on working group discussion
-| 18 April 2011 | Draft | Matthew Perry | All | Restructure with multiple conformance classes
-| 02 May 2011 | Draft | Matthew Perry | Clause 6 and Clause 8 | Move Geometry Class from core to geometryExtension
-| 05 May 2011 | Draft | Matthew Perry | All | Update URIs
-| 13 Jan. 2012 | Draft | Matthew Perry | All | Revision based on Public RFC
-| 16 April 2012 | Draft | Matthew Perry | All | Revision based on adoption vote comments
-| 19 July 2012 | 1.0 | Matthew Perry | All | Revision of URIs based on OGC Naming Authority recommendations
-| 09 Oct. 2020 | 1.1 Draft | Joseph Abhayaratna | All | Establishment of the 1.1 Specification
-| 10 Oct. 2020
-
-to
-
-02 June. 2022
-
-| 1.1 Draft | GeoSPARQL 1.1 SWG | All | Addition of GeoSPARQL 1.1 elements
-|===
-
-=== Major changes between versions 1.0 and 1.1
-Version 1.1 of GeoSPARQL was released approximately 9 years after version 1.0. It contains no breaking changes to 1.0, but does contain additions and clarifications. Profile resources, new ontology elements and new functions were added. The major changes are given in the tables below.
-
-==== Profile resources
-
-These new profile resources are resources - documents - that are separate from this Specification. The new _profile definition_ lists all the GeoSPARQL 1.1 resources.
-
-|===
-|New resource | Location
-
-|Profile definition | http://www.opengis.net/def/geosparql
-|RDF validation file | http://www.opengis.net/def/geosparql-shapes
-|===
-
-==== Ontology elements and functions
-
-These new ontology elements and new functions are normatively defined in this specification document.
-
-|===
-|New element | Section
-
-2+|_**Classes**_
-|Spatial Object Collection class | <<Class: geo:SpatialObjectCollection>>
-|Feature Collection class | <<Class: geo:FeatureCollection>>
-|Geometry Collection class | <<Class: geo:GeometryCollection>>
-2+|_**Spatial Object Properties**_
-|hasSize | <<Property: geo:hasSize>>
-|hasMetricSize | <<Property: geo:hasMetricSize>>
-|hasLength | <<Property: geo:hasLength>>
-|hasMetricLength | <<Property: geo:hasMetricLength>>
-|hasPerimeterLength | <<Property: geo:hasPerimeterLength>>
-|hasMetricPerimeterLength | <<Property: geo:hasMetricPerimeterLength>>
-|hasArea | <<Property: geo:hasArea>>
-|hasMetricArea | <<Property: geo:hasMetricArea>>
-|hasVolume | <<Property: geo:hasVolume>>
-|hasMetricVolume | <<Property: geo:hasMetricVolume>>
-2+|_**Feature Properties**_
-|hasBoundingBox | <<Property: geo:hasBoundingBox>>
-|hasCentroid | <<Property: geo:hasCentroid>>
-2+|_**Geometry Serializations**_
-|geoJSONLiteral | <<RDFS Datatype: geo:geoJSONLiteral>>
-|asGeoJSON | <<Property: geo:asGeoJSON>>
-|asGeoJSON function | <<Function: geof:asGeoJSON>>
-|kmlLiteral | <<RDFS Datatype: geo:kmlLiteral>>
-|asKML | <<Property: geo:asKML>>
-|asKML function | <<Function: geof:asKML>>
-|dggsLiteral | <<RDFS Datatype: geo:dggsLiteral>>
-|asDGGS | <<Property: geo:asDGGS>>
-|asDGGS function | <<Function: geof:asDGGS>>
-2+|_**Non-topological Query Functions**_
-|area | <<Function: geof:area>>
-|boundingCircle | <<Function: geof:boundingCircle>>
-|concaveHull | <<Function: geof:concaveHull>>
-|coordinateDimension | <<Function: geof:coordinateDimension>>
-|dimension | <<Function: geof:dimension>>
-|geometryN | <<Function: geof:geometryN>>
-|geometryType | <<Function: geof:geometryType>>
-|is3D | <<Function: geof:is3D>>
-|isEmpty | <<Function: geof:isEmpty>>
-|isMeasured | <<Function: geof:isMeasured>>
-|isSimple | <<Function: geof:isSimple>>
-|length | <<Function: geof:length>>
-|maxX | <<Function: geof:maxX>>
-|maxY | <<Function: geof:maxY>>
-|maxZ | <<Function: geof:maxZ>>
-|metricArea | <<Function: geof:metricArea>>
-|metricDistance | <<Function: geof:metricDistance>>
-|minX | <<Function: geof:minX>>
-|minY | <<Function: geof:minY>>
-|minZ | <<Function: geof:minZ>>
-|numGeometries | <<Function: geof:numGeometries>>
-|spatialDimension | <<Function: geof:spatialDimension>>
-|transform | <<Function: geof:transform>>
-2+|_**Spatial Aggregate Functions**_
-|aggBoundingBox | <<Function: geof:aggBoundingBox>>
-|aggBoundingCircle | <<Function: geof:aggBoundingCircle>>
-|aggCentroid | <<Function: geof:aggCentroid>>
-|aggConcaveHull | <<Function: geof:aggConcaveHull>>
-|aggConvexHull | <<Function: geof:aggConvexHull>>
-|aggUnion | <<Function: geof:aggUnion>>
-|===
-
-==== Clarifications
-
-* The terms <<spatial reference system, Spatial Reference System (SRS)>> and <<coordinate reference system, Coordinate Reference System (CRS)>> are no longer interchangeable. Spatial Reference System is now taken to be a broader category than Coordinate Reference System, and we have provided the definitions we are using for each, linked to from the terms above, in the <<Terms and definitions>> section.
-* Class definitions were updated to be more self-contained and easier to understand for people without a background in geoinformatics. They are no longer dependent on other standards' definitions, only informed by them.
+* The terms <<spatial reference system, Spatial Reference System (SRS)>> and <<coordinate reference system, Coordinate Reference System (CRS)>> are no longer interchangeable. Spatial Reference System is now taken to be a broader category than Coordinate Reference System. These are defined in the <<Terms and definitions>> section.
+* Class definitions were updated to be more self-contained and easier to understand for people without a background in geoinformatics. The definitions are no longer dependent on other standards' definitions, only informed by them.
 * A section was added on <<Recommendation for specification of units of measurement,the specification of units of measurement>>.
 * A section was added on the <<Influence of Coordinate Reference Systems on geometric computations>>.
 
