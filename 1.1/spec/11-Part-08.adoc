@@ -790,6 +790,7 @@ This Requirements class defines SPARQL functions for performing non-topological 
 <<Function: geof:intersection, `geof:intersection`>>, 
 <<Function: geof:is3D, `geof:is3D`>>, 
 <<Function: geof:isEmpty, `geof:isEmpty`>>, 
+<<Function: geof:isClosed, `geof:isClosed`>>, 
 <<Function: geof:isMeasured, `geof:isMeasured`>>, 
 <<Function: geof:isSimple, `geof:isSimple`>>, 
 <<Function: geof:spatialDimension, `geof:spatialDimension`>>, 
@@ -1019,6 +1020,14 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 
 Returns the spatial reference system IRI for `geom`.
 
+==== Function: geof:interiorRingN
+
+```
+geof:interiorRingN (geom: ogc:geomLiteral, ringindex: xsd:integer): ogc:geomLiteral
+```
+
+Returns the nth interior ring of `geom` if the geometry represents a Polygon.
+
 ==== Function: geof:intersection
 
 ```
@@ -1036,6 +1045,14 @@ geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 
 Returns true if `geom` has z coordinate values.
 
+==== Function: geof:isClosed
+
+```
+geof:isClosed (geom: ogc:geomLiteral): xsd:boolean
+```
+
+Returns true if `geom` is a closed geometry, i.e. its start point equals its end point.
+
 ==== Function: geof:isEmpty
 
 ```
@@ -1051,6 +1068,14 @@ geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
 ```
 
 Returns true if `geom` has m coordinate values.
+
+==== Function: geof:isRing
+
+```
+geof:isRing (geom: ogc:geomLiteral): xsd:boolean
+```
+
+Returns true if `geom` is a closed geometry (see <<Function: geof:isClosed, geo:isClosed >>) , and simple (see <<Function: geof:isSimple, geo:isSimple >>).
 
 ==== Function: geof:isSimple
 
@@ -1133,6 +1158,30 @@ geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
 ```
 
 Returns the number of geometries of `geom`.
+
+==== Function: geof:numInteriorRing
+
+```
+geof:numInteriorRing (geom: ogc:geomLiteral): xsd:integer
+```
+
+Returns the number of interior rings of `geom` if the geometry represents a Polygon.
+
+==== Function: geof:numPoints
+
+```
+geof:numPoints (geom: ogc:geomLiteral): xsd:integer
+```
+
+Returns the number of points of `geom`.
+
+==== Function: geof:pointN
+
+```
+geof:pointN (geom:ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
+```
+
+Returns the nth point in `geom`.
 
 ==== Function: geof:spatialDimension
 
