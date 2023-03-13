@@ -792,6 +792,7 @@ This Requirements class defines SPARQL functions for performing non-topological 
 <<Function: geof:isEmpty, `geof:isEmpty`>>, 
 <<Function: geof:isClosed, `geof:isClosed`>>, 
 <<Function: geof:isMeasured, `geof:isMeasured`>>, 
+<<Function: geof:isRing, `geof:isRing`>>, 
 <<Function: geof:isSimple, `geof:isSimple`>>, 
 <<Function: geof:spatialDimension, `geof:spatialDimension`>>, 
 <<Function: geof:symDifference, `geof:symDifference`>>, 
@@ -809,14 +810,22 @@ as SPARQL extension functions, consistent with definitions of these functions in
 <<Function: geof:perimeter, `geof:perimeter`>>,
 <<Function: geof:metricArea, `geof:metricArea`>>, 
 <<Function: geof:area, `geof:area`>>, 
+<<Function: geof:endPoint, `geof:endPoint`>>,
 <<Function: geof:geometryN, `geof:geometryN`>>, 
 <<Function: geof:maxX, `geof:maxX`>>,
 <<Function: geof:maxY, `geof:maxY`>>, 
 <<Function: geof:maxZ, `geof:maxZ`>>,  
 <<Function: geof:minX, `geof:minX`>>, 
 <<Function: geof:minY, `geof:minY`>>,
-<<Function: geof:minZ, `geof:minZ`>> and
-<<Function: geof:numGeometries, `geof:numGeometries`>>
+<<Function: geof:minZ, `geof:minZ`>>,
+<<Function: geof:numGeometries, `geof:numGeometries`>>,
+<<Function: geof:numInteriorRing, `geof:numInteriorRing`>>, 
+<<Function: geof:numPoints, `geof:numPoints`>>,
+<<Function: geof:startPoint, `geof:startPoint`>>,
+<<Function: geof:X, `geof:X`>>,
+<<Function: geof:Y, `geof:Y`>>,
+<<Function: geof:Z, `geof:Z`>>,
+<<Function: geof:M, `geof:M`>>
 as SPARQL extension functions which are defined in this standard, for non-DGGS geometry literals.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions-non-sf`]
 |===
@@ -987,6 +996,14 @@ geof:distance (geom1: ogc:geomLiteral,
 Returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in the spatial reference system of `geom1`. This function is similar to <<Function: geof:metricDistance, `geof:metricDistance`>>, which does not need a specification of measurement unit.
 
 NOTE: See the <<Recommendation for specification of units of measurement, Recommendation for specification of units of measurement>>.
+
+==== Function: geof:endPoint
+
+```
+geof:endPoint (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+
+Returns the last point in the given `geom` in the literal format of `geom`.
 
 ==== Function: geof:envelope
 
@@ -1191,6 +1208,14 @@ geof:spatialDimension (geom: ogc:geomLiteral): xsd:integer
 
 Returns the spatial dimension of `geom`.
 
+==== Function: geof:startPoint
+
+```
+geof:startPoint (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+
+Returns the first point in the given `geom` in the literal format of  `geom`.
+
 ==== Function: geof:symDifference
 
 ```
@@ -1218,6 +1243,38 @@ geof:union (geom1: ogc:geomLiteral,
 ```
 
 This function returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
+
+==== Function: geof:X
+
+```
+geof:X (geom: ogc:geomLiteral): xsd:double
+```
+
+This function returns the X coordinate if `geom` is a point geometry. The X coordinate is determined by the X axis definition of its SRS.
+
+==== Function: geof:Y
+
+```
+geof:Y (geom: ogc:geomLiteral): xsd:double
+```
+
+This function returns the Y coordinate if `geom` is a point geometry. The Y coordinate is determined by the X axis definition of its SRS.
+
+==== Function: geof:Z
+
+```
+geof:Z (geom: ogc:geomLiteral): xsd:double
+```
+
+This function returns the Z coordinate if `geom` is a point geometry. The Z coordinate is determined by the X axis definition of its SRS.
+
+==== Function: geof:M
+
+```
+geof:M (geom: ogc:geomLiteral): xsd:double
+```
+
+This function returns the M coordinate if `geom` is a point geometry. The M coordinate is determined by the X axis definition of its SRS.
 
 [#req_geometry_extension_srid-function]
 |===
