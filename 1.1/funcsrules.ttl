@@ -662,6 +662,27 @@ funcs:asKML_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:kmlLiteral  .
 
+funcs:asWKB
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (funcs:asWKB_param1 ) ;
+    fno:returns (funcs:asWKB_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/geometry-as-wkb-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible."@en ;
+    skos:prefLabel "asWKB"@en ;
+.
+
+funcs:asWKB_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+funcs:asWKB_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wkbLiteral  .
+
 funcs:asWKT
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -1315,6 +1336,31 @@ funcs:getSRID_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:anyURI  .
 
+funcs:interiorRingN
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (funcs:interiorRingN_param1,funcs:interiorRingN_param2 ) ;
+    fno:returns (funcs:interiorRingN_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the nth interior ring of a geometry."@en ;
+    skos:prefLabel "interiorRingN"@en ;
+.
+
+funcs:interiorRingN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+   
+funcs:interiorRingN_param2 a fno:Parameter ;
+    fno:type xsd:integer  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "n"@en .
+
+funcs:interiorRingN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
 funcs:intersection
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -1557,6 +1603,31 @@ funcs:minz_param1 a fno:Parameter ;
 funcs:minz_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
+    
+funcs:pointN
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (funcs:pointN_param1,funcs:pointN_param2 ) ;
+    fno:returns (funcs:pointN_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the nth point of a geometry."@en ;
+    skos:prefLabel "pointN"@en ;
+.
+
+funcs:pointN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+   
+funcs:pointN_param2 a fno:Parameter ;
+    fno:type xsd:integer  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "n"@en .
+
+funcs:pointN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
 funcs:rcc8dc
     a sd:Function, fno:Function ;
