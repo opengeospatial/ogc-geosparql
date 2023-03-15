@@ -123,7 +123,9 @@ Properties are defined for describing geometry metadata.
 <<Property: geo:hasMetricSpatialResolution, `geo:hasMetricSpatialResolution`>>, 
 <<Property: geo:hasSpatialAccuracy, `geo:hasSpatialAccuracy`>>, 
 <<Property: geo:hasMetricSpatialAccuracy, `geo:hasMetricSpatialAccuracy`>>, 
+<<Property: geo:isClosed, `geo:isClosed`>>, 
 <<Property: geo:isEmpty, `geo:isEmpty`>>, 
+<<Property: geo:isRing, `geo:isRing`>>, 
 <<Property: geo:isSimple, `geo:isSimple`>> and 
 <<Property: geo:hasSerialization, `geo:hasSerialization`>> 
 to be used in SPARQL graph patterns.
@@ -243,6 +245,22 @@ geo:hasMetricSpatialAccuracy
 .
 ```
 
+==== Property: geo:isClosed
+
+The property http://www.opengis.net/ont/geosparql#isClosed[`geo:isClosed`] will indicate a Boolean object set to `true` if and only if the Geometry is closed, i.e. its start and end point are the same.
+
+```turtle
+geo:isClosed
+    a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "is closed"@en ;
+    skos:definition "(true) if this geometric object is closed. If
+                    true, then this geometric object's start point equals its end point."@en ; 
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:boolean ;
+.
+```
+
 ==== Property: geo:isEmpty
 
 The property http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`] will indicate a Boolean object set to `true` if and only if the Geometry contains no information.
@@ -255,6 +273,22 @@ geo:isEmpty
     skos:definition "(true) if this geometric object is the empty Geometry. If
                     true, then this geometric object represents the empty point
                     set for the coordinate space."@en ; 
+    rdfs:domain geo:Geometry ;
+    rdfs:range xsd:boolean ;
+.
+```
+
+==== Property: geo:isRing
+
+The property http://www.opengis.net/ont/geosparql#isRing[`geo:isRing`] will indicate a Boolean object set to `true` if and only if the Geometry is closed and simple.
+
+```turtle
+geo:isRing
+    a rdf:Property, owl:DatatypeProperty ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "is ring"@en ;
+    skos:definition "(true) if this geometric object is a ring. If
+                    true, then this geometric object's start point equals its end point, i.e. it is closed and it is simple, i.e. is has no self-intersections."@en ; 
     rdfs:domain geo:Geometry ;
     rdfs:range xsd:boolean ;
 .
