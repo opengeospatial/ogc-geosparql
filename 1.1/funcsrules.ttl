@@ -980,6 +980,75 @@ funcs:distance_param3 a fno:Parameter ;
 funcs:distance_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
+    
+funcs:dWithin
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (funcs:dWithin_param1 funcs:dWithin_param2 funcs:dWithin_param3 funcs:dWithin_param4 ) ;
+    fno:returns (funcs:dWithin_output ) ;  
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns true if the second goemetry is within the given distance of the first geometry."@en ;
+    skos:example spec11:B.2.2.4 ;
+    skos:prefLabel "dWithin"@en ;
+.
+
+funcs:dWithin_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+funcs:dWithin_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+funcs:dWithin_param3 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "distance"@en .
+    
+funcs:dWithin_param4 a fno:Parameter ;
+    fno:type xsd:anyURI  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "unit"@en .
+
+funcs:dWithin_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+    
+funcs:metricDWithin
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (funcs:metricDWithin_param1 funcs:metricDWithin_param2 funcs:metricDWithin_param3 ) ;
+    fno:returns (funcs:metricDWithin_output ) ;  
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns true if the second goemetry is within the given metric distance of the first geometry."@en ;
+    skos:example spec11:B.2.2.4 ;
+    skos:prefLabel "metricDWithin"@en ;
+.
+
+funcs:metricDWithin_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+funcs:metricDWithin_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+funcs:metricDWithin_param3 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "distance"@en .
+
+funcs:metricDWithin_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
 
 funcs:ehContains
     a sd:Function, fno:Function ;
