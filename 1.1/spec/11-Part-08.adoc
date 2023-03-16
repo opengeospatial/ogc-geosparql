@@ -777,6 +777,8 @@ This Requirements class defines SPARQL functions for performing non-topological 
 <<Function: geof:boundingCircle, `geof:boundingCircle`>>, 
 <<Function: geof:metricBuffer, `geof:metricBuffer`>>, 
 <<Function: geof:buffer, `geof:buffer`>>, 
+<<Function: geof:metricDWithin, `geof:metricDWithin`>>, 
+<<Function: geof:DWithin, `geof:DWithin`>>, 
 <<Function: geof:convexHull, `geof:convexHull`>>, 
 <<Function: geof:concaveHull, `geof:concaveHull`>>, 
 <<Function: geof:coordinateDimension, `geof:coordinateDimension`>>, 
@@ -948,6 +950,24 @@ geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 ```
 
 Returns the coordinate dimension of `geom`.
+
+==== Function: geof:metricDWithin
+
+```
+geof:metricDWithin (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
+                 distance: xsd:double): xsd:boolean
+```
+
+Returns true if `geom2` is within a given distance of `geom1`. Calculations are according to the units in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between meter and the unit of the spatial reference system.
+
+==== Function: geof:sfDWithin
+
+```
+geof:sfDWithin (geom: ogc:geomLiteral, geom2: ogc:geomLiteral, 
+                 distance: xsd:double, units: xsd:anyURI): xsd:boolean
+```
+
+Returns true if `geom2` is within a given distance of `geom1`. Calculations are in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between the unit given as a parameter and the unit of the spatial reference system.
 
 ==== Function: geof:difference
 
