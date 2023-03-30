@@ -38,17 +38,46 @@ ex:myfeature geo:hasStyle geo:mystyle .
 .
 ```
 
+==== Property: geo:markerIcon
+
+The property http://www.opengis.net/ont/geosparql#markerIcon[`geo:markerIcon`] links a <<Class: geo:Style, `geo:Style`>> to a representation of an icon which can be used on map representation as a marker or along or within a geometry. The value of this property may either be an SVG representation in a geo:svgLiteral or a link to an image representation, represented as an xsd:anyURI.
+
+```turtle
+ex:mystyle rdf:type geo:Style .
+ex:mystyle geo:markerIcon "<svg>...</svg>"^^geo:svgLiteral .
+ex:mystyle geo:markerIcon "http://......jpg"^^xsd:anyURI .
+```
+
 ==== Property: geo:asGeoCSS
 
 The property http://www.opengis.net/ont/geosparql#asGeoCSS[`geo:asGeoCSS`] links a <<Class: geo:Style, `geo:Style`>> to a serialization of the style in CSS rendered in a geo:geocssLiteral.
 
 ```turtle
 ex:mystyle rdf:type geo:Style .
-ex:mystyle geo:asGeoCSS ""^^geo:geocssLiteral .
+ex:mystyle geo:asGeoCSS "stroke:black,fill:red,stroke-width:3,fill-opacity:0.6"^^geo:geocssLiteral
 .
 ```
 
 ==== Datatype: geo:geocssLiteral
+
+The literal http://www.opengis.net/ont/geosparql#geocssLiteral[`geo:geocssLiteral`] encodes a subset of CSS statements which are applicable to geometry representations.
+The subset of CSS statements is limited to the statements which are applicable to SVG representations.
+In particular these are the following attributes:
+
+```css
+fill: color
+stroke: color
+stroke-width: number
+fill-opacity: number
+```
+
+==== Datatype: geo:svgLiteral
+
+The literal http://www.opengis.net/ont/geosparql#svgLiteral[`geo:svgLiteral`] encodes a SVG representation in plain text.
+
+```svg
+ex:mystyle geo:markerIcon "<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>"^^geo:svgLiteral .
+```
 
 
 
