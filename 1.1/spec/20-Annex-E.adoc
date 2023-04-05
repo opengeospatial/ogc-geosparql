@@ -57,7 +57,7 @@ POS Source: http://www.w3.org/2003/01/geo/
 | From Element | Mapping relation | To Element | Notes
 
 | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.w3.org/2003/01/geo/SpatialThing[`pos:SpatialThing`] | Both classes are unrestricted, essentially abstract classes
-| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct postitioning, it is a form of geometry
+| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct positioning, it is a form of geometry
 | http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | 
 | http://www.w3.org/2003/01/geo/lat_long[`pos:lat_long`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | A special datatype is not indicated for use with this property by POS, unlike GeoSPARQL's <<Property: geo:hasSerialization,`geo:hasSerialization`>> object literals
 | http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry,`geo:hasGeometry`>> |
@@ -100,7 +100,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | From Element | Mapping relation | To Element | Notes
 
 | http://geovocab.org/spatial#Feature[`spatial:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> |
-| http://geovocab.org/spatial#C[`spatial:C`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ec, `geo:rcc8ec`>> | Sub proerty not equivalent property since the NeoGeo property has more restrictive domain & range
+| http://geovocab.org/spatial#C[`spatial:C`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ec, `geo:rcc8ec`>> | Subproperty not equivalent property since the NeoGeo property has more restrictive domain & range
 | http://geovocab.org/spatial#DR[`spatial:DR`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8dc, `geo:rcc8dc`>> |
 | http://geovocab.org/spatial#EC[`spatial:EC`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8ec, `geo:rcc8ec`>> |
 | http://geovocab.org/spatial#EQ[`spatial:EQ`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:rcc8eq, `geo:rcc8eq`>> |
@@ -124,7 +124,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | http://geovocab.org/geometry#MultiPolygon[`geom:MultiPolygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`] |
 | http://geovocab.org/geometry#Polygon[`geom:Polygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] |
 | http://geovocab.org/geometry#Point[`geom:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] |
-| `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictve domain
+| `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictive domain
 |===
 
 * The `geom:bbox` property relates a Geometry to another Geometry and is thus not equivalent to GeoSPARQL's Feature-to-Geometry `geo:hasBoundingBox`.
@@ -163,7 +163,7 @@ and
 * TIME uses properties such as https://www.w3.org/TR/owl-time/inXSDDate[`time:inXSDDate`] to indicate the position of temporal entities on a temporal reference system
 * GeoSPARQL uses properties such as <<Property: geo:asWKT, `geo:asWKT`>> to indicate the position of spatial entities (Geometries) on spatial reference systems
 
-OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spati-temporal Feature may be indicated like this:
+OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spatio-temporal Feature may be indicated like this:
 
 ```turtle
 :flooded-area-x
@@ -213,7 +213,7 @@ schema.org Source: https://schema.org
 | <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | 	
 https://schema.org/GeoShape[`sdo:GeoShape`] | A GeoShape can various literal geometry representation
 | https://schema.org/GeospatialGeometry[`sdo:GeospatialGeometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | Since https://schema.org/GeospatialGeometry[`sdo:GeospatialGeometry`] is the domain of SimpleFeature-like properties and a superclass of GeoShape
-| https://schema.org/GeoCoordinates[`sdo:GeoCoordinates`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GoCoordinates uses direct lat, long, elevation etc properties to indicate position, not a while geometry serialization but it is nevertheless a form of a Geometry
+| https://schema.org/GeoCoordinates[`sdo:GeoCoordinates`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GoCoordinates uses direct lat, long, elevation etc. properties to indicate position, not a while geometry serialization but it is nevertheless a form of a Geometry
 | https://schema.org/geo[`sdo:geo`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry, `geo:hasGeometry`>> |
 | https://schema.org/geoCoveredBy[`sdo:geoCoveredBy`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:ehCoveredBy, `geo:ehCoveredBy`>> | 
 | https://schema.org/geoCovers[`sdo:geoCovers`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:ehCovers, `geo:ehCovers`>> | 
@@ -406,7 +406,7 @@ BFO Source: https://basic-formal-ontology.org/bfo-2020.html, and from there, an 
 | <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://purl.obolibrary.org/obo/BFO_0000006[`obo:BFO_0000006`] "spatial region" | BFO's "spatial region" class is described as a "spatial projection of a portion of spacetime" so Feature appears to be equivalent since Feature is "A discrete spatial phenomenon in a universe of discourse". The BFO example indicates it's for 1-, 2- & 3-D spatial regions, as Feature is.
 | <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/IAO_0000030[`obo:IAO_0000030`] "information content entity" | BFO's "information content entity" class is described as "an entity that represents information about some other entity", so Geometry appears to be equivalent since in GeoSPARQL, Geometry gives the details of the spatial project of a Feature.
 | http://purl.obolibrary.org/obo/BFO_0000040[`obo:BFO_0000040`] "material entity" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | A BFO "material entity" is something that "has some portion of matter as continuant part" so some Features are such, however Features may be imaginary too 
-| http://purl.obolibrary.org/obo/BFO_0000029[`obo:BFO_0000029`] "site" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | BFO's sites either covert the same areas as or have locations determined in relation to material entities so sites are Features but not necissarily the other way around
+| http://purl.obolibrary.org/obo/BFO_0000029[`obo:BFO_0000029`] "site" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | BFO's sites either covert the same areas as or have locations determined in relation to material entities so sites are Features but not necessarily the other way around
 | <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000211[`obo:BFO_0000211`] "occupies spatial region at all times" | The BFO property links a thing that is not a spatial region to a spatial region, so it can be used as <<Property: geo:hasGeometry, `geo:hasGeometry`>> is used when the thing is taken to be a <<Class: geo:Feature, `geo:Feature`>> and the spatial region a <<Class: geo:Geometry, `geo:Geometry`>>. No GeoSPARQL temporality indicators mean mappings are eternal.
 | <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000210[`obo:BFO_0000210`] "occupies spatial region at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
 | <<Property: geo:sfWithin, `geo:sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_000082[`obo:BFO_0000082`] "located in at all times" | The BFO property "located in at all times" is a super property of <<Property: geo:sfWithin, `geo:sfWithin`>> when the thing located in the spatial region are defined to both be instances of <<Class: geo:Feature, `geo:Feature`>>. Since GeoSPARQL natively supplies no temporal qualifiers, pure GeoSPARQL assertions are assumed to be eternal: "...at all times"
