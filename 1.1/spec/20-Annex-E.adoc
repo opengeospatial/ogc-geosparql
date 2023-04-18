@@ -57,7 +57,7 @@ POS Source: http://www.w3.org/2003/01/geo/
 | From Element | Mapping relation | To Element | Notes
 
 | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.w3.org/2003/01/geo/SpatialThing[`pos:SpatialThing`] | Both classes are unrestricted, essentially abstract classes
-| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct postitioning, it is a form of geometry
+| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct positioning, it is a form of geometry
 | http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | 
 | http://www.w3.org/2003/01/geo/lat_long[`pos:lat_long`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | A special datatype is not indicated for use with this property by POS, unlike GeoSPARQL's <<Property: geo:hasSerialization,`geo:hasSerialization`>> object literals
 | http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry,`geo:hasGeometry`>> |
@@ -115,7 +115,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | http://geovocab.org/spatial#TPP[`spatial:TPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8tpp`>> |
 | http://geovocab.org/spatial#TPPi[`spatial:TPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo::rcc8tppi`>> |
 | http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> |
-| http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundigBox` property
+| http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundingBox` property
 | http://geovocab.org/geometry#GeometryCollection[`geom:GeometryCollection`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> |
 | http://geovocab.org/geometry#LineString[`geom:LineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] |
 | http://geovocab.org/geometry#LinearString[`geom:LinearRing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LinearRing[`sf:LinearRing`] |
@@ -124,7 +124,7 @@ NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
 | http://geovocab.org/geometry#MultiPolygon[`geom:MultiPolygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`] |
 | http://geovocab.org/geometry#Polygon[`geom:Polygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] |
 | http://geovocab.org/geometry#Point[`geom:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] |
-| `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictve domain
+| `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictive domain
 |===
 
 * The `geom:bbox` property relates a Geometry to another Geometry and is thus not equivalent to GeoSPARQL's Feature-to-Geometry `geo:hasBoundingBox`.
@@ -163,7 +163,7 @@ and
 * TIME uses properties such as https://www.w3.org/TR/owl-time/inXSDDate[`time:inXSDDate`] to indicate the position of temporal entities on a temporal reference system
 * GeoSPARQL uses properties such as <<Property: geo:asWKT, `geo:asWKT`>> to indicate the position of spatial entities (Geometries) on spatial reference systems
 
-OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spati-temporal Feature may be indicated like this:
+OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spatio-temporal Feature may be indicated like this:
 
 ```turtle
 :flooded-area-x
