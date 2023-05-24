@@ -18,6 +18,8 @@ jobs:
          sudo apt-get install python3-dev python3-pip -y
          sudo apt-get install asciidoctor ruby -y
          sudo gem install --pre asciidoctor-pdf
+         sudo gem install metanorma-cli
+         sudo gem install metanorma-ogc
          sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
@@ -54,6 +56,8 @@ jobs:
          mkdir servicedescription
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC HTML"
          asciidoctor --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
+         echo "Generating GeoSPARQL 1.1 Specification ISO"
+         metanorma --type ogc ../../1.1/spec/00-GeoSPARQL.adoc -o speciso.html
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC PDF"
          asciidoctor-pdf -a pdf-theme=default-with-fallback-font --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
          echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC HTML"
