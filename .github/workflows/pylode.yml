@@ -5,6 +5,29 @@ on:
       branches:
           - master
 jobs:
+
+  buildiso:
+      runs-on: matrix.os
+      strategy:
+        matrix:
+          os: [ windows-latest, macos-latest, ubuntu-latest ]
+      name: Compule on ${{ matrix.os }}
+      steps:
+        - uses: actions/checkout@master
+        - uses: actions-mn/setup@v1
+        - name: Compile document
+          run: | 
+                mkdir docs/geosparql11/
+                cd geosparql11
+                metanorma --type ogc --extensions pdf,html geosparql11/document.adoc
+                ls
+        - name: Deploy 🚀
+          uses: JamesIves/github-pages-deploy-action@releases/v3
+          with:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+             BRANCH: gh-pages
+             FOLDER: docs/
+  
   build:
 
     runs-on: ubuntu-latest
@@ -18,9 +41,9 @@ jobs:
          sudo apt-get install python3-dev python3-pip -y
          sudo apt-get install asciidoctor ruby -y   
          sudo gem install --pre asciidoctor-pdf
-         sudo gem install metanorma-cli
-         sudo gem install metanorma-ogc
-         sudo apt-get install python3-venv python3-wheel default-jdk graphviz -y
+         # sudo gem install metanorma-cli
+         # sudo gem install metanorma-ogc
+         sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
          mkdir docs/geosparql11/
@@ -56,8 +79,8 @@ jobs:
          mkdir servicedescription
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC HTML"
          asciidoctor --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
-         echo "Generating GeoSPARQL 1.1 Specification ISO"
-         metanorma --type ogc  --extensions pdf,html ../../1.1/spec/00-GeoSPARQL.adoc
+         # echo "Generating GeoSPARQL 1.1 Specification ISO"
+         # metanorma --type ogc  --extensions pdf,html ../../1.1/spec/00-GeoSPARQL.adoc
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC PDF"
          asciidoctor-pdf -a pdf-theme=default-with-fallback-font --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
          echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC HTML"
