@@ -5,24 +5,6 @@ on:
       branches:
           - master
 jobs:
-
-  buildiso:
-      runs-on: metanorma/metanorma
-      name: Compiling ISO DOC
-      steps:
-        - uses: actions/checkout@master
-        - name: Compile document
-          run: | 
-                mkdir docs/geosparql11/
-                cd geosparql11
-                metanorma compile -t ogc -x pdf,html geosparql11/document.adoc
-                ls
-        - name: Deploy 🚀
-          uses: JamesIves/github-pages-deploy-action@releases/v3
-          with:
-             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-             BRANCH: gh-pages
-             FOLDER: docs/
   
   build:
 
@@ -116,7 +98,7 @@ jobs:
       uses: addnab/docker-run-action@v3
       with:
               image: metanorma/metanorma
-              options: -v "$(pwd)":/metanorma/ -w /metanorma metanorma/metanorma
+              options: -v ".":/metanorma/ -w /metanorma metanorma/metanorma
               run: |
                   metanorma compile -t ogc -x pdf,html docs/geosparql11/document.adoc
     - name: Deploy 🚀
