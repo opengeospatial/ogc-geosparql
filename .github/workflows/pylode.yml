@@ -7,19 +7,15 @@ on:
 jobs:
 
   buildiso:
-      runs-on: matrix.os
-      strategy:
-        matrix:
-          os: [ ubuntu-latest ]
-      name: Compule on ${{ matrix.os }}
+      runs-on: metanorma/metanorma
+      name: Compiling ISO DOC
       steps:
         - uses: actions/checkout@master
-        - uses: actions-mn/setup@v1
         - name: Compile document
           run: | 
                 mkdir docs/geosparql11/
                 cd geosparql11
-                metanorma --type ogc --extensions pdf,html geosparql11/document.adoc
+                metanorma compile -t ogc -x pdf,html geosparql11/document.adoc
                 ls
         - name: Deploy 🚀
           uses: JamesIves/github-pages-deploy-action@releases/v3
