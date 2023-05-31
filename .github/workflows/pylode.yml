@@ -19,8 +19,8 @@ jobs:
          sudo apt-get install python3-dev python3-pip -y
          sudo apt-get install asciidoctor ruby -y   
          sudo gem install --pre asciidoctor-pdf
-         # sudo gem install metanorma-cli
-         # sudo gem install metanorma-ogc
+         sudo gem install metanorma-cli
+         sudo gem install metanorma-ogc
          sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
@@ -95,12 +95,13 @@ jobs:
          pylode -i ../../1.1/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
     - name: Run the build process with Docker
-      uses: addnab/docker-run-action@v3
+    - uses: actions-mn/compile@main
       with:
-              image: metanorma/metanorma
-              options: -v "1.1/spec/":/metanorma/ -w /metanorma metanorma/metanorma
-              run: |
-                  metanorma compile -t ogc -x pdf,html 00-GeoSPARQL.adoc 
+        input-file: 1.1/geosparql11/00-GeoSPARQL.adoc
+        type: iso
+        extensions: html
+        output-dir: ./result1
+        no-install-fonts: true
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
