@@ -3,7 +3,10 @@
 
 This section establishes the introduction of geometry styles into the GeoSPARQL standard.
 
-A geometry style is a set of instructions which allow for the representation of the geometry in a given context.
+A geometry style is a set of instructions that allow for the representation of the geometry in a given context.
+
+It contains and represents the essential elements of the OGC Styled layer description standard without implementing the rules for their application.
+The latter might be implemented as SHACL or reasoning rules and, for now, fall out of the scope of GeoSPARQL.
 
 ==== Class: geo:Style
 
@@ -19,7 +22,7 @@ geo:Style
 .
 ```
 
-[#req_core_style-class]
+[#req_geostyle_style-class]
 |===
 | *Req {counter:req}* Implementations shall allow the RDFS class <<Class: geo:Style, `geo:Style`>> to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.0/req/core/style-class[`http://www.opengis.net/spec/geosparql/1.0/req/core/style-class`]
@@ -37,6 +40,12 @@ ex:myfeature geo:hasGeometry ex:myfeature_geom .
 ex:myfeature geo:hasStyle geo:mystyle .
 .
 ```
+
+[#req_geostyle_hasstyle-property]
+|===
+| *Req {counter:req}* Implementations shall allow the property <<Property: geo:hasStyle, `geo:hasStyle`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hastyle-property[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hasstyle-property`]
+|===
 
 ==== Property: geo:markerIcon
 
@@ -58,11 +67,17 @@ ex:mystyle geo:asGeoCSS "stroke:black,fill:red,stroke-width:3,fill-opacity:0.6"^
 .
 ```
 
+[#req_geostyle_iconcss-property]
+|===
+| *Req {counter:req}* Implementations shall allow the properties <<Property: geo:markerIcon, `geo:markerIcon`>> and <<Property: geo:asGeoCSS, `geo:asGeoCSS`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/geostyle/iconcss-property[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/iconcss-property`]
+|===
+
 ==== Datatype: geo:geocssLiteral
 
-The literal http://www.opengis.net/ont/geosparql#geocssLiteral[`geo:geocssLiteral`] encodes a subset of CSS statements which are applicable to geometry representations.
-The subset of CSS statements is limited to the statements which are applicable to SVG representations.
-In particular these are the following attributes:
+The literal http://www.opengis.net/ont/geosparql#geocssLiteral[`geo:geocssLiteral`] encodes a subset of CSS statements that apply to geometry representations.
+The subset of CSS expressions limited to the statements which apply to SVG representations.
+In particular, these are the following attributes:
 
 ```css
 fill: color
@@ -70,14 +85,26 @@ stroke: color
 stroke-width: number
 fill-opacity: number
 ```
+This allows for the modification of all visible parts of a geometry on a map, as defined in the OGC Styled layer descriptor standard.
+
+[#req_geostyle_geocss-literal]
+|===
+| *Req {counter:req}* All RDFS Literals of type <<RDFSDatatype: geo:geocssLiteral, `geo:geocssLiteral`>> shall consist of a set of definitions of cascading stylesheets which are meant to modify the given geometry while displayed in a viewer application.
+|http://www.opengis.net/spec/geosparql/1.0/req/geostyle/geocss-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/geocss-literals`]
+|===
 
 ==== Datatype: geo:svgLiteral
 
-The literal http://www.opengis.net/ont/geosparql#svgLiteral[`geo:svgLiteral`] encodes a SVG representation in plain text.
+The literal http://www.opengis.net/ont/geosparql#svgLiteral[`geo:svgLiteral`] encodes an SVG representation in plain text.
 
 ```svg
 ex:mystyle geo:markerIcon "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"50\" cy=\"50\" r=\"50\"/></svg>"^^geo:svgLiteral .
 ```
+[#req_geostyle_svg-literal]
+|===
+| *Req {counter:req}* All RDFS Literals of type <<RDFSDatatype: geo:svgLiteral, `geo:svgLiteral`>> shall consist of a Scalable Vector Graphics expression (SVG), which may be used to visualize geometries on a given map representation.
+|http://www.opengis.net/spec/geosparql/1.0/req/geostyle/svg-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/svg-literals`]
+|===
 
 
 
