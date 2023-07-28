@@ -3,9 +3,11 @@
 
 This section establishes the introduction of geometry styles into the GeoSPARQL standard.
 
-A geometry style is a set of instructions that allow for the representation of the geometry in a given context.
+Geometries are visualized differently under different circumstances and in different map visualization contexts, as defined by legal or preferential, e.g. community-driven efforts.
 
-It contains and represents the essential elements of the OGC Styled layer description standard without implementing the rules for their application.
+A geometry style is hereby defined as a set of instructions representing the geometry in a given context.
+
+This extension contains and represents the essential elements of the OGC Styled layer and OGC Symbology Encoding standar description standard without implementing the rules for their application.
 The latter might be implemented as SHACL or reasoning rules and, for now, fall out of the scope of GeoSPARQL.
 
 ==== Class: geo:Style
@@ -28,6 +30,25 @@ geo:Style
 |http://www.opengis.net/spec/geosparql/1.0/req/core/style-class[`http://www.opengis.net/spec/geosparql/1.0/req/core/style-class`]
 |===
 
+==== Class: geo:StyleIcon
+
+The class http://www.opengis.net/ont/geosparql#StyleIcon[`geo:StyleIcon`] depicts the abstract representation of the image used by a style of a geospatial feature and is defined by the following:
+
+```turtle
+geo:StyleIcon
+    a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "StyleIcon"@en ;
+    skos:definition "A representation of an image which is used in representations of a geo:Style ."@en ;
+.
+```
+
+[#req_geostyle_styleicon-class]
+|===
+| *Req {counter:req}* Implementations shall allow the RDFS class <<Class: geo:StyleIcon, `geo:StyleIcon`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/core/styleicon-class[`http://www.opengis.net/spec/geosparql/1.0/req/core/styleicon-class`]
+|===
+
 ==== Property: geo:hasStyle
 
 The property http://www.opengis.net/ont/geosparql#hasStyle[`geo:hasStyle`] links a <<Class: geo:SpatialObject, `geo:SpatialObject`>> to a <<Class: geo:Style, `geo:Style`>> representation.
@@ -47,14 +68,45 @@ ex:myfeature geo:hasStyle geo:mystyle .
 |http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hastyle-property[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hasstyle-property`]
 |===
 
+==== Property: geo:hasIcon
+
+The property http://www.opengis.net/ont/geosparql#hasIcon[`geo:hasIcon`] links a <<Class: geo:Style, `geo:Style`>> to a <<Class: geo:StyleIcon, `geo:StyleIcon`>> representation.
+
+```turtle
+ex:mystyle rdf:type geo:Style.
+ex:myfeature rdf:type geo:Feature .
+ex:myfeature_geom rdf:type sf:Point .
+ex:myfeature geo:hasGeometry ex:myfeature_geom .
+ex:myfeature geo:hasStyle geo:mystyle .
+geo:mystyle geo:hasIcon geo:mystyle_icon .
+geo:mystyle_icon geo:markerIcon "<svg>....</svg>"^^geo:svgLiteral .
+```
+
+[#req_geostyle_hasstyle-property]
+|===
+| *Req {counter:req}* Implementations shall allow the property <<Property: geo:hasIcon, `geo:hasIcon`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hastyle-property[`http://www.opengis.net/spec/geosparql/1.0/req/geostyle/hasstyle-property`]
+|===
+
 ==== Property: geo:markerIcon
 
 The property http://www.opengis.net/ont/geosparql#markerIcon[`geo:markerIcon`] links a <<Class: geo:Style, `geo:Style`>> to a representation of an icon which can be used on map representation as a marker or along or within a geometry. The value of this property may either be an SVG representation in a geo:svgLiteral or a link to an image representation, represented as an xsd:anyURI.
 
 ```turtle
 ex:mystyle rdf:type geo:Style .
-ex:mystyle geo:markerIcon "<svg>...</svg>"^^geo:svgLiteral .
-ex:mystyle geo:markerIcon "http://......jpg"^^xsd:anyURI .
+ex:mystyle geo:hasIcon ex:mystyle_icon .
+ex:mystyle_icon geo:markerIcon "<svg>...</svg>"^^geo:svgLiteral .
+ex:mystyle_icon geo:markerIcon "http://......jpg"^^xsd:anyURI .
+```
+
+==== Property: geo:rotation
+
+The property http://www.opengis.net/ont/geosparql#rotation[`geo:rotation`] defines the rotation of a StyleIcon instance in degrees, as an xsd:double literal.
+
+```turtle
+ex:mystyle rdf:type geo:Style .
+ex:mystyle geo:hasIcon ex:mystyle_icon .
+ex:mystyle_icon geo:rotation "170.0"^^xsd:double .
 ```
 
 ==== Property: geo:asGeoCSS
