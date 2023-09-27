@@ -20,13 +20,17 @@ In the following descriptions, the notation `X/Y` is used to denote applying a s
 
 === Common Query Functions
 
-[#req_geometry-topology-extension_relate-query-function]
+[#geof:relate]
+
+[#req_geometry_topology_extension_relate_query_function]
 |===
-| *Req {counter:req}* Implementations shall support 
-<<Function: geof:relate, `geof:relate`>> 
+| *Req {counter:req}* Implementations shall support
+<<Function: geof:relate, `geof:relate`>>
 as a SPARQL extension function, consistent with the relate operator defined in Simple Features <<OGCSFACA>> <<ISO19125-1>>.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/relate-query-function`]
+|<<#conf_geometry_topology_extension_relate_query_function>>
 |===
+
+==== Function: geof:relate
 
 ```
 geof:relate (geom1: ogc:geomLiteral, 
@@ -40,19 +44,19 @@ Returns `true` if the spatial relationship between `geom1` and `geom2` correspon
 
 This clause establishes Requirements for the _Simple Features_ relation family.
 
-[#req_geometry-topology-extension_sf-query-functions]
+[#req_geometry_topology_extension_sf_query_functions]
 |===
 | *Req {counter:req}* Implementations shall support 
-http://www.opengis.net/def/function/geosparql/sfEquals[`geof:sfEquals`], 
-http://www.opengis.net/def/function/geosparql/sfDisjoint[`geof:sfDisjoint`], 
-http://www.opengis.net/def/function/geosparql/sfIntersects[`geof:sfIntersects`], 
-http://www.opengis.net/def/function/geosparql/sfTouches[`geof:sfTouches`], 
-http://www.opengis.net/def/function/geosparql/sfCrosses[`geof:sfCrosses`], 
-http://www.opengis.net/def/function/geosparql/sfWithin[`geof:sfWithin`], 
-http://www.opengis.net/def/function/geosparql/sfContains[`geof:sfContains`] and 
-http://www.opengis.net/def/function/geosparql/sfOverlaps[`geof:sfOverlaps`] 
+<<geof:sfEquals, `geof:sfEquals`>>,
+<<geof:sfDisjoint, `geof:sfDisjoint`>>, 
+<<geof:sfIntersects, `geof:sfIntersects`>>, 
+<<geof:sfTouches, `geof:sfTouches`>>, 
+<<geof:sfCrosses, `geof:sfCrosses`>>, 
+<<geof:sfWithin, `geof:sfWithin`>>, 
+<<geof:sfContains, `geof:sfContains`>> and 
+<<geof:sfOverlaps, `geof:sfOverlaps`>> 
 as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<OGCSFACA>> <<ISO19125-1>>.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/sf-query-functions`]
+<<#conf_geometry_topology_extension_sf_query_functions>>
 |===
 
 Boolean query functions defined for the Simple Features relation family, along with their associated DE-9IM intersection patterns, are shown in <<simple_features_query_functions>> below. Multi-row intersection patterns should be interpreted as a logical OR of each row. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal _serialization_ type _specified_ by serialization and version. Each function returns an http://www.w3.org/2001/XMLSchema#boolean[`xsd:boolean`] value of `true` if the specified relation exists between `geom1` and `geom2` and returns false otherwise. In each case, the spatial reference system of `geom1` is used for spatial calculations.
@@ -62,21 +66,21 @@ Boolean query functions defined for the Simple Features relation family, along w
 |===
 |Query Function | Defining DE-9IM Intersection Pattern
 
-|```geof:sfEquals(geom1: ogc:geomLiteral, 
+|[#geof:sfEquals]```geof:sfEquals(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFFFTFFFT)+`
-| ```geof:sfDisjoint(geom1: ogc:geomLiteral, 
+|[#geof:sfDisjoint]```geof:sfDisjoint(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FF*FF****)+`
-| ```geof:sfIntersects(geom1: ogc:geomLiteral, 
+|[#geof:sfIntersects]```geof:sfIntersects(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
-| ```geof:sfTouches(geom1: ogc:geomLiteral, 
+|[#geof:sfTouches]```geof:sfTouches(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
-| ```geof:sfCrosses(geom1: ogc:geomLiteral, 
+|[#geof:sfCrosses]```geof:sfCrosses(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*T***T**) for P/L, P/A, L/A; (0*T***T**) for L/L+`
-| ```geof:sfWithin(geom1: ogc:geomLiteral, 
+|[#geof:sfWithin]```geof:sfWithin(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*F**F***)+`
-| ```geof:sfContains(geom1: ogc:geomLiteral, 
+|[#geof:sfContains]```geof:sfContains(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*****FF*)+`
-| ```geof:sfOverlaps(geom1: ogc:geomLiteral, 
+|[#geof:sfOverlaps]```geof:sfOverlaps(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*T***T**) for A/A, P/P; (1*T***T**) for L/L+`
 |===
 
@@ -84,19 +88,19 @@ Boolean query functions defined for the Simple Features relation family, along w
 
 This clause establishes Requirements for the _Egenhofer_ relation family. Consult references <<FORMAL>> and <<CATEG>> for a more detailed discussion of _Egenhofer_ relations.
 
-[#req_geometry-topology-extension_eh-query-functions]
+[#req_geometry_topology_extension_eh_query_functions]
 |===
 | *Req {counter:req}* Implementations shall support 
-http://www.opengis.net/def/function/geosparql/ehEquals[`geof:ehEquals`], 
-http://www.opengis.net/def/function/geosparql/ehDisjoint[`geof:ehDisjoint`], 
-http://www.opengis.net/def/function/geosparql/ehMeet[`geof:ehMeet`], 
-http://www.opengis.net/def/function/geosparql/ehOverlap[`geof:ehOverlap`], 
-http://www.opengis.net/def/function/geosparql/ehCovers[`geof:ehCovers`], 
-http://www.opengis.net/def/function/geosparql/ehCoveredBy[`geof:ehCoveredBy`], 
-http://www.opengis.net/def/function/geosparql/ehInside[`geof:ehInside`] and 
-http://www.opengis.net/def/function/geosparql/ehContains[`geof:ehContains`] 
+<<geof:ehEquals, `geof:ehEquals`>>, 
+<<geof:ehDisjoint, `geof:ehDisjoint`>>, 
+<<geof:ehMeet, `geof:ehMeet`>>, 
+<<geof:ehOverlap, `geof:ehOverlap`>>, 
+<<geof:ehCovers, `geof:ehCovers`>>, 
+<<geof:ehCoveredBy, `geof:ehCoveredBy`>>, 
+<<geof:ehInside, `geof:ehInside`>> and 
+<<geof:ehContains, `geof:ehContains`>> 
 as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<OGCSFACA>> <<ISO19125-1>>.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/eh-query-functions`]
+|<<#conf_geometry_topology_extension_eh_query_functions>>
 |===
 
 Boolean query functions defined for the _Egenhofer_ relation family, along with their associated DE-9IM intersection patterns, are shown in <<egenhofer_query_functions>> below. Multi-row intersection patterns should be interpreted as a logical OR of each row. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal serialization type specified by _serialization_ and _version_. Each function returns an http://www.w3.org/2001/XMLSchema#boolean[`xsd:boolean`] value of `true` if the specified relation exists between `geom1` and `geom2` and returns `false` otherwise. In each case, the spatial reference system of geom1 is used for spatial calculations.
@@ -106,21 +110,21 @@ Boolean query functions defined for the _Egenhofer_ relation family, along with 
 |===
 |Query Function | Defining DE-9IM Intersection Pattern
 
-|```geof:ehEquals(geom1: ogc:geomLiteral, 
+|[#geof:ehEquals]```geof:ehEquals(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFFFTFFFT)+`
-| ```geof:ehDisjoint(geom1: ogc:geomLiteral, 
+|[#geof:ehDisjoint]```geof:ehDisjoint(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FF*FF****)+`
-| ```geof:ehMeet(geom1: ogc:geomLiteral, 
+|[#geof:ehMeet]```geof:ehMeet(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FT******* F**T***** F***T****)+`
-| ```geof:ehOverlap(geom1: ogc:geomLiteral, 
+|[#geof:ehOverlap]```geof:ehOverlap(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*T***T**)+`
-| ```geof:ehCovers(geom1: ogc:geomLiteral, 
+|[#geof:ehCovers]```geof:ehCovers(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*TFT*FF*)+`
-| ```geof:ehCoveredBy(geom1: ogc:geomLiteral, 
+|[#geof:ehCoveredBy]```geof:ehCoveredBy(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFF*TFT**)+`
-| ```geof:ehInside(geom1: ogc:geomLiteral, 
+|[#geof:ehInside]```geof:ehInside(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFF*FFT**)+`
-| ```geof:ehContains(geom1: ogc:geomLiteral, 
+|[#geof:ehContains]```geof:ehContains(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(T*TFF*FF*)+`
 |===
 
@@ -128,19 +132,19 @@ Boolean query functions defined for the _Egenhofer_ relation family, along with 
 
 This clause establishes Requirements for the _RCC8_ relation family. Consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
 
-[#req_geometry-topology-extension_rcc8-query-functions]
+[#req_geometry_topology_extension_rcc8_query_functions]
 |===
 | *Req {counter:req}* Implementations shall support 
-http://www.opengis.net/def/function/geosparql/rcc8eq[`geof:rcc8eq`], 
-http://www.opengis.net/def/function/geosparql/rcc8dc[`geof:rcc8dc`], 
-http://www.opengis.net/def/function/geosparql/rcc8ec[`geof:rcc8ec`], 
-http://www.opengis.net/def/function/geosparql/rcc8po[`geof:rcc8po`], 
-http://www.opengis.net/def/function/geosparql/rcc8tppi[`geof:rcc8tppi`], 
-http://www.opengis.net/def/function/geosparql/rcc8tpp[`geof:rcc8tpp`], 
-http://www.opengis.net/def/function/geosparql/rcc8ntpp[`geof:rcc8ntpp`] and 
-http://www.opengis.net/def/function/geosparql/rcc8ntppi[`geof:rcc8ntppi`] 
+<<geof:rcc8eq, `geof:rcc8eq`>>, 
+<<geof:rcc8dc, `geof:rcc8dc`>>, 
+<<geof:rcc8ec, `geof:rcc8ec`>>, 
+<<geof:rcc8po, `geof:rcc8po`>>, 
+<<geof:rcc8tppi, `geof:rcc8tppi`>>, 
+<<geof:rcc8tpp, `geof:rcc8tpp`>>, 
+<<geof:rcc8ntpp, `geof:rcc8ntpp`>> and 
+<<geof:rcc8ntppi, `geof:rcc8ntppi`>> 
 as SPARQL extension functions, consistent with their corresponding DE-9IM intersection patterns, as defined by Simple Features <<OGCSFACA>> <<ISO19125-1>>.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/rcc8-query-functions`]
+|<<#conf_geometry_topology_extension_rcc8_query_functions>>
 |===
 
 Boolean query functions defined for the _RCC8_ relation family, along with their associated DE-9IM intersection patterns, are shown in <<rcc8_query_functions>> below. Each function accepts two arguments (`geom1` and `geom2`) of the geometry literal serialization type specified by _serialization_ and _version_. Each function returns an http://www.w3.org/2001/XMLSchema#boolean[`xsd:boolean`] value of `true` if the specified relation exists between `geom1` and `geom2` and returns `false` otherwise. In each case, the spatial reference system of geom1 is used for spatial calculations.
@@ -150,20 +154,20 @@ Boolean query functions defined for the _RCC8_ relation family, along with their
 |===
 |Query Function | Defining DE-9IM Intersection Pattern
 
-|```geof:rcc8eq(geom1: ogc:geomLiteral, 
+|[#geof:rcc8eq]```geof:rcc8eq(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFFFTFFFT)+`
-| ```geof:rcc8dc(geom1: ogc:geomLiteral, 
+|[#geof:rcc8dc]```geof:rcc8dc(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FFTFFTTTT)+`
-| ```geof:rcc8ec(geom1: ogc:geomLiteral, 
+|[#geof:rcc8ec]```geof:rcc8ec(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(FFTFTTTTT)+`
-| ```geof:rcc8po(geom1: ogc:geomLiteral, 
+|[#geof:rcc8po]```geof:rcc8po(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TTTTTTTTT)+`
-| ```geof:rcc8tppi(geom1: ogc:geomLiteral, 
+|[#geof:rcc8tppi]```geof:rcc8tppi(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TTTFTTFFT)+`
-| ```geof:rcc8tpp(geom1: ogc:geomLiteral, 
+|[#geof:rcc8tpp]```geof:rcc8tpp(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFFTTFTTT)+`
-| ```geof:rcc8ntpp(geom1: ogc:geomLiteral, 
+|[#geof:rcc8ntpp]```geof:rcc8ntpp(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TFFTFFTTT)+`
-| ```geof:rcc8ntppi(geom1: ogc:geomLiteral, 
+|[#geof:rcc8ntppi]```geof:rcc8ntppi(geom1: ogc:geomLiteral,
                 geom2: ogc:geomLiteral): xsd:boolean``` | `+(TTTFFTFFT)+`
 |===

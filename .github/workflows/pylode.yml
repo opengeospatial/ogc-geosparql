@@ -5,6 +5,7 @@ on:
       branches:
           - master
 jobs:
+  
   build:
 
     runs-on: ubuntu-latest
@@ -16,8 +17,10 @@ jobs:
          sudo apt-get install python3 python3-setuptools python3-pip -y
          sudo apt-get install gcc libpq-dev -y
          sudo apt-get install python3-dev python3-pip -y
-         sudo apt-get install asciidoctor ruby -y
+         sudo apt-get install asciidoctor ruby -y   
          sudo gem install --pre asciidoctor-pdf
+         sudo gem install metanorma-cli
+         sudo gem install metanorma-ogc
          sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
@@ -28,12 +31,12 @@ jobs:
          cd docs/geosparql10/
          mkdir servicedescription
          cp ../../1.0/geo.ttl ../../1.0/profile.ttl ../../1.0/funcsrules.ttl ../../1.0/sf_geometries.ttl ../../1.0/11-052r4_OGC_GeoSPARQL.pdf ../../1.0/citeme.bib . 
-         cp ../../1.0/servicedescription_allfunctions.ttl ../../1.0/servicedescription_conformanceclasses.ttl ../../1.0/servicedescription_extensions.ttl  . 
+         cp ../../1.0/servicedescription_all_functions.ttl ../../1.0/servicedescription_conformanceclasses.ttl ../../1.0/servicedescription_extensions.ttl  . 
          echo "Generating documentation for GeoSPARQL 1.0 ontology"
          pylode -i ../../1.0/geo.ttl -o index.html
          python3 ../../convertjsonld.py geo.ttl geo.json
-         echo "Generating documentation for GeoSPARQL 1.0 profile"
-         pylode -i ../../1.0/profile.ttl -o profile.html -p prof
+         #echo "Generating documentation for GeoSPARQL 1.0 profile"
+         #pylode -i ../../1.0/profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.0 functions and rules"
          pylode -i ../../1.0/funcsrules.ttl -o funcsrules.html -p vocpub
          python3 ../../convertjsonld.py funcsrules.ttl funcsrules.json
@@ -48,12 +51,14 @@ jobs:
          pylode -i ../../1.0/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
          echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
-         pylode -i ../../1.0/servicedescription_allfunctions.ttl -o servicedescription_all_functions.html -p vocpub
-         python3 ../../convertjsonld.py servicedescription_allfunctions.ttl servicedescription_all_functions.json
+         pylode -i ../../1.0/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
+         python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
          cd ../geosparql11/
          mkdir servicedescription
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC HTML"
          asciidoctor --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.html
+         # echo "Generating GeoSPARQL 1.1 Specification ISO"
+         # metanorma --type ogc  --extensions pdf,html ../../1.1/spec/00-GeoSPARQL.adoc
          echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC PDF"
          asciidoctor-pdf -a pdf-theme=default-with-fallback-font --attribute docinfo=shared ../../1.1/spec/00-GeoSPARQL.adoc -o spec.pdf
          echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC HTML"
@@ -68,11 +73,11 @@ jobs:
          echo "Generating documentation for GeoSPARQL 1.1 ontology"
          python3 ../../convertjsonld.py geo.ttl geo.json
          pylode -i ../../1.1/geo.ttl -o index.html
-         echo "Generating documentation for GeoSPARQL 1.1 Profile"
-         pylode -i ../../1.1/profile.ttl -o profile.html -p prof
+         #echo "Generating documentation for GeoSPARQL 1.1 Profile"
+         #pylode -i ../../1.1/profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
-         #pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
-         #python3 ../../convertjsonld.py funcsrules.ttl funcsrules.json
+         pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
+         python3 ../../convertjsonld.py funcsrules.ttl funcsrules.json
          echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
          pylode -i ../../1.1/sf_geometries.ttl -o sf_geometries.html -p vocpub
          python3 ../../convertjsonld.py sf_geometries.ttl sf_geometries.json
@@ -89,6 +94,15 @@ jobs:
          echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
          pylode -i ../../1.1/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
+         pwd
+    #- name: Run the build process with Docker
+    #  uses: actions-mn/compile@main
+    #  with:
+    #    input-file: 1.1/spec/00-GeoSPARQL.adoc
+    #    type: ogc
+    #    extensions: html
+    #    output-dir: ./result1
+    #    no-install-fonts: true
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
