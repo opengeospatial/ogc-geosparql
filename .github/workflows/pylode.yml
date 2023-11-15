@@ -125,15 +125,6 @@ jobs:
          echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
          pylode -i ../../1.1/servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
-         pwd
-    #- name: Run the build process with Docker
-    #  uses: actions-mn/compile@main
-    #  with:
-    #    input-file: 1.1/spec/00-GeoSPARQL.adoc
-    #    type: ogc
-    #    extensions: html
-    #    output-dir: ./result1
-    #    no-install-fonts: true
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
@@ -141,3 +132,26 @@ jobs:
          BRANCH: gh-pages
          clean: false
          FOLDER: docs/
+
+build12:
+   - uses: actions/checkout@v3
+      with:
+        token: ${{ github.token }}
+        ref: geosparql-1.2
+        submodules: true
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.fontist
+        key: fontist-ubuntu-latest
+        restore-keys: fontist-ubuntu-latest
+
+    - uses: actions-mn/setup@main
+
+    - run: metanorma site generate --agree-to-terms
+
+    - uses: actions/upload-artifact@v3
+      if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
+      with:
+        name: site
+        path: _site
