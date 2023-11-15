@@ -147,7 +147,12 @@ jobs:
 
    - uses: actions-mn/setup@main
 
-   - run: metanorma site generate --agree-to-terms -o geosparql12
+   - run: | 
+         metanorma site generate --agree-to-terms
+         cd _site
+         mkdir geosparql12
+         mv documents/spec/* geosparql12/
+         rm -r documents
 
    - name: Deploy 🚀
      uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -155,4 +160,4 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        BRANCH: gh-pages
        clean: false
-       FOLDER: geosparql12/
+       FOLDER: _site/
