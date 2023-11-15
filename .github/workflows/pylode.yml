@@ -153,8 +153,11 @@ jobs:
 
    - run: metanorma site generate --agree-to-terms
 
-   - uses: actions/upload-artifact@v3
-     if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
+   - name: Deploy 🚀
+     uses: JamesIves/github-pages-deploy-action@releases/v3
      with:
-        name: site
-        path: _site
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       BRANCH: gh-pages
+       clean: false
+       FOLDER: documents/spec/
+       TARGET-FOLDER: geosparql12/
