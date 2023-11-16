@@ -148,11 +148,12 @@ jobs:
    - uses: actions-mn/setup@main
 
    - run: | 
-         mkdir geosparql12
-         metanorma site generate --agree-to-terms -o geosparql12
-         cd geosparql12
+         mkdir site
+         mkdir site/geosparql12
+         metanorma site generate --agree-to-terms -o site
+         cd site
          rm index.html
-         mv documents/spec/* .
+         mv documents/spec/* geosparql12
          rm -r documents
  
    - name: Deploy 🚀
@@ -161,4 +162,4 @@ jobs:
        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        BRANCH: gh-pages
        clean: false
-       FOLDER: _site/
+       FOLDER: site/
