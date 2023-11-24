@@ -163,3 +163,40 @@ jobs:
        BRANCH: gh-pages
        clean: false
        FOLDER: site/
+
+
+
+  build13:
+   name: Compile GeoSPARQL 1.3 Metanorma
+   runs-on: ubuntu-latest
+   steps:
+   - uses: actions/checkout@v3
+     with:
+        token: ${{ github.token }}
+        ref: master
+        submodules: true
+
+   - uses: actions/cache@v3
+     with:
+        path: ~/.fontist
+        key: fontist-ubuntu-latest
+        restore-keys: fontist-ubuntu-latest
+
+   - uses: actions-mn/setup@main
+
+   - run: | 
+         mkdir site
+         mkdir site/geosparql13
+         metanorma site generate --agree-to-terms -o site
+         cd site
+         rm index.html
+         mv documents/spec/* geosparql13
+         rm -r documents
+ 
+   - name: Deploy 🚀
+     uses: JamesIves/github-pages-deploy-action@releases/v4
+     with:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       BRANCH: gh-pages
+       clean: false
+       FOLDER: site/
