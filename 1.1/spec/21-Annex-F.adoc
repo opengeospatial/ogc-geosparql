@@ -1,11 +1,11 @@
 [appendix]
-= Annex F - CQL / GeoSPARQL Mapping (informative)
+== CQL / GeoSPARQL Mapping (informative)
 
-== F.0 Overview
+=== F.0 Overview
 
 This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service <<WFS>> and OGC API Features <<OGCAPIF>> which implement CQL.
 
-== F.1 Accessing spatial Features in a SPARQL endpoint
+=== F.1 Accessing spatial Features in a SPARQL endpoint
 
 Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
 They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where <<Property: geo:FeatureCollection, `geo:FeatureCollection`>> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <<Class: geo:Feature, `geo:Feature`>> instances.
@@ -23,9 +23,9 @@ WHERE {
 GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the http://www.w3.org/1999/02/22-rdf-syntax-ns#member[``rdf:member``] property. No inverse property is defined.
 
 [NOTE]
-====
+=====
 Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Collections and require that Features be members of exactly one Feature Collection. There is no such restriction in GeoSPARQL: Features may be members of one or more Feature Collections.
-====
+=====
 
 An extension to the above can retrieve any Geometry serializations for the Features within Feature Collection `ex:x`:
 
@@ -47,11 +47,11 @@ Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collect
 ** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property http://purl.org/dc/terms/identifier[`dcterms:identifier`] may be used to store appropriate token-like identifiers
 * Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
 
-== F.2 Mappings from CQL2 statements to GeoSPARQL queries
+=== F.2 Mappings from CQL2 statements to GeoSPARQL queries
 
 This section presents lists of equivalences between Common Query Language (CQL2) <<CQLDEF>> statements and GeoSPARQL statements.
 
-=== F.2.1 Query Parameters
+==== F.2.1 Query Parameters
 
 Several query parameters may be given as parameters to the HTTP request of CD-implementing systems, such as the OGC API Features service. These parameters have an influence on the SPARQL query to be executed for the retrieval of a FeatureCollection to be exposed using an OGC API Features service.
 
@@ -69,7 +69,7 @@ geo:sfIntersects())`` | ``FILTER(geo:sfIntersects(?geom, "POLYGON( (160.6 -55.95
 |===
 
 
-=== F.2.2 Literal Values
+==== F.2.2 Literal Values
 
 CQL2 defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.
 
@@ -84,7 +84,7 @@ CQL2 defines literal values for a variety of datatypes. The following table show
 | Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | http://www.w3.org/2001/XMLSchema#date[``xsd:date``], http://www.w3.org/2001/XMLSchema#dateTime[``xsd:dateTime``], http://www.w3.org/2001/XMLSchema#dateTimeStamp[``xsd:dateTimeStamp``] | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |===
 
-=== F.2.3 Property references
+==== F.2.3 Property references
 
 CQL2 allows the referencing of properties in a Feature Collection it is targeting for filtering. A property reference is converted to a triple pattern as shown in the following example. A SPARQL variable ``?item`` is assumed to represent the Feature Collection.
 
@@ -96,7 +96,7 @@ CQL2 allows the referencing of properties in a Feature Collection it is targetin
 | number>5 | ``?item my:number ?number . FILTER(?number>5)``
 |===
 
-=== F.2.4 Comparison Predicates
+==== F.2.4 Comparison Predicates
 
 CQL2 defines comparison predicates to compare two scalar expressions. A comparison predicate is converted to a triple pattern as shown in the following example. A SPARQL variable `?item` is assumed to represent the Feature Collection.
 
@@ -115,7 +115,7 @@ CQL2 defines comparison predicates to compare two scalar expressions. A comparis
 
 There is no direct GeoSPARQL equivalent to a CRS-based CQL filter, however certain GeoSPARQL geometry literals have explicity CRS/SRS information that may be filtered using SPARQL `REGEX` operators.
 
-=== F.2.5 Spatial Operators
+==== F.2.5 Spatial Operators
 
 GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in the table below.
 
@@ -132,7 +132,7 @@ GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in t
 | WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
 |===
 
-=== F.2.6 Temporal Operators
+==== F.2.6 Temporal Operators
 
 Temporal operators are not part of the GeoSPARQL standard. 
 
@@ -156,7 +156,7 @@ Temporal operators are not part of the GeoSPARQL standard.
 
 As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
 
-== F.3 Mappings from Simple Features for SQL
+=== F.3 Mappings from Simple Features for SQL
 
 The following table maps the functions and properties from Simple Features for SQL <<OGCSFACA>> <<ISO19125-1>> to GeoSPARQL.
 
