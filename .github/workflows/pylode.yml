@@ -98,7 +98,7 @@ jobs:
          # echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC PDF"
          # asciidoctor-pdf --attribute docinfo=shared ../../1.1/release_notes/releasenotes.adoc -o releasenotes.pdf
          echo "Copying over 1.1 RDF files"
-         cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/funcsrules.ttl ../../1.1/sf_geometries.ttl ../../1.1/reqs.ttl  ../../1.1/spec/citeme.bib .
+         cp ../../1.1/geo.ttl ../../1.1/profile.ttl ../../1.1/rules.ttl ../../1.1/functions.ttl ../../1.1/sf_geometries.ttl ../../1.1/reqs.ttl  ../../1.1/spec/citeme.bib .
          cp ../../1.1/servicedescription/servicedescription_all_functions.ttl ../../1.1/servicedescription/servicedescription_conformanceclasses.ttl ../../1.1/servicedescription/servicedescription_extensions.ttl .
          # ../../1.1/validation.ttl
          cp -r ../../1.1/spec/img .
@@ -108,8 +108,10 @@ jobs:
          #echo "Generating documentation for GeoSPARQL 1.1 Profile"
          #pylode -i ../../1.1/profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
-         pylode -i ../../1.1/funcsrules.ttl -o funcsrules.html -p vocpub
-         python3 ../../convertjsonld.py funcsrules.ttl funcsrules.json
+         pylode -i ../../1.1/functions.ttl -o functions.html -p vocpub
+         python3 ../../convertjsonld.py functions.ttl functions.json
+         pylode -i ../../1.1/rules.ttl -o rules.html -p vocpub
+         python3 ../../convertjsonld.py rules.ttl rules.json
          echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
          pylode -i ../../1.1/sf_geometries.ttl -o sf_geometries.html -p vocpub
          python3 ../../convertjsonld.py sf_geometries.ttl sf_geometries.json
