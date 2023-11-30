@@ -1,0 +1,387 @@
+PREFIX cs: <http://www.opengis.net/def/rule/geosparql>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX funcs: <http://www.opengis.net/def/function/geosparql/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX policy: <http://www.opengis.net/def/metamodel/ogc-na/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ogc: <http://www.opengis.net/> 
+PREFIX rules: <http://www.opengis.net/def/rule/geosparql/>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX sdo: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX spec11: <http://www.opengis.net/spec/geosparql/1.1/specification.html#>
+PREFIX status: <http://www.opengis.net/def/status/>
+PREFIX fno: <https://w3id.org/function/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+cs:
+    a skos:ConceptScheme ;
+    dcterms:created "2021-06-16"^^xsd:date ;
+    dcterms:creator [
+        a sdo:Organization ;
+        sdo:name "OGC GeoSPARQL Standards Working Group" ;
+        sdo:url "https://www.ogc.org"^^xsd:anyURI
+    ] ;
+    dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+    dcterms:modified "2023-11-30"^^xsd:date ;
+    dcterms:publisher [
+        a sdo:Organization ;
+        sdo:name "Open Geospatial Consortium" ;
+        sdo:url "https://www.ogc.org"^^xsd:anyURI
+    ] ;
+    dcterms:rights "(c) 2023 Open Geospatial Consortium" ;    
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    owl:versionIRI rules:1.1 ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Rules defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:hasTopConcept
+        rules:ehContains ,
+        rules:ehCoveredBy ,
+        rules:ehCovers ,
+        rules:ehDisjoint ,
+        rules:ehEquals ,
+        rules:ehInside ,
+        rules:ehMeet ,
+        rules:ehOverlap ,
+        rules:rcc8dc ,
+        rules:rcc8ec ,
+        rules:rcc8eq ,
+        rules:rcc8ntpp ,
+        rules:rcc8ntppi ,
+        rules:rcc8po ,
+        rules:rcc8tpp ,
+        rules:rcc8tppi ,
+        rules:sfContains ,
+        rules:sfCrosses ,
+        rules:sfDisjoint ,
+        rules:sfEquals ,
+        rules:sfIntersects ,
+        rules:sfOverlaps ,
+        rules:sfTouches ,
+        rules:sfWithin ;
+    skos:historyNote "This vocabulary was generated for GeoSPARQL 1.1 using content that was already specified for GeoSPARQL 1.0" ;
+    skos:prefLabel "GeoSPARQL Rules"@en ;
+.
+
+rules:eh
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Egenhofer Rules defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        rules:ehContains ,
+        rules:ehCoveredBy ,
+        rules:ehCovers ,
+        rules:ehDisjoint ,
+        rules:ehEquals ,
+        rules:ehInside ,
+        rules:ehMeet ,
+        rules:ehOverlap ;
+    skos:prefLabel "GeoSPARQL Egenhofer Topological Rules"@en ;
+.
+
+rules:rcc
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL RCC8 Rules defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        rules:rcc8dc ,
+        rules:rcc8ec ,
+        rules:rcc8eq ,
+        rules:rcc8ntpp ,
+        rules:rcc8ntppi ,
+        rules:rcc8po ,
+        rules:rcc8tpp ,
+        rules:rcc8tppi ;
+    skos:prefLabel "GeoSPARQL RCC8 Topological Rules"@en ;
+.
+
+rules:sf
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Simple Features Topological Rules defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        rules:sfContains ,
+        rules:sfCrosses ,
+        rules:sfDisjoint ,
+        rules:sfEquals ,
+        rules:sfIntersects ,
+        rules:sfOverlaps ,
+        rules:sfTouches ,
+        rules:sfWithin ;
+    skos:prefLabel "GeoSPARQL Simple Features Rules"@en ;
+.
+
+rules:ehContains
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "contains"@en ;
+.
+
+rules:ehCoveredBy
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is covered by another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "covered by"@en ;
+.
+
+rules:ehCovers
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object covers another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "covers"@en ;
+.
+
+rules:ehDisjoint
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
+    skos:prefLabel "disjoint"@en ;
+.
+
+rules:ehEquals
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects."@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+rules:ehInside
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is inside another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "inside"@en ;
+.
+
+rules:ehMeet
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects meet based on their associated primary geometry objects."@en ;
+    skos:prefLabel "meet"@en ;
+.
+
+rules:ehOverlap
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/eh-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects."@en ;
+    skos:prefLabel "overlap"@en ;
+.
+
+rules:rcc8dc
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
+    skos:prefLabel "disconnected"@en ;
+.
+
+rules:rcc8ec
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are externally connected based on their associated primary geometry objects."@en ;
+    skos:prefLabel "externally connected"@en ;
+.
+
+rules:rcc8eq
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine two spatial objects are equal based on their associated primary geometry objects."@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+rules:rcc8ntpp
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/spec/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is a non-tangential proper part of another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "non-tangential proper part"@en ;
+.
+
+rules:rcc8ntppi
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is a non-tangential proper part inverse of another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "non-tangential proper part inverse"@en ;
+.
+
+rules:rcc8po
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects partially overlap based on their associated primary geometry objects."@en ;
+    skos:prefLabel "partially overlapping"@en ;
+.
+
+rules:rcc8tpp
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is a tangential proper part of another spatial object based on their associated geometry objects."@en ;
+    skos:prefLabel "tangential proper part"@en ;
+.
+
+rules:rcc8tppi
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/rcc8-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is a tangential proper part inverse of another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "tangential proper part inverse"@en ;
+.
+
+rules:sfContains
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects."@en ;
+    skos:prefLabel "contains"@en ;
+.
+
+rules:sfCrosses
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects cross based their associated primary geometry objects."@en ;
+    skos:prefLabel "crosses"@en ;
+.
+
+rules:sfDisjoint
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects."@en ;
+    skos:prefLabel "disjoint"@en ;
+.
+
+rules:sfEquals
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects."@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+rules:sfIntersects
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects intersect based on their associated primary geometry objects."@en ;
+    skos:prefLabel "intersects"@en ;
+.
+
+rules:sfOverlaps
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects."@en ;
+    skos:example spec11:B.2.2.5 ;
+    skos:prefLabel "overlaps"@en ;
+.
+
+rules:sfTouches
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if two spatial objects touch based on their associated primary geometry objects."@en ;
+    skos:prefLabel "touches"@en ;
+.
+
+rules:sfWithin
+    a skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/sf-query-rewrite> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query rewrite rule used to determine if one spatial object is within another spatial object based on their associated geometry objects."@en ;
+    skos:prefLabel "within"@en ;
+.
