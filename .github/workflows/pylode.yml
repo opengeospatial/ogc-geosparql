@@ -31,7 +31,7 @@ jobs:
          mkdir docs/geosparql10/
          mkdir docs/geosparql10/servicedescription
          cd docs/geosparql10/
-         cp ../../*.ttl ../../11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib .
+         cp ../../*.ttl ../../vocabularies/*.ttl ../../servicedescription/*.ttl ../../11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib .
 
          echo "Generating documentation for GeoSPARQL 1.0 Ontology"
          pylode -i ../../geo.ttl -o index.html
@@ -96,17 +96,17 @@ jobs:
          asciidoctor --attribute docinfo=shared ../../release_notes/releasenotes.adoc -o releasenotes.html
 
          echo "Copying over image files"
-         cp -r ../../1.1/spec/img .
+         cp -r ../../spec/img .
 
          echo "Copying over RDF files"
-         cp ../../*.ttl ../../vocabularies/*.ttl ../../servicedescription/*.ttl ../../1.1/spec/citeme.bib .
+         cp ../../*.ttl ../../vocabularies/*.ttl ../../servicedescription/*.ttl .
 
          echo "Generating documentation for GeoSPARQL 1.1 Ontology"
          python3 ../../convertjsonld.py geo.ttl geo.json
-         pylode -i ../../1.1/geo.ttl -o index.html
+         pylode -i ../../geo.ttl -o index.html
 
          #echo "Generating documentation for GeoSPARQL 1.1 Profile"
-         #pylode -i ../../1.1/profile.ttl -o profile.html -p prof
+         #pylode -i ../../profile.ttl -o profile.html -p prof
 
          echo "Generating documentation for GeoSPARQL 1.1 Vocabularies"
          pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
