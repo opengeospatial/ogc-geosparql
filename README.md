@@ -19,11 +19,11 @@ If you want to cite the living document of the in-progress standard we encourage
 	type = {{OGC} {Implementation} {Standard}},
 	title = {{OGC} {GeoSPARQL} - {A} {Geographic} {Query} {Language} for {RDF} {Data}},
 	url = {http://www.opengis.net/doc/IS/geosparql/1.1},
-	number = {OGC 11-052r4},
+	number = {OGC 22-047},
 	institution = {Open Geospatial Consortium},
 	author = {{Nicholas J. Car} and {Timo Homburg} and {Matthew Perry} and {John Herring} and {Frans Knibbe} and {Simon J.D. Cox} and {Joseph Abhayaratna} and {Mathias Bonduel}},
 	collaborator = {Paul J. Cripps and {Krzysztof Janowicz}},
-	year = {2022},
+	year = {2023},
   version = {1.1},
 }
 ```
