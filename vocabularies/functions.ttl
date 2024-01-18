@@ -4,6 +4,8 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX policy: <http://www.opengis.net/def/metamodel/ogc-na/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX ogc: <http://www.opengis.net/> 
+PREFIX geofp: <http://www.opengis.net/def/function/parameter/geosparql/>
+PREFIX geofo: <http://www.opengis.net/def/function/output/geosparql/>
 PREFIX geor: <http://www.opengis.net/def/rule/geosparql/>
 PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -62,8 +64,8 @@ geof:boundary
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:boundary_param1 ) ;
-    fno:returns (geof:boundary_output ) ;
+    fno:expects (geofp:boundary_param1 ) ;
+    fno:returns (geofo:boundary_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -71,12 +73,12 @@ geof:boundary
     skos:prefLabel "boundary"@en ;
 .
 
-geof:boundary_param1 a fno:Parameter ;
+geofp:boundary_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:boundary_output a fno:Output ;
+geofo:boundary_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -88,8 +90,8 @@ geof:buffer
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:buffer_param1 geof:buffer_param2 geof:buffer_param3 ) ;
-    fno:returns (geof:buffer_output ) ;
+    fno:expects (geofp:buffer_param1 geofp:buffer_param2 geofp:buffer_param3 ) ;
+    fno:returns (geofo:buffer_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -97,22 +99,22 @@ geof:buffer
     skos:prefLabel "buffer"@en ;
 .
 
-geof:buffer_param1 a fno:Parameter ;
+geofp:buffer_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:buffer_param2 a fno:Parameter ;
+geofp:buffer_param2 a fno:Parameter ;
     fno:type xsd:double ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "radius"@en .
 
-geof:buffer_param3 a fno:Parameter ;
+geofp:buffer_param3 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
-geof:buffer_output a fno:Output ;
+geofo:buffer_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -124,8 +126,8 @@ geof:convexHull
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:convexHull_param1 ) ;
-    fno:returns (geof:convexHull_output ) ;
+    fno:expects (geofp:convexHull_param1 ) ;
+    fno:returns (geofo:convexHull_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -133,12 +135,12 @@ geof:convexHull
     skos:prefLabel "convex hull"@en ;
 .
 
-geof:convexHull_param1 a fno:Parameter ;
+geofp:convexHull_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:convexHull_output a fno:Output ;
+geofo:convexHull_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -152,25 +154,25 @@ geof:difference
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
     policy:status status:valid ;
-    fno:expects (geof:difference_param1 geof:difference_param2 ) ;
-    fno:returns (geof:difference_output ) ;
+    fno:expects (geofp:difference_param1 geofp:difference_param2 ) ;
+    fno:returns (geofo:difference_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
     skos:definition "A query function that returns a geometry consisting of all points that are part of the first geometry but not the second geometry."@en ;
     skos:prefLabel "difference"@en ;
 .
 
-geof:difference_param1 a fno:Parameter ;
+geofp:difference_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:difference_param2 a fno:Parameter ;
+geofp:difference_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:difference_output a fno:Output ;
+geofo:difference_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -184,30 +186,30 @@ geof:distance
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
     policy:status status:valid ;
-    fno:expects (geof:distance_param1 geof:distance_param2 geof:distance_param3 ) ;
-    fno:returns (geof:distance_output ) ;    
+    fno:expects (geofp:distance_param1 geofp:distance_param2 geofp:distance_param3 ) ;
+    fno:returns (geofo:distance_output ) ;    
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
     skos:definition "A query function that returns the distance between the two closest points of the input geometries."@en ;
     skos:prefLabel "distance"@en ;
 .
 
-geof:distance_param1 a fno:Parameter ;
+geofp:distance_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:distance_param2 a fno:Parameter ;
+geofp:distance_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:distance_param3 a fno:Parameter ;
+geofp:distance_param3 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
-geof:distance_output a fno:Output ;
+geofo:distance_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -220,8 +222,8 @@ geof:ehContains
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehContains_param1 geof:ehContains_param2 ) ;
-    fno:returns (geof:ehContains_output ) ;        
+    fno:expects (geofp:ehContains_param1 geofp:ehContains_param2 ) ;
+    fno:returns (geofo:ehContains_output ) ;        
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -231,17 +233,17 @@ DE-9IM: T*TFF*FF*"""@en ;
     skos:prefLabel "contains"@en ;
 .
 
-geof:ehContains_param1 a fno:Parameter ;
+geofp:ehContains_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehContains_param2 a fno:Parameter ;
+geofp:ehContains_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehContains_output a fno:Output ;
+geofo:ehContains_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -253,8 +255,8 @@ geof:ehCoveredBy
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehCoveredBy_param1 geof:ehCoveredBy_param2 ) ;
-    fno:returns (geof:ehConveredBy_output ) ;       
+    fno:expects (geofp:ehCoveredBy_param1 geofp:ehCoveredBy_param2 ) ;
+    fno:returns (geofo:ehConveredBy_output ) ;       
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -264,17 +266,17 @@ DE-9IM: TFF*TFT**"""@en ;
     skos:prefLabel "covered by"@en ;
 .
 
-geof:ehCoveredBy_param1 a fno:Parameter ;
+geofp:ehCoveredBy_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehCoveredBy_param2 a fno:Parameter ;
+geofp:ehCoveredBy_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehCoveredBy_output a fno:Output ;
+geofo:ehCoveredBy_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -286,8 +288,8 @@ geof:ehCovers
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehCovers_param1 geof:ehCovers_param2 ) ;
-    fno:returns (geof:ehCovers_output ) ;  
+    fno:expects (geofp:ehCovers_param1 geofp:ehCovers_param2 ) ;
+    fno:returns (geofo:ehCovers_output ) ;  
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -297,17 +299,17 @@ DE-9IM: T*TFT*FF*"""@en ;
     skos:prefLabel "covers"@en ;
 .
 
-geof:ehCovers_param1 a fno:Parameter ;
+geofp:ehCovers_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehCovers_param2 a fno:Parameter ;
+geofp:ehCovers_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehCovers_output a fno:Output ;
+geofo:ehCovers_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -320,8 +322,8 @@ geof:ehDisjoint
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehDisjoint_param1 geof:ehDisjoint_param2 ) ;
-    fno:returns (geof:ehDisjoint_output ) ;      
+    fno:expects (geofp:ehDisjoint_param1 geofp:ehDisjoint_param2 ) ;
+    fno:returns (geofo:ehDisjoint_output ) ;      
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -331,17 +333,17 @@ DE-9IM: FF*FF****"""@en ;
     skos:prefLabel "disjoint"@en ;
 .
 
-geof:ehDisjoint_param1 a fno:Parameter ;
+geofp:ehDisjoint_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehDisjoint_param2 a fno:Parameter ;
+geofp:ehDisjoint_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehDisjoint_output a fno:Output ;
+geofo:ehDisjoint_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -353,8 +355,8 @@ geof:ehEquals
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehEquals_param1 geof:ehEquals_param2 ) ;
-    fno:returns (geof:ehEquals_output ) ; 
+    fno:expects (geofp:ehEquals_param1 geofp:ehEquals_param2 ) ;
+    fno:returns (geofo:ehEquals_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -365,17 +367,17 @@ DE-9IM: TFFFTFFFT"""@en ;
 .
 
 
-geof:ehEquals_param1 a fno:Parameter ;
+geofp:ehEquals_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehEquals_param2 a fno:Parameter ;
+geofp:ehEquals_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehEquals_output a fno:Output ;
+geofo:ehEquals_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -387,8 +389,8 @@ geof:ehInside
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehInside_param1 geof:ehInside_param2 ) ;
-    fno:returns (geof:ehInside_output ) ; 
+    fno:expects (geofp:ehInside_param1 geofp:ehInside_param2 ) ;
+    fno:returns (geofo:ehInside_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -398,17 +400,17 @@ DE-9IM: TFF*FFT**"""@en ;
     skos:prefLabel "inside"@en ;
 .
 
-geof:ehInside_param1 a fno:Parameter ;
+geofp:ehInside_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehInside_param2 a fno:Parameter ;
+geofp:ehInside_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehInside_output a fno:Output ;
+geofo:ehInside_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -421,8 +423,8 @@ geof:ehMeet
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehMeet_param1 geof:ehMeet_param2 ) ;
-    fno:returns (geof:ehMeet_output ) ; 
+    fno:expects (geofp:ehMeet_param1 geofp:ehMeet_param2 ) ;
+    fno:returns (geofo:ehMeet_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -432,17 +434,17 @@ DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
     skos:prefLabel "meet"@en ;
 .
 
-geof:ehMeet_param1 a fno:Parameter ;
+geofp:ehMeet_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehMeet_param2 a fno:Parameter ;
+geofp:ehMeet_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehMeet_output a fno:Output ;
+geofo:ehMeet_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -455,8 +457,8 @@ geof:ehOverlap
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:ehOverlap_param1 geof:ehOverlap_param2 ) ;
-    fno:returns (geof:ehOverlap_output ) ; 
+    fno:expects (geofp:ehOverlap_param1 geofp:ehOverlap_param2 ) ;
+    fno:returns (geofo:ehOverlap_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -466,17 +468,17 @@ DE-9IM: T*T***T**"""@en ;
     skos:prefLabel "overlap"@en ;
 .
 
-geof:ehOverlap_param1 a fno:Parameter ;
+geofp:ehOverlap_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehOverlap_param2 a fno:Parameter ;
+geofp:ehOverlap_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehOverlap_output a fno:Output ;
+geofo:ehOverlap_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -490,20 +492,20 @@ geof:envelope
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
     policy:status status:valid ;
-    fno:expects (geof:envelope_param1 ) ;
-    fno:returns (geof:envelope_output ) ; 
+    fno:expects (geofp:envelope_param1 ) ;
+    fno:returns (geofo:envelope_output ) ; 
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
     skos:definition "A query function that returns the minimum bounding rectangle of the input geometry."@en ;
     skos:prefLabel "envelope"@en ;
 .
 
-geof:envelope_param1 a fno:Parameter ;
+geofp:envelope_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:envelope_output a fno:Output ;
+geofo:envelope_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -515,8 +517,8 @@ geof:getSRID
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:getSRID_param1 ) ;
-    fno:returns (geof:getSRID_output ) ;     
+    fno:expects (geofp:getSRID_param1 ) ;
+    fno:returns (geofo:getSRID_output ) ;     
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -524,12 +526,12 @@ geof:getSRID
     skos:prefLabel "getSRID"@en ;
 .
 
-geof:getSRID_param1 a fno:Parameter ;
+geofp:getSRID_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:getSRID_output a fno:Output ;
+geofo:getSRID_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:anyURI  .
 
@@ -541,8 +543,8 @@ geof:intersection
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:intersection_param1 geof:intersection_param2 ) ;
-    fno:returns (geof:intersection_output ) ;     
+    fno:expects (geofp:intersection_param1 geofp:intersection_param2 ) ;
+    fno:returns (geofo:intersection_output ) ;     
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -550,17 +552,17 @@ geof:intersection
     skos:prefLabel "intersection"@en ;
 .
 
-geof:intersection_param1 a fno:Parameter ;
+geofp:intersection_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:intersection_param2 a fno:Parameter ;
+geofp:intersection_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:intersection_output a fno:Output ;
+geofo:intersection_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -836,8 +838,8 @@ geof:relate
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:relate_param1 geof:relate_param2 geof:relate_param3 ) ;
-    fno:returns (geof:relate_output ) ; 
+    fno:expects (geofp:relate_param1 geofp:relate_param2 geofp:relate_param3 ) ;
+    fno:returns (geofo:relate_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -845,22 +847,22 @@ geof:relate
     skos:prefLabel "relate"@en ;
 .
 
-geof:relate_param1 a fno:Parameter ;
+geofp:relate_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:relate_param2 a fno:Parameter ;
+geofp:relate_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:relate_param3 a fno:Parameter ;
+geofp:relate_param3 a fno:Parameter ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "pattern-matrix"@en .
 
-geof:relate_output a fno:Output ;
+geofo:relate_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -872,8 +874,8 @@ geof:sfContains
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfContains_param1 geof:sfContains_param2 ) ;
-    fno:returns (geof:sfContains_output ) ; 
+    fno:expects (geofp:sfContains_param1 geofp:sfContains_param2 ) ;
+    fno:returns (geofo:sfContains_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -883,17 +885,17 @@ DE-9IM: T*****FF*"""@en ;
     skos:prefLabel "contains"@en ;
 .
 
-geof:sfContains_param1 a fno:Parameter ;
+geofp:sfContains_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfContains_param2 a fno:Parameter ;
+geofp:sfContains_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfContains_output a fno:Output ;
+geofo:sfContains_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -905,8 +907,8 @@ geof:sfCrosses
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfCrosses_param1 geof:sfCrosses_param2 ) ;
-    fno:returns (geof:sfCrosses_output ) ; 
+    fno:expects (geofp:sfCrosses_param1 geofp:sfCrosses_param2 ) ;
+    fno:returns (geofo:sfCrosses_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -916,17 +918,17 @@ DE-9IM: T*T***T**"""@en ;
     skos:prefLabel "crosses"@en ;
 .
 
-geof:sfCrosses_param1 a fno:Parameter ;
+geofp:sfCrosses_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfCrosses_param2 a fno:Parameter ;
+geofp:sfCrosses_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfCrosses_output a fno:Output ;
+geofo:sfCrosses_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -936,8 +938,8 @@ geof:sfDisjoint
         sd:Function, fno:Function ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfDisjoint_param1 geof:sfDisjoint_param2 ) ;
-    fno:returns (geof:sfDisjoint_output ) ; 
+    fno:expects (geofp:sfDisjoint_param1 geofp:sfDisjoint_param2 ) ;
+    fno:returns (geofo:sfDisjoint_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -948,17 +950,17 @@ DE-9IM: FF*FF****"""@en ;
 .
 
 
-geof:sfDisjoint_param1 a fno:Parameter ;
+geofp:sfDisjoint_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfDisjoint_param2 a fno:Parameter ;
+geofp:sfDisjoint_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfDisjoint_output a fno:Output ;
+geofo:sfDisjoint_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -970,8 +972,8 @@ geof:sfEquals
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfEquals_param1 geof:sfEquals_param2 ) ;
-    fno:returns (geof:sfEquals_output ) ; 
+    fno:expects (geofp:sfEquals_param1 geofp:sfEquals_param2 ) ;
+    fno:returns (geofo:sfEquals_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -982,17 +984,17 @@ DE-9IM: TFFFTFFFT"""@en ;
 .
 
 
-geof:sfEquals_param1 a fno:Parameter ;
+geofp:sfEquals_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfEquals_param2 a fno:Parameter ;
+geofp:sfEquals_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfEquals_output a fno:Output ;
+geofo:sfEquals_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1004,8 +1006,8 @@ geof:sfIntersects
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfIntersects_param1 geof:sfIntersects_param2 ) ;
-    fno:returns (geof:sfIntersects_output ) ; 
+    fno:expects (geofp:sfIntersects_param1 geofp:sfIntersects_param2 ) ;
+    fno:returns (geofo:sfIntersects_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1015,17 +1017,17 @@ DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T**** """@en ;
     skos:prefLabel "intersects"@en ;
 .
 
-geof:sfIntersects_param1 a fno:Parameter ;
+geofp:sfIntersects_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfIntersects_param2 a fno:Parameter ;
+geofp:sfIntersects_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfIntersects_output a fno:Output ;
+geofo:sfIntersects_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1037,8 +1039,8 @@ geof:sfOverlaps
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfOverlaps_param1 geof:sfOverlaps_param2 ) ;
-    fno:returns (geof:sfOverlaps_output ) ; 
+    fno:expects (geofp:sfOverlaps_param1 geofp:sfOverlaps_param2 ) ;
+    fno:returns (geofo:sfOverlaps_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1048,17 +1050,17 @@ DE-9IM: T*T***T** """@en ;
     skos:prefLabel "overlaps"@en ;
 .
 
-geof:sfOverlaps_param1 a fno:Parameter ;
+geofp:sfOverlaps_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfOverlaps_param2 a fno:Parameter ;
+geofp:sfOverlaps_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfOverlaps_output a fno:Output ;
+geofo:sfOverlaps_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1070,8 +1072,8 @@ geof:sfTouches
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfTouches_param1 geof:sfTouches_param2 ) ;
-    fno:returns (geof:sfTouches_output ) ; 
+    fno:expects (geofp:sfTouches_param1 geofp:sfTouches_param2 ) ;
+    fno:returns (geofo:sfTouches_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1081,17 +1083,17 @@ DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
     skos:prefLabel "touches"@en ;
 .
 
-geof:sfTouches_param1 a fno:Parameter ;
+geofp:sfTouches_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfTouches_param2 a fno:Parameter ;
+geofp:sfTouches_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfTouches_output a fno:Output ;
+geofo:sfTouches_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1103,8 +1105,8 @@ geof:sfWithin
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:sfWithin_param1 geof:sfWithin_param2 ) ;
-    fno:returns (geof:sfWithin_output ) ; 
+    fno:expects (geofp:sfWithin_param1 geofp:sfWithin_param2 ) ;
+    fno:returns (geofo:sfWithin_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1114,17 +1116,17 @@ DE-9IM: T*F**F***"""@en ;
     skos:prefLabel "within"@en ;
 .
 
-geof:sfWithin_param1 a fno:Parameter ;
+geofp:sfWithin_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfWithin_param2 a fno:Parameter ;
+geofp:sfWithin_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfWithin_output a fno:Output ;
+geofo:sfWithin_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1136,8 +1138,8 @@ geof:symDifference
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:symDifference_param1 geof:symDifference_param2 ) ;
-    fno:returns (geof:symDifference_output ) ; 
+    fno:expects (geofp:symDifference_param1 geofp:symDifference_param2 ) ;
+    fno:returns (geofo:symDifference_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1145,17 +1147,17 @@ geof:symDifference
     skos:prefLabel "symmetric difference"@en ;
 .
 
-geof:symDifference_param1 a fno:Parameter ;
+geofp:symDifference_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:symDifference_param2 a fno:Parameter ;
+geofp:symDifference_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:symDifference_output a fno:Output ;
+geofo:symDifference_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
@@ -1167,8 +1169,8 @@ geof:union
     dcterms:creator "OGC GeoSPARQL 1.0 Standard Working Group" ;
     dcterms:date "2011-06-16"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.0> ;
-    fno:expects (geof:union_param1 geof:union_param2 ) ;
-    fno:returns (geof:union_output ) ; 
+    fno:expects (geofp:union_param1 geofp:union_param2 ) ;
+    fno:returns (geofo:union_output ) ; 
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.0> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.0> ;
@@ -1176,17 +1178,17 @@ geof:union
     skos:prefLabel "union"@en ;
 .
 
-geof:union_param1 a fno:Parameter ;
+geofp:union_param1 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:union_param2 a fno:Parameter ;
+geofp:union_param2 a fno:Parameter ;
     fno:type ogc:wktLiteral, ogc:gmlLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:union_output a fno:Output ;
+geofo:union_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type ogc:wktLiteral, ogc:gmlLiteral  .
 
