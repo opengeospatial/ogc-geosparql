@@ -145,6 +145,30 @@ geof:centroid_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
+geof:coordinateDimension
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:coordinateDimension_param1 ) ;
+    fno:returns (geof:coordinateDimension_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A SPARQL extension function which returns the coordinate dimension of a geometry"@en ;
+    skos:prefLabel "centroid"@en ;
+.
+
+geof:coordinateDimension_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:coordinateDimension_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
 geof:common
     a skos:Collection ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -319,6 +343,116 @@ geof:concaveHull_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
+geof:spatialDimension
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:spatialDimension_param1 ) ;
+    fno:returns (geof:spatialDimension_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the spatial dimension of geom."@en ;
+    skos:prefLabel "spatial dimension"@en ;
+.
+
+geof:spatialDimension_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:spatialDimension_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer 
+
+geof:numGeometries
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:numGeometries_param1 ) ;
+    fno:returns (geof:numGeometries_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the number of geometries of geom."@en ;
+    skos:prefLabel "numGeometries"@en ;
+.
+
+geof:numGeometries_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:numGeometries_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer 
+
+geof:isMeasured
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:isMeasured_param1 ) ;
+    fno:returns (geof:isMeasured_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns true if geom has m coordinate values."@en ;
+    skos:prefLabel "isMeasured"@en ;
+.
+
+geof:isMeasured_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:isMeasured_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:anyURI 
+
+geof:is3D
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:is3D_param1 ) ;
+    fno:returns (geof:is3D_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns true if geom has z coordinate values."@en ;
+    skos:prefLabel "is3D"@en ;
+.
+
+geof:is3D_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:is3D_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:anyURI  .
+
+geof:geometryType
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:geometryType_param1 ) ;
+    fno:returns (geof:geometryType_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the URI of the subtype of Geometry of which this geometric object is a member."@en ;
+    skos:prefLabel "geometry type"@en ;
+.
+
+geof:geometryType_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:geometryType_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:anyURI  .
+
 geof:metricLength
     a sd:Function, fno:Function , skos:Concept ;
     skos:inScheme cs: ;
@@ -359,7 +493,7 @@ geof:length_param1 a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:length_param1 a fno:Parameter ;
+geof:length_param2 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
