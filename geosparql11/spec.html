@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.16">
 <title>OGC GeoSPARQL - A Geographic Query Language for RDF Data</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -84,10 +84,10 @@ code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;
 ul,ol,dl{line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
 ul,ol{margin-left:1.5em}
 ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
 ul.circle{list-style-type:circle}
 ul.disc{list-style-type:disc}
-ul.square{list-style-type:square}
-ul.circle ul:not([class]),ul.disc ul:not([class]),ul.square ul:not([class]){list-style:inherit}
 ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
 dl dt{margin-bottom:.3125em;font-weight:bold}
 dl dd{margin-bottom:1.25em}
@@ -193,8 +193,7 @@ body.toc2.toc-right{padding-left:0;padding-right:20em}}
 #content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
 details,.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
 details{margin-left:1.25rem}
-details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;outline:none;-webkit-tap-highlight-color:transparent}
-details>summary::-webkit-details-marker{display:none}
+details>summary{cursor:pointer;display:block;position:relative;line-height:1.6;margin-bottom:.625rem;-webkit-tap-highlight-color:transparent}
 details>summary::before{content:"";border:solid transparent;border-left:solid;border-width:.3em 0 .3em .5em;position:absolute;top:.5em;left:-1.25rem;transform:translateX(15%)}
 details[open]>summary::before{border:solid transparent;border-top:solid;border-width:.5em .3em 0;transform:translateY(15%)}
 details>summary::after{content:"";width:1.25rem;height:1em;position:absolute;top:.3em;left:-1.25rem}
@@ -208,10 +207,13 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -233,8 +235,9 @@ pre.prettyprint li:not(:first-child) code[data-lang]::before{display:none}
 table.linenotable{border-collapse:separate;border:0;margin-bottom:0;background:none}
 table.linenotable td[class]{color:inherit;vertical-align:top;padding:0;line-height:inherit;white-space:normal}
 table.linenotable td.code{padding-left:.75em}
-table.linenotable td.linenos,pre.pygments .linenos{border-right:1px solid;opacity:.35;padding-right:.5em;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
-pre.pygments span.linenos{display:inline-block;margin-right:.75em}
+table.linenotable td.linenos{border-right:1px solid;opacity:.35;padding-right:.5em}
+pre.pygments .lineno{border-right:1px solid;opacity:.35;display:inline-block;margin-right:.75em}
+pre.pygments .lineno::before{content:"";margin-right:-.125em}
 .quoteblock{margin:0 1em 1.25em 1.5em;display:table}
 .quoteblock:not(.excerpt)>.title{margin-left:-1.5em;margin-bottom:.75em}
 .quoteblock blockquote,.quoteblock p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
@@ -271,7 +274,7 @@ table.frame-none>colgroup+*>:first-child>*,table.frame-sides>colgroup+*>:first-c
 table.frame-none>:last-child>:last-child>*,table.frame-sides>:last-child>:last-child>*{border-bottom-width:0}
 table.frame-none>*>tr>:first-child,table.frame-ends>*>tr>:first-child{border-left-width:0}
 table.frame-none>*>tr>:last-child,table.frame-ends>*>tr>:last-child{border-right-width:0}
-table.stripes-all>*>tr,table.stripes-odd>*>tr:nth-of-type(odd),table.stripes-even>*>tr:nth-of-type(even),table.stripes-hover>*>tr:hover{background:#f8f8f7}
+table.stripes-all tr,table.stripes-odd tr:nth-of-type(odd),table.stripes-even tr:nth-of-type(even),table.stripes-hover tr:hover{background:#f8f8f7}
 th.halign-left,td.halign-left{text-align:left}
 th.halign-right,td.halign-right{text-align:right}
 th.halign-center,td.halign-center{text-align:center}
@@ -287,11 +290,10 @@ ol{margin-left:1.75em}
 ul li ol{margin-left:1.5em}
 dl dd{margin-left:1.125em}
 dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
-li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
 ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
 ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
 ul.unstyled,ol.unstyled{margin-left:0}
-li>p:empty:only-child::before{content:"";display:inline-block}
 ul.checklist>li>p:first-child{margin-left:-1em}
 ul.checklist>li>p:first-child>.fa-square-o:first-child,ul.checklist>li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
 ul.checklist>li>p:first-child>input[type=checkbox]:first-child{margin-right:.25em}
@@ -334,6 +336,8 @@ sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none;margin-left:-1.05em}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
 div.unbreakable{page-break-inside:avoid}
 .big{font-size:larger}
 .small{font-size:smaller}
@@ -390,7 +394,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -435,116 +439,218 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <style>
 pre.rouge table td { padding: 5px; }
 pre.rouge table pre { margin: 0; }
-pre.rouge, pre.rouge .w {
-  color: #24292f;
-  background-color: #f6f8fa;
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
 }
-pre.rouge .k, pre.rouge .kd, pre.rouge .kn, pre.rouge .kp, pre.rouge .kr, pre.rouge .kt, pre.rouge .kv {
-  color: #cf222e;
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
 }
-pre.rouge .gr {
-  color: #f6f8fa;
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .cd {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
 }
 pre.rouge .gd {
-  color: #82071e;
-  background-color: #ffebe9;
+  color: #000000;
+  background-color: #ffdddd;
 }
-pre.rouge .nb {
-  color: #953800;
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
 }
-pre.rouge .nc {
-  color: #953800;
-}
-pre.rouge .no {
-  color: #953800;
-}
-pre.rouge .nn {
-  color: #953800;
-}
-pre.rouge .sr {
-  color: #116329;
-}
-pre.rouge .na {
-  color: #116329;
-}
-pre.rouge .nt {
-  color: #116329;
-}
-pre.rouge .gi {
-  color: #116329;
-  background-color: #dafbe1;
-}
-pre.rouge .kc {
-  color: #0550ae;
-}
-pre.rouge .l, pre.rouge .ld, pre.rouge .m, pre.rouge .mb, pre.rouge .mf, pre.rouge .mh, pre.rouge .mi, pre.rouge .il, pre.rouge .mo, pre.rouge .mx {
-  color: #0550ae;
-}
-pre.rouge .sb {
-  color: #0550ae;
-}
-pre.rouge .bp {
-  color: #0550ae;
-}
-pre.rouge .ne {
-  color: #0550ae;
-}
-pre.rouge .nl {
-  color: #0550ae;
-}
-pre.rouge .py {
-  color: #0550ae;
-}
-pre.rouge .nv, pre.rouge .vc, pre.rouge .vg, pre.rouge .vi, pre.rouge .vm {
-  color: #0550ae;
-}
-pre.rouge .o, pre.rouge .ow {
-  color: #0550ae;
+pre.rouge .gr {
+  color: #aa0000;
 }
 pre.rouge .gh {
-  color: #0550ae;
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
   font-weight: bold;
 }
 pre.rouge .gu {
-  color: #0550ae;
-  font-weight: bold;
-}
-pre.rouge .s, pre.rouge .sa, pre.rouge .sc, pre.rouge .dl, pre.rouge .sd, pre.rouge .s2, pre.rouge .se, pre.rouge .sh, pre.rouge .sx, pre.rouge .s1, pre.rouge .ss {
-  color: #0a3069;
-}
-pre.rouge .nd {
-  color: #8250df;
-}
-pre.rouge .nf, pre.rouge .fm {
-  color: #8250df;
-}
-pre.rouge .err {
-  color: #f6f8fa;
-  background-color: #82071e;
-}
-pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cm, pre.rouge .cp, pre.rouge .cpf, pre.rouge .c1, pre.rouge .cs {
-  color: #6e7781;
-}
-pre.rouge .gl {
-  color: #6e7781;
+  color: #aaaaaa;
 }
 pre.rouge .gt {
-  color: #6e7781;
+  color: #aa0000;
 }
-pre.rouge .ni {
-  color: #24292f;
-}
-pre.rouge .si {
-  color: #24292f;
-}
-pre.rouge .ge {
-  color: #24292f;
-  font-style: italic;
-}
-pre.rouge .gs {
-  color: #24292f;
+pre.rouge .kc {
+  color: #000000;
   font-weight: bold;
 }
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
+<style>
+    .smalltext {
+        font-size: small;
+    }
 </style>
 </head>
 <body class="book toc2 toc-left">
@@ -563,13 +669,6 @@ pre.rouge .gs {
 </li>
 <li><a href="#_vi_clarifications">vi. Clarifications</a></li>
 <li><a href="#_vii_changes_to_the_ogc_abstract_specification">vii. Changes to the OGC® Abstract Specification</a></li>
-<li><a href="#_introduction">Introduction</a>
-<ul class="sectlevel2">
-<li><a href="#_rdf">RDF</a></li>
-<li><a href="#_sparql">SPARQL</a></li>
-<li><a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a></li>
-</ul>
-</li>
 <li><a href="#_ogc_geosparql_a_geographic_query_language_for_rdf_data">OGC GeoSPARQL - A Geographic Query Language for RDF Data</a>
 <ul class="sectlevel1">
 <li><a href="#_scope">1. Scope</a></li>
@@ -578,7 +677,7 @@ pre.rouge .gs {
 <li><a href="#_terms_and_definitions">4. Terms and definitions</a>
 <ul class="sectlevel2">
 <li><a href="#_semantic_web">4.1. Semantic Web</a></li>
-<li><a href="#_spatial">4.2. Spatial</a></li>
+<li><a href="#_spatial">4.2. spatial</a></li>
 </ul>
 </li>
 <li><a href="#_conventions">5. Conventions</a>
@@ -591,13 +690,13 @@ pre.rouge .gs {
 </li>
 <li><a href="#_core">6. Core</a>
 <ul class="sectlevel2">
-<li><a href="#_sparql_3">6.1. SPARQL</a></li>
+<li><a href="#_sparql_2">6.1. SPARQL</a></li>
 <li><a href="#_classes">6.2. Classes</a></li>
 <li><a href="#_standard_properties_for_geospatialobject">6.3. Standard Properties for geo:SpatialObject</a></li>
 <li><a href="#_standard_properties_for_geofeature">6.4. Standard Properties for geo:Feature</a></li>
 </ul>
 </li>
-<li><a href="#_topology_vocabulary_extension">7. Topology Vocabulary Extension</a>
+<li><a href="#vocabulary_extension">7. Topology Vocabulary Extension</a>
 <ul class="sectlevel2">
 <li><a href="#_parameters">7.1. Parameters</a></li>
 <li><a href="#_simple_features_relation_family">7.2. Simple Features Relation Family</a></li>
@@ -736,22 +835,22 @@ pre.rouge .gs {
 <td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Submission Date: 2023-06-08</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Approval Date: 2023-07-29</p></td>
+<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Approval Date: 2023-08-13</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Publication Date: 2023-11-16</p></td>
+<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Publication Date: 2024-MM-DD</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">External identifier of this OGC&#174; document: <a href="http://www.opengis.net/doc/IS/geosparql/1.1" class="bare">http://www.opengis.net/doc/IS/geosparql/1.1</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Internal reference number of this OGC&#174; document: 22-047</p></td>
+<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Internal reference number of this OGC&#174; document: 22-047r1</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Version: 1.1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Category: OGC&#174; Implementation Specification</p></td>
+<td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Category: OGC&#174; Standard</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-right valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Editors: Nicholas J. Car, Timo Homburg, Matthew Perry, John Herring, Frans Knibbe, Simon J.D. Cox, Joseph Abhayaratna and Mathias Bonduel</p></td>
@@ -780,7 +879,7 @@ pre.rouge .gs {
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Copyright notice</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Copyright &#169; 2023 Open Geospatial Consortium</p></td>
+<td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Copyright &#169; 2024 Open Geospatial Consortium</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">To obtain additional rights of use, visit <a href="http://www.opengeospatial.org/legal/" class="bare">http://www.opengeospatial.org/legal/</a></p></td>
@@ -925,7 +1024,7 @@ pre.rouge .gs {
 </ul>
 </div>
 <div class="paragraph">
-<p>This document authoritatively defines many of the Standard&#8217;s elements, including the ontology classes and properties, SPARQL functions, and function and rule vocabulary concepts. Complete descriptions of the Standard&#8217;s parts and their roles are given in the Introduction in the section <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
+<p>This document authoritatively defines many of the Standard&#8217;s elements, including the ontology classes and properties, SPARQL functions, and function and rule vocabulary concepts. Complete descriptions of the Standard&#8217;s parts and their roles are given in the Introduction in the section <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a>.</p>
 </div>
 </div>
 </div>
@@ -1061,253 +1160,8 @@ pre.rouge .gs {
 <div class="paragraph">
 <p>The OGC® Abstract Specification does not require changes to accommodate this OGC® standard.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The W3C Semantic Web Activity defines a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the Resource Description Framework (RDF) data model <a href="#RDF">[RDF]</a>, <a href="#RDFS">[RDFS]</a>, the OWL Web Ontology Language <a href="#OWL2">[OWL2]</a> and the SPARQL Protocol and RDF Query Language <a href="#SPARQL">[SPARQL]</a>.</p>
-</div>
-<div class="sect2">
-<h3 id="_rdf"><a class="anchor" href="#_rdf"></a>RDF</h3>
-<div class="paragraph">
-<p>RDF is, among other things, a data model built on edge-node "graphs." Each link in a graph consists of three elements (with many aliases depending on the mapping from other types of data models):</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Subject (start node, instance, entity, feature)</p>
-</li>
-<li>
-<p>Predicate (verb, property, attribute, relation, member, link, reference)</p>
-</li>
-<li>
-<p>Object (value, end node, non-literal values can be used as a Subject)</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Any of the three values in a triple can be represented with an Internationalized Resource Identifier (IRI) <a href="#IETF3987">[IETF3987]</a>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Uniform Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable. This means a person or machine can "dereference" them (<em>click on them</em> or otherwise execute them) and be taken to more information about the resource, perhaps in a web browser.</p>
-</div>
-<div class="paragraph">
-<p>Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier without meaning outside the graph it is defined within). Objects can further be represented with a literal value. RDF uses the basic literal values from XML <a href="#XSD2">[XSD2]</a> however the basic types can be extended for specialized purposes. Indeed, this document extends the basic types to include geometry data. The figure below shows a basic triple.</p>
-</div>
-<div id="img-rdf" class="imageblock text-center">
-<div class="content">
-<img src="img/01.png" alt="RDF Triple" width="600" height="400">
-</div>
-<div class="title">Figure 1. An RDF Triple</div>
-</div>
-<div class="paragraph">
-<p>Note that the same node may be a subject in some triples, and an object in others.</p>
-</div>
-<div class="paragraph">
-<p>Almost all data can be presented or represented in RDF. In particular, there are similarities to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <a href="#ISO19109">[ISO19109]</a>, and to the relational model as well (table primary key, column, value).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_sparql"><a class="anchor" href="#_sparql"></a>SPARQL</h3>
-<div class="paragraph">
-<p>From <a href="#SPARQL">[SPARQL]</a>:</p>
-</div>
-<div class="quoteblock">
-<blockquote>
-SPARQL &#8230;&#8203; is a set of specifications that provide languages and protocols to query and manipulate RDF graph content on the Web or in an RDF store.
-</blockquote>
-</div>
-<div class="paragraph">
-<p>From Wikipedia<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>:</p>
-</div>
-<div class="quoteblock">
-<blockquote>
-SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Query Language) is an RDF query language - that is, a semantic query language for databases — able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web. On 15 January 2008, SPARQL 1.0 was acknowledged by W3C as an official recommendation, and SPARQL 1.1 in March, 2013.
-</blockquote>
-</div>
-<div class="paragraph">
-<p>SPARQL queries work on RDF representations of data by finding patterns that match templates in the query, in effect finding information graphs in the RDF data based on the templates and filters (constraints on nodes and edges) expressed in the query. This query template is represented in the SPARQL query by a set of parameterized “query variables” appearing in a sequence of RDF triples and filters. If the query processor finds a set of triples in the data (converted to an RDF graph in some predetermined standard manner) then the values that the “query variables” take on in those triples become a solution to the query request. The values of the variables are returned in the query result in a format based on the “SELECT” clause of the query (similar to SQL).</p>
-</div>
-<div class="paragraph">
-<p>In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. Section 17.6<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a> describes the mechanism for invocation of such a filter function.</p>
-</div>
-<div class="paragraph">
-<p>The OGC GeoSPARQL Standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF. It also defines extensions to the SPARQL query language for processing geospatial data.</p>
-</div>
-<div class="paragraph">
-<p>GeoSPARQL does not directly provide support for temporality. Predicates for temporal relations may be used from the OWL Time Ontology <a href="#TIME">[TIME]</a>, but query extension functions for spatiotemporal operations are not present in the GeoSPARQL standard.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_geosparql_standard_structure"><a class="anchor" href="#_geosparql_standard_structure"></a>GeoSPARQL Standard structure</h3>
-<div class="paragraph">
-<p>The GeoSPARQL Standard consists of multiple parts, or <em>profile resources</em>. The comprehensive listing of these parts is given in the GeoSPARQL <em>profile definition</em>, (see <a href="http://www.opengis.net/def/geosparql" class="bare">http://www.opengis.net/def/geosparql</a>). Below is an overview of the major parts:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><em>profile definition</em></p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/def/geosparql" class="bare">http://www.opengis.net/def/geosparql</a></p>
-</li>
-<li>
-<p>Formally defined as an ontology, defined according to the <em>Profiles Vocabulary</em> <a href="#PROF">[PROF]</a>;</p>
-</li>
-<li>
-<p>This relates the parts in the standard together, provides access to them, and declares dependencies on other standards.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Standard document (this document)</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong><a href="http://www.opengis.net/doc/IS/geosparql/1.1" class="bare">http://www.opengis.net/doc/IS/geosparql/1.1</a></strong></p>
-</li>
-<li>
-<p><strong>Defines many of the standard&#8217;s parts;</strong></p>
-</li>
-<li>
-<p><strong>Includes normative RDF/OWL <a href="#RDF">[RDF]</a>,<a href="#OWL2">[OWL2]</a> ontology element definitions, conformance requirements and function signatures based on the General Feature Model <a href="#ISO19109">[ISO19109]</a>, Simple Features <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> and SQL MM <a href="#ISO13249">[ISO13249]</a>;</strong></p>
-</li>
-<li>
-<p><strong>Also includes non-normative examples and mappings to other modelling and function systems.</strong></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Domain model RDF/OWL <a href="#RDF">[RDF]</a>,<a href="#OWL2">[OWL2]</a> ontology</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/ont/geosparql" class="bare">http://www.opengis.net/ont/geosparql</a>;</p>
-</li>
-<li>
-<p>For geographic information representation;</p>
-</li>
-<li>
-<p>Based on the General Feature Model <a href="#ISO19109">[ISO19109]</a>, Simple Features Access <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>, Geography Markup Language <a href="#GML">[GML]</a> and SQL MM <a href="#ISO13249">[ISO13249]</a></p>
-</li>
-<li>
-<p>Defined within the specification document and also delivered in RDF.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Functions &amp; Rules vocabulary</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/def/geosparql/funcsrules" class="bare">http://www.opengis.net/def/geosparql/funcsrules</a>;</p>
-</li>
-<li>
-<p>Derived from the ontology;</p>
-</li>
-<li>
-<p>Presented as a <a href="#SKOS">[SKOS]</a> taxonomy.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Simple Features vocabulary</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/ont/sf" class="bare">http://www.opengis.net/ont/sf</a>;</p>
-</li>
-<li>
-<p>Derived from the class model defined in Simple Features Access <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>;</p>
-</li>
-<li>
-<p>Presented as an <a href="#OWL2">[OWL2]</a> ontology.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><a href="#SPARQL">[SPARQL]</a> extension functions defined within this document.</p>
-</li>
-<li>
-<p>RDF data validator</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/def/geosparql/validator" class="bare">http://www.opengis.net/def/geosparql/validator</a>;</p>
-</li>
-<li>
-<p>Defined using <a href="#SHACL">[SHACL]</a>;</p>
-</li>
-<li>
-<p>Presented within a single RDF file.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>SPARQL 1.1 Service description for GeoSPARQL</p>
-<div class="ulist">
-<ul>
-<li>
-<p><a href="http://www.opengis.net/def/geosparql/servicedescription" class="bare">http://www.opengis.net/def/geosparql/servicedescription</a>;</p>
-</li>
-<li>
-<p>Defined using <a href="#SPARQLSERVDESC">[SPARQLSERVDESC]</a>.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Extended Examples</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Example data in RDF files too long for this document</p>
-</li>
-<li>
-<p><a href="https://github.com/opengeospatial/ogc-geosparql/tree/geosparql-1.1/examples" class="bare">https://github.com/opengeospatial/ogc-geosparql/tree/geosparql-1.1/examples</a></p>
-</li>
-</ul>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>This document follows a modular design and contains the following components:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>A <em>core</em> component defining the top-level RDFS/OWL classes for spatial objects.</p>
-</li>
-<li>
-<p>A <em>topology vocabulary</em> component defining the RDF properties for asserting and querying topological relationships between spatial objects.</p>
-</li>
-<li>
-<p>A <em>geometry</em> component defining RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects.</p>
-</li>
-<li>
-<p>A <em>geometry topology</em> component defining topological query functions.</p>
-</li>
-<li>
-<p>An <em>RDFS entailment</em> component defining mechanisms for matching implicit RDF triples that are derived based on RDF and RDFS semantics.</p>
-</li>
-<li>
-<p>A <em>query rewrite</em> component defining rules for transforming a simple triple pattern that tests a topological relationship between two features into an equivalent query involving concrete geometries and topological query functions.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Each of these components forms a set of <em>Requirements</em> known as a GeoSPARQL <em>Conformance Class</em>. Implementations can provide various levels of functionality by choosing which <em>Conformance Classes</em> to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary Classes.</p>
-</div>
-<div class="paragraph">
-<p>In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g. those based on Region Connection Calculus <a href="#QUAL">[QUAL]</a>, <a href="#LOGIC">[LOGIC]</a>) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relationships between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relationships between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.</p>
-</div>
+<p>Unresolved directive in 00-GeoSPARQL.adoc - include::02-introduction.adoc[]</p>
 </div>
 </div>
 </div>
@@ -1316,7 +1170,7 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <h2 id="_scope"><a class="anchor" href="#_scope"></a>1. Scope</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The OGC GeoSPARQL Standard is comprised of multiple parts. See the Introduction section <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a> for details of the parts.</p>
+<p>The OGC GeoSPARQL Standard is comprised of multiple parts. See the Introduction section <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a> for details of the parts.</p>
 </div>
 <div class="paragraph">
 <p>GeoSPARQL does not define a comprehensive vocabulary for representing spatial information. Instead GeoSPARQL defines a core set of classes, properties and datatypes that can be used to construct query patterns. Many useful extensions to this vocabulary are possible, and we intend for the Semantic Web and Geospatial communities to develop additional vocabularies for describing spatial information.</p>
@@ -1397,7 +1251,7 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <div class="content">
 <img src="img/02.png" alt="02">
 </div>
-<div class="title">Figure 2. Confromance Class Dependency Graph</div>
+<div class="title">Figure 1. Confromance Class Dependency Graph</div>
 </div>
 </div>
 </div>
@@ -1413,43 +1267,43 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>, <em>ISO 19125-1: Geographic information — Simple feature access — Part 1: Common architecture</em></p>
+<p><a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>, OGC: <em>OpenGIS Implementation Specification for Geographic information - Simple feature access — Part 1: Common architecture</em> (also ISO 19125-1)</p>
 </li>
 <li>
-<p><a href="#OGCOM">[OGCOM]</a> <a href="#ISO19156">[ISO19156]</a>, <em>ISO 19156: Geographic information — Observations and measurements</em></p>
+<p><a href="#OGCOM">[OGCOM]</a> <a href="#ISO19156">[ISO19156]</a>, OGC: <em>Abstract Specification Topic 20 - Observations and measurements</em> (also ISO 19156)</p>
 </li>
 <li>
-<p><a href="#GML">[GML]</a>, <em>OGC 07-036: Geography Markup Language (GML) Encoding Standard</em></p>
+<p><a href="#GML">[GML]</a>, OGC: <em>OGC 07-036: Geography Markup Language (GML) Encoding Standard</em></p>
 </li>
 <li>
-<p><a href="#IETF3987">[IETF3987]</a>, Internet Engineering Task Force, <em>RFC 3987: Internationalized Resource Identifiers (IRIs)</em></p>
+<p><a href="#IETF3987">[IETF3987]</a>, IETF: <em>RFC 3987: Internationalized Resource Identifiers (IRIs)</em></p>
 </li>
 <li>
-<p><a href="#OWL2">[OWL2]</a> <em>OWL 2 Web Ontology Language Document Overview (Second Edition)</em></p>
+<p><a href="#OWL2">[OWL2]</a> W3C: <em>OWL 2 Web Ontology Language Document Overview (Second Edition)</em></p>
 </li>
 <li>
-<p><a href="#RDF">[RDF]</a>, <em>RDF 1.1 Concepts and Abstract Syntax</em></p>
+<p><a href="#RDF">[RDF]</a>, W3C: <em>RDF 1.1 Concepts and Abstract Syntax</em></p>
 </li>
 <li>
-<p><a href="#RDFS">[RDFS]</a> <em>RDF Schema 1.1</em></p>
+<p><a href="#RDFS">[RDFS]</a> W3C: <em>RDF Schema 1.1</em></p>
 </li>
 <li>
-<p><a href="#RIFCORE">[RIFCORE]</a>, <em>RIF Core Dialect (Second Edition)</em></p>
+<p><a href="#RIFCORE">[RIFCORE]</a>, W3C: <em>RIF Core Dialect (Second Edition)</em></p>
 </li>
 <li>
-<p><a href="#SPARQL">[SPARQL]</a>, <em>SPARQL 1.1 Query Language</em></p>
+<p><a href="#SPARQL">[SPARQL]</a>, W3C: <em>SPARQL 1.1 Query Language</em></p>
 </li>
 <li>
-<p><a href="#SPARQLENT">[SPARQLENT]</a>, <em>SPARQL 1.1 Entailment Regimes</em></p>
+<p><a href="#SPARQLENT">[SPARQLENT]</a>, W3C: <em>SPARQL 1.1 Entailment Regimes</em></p>
 </li>
 <li>
-<p><a href="#SPARQLPROT">[SPARQLPROT]</a>, <em>SPARQL 1.1 Protocol</em></p>
+<p><a href="#SPARQLPROT">[SPARQLPROT]</a>, W3C: <em>SPARQL 1.1 Protocol</em></p>
 </li>
 <li>
-<p><a href="#SPARQLRESX">[SPARQLRESX]</a>, <em>SPARQL Query Results XML Format (Second Edition)</em></p>
+<p><a href="#SPARQLRESX">[SPARQLRESX]</a>, W3C: <em>SPARQL Query Results XML Format (Second Edition)</em></p>
 </li>
 <li>
-<p><a href="#SPARQLRESJ">[SPARQLRESJ]</a>, <em>SPARQL 1.1 Query Results JSON Format</em></p>
+<p><a href="#SPARQLRESJ">[SPARQLRESJ]</a>, W3C: <em>SPARQL 1.1 Query Results JSON Format</em></p>
 </li>
 </ul>
 </div>
@@ -1467,7 +1321,7 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <p>The following terms and their definitions relate to Semantic Web models, tools and methods.</p>
 </div>
 <div class="sect3">
-<h4 id="_rdf_2"><a class="anchor" href="#_rdf_2"></a>4.1.1. RDF</h4>
+<h4 id="_rdf"><a class="anchor" href="#_rdf"></a>4.1.1. RDF</h4>
 <div class="paragraph">
 <p>The Resource Description Framework (RDF) is a framework for representing information in the Web. RDF graphs are sets of subject-predicate-object triples, where the elements may be IRIs, blank nodes, or datatyped literals. They are used to express descriptions of resources. <a href="#RDF">[RDF]</a></p>
 </div>
@@ -1485,14 +1339,14 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sparql_2"><a class="anchor" href="#_sparql_2"></a>4.1.4. SPARQL</h4>
+<h4 id="_sparql"><a class="anchor" href="#_sparql"></a>4.1.4. SPARQL</h4>
 <div class="paragraph">
 <p>SPARQL is a query language for RDF. The results of SPARQL queries can be result sets or RDF graphs. <a href="#SPARQL">[SPARQL]</a></p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_spatial"><a class="anchor" href="#_spatial"></a>4.2. Spatial</h3>
+<h3 id="_spatial"><a class="anchor" href="#_spatial"></a>4.2. spatial</h3>
 <div class="paragraph">
 <p>The following terms and their definitions relate to spatial science and data.</p>
 </div>
@@ -1715,7 +1569,7 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <div class="sect2">
 <h3 id="_rdf_serializations"><a class="anchor" href="#_rdf_serializations"></a>5.4. RDF Serializations</h3>
 <div class="paragraph">
-<p>Three RDF serializations are used in this document. Terse RDF Triple Language <a href="#TURTLE">turtle</a> is used for RDF snippets placed within the main body of the document, and turtle,  <a href="#JSON-LD">JSON-LD</a> &amp; <a href="#RDFXML">RDF/XML</a> are used for the examples in <a href="#_geosparql_examples_informative">Appendix C</a>.</p>
+<p>Three RDF serializations are used in this document. Terse RDF Triple Language <a href="#TURTLE">turtle</a> is used for RDF snippets placed within the main body of the document, and turtle, <a href="#JSON-LD">JSON-LD</a> &amp; <a href="#RDFXML">RDF/XML</a> are used for the examples in <a href="#_geosparql_examples_informative">Appendix C</a>.</p>
 </div>
 </div>
 </div>
@@ -1733,10 +1587,10 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
 <div class="content">
 <img src="img/ont-overview.png" alt="GeoSPARQL Ontology overview">
 </div>
-<div class="title">Figure 3. An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of <code>geo:hasSize</code>, its metric equivalent and <code>geo:hasSerialization</code> are not shown for clarity.</div>
+<div class="title">Figure 2. An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of <code>geo:hasSize</code>, its metric equivalent and <code>geo:hasSerialization</code> are not shown for clarity.</div>
 </div>
 <div class="sect2">
-<h3 id="_sparql_3"><a class="anchor" href="#_sparql_3"></a>6.1. SPARQL</h3>
+<h3 id="_sparql_2"><a class="anchor" href="#_sparql_2"></a>6.1. SPARQL</h3>
 <table id="req_core_sparql_protocol" class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
 <col style="width: 100%;">
@@ -1894,7 +1748,7 @@ SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Qu
     </span><span class="nn">rdfs:</span><span class="n">subClassOf</span><span class="w"> </span><span class="nn">geo:</span><span class="n">SpatialObjectCollection</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="nn">rdfs:</span><span class="n">subClassOf</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="k">a</span><span class="w"> </span><span class="nn">owl:</span><span class="n">Restriction</span><span class="w"> </span><span class="p">;</span><span class="w">
-        </span><span class="nn">owl:</span><span class="n">allValuesFrom</span><span class="w"> </span><span class="nn">:</span><span class="n">Feature</span><span class="w"> </span><span class="p">;</span><span class="w">
+        </span><span class="nn">owl:</span><span class="n">allValuesFrom</span><span class="w"> </span><span class="err">:</span><span class="n">Feature</span><span class="w"> </span><span class="p">;</span><span class="w">
         </span><span class="nn">owl:</span><span class="n">onProperty</span><span class="w"> </span><span class="nn">rdfs:</span><span class="n">member</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="p">]</span><span class="w"> </span><span class="p">;</span><span class="w">
 </span><span class="p">.</span></code></pre>
@@ -2088,14 +1942,14 @@ A consistency check can be applied to Geometry instances indicating both this pr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="w">    </span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-    </span><span class="k">ASK</span><span class="w">
-    </span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nv">?g</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasMetricPerimeterLength</span><span class="w"> </span><span class="nv">?p</span><span class="w"> </span><span class="p">;</span><span class="w">
-           </span><span class="nn">geo</span><span class="o">:</span><span class="ss">dimension</span><span class="w"> </span><span class="nv">?d</span><span class="w"> </span><span class="p">.</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+    ASK
+    WHERE {
+        ?g geo:hasMetricPerimeterLength ?p ;
+           geo:dimension ?d .
 
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nv">?d</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span></code></pre>
+        FILTER (?d &lt; 2)
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -2149,15 +2003,15 @@ A consistency check can be applied to Geometry instances indicating both this pr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="w">    </span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 
-    </span><span class="k">ASK</span><span class="w">
-    </span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nv">?g</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasMetricArea</span><span class="w"> </span><span class="nv">?a</span><span class="w"> </span><span class="p">;</span><span class="w">
-           </span><span class="nn">geo</span><span class="o">:</span><span class="ss">dimension</span><span class="w"> </span><span class="nv">?d</span><span class="w"> </span><span class="p">.</span><span class="w">
+    ASK
+    WHERE {
+        ?g geo:hasMetricArea ?a ;
+           geo:dimension ?d .
 
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nv">?d</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span></code></pre>
+        FILTER (?d &lt; 2)
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -2189,7 +2043,7 @@ A consistency check can be applied to Geometry instances indicating both this pr
 <pre class="rouge highlight"><code data-lang="turtle"><span class="nn">geo:</span><span class="n">hasMetricVolume
 </span><span class="w">    </span><span class="k">a</span><span class="w"> </span><span class="nn">rdf:</span><span class="n">Property,</span><span class="w"> </span><span class="nn">owl:</span><span class="n">DatatypeProperty</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="nn">rdfs:</span><span class="n">isDefinedBy</span><span class="w"> </span><span class="nn">geo:</span><span class="w"> </span><span class="p">;</span><span class="w">
-	</span><span class="nn">rdfs:</span><span class="n">subPropertyOf</span><span class="w"> </span><span class="nn">:</span><span class="n">hasMetricSize</span><span class="w"> </span><span class="p">;</span><span class="w">
+	</span><span class="nn">rdfs:</span><span class="n">subPropertyOf</span><span class="w"> </span><span class="err">:</span><span class="n">hasMetricSize</span><span class="w"> </span><span class="p">;</span><span class="w">
 	</span><span class="nn">rdfs:</span><span class="n">domain</span><span class="w"> </span><span class="nn">geo:</span><span class="n">SpatialObject</span><span class="w"> </span><span class="p">;</span><span class="w">
 	</span><span class="nn">rdfs:</span><span class="n">range</span><span class="w"> </span><span class="nn">xsd:</span><span class="n">double</span><span class="w"> </span><span class="p">;</span><span class="w">
 	</span><span class="nn">skos:</span><span class="n">definition</span><span class="w"> </span><span class="s">"The volume of a Spatial Object in cubic meters."</span><span class="na">@en</span><span class="w"> </span><span class="p">;</span><span class="w">
@@ -2211,15 +2065,15 @@ A consistency check can be applied to Geometries indicating both this property a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="w">    </span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">    PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 
-    </span><span class="k">ASK</span><span class="w">
-    </span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nv">?g</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasMetricVolume</span><span class="w"> </span><span class="nv">?v</span><span class="w"> </span><span class="p">;</span><span class="w">
-           </span><span class="nn">geo</span><span class="o">:</span><span class="ss">dimension</span><span class="w"> </span><span class="nv">?d</span><span class="w"> </span><span class="p">.</span><span class="w">
+    ASK
+    WHERE {
+        ?g geo:hasMetricVolume ?v ;
+           geo:dimension ?d .
 
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nv">?d</span><span class="w"> </span><span class="o">!</span><span class="p">=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span></code></pre>
+        FILTER (?d != 3)
+    }</code></pre>
 </div>
 </div>
 </div>
@@ -2289,10 +2143,10 @@ to be used in SPARQL graph patterns.</p></td>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="nb">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?cnt</span><span class="p">)</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">:</span><span class="ss">f1</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">sfDisjoint</span><span class="w"> </span><span class="o">:</span><span class="ss">f1</span><span class="w"> </span><span class="p">}</span></code></pre>
+SELECT (COUNT(*) AS ?cnt)
+WHERE { :f1 geo:sfDisjoint :f1 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2352,13 +2206,13 @@ to be used in SPARQL graph patterns.</p></td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_topology_vocabulary_extension"><a class="anchor" href="#_topology_vocabulary_extension"></a>7. Topology Vocabulary Extension</h2>
+<h2 id="vocabulary_extension"><a class="anchor" href="#vocabulary_extension"></a>7. Topology Vocabulary Extension</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This clause establishes the <em>Topology Vocabulary Extension</em> parameterized Requirements class. The IRI base is <code>/req/topology-vocab-extension</code>, which has a single corresponding Conformance Class <em>Topology Vocabulary Extension</em>, with IRI <code>/conf/topology-vocab-extension</code>. This Requirements class defines a vocabulary for asserting and querying topological relations between spatial objects. The class is parameterized so that different families of topological relations may be used, such as RCC8 and Egenhofer. These relations are generalized so that they may connect features as well as geometries.</p>
 </div>
 <div class="paragraph">
-<p>A Dimensionally Extended 9-Intersection Model <a href="#DE-9IM">[DE-9IM]</a> pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are <code>-1 (empty)</code>, <code>0, 1, 2, T (true) = {0, 1, 2}</code>, <code>F (false) = {-1}</code>, <code>* (don&#8217;t care) = {-1, 0, 1, 2}</code>. In the following descriptions, the notation <code>X/Y</code> is used to denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0-dimensional geometries (e.g. points). The symbol <code>L</code> is used for 1-dimensional geometries (e.g. lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> for a more detailed description of DE-9IM intersection patterns.</p>
+<p>A Dimensionally Extended 9-Intersection Model <a href="#DE-9IM">[DE-9IM]</a> pattern, which specifies the spatial dimension of the intersections of the interiors, boundaries and exteriors of two geometric objects, is used to describe each spatial relation. Possible pattern values are <code>-1 (empty)</code>, <code>0, 1, 2, T (true) = {0, 1, 2}</code>, <code>F (false) = {-1}</code>, <code>* (don&#8217;t care) = {-1, 0, 1, 2}</code>. In the following descriptions, the notation <code>X/Y</code> is used to denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0-dimensional geometries (e.g., points). The symbol <code>L</code> is used for 1-dimensional geometries (e.g., lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g., polygons). Consult the Simple Features specification <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> for a more detailed description of DE-9IM intersection patterns.</p>
 </div>
 <div class="sect2">
 <h3 id="_parameters"><a class="anchor" href="#_parameters"></a>7.1. Parameters</h3>
@@ -2766,13 +2620,13 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect2">
 <h3 id="_rationale"><a class="anchor" href="#_rationale"></a>8.1. Rationale</h3>
 <div class="paragraph">
-<p>Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabulary<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things. Geo specifies WGS84 as the reference datum". Further, many widely used Semantic Web vocabularies contain some spatial data support. For example, <em>Dublin Core Terms</em> provides a <em>Location</em> class<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> for "A spatial region or named place." and <em>schema.org</em> provides a number of spatial object and geometry classes, such as <code>GeoCoordinates</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup> and <code>GeoShape</code> <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup>.</p>
+<p>Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabulary<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things. Geo specifies WGS84 as the reference datum". Further, many widely used Semantic Web vocabularies contain some spatial data support. For example, <em>Dublin Core Terms</em> provides a <em>Location</em> class<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> for "A spatial region or named place." and <em>schema.org</em> provides a number of spatial object and geometry classes, such as <code>GeoCoordinates</code> <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> and <code>GeoShape</code> <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>.</p>
 </div>
 <div class="paragraph">
 <p>Many vocabularies such as the above provide little specific support for detailed geometries and only specify using the WGS84 Coordinate Reference System (CRS).</p>
 </div>
 <div class="paragraph">
-<p>Since the first version of GeoSPARQL, many ontologies have imported GeoSPARQL. For example, the <em>ISA Programme Location Core Vocabulary</em> <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup> whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL&#8217;s "geometry class". The W3C&#8217;s more recent <em>Data Catalog Vocabulary, Version 2</em> (DCAT2) standard<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> similarly contains usage notes for <code>geometry</code>, <code>bbox</code> and other properties that suggest the use of GeoSPARQL literals.</p>
+<p>Since the first version of GeoSPARQL, many ontologies have imported GeoSPARQL. For example, the <em>ISA Programme Location Core Vocabulary</em> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup> whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL&#8217;s "geometry class". The W3C&#8217;s more recent <em>Data Catalog Vocabulary, Version 2</em> (DCAT2) standard<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup> similarly contains usage notes for <code>geometry</code>, <code>bbox</code> and other properties that suggest the use of GeoSPARQL literals.</p>
 </div>
 <div class="paragraph">
 <p>Some of the properties defined in these vocabularies, such as DCAT2&#8217;s <a href="https://www.w3.org/TR/vocab-dcat-2/#Property:dataset_spatial_resolution"><code>dcat:spatialResolution</code></a> have motivated the inclusion of new properties in this version of GeoSPARQL. In this case the equivalent property is <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a>. The GeoSPARQL 1.1 Standards Working Group charter <a href="#CHARTER">[CHARTER]</a> contains references to a number of vocabularies/ontologies that were influential in the generation of this version of GeoSPARQL.</p>
@@ -2796,7 +2650,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect2">
 <h3 id="_recommendation_for_units_of_measure"><a class="anchor" href="#_recommendation_for_units_of_measure"></a>8.3. Recommendation for units of measure</h3>
 <div class="paragraph">
-<p>For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> or the function <a href="#_function_geofbuffer"><code>geof:buffer</code></a>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup> but others may be used, as long as they are well-described.</p>
+<p>For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> or the function <a href="#_function_geofbuffer"><code>geof:buffer</code></a>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup> but others may be used, as long as they are well-described.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3085,7 +2939,7 @@ See the <a href="#Recommendation for specification of units of measurement">[Rec
 <div class="sect3">
 <h4 id="geo:hasSpatialAccuracy"><a class="anchor" href="#geo:hasSpatialAccuracy"></a>8.7.6. Property: geo:hasSpatialAccuracy</h4>
 <div class="paragraph">
-<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialAccuracy"><code>geo:hasSpatialAccuracy</code></a> is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).</p>
+<p>The property <a href="http://www.opengis.net/ont/geosparql#hasSpatialAccuracy"><code>geo:hasSpatialAccuracy</code></a> is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g., a line, a circle, or a sphere, depending on spatial dimension).</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3213,7 +3067,7 @@ this property is the generic property used to connect a Geometry with its serial
 <div id="NOTE" class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>GeoSPARQL&#8217;s expectation of RDF literal representations of geometry data is that it is related to the <em>Simple Features Access</em> (SFA) <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of geometry which defines classes such as <code>Point</code>, <code>Curve</code> and <code>Surface</code> and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
+<p>GeoSPARQL&#8217;s expectation of RDF literal representations of geometry data is that it is related to the <em>Simple Features Access</em> (SFA) <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of geometry which defines classes such as <code>Point</code>, <code>Curve</code>, and <code>Surface</code> and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#GeoSPARQL Standard structure">GeoSPARQL Standard structure</a>.</p>
 </div>
 <div class="paragraph">
 <p>Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.</p>
@@ -4074,19 +3928,19 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 <div class="ulist">
 <ul>
 <li>
-<p>An argument of an unexpected type</p>
+<p>An argument of an unexpected type;</p>
 </li>
 <li>
-<p>An invalid geometry literal value</p>
+<p>An invalid geometry literal value;</p>
 </li>
 <li>
-<p>A non-fitting geometry type for the given function</p>
+<p>A non-fitting geometry type for the given function;</p>
 </li>
 <li>
-<p>A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations</p>
+<p>A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations; or</p>
 </li>
 <li>
-<p>An invalid unit IRI</p>
+<p>An invalid unit IRI.</p>
 </li>
 </ul>
 </div>
@@ -4094,7 +3948,7 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 <p>A more detailed description of expected inputs and expected outputs of the given functions is shown in Annex B.</p>
 </div>
 <div class="paragraph">
-<p>Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard:</p>
+<p>Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -4107,13 +3961,13 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 </ul>
 </div>
 <div class="paragraph">
-<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 17<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>.</p>
+<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 17<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>.</p>
 </div>
 <div class="paragraph">
 <p>Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.</p>
 </div>
 <div class="paragraph">
-<p>From Section 17.3.1<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>:</p>
+<p>From Section 17.3.1<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -4130,7 +3984,7 @@ SPARQL language extensions may provide additional associations between operators
 <div class="title">Note</div>
 </td>
 <td class="content">
-Several non-topological query functions use a unit of measure IRI. See the <a href="#Recommendation for specification of units of measurement">Recommendation for specification of units of measurement</a>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Server<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup>.
+Several non-topological query functions use a unit of measure IRI. See the <a href="#Recommendation for specification of units of measurement">Recommendation for specification of units of measurement</a>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Server<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup>.
 </td>
 </tr>
 </table>
@@ -4408,7 +4262,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/isEmpty"><code>geof:isEmpty</code></a> returns true if <code>geom</code> is an empty geometry, i.e. contains no coordinates.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/isEmpty"><code>geof:isEmpty</code></a> returns true if <code>geom</code> is an empty geometry, i.e., contains no coordinates.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4430,7 +4284,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/isSimple"><code>geof:isSimple</code></a> returns true if <code>geom</code> is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/isSimple"><code>geof:isSimple</code></a> returns true if <code>geom</code> is a simple geometry, i.e., has no anomalous geometric points, such as self intersection or self tangency.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4475,7 +4329,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxX"><code>geof:maxX</code></a> returns the maximum X coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxX"><code>geof:maxX</code></a> returns the maximum X coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4486,7 +4340,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxY"><code>geof:maxY</code></a> returns the maximum Y coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxY"><code>geof:maxY</code></a> returns the maximum Y coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4497,7 +4351,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxZ"><code>geof:maxZ</code></a> returns the maximum Z coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/maxZ"><code>geof:maxZ</code></a> returns the maximum Z coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4508,7 +4362,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:minX</code></a> returns the minimum X coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minX"><code>geof:minX</code></a> returns the minimum X coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4519,7 +4373,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/minY"><code>geof:minY</code></a> returns the minimum Y coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minY"><code>geof:minY</code></a> returns the minimum Y coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4530,7 +4384,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/minZ"><code>geof:minZ</code></a> returns the minimum Z coordinate for <code>geom</code> using the SRS of <code>geom</code> .</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/minZ"><code>geof:minZ</code></a> returns the minimum Z coordinate for <code>geom</code> using the SRS of <code>geom</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4808,7 +4662,7 @@ This function is similar in name to <a href="#_function_geofunion">geof:union</a
 </ul>
 </div>
 <div class="paragraph">
-<p>In the following descriptions, the notation <code>X/Y</code> is used to denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0-dimensional geometries (e.g. points). The symbol <code>L</code> is used for 1- dimensional geometries (e.g. lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> for a more detailed description of DE-9IM intersection patterns.</p>
+<p>In the following descriptions, the notation <code>X/Y</code> is used to denote applying a spatial relation to geometry types <code>X</code> and <code>Y</code> (i.e., <code>x</code> <em>relation</em> <code>y</code> where <code>x</code> is of type <code>X</code> and <code>y</code> is of type <code>Y</code>). The symbol <code>P</code> is used for 0-dimensional geometries (e.g., points). The symbol <code>L</code> is used for 1- dimensional geometries (e.g. lines), and the symbol <code>A</code> is used for 2-dimensional geometries (e.g., polygons). Consult the Simple Features specification <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> for a more detailed description of DE-9IM intersection patterns.</p>
 </div>
 <div class="sect2">
 <h3 id="_parameters_3"><a class="anchor" href="#_parameters_3"></a>9.1. Parameters</h3>
@@ -5264,10 +5118,10 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <h2 id="_query_rewrite_extension"><a class="anchor" href="#_query_rewrite_extension"></a>11. Query Rewrite Extension</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This clause establishes the <em>Query Rewrite Extension</em> parameterized Requirements class with base IRI <code>/req/query-rewrite-extension</code>, which has a single corresponding conformance class <em>Query Rewrite Extension</em>, with IRI <code>/conf/query-rewrite-extension</code>. These Requirements define a set of RIF rules <a href="#RIF">[RIF]</a> that use topological extension functions defined in Clause 9 to establish the existence of direct topological predicates defined in Clause 7. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.</p>
+<p>This clause establishes the <em>Query Rewrite Extension</em> parameterized Requirements class with base IRI <code>/req/query-rewrite-extension</code>, which has a single corresponding conformance class <em>Query Rewrite Extension</em>, with IRI <code>/conf/query-rewrite-extension</code>. These Requirements define a set of RIF rules <a href="#RIF">[RIF]</a> that use topological extension functions defined in <a href="#geometry_extension">Clause 9</a> to establish the existence of direct topological predicates defined in <a href="#vocabulary_extension">Clause 7</a>. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.</p>
 </div>
 <div class="paragraph">
-<p>The following rule specified using the RIF Core Dialect <a href="#RIFCORE">[RIFCORE]</a> and shown in <em>Presentation Syntax</em> is used as a template to describe rules in the remainder of this clause. <code>ogc:relation</code> is used as a placeholder for the spatial relation IRIs defined in Clause 7, and <code>ogc:function</code> is used as a placeholder for the spatial functions defined in <a href="#geometry_extension">Clause 9</a>. <code>ogc:asGeomLiteral</code> is used to indicate one of the properties that link <code>geo:Geometry</code> instances to serialisations, such as <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> or <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a>. The variables <code>?so1</code> &amp; <code>?so2</code> represent <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> instances (either <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances), <code>?g1</code> &amp; <code>?g2</code> <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances only and <code>?g1Serial</code> &amp; <code>?g2Serial</code> represent <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instance serializations, e.g. <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> etc. literals.</p>
+<p>The following rule specified using the RIF Core Dialect <a href="#RIFCORE">[RIFCORE]</a> and shown in <em>Presentation Syntax</em> is used as a template to describe rules in the remainder of this clause. <code>ogc:relation</code> is used as a placeholder for the spatial relation IRIs defined in Clause 7, and <code>ogc:function</code> is used as a placeholder for the spatial functions defined in <a href="#geometry_extension">Clause 9</a>. <code>ogc:asGeomLiteral</code> is used to indicate one of the properties that link <code>geo:Geometry</code> instances to serialisations, such as <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> or <a href="http://www.opengis.net/ont/geosparql#asGeoJSON"><code>geo:asGeoJSON</code></a>. The variables <code>?so1</code> &amp; <code>?so2</code> represent <a href="http://www.opengis.net/ont/geosparql#SpatialObject"><code>geo:SpatialObject</code></a> instances (either <a href="http://www.opengis.net/ont/geosparql#Feature"><code>geo:Feature</code></a> or <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances), <code>?g1</code> &amp; <code>?g2</code> <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instances only and <code>?g1Serial</code> &amp; <code>?g2Serial</code> represent <a href="http://www.opengis.net/ont/geosparql#Geometry"><code>geo:Geometry</code></a> instance serializations, e.g., <a href="http://www.opengis.net/ont/geosparql#asWKT"><code>geo:asWKT</code></a> etc. literals.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8277,7 +8131,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <div class="sect2">
 <h3 id="_c_0_overview"><a class="anchor" href="#_c_0_overview"></a>C.0 Overview</h3>
 <div class="paragraph">
-<p>This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a> for the link to those examples.</p>
+<p>This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a> for the link to those examples.</p>
 </div>
 </div>
 <div class="sect2">
@@ -8355,7 +8209,7 @@ It is unlikely that users of GeoSPARQL will create many instances of <a href="#_
 <p>Here a spatial object, Moreton Island, has the distance of its coastline given with two properties: <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> &amp; <a href="#geo:hasMetricPerimeterLength"><code>geo:hasMetricPerimeterLength</code></a>. The object for the first is a Blank Node with a QUDT value property of 92.367 and a QUDT unit property of <code>unit:KiloM</code> (kilometre). The object for the second is the literal <code>92367</code> (a double) which is, by the property&#8217;s definition, a number of metres.</p>
 </div>
 <div class="paragraph">
-<p>The use of the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup> and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> and any subproperty of <a href="#geo:hasSize"><code>geo:hasSize</code></a>.</p>
+<p>The use of the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup> and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> and any subproperty of <a href="#geo:hasSize"><code>geo:hasSize</code></a>.</p>
 </div>
 </div>
 </div>
@@ -8940,7 +8794,7 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 <div class="content">
 <img src="img/03.png" alt="600" width="400">
 </div>
-<div class="title">Figure 4. Illustration of spatial data</div>
+<div class="title">Figure 3. Illustration of spatial data</div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9040,22 +8894,22 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://example.org/ApplicationSchema#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/function/geosparql/&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
+PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?aGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?aGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?f</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
+SELECT ?f
+WHERE {
+    my:A my:hasExactGeometry ?aGeom .
+    ?aGeom geo:asWKT ?aWKT .
+    ?f my:hasExactGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
 
-    </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="w">
-        </span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfContains</span><span class="p">(</span><span class="nv">?aWKT</span><span class="p">,</span><span class="w"> </span><span class="nv">?fWKT</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w">
-            </span><span class="o">!</span><span class="nb">sameTerm</span><span class="p">(</span><span class="nv">?aGeom</span><span class="p">,</span><span class="w"> </span><span class="nv">?fGeom</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span></code></pre>
+    FILTER (
+        geof:sfContains(?aWKT, ?fWKT) &amp;&amp;
+            !sameTerm(?aGeom, ?fGeom)
+        )
+)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9087,24 +8941,24 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://example.org/ApplicationSchema#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/function/geosparql/&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
+PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nv">?f</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasPointGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="w">
-        </span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfWithin</span><span class="p">(</span><span class="w">
-            </span><span class="nv">?fWKT</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
+SELECT ?f
+WHERE {
+    ?f my:hasPointGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
+    FILTER (
+        geof:sfWithin(
+            ?fWKT,
+            "&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
             Polygon ((-83.4 34.0, -83.1 34.0,
                         -83.1 34.2, -83.4 34.2,
-                        -83.4 34.0))"</span><span class="o">^^</span><span class="nn">geo</span><span class="o">:</span><span class="ss">wktLiteral</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-    </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre>
+                        -83.4 34.0))"^^geo:wktLiteral
+        )
+    )
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9133,25 +8987,25 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://example.org/ApplicationSchema#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/function/geosparql/&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
+PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nv">?f</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?aGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?aGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nn">my</span><span class="o">:</span><span class="ss">D</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?dGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?dGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?dWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="w">
-        </span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfTouches</span><span class="p">(</span><span class="w">
-            </span><span class="nv">?fWKT</span><span class="p">,</span><span class="w">
-            </span><span class="nn">geof</span><span class="o">:</span><span class="ss">union</span><span class="p">(</span><span class="nv">?aWKT</span><span class="p">,</span><span class="w"> </span><span class="nv">?dWKT</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-    </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre>
+SELECT ?f
+WHERE {
+    ?f my:hasExactGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
+    my:A my:hasExactGeometry ?aGeom .
+    ?aGeom geo:asWKT ?aWKT .
+    my:D my:hasExactGeometry ?dGeom .
+    ?dGeom geo:asWKT ?dWKT .
+    FILTER (
+        geof:sfTouches(
+            ?fWKT,
+            geof:union(?aWKT, ?dWKT)
+        )
+    )
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9180,21 +9034,21 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">uom</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/uom/OGC/1.0/&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://example.org/ApplicationSchema#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/geosparql/function&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX uom: &lt;http://www.opengis.net/def/uom/OGC/1.0/&gt;
+PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
+PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/geosparql/function&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nn">my</span><span class="o">:</span><span class="ss">C</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?cGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?cGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?cWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?f</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">hasExactGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fWKT</span><span class="w"> </span><span class="p">.</span><span class="w">
-    </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nv">?fGeom</span><span class="w"> </span><span class="o">!</span><span class="p">=</span><span class="w"> </span><span class="nv">?cGeom</span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">ASC</span><span class="w"> </span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">distance</span><span class="p">(</span><span class="nv">?cWKT</span><span class="p">,</span><span class="w"> </span><span class="nv">?fWKT</span><span class="p">,</span><span class="w"> </span><span class="nn">uom</span><span class="o">:</span><span class="ss">metre</span><span class="p">))</span><span class="w">
-</span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">3</span></code></pre>
+SELECT ?f
+WHERE {
+    my:C my:hasExactGeometry ?cGeom .
+    ?cGeom geo:asWKT ?cWKT .
+    ?f my:hasExactGeometry ?fGeom .
+    ?fGeom geo:asWKT ?fWKT .
+    FILTER (?fGeom != ?cGeom)
+}
+ORDER BY ASC (geof:distance(?cWKT, ?fWKT, uom:metre))
+LIMIT 3</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9229,22 +9083,22 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/function/geosparql/&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?minX</span><span class="w"> </span><span class="nv">?minY</span><span class="w"> </span><span class="nv">?minZ</span><span class="w"> </span><span class="nv">?maxX</span><span class="w"> </span><span class="nv">?maxY</span><span class="w"> </span><span class="nv">?maxZ</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="k">BIND</span><span class="w"> </span><span class="p">(</span><span class="s2">"&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
+SELECT ?minX ?minY ?minZ ?maxX ?maxY ?maxZ
+WHERE {
+    BIND ("&lt;http://www.opengis.net/def/crs/OGC/1.3/CRS84&gt;
             Polygon Z((-83.4 34.0 0, -83.1 34.0 1,
                         -83.1 34.2 1, -83.4 34.2 1,
-                        -83.4 34.0 0))"</span><span class="o">^^</span><span class="nn">geo</span><span class="o">:</span><span class="ss">wktLiteral</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?testgeom</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">minX</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?minX</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">maxX</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?maxX</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">minY</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?minY</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">maxY</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?maxY</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">maxZ</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?maxZ</span><span class="p">)</span><span class="w">
-    </span><span class="k">BIND</span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">minZ</span><span class="p">(</span><span class="nv">?testgeom</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nv">?minZ</span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre>
+                        -83.4 34.0 0))"^^geo:wktLiteral) AS ?testgeom)
+    BIND(geof:minX(?testgeom) AS ?minX)
+    BIND(geof:maxX(?testgeom) AS ?maxX)
+    BIND(geof:minY(?testgeom) AS ?minY)
+    BIND(geof:maxY(?testgeom) AS ?maxY)
+    BIND(geof:maxZ(?testgeom) AS ?maxZ)
+    BIND(geof:minZ(?testgeom) AS ?minZ)
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9297,10 +9151,10 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="p">}</span></code></pre>
+SELECT ?f
+WHERE { ?f geo:sfOverlaps my:A }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9308,42 +9162,42 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sparql"><span class="k">PREFIX</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://example.org/ApplicationSchema#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/ont/geosparql#&gt;</span><span class="w">
-</span><span class="k">PREFIX</span><span class="w"> </span><span class="nn">geof</span><span class="o">:</span><span class="w"> </span><span class="nn">&lt;http://www.opengis.net/def/function/geosparql/&gt;</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX my: &lt;http://example.org/ApplicationSchema#&gt;
+PREFIX geo: &lt;http://www.opengis.net/ont/geosparql#&gt;
+PREFIX geof: &lt;http://www.opengis.net/def/function/geosparql/&gt;
 
-</span><span class="k">SELECT</span><span class="w"> </span><span class="nv">?f</span><span class="w">
-</span><span class="k">WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="c1"># check for asserted statement</span><span class="w">
-        </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="w"> </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="p">}</span><span class="w">
-    </span><span class="k">UNION</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="c1"># feature – feature</span><span class="w">
-        </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasDefaultGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasDefaultGeometry</span><span class="w"> </span><span class="nv">?aGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nv">?aGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="p">(</span><span class="nv">?fSerial</span><span class="p">,</span><span class="w"> </span><span class="nv">?aSerial</span><span class="p">))</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="k">UNION</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="c1"># feature – geometry</span><span class="w">
-        </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasDefaultGeometry</span><span class="w"> </span><span class="nv">?fGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nv">?fGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="p">(</span><span class="nv">?fSerial</span><span class="p">,</span><span class="w"> </span><span class="nv">?aSerial</span><span class="p">))</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="k">UNION</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="c1"># geometry – feature</span><span class="w">
-        </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">hasDefaultGeometry</span><span class="w"> </span><span class="nv">?aGeom</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nv">?aGeom</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="p">(</span><span class="nv">?fSerial</span><span class="p">,</span><span class="w"> </span><span class="nv">?aSerial</span><span class="p">))</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="k">UNION</span><span class="w">
-    </span><span class="p">{</span><span class="w"> </span><span class="c1"># geometry – geometry</span><span class="w">
-        </span><span class="nv">?f</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?fSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="nn">my</span><span class="o">:</span><span class="ss">A</span><span class="w"> </span><span class="nn">geo</span><span class="o">:</span><span class="ss">asWKT</span><span class="w"> </span><span class="nv">?aSerial</span><span class="w"> </span><span class="p">.</span><span class="w">
-        </span><span class="k">FILTER</span><span class="w"> </span><span class="p">(</span><span class="nn">geof</span><span class="o">:</span><span class="ss">sfOverlaps</span><span class="p">(</span><span class="nv">?fSerial</span><span class="p">,</span><span class="w"> </span><span class="nv">?aSerial</span><span class="p">))</span><span class="w">
-    </span><span class="p">}</span></code></pre>
+SELECT ?f
+WHERE {
+    { # check for asserted statement
+        ?f geo:sfOverlaps my:A }
+    UNION
+    { # feature – feature
+        ?f geo:hasDefaultGeometry ?fGeom .
+        ?fGeom geo:asWKT ?fSerial .
+        my:A geo:hasDefaultGeometry ?aGeom .
+        ?aGeom geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial))
+    }
+    UNION
+    { # feature – geometry
+        ?f geo:hasDefaultGeometry ?fGeom .
+        ?fGeom geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial))
+    }
+    UNION
+    { # geometry – feature
+        ?f geo:asWKT ?fSerial .
+        my:A geo:hasDefaultGeometry ?aGeom .
+        ?aGeom geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial))
+    }
+    UNION
+    { # geometry – geometry
+        ?f geo:asWKT ?fSerial .
+        my:A geo:asWKT ?aSerial .
+        FILTER (geof:sfOverlaps(?fSerial, ?aSerial))
+    }</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10305,7 +10159,7 @@ There are several SHACL tools that one can using to validate data using this Sha
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="nn">:</span><span class="n">flooded-area-x
+<pre class="rouge highlight"><code data-lang="turtle"><span class="err">:</span><span class="n">flooded-area-x
 </span><span class="w">    </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Feature</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="nn">geo:</span><span class="n">hasGeometry</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Geometry</span><span class="w"> </span><span class="p">;</span><span class="w">
@@ -10331,7 +10185,7 @@ There are several SHACL tools that one can using to validate data using this Sha
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="nn">:</span><span class="n">flooded-area-x
+<pre class="rouge highlight"><code data-lang="turtle"><span class="err">:</span><span class="n">flooded-area-x
 </span><span class="w">    </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Feature</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="nn">geo:</span><span class="n">hasGeometry</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Geometry</span><span class="w"> </span><span class="p">;</span><span class="w">
@@ -10524,13 +10378,13 @@ rivers, these can be defined as subclasses of <a href="#_class_geofeature"><code
 </ul>
 </div>
 <div class="paragraph">
-<p>DCTERMS-related geometry literals, such as the <em>DCMI Box Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnotedef_14" title="View footnote.">14</a>]</sup> and the <em>DCMI Point Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_15" class="footnote" href="#_footnotedef_15" title="View footnote.">15</a>]</sup>
+<p>DCTERMS-related geometry literals, such as the <em>DCMI Box Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup> and the <em>DCMI Point Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup>
 could be indicated as GeoSPARQL geometry literals if a literal datatype were created for each. For example, the <em>DCMI Point Encoding Scheme</em> example of "The highest point in Australia" with the literal value
 <code>east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko</code> might be encoded in GeoSPARQL like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="nn">:</span><span class="n">mt-kosciusko
+<pre class="rouge highlight"><code data-lang="turtle"><span class="err">:</span><span class="n">mt-kosciusko
 </span><span class="w">    </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Feature</span><span class="w"> </span><span class="p">;</span><span class="w">
     </span><span class="nn">geo:</span><span class="n">hasGeometry</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="k">a</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Geometry</span><span class="w"> </span><span class="p">;</span><span class="w">
@@ -10593,7 +10447,7 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 <p>Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as having been derived from a Polygon like this:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="nn">:</span><span class="n">bounding-box-y</span><span class="w"> </span><span class="nn">prov:</span><span class="n">wasDerivedFrom</span><span class="w"> </span><span class="nn">:</span><span class="n">polygon-x</span><span class="w"> </span><span class="p">.</span></code></pre>
+<pre class="rouge highlight"><code data-lang="turtle"><span class="err">:</span><span class="n">bounding-box-y</span><span class="w"> </span><span class="nn">prov:</span><span class="n">wasDerivedFrom</span><span class="w"> </span><span class="err">:</span><span class="n">polygon-x</span><span class="w"> </span><span class="p">.</span></code></pre>
 </div>
 </div>
 </li>
@@ -12297,54 +12151,48 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. <a href="https://en.wikipedia.org/wiki/SPARQL" class="bare">https://en.wikipedia.org/wiki/SPARQL</a>
+<a href="#_footnoteref_1">1</a>. <a href="http://www.w3.org/2003/01/geo/" class="bare">http://www.w3.org/2003/01/geo/</a>
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. <a href="https://www.w3.org/TR/sparql11-query/#extensionFunctions" class="bare">https://www.w3.org/TR/sparql11-query/#extensionFunctions</a>
+<a href="#_footnoteref_2">2</a>. <a href="http://purl.org/dc/terms/Location" class="bare">http://purl.org/dc/terms/Location</a>
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. <a href="http://www.w3.org/2003/01/geo/" class="bare">http://www.w3.org/2003/01/geo/</a>
+<a href="#_footnoteref_3">3</a>. <a href="https://schema.org/GeoCoordinates" class="bare">https://schema.org/GeoCoordinates</a>
 </div>
 <div class="footnote" id="_footnotedef_4">
-<a href="#_footnoteref_4">4</a>. <a href="http://purl.org/dc/terms/Location" class="bare">http://purl.org/dc/terms/Location</a>
+<a href="#_footnoteref_4">4</a>. <a href="https://schema.org/GeoShape" class="bare">https://schema.org/GeoShape</a>
 </div>
 <div class="footnote" id="_footnotedef_5">
-<a href="#_footnoteref_5">5</a>. <a href="https://schema.org/GeoCoordinates" class="bare">https://schema.org/GeoCoordinates</a>
+<a href="#_footnoteref_5">5</a>. <a href="https://www.w3.org/ns/locn" class="bare">https://www.w3.org/ns/locn</a>
 </div>
 <div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. <a href="https://schema.org/GeoShape" class="bare">https://schema.org/GeoShape</a>
+<a href="#_footnoteref_6">6</a>. <a href="https://www.w3.org/TR/vocab-dcat/#spatial-properties" class="bare">https://www.w3.org/TR/vocab-dcat/#spatial-properties</a>
 </div>
 <div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. <a href="https://www.w3.org/ns/locn" class="bare">https://www.w3.org/ns/locn</a>
+<a href="#_footnoteref_7">7</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
 </div>
 <div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. <a href="https://www.w3.org/TR/vocab-dcat/#spatial-properties" class="bare">https://www.w3.org/TR/vocab-dcat/#spatial-properties</a>
+<a href="#_footnoteref_8">8</a>. <a href="https://www.w3.org/TR/sparql11-query/#expressions" class="bare">https://www.w3.org/TR/sparql11-query/#expressions</a>
 </div>
 <div class="footnote" id="_footnotedef_9">
-<a href="#_footnoteref_9">9</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
+<a href="#_footnoteref_9">9</a>. <a href="https://www.w3.org/TR/sparql11-query/#operatorExtensibility" class="bare">https://www.w3.org/TR/sparql11-query/#operatorExtensibility</a>
 </div>
 <div class="footnote" id="_footnotedef_10">
-<a href="#_footnoteref_10">10</a>. <a href="https://www.w3.org/TR/sparql11-query/#expressions" class="bare">https://www.w3.org/TR/sparql11-query/#expressions</a>
+<a href="#_footnoteref_10">10</a>. <a href="https://www.ogc.org/def-server" class="bare">https://www.ogc.org/def-server</a>
 </div>
 <div class="footnote" id="_footnotedef_11">
-<a href="#_footnoteref_11">11</a>. <a href="https://www.w3.org/TR/sparql11-query/#operatorExtensibility" class="bare">https://www.w3.org/TR/sparql11-query/#operatorExtensibility</a>
+<a href="#_footnoteref_11">11</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
 </div>
 <div class="footnote" id="_footnotedef_12">
-<a href="#_footnoteref_12">12</a>. <a href="https://www.ogc.org/def-server" class="bare">https://www.ogc.org/def-server</a>
+<a href="#_footnoteref_12">12</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-box/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-box/</a>
 </div>
 <div class="footnote" id="_footnotedef_13">
-<a href="#_footnoteref_13">13</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
-</div>
-<div class="footnote" id="_footnotedef_14">
-<a href="#_footnoteref_14">14</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-box/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-box/</a>
-</div>
-<div class="footnote" id="_footnotedef_15">
-<a href="#_footnoteref_15">15</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-point/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-point/</a>
+<a href="#_footnoteref_13">13</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-point/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-point/</a>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-20 14:27:31 +1000
+Last updated 2024-01-22 20:33:20 UTC
 </div>
 </div>
 </body>
