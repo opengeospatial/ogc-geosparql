@@ -2,7 +2,6 @@ import os
 import sys
 import re
 import json
-import asciidoc
 from rdflib import Graph, URIRef, Literal
 
 logfile=open("logfile.txt","w")
