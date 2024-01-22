@@ -25,9 +25,11 @@ SFA-CA also describes M coordinate values that may be part of geometry encodings
 SFA-CA specifies a class hierarchy for Geometry. Although these classes are not part of the GeoSPARQL ontology, the GeoSPARQL SWG does publish a vocabulary of Simple Features geometry: http://www.opengis.net/ont/sf. Geometry types defined in this vocabulary can be considered safe to use with GeoSPARQL. The two Geometry serializations that were specified in GeoSPARQL 1.0, WKT and GML, fully support all SFA-CA geometry types. However, the two Geometry serializations that were introduced in GeoSPARQL 1.1 do not. Some SFA-CA geometry types are not supported by either the OGC KML <<OGCKML>> or the GeoJSON format. For example, neither KML nor GeoJSON support the Triangulated Integrated Network (TIN) or Triangle geometry types.
 
 === Recommendation for units of measure
+
 For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>> or the function <<Function: geof:buffer, `geof:buffer`>>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] but others may be used, as long as they are well-described.
 
 === Influence of Reference Systems on computations
+
 A Geometry object consists of a set of coordinates and a specification on how the coordinates should be interpreted. This specification is known as a Spatial reference System (SRS). Taken together, coordinates and SRS allow performing computations on Geometry objects. For example, sizes can be calculated or new Geometry objects can be created. Some Spatial Reference Systems describe a two-dimensional flat space. In that case, coordinates are understood to be Cartesian, and Cartesian geometric computations can be performed. But Spatial Reference Systems can describe other types of spaces, to which Cartesian computations are not applicable. For example, if CRS http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] is used, coordinates are to be interpreted as decimal degrees of latitude and longitude, designating positions on a spheroid. The distance between two points using this CRS is different from the distance between two points that have the same coordinates but are based on a Cartesian CRS or other SRS.
 
 To avoid erroneous computations involving Geometry, data publishers are recommended to clearly indicate the type of space that is described by the SRS.
@@ -218,11 +220,10 @@ geo:hasMetricSpatialResolution
 .
 ```
 
-
 [#geo:hasSpatialAccuracy]
 ==== Property: geo:hasSpatialAccuracy
 
-The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
+The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g., a line, a circle, or a sphere, depending on spatial dimension).
 
 ```turtle
 geo:hasSpatialAccuracy 
@@ -305,6 +306,7 @@ geo:hasSerialization
 NOTE: this property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this property for connecting serializations of common types with geometries, for example <<Property: geo:asGeoJSON, as GeoJSON>> which can be used for GeoJSON <<GEOJSON>> literals.
 
 === Geometry Serializations
+
 This section establishes the Requirements class for representing Geometry data in RDF literals, according to different non-RDF systems.
 
 GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them. It does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
@@ -313,7 +315,7 @@ GeoSPARQL does present some Requirements for literal structure which extend the 
 
 [[NOTE]]
 ====
-GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGCSFACA>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGCSFACA>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve`, and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
 
 Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
 ====
@@ -865,15 +867,15 @@ These notes apply to all the following functions in this section.
 
 An invocation of any of the following functions with invalid arguments produces an error. An invalid argument includes any of the following:
 
-* An argument of an unexpected type
-* An invalid geometry literal value
-* A non-fitting geometry type for the given function
-* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
-* An invalid unit IRI
+* An argument of an unexpected type;
+* An invalid geometry literal value;
+* A non-fitting geometry type for the given function;
+* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations; or
+* An invalid unit IRI.
 
 A more detailed description of expected inputs and expected outputs of the given functions is shown in Annex B.
 
-Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard:
+Unless otherwise stated in the function definition, the following behaviors should be followed by all SPARQL extension functions defined in the GeoSPARQL standard.
 
 * Functions returning a new geometry literal should follow the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a WKT literal shall be returned.
 * Functions returning a new geometry literal should follow the SRS defined in the literal format of the first geometry literal input parameter. If no geometry literal input parameter is present, a geometry result should be returned in the CRS84 SRS.
@@ -1072,7 +1074,7 @@ The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Ret
 geof:isEmpty (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`] returns true if `geom` is an empty geometry, i.e. contains no coordinates.
+The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`] returns true if `geom` is an empty geometry, i.e., contains no coordinates.
 
 ==== Function: geof:isMeasured
 
@@ -1088,7 +1090,7 @@ The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMe
 geof:isSimple (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`] returns true if `geom` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
+The function http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`] returns true if `geom` is a simple geometry, i.e., has no anomalous geometric points, such as self intersection or self tangency.
 
 ==== Function: geof:metricLength
 
@@ -1114,7 +1116,7 @@ NOTE: See the <<Recommendation for specification of units of measurement, Recomm
 geof:maxX (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxY
 
@@ -1122,7 +1124,7 @@ The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] ret
 geof:maxY (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxZ
 
@@ -1130,7 +1132,7 @@ The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] ret
 geof:maxZ (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minX
 
@@ -1138,7 +1140,7 @@ The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] ret
 geof:minX (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minY
 
@@ -1146,7 +1148,7 @@ The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] ret
 geof:minY (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minZ
 
@@ -1154,7 +1156,7 @@ The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] ret
 geof:minZ (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom` using the SRS of `geom` .
+The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:numGeometries
 
