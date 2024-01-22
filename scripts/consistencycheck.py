@@ -75,6 +75,7 @@ def check_vocab_jsonld_consistency(input1,input2):
     funcs2={}
     for obj in g2.subjects():
         if isinstance(obj,URIRef):
+            print(obj)
             funcs2[str(obj)]=str(obj)[str(obj).rfind("/")+1]
     comparison(contextvals,funcs2.keys(),input1,input2)
 
