@@ -31,31 +31,31 @@ jobs:
          mkdir docs/geosparql10/
          mkdir docs/geosparql10/servicedescription
          cd docs/geosparql10/
-         cp ../../geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../spec/11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib . 
+         cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../spec/11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib . 
          cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl .  
          echo "Generating documentation for GeoSPARQL 1.0 ontology"
          pylode -i ../../geo.ttl -o index.html
-         python3 ../../convertjsonld.py geo.ttl geo.json
+         python3 ../../scripts/convertjsonld.py geo.ttl geo.json
          #echo "Generating documentation for GeoSPARQL 1.0 profile"
          #pylode -i ../../profile.ttl -o profile.html -p prof
          echo "Generating documentation for GeoSPARQL 1.0 functions and rules"
          pylode -i ../../vocabularies/rules.ttl -o rules.html -p vocpub
-         python3 ../../convertjsonld.py rules.ttl rules.json
+         python3 ../../scripts/convertjsonld.py rules.ttl rules.json
          pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
-         python3 ../../convertjsonld.py functions.ttl functions.json
+         python3 ../../scripts/convertjsonld.py functions.ttl functions.json
          echo "Generating documentation for GeoSPARQL 1.0 Simple Features Vocabulary"
          pylode -i ../../vocabularies/sf_geometries.ttl -o sf_geometries.html -p vocpub
-         python3 ../../convertjsonld.py sf_geometries.ttl sf_geometries.json
+         python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json
          # pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
          echo "Generating documentation for GeoSPARQL 1.0 Service Description Extensions"
          pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
-         python3 ../../convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
+         python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json
          echo "Generating documentation for GeoSPARQL 1.0 Service Description Conformance Classes"
          pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
-         python3 ../../convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
+         python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json
          echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
          pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
-         python3 ../../convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
+         python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
