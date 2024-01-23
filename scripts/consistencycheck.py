@@ -75,7 +75,8 @@ def check_vocab_jsonld_consistency(input1,input2):
     funcs2={}
     for obj in g2.subjects():
         if isinstance(obj,URIRef) and "http://www.opengis.net/ont/geosparql#" in str(obj):
-            funcs2[str(obj)]=str(obj)[str(obj).rfind("/")+1]
+            if not str(obj).endswith("/"):
+                funcs2[str(obj)]=str(obj)[str(obj).rfind("/")+1]
     comparison(contextvals,funcs2.keys(),input1,input2)
 
 def check_translation_consistency(translationfolder,vocabfolder):
