@@ -56,9 +56,11 @@ def check_functions_reqs_consistency(input1,input2):
     funcs1={}
     funcs2={}
     for obj in g1.objects(None,URIRef("http://www.w3.org/2000/01/rdf-schema#isDefinedBy")):
-        funcs1[str(obj)]=str(obj)[str(obj).rfind("/")+1]
+        if not str(obj).endswith("/"):
+            funcs1[str(obj)]=str(obj)[0:str(obj).rfind("/")+1:]
     for obj in g2.subjects(URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),URIRef("http://www.opengis.net/def/spec-element/Requirement")):
-        funcs2[str(obj)]=str(obj)[str(obj).rfind("/")+1]
+        if not str(obj).endswith("/"):
+            funcs2[str(obj)]=str(obj)[0:str(obj).rfind("/")+1:]
     comparison(funcs1.keys(),funcs2.keys(),input1,input2)
     
 def check_vocab_jsonld_consistency(input1,input2):
@@ -76,7 +78,7 @@ def check_vocab_jsonld_consistency(input1,input2):
     for obj in g2.subjects():
         if isinstance(obj,URIRef) and "http://www.opengis.net/ont/geosparql#" in str(obj):
             if not str(obj).endswith("/"):
-                funcs2[str(obj)]=str(obj)[0:str(obj).rfind("/")+1]
+                funcs2[str(obj)]=str(obj)[0:str(obj).rfind("/")+1:]
     comparison(contextvals,funcs2.keys(),input1,input2)
 
 def check_translation_consistency(translationfolder,vocabfolder):
