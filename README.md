@@ -1,7 +1,7 @@
 # OGC GeoSPARQL
-
+ 
 ## Introduction
-   
+     
 This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL Standard](https://www.ogc.org/standards/geosparql).
 
 This repository is managed by the _GeoSPARQL Standards Working Group_, the Charter for which can be viewed here:
@@ -15,15 +15,15 @@ To see in-progress HTML & PDF versions of the various elements of GeoSPARQL 1.1 
 If you want to cite the living document of the in-progress standard we encourage you to use the following BibTeX statement:
 
 ```bibtex
-@techreport{nicholas_j_car_ogc_2022,
+@techreport{nicholas_j_car_ogc_2023,
 	type = {{OGC} {Implementation} {Standard}},
 	title = {{OGC} {GeoSPARQL} - {A} {Geographic} {Query} {Language} for {RDF} {Data}},
 	url = {http://www.opengis.net/doc/IS/geosparql/1.1},
-	number = {OGC 11-052r4},
+	number = {OGC 22-047},
 	institution = {Open Geospatial Consortium},
 	author = {{Nicholas J. Car} and {Timo Homburg} and {Matthew Perry} and {John Herring} and {Frans Knibbe} and {Simon J.D. Cox} and {Joseph Abhayaratna} and {Mathias Bonduel}},
 	collaborator = {Paul J. Cripps and {Krzysztof Janowicz}},
-	year = {2022},
+	year = {2023},
   version = {1.1},
 }
 ```
