@@ -219,6 +219,7 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 		geo:asWKT ,
 		geo:asGeoJSON ,
 		geo:asKML ,
+	        geo:asGeocode,
 		geo:asDGGS ;
 	sh:nodeKind sh:Literal ;
 	sh:message "The target of a geo:hasSerialization property, or a specialization of, it should be an RDF literal."@en ;
@@ -314,6 +315,14 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	sh:datatype geo:kmlLiteral ;
 	sh:message "The target of a geo:asDGGS property should be an RDF literal with datatype geo:dggsLiteral."@en ;
 .
+
+<S8a-asGeocode-geocodeLiteral>
+	a sh:NodeShape ;
+	sh:targetObjectsOf geo:asGeocode ;
+	sh:datatype geo:geocodeLiteral ;
+	sh:message "The target of a geo:asGeocode property should be an RDF literal with datatype geo:geocodeLiteral."@en ;
+.
+
 
 #################################################
 # Shape 9-10-11-12-13-14 (14a-14d) - geometry metadata properties can only exist once
@@ -528,6 +537,13 @@ As of GeoSPARQL 1.1, this validator is not normative, only informative, however 
 	sh:path geo:asDGGS ;
 	sh:pattern "^\\s*(<(.+)>(\\s+(.+))?)?\\s*$" ;  # starts with space, <, then IRI, then > then DGGS literal content
 	sh:message "The content of an RDF literal with an incoming geo:asDGGS relation must conform to DGGS literals, as defined by their specifications, however GeoSPARQL requires all DGGS Literals to start by indicating the specific DGGS used with an IRI for that DGGS enclosed n < & >"@en ;
+.
+
+<S20a-geocode-content-sub-start>
+	a sh:PropertyShape ;
+	sh:path geo:asGeocode ;
+	sh:pattern "^\\s*(<(.+)>(\\s+(.+))?)?\\s*$" ;  # starts with space, <, then IRI, then > then Geocode literal content
+	sh:message "The content of an RDF literal with an incoming geo:asGeocode relation must conform to Geocode literals, as defined by their specifications, however GeoSPARQL requires all Geocode Literals to start by indicating the specific Geocode type used with an IRI for that Geocode enclosed n < & >"@en ;
 .
 
 #################################################
