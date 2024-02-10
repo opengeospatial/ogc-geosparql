@@ -669,6 +669,13 @@ pre.rouge {
 </li>
 <li><a href="#_vi_clarifications">vi. Clarifications</a></li>
 <li><a href="#_vii_changes_to_the_ogc_abstract_specification">vii. Changes to the OGC® Abstract Specification</a></li>
+<li><a href="#_introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_rdf">RDF</a></li>
+<li><a href="#_sparql">SPARQL</a></li>
+<li><a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a></li>
+</ul>
+</li>
 <li><a href="#_ogc_geosparql_a_geographic_query_language_for_rdf_data">OGC GeoSPARQL - A Geographic Query Language for RDF Data</a>
 <ul class="sectlevel1">
 <li><a href="#_scope">1. Scope</a></li>
@@ -690,7 +697,7 @@ pre.rouge {
 </li>
 <li><a href="#_core">6. Core</a>
 <ul class="sectlevel2">
-<li><a href="#_sparql_2">6.1. SPARQL</a></li>
+<li><a href="#_sparql_3">6.1. SPARQL</a></li>
 <li><a href="#_classes">6.2. Classes</a></li>
 <li><a href="#_standard_properties_for_geospatialobject">6.3. Standard Properties for geo:SpatialObject</a></li>
 <li><a href="#_standard_properties_for_geofeature">6.4. Standard Properties for geo:Feature</a></li>
@@ -1024,7 +1031,7 @@ pre.rouge {
 </ul>
 </div>
 <div class="paragraph">
-<p>This document authoritatively defines many of the Standard&#8217;s elements, including the ontology classes and properties, SPARQL functions, and function and rule vocabulary concepts. Complete descriptions of the Standard&#8217;s parts and their roles are given in the Introduction in the section <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a>.</p>
+<p>This document authoritatively defines many of the Standard&#8217;s elements, including the ontology classes and properties, SPARQL functions, and function and rule vocabulary concepts. Complete descriptions of the Standard&#8217;s parts and their roles are given in the Introduction in the section <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
 </div>
 </div>
 </div>
@@ -1160,8 +1167,253 @@ pre.rouge {
 <div class="paragraph">
 <p>The OGC® Abstract Specification does not require changes to accommodate this OGC® standard.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_introduction"><a class="anchor" href="#_introduction"></a>Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Unresolved directive in 00-GeoSPARQL.adoc - include::02-introduction.adoc[]</p>
+<p>The W3C Semantic Web Activity defines a collection of technologies that enables a “web of data” where information is easily shared and reused across applications. Some key pieces of this technology stack are the Resource Description Framework (RDF) data model <a href="#RDF">[RDF]</a>, <a href="#RDFS">[RDFS]</a>, the OWL Web Ontology Language <a href="#OWL2">[OWL2]</a> and the SPARQL Protocol and RDF Query Language <a href="#SPARQL">[SPARQL]</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_rdf"><a class="anchor" href="#_rdf"></a>RDF</h3>
+<div class="paragraph">
+<p>RDF is, among other things, a data model built on edge-node "graphs." Each link in a graph consists of three elements (with many aliases depending on the mapping from other types of data models):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Subject (start node, instance, entity, feature);</p>
+</li>
+<li>
+<p>Predicate (verb, property, attribute, relation, member, link, reference); and</p>
+</li>
+<li>
+<p>Object (value, end node, non-literal values can be used as a Subject).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Any of the three values in a triple can be represented with an Internationalized Resource Identifier (IRI) <a href="#IETF3987">[IETF3987]</a>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Uniform Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable. This means a person or machine can "dereference" them (<em>click on them</em> or otherwise execute them) and be taken to more information about the resource, perhaps in a web browser.</p>
+</div>
+<div class="paragraph">
+<p>Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier without meaning outside the graph it is defined within). Objects can further be represented with a literal value. RDF uses the basic literal values from XML <a href="#XSD2">[XSD2]</a> however the basic types can be extended for specialized purposes. Indeed, this document extends the basic types to include geometry data. The figure below shows a basic triple.</p>
+</div>
+<div id="img-rdf" class="imageblock text-center">
+<div class="content">
+<img src="img/01.png" alt="RDF Triple" width="600" height="400">
+</div>
+<div class="title">Figure 1. An RDF Triple</div>
+</div>
+<div class="paragraph">
+<p>Note that the same node may be a subject in some triples, and an object in others.</p>
+</div>
+<div class="paragraph">
+<p>Almost all data can be presented or represented in RDF. In particular, there are similarities to the (feature-instance-by-id, attribute, value) tuples of the General Feature Model <a href="#ISO19109">[ISO19109]</a>, and to the relational model as well (table primary key, column, value).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sparql"><a class="anchor" href="#_sparql"></a>SPARQL</h3>
+<div class="paragraph">
+<p>From <a href="#SPARQL">[SPARQL]</a>:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+SPARQL &#8230;&#8203; is a set of specifications that provide languages and protocols to query and manipulate RDF graph content on the Web or in an RDF store.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>From Wikipedia<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup>:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+SPARQL (pronounced "sparkle", a recursive acronym for SPARQL Protocol and RDF Query Language) is an RDF query language - that is, a semantic query language for databases — able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web. On 15 January 2008, SPARQL 1.0 was acknowledged by W3C as an official recommendation, and SPARQL 1.1 in March, 2013.
+</blockquote>
+</div>
+<div class="paragraph">
+<p>SPARQL queries work on RDF representations of data by finding patterns that match templates in the query, in effect finding information graphs in the RDF data based on the templates and filters (constraints on nodes and edges) expressed in the query. This query template is represented in the SPARQL query by a set of parameterized “query variables” appearing in a sequence of RDF triples and filters. If the query processor finds a set of triples in the data (converted to an RDF graph in some predetermined standard manner) then the values that the “query variables” take on in those triples become a solution to the query request. The values of the variables are returned in the query result in a format based on the “SELECT” clause of the query (similar to SQL).</p>
+</div>
+<div class="paragraph">
+<p>In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. Section 17.6<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a> describes the mechanism for invocation of such a filter function.</p>
+</div>
+<div class="paragraph">
+<p>The OGC GeoSPARQL Standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF. It also defines extensions to the SPARQL query language for processing geospatial data.</p>
+</div>
+<div class="paragraph">
+<p>GeoSPARQL does not directly provide support for temporality. Predicates for temporal relations may be used from the OWL Time Ontology <a href="#TIME">[TIME]</a>, but query extension functions for spatiotemporal operations are not present in the GeoSPARQL standard.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_geosparql_standard_structure"><a class="anchor" href="#_geosparql_standard_structure"></a>GeoSPARQL Standard structure</h3>
+<div class="paragraph">
+<p>The GeoSPARQL Standard consists of multiple parts, or <em>profile resources</em>. The comprehensive listing of these parts is given in the GeoSPARQL <em>profile definition</em>, (see <a href="http://www.opengis.net/def/geosparql" class="bare">http://www.opengis.net/def/geosparql</a>). Below is an overview of the major parts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><em>profile definition</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/def/geosparql" class="bare">http://www.opengis.net/def/geosparql</a></p>
+</li>
+<li>
+<p>Formally defined as an ontology, defined according to the <em>Profiles Vocabulary</em> <a href="#PROF">[PROF]</a>;</p>
+</li>
+<li>
+<p>This relates the parts in the standard together, provides access to them, and declares dependencies on other standards.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Standard document (this document)</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><a href="http://www.opengis.net/doc/IS/geosparql/1.1" class="bare">http://www.opengis.net/doc/IS/geosparql/1.1</a></strong></p>
+</li>
+<li>
+<p><strong>Defines many of the standard&#8217;s parts;</strong></p>
+</li>
+<li>
+<p><strong>Includes normative RDF/OWL <a href="#RDF">[RDF]</a>,<a href="#OWL2">[OWL2]</a> ontology element definitions, conformance requirements and function signatures based on the General Feature Model <a href="#ISO19109">[ISO19109]</a>, Simple Features <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> and SQL MM <a href="#ISO13249">[ISO13249]</a>;</strong></p>
+</li>
+<li>
+<p><strong>Also includes non-normative examples and mappings to other modelling and function systems.</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Domain model RDF/OWL <a href="#RDF">[RDF]</a>,<a href="#OWL2">[OWL2]</a> ontology</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/ont/geosparql" class="bare">http://www.opengis.net/ont/geosparql</a>;</p>
+</li>
+<li>
+<p>For geographic information representation;</p>
+</li>
+<li>
+<p>Based on the General Feature Model <a href="#ISO19109">[ISO19109]</a>, Simple Features Access <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>, Geography Markup Language <a href="#GML">[GML]</a> and SQL MM <a href="#ISO13249">[ISO13249]</a></p>
+</li>
+<li>
+<p>Defined within the specification document and also delivered in RDF.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Functions &amp; Rules vocabulary</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/def/geosparql/funcsrules" class="bare">http://www.opengis.net/def/geosparql/funcsrules</a>;</p>
+</li>
+<li>
+<p>Derived from the ontology;</p>
+</li>
+<li>
+<p>Presented as a <a href="#SKOS">[SKOS]</a> taxonomy.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Simple Features vocabulary</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/ont/sf" class="bare">http://www.opengis.net/ont/sf</a>;</p>
+</li>
+<li>
+<p>Derived from the class model defined in Simple Features Access <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a>;</p>
+</li>
+<li>
+<p>Presented as an <a href="#OWL2">[OWL2]</a> ontology.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="#SPARQL">[SPARQL]</a> extension functions defined within this document.</p>
+</li>
+<li>
+<p>RDF data validator</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/def/geosparql/validator" class="bare">http://www.opengis.net/def/geosparql/validator</a>;</p>
+</li>
+<li>
+<p>Defined using <a href="#SHACL">[SHACL]</a>;</p>
+</li>
+<li>
+<p>Presented within a single RDF file.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SPARQL 1.1 Service description for GeoSPARQL</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.opengis.net/def/geosparql/servicedescription" class="bare">http://www.opengis.net/def/geosparql/servicedescription</a>;</p>
+</li>
+<li>
+<p>Defined using <a href="#SPARQLSERVDESC">[SPARQLSERVDESC]</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Extended Examples</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Example data in RDF files too long for this document</p>
+</li>
+<li>
+<p><a href="https://github.com/opengeospatial/ogc-geosparql/tree/geosparql-1.1/examples" class="bare">https://github.com/opengeospatial/ogc-geosparql/tree/geosparql-1.1/examples</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This document follows a modular design and contains the following components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A <em>core</em> component defining the top-level RDFS/OWL classes for spatial objects.</p>
+</li>
+<li>
+<p>A <em>topology vocabulary</em> component defining the RDF properties for asserting and querying topological relationships between spatial objects.</p>
+</li>
+<li>
+<p>A <em>geometry</em> component defining RDFS data types for serializing geometry data, geometry-related RDF properties, and non-topological spatial query functions for geometry objects.</p>
+</li>
+<li>
+<p>A <em>geometry topology</em> component defining topological query functions.</p>
+</li>
+<li>
+<p>An <em>RDFS entailment</em> component defining mechanisms for matching implicit RDF triples that are derived based on RDF and RDFS semantics.</p>
+</li>
+<li>
+<p>A <em>query rewrite</em> component defining rules for transforming a simple triple pattern that tests a topological relationship between two features into an equivalent query involving concrete geometries and topological query functions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of these components forms a set of <em>Requirements</em> known as a GeoSPARQL <em>Conformance Class</em>. Implementations can provide various levels of functionality by choosing which <em>Conformance Classes</em> to support. For example, a system based purely on qualitative spatial reasoning may support only the core and topological vocabulary Classes.</p>
+</div>
+<div class="paragraph">
+<p>In addition, GeoSPARQL is designed to accommodate systems based on qualitative spatial reasoning and systems based on quantitative spatial computations. Systems based on qualitative spatial reasoning, (e.g., those based on Region Connection Calculus <a href="#QUAL">[QUAL]</a>, <a href="#LOGIC">[LOGIC]</a>) do not usually model explicit geometries, so queries in such systems will likely test for binary spatial relationships between features rather than between explicit geometries. To allow queries for spatial relationships between features in quantitative systems, GeoSPARQL defines a series of query transformation rules that expand a feature-only query into a geometry-based query. With these transformation rules, queries about spatial relationships between features will have the same specification in both qualitative systems and quantitative systems. The qualitative system will likely evaluate the query with a backward-chaining spatial “reasoner”, and the quantitative system can transform the query into a geometry-based query that can be evaluated with computational geometry.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1170,7 +1422,7 @@ pre.rouge {
 <h2 id="_scope"><a class="anchor" href="#_scope"></a>1. Scope</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The OGC GeoSPARQL Standard is comprised of multiple parts. See the Introduction section <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a> for details of the parts.</p>
+<p>The OGC GeoSPARQL Standard is comprised of multiple parts. See the Introduction section <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a> for details of the parts.</p>
 </div>
 <div class="paragraph">
 <p>GeoSPARQL does not define a comprehensive vocabulary for representing spatial information. Instead GeoSPARQL defines a core set of classes, properties and datatypes that can be used to construct query patterns. Many useful extensions to this vocabulary are possible, and we intend for the Semantic Web and Geospatial communities to develop additional vocabularies for describing spatial information.</p>
@@ -1251,7 +1503,7 @@ pre.rouge {
 <div class="content">
 <img src="img/02.png" alt="02">
 </div>
-<div class="title">Figure 1. Confromance Class Dependency Graph</div>
+<div class="title">Figure 2. Confromance Class Dependency Graph</div>
 </div>
 </div>
 </div>
@@ -1321,7 +1573,7 @@ pre.rouge {
 <p>The following terms and their definitions relate to Semantic Web models, tools and methods.</p>
 </div>
 <div class="sect3">
-<h4 id="_rdf"><a class="anchor" href="#_rdf"></a>4.1.1. RDF</h4>
+<h4 id="_rdf_2"><a class="anchor" href="#_rdf_2"></a>4.1.1. RDF</h4>
 <div class="paragraph">
 <p>The Resource Description Framework (RDF) is a framework for representing information in the Web. RDF graphs are sets of subject-predicate-object triples, where the elements may be IRIs, blank nodes, or datatyped literals. They are used to express descriptions of resources. <a href="#RDF">[RDF]</a></p>
 </div>
@@ -1339,7 +1591,7 @@ pre.rouge {
 </div>
 </div>
 <div class="sect3">
-<h4 id="_sparql"><a class="anchor" href="#_sparql"></a>4.1.4. SPARQL</h4>
+<h4 id="_sparql_2"><a class="anchor" href="#_sparql_2"></a>4.1.4. SPARQL</h4>
 <div class="paragraph">
 <p>SPARQL is a query language for RDF. The results of SPARQL queries can be result sets or RDF graphs. <a href="#SPARQL">[SPARQL]</a></p>
 </div>
@@ -1587,10 +1839,10 @@ pre.rouge {
 <div class="content">
 <img src="img/ont-overview.png" alt="GeoSPARQL Ontology overview">
 </div>
-<div class="title">Figure 2. An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of <code>geo:hasSize</code>, its metric equivalent and <code>geo:hasSerialization</code> are not shown for clarity.</div>
+<div class="title">Figure 3. An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of <code>geo:hasSize</code>, its metric equivalent and <code>geo:hasSerialization</code> are not shown for clarity.</div>
 </div>
 <div class="sect2">
-<h3 id="_sparql_2"><a class="anchor" href="#_sparql_2"></a>6.1. SPARQL</h3>
+<h3 id="_sparql_3"><a class="anchor" href="#_sparql_3"></a>6.1. SPARQL</h3>
 <table id="req_core_sparql_protocol" class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
 <col style="width: 100%;">
@@ -2620,13 +2872,13 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect2">
 <h3 id="_rationale"><a class="anchor" href="#_rationale"></a>8.1. Rationale</h3>
 <div class="paragraph">
-<p>Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabulary<sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnotedef_1" title="View footnote.">1</a>]</sup> was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things. Geo specifies WGS84 as the reference datum". Further, many widely used Semantic Web vocabularies contain some spatial data support. For example, <em>Dublin Core Terms</em> provides a <em>Location</em> class<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnotedef_2" title="View footnote.">2</a>]</sup> for "A spatial region or named place." and <em>schema.org</em> provides a number of spatial object and geometry classes, such as <code>GeoCoordinates</code> <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> and <code>GeoShape</code> <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup>.</p>
+<p>Other schemes for encoding simple geometry data in RDF have been implemented. The W3C Basic Geo vocabulary<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> was an early (2003) RDF vocabulary for "representing lat(itude), long(itude) and other information about spatially-located things. Geo specifies WGS84 as the reference datum". Further, many widely used Semantic Web vocabularies contain some spatial data support. For example, <em>Dublin Core Terms</em> provides a <em>Location</em> class<sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> for "A spatial region or named place." and <em>schema.org</em> provides a number of spatial object and geometry classes, such as <code>GeoCoordinates</code> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup> and <code>GeoShape</code> <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup>.</p>
 </div>
 <div class="paragraph">
 <p>Many vocabularies such as the above provide little specific support for detailed geometries and only specify using the WGS84 Coordinate Reference System (CRS).</p>
 </div>
 <div class="paragraph">
-<p>Since the first version of GeoSPARQL, many ontologies have imported GeoSPARQL. For example, the <em>ISA Programme Location Core Vocabulary</em> <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnotedef_5" title="View footnote.">5</a>]</sup> whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL&#8217;s "geometry class". The W3C&#8217;s more recent <em>Data Catalog Vocabulary, Version 2</em> (DCAT2) standard<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnotedef_6" title="View footnote.">6</a>]</sup> similarly contains usage notes for <code>geometry</code>, <code>bbox</code> and other properties that suggest the use of GeoSPARQL literals.</p>
+<p>Since the first version of GeoSPARQL, many ontologies have imported GeoSPARQL. For example, the <em>ISA Programme Location Core Vocabulary</em> <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup> whose usage notes provide examples containing GeoSPARQL literals and the use of GeoSPARQL&#8217;s "geometry class". The W3C&#8217;s more recent <em>Data Catalog Vocabulary, Version 2</em> (DCAT2) standard<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> similarly contains usage notes for <code>geometry</code>, <code>bbox</code> and other properties that suggest the use of GeoSPARQL literals.</p>
 </div>
 <div class="paragraph">
 <p>Some of the properties defined in these vocabularies, such as DCAT2&#8217;s <a href="https://www.w3.org/TR/vocab-dcat-2/#Property:dataset_spatial_resolution"><code>dcat:spatialResolution</code></a> have motivated the inclusion of new properties in this version of GeoSPARQL. In this case the equivalent property is <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a>. The GeoSPARQL 1.1 Standards Working Group charter <a href="#CHARTER">[CHARTER]</a> contains references to a number of vocabularies/ontologies that were influential in the generation of this version of GeoSPARQL.</p>
@@ -2650,7 +2902,7 @@ to be used in SPARQL graph patterns.</p></td>
 <div class="sect2">
 <h3 id="_recommendation_for_units_of_measure"><a class="anchor" href="#_recommendation_for_units_of_measure"></a>8.3. Recommendation for units of measure</h3>
 <div class="paragraph">
-<p>For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> or the function <a href="#_function_geofbuffer"><code>geof:buffer</code></a>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnotedef_7" title="View footnote.">7</a>]</sup> but others may be used, as long as they are well-described.</p>
+<p>For geometric data to be interpreted and used correctly, the units of measure should be known. Typically, the particular Spatial Reference System (SRS) that is associated with a Geometry instance will specify a unit of measurement. However, some elements of GeoSPARQL allow arbitrary units of distance to be used, for example the property <a href="#geo:hasSpatialResolution"><code>geo:hasSpatialResolution</code></a> or the function <a href="#_function_geofbuffer"><code>geof:buffer</code></a>. In those cases it is advisable to make use of a well-known web vocabulary for units of measurement. Making the unit of measurement explicit will improve data interoperability. The recommended vocabulary for units of measurement for GeoSPARQL is the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup> but others may be used, as long as they are well-described.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3067,7 +3319,7 @@ this property is the generic property used to connect a Geometry with its serial
 <div id="NOTE" class="exampleblock">
 <div class="content">
 <div class="paragraph">
-<p>GeoSPARQL&#8217;s expectation of RDF literal representations of geometry data is that it is related to the <em>Simple Features Access</em> (SFA) <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of geometry which defines classes such as <code>Point</code>, <code>Curve</code>, and <code>Surface</code> and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#GeoSPARQL Standard structure">GeoSPARQL Standard structure</a>.</p>
+<p>GeoSPARQL&#8217;s expectation of RDF literal representations of geometry data is that it is related to the <em>Simple Features Access</em> (SFA) <a href="#OGCSFACA">[OGCSFACA]</a> <a href="#ISO19125-1">[ISO19125-1]</a> standard&#8217;s conceptualization of geometry which defines classes such as <code>Point</code>, <code>Curve</code>, and <code>Surface</code> and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the <em>Simple Features Vocabulary</em> presented within GeoSPARQL as an independent profile element, see <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a>.</p>
 </div>
 <div class="paragraph">
 <p>Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.</p>
@@ -3961,13 +4213,13 @@ as SPARQL extension functions which are defined in this standard, for non-DGGS g
 </ul>
 </div>
 <div class="paragraph">
-<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 17<sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnotedef_8" title="View footnote.">8</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>.</p>
+<p>For further discussion of the effects of errors during FILTER evaluation, consult Section 17<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>.</p>
 </div>
 <div class="paragraph">
 <p>Note that returning values instead of raising an error serves as an extension mechanism of SPARQL.</p>
 </div>
 <div class="paragraph">
-<p>From Section 17.3.1<sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnotedef_9" title="View footnote.">9</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>:</p>
+<p>From Section 17.3.1<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup> of the SPARQL specification <a href="#SPARQL">[SPARQL]</a>:</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -3984,7 +4236,7 @@ SPARQL language extensions may provide additional associations between operators
 <div class="title">Note</div>
 </td>
 <td class="content">
-Several non-topological query functions use a unit of measure IRI. See the <a href="#Recommendation for specification of units of measurement">Recommendation for specification of units of measurement</a>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Server<sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnotedef_10" title="View footnote.">10</a>]</sup>.
+Several non-topological query functions use a unit of measure IRI. See the <a href="#Recommendation for specification of units of measurement">Recommendation for specification of units of measurement</a>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Server<sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup>.
 </td>
 </tr>
 </table>
@@ -8131,7 +8383,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <div class="sect2">
 <h3 id="_c_0_overview"><a class="anchor" href="#_c_0_overview"></a>C.0 Overview</h3>
 <div class="paragraph">
-<p>This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <a href="#GeoSPARQL Standard structure">[GeoSPARQL Standard structure]</a> for the link to those examples.</p>
+<p>This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <a href="#_geosparql_standard_structure">GeoSPARQL Standard structure</a> for the link to those examples.</p>
 </div>
 </div>
 <div class="sect2">
@@ -8209,7 +8461,7 @@ It is unlikely that users of GeoSPARQL will create many instances of <a href="#_
 <p>Here a spatial object, Moreton Island, has the distance of its coastline given with two properties: <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> &amp; <a href="#geo:hasMetricPerimeterLength"><code>geo:hasMetricPerimeterLength</code></a>. The object for the first is a Blank Node with a QUDT value property of 92.367 and a QUDT unit property of <code>unit:KiloM</code> (kilometre). The object for the second is the literal <code>92367</code> (a double) which is, by the property&#8217;s definition, a number of metres.</p>
 </div>
 <div class="paragraph">
-<p>The use of the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnotedef_11" title="View footnote.">11</a>]</sup> and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> and any subproperty of <a href="#geo:hasSize"><code>geo:hasSize</code></a>.</p>
+<p>The use of the <em>Quantities, Units, Dimensions and Types (QUDT)</em> ontology<sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup> and its <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:numericValue</code></a> &amp; <a href="http://qudt.org/schema/qudt#numericValue"><code>qudt:unit</code></a> is just one of many possible ways to convey the value of <a href="#geo:hasPerimeterLength"><code>geo:hasPerimeterLength</code></a> and any subproperty of <a href="#geo:hasSize"><code>geo:hasSize</code></a>.</p>
 </div>
 </div>
 </div>
@@ -8794,7 +9046,7 @@ Machine use of this <code>Feature</code> would be able to differentiate the two 
 <div class="content">
 <img src="img/03.png" alt="600" width="400">
 </div>
-<div class="title">Figure 3. Illustration of spatial data</div>
+<div class="title">Figure 4. Illustration of spatial data</div>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10378,7 +10630,7 @@ rivers, these can be defined as subclasses of <a href="#_class_geofeature"><code
 </ul>
 </div>
 <div class="paragraph">
-<p>DCTERMS-related geometry literals, such as the <em>DCMI Box Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnotedef_12" title="View footnote.">12</a>]</sup> and the <em>DCMI Point Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnotedef_13" title="View footnote.">13</a>]</sup>
+<p>DCTERMS-related geometry literals, such as the <em>DCMI Box Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnotedef_14" title="View footnote.">14</a>]</sup> and the <em>DCMI Point Encoding Scheme</em> <sup class="footnote">[<a id="_footnoteref_15" class="footnote" href="#_footnotedef_15" title="View footnote.">15</a>]</sup>
 could be indicated as GeoSPARQL geometry literals if a literal datatype were created for each. For example, the <em>DCMI Point Encoding Scheme</em> example of "The highest point in Australia" with the literal value
 <code>east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko</code> might be encoded in GeoSPARQL like this:</p>
 </div>
@@ -11011,11 +11263,14 @@ They may have one or more <a href="#geo:hasGeometry"><code>geo:hasGeometry</code
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="n">SELECT</span><span class="w"> </span><span class="n">?fcollection</span><span class="w"> </span><span class="n">?item</span><span class="w"> </span><span class="n">?rel</span><span class="w"> </span><span class="n">?val</span><span class="w"> </span><span class="n">?geom
-WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nn">ex:</span><span class="n">x</span><span class="w"> </span><span class="nn">rdfs:</span><span class="n">member</span><span class="w"> </span><span class="n">?item</span><span class="w"> </span><span class="p">.</span><span class="w">
-  </span><span class="n">?item</span><span class="w"> </span><span class="nn">rdfs:</span><span class="n">subClassOf*</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Feature</span><span class="w"> </span><span class="p">.</span><span class="w">
-</span><span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX ex: &lt;http://example.com/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?fcollection ?item ?rel ?val ?geom
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11040,15 +11295,18 @@ WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="turtle"><span class="n">SELECT</span><span class="w"> </span><span class="n">?fcollection</span><span class="w"> </span><span class="n">?item</span><span class="w"> </span><span class="n">?rel</span><span class="w"> </span><span class="n">?val</span><span class="w"> </span><span class="n">?geom
-WHERE</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nn">ex:</span><span class="n">x</span><span class="w"> </span><span class="nn">rdfs:</span><span class="n">member</span><span class="w"> </span><span class="n">?item</span><span class="w"> </span><span class="p">.</span><span class="w">
-  </span><span class="n">?item</span><span class="w"> </span><span class="nn">rdfs:</span><span class="n">subClassOf*</span><span class="w"> </span><span class="nn">geo:</span><span class="n">Feature</span><span class="w"> </span><span class="p">.</span><span class="w">
+<pre class="rouge highlight"><code data-lang="sparql">PREFIX ex: &lt;http://example.com/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
 
-  </span><span class="n">OPTIONAL</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">?item</span><span class="w"> </span><span class="nn">geo:hasGeometry/geo:</span><span class="n">hasSerialization</span><span class="w"> </span><span class="n">?geom
-</span><span class="w">  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span></code></pre>
+SELECT ?fcollection ?item ?rel ?val ?geom
+WHERE {
+  ex:x rdfs:member ?item .
+  ?item rdfs:subClassOf* geo:Feature .
+
+  OPTIONAL {
+    ?item geo:hasGeometry/geo:hasSerialization ?geom
+  }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -12151,48 +12409,54 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnotedef_1">
-<a href="#_footnoteref_1">1</a>. <a href="http://www.w3.org/2003/01/geo/" class="bare">http://www.w3.org/2003/01/geo/</a>
+<a href="#_footnoteref_1">1</a>. <a href="https://en.wikipedia.org/wiki/SPARQL" class="bare">https://en.wikipedia.org/wiki/SPARQL</a>
 </div>
 <div class="footnote" id="_footnotedef_2">
-<a href="#_footnoteref_2">2</a>. <a href="http://purl.org/dc/terms/Location" class="bare">http://purl.org/dc/terms/Location</a>
+<a href="#_footnoteref_2">2</a>. <a href="https://www.w3.org/TR/sparql11-query/#extensionFunctions" class="bare">https://www.w3.org/TR/sparql11-query/#extensionFunctions</a>
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. <a href="https://schema.org/GeoCoordinates" class="bare">https://schema.org/GeoCoordinates</a>
+<a href="#_footnoteref_3">3</a>. <a href="http://www.w3.org/2003/01/geo/" class="bare">http://www.w3.org/2003/01/geo/</a>
 </div>
 <div class="footnote" id="_footnotedef_4">
-<a href="#_footnoteref_4">4</a>. <a href="https://schema.org/GeoShape" class="bare">https://schema.org/GeoShape</a>
+<a href="#_footnoteref_4">4</a>. <a href="http://purl.org/dc/terms/Location" class="bare">http://purl.org/dc/terms/Location</a>
 </div>
 <div class="footnote" id="_footnotedef_5">
-<a href="#_footnoteref_5">5</a>. <a href="https://www.w3.org/ns/locn" class="bare">https://www.w3.org/ns/locn</a>
+<a href="#_footnoteref_5">5</a>. <a href="https://schema.org/GeoCoordinates" class="bare">https://schema.org/GeoCoordinates</a>
 </div>
 <div class="footnote" id="_footnotedef_6">
-<a href="#_footnoteref_6">6</a>. <a href="https://www.w3.org/TR/vocab-dcat/#spatial-properties" class="bare">https://www.w3.org/TR/vocab-dcat/#spatial-properties</a>
+<a href="#_footnoteref_6">6</a>. <a href="https://schema.org/GeoShape" class="bare">https://schema.org/GeoShape</a>
 </div>
 <div class="footnote" id="_footnotedef_7">
-<a href="#_footnoteref_7">7</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
+<a href="#_footnoteref_7">7</a>. <a href="https://www.w3.org/ns/locn" class="bare">https://www.w3.org/ns/locn</a>
 </div>
 <div class="footnote" id="_footnotedef_8">
-<a href="#_footnoteref_8">8</a>. <a href="https://www.w3.org/TR/sparql11-query/#expressions" class="bare">https://www.w3.org/TR/sparql11-query/#expressions</a>
+<a href="#_footnoteref_8">8</a>. <a href="https://www.w3.org/TR/vocab-dcat/#spatial-properties" class="bare">https://www.w3.org/TR/vocab-dcat/#spatial-properties</a>
 </div>
 <div class="footnote" id="_footnotedef_9">
-<a href="#_footnoteref_9">9</a>. <a href="https://www.w3.org/TR/sparql11-query/#operatorExtensibility" class="bare">https://www.w3.org/TR/sparql11-query/#operatorExtensibility</a>
+<a href="#_footnoteref_9">9</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
 </div>
 <div class="footnote" id="_footnotedef_10">
-<a href="#_footnoteref_10">10</a>. <a href="https://www.ogc.org/def-server" class="bare">https://www.ogc.org/def-server</a>
+<a href="#_footnoteref_10">10</a>. <a href="https://www.w3.org/TR/sparql11-query/#expressions" class="bare">https://www.w3.org/TR/sparql11-query/#expressions</a>
 </div>
 <div class="footnote" id="_footnotedef_11">
-<a href="#_footnoteref_11">11</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
+<a href="#_footnoteref_11">11</a>. <a href="https://www.w3.org/TR/sparql11-query/#operatorExtensibility" class="bare">https://www.w3.org/TR/sparql11-query/#operatorExtensibility</a>
 </div>
 <div class="footnote" id="_footnotedef_12">
-<a href="#_footnoteref_12">12</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-box/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-box/</a>
+<a href="#_footnoteref_12">12</a>. <a href="https://www.ogc.org/def-server" class="bare">https://www.ogc.org/def-server</a>
 </div>
 <div class="footnote" id="_footnotedef_13">
-<a href="#_footnoteref_13">13</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-point/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-point/</a>
+<a href="#_footnoteref_13">13</a>. <a href="http://www.qudt.org" class="bare">http://www.qudt.org</a>
+</div>
+<div class="footnote" id="_footnotedef_14">
+<a href="#_footnoteref_14">14</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-box/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-box/</a>
+</div>
+<div class="footnote" id="_footnotedef_15">
+<a href="#_footnoteref_15">15</a>. <a href="https://www.dublincore.org/specifications/dublin-core/dcmi-point/" class="bare">https://www.dublincore.org/specifications/dublin-core/dcmi-point/</a>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-01-23 00:11:53 UTC
+Last updated 2024-02-10 20:34:25 UTC
 </div>
 </div>
 </body>
