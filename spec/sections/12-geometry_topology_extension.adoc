@@ -1,4 +1,4 @@
-[[geometry_extension]]
+[[geometry_topology_extension]]
 == Geometry Topology Extension
 
 This clause establishes the _Geometry Topology Extension_ parameterized Requirements class with base IRI `/req/geometry-topology-extension`, which defines a collection of topological query functions that operate on geometry literals. These Requirements are parameterized to give implementations flexibility in the topological relation families and geometry serializations that they choose to support. These Requirements have a single corresponding conformance class _Geometry Topology Extension_, with IRI `/conf/geometry-topology-extension`.
@@ -10,7 +10,7 @@ The Dimensionally Extended Nine Intersection Model (DE-9IM) <<DE-9IM>> has been 
 * `F` (false) = `{-1}`
 * `*` (don't care) = `{-1, 0, 1, 2}`
 
-In the following descriptions, the notation `X/Y` is used to denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g. points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g. polygons). Consult the Simple Features specification <<OGCSFACA>> <<ISO19125-1>> for a more detailed description of DE-9IM intersection patterns.
+In the following descriptions, the notation `X/Y` is used to denote applying a spatial relation to geometry types `X` and `Y` (i.e., `x` _relation_ `y` where `x` is of type `X` and `y` is of type `Y`). The symbol `P` is used for 0-dimensional geometries (e.g., points). The symbol `L` is used for 1- dimensional geometries (e.g. lines), and the symbol `A` is used for 2-dimensional geometries (e.g., polygons). Consult the Simple Features specification <<OGCSFACA>> <<ISO19125-1>> for a more detailed description of DE-9IM intersection patterns.
 
 [requirements_class,identifier="/req/geometry-topology-extension",subject="Implementation Specification"]
 .Geometry Topology Extension
@@ -39,11 +39,12 @@ as a SPARQL extension function, consistent with the relate operator defined in S
 ====
 
 [%unnumbered]
-```
+[source,RDF]
+----
 geof:relate (geom1: ogc:geomLiteral, 
              geom2: ogc:geomLiteral, 
              pattern-matrix: xsd:string): xsd:boolean
-```
+----
 
 Returns `true` if the spatial relationship between `geom1` and `geom2` corresponds to one with acceptable values for the specified pattern-matrix. Otherwise, this function returns `false`. `pattern-matrix` represents a DE-9IM intersection pattern consisting of `T` (true) and `F` (false) values. The spatial reference system for `geom1` is used for spatial calculations.
 
