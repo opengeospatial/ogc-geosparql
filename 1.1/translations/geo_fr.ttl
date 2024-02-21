@@ -1,0 +1,300 @@
+# baseURI: http://www.opengis.net/ont/geosparql
+
+@base <http://www.opengis.net/ont/geosparql> .
+
+@prefix : <http://www.opengis.net/ont/geosparql#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdo: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spec11: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> . # TODO: use PID IRI
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/ont/geosparql> 
+	dcterms:contributor 
+	[
+		a sdo:Person ;
+		sdo:name "Rob Warren" ;
+		sdo:affiliation "Glengarry Agriculture and Forestry" ;
+		sdo:email "warren@glengarryag.com"^^xsd:anyURI ;
+		sdo:url " https://orcid.org/0000-0002-7066-1141"^^xsd:anyURI ;
+		rdfs:comment "French translations of ontology. With thanks to Corentin Follenfant, Sylvain Grellet and Ghislain Atemezing."@en ;
+		rdf:comment "Traduction de l'ontologie en français. Merci à Corentin Follenfant, Sylvain Grellet and Ghislain Atemezing."@fr ;
+	] ;
+. 
+
+:gmlLiteral
+	skos:prefLabel "Littéral GML"@fr ;
+	skos:definition """Une sérialisation GML de l'object de Géométrie."""@fr .
+
+:wktLiteral
+	skos:prefLabel "Littéral texte bien-connu (WKT)"@fr ;
+	skos:definition """Une sérialisation texte bien-connu (WKT) de l'object de Géométrie."""@fr .
+	
+:geoJSONLiteral
+	skos:prefLabel "Littéral GeoJSON"@fr ;
+	skos:definition """Une sérialisation GeoJSON de l'object de Géométrie."""@fr .
+	
+:kmlLiteral
+	skos:prefLabel "Littéral KML"@fr ;
+	skos:definition """Une sérialisation KML de l'object de Géométrie."""@fr .
+	
+:dggsLiteral
+	skos:prefLabel "Littéral DGGS"@fr ;
+	skos:definition """Une sérialisation texte Discrete Global Grid System (DGGS) de l'object de Géométrie."""@fr ;
+	skos:scopeNote "Ce type de données n'est pas censé être utilisé directement. Il sert comme type de données abstrait pour une série de types littéraux dans des implémentations DGGS spécifiques."@fr .
+	
+:defaultGeometry
+	skos:definition """La Géométrie utilisée par défaut pour des calculs géospatiaux. C'est en général la Géométrie la plus détaillée."""@fr ;
+	skos:note """Deux propriétés identiques, defaultGeometry et hasDefaultGeometry, existent en raison d'une incohérence entre l'ontologie et la documentation dans GeoSPARQL 1.0. Seul hasDefaultGeometry est décrit dans la documentation."""@fr ;
+	skos:prefLabel "Géométrie par Défaut"@fr .
+	
+:hasDefaultGeometry 
+	skos:definition """La Géométrie utiliser par Défaut pour des calculs géospatiales. C'est d'habitude la Géométrie la plus détaillée.."""@fr ;
+	skos:note """Deux propriétés identiques, defaultGeometry et hasDefaultGeometry, existent en raison d'une incohérence entre l'ontologie et la documentation dans GeoSPARQL 1.0. Seul hasDefaultGeometry est décrit dans la documentation."""@fr ;
+	skos:prefLabel "Géométrie par Défaut"@fr .
+	
+:ehContains
+	skos:definition """Indique que l'objet SpatialObject est contenu par le sujet SpatialObject. DE-9IM: T*TFF*FF*"""@fr ;
+	skos:prefLabel "contient"@fr .
+
+:ehCoveredBy
+	skos:definition """Indique que le sujet SpatialObject est couvert spatialement par l'objet SpatialObject. DE-9IM: TFF*TFT**"""@fr ;
+	skos:prefLabel "couvert par"@fr .
+	
+:ehCovers		
+	skos:definition """Indique que le sujet SpatialObject couvre spatialement l'objet SpatialObject.. DE-9IM: T*TFT*FF*"""@fr ;
+	skos:prefLabel "couvre"@fr .
+	
+:ehDisjoint	
+	skos:definition """Indique que le sujet SpatialObject est spatialement disjoint de l'objet SpatialObject. DE-9IM: FF*FF****"""@fr ;
+	skos:prefLabel "disjoint"@fr .
+	
+:ehEquals
+	skos:definition """Indique que le sujet SpatialObject est spatialement égal à l'objet SpatialObject. DE-9IM: TFFFTFFFT"""@fr ;
+	skos:prefLabel "égal"@fr .
+	
+:ehInside		
+	skos:definition """Indique que le sujet SpatialObject est spatialement à l'intérieur de l'objet SpatialObject. DE-9IM: TFF*FFT**"""@fr ;
+	skos:prefLabel "à l'intérieur de"@fr .
+	
+:ehMeet	
+	skos:definition """Indique que le sujet SpatialObject rencontre spatialement l'objet SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@fr ;
+	skos:prefLabel "rencontre"@fr .
+	
+:ehOverlap	
+	skos:definition """Indique que le sujet SpatialObject chevauche spatialement l'objet SpatialObject.. DE-9IM: T*T***T**"""@fr ;
+	skos:prefLabel "chevauche"@fr .
+	
+:hasGeometry
+	skos:definition """Représentation spatiale d'une caractéristique géographique."""@fr ;
+	skos:prefLabel "géométrie"@fr .
+	
+:hasBoundingBox
+	skos:definition """La boîte englobante minimale d'une caractéristique géographique."""@fr ;
+	skos:prefLabel "boîte englobante"@fr ;
+	skos:scopeNote "La cible est une Géométrie qui définit une région rectiligne dont les bords sont alignés avec les axes du système de référence de coordonnées et qui contient exactement la caractéristique géographique. Exemple: sf:envelope."@fr .
+	
+:hasCentroid
+	skos:definition """La position moyenne arithmétique de tous les points de géométrie d'une caractéristique géographique."""@fr ;
+	skos:prefLabel "a un centroïde"@fr ;
+	skos:scopeNote "La géométrie cible doit décrire un point. Exemple: sf:Point"@fr .
+	
+:hasLength
+	skos:definition """La longueur d'un objet géospatial."""@fr ;
+	skos:prefLabel "a une longueur"@fr .
+	
+:hasPerimeterLength
+	skos:definition """La longueur du périmètre d'un objet géospatial."""@fr ;
+	skos:prefLabel "a un périmètre"@fr .
+	
+:hasArea
+	skos:definition """La superficie d'un objet géospatial."""@fr ;
+	skos:prefLabel "a une superficie"@fr .
+	
+:hasVolume
+	skos:definition """Le volume d'un objet géospatial."""@fr ;
+	skos:prefLabel "a un volume"@fr .
+	
+:hasSpatialResolution
+	skos:definition """La résolution géospatial d'une Géométrie."""@fr ;
+	skos:note """La résolution géospatial spécifie le niveau de détail d'une Géométrie. C'est la plus petite distance discernable entre des coordonnées adjacentes."""@fr;
+	skos:prefLabel "a une résolution"@fr .
+	
+:hasSpatialAccuracy
+	skos:definition """La précision des positions de coordonnées d'une géométrie."""@fr ;
+	skos:note """La précision spatiale est applicable lorsqu'une géométrie est utilisée pour représenter une caractéristique géospatiale. Elle est exprimée comme une distance qui indique la véracité des coordonnées qui définissent la Géométrie. Dans ce cas, la précision définit une zone entourant chaque coordonnée à l'intérieur de laquelle les positions réelles sont connues. La valeur de précision définit cette zone comme une distance de la ou des coordonnées dans toutes les directions (par exemple, une ligne, un cercle ou une sphère, selon la dimension spatiale)."""@fr;
+	skos:prefLabel "a une précision"@fr .
+	
+:rcc8dc
+	skos:definition """Indique que le sujet SpatialObject est spatialement disjoint de l'objet SpatialObject. DE-9IM: FFTFFTTTT"""@fr ;
+	skos:prefLabel "déconnecté"@fr .
+	
+:rcc8ec
+	skos:definition """Indique que le sujet SpatialObject rencontre spatialement l'objet SpatialObject. DE-9IM: FFTFTTTTT"""@fr ;
+	skos:prefLabel "rencontre"@fr .
+	
+:rcc8eq
+	skos:definition """Indique que le sujet SpatialObject est spatialement égal à l'objet SpatialObject. DE-9IM: TFFFTFFFT"""@fr ;
+	skos:prefLabel "égal"@fr .
+	
+:rcc8ntpp
+	skos:definition """Indique que le sujet SpatialObject est spatialement à l'intérieur de l'objet SpatialObject. DE-9IM: TFFTFFTTT"""@fr ;
+	skos:prefLabel "à l'intérieur de"@fr .
+	
+:rcc8ntppi
+	skos:definition """Indique que l'objet SpatialObject est contenue par le sujet SpatialObject. DE-9IM: TTTFFTFFT"""@fr ;
+	skos:prefLabel "contient"@fr .
+
+:rcc8po
+	skos:definition """Indique que le sujet SpatialObject chevauche spatialement l'objet SpatialObject. DE-9IM: TTTTTTTTT"""@fr ;
+	skos:prefLabel "chevauche"@fr .
+	
+:rcc8tpp
+	skos:definition """Indique que le sujet SpatialObject est couvert spatialement par l'objet SpatialObject. DE-9IM: TFFTTFTTT"""@fr ;
+	skos:prefLabel "couvert par"@fr .
+	
+:rcc8tppi
+	skos:definition """Indique que le sujet SpatialObject couvre spatialement l'objet SpatialObject. DE-9IM: TTTFTTFFT"""@fr ;
+	skos:prefLabel "couvre"@fr .	
+
+:sfContains
+	skos:definition """Indique que le sujet SpatialObject est contenue par l'objet SpatialObject. DE-9IM: T*****FF*"""@fr ;
+	skos:prefLabel "contient"@fr .
+	
+:sfCrosses
+	skos:definition """Indique que le sujet SpatialObject croise l'object SpatialObject. DE-9IM: T*T******"""@fr ;
+	skos:prefLabel "croise"@fr .
+	
+:sfDisjoint
+	skos:definition """Indique que le sujet SpatialObject est spatialement disjoint de l'objet SpatialObject. DE-9IM: FF*FF****"""@fr ;
+	skos:prefLabel "disjoint"@fr .
+
+:sfEquals
+	skos:definition """Indique que le sujet SpatialObject est spatialement égal à l'objet SpatialObject. DE-9IM: TFFFTFFFT"""@fr ;
+	skos:prefLabel "égal"@fr .
+	
+:sfIntersects
+	skos:definition """Indique que le sujet SpatialObject n'est pas spatialement disjoint de l'objet SpatialObject. DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T****"""@fr ;
+	skos:prefLabel "intersecte"@fr .
+	
+:sfOverlaps
+	skos:definition """Indique que le sujet SpatialObject chevauche spatialement l'objet SpatialObject. DE-9IM: T*T***T**"""@fr ;
+	skos:prefLabel "chevauche"@fr .
+	
+:sfTouches
+	skos:definition """Indique que le sujet SpatialObject touche spatialement l'objet SpatialObject. DE-9IM: FT******* ^ F**T***** ^ F***T****"""@fr ;
+	skos:prefLabel "touche"@fr .
+	
+:sfWithin
+	skos:definition """Indique que le sujet SpatialObject est spatialement à l'intérieur de l'objet SpatialObject. DE-9IM: T*F**F***"""@fr ;
+	skos:prefLabel "à l'intérieur"@fr .
+	
+:hasSize
+	skos:definition """Les sous-propriétés de ce terme sont utilisées pour indiquer la taille d'un objet géographique en tant que mesure ou estimation d'une ou plusieurs des dimensions de l'objet géographique."""@fr ;
+	skos:note """La méthode recommandée pour spécifier la taille consiste à utiliser une sous-propriété de hasMetricSize. Les sous-propriétés de hasSize sont utilisées pour des expressions plus complexes. Par exemple, si l'unité de longueur ne peut pas être convertie en mètre, ou si des données supplémentaires sont nécessaires pour décrire la mesure ou l'estimation."""@fr ;
+	skos:prefLabel "taille"@fr .
+	
+:asGML
+	skos:definition """La sérialisation GML de la Géométrie."""@fr ;
+	skos:prefLabel "comme GML"@fr .
+	
+:asWKT
+	skos:definition """La sérialisation WKT de la Géométrie."""@fr ;
+	skos:prefLabel "comme WKT"@fr .
+	
+:asGeoJSON
+	skos:definition """La sérialisation GeoJSON de la Géométrie."""@fr ;
+	skos:prefLabel "comme GeoJSON"@fr .
+	
+:asKML
+	skos:definition """La sérialisation KML de la Géométrie."""@fr ;
+	skos:prefLabel "comme KML"@fr .
+	
+:asDGGS
+	skos:definition """La sérialisation Discrete Global Grid System (DGGS) de la Géométrie."""@fr ;	
+	skos:prefLabel "comme DGGS"@fr .
+	
+:coordinateDimension
+	skos:definition """Le nombre de mesures ou d'axes nécessaires pour décrire la position de cette géométrie dans un système de coordonnées."""@fr ;
+	skos:prefLabel "nombre de mesures"@fr .
+	
+:dimension
+	skos:definition """La dimension topologique de cet objet géométrique, qui doit être inférieure ou égale à la dimension des coordonnées. Dans les collections non homogènes, ce sera la plus grande dimension topologique des objets contenus."""@fr ;
+	skos:prefLabel "dimension"@fr .
+	
+:hasSerialization
+	skos:definition """Lie une Géométrie à sa sérialisation textuelle."""@fr ;
+	skos:prefLabel "a une géométrie"@fr .
+	
+:isEmpty
+	skos:definition """Vrai si cet objet géométrique est une géométrie vide. Si vrai, alors cet objet géométrique représente l'ensemble de points vide pour l'espace de coordonnées."""@fr ;
+	skos:prefLabel "vide"@fr .
+	
+:isSimple
+	skos:definition """Vrai si cet objet géométrique n'a pas de points géométriques anormaux, tels que l'auto-intersection ou l'auto-tangence."""@fr ;
+	skos:prefLabel "simple"@fr .
+	
+:spatialDimension
+	skos:definition """Le nombre de dimensions ou d'axes nécessaires pour décrire la position spatiale de cette Géométrie dans un système de coordonnées."""@fr ;
+	skos:prefLabel "nombre de dimensions"@fr .
+	
+:hasMetricSpatialResolution
+	skos:definition """La résolution spatiale d'une géométrie en mètres."""@fr ;
+	skos:note """La précision spatiale est applicable lorsqu'une géométrie est utilisée pour représenter un object géospatial. Elle est exprimée comme une distance qui indique la véracité des positions (coordonnées) qui définissent la Géométrie. Dans ce cas, la précision définit une zone entourant chaque coordonnée à l'intérieur de laquelle les positions réelles sont connues. La valeur de précision définit cette zone comme une distance à la ou aux coordonnées dans toutes les directions (par exemple, une ligne, un cercle ou une sphère, selon la dimension spatiale)."""@fr;
+	skos:prefLabel "résolution spatiale en mètres"@fr .
+	
+:hasMetricSpatialAccuracy
+	skos:definition """La précision des positions de coordonnées d'une géométrie en mètres."""@fr ;
+	skos:note """La précision spatiale est applicable lorsqu'une géométrie est utilisée pour représenter une caractéristique géospatiale. Elle est exprimée comme une distance qui indique la véracité des coordonnées qui définissent la Géométrie. Dans ce cas, la précision définit une zone entourant chaque coordonnée à l'intérieur de laquelle les positions réelles sont connues. La valeur de précision définit cette zone comme une distance de la ou des coordonnées dans toutes les directions (par exemple, une ligne, un cercle ou une sphère, selon la dimension spatiale)."""@fr;
+	skos:prefLabel "précision spatiale en mètres"@fr .
+	
+:hasMetricLength
+	skos:definition """La longueur d'un objet géospatial en mètres."""@fr ;
+	skos:prefLabel "longueur en mètres"@fr .
+	
+:hasMetricPerimeterLength
+	skos:definition """La longueur du périmètre d'un objet géospatial en mètres."""@fr ;
+	skos:prefLabel "périmètre en mètres"@fr .
+	
+:hasMetricArea
+	skos:definition """La superficie d'un objet géospatial en mètres carrés."""@fr ;
+	skos:prefLabel "superficie en mètres carrés"@fr .
+	
+:hasMetricVolume
+	skos:definition """Le volume d'un objet géospatial en mètres carrés."""@fr ;
+	skos:prefLabel "volume en mètres carrés"@fr .
+	
+:hasMetricSize
+	skos:definition """Les sous-propriétés de ce terme sont utilisées pour indiquer la taille d'un objet géographique en tant que mesure ou estimation d'une ou plusieurs des dimensions de l'objet géographique. Les unités sont toujours métriques."""@fr ;
+	skos:prefLabel "taille métriques"@fr .
+	
+:Feature
+	skos:definition """Un phénomène géospatial discret dans un univers de discours."""@fr ;
+	skos:note """Une caractéristique géospatiale représente un phénomène identifiable de manière unique, par exemple une rivière ou une pomme. Bien que de tels phénomènes (et donc les fonctionnalités utilisées pour les représenter) sont délimitées, leurs frontières peuvent être nettes (par exemple, les frontières déclarées d'un État), vagues (par exemple, la délimitation d'une vallée par rapport aux montagnes voisines) et changer avec le temps (par exemple, un front de tempête). Bien que de nature discrète, les entités peuvent être créées à partir d'observations continues, telles qu'une isochrone qui détermine la région accessible en ambulance en 5 minutes."""@fr ;
+	skos:prefLabel "caractéristique géospatiale"@fr .
+	
+:FeatureCollection
+	skos:prefLabel "collection de caractéristique géospatiale"@fr ;
+	skos:definition "Une collection quelconque caractéristique géospatiale."@fr .
+	
+:Geometry
+	skos:definition """Un ensemble cohérent de positions dans l'espace euclidien. Une position directe contient les coordonnées d'une position dans un système de référence de coordonnées (CRS)."""@fr ;
+	skos:note """Une géométrie peut être utilisée comme représentation de la forme, de l'étendue ou de l'emplacement d'une entité, ou peut exister en tant qu'entité autonome."""@fr ;
+	skos:prefLabel "géométrie"@fr .
+	
+:GeometryCollection
+	skos:definition "Une collection quelconque de géométrie"@fr ;
+	skos:prefLabel "collection de géométrie"@fr .
+	
+:SpatialObject
+	skos:definition """Tout ce qui est spatial (ayant ou étant une forme, une position ou une étendue)."""@fr ;
+	skos:note """Les sous-classes devraient être utilisées pour les données d'instance."""@fr ;
+	skos:prefLabel "object géospatial"@fr .
+	
+
+:SpatialObjectCollection
+	skos:prefLabel "collection d'objects géospatials"@fr ;
+	skos:definition """Une collection quelconque d'objects géospatiales"""@fr .

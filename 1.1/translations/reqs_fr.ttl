@@ -1,0 +1,762 @@
+@prefix : <http://www.opengis.net/def/geosparql/reqs#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sdo: <https://schema.org/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov-o/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spec: <http://www.opengis.net/def/spec-element/> .
+@prefix reqs10: <http://www.opengis.net/spec/geosparql/1.0/req/> .
+@prefix confs10: <http://www.opengis.net/spec/geosparql/1.0/conf/> .
+@prefix confs11: <http://www.opengis.net/spec/geosparql/1.1/conf/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix conf10gx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-extension/> .
+@prefix conf11gx: <http://www.opengis.net/spec/geosparql/1.1/conf/geometry-extension/> .
+@prefix reqs10gx: <http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/> .
+@prefix reqs11gx: <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/> .
+@prefix conf10gtx: <http://www.opengis.net/spec/geosparql/1.0/conf/geometry-topology-extension/> .
+@prefix conf10qre: <http://www.opengis.net/spec/geosparql/1.0/conf/query-rewrite-extension/> .
+@prefix conf10ree: <http://www.opengis.net/spec/geosparql/1.0/conf/rdfs-entailment-extension/> .
+@prefix conf10tve: <http://www.opengis.net/spec/geosparql/1.0/conf/topology-vocab-extension/> .
+@prefix conf11gtx: <http://www.opengis.net/spec/geosparql/1.1/conf/geometry-topology-extension/> .
+@prefix conf11qre: <http://www.opengis.net/spec/geosparql/1.1/conf/query-rewrite-extension/> .
+@prefix conf11ree: <http://www.opengis.net/spec/geosparql/1.1/conf/rdfs-entailment-extension/> .
+@prefix conf11tve: <http://www.opengis.net/spec/geosparql/1.1/conf/topology-vocab-extension/> .
+@prefix reqs10gtx: <http://www.opengis.net/spec/geosparql/1.0/req/geometry-topology-extension/> .
+@prefix reqs10qre: <http://www.opengis.net/spec/geosparql/1.0/req/query-rewrite-extension/> .
+@prefix reqs10ree: <http://www.opengis.net/spec/geosparql/1.0/req/rdfs-entailment-extension/> .
+@prefix reqs10tve: <http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/> .
+@prefix reqs11gtx: <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/> .
+@prefix reqs11qre: <http://www.opengis.net/spec/geosparql/1.1/req/query-rewrite-extension/> .
+@prefix reqs11ree: <http://www.opengis.net/spec/geosparql/1.1/req/rdfs-entailment-extension/> .
+@prefix reqs11tve: <http://www.opengis.net/spec/geosparql/1.1/req/topology-vocab-extension/> .
+@prefix conf10core: <http://www.opengis.net/spec/geosparql/1.0/conf/core/> .
+@prefix conf11core: <http://www.opengis.net/spec/geosparql/1.1/conf/core/> .
+@prefix reqs10core: <http://www.opengis.net/spec/geosparql/1.0/req/core/> .
+@prefix reqs11core: <http://www.opengis.net/spec/geosparql/1.1/req/core/> .
+
+@base <http://www.opengis.net/def/geosparql/reqs> .
+<http://www.opengis.net/def/geosparql/reqs> rdf:type skos:ConceptScheme ;
+                                             dcterms:created "2021-06-28"^^xsd:date ;
+                                             dcterms:modified "2021-07-13"^^xsd:date ;
+                                             rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+                                             skos:definition "Un vocabulaire des exigences et des classes de conformité dans la spécification GeosparQL 1.1"@fr ;
+                                             dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+	                                     dcterms:rights "(c) 2021 Open Geospatial Consortium"@fr ;
+                                             skos:prefLabel "GeoSPARQL 1.1 Conditions requises et classes de conformité " ;
+                                             dcterms:contributor 
+                                             [
+                                               a sdo:Person ;
+                                               sdo:name "Rob Warren" ;
+                                               sdo:affiliation "Glengarry Agriculture and Forestry" ;
+                                               sdo:email "warren@glengarryag.com"^^xsd:anyURI ;
+                                               sdo:url " https://orcid.org/0000-0002-7066-1141"^^xsd:anyURI ;
+                                               rdfs:comment "French translations of ontology. With thanks to Corentin Follenfant, Sylvain Grellet and Ghislain Atemezing."@en ;
+                                               rdfs:comment "Traductions de l'ontologie en français. Merci à Corentin Follenfant, Sylvain Grellet and Ghislain Atemezing."@fr ;		
+                                             ] ;
+. 
+
+<http://www.opengis.net/def/geosparql/reqs> rdf:type 
+                                                     skos:ConceptScheme .
+
+confs10:core rdf:type 
+                      spec:ConformanceClass, skos:Collection ;
+             skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Coeur"@fr .
+
+confs10:geometry-extension rdf:type 
+                                    spec:ConformanceClass, skos:Collection ;
+                           skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Extension de géométrie"@fr .
+
+confs10:geometry-topology-extension rdf:type 
+                                             spec:ConformanceClass, skos:Collection ;
+                                    skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Extension de géométrie topologique"@fr .
+
+confs10:rdfs-entailment-extension rdf:type 
+                                           spec:ConformanceClass, skos:Collection ;
+                                  skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Extension d'Implication RDFS"@fr .
+
+confs10:topology-vocab-extension rdf:type 
+                                          spec:ConformanceClass, skos:Collection ;
+                                 skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Extension de vocabulaire topologique"@fr .
+
+conf10core:feature-class rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez que les requêtes impliquant Geo:Feature fonctionnalité renvoient le résultat correct sur des données de test."@fr ;
+                         skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Classe Feature"@fr .
+
+conf10core:sparql-protocol rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifiez que la mise en oeuvre accepte les requêtes SPARQL et renvoie les résultats corrects dans le format correct, d’après SPARQL pour RDF, le protocole SPARQL pour RDF et la Spécifications W3C pour les Résultats SPARQL XML."@fr ;
+                           skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Protocol SPARQL"@fr .
+
+conf10core:spatial-object-class rdf:type 
+                                         spec:ConformanceTest ;
+                                spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                skos:definition "Vérifiez que les requêtes impliquant geo:SpatialObject fonctionnalité renvoient le résultat correct sur des données de test."@fr ;
+                                skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Classe SpatialObject"@fr .
+
+conf11core:spatial-object-properties rdf:type 
+                                         spec:ConformanceTest ;
+                                spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                skos:definition "Vérifier que les requêtes sur ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                                skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Propriétés SpatialObject"@fr .
+
+conf10gx:feature-properties rdf:type 
+                                     spec:ConformanceTest ;
+                            spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                            skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                            skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Propriétés Entités"@fr .
+
+conf10gx:geometry-as-gml-literal rdf:type 
+                                          spec:ConformanceTest ;
+                                 spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                 skos:definition "Vérifier que les requêtes impliquant la propriété geo:asGML renvoient le résultat correct sur des données de test."@fr ;
+                                 skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral de Géométrie asGML"@fr .
+
+conf10gx:geometry-as-wkt-literal rdf:type 
+                                          spec:ConformanceTest ;
+                                 spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                 skos:definition "Vérifier que les requêtes impliquant les valeurs geo:wktLiteral renvoient le résultat correct sur des données de test."@fr ;
+                                 skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral de Géométrie asWKT"@fr .
+
+conf10gx:geometry-class rdf:type 
+                                 spec:ConformanceTest ;
+                        spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                        skos:definition "Vérifier que les requêtes impliquant les valeurs geo:Geometry renvoient le résultat correct sur des données de test."@fr ;
+                        skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Classes Geometry"@fr .
+
+conf10gx:geometry-properties rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Propriétés Géométrie"@fr .
+
+conf10gx:gml-literal rdf:type 
+                              spec:ConformanceTest ;
+                     spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                     skos:definition "Vérifier que les requêtes impliquant les valeurs geo:gmlLiteral renvoient le résultat correct sur des données de test."@fr ;
+                     skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral GML"@fr .
+
+conf10gx:gml-literal-empty rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifier que les requêtes impliquant les valeurs geo:gmlLiteral renvoient le résultat correct sur des données de test."@fr ;
+                           skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral GML Vide"@fr .
+
+conf10gx:gml-profile rdf:type 
+                              spec:ConformanceTest ;
+                     spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                     skos:definition "Examiner la documentation de la mise en oeuvre pour vérifier que les profils GML sont documentés."@fr ;
+                     skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Profile GML"@fr .
+
+conf10gx:query-functions rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour un ensemble de données de test lors de l'utilisation de la sérialisation et de la version spécifiée:  geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference,geof:symDifference, geof:envelope and geof:boundary."@fr ;
+                         skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Fonctions Requêtes"@fr .
+
+conf10gx:srid-function rdf:type 
+                                spec:ConformanceTest ;
+                       spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                       skos:definition "Vérifier qu'une requête SPARQL impliquant la fonction geof:getSRID renvoie le résultat correct sur des données de test lors de l'utilisation de la sérialisation et de la version spécifiée."@fr ;
+                       skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Fonctions SRID"@fr .
+
+conf10gx:wkt-axis-order rdf:type 
+                                 spec:ConformanceTest ;
+                        spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                        skos:definition "Vérifier que les requêtes impliquant les valeurs geo:wktLiteral renvoient le résultat correct sur des données de test."@fr ;
+                        skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Ordre des Axes WKT"@fr .
+
+conf10gx:wkt-literal rdf:type 
+                              spec:ConformanceTest ;
+                     spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                     skos:definition "Vérifier que les requêtes impliquant les valeurs geo:wktLiteral renvoient le résultat correct sur des données de test."@fr ;
+                     skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral WKT"@fr .
+
+conf10gx:wkt-literal-default-srs rdf:type 
+                                          spec:ConformanceTest ;
+                                 spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                 skos:definition "Vérifier que les requêtes impliquant les valeurs geo:wktLiteral sans URI de système de référence spatiale explicite renvoient le résultat correctement sur des données de test."@fr ;
+                                 skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: SRS de default de Littéral WKT"@fr .
+
+conf10gx:wkt-literal-empty rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifier que les requêtes impliquant les valeurs geo:wktLiteral renvoient le résultat correct sur des données de test."@fr ;
+                           skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Littéral WKT Vide"@fr .
+
+conf10gtx:eh-query-functions rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside, geof:ehContains"@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: EH Fonctions de Requêtes"@fr .
+
+conf10gtx:rcc8-query-functions rdf:type 
+                                        spec:ConformanceTest ;
+                               spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                               skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp, geof:rcc8ntppi"@fr ;
+                               skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: RCC8 Fonctions de Requêtes"@fr .
+
+conf10gtx:relate-query-function rdf:type 
+                                         spec:ConformanceTest ;
+                                spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                skos:definition "Vérifier qu'un ensemble de requêtes SPARQL impliquant la fonction geof:relate renvoie le résultat correct pour un ensemble de données de test lors de l'utilisation de la sérialisation et de la version spécifiées."@fr ;
+                                skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Fonctions de Requêtes"@fr .
+
+conf10gtx:sf-query-functions rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps"@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: SF Fonctions de Requêtes"@fr .
+
+confs10:query-rewrite-extension: rdf:type 
+                    spec:ConformanceClass, skos:Collection ;
+           skos:prefLabel "GeoSPARQL 1.0 Classe de conformité: Query Rewrite Extension"@fr .
+
+conf10qre:eh-query-rewrite rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifier que les requêtes impliquant les règles de transformation de requête suivantes renvoient le résultat correct pour un jeu de données de test lors de l'utilisation de la sérialisation et de la version spécifiés: geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside, geor:ehContains"@fr ;
+                           skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: EH Réécriture de Requêtes"@fr .
+
+conf10qre:rcc8-query-rewrite rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier que les requêtes impliquant les règles de transformation de requête suivantes renvoient le résultat correct pour un jeu de données de test lors de l'utilisation de la sérialisation et de la version spécifiés: geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp"@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: RCC8 Réécriture de Requêtes"@fr .
+
+conf10qre:sf-query-rewrite rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifier que les requêtes impliquant les règles de transformation de requête suivantes renvoient le résultat correct pour un jeu de données de test lors de l'utilisation de la sérialisation et de la version spécifiés: geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains und geor:sfOverlaps"@fr ;
+                           skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: SF Réécriture de Requêtes"@fr .
+
+conf10ree:bgp-rdfs-ent rdf:type 
+                                spec:ConformanceTest ;
+                       spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                       skos:definition "Vérifier qu'un ensemble de requêtes SPARQL impliquant des triplets RDF impliqués renvoie le résultat correct pour un ensemble de données de test en utilisant la sérialisation, la version et la relation_family spécifiée."@fr ;
+                       skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: Implications BGP RDFS"@fr .
+
+conf10ree:gml-geometry-types rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier qu'un ensemble de requêtes SPARQL impliquant des types de géométrie GML renvoie le résultat correct pour un jeu de données de test à l'aide de la version spécifiée de GML."@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: GML Types de Géométrie"@fr .
+
+conf10ree:wkt-geometry-types rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier qu'un ensemble de requêtes SPARQL impliquant des types de géométrie WKT renvoie le résultat correct pour un jeu de données de test à l'aide de la version spécifiée des fonctionnalités simples."@fr ;
+                             skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: WKT Types de Géométrie"@fr .
+
+conf10tve:eh-spatial-relations rdf:type 
+                                        spec:ConformanceTest ;
+                               spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                               skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                               skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: EH Relations spatiales"@fr .
+
+conf10tve:rcc8-spatial-relations rdf:type 
+                                          spec:ConformanceTest ;
+                                 spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                 skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                                 skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: RCC8 Relations spatiales"@fr .
+
+conf10tve:sf-spatial-relations rdf:type 
+                                        spec:ConformanceTest ;
+                               spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                               skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                               skos:prefLabel "GeoSPARQL 1.0 Vérification de la conformité: SF Relations spatiales"@fr .
+
+reqs10:geosparql10reqs rdf:type 
+                                skos:Collection ;
+                       skos:definition "Toutes les exigences GeoSPARQL définies dans la spécification GeoSPARQL 1.0."@fr ;
+                       skos:prefLabel "Conditions GeoSPARQL 1.0" .
+
+reqs10:geosparql11reqs rdf:type 
+                                skos:Collection ;
+                       skos:definition "Toutes les exigences GeoSPARQL définies dans la spécification GeoSPARQL 1.0."@fr ;
+                       skos:prefLabel "Conditions GeoSPARQL 1.1" .
+
+reqs10core:feature-class rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent permettre à la classe RDFS geo:Feature d'être utilisée dans les modèles de graphe SPARQL."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.0: Classe d'Entités"@fr .
+
+reqs10core:sparql-protocol rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Les implémentations doivent prendre en charge le langage de requête SPARQL pour RDF, le protocole SPARQL pour RDF et le format XML des résultats de requête SPARQL."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.0: SPARQL Protocole"@fr .
+
+reqs10core:spatial-object-class rdf:type 
+                                         spec:Requirement ;
+                                skos:definition "Les implémentations doivent permettre à la classe RDFS geo:SpatialObject d'être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                skos:prefLabel "Conditions GeoSPARQL 1.0: Classes d'object Spatiales"@fr .
+
+reqs10gx:feature-properties rdf:type 
+                                     spec:Requirement ;
+                            skos:definition "Les implémentations doivent permettre aux propriétés geo:hasGeometry et geo:hasDefaultGeometry d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                            skos:prefLabel "Conditions GeoSPARQL 1.0: Propriétés Entités Feature Properties"@fr .
+
+reqs10gx:geometry-as-gml-literal rdf:type 
+                                          spec:Requirement ;
+                                 skos:definition "Les implémentations doivent permettre à la propriété RDF geo:asGML d'être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                 skos:prefLabel "Conditions GeoSPARQL 1.0:  Littéraux de Géométrie asGML"@fr .
+
+reqs10gx:geometry-as-wkt-literal rdf:type 
+                                          spec:Requirement ;
+                                 skos:definition "Les implémentations doivent permettre à la propriété RDF geo:asWKT d'être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                 skos:prefLabel "Conditions GeoSPARQL 1.0: Littéraux de Géométrie asWKT"@fr .
+
+reqs10gx:geometry-class rdf:type 
+                                 spec:Requirement ;
+                        skos:definition "Les implémentations doivent permettre à la classe RDFS geo:Geometry d'être utilisée dans les modèles de graphe SPARQL."@fr ;
+                        skos:prefLabel "Conditions GeoSPARQL 1.0: Classe de Géométrie"@fr .
+
+reqs10gx:geometry-properties rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent permettre aux propriétés geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: Propriétés de Géométrie"@fr .
+
+reqs10gx:gml-literal rdf:type 
+                              spec:Requirement ;
+                     skos:definition "Tous les geo:gmlLiterals doivent consister en un élément valide du schéma GML qui implémente un sous-type de GM_Object tel que défini dans [OGC 07-036]"@fr ;
+                     skos:prefLabel "Conditions GeoSPARQL 1.0: GML Littéral"@fr .
+
+reqs10gx:gml-literal-empty rdf:type 
+                                    spec:Requirement ;
+                           skos:requires reqs10gx:gml-literal ;
+                           skos:definition "Un geo:gmlLiteral vide doit être interprété comme une géométrie vide."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.0: Littéral GML vide"@fr .
+
+reqs10gx:gml-profile rdf:type 
+                              spec:Requirement ;
+                     skos:definition "Les implémentations doivent documenter les profils GML pris en charge."@fr ;
+                     skos:prefLabel "Conditions GeoSPARQL 1.0: Profile GML"@fr .
+
+reqs10gx:query-functions rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent prendre en charge geof:distance, geof:buffer, geof:convexHull, geof:intersection, geof:union, geof:difference, geof:symDifference, geof:envelope et geof:boundary en tant que fonctions d'extension SPARQL, conformément aux définitions des fonctions d'extension Simple Features (respectivement ddistance, buffer, convexHull, intersection, difference, symDifference, envelope and boundary) dans [ISO 19125-1]."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.0: Requêtes fonctionnelles"@fr .
+
+reqs10gx:srid-function rdf:type 
+                                spec:Requirement ;
+                       skos:definition "Les implémentations doivent prendre en charge geof:getSRID comme une fonction d'extension SPARQL."@fr ;
+                       skos:prefLabel "Conditions GeoSPARQL 1.0: Fonction SRID"@fr .
+
+reqs10gx:wkt-axis-order rdf:type 
+                                 spec:Requirement ;
+                        skos:definition "Les tuples de coordonnées dans geo:wktLiterals doivent être interprétés à l'aide de l'ordre d'axe défini dans le système de référence spatial utilisé."@fr ;
+                        skos:prefLabel "Conditions GeoSPARQL 1.0: Ordre D'axe WKT"@fr .
+
+reqs10gx:wkt-literal rdf:type 
+                              spec:Requirement ;
+                     skos:definition "Tous les Littéraux RDFS de type geo:wktLiteral doivent être constitués d'un URI optionnel identifiant le système de référence de coordonnées suivi des caractéristiques simples de texte bien connu (WKT) décrivant une valeur géométrique. Un geo:wktLiterals valide est formé en concaténant une URI [RFC 2396] définie, un ou plusieurs espaces U + 0020  en tant que séparateur et une chaîne WKT telle que définie dans [ISO 19125-1]."@fr ;
+                     skos:prefLabel "Conditions GeoSPARQL 1.0: Littéral WKT"@fr .
+
+reqs10gx:wkt-literal-default-srs rdf:type 
+                                          spec:Requirement ;
+                                 skos:definition "L'URI <http://www.opengis.net/def/crs/ogc/1.3/crrs84> est supposé que le système de référence spatial de L'URI <http://www.opengis.net/def/crs/ogc/1.3/crrs84> est assumé lorsqu'un  geo:wktLiterals ne spécifie pas un système de référence spatial explicite."@fr ;
+                                 skos:prefLabel "Conditions GeoSPARQL 1.0: Littéral WKT assumé"@fr .
+
+reqs10gx:wkt-literal-empty rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Un littéral geo:wktLiterals vide doit être interprété comme une géométrie vide."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.0: Littéral WKT Vide"@fr .
+
+reqs10gtx:eh-query-functions rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent prendre en charge geof:ehEquals, geof:ehDisjoint, geof:ehMeet, geof:ehOverlap, geof:ehCovers, geof:ehCoveredBy, geof:ehInside et geof:ehContains sous forme de fonctions d'extension SPARQL, conformément à leurs modèles d'intersection DE9IM correspondants [ISO 19125-1]."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: EH Requêtes fonctionnelles"@fr .
+
+reqs10gtx:rcc8-query-functions rdf:type 
+                                        spec:Requirement ;
+                               skos:definition "Les implémentations doivent prendre en charge  geof:rcc8eq, geof:rcc8dc, geof:rcc8ec, geof:rcc8po, geof:rcc8tppi, geof:rcc8tpp, geof:rcc8ntpp et geof:rcc8ntppi sous forme de fonctions d'extension SPARQL, conformément à leurs modèles d'intersection DE9IM correspondants [ISO 19125-1]."@fr ;
+                               skos:prefLabel "Conditions GeoSPARQL 1.0: RCC8 Requêtes fonctionnelles"@fr .
+
+reqs10gtx:relate-query-function rdf:type 
+                                         spec:Requirement ;
+                                skos:definition "Les implémentations doivent prendre en charge geof:relate comme une fonction d'extension SPARQL, comme défini par l'opérateur relate de [ISO 19125-1]."@fr ;
+                                skos:prefLabel "Conditions GeoSPARQL 1.0: Requêtes relation fonctionnelles"@fr .
+
+reqs10gtx:sf-query-functions rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent prendre en charge geof:sfEquals, geof:sfDisjoint, geof:sfIntersects, geof:sfTouches, geof:sfCrosses, geof:sfWithin, geof:sfContains, geof:sfOverlaps conformément aux modèles d'intersection DE9IM dans [ISO 19125-1]."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: SF Requêtes fonctionnelles"@fr .
+
+reqs10qre:eh-query-rewrite rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Le modèle de graphe de base doit utiliser la sémantique définie par le régime RIF Core [W3C SPARQL Entailment] pour les règles RIF [W3C RIF Core] geor:ehEquals, geor:ehDisjoint, geor:ehMeet, geor:ehOverlap, geor:ehCovers, geor:ehCoveredBy, geor:ehInside et geor:ehContains."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.0: EH Requêtes ré-écrites"@fr .
+
+reqs10qre:rcc8-query-rewrite rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Le modèle de graphe de base doit utiliser la sémantique définie par le régime RIF Core [W3C SPARQL Entailment] pour les règles RIF [W3C RIF Core] geor:rcc8eq, geor:rcc8dc, geor:rcc8ec, geor:rcc8po, geor:rcc8tppi, geor:rcc8tpp, geor:rcc8ntpp et geor:rcc8ntppi."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: RCC8 Requêtes ré-écrites"@fr .
+
+reqs10qre:sf-query-rewrite rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Le modèle de graphe de base doit utiliser la sémantique définie par le régime RIF Core [W3C SPARQL Entailment] pour les règles RIF [W3C RIF Core] geor:sfEquals, geor:sfDisjoint, geor:sfIntersects, geor:sfTouches, geor:sfCrosses, geor:sfWithin, geor:sfContains et geor:sfOverlaps."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.0: SF Requêtes ré-écrites"@fr .
+
+reqs10ree:bgp-rdfs-ent rdf:type 
+                                spec:Requirement ;
+                       skos:definition "Le graphe de base doit utiliser la sémantique définie par le régime d'Entailment RDFS [W3C SPARQL Entailment]"@fr ;
+                       skos:prefLabel "Conditions GeoSPARQL 1.0: Implications BGP RDFSs"@fr .
+
+reqs10ree:gml-geometry-types rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent prendre en charge les implications des classes hiérarchiques  RDFS /  OWL de géométrie compatible avec le schéma GML qui implémenté par le GM_Object selon la version spécifiée de GML [OGC 07-036]."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: GML Types de Géometries"@fr .
+
+reqs10ree:wkt-geometry-types rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent prendre en charge les implications des classes hiérarchiques  RDFS /  OWL de géométrie compatible avec la version de géométrie simple [ISO 19125-1]."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.0: WKT Types de Géometries"@fr .
+
+reqs10tve:eh-spatial-relations rdf:type 
+                                       spec:Requirement ;
+                               skos:definition "Les implémentations doivent autoriser les propriétés geo:ehEquals, geo:ehDisjoint, geo:ehMeet, geo:ehOverlap, geo:ehCovers, geo:ehCoveredBy, geo:ehInside et geo:ehContains a être utilisés dans les graphes SPARQL."@fr ;
+                               skos:prefLabel "Conditions GeoSPARQL 1.0: EH Relations Spatiales"@fr .
+
+reqs10tve:rcc8-spatial-relations rdf:type 
+                                          spec:Requirement ;
+                                 skos:definition "Les implémentations doivent autoriser les propriétés geo:rcc8eq, geo:rcc8dc, geo:rcc8ec, geo:rcc8po, geo:rcc8tppi, geo:rcc8tpp, geo:rcc8ntpp et geo:rcc8ntppi a être utilisés dans les graphes SPARQL."@fr ;
+                                 skos:prefLabel "Conditions GeoSPARQL 1.0: RCC8 Relations Spatiales"@fr .
+
+reqs10tve:sf-spatial-relations rdf:type 
+                                        spec:Requirement ;
+                               skos:definition "Les implémentations doivent autoriser les propriétés geo:sfEquals, geo:sfDisjoint, geo:sfIntersects, geo:sfTouches, geo:sfCrosses, geo:sfWithin, geo:sfContains et geo:sfOverlaps a être utilisés dans les graphes SPARQL."@fr ;
+                               skos:prefLabel "Conditions GeoSPARQL 1.0: SF Relations Spatiales"@fr .
+
+confs11:core rdf:type 
+                      spec:ConformanceClass, skos:Collection ;
+             skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Coeur"@fr .
+
+confs11:geometry-extension rdf:type 
+                                    spec:ConformanceClass, skos:Collection ;
+                           skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Extensions Géometriques"@fr .
+
+confs11:geometry-topology-extension rdf:type 
+                                             spec:ConformanceClass, skos:Collection ;
+                                    skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Extensions Géometriques pour topologies"@fr .
+
+confs11:rdfs-entailment-extension rdf:type 
+                                           spec:ConformanceClass, skos:Collection ;
+                                  skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Extensions RDFS d'implications"@fr .
+
+confs11:topology-vocab-extension rdf:type 
+                                          spec:ConformanceClass, skos:Collection ;
+                                 skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Extensions Vocabulaire Topologiques"@fr .
+
+conf11core:spatial-object-collection-class rdf:type 
+                                             spec:ConformanceTest ;
+                                    spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                    skos:definition "Vérifier que les requêtes impliquant les valeurs geo:SpatialObjectCollection renvoient le résultat correct sur des données de test."@fr ;
+                                    skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Collections de Classes Géometriques"@fr .
+
+conf11core:feature-collection-class rdf:type 
+                                             spec:ConformanceTest ;
+                                    spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                    skos:definition "Vérifier que les requêtes impliquant les valeurs geo:FeatureCollection renvoient le résultat correct sur des données de test."@fr ;
+                                    skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Collections de Classes Caractéristique"@fr .
+
+conf11core:geometry-collection-class rdf:type 
+                                              spec:ConformanceTest ;
+                                     skos:definition "Vérifier que les requêtes impliquant les valeurs geo:GeometryCollection renvoient le résultat correct sur des données de test."@fr ;
+                                     skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Collections de Classes Géometriques"@fr .
+
+conf11core:sparql-protocol rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifiez que la mise en oeuvre accepte les requêtes SPARQL et renvoie les résultats corrects dans le format correct, en fonction de la langue de requête SPARQL pour RDF, le protocole SPARQL pour RDF et SPARQL Résultats de la requête XML Format XML Spécifications W3C."@fr ;
+                           skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Protocole SPARQL"@fr .
+
+conf11gx:dggs-literal rdf:type 
+                               spec:ConformanceTest ;
+                      spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                      skos:definition "Vérifiez que les requêtes n'utilisent pas ce type de données, mais utilisez plutôt des spécialisations de celui-ci."@fr ;
+                      skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral DGGS"@fr .
+
+conf11gx:dggs-literal-empty rdf:type 
+                                     spec:ConformanceTest ;
+                            spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                            skos:definition "Vérifiez que les requêtes impliquant un geo:dggsLiteral vide renvoient le résultat correct pour un jeu de données de test."@fr ;
+                            skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral DGGS Vide"@fr .
+
+conf11gx:feature-properties rdf:type 
+                                     spec:ConformanceTest ;
+                            spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                            skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                            skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Propriétés de Caractéristique"@fr .
+
+conf11gx:geojson-literal rdf:type 
+                                 spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifier que les requêtes impliquant les valeurs geo:geoJSONLiteral renvoient le résultat correct sur des données de test."@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral GeoJSON"@fr .
+
+conf11gx:geojson-literal-empty rdf:type 
+                                        spec:ConformanceTest ;
+                               spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                               skos:definition "Vérifier que les requêtes impliquant les valeurs geo:kmlLiteral sans un SRS codé explicite renvoye le résultat correct pour un jeu de données de test."@fr ;
+                               skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral KML"@fr .
+
+conf11gx:geojson-literal-srs rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier que les requêtes impliquant les valeurs geo:geoJSONLiteral sans un SRS codé explicite renvoye le résultat correct pour un jeu de données de test."@fr ;
+                             skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral GeoJSON SRS assumé"@fr .
+
+conf11gx:geometry-as-dggs-function rdf:type 
+                                            spec:ConformanceTest ;
+                                   spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                   skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant la fonction geof:asDGGS renvoie le résultat correct pour un jeu de données de test lors de l'utilisation de la série et de la version spécifiées."@fr ;
+                                   skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonction asDGGS"@fr .
+
+conf11gx:geometry-as-dggs-literal rdf:type 
+                                           spec:ConformanceTest ;
+                                  spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                  skos:definition "Vérifiez que les requêtes impliquant la propriété geo:asDGGS renvoient le résultat correct pour un jeu de données de test."@fr ;
+                                  skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral Géometriques asDGGS"@fr .
+
+conf11gx:geometry-as-geojson-function rdf:type 
+                                               spec:ConformanceTest ;
+                                      spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                      skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant la fonction geof:asGeoJSON renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée."@fr ;
+                                      skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonction asGeoJSON"@fr .
+
+conf11gx:geometry-as-geojson-literal rdf:type 
+                                             spec:ConformanceTest ;
+                                     spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                     skos:definition "Vérifiez que les requêtes impliquant la propriété geof:asGeoJSON renvoient le résultat correct pour des données de test."@fr ;
+                                     skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral Géometriques asGeoJSON"@fr .
+
+conf11gx:geometry-as-gml-function rdf:type 
+                                           spec:ConformanceTest ;
+                                  spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                  skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant la fonction geof:asGML renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée."@fr ;
+                                  skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonction asGML"@fr .
+
+conf11gx:geometry-as-kml-function rdf:type 
+                                           spec:ConformanceTest ;
+                                  spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                  skos:definition  "Vérifiez qu'un ensemble de requêtes SPARQL impliquant la fonction geof:asGML renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée."@fr ;
+                                  skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonction asKML"@fr .
+
+conf11gx:geometry-as-kml-literal rdf:type 
+                                          spec:ConformanceTest ;
+                                 spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                 skos:definition  "Vérifiez que les requêtes impliquant la propriété geof:asKML renvoient le résultat correct pour des données de test."@fr ;
+                                 skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral Géometriques asKML"@fr .
+
+conf11gx:geometry-as-wkt-function rdf:type 
+                                           spec:ConformanceTest ;
+                                  spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                                  skos:definition  "Vérifiez qu'un ensemble de requêtes SPARQL impliquant la fonction geof:asWKT renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée."@fr ;
+                                  skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonction asWKT"@fr .
+
+conf11gx:geometry-properties rdf:type 
+                                      spec:ConformanceTest ;
+                             spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                             skos:definition "Vérifier que les requêtes impliquant ces propriétés renvoient le résultat correct sur des données de test."@fr ;
+                             skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Propriétés Géometriques"@fr .
+
+conf11gx:kml-literal rdf:type 
+                              spec:ConformanceTest ;
+                     spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                     skos:definition "Vérifier que les requêtes impliquant les valeurs geo:kmlLiteral renvoient le résultat correct sur des données de test."@fr ;
+                     skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral KML"@fr .
+
+conf11gx:kml-literal-empty rdf:type 
+                                    spec:ConformanceTest ;
+                           spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                           skos:definition "Vérifier que les requêtes impliquant les valeurs vide geo:geoJSONLiteral renvoient le résultat correct sur des données de test."@fr ;
+                           skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral GeoJSON Vide"@fr .
+
+conf11gx:kml-literal-srs rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez que les requêtes impliquant des valeurs geo:kmlLiteral sans un SRS codé explicitement renvoient le résultat correct pour des données de test."@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Littéral KML SRS assumé"@fr .
+
+conf11gx:query-functions rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:boundary geof:buffer, geof:convexHull, geof:coordinateDimension, geof:difference, geof: dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform und geof:union für Nicht-DGGS-Geometrieliterale"@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonctions Requêtes"@fr .
+
+conf11gx:query-functions-non-sf rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries und geof:projectTo für Nicht-DGGS-Geometrieliterale"@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonctions Requêtes, Géometries non-simple."@fr .
+
+conf11gx:query-functions-dggs rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:boundary geof:buffer, geof:convexHull, geof:coordinateDimension, geof: difference, geof:dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform und geof:union für DGGS-Geometrie-Literale"@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Requêtes SF fonctionnelles, DGGS"@fr .
+
+conf11gx:query-functions-non-sf-dggs rdf:type 
+                                  spec:ConformanceTest ;
+                         spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                         skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct pour des données de test lors de l'utilisation de la sérialisation et de la version spécifiée: geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries und geof:projectTo für DGGS-Geometrieliterale"@fr ;
+                         skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Requêtes SF fonctionnelles, Caractéristique non-simple, DGGS"@fr .                         
+
+conf11gx:sa-functions rdf:type 
+                               spec:ConformanceTest ;
+                      spec:testPurpose "Vérifiez la conformité avec cette exigence."@fr ;
+                      skos:definition "Vérifiez qu'un ensemble de requêtes SPARQL impliquant chacune des fonctions suivantes renvoie le résultat correct."@fr ;
+                      skos:prefLabel "Tests de conformité GeoSPARQL 1.1: Fonctions Agrégat"@fr .
+
+conf11qre: rdf:type 
+                    spec:ConformanceClass ;
+           dcterms:requires confs11:geometry-topology-extension ;
+           skos:prefLabel "Classe de conformité GeoSPARQL 1.1: Extension de re-écriture de requêtes"@fr .
+
+reqs11core:spatial-object-collection-class rdf:type 
+                                                    spec:Requirement ;
+                                           skos:definition "Les implémentations doivent autoriser la classe RDFS geo:SpatialObjectCollection a être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                           skos:prefLabel "Conditions GeoSPARQL 1.1: Classe d'objects géospatiales"@fr .
+
+reqs11core:feature-collection-class rdf:type 
+                                             spec:Requirement ;
+                                    skos:definition "Les implémentations doivent autoriser la classe RDFS geo:FeatureCollection a être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                    skos:prefLabel "Conditions GeoSPARQL 1.1: Classe d'objects caractéristiques"@fr .
+
+reqs11core:geometry-collection-class rdf:type 
+                                              spec:Requirement ;
+                                     skos:definition "Les implémentations doivent autoriser la classe RDFS geo:GeometryCollection a être utilisée dans les modèles de graphe SPARQL."@fr ;
+                                     skos:prefLabel "Conditions GeoSPARQL 1.1: Classe collections géométriques"@fr .
+
+reqs11core:sparql-protocol rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Les implémentations doivent prendre en charge la langue de requête SPARQL pour RDF [SPARQL], le protocole SPARQL [SPARQLPROT] et les Résultats de requête SPARQL en formats XML [SPARQLRESX] et JSON [SPARQLRESJ].."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.1: Protocole SPARQL"@fr ;
+                           prov:wasDerivedFrom reqs10core:sparql-protocol .
+
+reqs11gx:dggs-literal rdf:type 
+                               spec:Requirement ;
+                      skos:definition "Tous les littéraux RDFS de type geo:dggsLiteral doivent être constitués d'une série de géométrie DGGS formulée selon un type littéral DGGS spécifique identifié par un type de données spécialisant le type de données."@fr ;
+                      skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral DGGS"@fr .
+
+reqs11gx:dggs-literal-empty rdf:type 
+                                     spec:Requirement ;
+                            skos:definition "Un geo:dggsLiteral vide doit être interprété comme une géométrie vide."@fr ;
+                            skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral DGGS Vide"@fr .
+
+reqs11gx:feature-properties rdf:type 
+                                     spec:Requirement ;
+                            skos:definition "Les implémentations doivent permettre aux propriétés geo:hasGeometry, geo:hasDefaultGeometry, geo:hasLength, geo:hasArea, geo:hasVolume geo:hasCentroid, geo:hasBoundingBox et geo:hasSpatialResolution d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                            skos:prefLabel "Conditions GeoSPARQL 1.1: Propriétés caractéristiques"@fr ;
+                            prov:wasDerivedFrom reqs10gx:feature-properties .
+
+reqs11gx:geojson-literal rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les instances geo:geoJSONLiteral sont des objets géométrie tels que définis dans la spécification Geojson [Geojson]."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral GeoJSON"@fr .
+
+reqs11gx:geojson-literal-empty rdf:type 
+                                        spec:Requirement ;
+                               skos:definition "Un geo:kmlLiteral vide doit être interprété comme une géométrie vide."@fr ;
+                               skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral KML Vide"@fr .
+
+reqs11gx:geojson-literal-srs rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les littéraux de type geo:geoJSONLiteral ne contiennent pas de définition SRS. Tous les littéraux de ce type doivent, selon la spécification Geojson, codés et utilisés, le système de référence spatial de la longitude géodésique WGS84 (http://www.opengis.net/def/CRS/OGC/1.3/CRS84)."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral GeoJSON SRS par défault"@fr .
+
+reqs11gx:geometry-as-dggs-function rdf:type 
+                                            spec:Requirement ;
+                                   skos:definition "Les implémentations doivent prendre en charge geof:asDGGS, en tant que fonction d'extension SPARQL."@fr ;
+                                   skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction asDGGS"@fr .
+
+reqs11gx:geometry-as-dggs-literal rdf:type 
+                                           spec:Requirement ;
+                                  skos:definition "Les implémentations doivent permettre aux littéraux geo:asDGGS d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                  skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral géométrique asDGGS"@fr .
+
+reqs11gx:geometry-as-geojson-function rdf:type 
+                                               spec:Requirement ;
+                                      skos:definition "Les implémentations doivent permettre aux fonctions geof:asGeoJSON d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                      skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction asGeoJSON"@fr .
+
+reqs11gx:geometry-as-geojson-literal rdf:type 
+                                              spec:Requirement ;
+                                     skos:definition "Les implémentations doivent permettre aux littéraux geo:asGeoJSON d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                     skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral asGeoJSON"@fr .
+
+reqs11gx:geometry-as-gml-function rdf:type 
+                                           spec:Requirement ;
+                                  skos:definition  "Les implémentations doivent permettre aux fonctions geof:asGML d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                  skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction asGML"@fr .
+
+reqs11gx:geometry-as-kml-function rdf:type 
+                                           spec:Requirement ;
+                                  skos:definition "Les implémentations doivent permettre aux fonctions geof:asKML d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                  skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction asKML"@fr .
+
+reqs11gx:geometry-as-kml-literal rdf:type 
+                                          spec:Requirement ;
+                                 skos:definition "Les implémentations doivent permettre aux littéraux geo:asKML d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                 skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral géométrique asKML"@fr .
+
+reqs11gx:geometry-as-wkt-function rdf:type 
+                                           spec:Requirement ;
+                                  skos:definition "Les implémentations doivent permettre aux fonctions geof:asWKT d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                                  skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction asWKT"@fr .
+
+reqs11gx:geometry-properties rdf:type 
+                                      spec:Requirement ;
+                             skos:definition "Les implémentations doivent permettre aux propriétés geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple et geo:hasSerialization d'être utilisées dans les modèles de graphe SPARQL."@fr ;
+                             skos:prefLabel "Conditions GeoSPARQL 1.1: Propriétés géométriques"@fr ;
+                             prov:wasDerivedFrom reqs10gx:geometry-properties .
+
+reqs11gx:kml-literal rdf:type 
+                              spec:Requirement ;
+                     skos:definition "Toutes les instances geo:kmlLiteral doivent être composées des objets de géométrie définis dans la spécification KML [OGCKML]."@fr ;
+                     skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral KML"@fr .
+
+reqs11gx:kml-literal-empty rdf:type 
+                                    spec:Requirement ;
+                           skos:definition "Un geo:kmlLiteral vide doit être interprété comme une géométrie vide."@fr ;
+                           skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral GeoJSON Vide"@fr .
+
+reqs11gx:kml-literal-srs rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "L'IRI http://www.opengis.net/def/crs/ogc/1.3/crrs84 doit être supposé pour change geo:kmlLiteral qui n'en spécifient pas."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Littéral KML SRS par défault"@fr .
+
+reqs11gx:query-functions rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent permettre aux fonctions geof:boundary, geof:buffer, geof:convexHull, geof:coordinateDimension, geof:difference, geof:dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform et geof:union d'être utilisées dans les modèles de graphe SPARQL selon les definitions Simple Features [ISO19125-1] pour les littéraux non-DGGS."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Requêtes fonctionnelles"@fr ;
+                         prov:wasDerivedFrom reqs10gx:query-functions .
+
+reqs11gx:query-functions-non-sf rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent permettre aux fonctions geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries et geof:projectTo d'être utilisées dans les modèles de graphe SPARQL selon les definitions de ce standard pour les littéraux non-DGGS."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Requêtes fonctionnelles"@fr ;
+                         prov:wasDerivedFrom reqs10gx:query-functions .
+
+reqs11gx:query-functions-dggs rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent prendre en charge les fonctions d'exigence 40 pour les littéraux de la géométrie DGGS en tant que fonctions d'extension SPARQL, conformément aux définitions Simple Features [ISO19125-1] pour les littéraux de géométrie non-DGGS."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Requêtes fonctionnelles"@fr ;
+                         prov:wasDerivedFrom reqs10gx:query-functions .    
+
+reqs11gx:query-functions-non-sf-dggs rdf:type 
+                                  spec:Requirement ;
+                         skos:definition "Les implémentations doivent prendre en charge les fonctions d'exigence 41 pour les littéraux de la géométrie DGGS en tant que fonctions d'extension SPARQL, conformément aux définitions de ce standard pour les littéraux de géométrie non-DGGS."@fr ;
+                         skos:prefLabel "Conditions GeoSPARQL 1.1: Requêtes fonctionnelles"@fr ;
+                         prov:wasDerivedFrom reqs10gx:query-functions .                                                                       
+
+reqs11gx:sa-functions rdf:type 
+                               spec:Requirement ;
+                      skos:definition "Les implémentations doivent permettre aux fonctions geof:concaveHull, geof:boundingCircle, geof:union2, geof:concatLines, geof:centroid, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY et geof:minZ en tant que fonctions d'extension SPARQL."@fr ;
+                      skos:prefLabel "Conditions GeoSPARQL 1.1: Fonction Agrégat spatiales"@fr .
