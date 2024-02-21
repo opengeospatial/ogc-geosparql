@@ -12,7 +12,7 @@ PREFIX confs11: <http://www.opengis.net/spec/geosparql/1.1/conf/>
 PREFIX cs: <http://www.opengis.net/def/geosparql/reqs>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX prov1: <http://www.w3.org/ns/prov-o/>
+PREFIX prov: <http://www.w3.org/ns/prov-o/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX reqs10: <http://www.opengis.net/spec/geosparql/1.0/req/>
 PREFIX reqs10core: <http://www.opengis.net/spec/geosparql/1.0/req/core/>
@@ -100,11 +100,33 @@ reqs10:geosparql11reqs
     skos:prefLabel "GeoSPARQL 1.1 Requirements"@en ;
 .
 
+reqs11:geometry-extension-dggs
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires confs11:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Geometry Extension - DGGS Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gx:geometry-class ,
+        reqs10gx:query-functions ,
+        reqs10gx:srid-function ,
+        reqs11gx:dggs-literal ,
+        reqs11gx:dggs-literal-empty ,
+        reqs11gx:dggs-literal-srs ,
+        reqs11gx:feature-properties ,
+        reqs11gx:query-functions ,
+        reqs11gx:query-functions-non-sf ,
+        reqs11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Geometry Extension - DGGS"@en ;
+.
+
 confs11:geometry-extension-dggs
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection  ;
     dcterms:requires confs11:core ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The Geometry Extension - DGGS Conformance Class for GeoSPARQL 1.1"@en ;
@@ -123,11 +145,42 @@ confs11:geometry-extension-dggs
     skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Geometry Extension - DGGS"@en ;
 .
 
+reqs11qre:query-rewrite-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:query-rewrite-extension ,
+        reqs11:geometry-topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Query Rewrite Extension Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gx:geometry-class ,
+        reqs10gx:query-functions ,
+        reqs10gx:srid-function ,
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ,
+        reqs10qre:eh-query-rewrite ,
+        reqs10qre:rcc8-query-rewrite ,
+        reqs10qre:sf-query-rewrite ,
+        reqs11gx:dggs-literal ,
+        reqs11gx:dggs-literal-empty ,
+        reqs11gx:dggs-literal-srs ,
+        reqs11gx:feature-properties ,
+        reqs11gx:query-functions ,
+        reqs11gx:query-functions-non-sf ,
+        reqs11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Query Rewrite Extension"@en ;
+.
+
 conf11qre:query-rewrite-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:query-rewrite-extension ,
         confs11:geometry-topology-extension ;
@@ -155,11 +208,42 @@ conf11qre:query-rewrite-extension
     skos:prefLabel "GeoSPARQL 1.1 Conformance Class: Query Rewrite Extension"@en ;
 .
 
+reqs11:rdfs-entailment-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:rdfs-entailment-extension ,
+        reqs11:geometry-topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The RDFS Entailment Extension Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gx:geometry-class ,
+        reqs10gx:query-functions ,
+        reqs10gx:srid-function ,
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ,
+        reqs10ree:bgp-rdfs-ent ,
+        reqs10ree:gml-geometry-types ,
+        reqs10ree:wkt-geometry-types ,
+        reqs11gx:dggs-literal ,
+        reqs11gx:dggs-literal-empty ,
+        reqs11gx:dggs-literal-srs ,
+        reqs11gx:feature-properties ,
+        reqs11gx:query-functions ,
+        reqs11gx:query-functions-non-sf ,
+        reqs11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: RDFS Entailment Extension"@en ;
+.
+
 confs11:rdfs-entailment-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:rdfs-entailment-extension ,
         confs11:geometry-topology-extension ;
@@ -190,8 +274,7 @@ confs11:rdfs-entailment-extension
 confs10:query-rewrite-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection  ;
     dcterms:requires confs10:geometry-topology-extension ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The Query Rewrite Extension Conformance Class for GeoSPARQL 1.0"@en ;
@@ -203,11 +286,42 @@ confs10:query-rewrite-extension
     skos:prefLabel "GeoSPARQL 1.0 Conformance Class: Query Rewrite Extension"@en ;
 .
 
+reqs10:query-rewrite-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires reqs10:geometry-topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Query Rewrite Extension Requirements Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10qre:eh-query-rewrite ,
+        reqs10qre:rcc8-query-rewrite ,
+        reqs10qre:sf-query-rewrite ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: Query Rewrite Extension"@en ;
+.
+
+reqs10:rdfs-entailment-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires reqs10:geometry-topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The RDFS Entailment Extension Requirements Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10ree:bgp-rdfs-ent ,
+        reqs10ree:gml-geometry-types ,
+        reqs10ree:wkt-geometry-types ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: RDFS Entailment Extension"@en ;
+.
+
 confs10:rdfs-entailment-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires confs10:geometry-topology-extension ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The RDFS Entailment Extension Conformance Class for GeoSPARQL 1.0"@en ;
@@ -269,11 +383,37 @@ conf11core:geometry-collection-class
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Geometry Collection Class"@en ;
 .
 
+reqs11:geometry-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:geometry-extension ,
+        reqs11:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Geometry Extension Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs11gx:geojson-literal ,
+        reqs11gx:geojson-literal-empty ,
+        reqs11gx:geojson-literal-srs ,
+        reqs11gx:geometry-as-geojson-literal ,
+        reqs11gx:geometry-as-kml-literal ,
+        reqs11gx:geometry-properties ,
+        reqsf11gx:kml-literal ,
+        reqs11gx:kml-literal-empty ,
+        reqs11gx:kml-literal-srs ,
+        reqs11gx:query-functions ,
+        reqs11gx:query-functions-non-sf ,
+        reqs11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Geometry Extension"@en ;
+.
+
 confs11:geometry-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:geometry-extension ,
         confs11:core ;
@@ -400,11 +540,34 @@ conf11gx:query-functions-non-sf-dggs
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: Query Functions, non Simple Features, DGGS"@en ;
 .
 
+reqs11:topology-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:topology-extension ,
+        reqs11:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Topology Extension Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ,
+        reqs11core:feature-collection-class ,
+        reqs11core:sparql-protocol ,
+        reqs11core:spatial-object-class ,
+        reqs11core:spatial-object-collection-class ,
+        reqs11core:spatial-object-properties ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Topology Extension"@en ;
+.
+
 confs11:topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:topology-extension ,
         confs11:core ;
@@ -450,11 +613,36 @@ conf10core:spatial-object-class
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: Spatial Object Class"@en ;
 .
 
+reqs10:geometry-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires reqs10:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Geometry Extension Requirements Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gx:feature-properties ,
+        reqs10gx:geometry-as-gml-literal ,
+        reqs10gx:geometry-as-wkt-literal ,
+        reqs10gx:geometry-properties ,
+        reqs10gx:gml-literal ,
+        reqs10gx:gml-literal-empty ,
+        reqs10gx:gml-profile ,
+        reqs10gx:query-functions ,
+        reqs10gx:srid-function ,
+        reqs10gx:wkt-axis-order ,
+        reqs10gx:wkt-literal ,
+        reqs10gx:wkt-literal-default-srs ,
+        reqs10gx:wkt-literal-empty ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: Geometry Extension"@en ;
+.
+
 confs10:geometry-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires confs10:core ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The Geometry Extension Conformance Class for GeoSPARQL 1.0"@en ;
@@ -619,11 +807,27 @@ conf10gx:wkt-literal-empty
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: WKT Literal Empty"@en ;
 .
 
+reqs10:topology-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires reqs10:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Topology Extension Requirements Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: Topology Extension"@en ;
+.
+
 confs10:topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires confs10:core ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The Topology Extension Conformance Class for GeoSPARQL 1.0"@en ;
@@ -753,11 +957,40 @@ conf11gx:kml-literal-srs
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: KML Literal Default SRS"@en ;
 .
 
+reqs11:geometry-topology-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:geometry-topology-extension ,
+        reqs11:geometry-extension ,
+        reqs11:topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Geometry Topology Extension Requirements Class for GeoSPARQL 1.1"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gx:geometry-class ,
+        reqs10gx:query-functions ,
+        reqs10gx:srid-function ,
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ,
+        reqs11gx:dggs-literal ,
+        reqs11gx:dggs-literal-empty ,
+        reqs11gx:dggs-literal-srs ,
+        reqs11gx:feature-properties ,
+        reqs11gx:query-functions ,
+        reqs11gx:query-functions-non-sf ,
+        reqs11gx:sa-functions ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Geometry Topology Extension"@en ;
+.
+
 confs11:geometry-topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:geometry-topology-extension ,
         confs11:geometry-extension ,
@@ -873,11 +1106,25 @@ reqs11gx:sa-functions
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Spatial Aggregate Functions"@en ;
 .
 
+reqs10:core
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Core Requirements Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10core:feature-class ,
+        reqs10core:sparql-protocol ,
+        reqs10core:spatial-object-class ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: Core"@en ;
+.
+
 confs10:core
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     rdfs:isDefinedBy cs: ;
     skos:definition "The Core Conformance Class for GeoSPARQL 1.0"@en ;
     skos:inScheme cs: ;
@@ -901,11 +1148,29 @@ conf10core:sparql-protocol
     skos:prefLabel "GeoSPARQL 1.0 Conformance Test: SPARQL Protocol"@en ;
 .
 
+reqs10:geometry-topology-extension
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires
+        reqs10:geometry-extension ,
+        reqs10:topology-extension ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "The Geometry Topology Extension Conformance Class for GeoSPARQL 1.0"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs10gtx:eh-query-functions ,
+        reqs10gtx:rcc8-query-functions ,
+        reqs10gtx:relate-query-function ,
+        reqs10gtx:sf-query-functions ;
+    skos:prefLabel "GeoSPARQL 1.0 Requirements Class: Geometry Topology Extension"@en ;
+.
+
 confs10:geometry-topology-extension
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires
         confs10:geometry-extension ,
         confs10:topology-extension ;
@@ -1249,14 +1514,31 @@ reqs10tve:sf-spatial-relations
     skos:prefLabel "GeoSPARQL 1.0 Requirement: SF Spatial Relations"@en ;
 .
 
+reqs11:core
+    a
+        spec:RequirementsClass ,
+        skos:Collection ,
+        sd:Feature ;
+    dcterms:requires reqs10:core ;
+    rdfs:isDefinedBy cs: ;
+    skos:definition "All GeoSPARQL 1.1 Core Requirements Classes"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        reqs11core:feature-collection-class ,
+        reqs11core:sparql-protocol ,
+        reqs11core:spatial-object-class ,
+        reqs11core:spatial-object-collection-class ,
+        reqs11core:spatial-object-properties ;
+    skos:prefLabel "GeoSPARQL 1.1 Requirements Class: Core"@en ;
+.
+
 confs11:core
     a
         spec:ConformanceClass ,
-        skos:Collection ,
-        sd:Feature ;
+        skos:Collection ;
     dcterms:requires confs10:core ;
     rdfs:isDefinedBy cs: ;
-    skos:definition "All the Core Conformance Classes"@en ;
+    skos:definition "All the GeoSPARQL 1.1 Core Conformance Classes"@en ;
     skos:inScheme cs: ;
     skos:member
         conf11core:feature-collection-class ,
@@ -1290,7 +1572,7 @@ conf11core:sparql-protocol
     skos:definition "Verify that the implementation accepts SPARQL queries and returns the correct results in the correct format, according to the SPARQL Query Language for RDF, the SPARQL Protocol for RDF and SPARQL Query Results XML Format W3C specifications"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Conformance Test: SPARQL Protocol"@en ;
-    prov1:wasDerivedFrom conf10core:sparql-protocol ;
+    prov:wasDerivedFrom conf10core:sparql-protocol ;
 .
 
 conf11core:spatial-object-collection-class
@@ -1326,7 +1608,7 @@ reqs11core:sparql-protocol
     skos:definition "Implementations shall support the SPARQL Query Language for RDF [SPARQL], the SPARQL Protocol [SPARQLPROT] and the SPARQL Query Results XML [SPARQLRESX] and JSON [SPARQLRESJ] Formats"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: SPARQL Protocol"@en ;
-    prov1:wasDerivedFrom reqs10core:sparql-protocol ;
+    prov:wasDerivedFrom reqs10core:sparql-protocol ;
 .
 
 reqs11gx:dggs-literal
@@ -1357,7 +1639,7 @@ reqs11gx:feature-properties
     skos:definition "Implementations shall allow the properties geo:hasGeometry, geo:hasDefaultGeometry, geo:hasLength, geo:hasArea, geo:hasVolume geo:hasCentroid, geo:hasBoundingBox and geo:hasSpatialResolution to be used in SPARQL graph patterns"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Feature Properties"@en ;
-    prov1:wasDerivedFrom reqs10gx:feature-properties ;
+    prov:wasDerivedFrom reqs10gx:feature-properties ;
 .
 
 reqs11gx:geojson-literal
@@ -1428,7 +1710,7 @@ reqs11gx:geometry-properties
     skos:definition "Implementations shall allow the properties geo:dimension, geo:coordinateDimension, geo:spatialDimension, geo:isEmpty, geo:isSimple, geo:hasSerialization to be used in SPARQL graph patterns"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Geometry Properties"@en ;
-    prov1:wasDerivedFrom reqs10gx:geometry-properties ;
+    prov:wasDerivedFrom reqs10gx:geometry-properties ;
 .
 
 reqs11gx:kml-literal
@@ -1469,7 +1751,7 @@ reqs11gx:query-functions
     skos:definition "Implementations shall support the functions geof:boundary geof:buffer, geof:convexHull, geof:coordinateDimension, geof:difference, geof:dimension, geof:distance, geof:envelope, geof:geometryType, geof:getSRID, geof:intersection, geof:is3D, geof:isEmpty, geof:isMeasured, geof:isSimple, geof:spatialDimension, geof:symDifference, geof:transform and geof:union as SPARQL extension functions, consistent with definitions of these functions in Simple Features [ISO19125-1], for non-DGGS geometry literals"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Query Functions"@en ;
-    prov1:wasDerivedFrom reqs10gx:query-functions ;
+    prov:wasDerivedFrom reqs10gx:query-functions ;
 .
 
 reqs11gx:query-functions-dggs
@@ -1480,7 +1762,7 @@ reqs11gx:query-functions-dggs
     skos:definition "Implementations shall support the functions of Requirement 40 for DGGS geometry literals as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<ISO19125-1>>, for non-DGGS geometry literals"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Query Functions"@en ;
-    prov1:wasDerivedFrom reqs10gx:query-functions ;
+    prov:wasDerivedFrom reqs10gx:query-functions ;
 .
 
 reqs11gx:query-functions-non-sf
@@ -1491,7 +1773,7 @@ reqs11gx:query-functions-non-sf
     skos:definition "Implementations shall support the functions geof:area, geof:geometryN, geof:length, geof:maxX, geof:maxY, geof:maxZ, geof:minX, geof:minY, geof:minZ, geof:numGeometries and geof:projectTo as SPARQL extension functions which are defined in this standard, for non-DGGS geometry literals"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Query Functions"@en ;
-    prov1:wasDerivedFrom reqs10gx:query-functions ;
+    prov:wasDerivedFrom reqs10gx:query-functions ;
 .
 
 reqs11gx:query-functions-non-sf-dggs
@@ -1502,7 +1784,7 @@ reqs11gx:query-functions-non-sf-dggs
     skos:definition "Implementations shall support the functions of Requirement 41 for DGGS geometry literals as SPARQL extension functions which are defined in this standard, for non-DGGS geometry literals"@en ;
     skos:inScheme cs: ;
     skos:prefLabel "GeoSPARQL 1.1 Requirement: Query Functions"@en ;
-    prov1:wasDerivedFrom reqs10gx:query-functions ;
+    prov:wasDerivedFrom reqs10gx:query-functions ;
 .
 
 reqs10core:sparql-protocol

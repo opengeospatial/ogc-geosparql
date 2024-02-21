@@ -35,8 +35,8 @@ The geometry subtypes - Polygon, Point, CellList etc. - are the _Simple Features
 | <<geof:ehInside, ehInside>> | 2x ogc:geomLiteral | 2x Geometry | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
 5+| **Region Connection Calculus Functions**
 | *Function* | *Input Datatypes* | *Input Subtypes* | *Output Datatype* | *Output Subtype* 
-| <<geof:rcc8dcc, rcc8dcc>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
-| <<geof:rcc8ecc, rcc8ecc>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
+| <<geof:rcc8dc, rcc8dc>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
+| <<geof:rcc8ec, rcc8ec>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
 | <<geof:rcc8eq, rcc8eq>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
 | <<geof:rcc8ntpp, rcc8ntpp>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
 | <<geof:rcc8ntppi, rcc8ntppi>> | 2x ogc:geomLiteral | 2x Polygon | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] |
@@ -46,7 +46,7 @@ The geometry subtypes - Polygon, Point, CellList etc. - are the _Simple Features
 
 5+| **Spatial Aggregate Functions**
 | *Function* | *Input Datatypes* | *Input Subtypes* | *Output Datatype* | *Output Subtype* 
-| <<Function: geof:aggBoundingBox, aggBoundingBox>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | square Polygon (not DGGS), 
+| <<Function: geof:aggBoundingBox, aggBoundingBox>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | rectangular Polygon (not DGGS), 
 
 CellList (DGGS)  
 | <<Function: geof:aggBoundingCircle, aggBoundingCircle>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon (not DGGS) 
@@ -61,7 +61,7 @@ CellList (DGGS)
 | <<Function: geof:aggConvexHull, aggConvexHull>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon (not DGGS),
 
 CellList (DGGS) 
-| <<Function: geof:aggUnion, aggUnion>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | Polygon (not DGGS),
+| <<Function: geof:aggUnion, aggUnion>> | 1 or more ogc:geomLiteral | | ogc:geomLiteral | (Multi)Point, (Multi)LineString, (Multi)Polygon (not DGGS),
 
 CellList (DGGS) 
 5+| **Non-topological Query Functions**
@@ -71,13 +71,21 @@ CellList (DGGS)
 | <<Function: geof:boundary, boundary>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | LineString (not DGGS),
 
 OrderedCellList (DGGS) 
+| <<Function: geof:boundingCircle, boundingCircle>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | LineString (not DGGS),
+
+OrderedCellList (DGGS) 
+| <<Function: geof:metricBuffer, metricBuffer>> | 1x ogc:geomLiteral, 1x http://www.w3.org/2001/XMLSchema#double[xsd:double] | any | ogc:geomLiteral | (Multi)Polygon (not DGGS),
+
+CellList (DGGS)  
 | <<Function: geof:buffer, buffer>> | 1x ogc:geomLiteral, 
 
 1x http://www.w3.org/2001/XMLSchema#double[xsd:double], 
 
-1x http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | any | ogc:geomLiteral | (Multi)Polygon (not DGGS),
+1x http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | any | ogc:geomLiteral | Polygon (not DGGS),
 
 CellList (DGGS) 
+| <<Function: geof:centroid, centroid>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | Point (not DGGS) 
+| <<Function: geof:concaveHull, concaveHull>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | LineString (not DGGS) 
 | <<Function: geof:convexHull, convexHull>> | 1x ogc:geomLiteral | Geometry | ogc:geomLiteral | LineString (not DGGS) 
 | <<Function: geof:coordinateDimension, coordinateDimension>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#integer[xsd:integer] | 
 | <<Function: geof:difference, difference>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | (Multi)Polygon (not DGGS),
@@ -98,7 +106,7 @@ CellList (DGGS)
 | <<Function: geof:geometryN, geometryN>> | 1x ogc:geomLiteral | GeometryCollection (not DGGS) | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:geometryType, geometryType>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | 
 | <<Function: geof:getSRID, getSRID>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | 
-| <<Function: geof:intersection, intersection>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | Polygon (not DGGS),
+| <<Function: geof:intersection, intersection>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | (Multi)Polygon (not DGGS),
 
 CellList (DGGS) 
 | <<Function: geof:is3D, is3D>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#boolean[xsd:boolean] | 
@@ -115,7 +123,7 @@ CellList (DGGS)
 
 CellList DGGS) 
 | <<Function: geof:transform, transform>> | 1x ogc:geomLiteral, 1x http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | Geometry | ogc:geomLiteral | Geometry 
-| <<Function: geof:union, union>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | Polygon (not DGGS),
+| <<Function: geof:union, union>> | 2x ogc:geomLiteral | 2x Geometry | ogc:geomLiteral | (Multi)Point, (Multi)LineString, (Multi)Polygon (not DGGS),
 
 CellList (DGGS) 
 5+| **Serialization Functions**
@@ -127,7 +135,6 @@ CellList (DGGS)
 | <<Function: geof:asWKT, asWKT>> | 1x ogc:geomLiteral | Geometry | geo:wktLiteral | 
 5+| **Extent Functions**
 | *Function* | *Input Datatypes* | *Input Subtypes* | *Output Datatype* | *Output Subtype* 
-| <<Function: geof:getSRID, getSRID>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#anyURI[xsd:anyURI] | 
 | <<Function: geof:maxX, maxX>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:maxY, maxY>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 
 | <<Function: geof:maxZ, maxZ>> | 1x ogc:geomLiteral | Geometry | http://www.w3.org/2001/XMLSchema#double[xsd:double] | 

@@ -1066,7 +1066,7 @@ The function http://www.opengis.net/def/function/geosparql/intersection[`geof:in
 geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values.
+The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: currently it supports 2.5D and geometric functions ignore Z values in calculations.
 
 ==== Function: geof:isEmpty
 
@@ -1082,7 +1082,7 @@ The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty
 geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMeasured`] returns true if `geom` has m coordinate values.
+The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMeasured`] returns true if `geom` has m coordinate values, as used e.g. in linear referencing. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: at the moment it does not support linear referencing and M values are ignored.
 
 ==== Function: geof:isSimple
 
@@ -1166,6 +1166,8 @@ geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
 
 The function http://www.opengis.net/def/function/geosparql/numGeometries[`geof:numGeometries`] returns the number of geometries of `geom`.
 
+NOTE: This function returns 1 except in cases when it receives a collection type, such as an http://www.opengis.net/ont/sf#MultiPoint[`sf:MultiPoint`], a http://www.opengis.net/ont/sf#MultiLineString[`sf:MultiLineString`], a http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`], or a http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`]. The function does not apply to http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] instances, as members of http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] instances are not ordered.
+
 ==== Function: geof:perimeter
 
 ```
@@ -1233,6 +1235,9 @@ This function http://www.opengis.net/def/function/geosparql/union[`geof:union`] 
 
 === Spatial Aggregate Functions
 This clause defines SPARQL functions for performing spatial aggregations of data.
+These are https://www.w3.org/TR/sparql11-query/#aggregates[SPARQL aggregates] that are computed over a set of geometries, namely the solutions returned by one query variable.
+They can be used in a SELECT expression or HAVING clause, similar to the standard SPARQL aggregates COUNT, SUM, MIN, MAX, AVG, GROUP_CONCAT, and SAMPLE.
+If a query uses GROUP BY then all other SELECT expressions (outside of the GROUP BY variables) must use an aggregate.
 
 [#req_geometry_extension_sa_functions]
 |===
@@ -1260,12 +1265,16 @@ geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingBox[`geof:aggBoundingBox`] calculates a minimum bounding box - rectangle - of the set of given geometries.
 
+NOTE: This function is similar in name to <<Function: geof:envelope, geof:envelope>> used to calculate the bounding box of just one geometry.
+
 ==== Function: geof:aggBoundingCircle
 ```
 geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingCircle[`geof:aggBoundingCircle`] calculates a minimum bounding circle of the set of given geometries.
+
+NOTE: This function is similar in name to <<Function: geof:boundingCircle, geof:boundingCircle>> used to calculate the bounding circle of just one geometry.
 
 ==== Function: geof:aggCentroid
 
@@ -1275,6 +1284,8 @@ geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:aggCentroid`] calculates the centroid of the set of given geometries.
 
+NOTE: This function is similar in name to <<Function: geof:centroid, geof:centroid>> used to calculate the centroid of just one geometry.
+
 ==== Function: geof:aggConcaveHull
 
 ```
@@ -1282,6 +1293,8 @@ geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geom
 ```
 
 The function http://www.opengis.net/def/function/geosparql/aggConcaveHull[`geof:aggConcaveHull`] calculates the concave hull of the set of given geometries.
+
+NOTE: This function is similar in name to <<Function: geof:concaveHull, geof:concaveHull>> used to calculate the concave hull of just one geometry.
 
 ==== Function: geof:aggConvexHull
 
