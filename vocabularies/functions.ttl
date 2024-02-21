@@ -1,6 +1,8 @@
 PREFIX cs: <http://www.opengis.net/def/function/geosparql>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX geofp: <http://www.opengis.net/def/function/parameter/geosparql/>
+PREFIX geofo: <http://www.opengis.net/def/function/output/geosparql/>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX policy: <http://www.opengis.net/def/metamodel/ogc-na/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -128,20 +130,20 @@ geof:centroid
     dcterms:date "2021-02-25"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:centroid_param1 ) ;
-    fno:returns (geof:centroid_output ) ;
+    fno:expects (geofp:centroid_param1 ) ;
+    fno:returns (geofo:centroid_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A spatial aggregate function that calculates a centroid of a set of geometries."@en ;
     skos:prefLabel "centroid"@en ;
 .
 
-geof:centroid_param1 a fno:Parameter ;
+geofp:centroid_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:centroid_output a fno:Output ;
+geofo:centroid_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
@@ -310,12 +312,12 @@ geof:concaveHull
     skos:prefLabel "concave hull"@en ;
 .
 
-geof:concaveHull_param1 a fno:Parameter ;
+geofp:concaveHull_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:concaveHull_output a fno:Output ;
+geofo:concaveHull_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
@@ -324,20 +326,20 @@ geof:metricLength
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:metricLength_param1 ) ;
-    fno:returns (geof:metricLength_output ) ;
+    fno:expects (geofp:metricLength_param1 ) ;
+    fno:returns (geofo:metricLength_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Returns the length of a geometry in meters."@en ;
     skos:prefLabel "metric length"@en ;
 .
 
-geof:metricLength_param1 a fno:Parameter ;
+geofp:metricLength_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricLength_output a fno:Output ;
+geofo:metricLength_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -346,52 +348,52 @@ geof:length
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:length_param1 geof:length_param2) ;
-    fno:returns (geof:length_output ) ;
+    fno:expects (geofp:length_param1 geofp:length_param2) ;
+    fno:returns (geofo:length_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Returns the length of a geometry in meters."@en ;
     skos:prefLabel "length"@en ;
 .
 
-geof:length_param1 a fno:Parameter ;
+geofp:length_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:length_param1 a fno:Parameter ;
+geofp:length_param1 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:length_output a fno:Output ;
+geofo:length_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
-geof:metricDistance
+geofp:metricDistance
     a sd:Function, fno:Function , skos:Concept ;
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:metricDistance_param1 geof:metricDistance_param2 ) ;
-    fno:returns (geof:metricDistance_output ) ;
+    fno:expects (geofp:metricDistance_param1 geofp:metricDistance_param2 ) ;
+    fno:returns (geofo:metricDistance_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the distance in meters between the two closest points of the input geometries."@en ;
     skos:prefLabel "metric distance"@en ;
 .
 
-geof:metricDistance_param1 a fno:Parameter ;
+geofp:metricDistance_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricDistance_param2 a fno:Parameter ;
+geofp:metricDistance_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricDistance_output a fno:Output ;
+geofo:metricDistance_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -399,8 +401,8 @@ geof:transform
     a sd:Function, fno:Function , skos:Concept ;
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
-    fno:expects (geof:transform_param1 geof:transform_param2 ) ;
-    fno:returns (geof:transform_output ) ;
+    fno:expects (geofp:transform_param1 geofp:transform_param2 ) ;
+    fno:returns (geofo:transform_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -409,17 +411,17 @@ geof:transform
 .
 
 
-geof:transform_param1 a fno:Parameter ;
+geofp:transform_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:transform_param2 a fno:Parameter ;
+geofp:transform_param2 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "srsIRI"@en .
 
-geof:transform_output a fno:Output ;
+geofo:transform_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
@@ -428,25 +430,25 @@ geof:asDGGS
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:asDGGS_param1 geof:asDGGS_param2 ) ;
-    fno:returns (geof:asDGGS_output ) ;
+    fno:expects (geofp:asDGGS_param1 geofp:asDGGS_param2 ) ;
+    fno:returns (geofo:asDGGS_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter."@en ;
     skos:prefLabel "asDGGS"@en ;
 .
 
-geof:asDGGS_param1 a fno:Parameter ;
+geofp:asDGGS_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:asDGGS_param2 a fno:Parameter ;
+geofp:asDGGS_param2 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "specificDggsDatatype"@en .
 
-geof:asDGGS_output a fno:Output ;
+geofo:asDGGS_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:dggsLiteral  .
 
@@ -455,25 +457,25 @@ geof:asGML
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:asGML_param1 geof:asGML_param2 ) ;
-    fno:returns (geof:asGML_output ) ;
+    fno:expects (geofp:asGML_param1 geofp:asGML_param2 ) ;
+    fno:returns (geofo:asGML_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system."@en ;
     skos:prefLabel "asGML"@en ;
 .
 
-geof:asGML_param1 a fno:Parameter ;
+geofp:asGML_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:asGML_param2 a fno:Parameter ;
+geofp:asGML_param2 a fno:Parameter ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "gmlProfile"@en .
 
-geof:asGML_output a fno:Output ;
+geofo:asGML_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:gmlLiteral  .
 
@@ -484,8 +486,8 @@ geof:asGeoJSON
     dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
     dcterms:date "2021-05-20"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
-    fno:expects (geof:asGeoJSON_param1 ) ;
-    fno:returns (geof:asGeoJSON_output ) ;
+    fno:expects (geofp:asGeoJSON_param1 ) ;
+    fno:returns (geofo:asGeoJSON_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -493,12 +495,12 @@ geof:asGeoJSON
     skos:prefLabel "asGeoJSON"@en ;
 .
 
-geof:asGeoJSON_param1 a fno:Parameter ;
+geofp:asGeoJSON_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:asGeoJSON_output a fno:Output ;
+geofo:asGeoJSON_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:geoJSONLiteral  .
 
@@ -507,20 +509,20 @@ geof:asKML
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:asKML_param1 ) ;
-    fno:returns (geof:asKML_output ) ;
+    fno:expects (geofp:asKML_param1 ) ;
+    fno:returns (geofo:asKML_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal."@en ;
     skos:prefLabel "asKML"@en ;
 .
 
-geof:asKML_param1 a fno:Parameter ;
+geofp:asKML_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:asKML_output a fno:Output ;
+geofo:asKML_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:kmlLiteral  .
 
@@ -529,20 +531,20 @@ geof:asWKT
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:asWKT_param1 ) ;
-    fno:returns (geof:asWKT_output ) ;
+    fno:expects (geofp:asWKT_param1 ) ;
+    fno:returns (geofo:asWKT_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible."@en ;
     skos:prefLabel "asWKT"@en ;
 .
 
-geof:asWKT_param1 a fno:Parameter ;
+geofp:asWKT_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:asWKT_output a fno:Output ;
+geofo:asWKT_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral  .
 
@@ -551,25 +553,25 @@ geof:geometryN
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:geometryN_param1 geof:geometryN_param2 ) ;
-    fno:returns (geof:geometryN_output ) ;
+    fno:expects (geofp:geometryN_param1 geofp:geometryN_param2 ) ;
+    fno:returns (geofo:geometryN_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection."@en ;
     skos:prefLabel "geometryN"@en ;
 .
 
-geof:geometryN_param1 a fno:Parameter ;
+geofp:geometryN_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:geometryN_param2 a fno:Parameter ;
+geofp:geometryN_param2 a fno:Parameter ;
     fno:type xsd:int ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geomindex"@en .
 
-geof:geometryN_output a fno:Output ;
+geofo:geometryN_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
@@ -578,8 +580,8 @@ geof:metricBuffer
     skos:inScheme cs: ;
     dcterms:date "2022-04-20"^^xsd:date ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
-    fno:expects (geof:metricBuffer_param1 geof:metricBuffer_param2 ) ;
-    fno:returns (geof:metricBuffer_output ) ;
+    fno:expects (geofp:metricBuffer_param1 geofp:metricBuffer_param2 ) ;
+    fno:returns (geofo:metricBuffer_output ) ;
     policy:status status:valid ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
@@ -587,17 +589,17 @@ geof:metricBuffer
     skos:prefLabel "metric buffer"@en ;
 .
 
-geof:metricBuffer_param1 a fno:Parameter ;
+geofp:metricBuffer_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricBuffer_param2 a fno:Parameter ;
+geofp:metricBuffer_param2 a fno:Parameter ;
     fno:type xsd:double ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "radius"@en .
 
-geof:metricBuffer_output a fno:Output ;
+geofo:metricBuffer_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
 
@@ -606,20 +608,20 @@ geof:numGeometries
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:numGeometries_param1 ) ;
-    fno:returns (geof:numGeometries_output ) ;
+    fno:expects (geofp:numGeometries_param1 ) ;
+    fno:returns (geofo:numGeometries_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection."@en ;
     skos:prefLabel "numGeometries"@en ;
 .
 
-geof:numGeometries_param1 a fno:Parameter ;
+geofp:numGeometries_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:numGeometries_output a fno:Output ;
+geofo:numGeometries_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:integer  .
 
@@ -630,20 +632,20 @@ geof:metricPerimeter
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:metricPerimeter_param1 ) ;
-    fno:returns (geof:metricPerimeter_output ) ;
+    fno:expects (geofp:metricPerimeter_param1 ) ;
+    fno:returns (geofo:metricPerimeter_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Returns the perimeter of a geometry in meters."@en ;
     skos:prefLabel "metric perimeter"@en ;
 .
 
-geof:metricPerimeter_param1 a fno:Parameter ;
+geofp:metricPerimeter_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricPerimeter_output a fno:Output ;
+geofo:metricPerimeter_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
     
@@ -653,25 +655,25 @@ geof:metricPerimeter_output a fno:Output ;
     skos:inScheme cs: ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     policy:status status:valid ;
-    fno:expects (geof:perimeter_param1 geof:perimeter_param2) ;
-    fno:returns (geof:perimeter_output ) ;
+    fno:expects (geofp:perimeter_param1 geofp:perimeter_param2) ;
+    fno:returns (geofo:perimeter_output ) ;
     rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
     skos:definition "Returns the perimeter of a geometry in meters."@en ;
     skos:prefLabel "perimeter"@en ;
 .
 
-geof:perimeter_param1 a fno:Parameter ;
+geofp:perimeter_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:perimeter_param2 a fno:Parameter ;
+geofp:perimeter_param2 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "unit"@en .
 
-geof:perimeter_output a fno:Output ;
+geofo:perimeter_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
  
@@ -689,12 +691,12 @@ geof:metricArea
     skos:prefLabel "metric area"@en ;
 .
 
-geof:metricArea_param1 a fno:Parameter ;
+geofp:metricArea_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:metricArea_output a fno:Output ;
+geofo:metricArea_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:integer  .
 
@@ -712,17 +714,17 @@ geof:area
     skos:prefLabel "area"@en ;
 .
 
-geof:area_param1 a fno:Parameter ;
+geofp:area_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:area_param2 a fno:Parameter ;
+geofp:area_param2 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
-geof:area_output a fno:Output ;
+geofo:area_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:integer  .
 
@@ -739,12 +741,12 @@ geof:boundary
     skos:prefLabel "boundary"@en ;
 .
 
-geof:boundary_param1 a fno:Parameter ;
+geofp:boundary_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:boundary_output a fno:Output ;
+geofo:boundary_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
@@ -760,12 +762,12 @@ geof:boundingCircle
     skos:prefLabel "bounding circle"@en ;
 .
 
-geof:boundingCircle_param1 a fno:Parameter ;
+geofp:boundingCircle_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:boundingCircle_output a fno:Output ;
+geofo:boundingCircle_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
 
@@ -782,22 +784,22 @@ geof:buffer
     skos:prefLabel "buffer"@en ;
 .
 
-geof:buffer_param1 a fno:Parameter ;
+geofp:buffer_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:buffer_param2 a fno:Parameter ;
+geofp:buffer_param2 a fno:Parameter ;
     fno:type xsd:double ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "radius"@en .
 
-geof:buffer_param3 a fno:Parameter ;
+geofp:buffer_param3 a fno:Parameter ;
     fno:type xsd:anyURI ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
-geof:buffer_output a fno:Output ;
+geofo:buffer_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
 
@@ -814,12 +816,12 @@ geof:convexHull
     skos:prefLabel "convex hull"@en ;
 .
 
-geof:convexHull_param1 a fno:Parameter ;
+geofp:convexHull_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:convexHull_output a fno:Output ;
+geofo:convexHull_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
 
@@ -837,17 +839,17 @@ geof:difference
     skos:prefLabel "difference"@en ;
 .
 
-geof:difference_param1 a fno:Parameter ;
+geofp:difference_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:difference_param2 a fno:Parameter ;
+geofp:difference_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:difference_output a fno:Output ;
+geofo:difference_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
 
@@ -864,12 +866,12 @@ geof:dimension
     skos:prefLabel "area"@en ;
 .
 
-geof:dimension_param1 a fno:Parameter ;
+geofp:dimension_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:dimension_output a fno:Output ;
+geofo:dimension_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:integer  .
 
@@ -888,22 +890,22 @@ geof:distance
     skos:prefLabel "distance"@en ;
 .
 
-geof:distance_param1 a fno:Parameter ;
+geofp:distance_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom"@en .
 
-geof:distance_param2 a fno:Parameter ;
+geofp:distance_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:distance_param3 a fno:Parameter ;
+geofp:distance_param3 a fno:Parameter ;
     fno:type xsd:anyURI  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "units"@en .
 
-geof:distance_output a fno:Output ;
+geofo:distance_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -922,17 +924,17 @@ DE-9IM: T*TFF*FF*"""@en ;
     skos:prefLabel "contains"@en ;
 .
 
-geof:ehContains_param1 a fno:Parameter ;
+geofp:ehContains_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehContains_param2 a fno:Parameter ;
+geofp:ehContains_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehContains_output a fno:Output ;
+geofo:ehContains_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -951,17 +953,17 @@ DE-9IM: TFF*TFT**"""@en ;
     skos:prefLabel "covered by"@en ;
 .
 
-geof:ehCoveredBy_param1 a fno:Parameter ;
+geofp:ehCoveredBy_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehCoveredBy_param2 a fno:Parameter ;
+geofp:ehCoveredBy_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehCoveredBy_output a fno:Output ;
+geofo:ehCoveredBy_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -980,17 +982,17 @@ DE-9IM: T*TFT*FF*"""@en ;
     skos:prefLabel "covers"@en ;
 .
 
-geof:ehCovers_param1 a fno:Parameter ;
+geofp:ehCovers_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehCovers_param2 a fno:Parameter ;
+geofp:ehCovers_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehCovers_output a fno:Output ;
+geofo:ehCovers_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1009,17 +1011,17 @@ DE-9IM: FF*FF****"""@en ;
     skos:prefLabel "disjoint"@en ;
 .
 
-geof:ehDisjoint_param1 a fno:Parameter ;
+geofp:ehDisjoint_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehDisjoint_param2 a fno:Parameter ;
+geofp:ehDisjoint_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehDisjoint_output a fno:Output ;
+geofo:ehDisjoint_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1038,17 +1040,17 @@ DE-9IM: TFFFTFFFT"""@en ;
     skos:prefLabel "equals"@en ;
 .
 
-geof:ehEquals_param1 a fno:Parameter ;
+geofp:ehEquals_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehEquals_param2 a fno:Parameter ;
+geofp:ehEquals_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehEquals_output a fno:Output ;
+geofo:ehEquals_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1067,17 +1069,17 @@ DE-9IM: TFF*FFT**"""@en ;
     skos:prefLabel "inside"@en ;
 .
 
-geof:ehInside_param1 a fno:Parameter ;
+geofp:ehInside_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehInside_param2 a fno:Parameter ;
+geofp:ehInside_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehInside_output a fno:Output ;
+geofo:ehInside_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1096,17 +1098,17 @@ DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
     skos:prefLabel "meet"@en ;
 .
 
-geof:ehMeet_param1 a fno:Parameter ;
+geofp:ehMeet_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehMeet_param2 a fno:Parameter ;
+geofp:ehMeet_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehMeet_output a fno:Output ;
+geofo:ehMeet_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1125,17 +1127,17 @@ DE-9IM: T*T***T**"""@en ;
     skos:prefLabel "overlap"@en ;
 .
 
-geof:ehOverlap_param1 a fno:Parameter ;
+geofp:ehOverlap_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:ehOverlap_param2 a fno:Parameter ;
+geofp:ehOverlap_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:ehOverlap_output a fno:Output ;
+geofo:ehOverlap_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1152,12 +1154,12 @@ geof:envelope
     skos:prefLabel "envelope"@en ;
 .
 
-geof:envelope_param1 a fno:Parameter ;
+geofp:envelope_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:envelope_output a fno:Output ;
+geofo:envelope_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
@@ -1174,12 +1176,12 @@ geof:getSRID
     skos:prefLabel "getSRID"@en ;
 .
 
-geof:getSRID_param1 a fno:Parameter ;
+geofp:getSRID_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:getSRID_output a fno:Output ;
+geofo:getSRID_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:anyURI  .
 
@@ -1196,17 +1198,17 @@ geof:intersection
     skos:prefLabel "intersection"@en ;
 .
 
-geof:intersection_param1 a fno:Parameter ;
+geofp:intersection_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:intersection_param2 a fno:Parameter ;
+geofp:intersection_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:intersection_output a fno:Output ;
+geofo:intersection_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
@@ -1223,12 +1225,12 @@ geof:isEmpty
     skos:prefLabel "isEmpty"@en ;
 .
 
-geof:isEmpty_param1 a fno:Parameter ;
+geofp:isEmpty_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:isEmpty_output a fno:Output ;
+geofo:isEmpty_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1245,12 +1247,12 @@ geof:isSimple
     skos:prefLabel "isSimple"@en ;
 .
 
-geof:isSimple_param1 a fno:Parameter ;
+geofp:isSimple_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:isSimple_output a fno:Output ;
+geofo:isSimple_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1269,12 +1271,12 @@ geof:maxX
     skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:maxX_param1 a fno:Parameter ;
+geofp:maxX_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:maxX_output a fno:Output ;
+geofo:maxX_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1292,12 +1294,12 @@ geof:maxY
     skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:maxY_param1 a fno:Parameter ;
+geofp:maxY_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:maxY_output a fno:Output ;
+geofo:maxY_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1315,12 +1317,12 @@ geof:maxZ
     skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:maxZ_param1 a fno:Parameter ;
+geofp:maxZ_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:maxZ_output a fno:Output ;
+geofo:maxZ_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1338,12 +1340,12 @@ geof:minX
     skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:minX_param1 a fno:Parameter ;
+geofp:minX_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:minX_output a fno:Output ;
+geofo:minX_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1361,12 +1363,12 @@ geof:minY
     skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:minY_param1 a fno:Parameter ;
+geofp:minY_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:minY_output a fno:Output ;
+geofo:minY_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1384,12 +1386,12 @@ geof:minZ
     skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
 .
 
-geof:minZ_param1 a fno:Parameter ;
+geofp:minZ_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:minZ_output a fno:Output ;
+geofo:minZ_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
 
@@ -1639,22 +1641,22 @@ geof:relate
     skos:prefLabel "relate"@en ;
 .
 
-geof:relate_param1 a fno:Parameter ;
+geofp:relate_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:relate_param2 a fno:Parameter ;
+geofp:relate_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:relate_param3 a fno:Parameter ;
+geofp:relate_param3 a fno:Parameter ;
     fno:type xsd:string ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "pattern-matrix"@en .
 
-geof:relate_output a fno:Output ;
+geofo:relate_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1674,17 +1676,17 @@ DE-9IM: T*****FF*"""@en ;
     skos:prefLabel "contains"@en ;
 .
 
-geof:sfContains_param1 a fno:Parameter ;
+geofp:sfContains_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfContains_param2 a fno:Parameter ;
+geofp:sfContains_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfContains_output a fno:Output ;
+geofo:sfContains_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1703,17 +1705,17 @@ DE-9IM: T*T***T**"""@en ;
     skos:prefLabel "crosses"@en ;
 .
 
-geof:sfCrosses_param1 a fno:Parameter ;
+geofp:sfCrosses_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfCrosses_param2 a fno:Parameter ;
+geofp:sfCrosses_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfCrosses_output a fno:Output ;
+geofo:sfCrosses_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1732,17 +1734,17 @@ DE-9IM: FF*FF****"""@en ;
     skos:prefLabel "disjoint"@en ;
 .
 
-geof:sfDisjoint_param1 a fno:Parameter ;
+geofp:sfDisjoint_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfDisjoint_param2 a fno:Parameter ;
+geofp:sfDisjoint_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfDisjoint_output a fno:Output ;
+geofo:sfDisjoint_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1761,17 +1763,17 @@ DE-9IM: TFFFTFFFT"""@en ;
     skos:prefLabel "equals"@en ;
 .
 
-geof:sfEquals_param1 a fno:Parameter ;
+geofp:sfEquals_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfEquals_param2 a fno:Parameter ;
+geofp:sfEquals_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfEquals_output a fno:Output ;
+geofo:sfEquals_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1790,17 +1792,17 @@ DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T**** """@en ;
     skos:prefLabel "intersects"@en ;
 .
 
-geof:sfIntersects_param1 a fno:Parameter ;
+geofp:sfIntersects_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfIntersects_param2 a fno:Parameter ;
+geofp:sfIntersects_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfIntersects_output a fno:Output ;
+geofo:sfIntersects_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1819,17 +1821,17 @@ DE-9IM: T*T***T** """@en ;
     skos:prefLabel "overlaps"@en ;
 .
 
-geof:sfOverlaps_param1 a fno:Parameter ;
+geofp:sfOverlaps_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfOverlaps_param2 a fno:Parameter ;
+geofp:sfOverlaps_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfOverlaps_output a fno:Output ;
+geofo:sfOverlaps_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1849,17 +1851,17 @@ DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
     skos:prefLabel "touches"@en ;
 .
 
-geof:sfTouches_param1 a fno:Parameter ;
+geofp:sfTouches_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfTouches_param2 a fno:Parameter ;
+geofp:sfTouches_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfTouches_output a fno:Output ;
+geofo:sfTouches_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1879,17 +1881,17 @@ DE-9IM: T*F**F***"""@en ;
     skos:prefLabel "within"@en ;
 .
 
-geof:sfWithin_param1 a fno:Parameter ;
+geofp:sfWithin_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:sfWithin_param2 a fno:Parameter ;
+geofp:sfWithin_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:sfWithin_output a fno:Output ;
+geofo:sfWithin_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
@@ -1906,17 +1908,17 @@ geof:symDifference
     skos:prefLabel "symmetric difference"@en ;
 .
 
-geof:symDifference_param1 a fno:Parameter ;
+geofp:symDifference_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:symDifference_param2 a fno:Parameter ;
+geofp:symDifference_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:symDifference_output a fno:Output ;
+geofo:symDifference_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
@@ -1934,17 +1936,17 @@ geof:union
     skos:prefLabel "union"@en ;
 .
 
-geof:union_param1 a fno:Parameter ;
+geofp:union_param1 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom1"@en .
 
-geof:union_param2 a fno:Parameter ;
+geofp:union_param2 a fno:Parameter ;
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geom2"@en .
 
-geof:union_output a fno:Output ;
+geofo:union_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
 
