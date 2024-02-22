@@ -1012,11 +1012,11 @@ These notes apply to all of the following functions in this section.
 
 An invocation of any of the following functions with invalid arguments produces an error. An invalid argument includes any of the following:
 
-* An argument of an unexpected type
-* An invalid geometry literal value
-* A non-fitting geometry type for the given function
-* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations
-* An invalid unit IRI
+* An argument of an unexpected type;
+* An invalid geometry literal value;
+* A non-fitting geometry type for the given function;
+* A geometry literal from a spatial reference system that is incompatible with the spatial reference system used for calculations; or
+* An invalid unit IRI.
 
 A more detailed description of expected inputs and expected outputs of the given functions is shown in Annex B.
 
@@ -1054,7 +1054,7 @@ The function http://www.opengis.net/def/function/geosparql/metricArea[`geof:metr
 
 [%unnumbered]
 ```
-geof:area (geom: ogc:geomLiteral, units: xsd:anyURI): rdf:Resource
+geof:area (geom: ogc:geomLiteral, units: rdfs:Resource): xsd:double
 ```
 
 The function http://www.opengis.net/def/function/geosparql/area[`geof:area`] returns the area of `geom`. Must return zero for all geometry types other than Polygon. This function is similar to <<Function: geof:metricArea, `geof:metricArea`>>, which does not need a specification of measurement unit.
@@ -1234,7 +1234,7 @@ The function http://www.opengis.net/def/function/geosparql/intersection[`geof:in
 geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values.
+The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: currently it supports 2.5D and geometric functions ignore Z values in calculations.
 
 ==== Function: geof:isEmpty
 
@@ -1252,7 +1252,7 @@ The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty
 geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
 ```
 
-The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMeasured`] returns true if `geom` has m coordinate values.
+The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMeasured`] returns true if `geom` has m coordinate values, as used e.g. in linear referencing. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: at the moment it does not support linear referencing and M values are ignored.
 
 ==== Function: geof:isSimple
 
@@ -1276,7 +1276,7 @@ The function http://www.opengis.net/def/function/geosparql/metricLength[`geof:me
 
 [%unnumbered]
 ```
-geof:length (geom: ogc:geomLiteral, units: xsd:anyURI): xsd:double
+geof:length (geom: ogc:geomLiteral, units: rdfs:Resource): xsd:double
 ```
 
 The function http://www.opengis.net/def/function/geosparql/length[`geof:length`] returns the length of `geom`. The longest length from any one dimension is returned. This function is similar to <<Function: geof:metricLength, `geof:metricLength`>>, which does not need a specification of measurement unit.
@@ -1293,7 +1293,7 @@ See the <<Recommendation for specification of units of measurement, Recommendati
 geof:maxX (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxY
 
@@ -1302,7 +1302,7 @@ The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] ret
 geof:maxY (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxZ
 
@@ -1311,7 +1311,7 @@ The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] ret
 geof:maxZ (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minX
 
@@ -1320,7 +1320,7 @@ The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] ret
 geof:minX (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minY
 
@@ -1329,7 +1329,7 @@ The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] ret
 geof:minY (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minZ
 
@@ -1338,7 +1338,7 @@ The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] ret
 geof:minZ (geom: ogc:geomLiteral): xsd:double
 ```
 
-The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom`.
+The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:numGeometries
 
@@ -1349,11 +1349,16 @@ geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
 
 The function http://www.opengis.net/def/function/geosparql/numGeometries[`geof:numGeometries`] returns the number of geometries of `geom`.
 
+[NOTE,keep-separate=true]
+====
+This function returns 1 except in cases when it receives a collection type, such as an http://www.opengis.net/ont/sf#MultiPoint[`sf:MultiPoint`], a http://www.opengis.net/ont/sf#MultiLineString[`sf:MultiLineString`], a http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`], or a http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`]. The function does not apply to http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] instances, as members of http://www.opengis.net/ont/geosparql#GeometryCollection[`geo:GeometryCollection`] instances are not ordered.
+====
+
 ==== Function: geof:perimeter
 
 [%unnumbered]
 ```
-geof:perimeter (geom: ogc:geomLiteral, unit: xsd:anyURI): xsd:double
+geof:perimeter (geom: ogc:geomLiteral, unit: rdfs:Resource): xsd:double
 ```
 
 The function http://www.opengis.net/def/function/geosparql/perimeter[`geof:perimeter`] returns the perimeter of  `geom` in the unit specified by the unit parameter for areal geometries. For non-areal geometries the result is equivalent to geof:hasLength. 
@@ -1453,6 +1458,11 @@ geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingBox[`geof:aggBoundingBox`] calculates a minimum bounding box - rectangle - of the set of given geometries.
 
+[NOTE,keep-separate=true]
+====
+This function is similar in nature to <<Function: geof:envelope, geof:envelope>> used to calculate the bounding box of just one geometry.
+====
+
 ==== Function: geof:aggBoundingCircle
 [%unnumbered]
 ```
@@ -1460,6 +1470,11 @@ geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
 ```
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingCircle[`geof:aggBoundingCircle`] calculates a minimum bounding circle of the set of given geometries.
+
+[NOTE,keep-separate=true]
+====
+This function is similar in name to <<Function: geof:boundingCircle, geof:boundingCircle>> used to calculate the bounding circle of just one geometry.
+====
 
 ==== Function: geof:aggCentroid
 [%unnumbered]
@@ -1469,6 +1484,11 @@ geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:aggCentroid`] calculates the centroid of the set of given geometries.
 
+[NOTE,keep-separate=true]
+====
+This function is similar in name to <<Function: geof:centroid, geof:centroid>> used to calculate the centroid of just one geometry.
+====
+
 ==== Function: geof:aggConcaveHull
 [%unnumbered]
 ```
@@ -1476,6 +1496,11 @@ geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geom
 ```
 
 The function http://www.opengis.net/def/function/geosparql/aggConcaveHull[`geof:aggConcaveHull`] calculates the concave hull of the set of given geometries.
+
+[NOTE,keep-separate=true]
+====
+This function is similar in name to <<Function: geof:concaveHull, geof:concaveHull>> used to calculate the concave hull of just one geometry.
+====
 
 ==== Function: geof:aggConvexHull
 
