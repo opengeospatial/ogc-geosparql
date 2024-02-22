@@ -4503,7 +4503,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/is3D"><code>geof:is3D</code></a> Returns true if <code>geom</code> has z coordinate values.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/is3D"><code>geof:is3D</code></a> Returns true if <code>geom</code> has z coordinate values. See <a href="#_GeoSPARQL_and_Simple_Features_(SFA-CA)">[_GeoSPARQL_and_Simple_Features_(SFA-CA)]</a> for a description of GeoSPARQL&#8217;s limitations: currently it supports 2.5D and geometric functions ignore Z values in calculations.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4525,7 +4525,7 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 </div>
 </div>
 <div class="paragraph">
-<p>The function <a href="http://www.opengis.net/def/function/geosparql/isMeasured"><code>geof:isMeasured</code></a> returns true if <code>geom</code> has m coordinate values.</p>
+<p>The function <a href="http://www.opengis.net/def/function/geosparql/isMeasured"><code>geof:isMeasured</code></a> returns true if <code>geom</code> has m coordinate values, as used e.g. in linear referencing. See <a href="#_GeoSPARQL_and_Simple_Features_(SFA-CA)">[_GeoSPARQL_and_Simple_Features_(SFA-CA)]</a> for a description of GeoSPARQL&#8217;s limitations: at the moment it does not support linear referencing and M values are ignored.</p>
 </div>
 </div>
 <div class="sect3">
@@ -4649,6 +4649,18 @@ See the <a href="#Recommendation for specification of units of measurement">Reco
 <div class="paragraph">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/numGeometries"><code>geof:numGeometries</code></a> returns the number of geometries of <code>geom</code>.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This function returns 1 except in cases when it receives a collection type, such as an <a href="http://www.opengis.net/ont/sf#MultiPoint"><code>sf:MultiPoint</code></a>, a <a href="http://www.opengis.net/ont/sf#MultiLineString"><code>sf:MultiLineString</code></a>, a <a href="http://www.opengis.net/ont/sf#MultiPolygon"><code>sf:MultiPolygon</code></a>, or a <a href="http://www.opengis.net/ont/sf#GeometryCollection"><code>sf:GeometryCollection</code></a>. The function does not apply to <a href="http://www.opengis.net/ont/geosparql#GeometryCollection"><code>geo:GeometryCollection</code></a> instances, as members of <a href="http://www.opengis.net/ont/geosparql#GeometryCollection"><code>geo:GeometryCollection</code></a> instances are not ordered.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_function_geofperimeter"><a class="anchor" href="#_function_geofperimeter"></a>8.9.34. Function: geof:perimeter</h4>
@@ -4760,7 +4772,10 @@ We recommend that implementers use the same literal type as a result of this fun
 <div class="sect2">
 <h3 id="_spatial_aggregate_functions"><a class="anchor" href="#_spatial_aggregate_functions"></a>8.10. Spatial Aggregate Functions</h3>
 <div class="paragraph">
-<p>This clause defines SPARQL functions for performing spatial aggregations of data.</p>
+<p>This clause defines SPARQL functions for performing spatial aggregations of data.
+These are <a href="https://www.w3.org/TR/sparql11-query/#aggregates">SPARQL aggregates</a> that are computed over a set of geometries, namely the solutions returned by one query variable.
+They can be used in a SELECT expression or HAVING clause, similar to the standard SPARQL aggregates COUNT, SUM, MIN, MAX, AVG, GROUP_CONCAT, and SAMPLE.
+If a query uses GROUP BY then all other SELECT expressions (outside of the GROUP BY variables) must use an aggregate.</p>
 </div>
 <table id="req_geometry_extension_sa_functions" class="tableblock frame-all grid-all stripes-odd stretch">
 <colgroup>
@@ -4805,6 +4820,18 @@ as a SPARQL extension functions.</p></td>
 <div class="paragraph">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggBoundingBox"><code>geof:aggBoundingBox</code></a> calculates a minimum bounding box - rectangle - of the set of given geometries.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This function is similar in name to <a href="#_function_geofenvelope">geof:envelope</a> used to calculate the bounding box of just one geometry.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_function_geofaggboundingcircle"><a class="anchor" href="#_function_geofaggboundingcircle"></a>8.10.2. Function: geof:aggBoundingCircle</h4>
@@ -4815,6 +4842,18 @@ as a SPARQL extension functions.</p></td>
 </div>
 <div class="paragraph">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggBoundingCircle"><code>geof:aggBoundingCircle</code></a> calculates a minimum bounding circle of the set of given geometries.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This function is similar in name to <a href="#_function_geofboundingcircle">geof:boundingCircle</a> used to calculate the bounding circle of just one geometry.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -4827,6 +4866,18 @@ as a SPARQL extension functions.</p></td>
 <div class="paragraph">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggCentroid"><code>geof:aggCentroid</code></a> calculates the centroid of the set of given geometries.</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This function is similar in name to <a href="#_function_geofcentroid">geof:centroid</a> used to calculate the centroid of just one geometry.
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_function_geofaggconcavehull"><a class="anchor" href="#_function_geofaggconcavehull"></a>8.10.4. Function: geof:aggConcaveHull</h4>
@@ -4837,6 +4888,18 @@ as a SPARQL extension functions.</p></td>
 </div>
 <div class="paragraph">
 <p>The function <a href="http://www.opengis.net/def/function/geosparql/aggConcaveHull"><code>geof:aggConcaveHull</code></a> calculates the concave hull of the set of given geometries.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+This function is similar in name to <a href="#_function_geofconcavehull">geof:concaveHull</a> used to calculate the concave hull of just one geometry.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
@@ -7602,14 +7665,14 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Output Subtype</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#geof:rcc8dcc">rcc8dcc</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#geof:rcc8dc">rcc8dc</a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x Polygon</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#geof:rcc8ecc">rcc8ecc</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#geof:rcc8ec">rcc8ec</a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x Polygon</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a></p></td>
@@ -7672,7 +7735,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1 or more ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">square Polygon (not DGGS),</p>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">rectangular Polygon (not DGGS),</p>
 <p class="tableblock">CellList (DGGS)</p></td>
 </tr>
 <tr>
@@ -7712,7 +7775,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1 or more ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Polygon (not DGGS),</p>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(Multi)Point, (Multi)LineString, (Multi)Polygon (not DGGS),</p>
 <p class="tableblock">CellList (DGGS)</p></td>
 </tr>
 <tr>
@@ -7748,14 +7811,44 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <p class="tableblock">OrderedCellList (DGGS)</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofboundingcircle">boundingCircle</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">LineString (not DGGS),</p>
+<p class="tableblock">OrderedCellList (DGGS)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofmetricbuffer">metricBuffer</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral, 1x <a href="http://www.w3.org/2001/XMLSchema#double">xsd:double</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">any</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(Multi)Polygon (not DGGS),</p>
+<p class="tableblock">CellList (DGGS)</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofbuffer">buffer</a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral,</p>
 <p class="tableblock">1x <a href="http://www.w3.org/2001/XMLSchema#double">xsd:double</a>,</p>
 <p class="tableblock">1x <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">any</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(Multi)Polygon (not DGGS),</p>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Polygon (not DGGS),</p>
 <p class="tableblock">CellList (DGGS)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofcentroid">centroid</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Point (not DGGS)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofconcavehull">concaveHull</a></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geometry</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">LineString (not DGGS)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofconvexhull">convexHull</a></p></td>
@@ -7837,7 +7930,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x Geometry</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Polygon (not DGGS),</p>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(Multi)Polygon (not DGGS),</p>
 <p class="tableblock">CellList (DGGS)</p></td>
 </tr>
 <tr>
@@ -7930,7 +8023,7 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x ogc:geomLiteral</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2x Geometry</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Polygon (not DGGS),</p>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(Multi)Point, (Multi)LineString, (Multi)Polygon (not DGGS),</p>
 <p class="tableblock">CellList (DGGS)</p></td>
 </tr>
 <tr>
@@ -7987,13 +8080,6 @@ as SPARQL extension functions, consistent with their corresponding DE-9IM inters
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Input Subtypes</strong></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Output Datatype</strong></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong>Output Subtype</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofgetsrid">getSRID</a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1x ogc:geomLiteral</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geometry</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="#_function_geofmaxx">maxX</a></p></td>
@@ -12456,7 +12542,7 @@ architecture. <a href="http://www.opengis.net/doc/is/sfa/1.2.1" class="bare">htt
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-02-10 20:51:03 UTC
+Last updated 2024-02-22 01:39:45 UTC
 </div>
 </div>
 </body>
