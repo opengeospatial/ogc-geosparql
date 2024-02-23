@@ -15,13 +15,15 @@ They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> prope
 The following example SPARQL query retrieves all Features within the Feature Collection with the IRI `ex:x` within a given SPARQL endpoint.
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 SELECT ?fcollection ?item ?rel ?val ?geom 
 WHERE {
   ex:x rdfs:member ?item .
   ?item rdfs:subClassOf* geo:Feature .
 }
-```
+----
 
 GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the http://www.w3.org/1999/02/22-rdf-syntax-ns#member[``rdf:member``] property. No inverse property is defined.
 
@@ -33,7 +35,9 @@ Some CQL-implementing systems, such as OGC API, have fixed notions of Feature Co
 An extension to the above can retrieve any Geometry serializations for the Features within Feature Collection `ex:x`:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 SELECT ?fcollection ?item ?rel ?val ?geom 
 WHERE {
   ex:x rdfs:member ?item .
@@ -43,7 +47,7 @@ WHERE {
     ?item geo:hasGeometry/geo:hasSerialization ?geom
   }
 }
-```
+----
 
 Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collections mappings are:
 
