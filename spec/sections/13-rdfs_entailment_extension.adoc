@@ -38,7 +38,9 @@ This section establishes the requirements for representing geometry data in RDF 
 The Simple Features specification presents a geometry class hierarchy. It is straightforward to represent this class hierarchy in RDFS and OWL by constructing IRIs for geometry classes using the following pattern: `+http://www.opengis.net/ont/sf#{geometry class}+` and by asserting appropriate http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] statements. The _Simple Features Vocabulary_ resource within GeoSPARQL 1.1 (sibling resource to this specification) does this. The following list gives the class hierarchy with each indented item being a subclass of the item in the line above. The class hierarchy starts with GeoSPARQL's `geo:Geometry` class of which http://www.opengis.net/ont/sf#Geometry[`sf:Geometry`] is a subclass:
 
 [%unnumbered]
-```
+=======
+[source,turtle]
+----
 geo:Geometry
     sf:Geometry
         sf:Curve
@@ -58,12 +60,14 @@ geo:Geometry
                 sf:Triangle
             sf:PolyhedralSurface
                 sf:TIN
-```
+----
 
 The following example RDF snippet below encodes the _Simple Features vocabulary_ Polygon class:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 sf:Polygon 
     a rdfs:Class, owl:Class ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
@@ -72,7 +76,7 @@ sf:Polygon
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or 
                     more interior boundaries"@en ;
 .
-```
+----
 
 [[req_rdfs_entailment_extension_wkt-geometry-types]]
 [requirement,identifier="/req/rdfs-entailment-extension/wkt-geometry-types"]
@@ -93,7 +97,9 @@ An RDF/OWL class hierarchy can be generated from the GML schema that implements 
 The example RDF snippet below encodes the Polygon class from GML 3.2.
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 gml:Polygon 
     a rdfs:Class, owl:Class ;
     skos:prefLabel "Polygon"@en ;
@@ -101,7 +107,7 @@ gml:Polygon
     skos:definition "A planar surface defined by 1 exterior boundary and 0 or
                     more interior boundaries."@en ;
 .
-```
+----
 [[req_rdfs_entailment_extension_gml-geometry-types]]
 [requirement,identifier="/req/rdfs-entailment-extension/gml-geometry-types"]
 .GML Geometry Types
