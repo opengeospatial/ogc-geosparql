@@ -176,7 +176,9 @@ and
 OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spatio-temporal Feature may be indicated like this:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 :flooded-area-x
     a geo:Feature ;
     geo:hasGeometry [
@@ -193,14 +195,16 @@ OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime
         ] ;        
     ] ;
 .    
-```
+----
 
 In the above example, `:flooded-area-x` is a spatio-temporal Feature that has both a GeoSPARQL spatial projection - a <<Class: geo:Geometry, `geo:Geometry`>> - and a temporal projection - a https://www.w3.org/TR/owl-time/ProperInterval[`time:ProperInterval`] which is a specialized form of https://www.w3.org/TR/owl-time/TemporalEntity[`time:TemporalEntity`].
 
 Another possible use of TIME with GeoSPARQL is to assign temporality to individual <<Class: geo:Geometry, `geo:Geometry`>> instances. This is allowed given https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`]'s open domain:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 :flooded-area-x
     a geo:Feature ;
     geo:hasGeometry [
@@ -209,7 +213,7 @@ Another possible use of TIME with GeoSPARQL is to assign temporality to individu
         time:hasTime [ ... ] ;      
     ] ;
 .
-```
+----
 
 In contrast to the first example, `:flooded-area-x` is inferred to be a spatio-temporal Feature but since it is the Geometry of `:flooded-area-x` that has a temporality, it is possible to describe other Geometries of `:flooded-area-x` with other temporalities.
 
@@ -273,7 +277,9 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
 `east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko` might be encoded in GeoSPARQL like this:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 :mt-kosciusko
     a geo:Feature ;
     geo:hasGeometry [
@@ -281,7 +287,7 @@ could be indicated as GeoSPARQL geometry literals if a literal datatype were cre
         geo:hasSerialization "east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko"^^ex:dcmiPoint ;        
     ] ;
 .
-```
+----
 
 
 === The Provenance Ontology (PROV)
@@ -304,9 +310,11 @@ From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with m
 * Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as having been derived from a Polygon like this:
 
 [%unnumbered]
-```turtle
+=======
+[source,turtle]
+----
 :bounding-box-y prov:wasDerivedFrom :polygon-x .
-```
+----
 
 === WikiData
 
