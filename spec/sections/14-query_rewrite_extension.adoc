@@ -14,7 +14,8 @@ requirement:: /req/query-rewrite-extension/rcc8-query-rewrite
 The following rule specified using the RIF Core Dialect <<RIFCORE>> and shown in _Presentation Syntax_ is used as a template to describe rules in the remainder of this clause. `ogc:relation` is used as a placeholder for the spatial relation IRIs defined in Clause 7, and `ogc:function` is used as a placeholder for the spatial functions defined in <<geometry_extension>>. `ogc:asGeomLiteral` is used to indicate one of the properties that link `geo:Geometry` instances to serialisations, such as http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] or http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`]. The variables `?so1` & `?so2` represent http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] instances (either http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances), `?g1` & `?g2` http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances only and `?g1Serial` & `?g2Serial` represent http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instance serializations, e.g. http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] etc. literals.
 
 [%unnumbered]
-```rif
+[source,rif]
+----
 Forall ?so1 ?so2 ?g1 ?g2 ?g1Serial ?g2Serial (
     ?so1[ogc:relation->?so2] :- Or (
         And (
@@ -47,7 +48,7 @@ Forall ?so1 ?so2 ?g1 ?g2 ?g1Serial ?g2Serial (
         ) 
     )
 )
-```
+----
 
 === Parameters
 
@@ -167,9 +168,10 @@ The applicability of GeoSPARQL rules in certain circumstances has intentionally 
 The first situation arises for triple patterns with unbound predicates. Consider the query pattern below:
 
 [%unnumbered]
-```
+[source,sparql]
+----
 { my:feature1 ?p my:feature2 }
-```
+----
 
 When using a query transformation strategy, this triple pattern could invoke none of the GeoSPARQL rules or all of the rules. Implementations are free to support either of these alternatives.
 

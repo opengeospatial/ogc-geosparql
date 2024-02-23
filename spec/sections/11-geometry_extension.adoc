@@ -588,9 +588,10 @@ geo:asGML
 ===== Function: geof:asGML
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] converts `geom` to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system. 
 
@@ -680,9 +681,10 @@ geo:asGeoJSON
 ===== Function: geof:asGeoJSON
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] converts `geom` to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal. 
 
@@ -780,9 +782,10 @@ geo:asKML
 ===== Function: geof:asKML
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] converts `geom` to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal. 
 
@@ -911,9 +914,10 @@ geo:asDGGS
 ===== Function: geof:asDGGS
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`] converts `geom` to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated by the IRI required to be present in the DGGS literal.
 
@@ -1044,18 +1048,20 @@ Several non-topological query functions use a unit of measure IRI. See the <<Rec
 ==== Function: geof:metricArea
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:metricArea (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/metricArea[`geof:metricArea`] returns the area of `geom` in square meters. Must return zero for all geometry types other than Polygon. This function is similar to <<Function: geof:area, `geof:area`>> but does not need a specification of measurement unit.
 
 ==== Function: geof:area
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:area (geom: ogc:geomLiteral, units: rdfs:Resource): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/area[`geof:area`] returns the area of `geom`. Must return zero for all geometry types other than Polygon. This function is similar to <<Function: geof:metricArea, `geof:metricArea`>>, which does not need a specification of measurement unit.
 
@@ -1067,39 +1073,43 @@ See the <<Recommendation for specification of units of measurement, Recommendati
 ==== Function: geof:boundary
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:boundary (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/boundary[`geof:boundary`] returns the closure of the boundary of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:boundingCircle
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:boundingCircle`] returns the minimum bounding circle around `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:metricBuffer
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:metricBuffer (geom: ogc:geomLiteral, 
                    radius: xsd:double): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/metricBuffer[`geof:metricBuffer`] returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in meters. Calculations are in the coordinate reference system of `geom`. This function is similar to <<Function: geof:buffer, `geof:buffer`>>, but does not need a specification of measurement unit.
 
 ==== Function: geof:buffer
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:buffer (geom: ogc:geomLiteral, 
              radius: xsd:double, 
              units: xsd:anyURI): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/buffer[`geof:buffer`] returns a geometric object that represents all Points whose distance from `geom` is less than or equal to the `radius` measured in `units`. Calculations are in the spatial reference system of `geom`. This function is similar to <<Function: geof:metricBuffer, `geof:metricBuffer`>>, which does not need a specification of measurement unit.
 
@@ -1111,65 +1121,72 @@ See the <<Recommendation for specification of units of measurement, Recommendati
 ==== Function: geof:centroid
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:centroid (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/centroid[`geof:centroid`] returns the mathematical centroid of `geom`. The centroid point does not have to be part of the surface it is derived from.
 
 ==== Function: geof:convexHull
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:convexHull (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:convexHull`] returns a geometric object that represents all Points in the convex hull of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:concaveHull
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:concaveHull (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:concaveHull`] returns a geometric object that represents all Points in the concave hull of `geom`. Calculations are in the spatial reference system of `geom`. Various implementers use parameters to calculate a concave hull. As such, two implementations may return different results from their concave hull functions for the same geometry. Implementers should make clear any default values used to calculate a concave hull in their documentation.
 
 ==== Function: geof:coordinateDimension
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/coordinateDimension[`geof:coordinateDimension`] returns the coordinate dimension of `geom`.
 
 ==== Function: geof:difference
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:difference (geom1: ogc:geomLiteral, 
                  geom2: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/difference[`geof:difference`] returns a geometric object that represents all Points in the set difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:dimension
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:dimension (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/dimension[`geof:dimensions`] returns the dimension of `geom`. In non-homogeneous geometry collections, this will return the largest topological dimension of the contained objects.
 
 ==== Function: geof:metricDistance
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:metricDistance (geom1: ogc:geomLiteral, 
                      geom2: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/metricDistance[`geof:metricDistance`] returns the shortest distance in meters between any two Points in the two geometric objects. Calculations are in the coordinate reference system of `geom1`. This function is similar to <<Function: geof:distance, `geof:distance`>>, but does not need a specification of measurement unit.
 
@@ -1177,11 +1194,12 @@ The function http://www.opengis.net/def/function/geosparql/metricDistance[`geof:
 ==== Function: geof:distance
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:distance (geom1: ogc:geomLiteral, 
                geom2: ogc:geomLiteral, 
                units: xsd:anyURI): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/distance[`geof:distance`] returns the shortest distance in `units` between any two Points in the two geometric objects. Calculations are in the spatial reference system of `geom1`. This function is similar to <<Function: geof:metricDistance, `geof:metricDistance`>>, which does not need a specification of measurement unit.
 
@@ -1193,91 +1211,101 @@ See the <<Recommendation for specification of units of measurement, Recommendati
 ==== Function: geof:envelope
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:envelope (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/envelope[`geof:envelope`] returns the minimum bounding box - a rectangle - of `geom`. Calculations are in the spatial reference system of `geom`.
 
 ==== Function: geof:geometryN
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:geometryN (geom: ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/geometryN[`geof:geometryN`] returns the nth geometry of `geom` if it is a GeometryCollection that is defined in a literal type (such as in the case of a sf:GeometryCollection) or `geom` if it is a Geometry. This function is not applicable to the type geo:GeometryCollection, as elements in geo:GeometryCollection are not guaranteed to be ordered.
 
 ==== Function: geof:geometryType
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:geometryType (geom: ogc:geomLiteral): xsd:anyURI
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/geometryType[`geof:geometryType`] returns the URI of the subtype of Geometry of which this geometric object is an member. No attempt to reconcile different geometry subtypes across all support literals need be made.
 
 ==== Function: geof:intersection
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:intersection (geom1: ogc:geomLiteral,
                    geom2: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/intersection[`geof:intersection`] returns a geometric object that represents all Points in the intersection of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:is3D
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:is3D (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: currently it supports 2.5D and geometric functions ignore Z values in calculations.
 
 ==== Function: geof:isEmpty
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:isEmpty (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty`] returns true if `geom` is an empty geometry, i.e. contains no coordinates.
 
 ==== Function: geof:isMeasured
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMeasured`] returns true if `geom` has m coordinate values, as used e.g. in linear referencing. See <<_GeoSPARQL_and_Simple_Features_(SFA-CA)>> for a description of GeoSPARQL's limitations: at the moment it does not support linear referencing and M values are ignored.
 
 ==== Function: geof:isSimple
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:isSimple (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimple`] returns true if `geom` is a simple geometry, i.e. has no anomalous geometric points, such as self intersection or self tangency.
 
 ==== Function: geof:metricLength
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:metricLength (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/metricLength[`geof:metricLength`] returns the length of `geom` in meters. The longest length from any one dimension is returned. This is for example the length of a line from its beginning point to its endpoint or the length of the boundary of a polygon. This function is similar to <<Function: geof:length, `geof:length`>> but does not need a specification of measurement unit.
 
 ==== Function: geof:length
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:length (geom: ogc:geomLiteral, units: rdfs:Resource): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/length[`geof:length`] returns the length of `geom`. The longest length from any one dimension is returned. This function is similar to <<Function: geof:metricLength, `geof:metricLength`>>, which does not need a specification of measurement unit.
 
@@ -1289,63 +1317,70 @@ See the <<Recommendation for specification of units of measurement, Recommendati
 ==== Function: geof:maxX
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:maxX (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] returns the maximum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxY
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:maxY (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] returns the maximum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:maxZ
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:maxZ (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minX
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:minX (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] returns the minimum X coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minY
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:minY (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] returns the minimum Y coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:minZ
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:minZ (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom` using the SRS of `geom`.
 
 ==== Function: geof:numGeometries
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/numGeometries[`geof:numGeometries`] returns the number of geometries of `geom`.
 
@@ -1357,18 +1392,20 @@ This function returns 1 except in cases when it receives a collection type, such
 ==== Function: geof:perimeter
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:perimeter (geom: ogc:geomLiteral, unit: rdfs:Resource): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/perimeter[`geof:perimeter`] returns the perimeter of  `geom` in the unit specified by the unit parameter for areal geometries. For non-areal geometries the result is equivalent to geof:hasLength. 
 
 ==== Function: geof:metricPerimeter
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:metricPerimeter (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/metricPerimeter[`geof:metricPerimeter`] returns the perimeter of `geom`. It is similar to the function geof:perimeter, but always returns the result in meters.
 
@@ -1376,28 +1413,31 @@ The function http://www.opengis.net/def/function/geosparql/metricPerimeter[`geof
 ==== Function: geof:spatialDimension
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:spatialDimension (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/spatialDimension[`geof:spatialDimension`] returns the spatial dimension of `geom`.
 
 ==== Function: geof:symDifference
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:symDifference (geom1: ogc:geomLiteral, 
                     geom2: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`] returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
 ==== Function: geof:transform
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
 
@@ -1409,10 +1449,11 @@ We recommend that implementers use the same literal type as a result of this fun
 ==== Function: geof:union
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:union (geom1: ogc:geomLiteral, 
             geom2: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 This function http://www.opengis.net/def/function/geosparql/union[`geof:union`] returns a geometric object that represents all Points in the union of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
@@ -1426,9 +1467,10 @@ Implementations shall support http://www.opengis.net/def/function/geosparql/getS
 ==== Function: geof:getSRID
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] returns the spatial reference system IRI for `geom`.
 
@@ -1452,9 +1494,10 @@ as a SPARQL extension functions.
 
 ==== Function: geof:aggBoundingBox
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingBox[`geof:aggBoundingBox`] calculates a minimum bounding box - rectangle - of the set of given geometries.
 
@@ -1465,9 +1508,10 @@ This function is similar in nature to <<Function: geof:envelope, geof:envelope>>
 
 ==== Function: geof:aggBoundingCircle
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggBoundingCircle[`geof:aggBoundingCircle`] calculates a minimum bounding circle of the set of given geometries.
 
@@ -1478,9 +1522,10 @@ This function is similar in name to <<Function: geof:boundingCircle, geof:boundi
 
 ==== Function: geof:aggCentroid
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:aggCentroid`] calculates the centroid of the set of given geometries.
 
@@ -1491,9 +1536,10 @@ This function is similar in name to <<Function: geof:centroid, geof:centroid>> u
 
 ==== Function: geof:aggConcaveHull
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggConcaveHull[`geof:aggConcaveHull`] calculates the concave hull of the set of given geometries.
 
@@ -1505,9 +1551,10 @@ This function is similar in name to <<Function: geof:concaveHull, geof:concaveHu
 ==== Function: geof:aggConvexHull
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggConvexHull (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggConvexHull[`geof:aggConvexHull`] calculates the convex hull of the set of given geometries.
 
@@ -1519,9 +1566,10 @@ This function is similar in name to <<Function: geof:convexHull, geof:convexHull
 ==== Function: geof:aggUnion
 
 [%unnumbered]
-```
+[source,sparql]
+----
 geof:aggUnion (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggUnion[`geof:aggUnion`] calculates the union of the set of given geometries.
 
