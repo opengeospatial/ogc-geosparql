@@ -174,7 +174,7 @@ def parseSpecForFunctions(directory):
     
 #input1=sys.argv[1]
 #input2=sys.argv[2]
-specvocab=parseSpecForFunctions("../spec/")
+specvocab=parseSpecForFunctions("../spec/sections/")
 input1="../vocabularies/functions.ttl"
 input2="../servicedescription/servicedescription_all_functions.ttl"
 check_functions_sd_consistency(input1,input2)
