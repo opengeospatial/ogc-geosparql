@@ -1,0 +1,2168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoSPARQL 1.1 Functions</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1Sew
+EAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://www.opengis.net/def/function/geosparql",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>A vocabulary of the functions defined within the GeoSPARQL 1.1 specification</p>"
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@id": "https://www.ogc.org/license"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "GeoSPARQL 1.1 Functions"
+      }
+    ],
+    "https://schema.org/rights": [
+      {
+        "@value": "&copy; 2023 Open Geospatial Consortium"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.13.2</span>
+  </div>
+  <h1>GeoSPARQL 1.1 Functions</h1>
+<h3><em>A taxonomy</em></h3>
+  <section id="conceptscheme">
+      <h2 style="display:none;">Concept Scheme</h2>
+      <dl>
+          <dt>URI</dt>
+          <dd><code>http://www.opengis.net/def/function/geosparql</code></dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher">Publisher</a>(s)</dt>
+          <dd>
+              
+    Open Geospatial Consortium<br/>
+          </dd>
+            <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator">Creator</a>(s)</dt>
+          <dd>
+              
+    OGC GeoSPARQL Standards Working Group<br/>
+          </dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/created">Created</a></dt>
+          <dd>2021-06-16</dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+          <dd>2023-11-30</dd>
+          <dt>Version URI</dt>
+          <dd><a href="http://www.opengis.net/def/function/geosparql/1.1">http://www.opengis.net/def/function/geosparql/1.1</a></dd>
+          <dt>License &amp; Rights</dt>
+          <dd>
+              <a href="https://www.ogc.org/license">https://www.ogc.org/license</a><br />
+              &copy; 2023 Open Geospatial Consortium
+          </dd>
+          <dt>Source</dt>
+          <dd><a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a></dd>
+          <dt>Ontology RDF</dt>
+          <dd><a href="functions.ttl">RDF (turtle)</a></dd>
+      </dl>
+      <h2>Description</h2>
+      <div id="description">
+          <p>A vocabulary of the functions defined within the GeoSPARQL 1.1 specification</p>
+      </div>
+      <p><strong>History Note:</strong> <p>This vocabulary was generated for GeoSPARQL 1.1 using some content that was already specified for GeoSPARQL 1.0 but which was expanded on</p></p>
+  </section>
+  <section id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#concepts">Concepts</a></li>
+          <li><a href="#namespaces">Namespaces</a></li>
+          <li><a href="#legend">Legend</a></li>
+      </ol>
+  </section>
+  <section id="overview">
+      <h2>Overview</h2>
+      <div class="figure">
+          <div style="width:500px; height:500px; background-color: black;">&nbsp;</div>
+          <div class="caption"><strong>Figure 1:</strong> Taxonomy overview</div>
+      </div>
+  </section>
+  <section id="collections">
+    <h2>Collections <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#GeoSPARQLCommonQueryFunctions">GeoSPARQL Common Query Functions</a></li>
+        <li><a href="#GeoSPARQLEgenhoferTopologicalFunctions">None</a></li>
+        <li><a href="#GeoSPARQLNon-topologicalQueryFunctions">GeoSPARQL Non-topological Query Functions</a></li>
+        <li><a href="#GeoSPARQLRCC8TopologicalFunctions">GeoSPARQL RCC8 Topological Functions</a></li>
+        <li><a href="#GeoSPARQLSpatialAggregationFunctions">GeoSPARQL Spatial Aggregation Functions</a></li>
+        <li><a href="#GeoSPARQLSimpleFeaturesFunctions">GeoSPARQL Simple Features Functions</a></li>
+    </ul>
+    <div class="entity collection" id="GeoSPARQLCommonQueryFunctions">
+        <h3>GeoSPARQL Common Query Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/common</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Common Query Functions defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#relate">relate</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLEgenhoferTopologicalFunctions">
+        <h3>GeoSPARQL Egenhofer Topological Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/eh</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Egenhofer Topological Functions defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#covers">covers</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#disjoint">disjoint</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#coveredby">covered by</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#overlap">overlap</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#meet">meet</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#contains">contains</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#inside">inside</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#equals">equals</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLNon-topologicalQueryFunctions">
+        <h3>GeoSPARQL Non-topological Query Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/nonTopo</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Non-topological Query Functions defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#area">area</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#envelope">envelope</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#geometryN">geometryN</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#symmetricdifference">symmetric difference</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#convexhull">convex hull</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#dimension">area</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#metricbuffer">metric buffer</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#boundary">boundary</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#boundingCircle">bounding circle</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#getSRID">getSRID</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#length">length</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#distance">distance</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#minZ">minZ</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#maxZ">maxZ</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#metriclength">metric length</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#minY">minY</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#buffer">buffer</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#difference">difference</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#isSimple">isSimple</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#isEmpty">isEmpty</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#minX">minX</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#metricperimeter">metric perimeter</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#maxY">maxY</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#maxX">maxX</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#intersection">intersection</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#metricarea">metric area</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#numGeometries">numGeometries</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#union">union</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#metricdistance">metric distance</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#perimeter">perimeter</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLRCC8TopologicalFunctions">
+        <h3>GeoSPARQL RCC8 Topological Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL RCC8 Topological Functions defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#externallyconnected">externally connected</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#partiallyoverlapping">partially overlapping</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#non-tangentialproperpart">non-tangential proper part</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#tangentialproperpartinverse">tangential proper part inverse</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#non-tangentialproperpartinverse">non-tangential proper part inverse</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#rcc8eq">equals</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#disconnected">disconnected</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#tangentialproperpart">tangential proper part</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLSpatialAggregationFunctions">
+        <h3>GeoSPARQL Spatial Aggregation Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sa</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL aggregation functions</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="http://www.opengis.net/def/function/geosparql/aggBoundingBox">http://www.opengis.net/def/function/geosparql/aggBoundingBox</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#aggregateunion">aggregate union</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/def/function/geosparql/aggBoundingCircle">http://www.opengis.net/def/function/geosparql/aggBoundingCircle</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="http://www.opengis.net/def/function/geosparql/aggCentroid">http://www.opengis.net/def/function/geosparql/aggCentroid</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#concavehull">concave hull</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLSimpleFeaturesFunctions">
+        <h3>GeoSPARQL Simple Features Functions<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sf</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Simple Features Topological Functions defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#within">within</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfContains">contains</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#intersects">intersects</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#touches">touches</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfDisjoint">disjoint</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#crosses">crosses</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#overlaps">overlaps</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfEquals">equals</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</section>
+  <section id="concepts">
+    <h2>Concepts <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hierarchy">
+<li><a href="#area">area</a></li><li><a href="#asDGGS">asDGGS</a></li><li><a href="#asGML">asGML</a></li><li><a href="#asGeoJSON">asGeoJSON</a></li><li><a href="#asKML">asKML</a></li><li><a href="#asWKT">asWKT</a></li><li><a href="#boundary">boundary</a></li><li><a href="#boundingCircle">bounding circle</a></li><li><a href="#buffer">buffer</a></li><li><a href="#concaveHull">concave hull</a></li><li><a href="#convexhull">convex hull</a></li><li><a href="#difference">difference</a></li><li><a href="#dimension">area</a></li><li><a href="#distance">distance</a></li><li><a href="#contains">contains</a></li><li><a href="#coveredby">covered by</a></li><li><a href="#covers">covers</a></li><li><a href="#disjoint">disjoint</a></li><li><a href="#equals">equals</a></li><li><a href="#inside">inside</a></li><li><a href="#meet">meet</a></li><li><a href="#overlap">overlap</a></li><li><a href="#envelope">envelope</a></li><li><a href="#getSRID">getSRID</a></li><li><a href="#intersection">intersection</a></li><li><a href="#isEmpty">isEmpty</a></li><li><a href="#isSimple">isSimple</a></li><li><a href="#length">length</a></li><li><a href="#maxX">maxX</a></li><li><a href="#maxY">maxY</a></li><li><a href="#maxZ">maxZ</a></li><li><a href="#metricarea">metric area</a></li><li><a href="#metricbuffer">metric buffer</a></li><li><a href="#metricdistance">metric distance</a></li><li><a href="#metriclength">metric length</a></li><li><a href="#metricperimeter">metric perimeter</a></li><li><a href="#minX">minX</a></li><li><a href="#minY">minY</a></li><li><a href="#minZ">minZ</a></li><li><a href="#perimeter">perimeter</a></li><li><a href="#disconnected">disconnected</a></li><li><a href="#externallyconnected">externally connected</a></li><li><a href="#rcc8eq">equals</a></li><li><a href="#non-tangentialproperpart">non-tangential proper part</a></li><li><a href="#non-tangentialproperpartinverse">non-tangential proper part inverse</a></li><li><a href="#partiallyoverlapping">partially overlapping</a></li><li><a href="#tangentialproperpart">tangential proper part</a></li><li><a href="#tangentialproperpartinverse">tangential proper part inverse</a></li><li><a href="#relate">relate</a></li><li><a href="#sfContains">contains</a></li><li><a href="#crosses">crosses</a></li><li><a href="#sfDisjoint">disjoint</a></li><li><a href="#sfEquals">equals</a></li><li><a href="#intersects">intersects</a></li><li><a href="#overlaps">overlaps</a></li><li><a href="#touches">touches</a></li><li><a href="#within">within</a></li><li><a href="#symmetricdifference">symmetric difference</a></li><li><a href="#union">union</a></li>
+</ul>
+    <div class="entity concept" id="concavehull">
+        <h3>concave hull<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/aggConcaveHull</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A spatial aggregate function that calculates the concave hull of a set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="aggregateunion">
+        <h3>aggregate union<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/aggUnion</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A spatial aggregate function that calculates the union of a set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="boundingbox">
+        <h3>bounding box<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/aggboundingBox</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A spatial aggregate function that calculates the minimum bounding box of set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="boundingcircle">
+        <h3>bounding circle<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/aggboundingCircle</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A spatial aggregate function that calculates the minimum bounding circle of set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="area">
+        <h3>area<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/area</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the area of a geometry in square meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="asDGGS">
+        <h3>asDGGS<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/asDGGS</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="asGML">
+        <h3>asGML<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/asGML</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="asGeoJSON">
+        <h3>asGeoJSON<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/asGeoJSON</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Converts a given geometry to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="asKML">
+        <h3>asKML<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/asKML</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="asWKT">
+        <h3>asWKT<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/asWKT</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="boundary">
+        <h3>boundary<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/boundary</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the boundary of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="boundingCircle">
+        <h3>bounding circle<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/boundingCircle</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that calculates the minimum bounding circle of set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="buffer">
+        <h3>buffer<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/buffer</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a buffer around the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="centroid">
+        <h3>centroid<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/centroid</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A spatial aggregate function that calculates a centroid of a set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="concaveHull">
+        <h3>concave hull<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/concaveHull</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that calculates the concave hull of a set of geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="convexhull">
+        <h3>convex hull<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/convexHull</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the convex hull of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="coordinateDimension">
+        <h3>centroid<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/coordinateDimension</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A SPARQL extension function which returns the coordinate dimension of a geometry</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="difference">
+        <h3>difference<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/difference</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a geometry consisting of all points that are part of the first geometry but not the second geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="dimension">
+        <h3>area<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/dimension</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the dimension of a geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="distance">
+        <h3>distance<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/distance</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the distance between the two closest points of the input geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="contains">
+        <h3>contains<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehContains</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially contains the second geometry argument. </p>
+<p>DE-9IM: T<em>TFF</em>FF*</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="coveredby">
+        <h3>covered by<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehCoveredBy</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.</p>
+<p>DE-9IM: TFF<em>TFT</em>*</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="covers">
+        <h3>covers<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehCovers</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially covers the second geometry argument.</p>
+<p>DE-9IM: T<em>TFT</em>FF*</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="disjoint">
+        <h3>disjoint<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehDisjoint</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are disjoint. </p>
+<p>DE-9IM: FF<em>FF</em>***</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="equals">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehEquals</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are equal. </p>
+<p>DE-9IM: TFFFTFFFT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="inside">
+        <h3>inside<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehInside</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument is spatially inside the second geometry argument.</p>
+<p>DE-9IM: TFF<em>FFT</em>*</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="meet">
+        <h3>meet<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehMeet</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries meet.</p>
+<p>DE-9IM: FT<strong><em>*</em></strong> ^ F<strong>T</strong><strong><em> ^ F</em></strong>T****</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="overlap">
+        <h3>overlap<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/ehOverlap</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries overlap.</p>
+<p>DE-9IM: T<em>T</em><strong>T</strong></p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="envelope">
+        <h3>envelope<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/envelope</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the minimum bounding rectangle of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="geometryN">
+        <h3>geometryN<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/geometryN</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="geometrytype">
+        <h3>geometry type<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/geometryType</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the URI of the subtype of Geometry of which this geometric object is a member.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="getSRID">
+        <h3>getSRID<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/getSRID</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the spatial reference system URI of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="intersection">
+        <h3>intersection<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/intersection</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a geometry consisting of all points that are part of both input geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="is3D">
+        <h3>is3D<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/is3D</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns true if geom has z coordinate values.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="isEmpty">
+        <h3>isEmpty<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/isEmpty</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometry is empty.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="isMeasured">
+        <h3>isMeasured<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/isMeasured</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns true if geom has m coordinate values.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="isSimple">
+        <h3>isSimple<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/isSimple</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometry is a simple geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="length">
+        <h3>length<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/length</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the length of a geometry in meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="maxX">
+        <h3>maxX<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/maxX</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the maximum x coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>X indicates the first dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="maxY">
+        <h3>maxY<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/maxY</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the maximum y coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>Y indicates the second dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="maxZ">
+        <h3>maxZ<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/maxZ</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the maximum z coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>Z indicates the third dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="metricarea">
+        <h3>metric area<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/metricArea</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the area of a geometry in squaremeters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="metricbuffer">
+        <h3>metric buffer<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/metricBuffer</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a buffer around the input geometry, using a distance in meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="metricdistance">
+        <h3>metric distance<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/metricDistance</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the distance in meters between the two closest points of the input geometries.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="metriclength">
+        <h3>metric length<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/metricLength</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the length of a geometry in meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="metricperimeter">
+        <h3>metric perimeter<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/metricPerimeter</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the perimeter of a geometry in meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="minX">
+        <h3>minX<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/minX</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the minimum x coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>X indicates the first dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="minY">
+        <h3>minY<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/minY</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the minimum y coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>Y indicates the second dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="minZ">
+        <h3>minZ<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/minZ</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns the minimum z coordinate of the input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Scope Note</th>
+                <td>
+                    <p>Z indicates the third dimension as indicated by the spatial reference system</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="numGeometries">
+        <h3>numGeometries<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/numGeometries</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the number of geometries of geom.</p><br/>
+                    <p>A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="perimeter">
+        <h3>perimeter<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/perimeter</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the perimeter of a geometry in meters.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="disconnected">
+        <h3>disconnected<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8dc</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are disjoint. </p>
+<p>DE-9IM: FFTFFTTTT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="externallyconnected">
+        <h3>externally connected<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8ec</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries meet. </p>
+<p>DE-9IM: FFTFTTTTT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="rcc8eq">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8eq</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are equal. </p>
+<p>DE-9IM: TFFFTFFFT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="non-tangentialproperpart">
+        <h3>non-tangential proper part<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8ntpp</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument is spatially inside the second geometry argument.</p>
+<p>DE-9IM: TFFTFFTTT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="non-tangentialproperpartinverse">
+        <h3>non-tangential proper part inverse<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8ntppi</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially contains the second geometry argument.</p>
+<p>DE-9IM: TTTFFTFFT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="partiallyoverlapping">
+        <h3>partially overlapping<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8po</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries overlap.</p>
+<p>DE-9IM: TTTTTTTTT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="tangentialproperpart">
+        <h3>tangential proper part<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8tpp</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.</p>
+<p>DE-9IM: TFFTTFTTT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="tangentialproperpartinverse">
+        <h3>tangential proper part inverse<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/rcc8tppi</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially covers the second geometry argument.</p>
+<p>DE-9IM: TTTFTTFFT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="relate">
+        <h3>relate<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/relate</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the spatial relationship between the two input geometries corresponds to one with acceptable values for the specified DE-9IM pattern matrix.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfContains">
+        <h3>contains<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfContains</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially contains the second geometry argument.</p>
+<p>DE-9IM: T<strong>*</strong>FF*</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="crosses">
+        <h3>crosses<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfCrosses</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially crosses the second geometry argument.</p>
+<p>DE-9IM: T<em>T</em><strong>T</strong></p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfDisjoint">
+        <h3>disjoint<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfDisjoint</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are disjoint. </p>
+<p>DE-9IM: FF<em>FF</em>***</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfEquals">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfEquals</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries are equal. </p>
+<p>DE-9IM: TFFFTFFFT</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="intersects">
+        <h3>intersects<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfIntersects</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries intersect.</p>
+<p>DE-9IM: T<strong><em>*</em></strong><em> ^ </em>T<strong><em>*</em></strong> ^ <strong><em>T</em></strong><strong> ^ </strong><strong>T</strong>** </p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="overlaps">
+        <h3>overlaps<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfOverlaps</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument spatially overlaps the second geometry argument.</p>
+<p>DE-9IM: T<em>T</em><strong>T</strong> </p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="touches">
+        <h3>touches<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfTouches</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the input geometries touch.</p>
+<p>DE-9IM: FT<strong><em>*</em></strong> ^ F<strong>T</strong><strong><em> ^ F</em></strong>T****</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="within">
+        <h3>within<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/sfWithin</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns true if the first geometry argument is spatially within the second geometry argument. </p>
+<p>DE-9IM: T<em>F</em><em>F</em>**</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="spatialdimension">
+        <h3>spatial dimension<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/spatialDimension</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>Returns the spatial dimension of geom.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="symmetricdifference">
+        <h3>symmetric difference<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/symDifference</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a geometry consisting of all points that are part of only one input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="transform">
+        <h3>transform<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/transform</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that converts a given geometry to a spatial reference system defined by an IRI. The function raises an error if a transformation is not mathematically possible.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="union">
+        <h3>union<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/function/geosparql/union</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query function that returns a geometry consisting of all points that are part of at least one input geometry.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>default (:)</dt>
+        <dd><code>http://www.opengis.net/def/function/geosparql</code></dd>
+        <dt>brick</dt>
+        <dd><code>https://brickschema.org/schema/Brick#</code></dd>
+        <dt>csvw</dt>
+        <dd><code>http://www.w3.org/ns/csvw#</code></dd>
+        <dt>dc</dt>
+        <dd><code>http://purl.org/dc/elements/1.1/</code></dd>
+        <dt>dcam</dt>
+        <dd><code>http://purl.org/dc/dcam/</code></dd>
+        <dt>dcat</dt>
+        <dd><code>http://www.w3.org/ns/dcat#</code></dd>
+        <dt>dcmitype</dt>
+        <dd><code>http://purl.org/dc/dcmitype/</code></dd>
+        <dt>dcterms</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>doap</dt>
+        <dd><code>http://usefulinc.com/ns/doap#</code></dd>
+        <dt>fno</dt>
+        <dd><code>https://w3id.org/function/ontology#</code></dd>
+        <dt>foaf</dt>
+        <dd><code>http://xmlns.com/foaf/0.1/</code></dd>
+        <dt>geo</dt>
+        <dd><code>http://www.opengis.net/ont/geosparql#</code></dd>
+        <dt>odrl</dt>
+        <dd><code>http://www.w3.org/ns/odrl/2/</code></dd>
+        <dt>ogc</dt>
+        <dd><code>http://www.opengis.net/</code></dd>
+        <dt>org</dt>
+        <dd><code>http://www.w3.org/ns/org#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>policy</dt>
+        <dd><code>http://www.opengis.net/def/metamodel/ogc-na/</code></dd>
+        <dt>prof</dt>
+        <dd><code>http://www.w3.org/ns/dx/prof/</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>qb</dt>
+        <dd><code>http://purl.org/linked-data/cube#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>sd</dt>
+        <dd><code>http://www.w3.org/ns/sparql-service-description#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>sh</dt>
+        <dd><code>http://www.w3.org/ns/shacl#</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>sosa</dt>
+        <dd><code>http://www.w3.org/ns/sosa/</code></dd>
+        <dt>spec11</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/specification.html#</code></dd>
+        <dt>ssn</dt>
+        <dd><code>http://www.w3.org/ns/ssn/</code></dd>
+        <dt>status</dt>
+        <dd><code>http://www.opengis.net/def/status/</code></dd>
+        <dt>time</dt>
+        <dd><code>http://www.w3.org/2006/time#</code></dd>
+        <dt>vann</dt>
+        <dd><code>http://purl.org/vocab/vann/</code></dd>
+        <dt>void</dt>
+        <dd><code>http://rdfs.org/ns/void#</code></dd>
+        <dt>wgs</dt>
+        <dd><code>https://www.w3.org/2003/01/geo/wgs84_pos#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+
+  <section id="legend">
+    <h2>Legend</h2>
+    <table class="entity">
+      <tr><td><sup class="sup-col" title="Collections">col</sup></td><td>Collections</td></tr>
+      <tr><td><sup class="sup-con" title="Concepts">con</sup></td><td>Concepts</td></tr>
+    </table>
+  </section>
+</body>
+</html>
