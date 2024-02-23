@@ -4,4 +4,6 @@ gem "metanorma-cli"
 
 gem "jekyll"
 
+gem "jekyll-paginate"
+
 gem "minima", "~> 2.5"
