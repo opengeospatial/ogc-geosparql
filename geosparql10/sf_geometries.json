@@ -1,6 +1,6 @@
 [
   {
-    "@id": "http://www.opengis.net/ont/sf#Surface",
+    "@id": "http://www.opengis.net/ont/sf#MultiPolygon",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -8,7 +8,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A Surface is a 2-dimensional geometric object.\nA simple Surface may consists of a single patch that is associated with one exterior boundary and 0 or more interior boundaries. A single such Surface patch in 3-dimensional space is isometric to planar Surfaces, by a simple affine rotation matrix that rotates the patch onto the plane z = 0. If the patch is not vertical, the projection onto the same plane is an isomorphism, and can be represented as a linear transformation, i.e. an affine.\n\nPolyhedral Surfaces are formed by stitching together such simple Surfaces patches along their common boundaries. Such polyhedral Surfaces in a 3-dimensional space may not be planar as a whole, depending on the orientation of their planar normals. If all the patches are in alignment (their normals are parallel), then the whole stitched polyhedral surface is co-planar and can be represented as a single patch if it is connected.\n\nThe boundary of a simple Surface is the set of closed Curves corresponding to its exterior and interior boundaries.\n\nA Polygon is a simple Surface that is planar. A PolyhedralSurface is a simple surface, consisting of some number of Polygon patches or facets. If a PolyhedralSurface is closed, then it bounds a solid. A MultiSurface containing a set of closed PolyhedralSurfaces can be used to represent a Solid object with holes."
+        "@value": "A MultiPolygon is a MultiSurface whose elements are Polygons.\n\nThe assertions for MultiPolygons are as follows.\n\na) The interiors of 2 Polygons that are elements of a MultiPolygon may not intersect.\nb) The boundaries of any 2 Polygons that are elements of a MultiPolygon may not cross and may touch at only a finite number of Points.\nc) A MultiPolygon is defined as topologically closed.\nd) A MultiPolygon may not have cut lines, spikes or punctures, a MultiPolygon is a regular closed Point set,\ne) The interior of a MultiPolygon with more than 1 Polygon is not connected; the number of connected components of the interior of a MultiPolygon is equal to the number of Polygons in the MultiPolygon. \n\nThe boundary of a MultiPolygon is a set of closed Curves (LineStrings) corresponding to the boundaries of its element Polygons. Each Curve in the boundary of the MultiPolygon is in the boundary of exactly 1 element Polygon, and every Curve in the boundary of an element Polygon is in the boundary of the MultiPolygon."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -19,17 +19,17 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Surface"
+        "@value": "Multi Polygon"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Geometry"
+        "@id": "http://www.opengis.net/ont/sf#MultiSurface"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#LineString",
+    "@id": "http://www.opengis.net/ont/sf#Triangle",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -37,7 +37,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment."
+        "@value": "A Triangle is a polygon with 3 distinct, non-collinear vertices and no interior boundary."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -48,17 +48,17 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Line String"
+        "@value": "Triangle"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Curve"
+        "@id": "http://www.opengis.net/ont/sf#Polygon"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#TIN",
+    "@id": "http://www.opengis.net/ont/sf#MultiLineString",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -66,7 +66,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A TIN (triangulated irregular network) is a PolyhedralSurface consisting only of Triangle patches."
+        "@value": "A MultiLineString is a MultiCurve whose elements are LineStrings."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -77,70 +77,54 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Triangulated Irregular Network"
+        "@value": "Multi Line String"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface"
+        "@id": "http://www.opengis.net/ont/sf#MultiCurve"
       }
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#Curve",
+    "@id": "http://www.opengis.net/ont/sf",
     "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
+      "http://www.w3.org/2002/07/owl#Ontology"
     ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
+    "http://purl.org/dc/elements/1.1/creator": [
       {
-        "@language": "en",
-        "@value": "A Curve is a 1-dimensional geometric object usually stored as a sequence of Points, with the subtype of Curve specifying the form of the interpolation between Points. This specification defines only one subclass of Curve, LineString, which uses linear interpolation between Points.\n\nA Curve is a 1-dimensional geometric object that is the homeomorphic image of a real, closed, interval.\n\nA Curve is simple if it does not pass through the same Point twice with the possible exception of the two end\npoints.\n\nA Curve is closed if its start Point is equal to its end Point.\n\nThe boundary of a closed Curve is empty.\n\nA Curve that is simple and closed is a Ring.\n\nThe boundary of a non-closed Curve consists of its two end Points.\n\nA Curve is defined as topologically closed, that is, it contains its endpoints f(a) and f(b)."
+        "@value": "Open Geospatial Consortium"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+    "http://purl.org/dc/elements/1.1/date": [
       {
-        "@id": "http://www.opengis.net/ont/sf"
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2012-09-11"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
+    "http://purl.org/dc/elements/1.1/description": [
       {
-        "@language": "en",
-        "@value": "Curve"
+        "@value": "An RDF/OWL vocabulary for defining SimpleFeature geometry types"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+    "http://purl.org/dc/elements/1.1/title": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Geometry"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#LinearRing",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A LinearRing is a LineString that is both closed and simple."
+        "@value": "Simple Features Vocabulary"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+    "http://www.w3.org/2002/07/owl#imports": [
       {
-        "@id": "http://www.opengis.net/ont/sf"
+        "@id": "http://www.opengis.net/ont/geosparql"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
+    "http://www.w3.org/2002/07/owl#versionIRI": [
       {
-        "@language": "en",
-        "@value": "Linear Ring"
+        "@id": "http://www.opengis.net/ont/sf/1.0"
       }
     ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+    "http://www.w3.org/2002/07/owl#versionInfo": [
       {
-        "@id": "http://www.opengis.net/ont/sf#LineString"
+        "@value": "OGC GeoSPARQL 1.0"
       }
     ]
   },
@@ -232,106 +216,6 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#MultiPolygon",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A MultiPolygon is a MultiSurface whose elements are Polygons.\n\nThe assertions for MultiPolygons are as follows.\n\na) The interiors of 2 Polygons that are elements of a MultiPolygon may not intersect.\nb) The boundaries of any 2 Polygons that are elements of a MultiPolygon may not cross and may touch at only a finite number of Points.\nc) A MultiPolygon is defined as topologically closed.\nd) A MultiPolygon may not have cut lines, spikes or punctures, a MultiPolygon is a regular closed Point set,\ne) The interior of a MultiPolygon with more than 1 Polygon is not connected; the number of connected components of the interior of a MultiPolygon is equal to the number of Polygons in the MultiPolygon. \n\nThe boundary of a MultiPolygon is a set of closed Curves (LineStrings) corresponding to the boundaries of its element Polygons. Each Curve in the boundary of the MultiPolygon is in the boundary of exactly 1 element Polygon, and every Curve in the boundary of an element Polygon is in the boundary of the MultiPolygon."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Multi Polygon"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#MultiSurface"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf#Point",
-    "@type": [
-      "http://www.w3.org/2000/01/rdf-schema#Class",
-      "http://www.w3.org/2002/07/owl#Class"
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#comment": [
-      {
-        "@language": "en",
-        "@value": "A Point is a 0-dimensional geometric object and represents a single location in coordinate space. \nA Point has an x-coordinate value, a y-coordinate value. If called for by the associated Spatial Reference System, it may also have coordinate values for z and m.\nThe boundary of a Point is the empty set."
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
-      {
-        "@id": "http://www.opengis.net/ont/sf"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#label": [
-      {
-        "@language": "en",
-        "@value": "Point"
-      }
-    ],
-    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-      {
-        "@id": "http://www.opengis.net/ont/sf#Geometry"
-      }
-    ]
-  },
-  {
-    "@id": "http://www.opengis.net/ont/sf",
-    "@type": [
-      "http://www.w3.org/2002/07/owl#Ontology"
-    ],
-    "http://purl.org/dc/elements/1.1/creator": [
-      {
-        "@value": "Open Geospatial Consortium"
-      }
-    ],
-    "http://purl.org/dc/elements/1.1/date": [
-      {
-        "@type": "http://www.w3.org/2001/XMLSchema#date",
-        "@value": "2012-09-11"
-      }
-    ],
-    "http://purl.org/dc/elements/1.1/description": [
-      {
-        "@value": "An RDF/OWL vocabulary for defining SimpleFeature geometry types"
-      }
-    ],
-    "http://purl.org/dc/elements/1.1/title": [
-      {
-        "@value": "Simple Features Vocabulary"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#imports": [
-      {
-        "@id": "http://www.opengis.net/ont/geosparql"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#versionIRI": [
-      {
-        "@id": "http://www.opengis.net/ont/sf/1.0"
-      }
-    ],
-    "http://www.w3.org/2002/07/owl#versionInfo": [
-      {
-        "@value": "OGC GeoSPARQL 1.0"
-      }
-    ]
-  },
-  {
     "@id": "http://www.opengis.net/ont/sf#Geometry",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
@@ -361,7 +245,7 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#MultiPoint",
+    "@id": "http://www.opengis.net/ont/sf#TIN",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -369,7 +253,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A MultiPoint is a 0-dimensional GeometryCollection. The elements of a MultiPoint are restricted to Points. ThePoints are not connected or ordered in any semantically important way.\n\nA MultiPoint is simple if no two Points in the MultiPoint are equal (have identical coordinate values in X and Y).\n\nEvery MultiPoint is spatially equal to a simple Multipoint.\n\nThe boundary of a MultiPoint is the empty set."
+        "@value": "A TIN (triangulated irregular network) is a PolyhedralSurface consisting only of Triangle patches."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -380,12 +264,12 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Multi Point"
+        "@value": "Triangulated Irregular Network"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#GeometryCollection"
+        "@id": "http://www.opengis.net/ont/sf#PolyhedralSurface"
       }
     ]
   },
@@ -419,7 +303,7 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#MultiLineString",
+    "@id": "http://www.opengis.net/ont/sf#Surface",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -427,7 +311,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A MultiLineString is a MultiCurve whose elements are LineStrings."
+        "@value": "A Surface is a 2-dimensional geometric object.\nA simple Surface may consists of a single patch that is associated with one exterior boundary and 0 or more interior boundaries. A single such Surface patch in 3-dimensional space is isometric to planar Surfaces, by a simple affine rotation matrix that rotates the patch onto the plane z = 0. If the patch is not vertical, the projection onto the same plane is an isomorphism, and can be represented as a linear transformation, i.e. an affine.\n\nPolyhedral Surfaces are formed by stitching together such simple Surfaces patches along their common boundaries. Such polyhedral Surfaces in a 3-dimensional space may not be planar as a whole, depending on the orientation of their planar normals. If all the patches are in alignment (their normals are parallel), then the whole stitched polyhedral surface is co-planar and can be represented as a single patch if it is connected.\n\nThe boundary of a simple Surface is the set of closed Curves corresponding to its exterior and interior boundaries.\n\nA Polygon is a simple Surface that is planar. A PolyhedralSurface is a simple surface, consisting of some number of Polygon patches or facets. If a PolyhedralSurface is closed, then it bounds a solid. A MultiSurface containing a set of closed PolyhedralSurfaces can be used to represent a Solid object with holes."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -438,12 +322,70 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Multi Line String"
+        "@value": "Surface"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#MultiCurve"
+        "@id": "http://www.opengis.net/ont/sf#Geometry"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#LinearRing",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A LinearRing is a LineString that is both closed and simple."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Linear Ring"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#LineString"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#Curve",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A Curve is a 1-dimensional geometric object usually stored as a sequence of Points, with the subtype of Curve specifying the form of the interpolation between Points. This specification defines only one subclass of Curve, LineString, which uses linear interpolation between Points.\n\nA Curve is a 1-dimensional geometric object that is the homeomorphic image of a real, closed, interval.\n\nA Curve is simple if it does not pass through the same Point twice with the possible exception of the two end\npoints.\n\nA Curve is closed if its start Point is equal to its end Point.\n\nThe boundary of a closed Curve is empty.\n\nA Curve that is simple and closed is a Ring.\n\nThe boundary of a non-closed Curve consists of its two end Points.\n\nA Curve is defined as topologically closed, that is, it contains its endpoints f(a) and f(b)."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Curve"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Geometry"
       }
     ]
   },
@@ -477,6 +419,35 @@
     ]
   },
   {
+    "@id": "http://www.opengis.net/ont/sf#Point",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A Point is a 0-dimensional geometric object and represents a single location in coordinate space. \nA Point has an x-coordinate value, a y-coordinate value. If called for by the associated Spatial Reference System, it may also have coordinate values for z and m.\nThe boundary of a Point is the empty set."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Point"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#Geometry"
+      }
+    ]
+  },
+  {
     "@id": "http://www.opengis.net/ont/sf#MultiSurface",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
@@ -506,7 +477,7 @@
     ]
   },
   {
-    "@id": "http://www.opengis.net/ont/sf#Triangle",
+    "@id": "http://www.opengis.net/ont/sf#LineString",
     "@type": [
       "http://www.w3.org/2000/01/rdf-schema#Class",
       "http://www.w3.org/2002/07/owl#Class"
@@ -514,7 +485,7 @@
     "http://www.w3.org/2000/01/rdf-schema#comment": [
       {
         "@language": "en",
-        "@value": "A Triangle is a polygon with 3 distinct, non-collinear vertices and no interior boundary."
+        "@value": "A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment."
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
@@ -525,12 +496,41 @@
     "http://www.w3.org/2000/01/rdf-schema#label": [
       {
         "@language": "en",
-        "@value": "Triangle"
+        "@value": "Line String"
       }
     ],
     "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
       {
-        "@id": "http://www.opengis.net/ont/sf#Polygon"
+        "@id": "http://www.opengis.net/ont/sf#Curve"
+      }
+    ]
+  },
+  {
+    "@id": "http://www.opengis.net/ont/sf#MultiPoint",
+    "@type": [
+      "http://www.w3.org/2000/01/rdf-schema#Class",
+      "http://www.w3.org/2002/07/owl#Class"
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#comment": [
+      {
+        "@language": "en",
+        "@value": "A MultiPoint is a 0-dimensional GeometryCollection. The elements of a MultiPoint are restricted to Points. ThePoints are not connected or ordered in any semantically important way.\n\nA MultiPoint is simple if no two Points in the MultiPoint are equal (have identical coordinate values in X and Y).\n\nEvery MultiPoint is spatially equal to a simple Multipoint.\n\nThe boundary of a MultiPoint is the empty set."
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#isDefinedBy": [
+      {
+        "@id": "http://www.opengis.net/ont/sf"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#label": [
+      {
+        "@language": "en",
+        "@value": "Multi Point"
+      }
+    ],
+    "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+      {
+        "@id": "http://www.opengis.net/ont/sf#GeometryCollection"
       }
     ]
   }
