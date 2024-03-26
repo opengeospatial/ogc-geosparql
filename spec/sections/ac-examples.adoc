@@ -24,7 +24,7 @@ The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
 Basic use (as per the example in the class definition)
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:SpatialObject ;
@@ -50,7 +50,7 @@ The "size" properties - <<Property: geo:hasSize, `geo:hasSize`>>,
 <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>> - are all applicable to instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> although, as per the note in the section above, they are likely to be used with <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>> instances.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
@@ -83,7 +83,7 @@ The `Feature` class is defined in <<Class: geo:Feature>>.
 ====== Basic use
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -98,7 +98,7 @@ Here a `Feature` is declared and given a preferred label.
 ====== A `Feature` related to a `Geometry`
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -117,7 +117,7 @@ Here a <<Class: geo:Feature, `geo:Feature`>> is declared, given a preferred labe
 ====== `Feature` with `Geometry` and size (area)
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -135,7 +135,7 @@ This example and the example below (B 1.1.2.4) show the same <<Class: geo:Featur
 ====== `Feature` with `Geometry` and non-metric size
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
@@ -160,7 +160,7 @@ Here a <<Class: geo:Feature, `geo:Feature`>> is described as per the previous ex
 ====== `Feature` with two different `Geometry` instances indicated
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -185,7 +185,7 @@ In this example, `Feature X` has two different `Geometry` instances indicated wi
 ====== `Feature` with two different `Geometry` instances with different property values
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -209,7 +209,7 @@ Machine use of this `Feature` would be able to differentiate the two `Geometry` 
 ====== `Feature` with non-metric size
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix dbp: <http://dbpedia.org/resource/> .
 @prefix qudt: <http://qudt.org/schema/qudt/> .
@@ -235,7 +235,7 @@ In this example it is not possible to convert the length of the feature to meter
 ====== `Feature` with two different types of `Geometry` instances
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -256,7 +256,7 @@ Here a `Feature` instance has two geometries, one indicated with the general pro
 ====== `Feature` with multiple sizes
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 ex:lake-x
     a geo:Feature ;
@@ -277,7 +277,7 @@ The `Geometry` class is defined in <<Class: geo:Geometry>>.
 ====== Basic Use
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:y a geo:Geometry ;
     skos:prefLabel "Geometry Y";
@@ -289,7 +289,7 @@ Here a `Geometry` is declared and given a preferred label.
 From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<B 1.1.2.2 A `Feature` related to a `Geometry`>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node. However, it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an absolute URI and data.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 <https://example.com/geometry/y> 
     a geo:Geometry ;
@@ -306,7 +306,7 @@ Here the `Geometry` instance has data in WKT form and, since no CRS is declared,
 ====== A `Geometry` with multiple serializations
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x
     a geo:Feature ;
@@ -325,7 +325,7 @@ Here a single `Geometry`, linked to a `Feature` instance, is expressed using two
 ====== `Geometry` with scalar spatial property
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x 
     a geo:Feature ;
@@ -355,7 +355,7 @@ This use of a scalar spatial measurement property with a Geometry, here <<Proper
 This example shows a `FeatureCollection` instance containing 3 `Feature` instances.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 ex:fc-x
     a geo:FeatureCollection ;
@@ -375,7 +375,7 @@ All of the GeoSPARQL collection classes are unordered since they are subclasses 
 This example shows a `GeometryCollection` instance containing 3 `Geometry` instances.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 ex:gc-x
     a geo:GeometryCollection ;
@@ -399,7 +399,7 @@ It may be appropriate to use these specialized forms of Geometry in circumstance
 The following example shows a `Feature` instance with two `Geometry` instances where the _Simple Features Vocabulary_ classes are used to indicate the Geometry type:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 ex:x
     a geo:Feature ;
@@ -431,7 +431,7 @@ This example shows a <<Class: geo:Feature, `geo:Feature`>> instance with each of
 <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> and <<Property: geo:hasSize, `geo:hasSize`>>, that are intended to be used through their subproperties and <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>> and <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> which are examplified in <<C.1.1.1.2 Size Properties>>.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 
@@ -483,7 +483,7 @@ Note that this `Feature` has a 2D `Geometry` and yet a property indicating a sca
 This example shows a `Geometry` instance, a Blank Node, declared in relation to a `Feature` instance, with each of the properties defined in <<Standard Properties for geo:Geometry>> used.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix qudt: <http://qudt.org/schema/qudt/> .
 @prefix unit: <http://qudt.org/vocab/unit/> .
@@ -517,7 +517,7 @@ This section shows a `Geometry` instance for a `Feature` instance which is repre
 Note that the concrete DGGS serialization used is for example purposes only as it is not formally defined in GeoSPARQL.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 eg:x
     a geo:Feature ;
@@ -644,7 +644,7 @@ All the following examples use the parameter values relation_family = Simple Fea
 image::03.png[600,400,align="center"]
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix my: <http://example.org/ApplicationSchema#> .
@@ -740,7 +740,7 @@ This Section illustrates the use of GeoSPARQL functions through a series of exam
 _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -776,7 +776,7 @@ WHERE {
 _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -813,7 +813,7 @@ WHERE {
 _Find all features that touch the union of feature `my:A` and feature `my:D`, where computations are based on_ `my:hasExactGeometry`.
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -851,7 +851,7 @@ WHERE {
 _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX uom: <http://www.opengis.net/def/uom/OGC/1.0/> 
 PREFIX my: <http://example.org/ApplicationSchema#>
@@ -887,7 +887,7 @@ LIMIT 3
 _Find the maximum and minimum coordinates of a given set of geometries._
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -929,7 +929,7 @@ _Find all features or geometries that overlap feature_ `my:A`.
 *Original Query*:
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 
@@ -940,7 +940,7 @@ WHERE { ?f geo:sfOverlaps my:A }
 *Transformed Query (application of transformation rule geor:sfOverlaps)*:
 
 [%unnumbered]
-[source,shell]
+[source,sqarql]
 ----
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
