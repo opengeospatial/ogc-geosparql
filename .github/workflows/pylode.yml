@@ -86,18 +86,19 @@ jobs:
          sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
-         mkdir docs/geosparql11/
-         mkdir docs/geosparql11/servicedescription/
-         mkdir docs/bestpractice/
-         cd docs/geosparql11/
-         echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC HTML"
-         asciidoctor --attribute docinfo=shared ../../spec/document.adoc -o spec.html
-         echo "Generating GeoSPARQL 1.1 Specification - ASCIIDOC PDF"
-         asciidoctor-pdf -a pdf-theme=default-with-fallback-font --attribute docinfo=shared ../../spec/document.adoc -o spec.pdf
-         echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC HTML"
-         asciidoctor --attribute docinfo=shared ../../release_notes/releasenotes.adoc -o releasenotes.html
-         echo "Generating GeoSPARQL 1.1 Release Notes - ASCIIDOC PDF"
-         asciidoctor-pdf --attribute docinfo=shared ../../release_notes/releasenotes.adoc -o releasenotes.pdf
+         mkdir site
+         mkdir site/geosparql11
+         mkdir site/geosparql11/vocabularies/
+         mkdir site/geosparql11/servicedescription/
+         ls
+         metanorma site generate --agree-to-terms -o site
+         cd site
+         ls
+         ls geosparql11
+         ls documents
+         mv documents/spec/* geosparql11/
+         mv geosparql11 ../docs/
+         cd ..
          echo "Copying over 1.1 RDF files"
          cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../vocabularies/requirements.ttl  ../../citeme.bib .
          cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
