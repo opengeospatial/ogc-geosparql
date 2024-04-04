@@ -4,4 +4,4 @@ gem "metanorma-cli"
 
 gem "jekyll"
 
-gem "jekyll-paginate"
+gem "jekyll-paginate-v2"
