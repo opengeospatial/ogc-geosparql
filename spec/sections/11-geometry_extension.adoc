@@ -91,7 +91,7 @@ One container class is defined: <<Class: geo:GeometryCollection, Geometry Collec
 The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is conceptually derived from UML class `Geometry` in <<ISO19107>> which is that standard's "root class of the geometric object taxonomy and supports interfaces common to all geographically referenced geometric objects". `geo:Geometry` is defined by the following:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:Geometry 
     a rdfs:Class, owl:Class ;
@@ -118,7 +118,7 @@ Implementations shall allow the RDFS class <<Class: geo:Geometry, `geo:Geometry`
 The class <<Class: geo:GeometryCollection, Geometry Collection>> is defined by the following:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:GeometryCollection
   a owl:Class ;
@@ -181,7 +181,7 @@ to be used in SPARQL graph patterns.
 The property http://www.opengis.net/ont/geosparql#dimension[`geo:dimension`] is used to link a Geometry object to its topological dimension, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this will return the largest topological dimension of the contained objects.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:dimension 
     a rdf:Property, owl:DatatypeProperty ;
@@ -201,7 +201,7 @@ geo:dimension
 The property http://www.opengis.net/ont/geosparql#coordinateDimension[`geo:coordinateDimension`] is defined to link a Geometry object to the dimension of direct positions (coordinate tuples) used in the Geometry's definition.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:coordinateDimension 
     a rdf:Property, owl:DatatypeProperty;
@@ -219,7 +219,7 @@ geo:coordinateDimension
 The property http://www.opengis.net/ont/geosparql#spatialDimension[`geo:spatialDimension`] is defined to link a Geometry object to the dimension of the spatial portion of the direct positions (coordinate tuples) used in its serializations. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:spatialDimension 
     a rdf:Property, owl:DatatypeProperty;
@@ -239,7 +239,7 @@ The property http://www.opengis.net/ont/geosparql#hasSpatialResolution[`geo:hasS
 Since this property is defined for a <<Class: geo:Geometry, `geo:Geometry`>>, all literal representations of that Geometry instance must have the same spatial resolution.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:hasSpatialResolution 
     a rdf:Property, owl:ObjectProperty;
@@ -260,7 +260,7 @@ See the <<Recommendation for units of measure>>.
 The property http://www.opengis.net/ont/geosparql#hasMetricSpatialResolution[`geo:hasMetricSpatialResolution`] is similar to <<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>, except that the unit of resolution is always meter (the standard distance unit of the International System of Units). 
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:hasMetricSpatialResolution 
     a rdf:Property, owl:ObjectProperty;
@@ -278,7 +278,7 @@ geo:hasMetricSpatialResolution
 The property http://www.opengis.net/ont/geosparql#hasSpatialAccuracy[`geo:hasSpatialAccuracy`] is applicable when a Geometry is used to represent a Feature. It is expressed as a distance that indicates the truthfulness of the positions (coordinates) that define the Geometry. In this case accuracy defines a zone surrounding each coordinate within which the real positions are known to be. The accuracy value defines this zone as a distance from the coordinate(s) in all directions (e.g. a line, a circle or a sphere, depending on spatial dimension).
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:hasSpatialAccuracy 
     a rdf:Property, owl:ObjectProperty;
@@ -299,7 +299,7 @@ See the <<Recommendation for units of measure>>.
 The property http://www.opengis.net/ont/geosparql#hasMetricSpatialAccuracy[`geo:hasMetricSpatialAccuracy`] is similar to <<Property: geo:hasSpatialAccuracy, has spatial accuracy>>, but is easier to specify and use because the unit of distance is always meter (the standard distance unit of the International System of Units). 
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:hasMetricSpatialAccuracy 
     a rdf:Property, owl:ObjectProperty;
@@ -316,7 +316,7 @@ geo:hasMetricSpatialAccuracy
 The property http://www.opengis.net/ont/geosparql#isEmpty[`geo:isEmpty`] will indicate a Boolean object set to `true` if and only if the Geometry contains no information.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:isEmpty 
     a rdf:Property, owl:DatatypeProperty ;
@@ -335,7 +335,7 @@ geo:isEmpty
 The property http://www.opengis.net/ont/geosparql#isSimple[`geo:isSimple`] will indicate a Boolean object set to `true` if and only if the Geometry contains no self-intersections, with the possible exception of its boundary.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:isSimple 
     a rdf:Property, owl:DatatypeProperty ;
@@ -353,7 +353,7 @@ geo:isSimple
 The property http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] is defined to connect a Geometry with its text-based serialization (e.g., its WKT serialization).
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:hasSerialization 
     a rdf:Property, owl:DatatypeProperty ;
@@ -394,7 +394,7 @@ This section establishes the requirements for representing Geometry data in RDF 
 The datatype http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] is used to contain the Well-Known Text (WKT) serialization of a Geometry.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:wktLiteral 
     a rdfs:Datatype ;
@@ -414,7 +414,7 @@ All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> sh
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 wktLiteral ::= opt-iri-and-whitespace geometry-data
 
@@ -444,7 +444,7 @@ Coordinate tuples within <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> sha
 The example <<RDFS Datatype: geo:wktLiteral, WKT Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ----
@@ -452,7 +452,7 @@ The example <<RDFS Datatype: geo:wktLiteral, WKT Literal>> below encodes a point
 A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/crs/EPSG/0/4326[`+http://www.opengis.net/def/crs/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
 ----
@@ -478,7 +478,7 @@ Implementations shall allow the RDF property <<Property: geo:asWKT, `geo:asWKT`>
 ====
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:asWKT 
     a rdf:Property, owl:DatatypeProperty ;
@@ -494,7 +494,7 @@ geo:asWKT
 ===== Function: geof:asWKT
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral
 ----
@@ -518,7 +518,7 @@ This section establishes a Requirements class for representing Geometry data in 
 The datatype http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] is used to contain the Geography Markup Language (GML) serialization of a Geometry.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:gmlLiteral 
     a rdfs:Datatype ;
@@ -540,7 +540,7 @@ All <<RDFS Datatype: geo:gmlLiteral, `geo:gmlLiteral`>> instances shall consist 
 The example <<RDFS Datatype: geo:gmlLiteral, GML Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 """
 <gml:Point 
@@ -577,7 +577,7 @@ Implementations shall allow the RDF property <<Property: geo:asGML, `geo:asGML`>
 ====
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:asGML 
     a rdf:Property ; 
@@ -593,7 +593,7 @@ geo:asGML
 ===== Function: geof:asGML
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral
 ----
@@ -616,7 +616,7 @@ This section establishes a Requirements class for representing Geometry data in 
 The datatype http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:geoJSONLiteral`] is used to contain the GeoJSON serialization of a Geometry.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:geoJSONLiteral a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
@@ -643,7 +643,7 @@ RDFS Literals of type <<RDFS Datatype: geo:geoJSONLiteral, `geo:geoJSONLiteral`>
 The example <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 """
 {"type": "Point", "coordinates": [-83.38,33.95]}
@@ -669,7 +669,7 @@ Implementations shall allow the RDF property <<Property: geo:asGeoJSON, `geo:asG
 ====
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:asGeoJSON 
     a rdf:Property, owl:DatatypeProperty ;
@@ -685,7 +685,7 @@ geo:asGeoJSON
 ===== Function: geof:asGeoJSON
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:asGeoJSON (geom: ogc:geomLiteral): geo:geoJSONLiteral
 ----
@@ -709,7 +709,7 @@ This section establishes the Requirements class for representing Geometry data i
 The datatype http://www.opengis.net/ont/geosparql#kmlLiteral[`geo:kmlLiteral`] is used to contain the Keyhole Markup Language (KML) serialization of a Geometry.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:kmlLiteral 
     a rdfs:Datatype ;
@@ -739,7 +739,7 @@ RDFS Literals of type <<RDFS Datatype: geo:kmlLiteral, `geo:kmlLiteral`>> do not
 The example <<RDFS Datatype: geo:kmlLiteral, KML Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 """
 <Point xmlns=\"http://www.opengis.net/kml/2.2\">
@@ -770,7 +770,7 @@ Implementations shall allow the RDF property <<Property: geo:asKML, `geo:asKML`>
 The property <<Property: geo:asKML, as KML>> is used to link a geometric element with its KML serialization.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:asKML 
     a rdf:Property, owl:DatatypeProperty;
@@ -786,7 +786,7 @@ geo:asKML
 ===== Function: geof:asKML
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:asKML (geom: ogc:geomLiteral): geo:kmlLiteral
 ----
@@ -826,7 +826,7 @@ http://www.opengis.net/ont/geosparql#dggsLiteral[`http://www.opengis.net/ont/geo
 The datatype http://www.opengis.net/ont/geosparql#dggsLiteral[`geo:dggsLiteral`] is used to contain the Discrete Global Grid System (DGGS) serialization of a Geometry.
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:dggsLiteral 
     a rdfs:Datatype ;
@@ -848,7 +848,7 @@ All RDFS Literals of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral`>> 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 dggsLiteral ::= iri-and-whitespace dggs-geomety-data
 
@@ -860,7 +860,7 @@ The token `iri-and-whitespace` is an IRI and whitespace. The token `IRI` (Intern
 An example of a DGGS literal for the AusPIX DGGS could be:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 "<https://w3id.org/dggs/auspix> CELL (R3234)"^^geo:dggsLiteral
 ----
@@ -882,7 +882,7 @@ An empty RDFS Literal of type <<RDFS Datatype: geo:dggsLiteral, `geo:dggsLiteral
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 dggsLiteral ::= iri-and-space dggs-geometry-data
 
@@ -905,7 +905,7 @@ to be used in SPARQL graph patterns.
 ====
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geo:asDGGS 
     a rdf:Property, owl:DatatypeProperty ;
@@ -921,7 +921,7 @@ geo:asDGGS
 ===== Function: geof:asDGGS
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:asDGGS (geom: ogc:geomLiteral, specificDggsDatatype: xsd:anyURI): geo:DggsLiteral
 ----
@@ -1059,7 +1059,7 @@ Several non-topological query functions use a unit of measure IRI. See the <<Rec
 ==== Function: geof:metricArea
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:metricArea (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1069,7 +1069,7 @@ The function http://www.opengis.net/def/function/geosparql/metricArea[`geof:metr
 ==== Function: geof:area
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:area (geom: ogc:geomLiteral, units: xsd:anyURI): rdf:Resource
 ----
@@ -1084,7 +1084,7 @@ See the <<Recommendation for units of measure, Recommendation for units of measu
 ==== Function: geof:boundary
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:boundary (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1094,7 +1094,7 @@ The function http://www.opengis.net/def/function/geosparql/boundary[`geof:bounda
 ==== Function: geof:boundingCircle
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:boundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1104,7 +1104,7 @@ The function http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:
 ==== Function: geof:metricBuffer
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:metricBuffer (geom: ogc:geomLiteral, 
                    radius: xsd:double): ogc:geomLiteral
@@ -1115,7 +1115,7 @@ The function http://www.opengis.net/def/function/geosparql/metricBuffer[`geof:me
 ==== Function: geof:buffer
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:buffer (geom: ogc:geomLiteral, 
              radius: xsd:double, 
@@ -1132,7 +1132,7 @@ See the <<Recommendation for units of measure, Recommendation for units of measu
 ==== Function: geof:centroid
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:centroid (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1142,7 +1142,7 @@ The function http://www.opengis.net/def/function/geosparql/centroid[`geof:centro
 ==== Function: geof:convexHull
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:convexHull (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1152,7 +1152,7 @@ The function http://www.opengis.net/def/function/geosparql/convexHull[`geof:conv
 ==== Function: geof:concaveHull
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:concaveHull (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1162,7 +1162,7 @@ The function http://www.opengis.net/def/function/geosparql/concaveHull[`geof:con
 ==== Function: geof:coordinateDimension
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 ----
@@ -1172,7 +1172,7 @@ The function http://www.opengis.net/def/function/geosparql/coordinateDimension[`
 ==== Function: geof:difference
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:difference (geom1: ogc:geomLiteral, 
                  geom2: ogc:geomLiteral): ogc:geomLiteral
@@ -1183,7 +1183,7 @@ The function http://www.opengis.net/def/function/geosparql/difference[`geof:diff
 ==== Function: geof:dimension
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:dimension (geom: ogc:geomLiteral): xsd:integer
 ----
@@ -1193,7 +1193,7 @@ The function http://www.opengis.net/def/function/geosparql/dimension[`geof:dimen
 ==== Function: geof:metricDistance
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:metricDistance (geom1: ogc:geomLiteral, 
                      geom2: ogc:geomLiteral): xsd:double
@@ -1205,7 +1205,7 @@ The function http://www.opengis.net/def/function/geosparql/metricDistance[`geof:
 ==== Function: geof:distance
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:distance (geom1: ogc:geomLiteral, 
                geom2: ogc:geomLiteral, 
@@ -1222,7 +1222,7 @@ See the <<Recommendation for units of measure, Recommendation for units of measu
 ==== Function: geof:envelope
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:envelope (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1232,7 +1232,7 @@ The function http://www.opengis.net/def/function/geosparql/envelope[`geof:envelo
 ==== Function: geof:geometryN
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:geometryN (geom: ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
 ----
@@ -1242,7 +1242,7 @@ The function http://www.opengis.net/def/function/geosparql/geometryN[`geof:geome
 ==== Function: geof:geometryType
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:geometryType (geom: ogc:geomLiteral): xsd:anyURI
 ----
@@ -1252,7 +1252,7 @@ The function http://www.opengis.net/def/function/geosparql/geometryType[`geof:ge
 ==== Function: geof:intersection
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:intersection (geom1: ogc:geomLiteral,
                    geom2: ogc:geomLiteral): ogc:geomLiteral
@@ -1263,7 +1263,7 @@ The function http://www.opengis.net/def/function/geosparql/intersection[`geof:in
 ==== Function: geof:is3D
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 ----
@@ -1273,7 +1273,7 @@ The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Ret
 ==== Function: geof:isEmpty
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:isEmpty (geom: ogc:geomLiteral): xsd:boolean
 ----
@@ -1283,7 +1283,7 @@ The function http://www.opengis.net/def/function/geosparql/isEmpty[`geof:isEmpty
 ==== Function: geof:isMeasured
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:isMeasured (geom: ogc:geomLiteral): xsd:boolean
 ----
@@ -1293,7 +1293,7 @@ The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMe
 ==== Function: geof:isSimple
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:isSimple (geom: ogc:geomLiteral): xsd:boolean
 ----
@@ -1303,7 +1303,7 @@ The function http://www.opengis.net/def/function/geosparql/isSimple[`geof:isSimp
 ==== Function: geof:metricLength
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:metricLength (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1313,7 +1313,7 @@ The function http://www.opengis.net/def/function/geosparql/metricLength[`geof:me
 ==== Function: geof:length
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:length (geom: ogc:geomLiteral, units: xsd:anyURI): xsd:double
 ----
@@ -1328,7 +1328,7 @@ See the <<Recommendation for units of measure, Recommendation for units of measu
 ==== Function: geof:maxX
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:maxX (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1338,7 +1338,7 @@ The function http://www.opengis.net/def/function/geosparql/maxX[`geof:maxX`] ret
 ==== Function: geof:maxY
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:maxY (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1348,7 +1348,7 @@ The function http://www.opengis.net/def/function/geosparql/maxY[`geof:maxY`] ret
 ==== Function: geof:maxZ
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:maxZ (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1358,7 +1358,7 @@ The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] ret
 ==== Function: geof:minX
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:minX (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1368,7 +1368,7 @@ The function http://www.opengis.net/def/function/geosparql/minX[`geof:minX`] ret
 ==== Function: geof:minY
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:minY (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1378,7 +1378,7 @@ The function http://www.opengis.net/def/function/geosparql/minY[`geof:minY`] ret
 ==== Function: geof:minZ
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:minZ (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1388,7 +1388,7 @@ The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] ret
 ==== Function: geof:numGeometries
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:numGeometries (geom: ogc:geomLiteral): xsd:integer
 ----
@@ -1398,7 +1398,7 @@ The function http://www.opengis.net/def/function/geosparql/numGeometries[`geof:n
 ==== Function: geof:perimeter
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:perimeter (geom: ogc:geomLiteral, unit: xsd:anyURI): xsd:double
 ----
@@ -1408,7 +1408,7 @@ The function http://www.opengis.net/def/function/geosparql/perimeter[`geof:perim
 ==== Function: geof:metricPerimeter
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:metricPerimeter (geom: ogc:geomLiteral): xsd:double
 ----
@@ -1419,7 +1419,7 @@ The function http://www.opengis.net/def/function/geosparql/metricPerimeter[`geof
 ==== Function: geof:spatialDimension
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:spatialDimension (geom: ogc:geomLiteral): xsd:integer
 ----
@@ -1429,7 +1429,7 @@ The function http://www.opengis.net/def/function/geosparql/spatialDimension[`geo
 ==== Function: geof:symDifference
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:symDifference (geom1: ogc:geomLiteral, 
                     geom2: ogc:geomLiteral): ogc:geomLiteral
@@ -1440,7 +1440,7 @@ The function http://www.opengis.net/def/function/geosparql/symDifference[`geof:s
 ==== Function: geof:transform
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
 ----
@@ -1455,7 +1455,7 @@ We recommend that implementers use the same literal type as a result of this fun
 ==== Function: geof:union
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:union (geom1: ogc:geomLiteral, 
             geom2: ogc:geomLiteral): ogc:geomLiteral
@@ -1473,7 +1473,7 @@ Implementations shall support http://www.opengis.net/def/function/geosparql/getS
 ==== Function: geof:getSRID
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ----
@@ -1500,7 +1500,7 @@ as a SPARQL extension functions.
 
 ==== Function: geof:aggBoundingBox
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggBoundingBox (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1509,7 +1509,7 @@ The function http://www.opengis.net/def/function/geosparql/aggBoundingBox[`geof:
 
 ==== Function: geof:aggBoundingCircle
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggBoundingCircle (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1518,7 +1518,7 @@ The function http://www.opengis.net/def/function/geosparql/aggBoundingCircle[`ge
 
 ==== Function: geof:aggCentroid
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1527,7 +1527,7 @@ The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:agg
 
 ==== Function: geof:aggConcaveHull
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggConcaveHull (geom: ogc:geomLiteral, targetPercent: xsd:double): ogc:geomLiteral
 ----
@@ -1537,7 +1537,7 @@ The function http://www.opengis.net/def/function/geosparql/aggConcaveHull[`geof:
 ==== Function: geof:aggConvexHull
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggConvexHull (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
@@ -1552,7 +1552,7 @@ This function is similar in name to <<Function: geof:convexHull, geof:convexHull
 ==== Function: geof:aggUnion
 
 [%unnumbered]
-[source,RDF]
+[source,turtle]
 ----
 geof:aggUnion (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
