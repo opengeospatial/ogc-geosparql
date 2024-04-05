@@ -28,9 +28,10 @@ jobs:
          mkdir docs
          mkdir docs/geosparql10/
          mkdir docs/geosparql10/servicedescription
+         mkdir docs/geosparql10/vocabularies
          cd docs/geosparql10/
          cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../spec/11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib . 
-         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl .  
+         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl servicdescription/  
          echo "Generating documentation for GeoSPARQL 1.0 ontology"
          pylode -i ../../vocabularies/geo.ttl -o index.html
          python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
@@ -91,6 +92,7 @@ jobs:
          sudo apt-get install python3-venv python3-wheel -y
          sudo pip3 install wheel pylode==2.13.2 rdflib
          mkdir docs
+         mkdir docs/servicedescription
          mkdir site
          mkdir site/geosparql11
          ls
@@ -104,7 +106,7 @@ jobs:
          cd ../docs/geosparql11/
          echo "Copying over 1.1 RDF files"
          cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../vocabularies/requirements.ttl  ../../citeme.bib .
-         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
+         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl servicedescription/
          cp -r ../../spec/figures .
          echo "Generating documentation for GeoSPARQL 1.1 ontology"
          python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
