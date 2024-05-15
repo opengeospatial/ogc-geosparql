@@ -800,6 +800,103 @@ The function http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`] c
 Implementations shall support <<Function: geof:asKML, `geof:asKML`>> as a SPARQL extension function.
 ====
 
+==== Geocode Literal
+
+This section establishes the Requirements class for representing geocode data in RDF based on a Literal type that can encompass different Geocodes. It defines one RDFS Datatype:
+<<RDFS Datatype: geo:geocodeLiteral, Geocode Literal>> and one property, <<Function: geof:asGeocode, as GeoCode>>.
+
+===== RDFS Datatype: geo:geocodeLiteral
+
+The datatype http://www.opengis.net/ont/geosparql#geocodeLiteral[`geo:geocodeLiteral`] is used to contain a geocode serialization of a Geometry.
+
+[%unnumbered]
+[source,turtle]
+----
+geo:geocodeLiteral 
+    a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Geocode Literal"@en ;
+    skos:definition "A Geocode serialization of a Geometry object."@en ;
+.
+----
+
+The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
+
+[%unnumbered]
+```
+geocodeLiteral ::= opt-iri-and-whitespace geocode-data
+
+opt-iri-and-space = "<" IRI ">" LWSP / ""
+```
+
+The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geocode-data` is the Geocode representation of the Geometry, in the way it is defined in the definition of the respective Geocoding standard, as identified by its IRI.
+
+[[req_geometry_extension_geocode-literal-srs]]
+[requirement,identifier="/req/geometry-extension/geocode-literal-srs"]
+.Geocode Literal SRS
+====
+RDFS Literals of type <<RDFS Datatype: geo:geocodeLiteral, `geo:geocodeLiteral`>> contain a Geocoding system definition in the form of an IRI. The SRS for the All literals of this type shall according to the KML specification only be encoded in and assumed to use the WGS84 geodetic longitude-latitude spatial reference system (http://www.opengis.net/def/crs/OGC/1.3/CRS84[`http://www.opengis.net/def/crs/OGC/1.3/CRS84`]).
+====
+
+The example <<RDFS Datatype: geo:geocodeLiteral, Geocode Literal>> below encodes a point Geometry (point 27 19' 32S, 153 4' 59"E) in the GeoHash encoding:
+
+[%unnumbered]
+[source,turtle]
+----
+"<https://w3id.org/geohashes/geohash> r7hue3x9jepv"^^<http://www.opengis.net/ont/geosparql#geocodeLiteral>
+----
+
+[[req_geometry_extension_geocode-literal-empty]]
+[requirement,identifier="/req/geometry-extension/geocode-literal-empty"]
+.Empty Geocode Literal
+====
+An empty RDFS Literal of type <<RDFS Datatype: geo:geocodeLiteral, `geo:geocodeLiteral`>> shall be interpreted as an empty Geometry .
+====
+
+===== Property: geo:asGeocode
+
+The property http://www.opengis.net/ont/geosparql#asGeocode[`geo:asGeocode`] is defined to link a Geometry with a Geocode serialization.
+
+[[req_geometry_extension_geometry-as-geocode-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-geocode-literal"]
+.asGeocode Property
+====
+Implementations shall allow the RDF property <<Property: geo:asGeocode, `geo:asGeocode`>> to be used in SPARQL graph patterns.
+====
+
+The property <<Property: geo:asGeocode, as Geocode>> is used to link a geometric element with a Geocode serialization.
+
+[%unnumbered]
+[source,turtle]
+----
+geo:asGeocode 
+    a rdf:Property, owl:DatatypeProperty;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as Geocode"@en ;
+    skos:definition "The Geocode serialization of a Geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:geocodeLiteral ;
+.
+----
+
+===== Function: geof:asGeocode
+
+[%unnumbered]
+```
+geof:asGeocode (geom: ogc:geomLiteral, geocode: rdfs:Resource): geo:geocodeLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/asGeocode[`geof:asGeocode`] converts `geom` to an equivalent Geocode representation in the Geocoding system as defined by the `geocode` parameter. 
+
+[[req_geometry_extension_asGeocode-function]]
+[requirement,identifier="/req/geometry-extension/asGeocode-function"]
+.asGeocode Function
+====
+Implementations shall support <<Function: geof:asGeocode, `geof:asGeocode`>> as a SPARQL extension function.
+====
+
+
 
 ==== Discrete Global Grid System
 

@@ -137,6 +137,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		spec11:C.1.2.4 ;	
 .
 
+
+:geocodeLiteral
+	a rdfs:Datatype ;
+	rdfs:isDefinedBy 
+		: ,
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geocode-literal> ;
+	skos:definition """A Geocode serialization of a Geometry object."""@en ;
+	skos:prefLabel "Geocode Literal"@en ;	
+.
+
+
 :kmlLiteral
 	a rdfs:Datatype ;
 	rdfs:seeAlso <https://www.ogc.org/standards/kml/> ;
@@ -741,7 +752,19 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	skos:prefLabel "as KML"@en ;
 	skos:example 
 		spec11:C.1.2.4 ;
-.	
+.
+
+:asGeocode
+	a rdf:Property, owl:DatatypeProperty ;
+	rdfs:subPropertyOf :hasSerialization;
+	rdfs:domain :Geometry ;
+	rdfs:range :geocodeLiteral ;
+	rdfs:isDefinedBy 
+		: , 
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geocode-literal> ;
+	skos:definition """The Geocode serialization of a Geometry"""@en ;
+	skos:prefLabel "as Geocode"@en ;
+.
 
 :asDGGS
 	a rdf:Property, owl:DatatypeProperty ;
