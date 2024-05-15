@@ -125,6 +125,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		spec11:C.2.2.2 ;
 .
 
+:ewkbLiteral
+	a rdfs:Datatype ;
+	rdfs:isDefinedBy 
+		: ,
+		<http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/ewkb-literal> ;
+	skos:definition """A Well-known Binary serialization of a Geometry object."""@en ;
+	rdfs:seeAlso <https://portal.ogc.org/files/?artifact_id=25355> ; # TODO: replace with one that is guaranteed to be persistent
+	skos:prefLabel "Well-known Binary Literal"@en ;
+	skos:example
+		spec11:C.2.2.3 ;
+.
+
 :geoJSONLiteral
 	a rdfs:Datatype ;
 	rdfs:seeAlso <https://tools.ietf.org/html/rfc7946> ;
@@ -820,6 +832,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		spec11:C.1.2.3 ;		
 .
 
+:isClosed
+	a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:range xsd:boolean ;
+	rdfs:isDefinedBy 
+		: , 
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties> ;
+	skos:definition """(true) if this geometric object is closed. If true, then this geometric object's start point equals its end point."""@en ;
+	skos:prefLabel "is closed"@en ;
+	skos:example 
+		spec11:C.1.2.3 ;
+
 :isEmpty
 	a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
@@ -833,6 +857,18 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	skos:example 
 		spec11:C.1.2.3 ;		
 .
+
+:isRing
+	a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain :Geometry ;
+	rdfs:range xsd:boolean ;
+	rdfs:isDefinedBy 
+		: , 
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties> ;
+	skos:definition """(true) if this geometric object is a ring. If true, then this geometric object is closed and simple."""@en ;
+	skos:prefLabel "is ring"@en ;
+	skos:example 
+		spec11:C.1.2.3 ;
 
 :isSimple
 	a rdf:Property, owl:DatatypeProperty ;
