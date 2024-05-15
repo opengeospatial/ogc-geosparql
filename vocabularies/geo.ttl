@@ -8,6 +8,7 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sdo: <https://schema.org/>
+PREFIX vann: <http://purl.org/vocab/vann/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX spec11: <http://www.opengis.net/spec/geosparql/1.1/specification.html#> # TODO: use PID IRI
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -16,6 +17,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <http://www.opengis.net/ont/geosparql> 
 	a owl:Ontology ;
 	dcterms:title "GeoSPARQL Ontology" ;
+        vann:preferredNamespacePrefix "geo"^^xsd:string ;
+    	vann:preferredNamespaceUri "http://www.opengis.net/ont/geosparql#"^^xsd:anyURI ;
 	dcterms:publisher [
 		a sdo:Organization ;
 		sdo:name "Open Geospatial Consortium" ;
@@ -145,6 +148,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	skos:example
 		spec11:C.1.2.4 ;	
 .
+
+
+:geocodeLiteral
+	a rdfs:Datatype ;
+	rdfs:isDefinedBy 
+		: ,
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geocode-literal> ;
+	skos:definition """A Geocode serialization of a Geometry object."""@en ;
+	skos:prefLabel "Geocode Literal"@en ;	
+.
+
 
 :kmlLiteral
 	a rdfs:Datatype ;
@@ -750,7 +764,19 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	skos:prefLabel "as KML"@en ;
 	skos:example 
 		spec11:C.1.2.4 ;
-.	
+.
+
+:asGeocode
+	a rdf:Property, owl:DatatypeProperty ;
+	rdfs:subPropertyOf :hasSerialization;
+	rdfs:domain :Geometry ;
+	rdfs:range :geocodeLiteral ;
+	rdfs:isDefinedBy 
+		: , 
+		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geocode-literal> ;
+	skos:definition """The Geocode serialization of a Geometry"""@en ;
+	skos:prefLabel "as Geocode"@en ;
+.
 
 :asDGGS
 	a rdf:Property, owl:DatatypeProperty ;

@@ -2,14 +2,16 @@
 
 [[core]]
 
-This clause establishes the *core* requirements class, with IRI `/req/core`, which has a single corresponding conformance class, *core*, with IRI `/conf/core`. This requirements class defines a set of classes and properties for representing geospatial data. The resulting vocabulary - an ontology - can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. RDFS and OWL vocabulary have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.
+This clause establishes the *Core* Requirements class, with IRI `/req/core`, which has a corresponding Conformance Class, *Core*, with IRI `/conf/core`. These Requirements define a set of classes and properties for representing geospatial data. The resulting vocabulary - an ontology - can be used to construct SPARQL graph patterns for querying appropriately modeled geospatial data. The RDFS and OWL vocabularies have both been used so that the vocabulary can be understood by systems that support only RDFS entailment and by systems that support OWL-based reasoning.
 
-The figure below overviews the classes and properties defined by GeoSPARQL in the *core*, *Topology Vocabulary Extension* and *Geometry Extension*, *Geometry Topology Extension* and *RDFS Entailment Extension* requirements classes. 
+The figure below gives an overview of the classes and properties defined by GeoSPARQL in the *Core*, *Topology Vocabulary Extension* and *Geometry Extension*, *Geometry Topology Extension* and *RDFS Entailment Extension* Conformance Classes. 
 
 [#ont-overview]
-.An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, their prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of `geo:hasSize`, its metric equivalent and `geo:hasSerialization` are not shown for clarity.
+.An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of `geo:hasSize`, its metric equivalent and `geo:hasSerialization` are not shown for clarity.
 image::ont-overview.png[GeoSPARQL Ontology overview,align="center"]
 
+////
+//REMOVED GSB
 [requirements_class,identifier="/req/core",subject="Implementation Specification"]
 .Core Extension
 ====
@@ -21,6 +23,7 @@ requirement:: /req/core/feature-collection-class
 requirement:: /req/core/geometry-collection-class
 requirement:: /req/core/spatial-object-properties
 ====
+////
 
 [[sparql_protocol]]
 === SPARQL
@@ -34,7 +37,7 @@ Implementations shall support the SPARQL Query Language for RDF <<SPARQL>>, the 
 
 === Classes
 
-Two main classes are defined: <<Class: geo:SpatialObject, `geo:SpatialObject`>> and <<Class: geo:Feature, `geo:Feature`>>. The class <<Class: geo:Feature, `geo:Feature`>> is equivalent to the UML class `Feature` defined in <<ISO19109>>.
+Two main classes are defined: <<Class: geo:SpatialObject, `geo:SpatialObject`>> and <<Class: geo:Feature, `geo:Feature`>>. 
 
 Two container classes are defined: <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> and <<Class: geo:FeatureCollection, Feature Collection>>. 
 
@@ -43,15 +46,16 @@ Two container classes are defined: <<Class: geo:SpatialObjectCollection, Spatial
 The class http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] is defined by the following:
 
 [%unnumbered]
+[#spatialobject_def]
 [source,turtle]
 ----
 geo:SpatialObject 
     a rdfs:Class, owl:Class ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "Spatial Object"@en ;
-    skos:definition "The class Spatial Object represents everything that can 
-                    have a spatial representation. It is superclass of feature 
-                    and geometry"@en .
+    skos:definition "Anything spatial (being or having a shape, position or an extent)."@en ;
+    skos:note "Subclasses of this class are expected to be used for instance data."@en ;
+.
 ----
 [[req_core_spatial_object_class]]
 [requirement,identifier="/req/core/spatial-object-class"]
@@ -84,9 +88,17 @@ geo:Feature
     skos:prefLabel "Feature"@en ;
     rdfs:subClassOf geo:SpatialObject ;
     owl:disjointWith geo:Geometry ;
-    skos:definition "This class represents the top-level feature type. This
-                    class is equivalent to GFI_Feature defined in ISO 19156, 
-                    and it is superclass of all feature types."@en .
+    skos:definition "A discrete spatial phenomenon in a universe of discourse."@en ;
+    skos:note "A Feature represents a uniquely identifiable phenomenon, for example 
+              a river or an apple. While such phenomena (and therefore the Features 
+              used to represent them) are bounded, their boundaries may be crisp 
+              (e.g., the declared boundaries of a state), vague (e.g., the 
+              delineation of a valley versus its neighboring mountains), and change 
+              with time (e.g., a storm front). While discrete in nature, Features 
+              may be created from continuous observations, such as an isochrone 
+              that determines the region that can be reached by ambulance within 
+              5 minutes."@en ;
+.
 ----
 
 [[req_core_feature-class]]
@@ -104,22 +116,21 @@ The class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[`geo:Spat
 [source,turtle]
 ----
 geo:SpatialObjectCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Spatial Object Collection" ;
-  skos:definition "The class Spatial Object Collection represents any collection of 
-                  individual Spatial Objects. It is superclass of Feature Collection 
-                  and Geometry Collection."@en ;  
-  rdfs:subClassOf rdfs:Container ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom geo:SpatialObject ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Spatial Object Collection" ;
+    skos:definition "A collection of individual Spatial Objects."@en ;  
+    skos:note "This is the superclass of Feature Collection and Geometry Collection."@en ;              
+    rdfs:subClassOf rdfs:Container ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom geo:SpatialObject ;
+        owl:onProperty rdfs:member ;
     ] ;
 .
 ----
 
-The restriction imposed on the generic `rdfs:Container` that defines this class is that only instances of <<Class: SpatialObject, Spatial Object>> are allowed to be members of it and these are indicated with the `rdfs:member` property.
+Membership of the generic  http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`] that defines this class is restricted to instances of <<Class: SpatialObject, Spatial Object>>. <<Class: SpatialObjectCollection, Spatial Object Collection>> members are to be indicated with the  http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
 
 [[req_core_spatial-object-collection-class]]
 [requirement,identifier="/req/core/spatial-object-collection-class"]
@@ -136,21 +147,20 @@ The class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCol
 [source,turtle]
 ----
 geo:FeatureCollection
-  a owl:Class ;
-  rdfs:isDefinedBy geo: ;
-  skos:prefLabel "Feature Collection" ;
-  skos:definition "The class Feature Collection represents 
-                  any collection of individual Features."@en ;  
-  rdfs:subClassOf geo:SpatialObjectCollection ;
-  rdfs:subClassOf [
-      a owl:Restriction ;
-      owl:allValuesFrom :Feature ;
-      owl:onProperty rdfs:member ;
+    a owl:Class ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "Feature Collection" ;
+    skos:definition "A collection of individual Features."@en ;
+    rdfs:subClassOf geo:SpatialObjectCollection ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:allValuesFrom :Feature ;
+        owl:onProperty rdfs:member ;
     ] ;
 .
 ----
 
-The restriction imposed on the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is that only instances of <<Class: Feature, Feature>> are allowed to be members of it and these are to be indicated with the `rdfs:member` property.
+Membership of the more general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: Feature, Feature>>. <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> members are to be indicated with the `rdfs:member` property.
 
 [[req_core_feature-collection-class]]
 [requirement,identifier="/req/core/feature-collection-class"]
@@ -165,7 +175,7 @@ Implementations shall allow the RDFS class <<Class: geo:FeatureCollection, `geo:
 Properties are defined for associating Spatial Objects with scalar spatial measurements (sizes) .
 
 
-[[req_geometry-extension_spatial-object-properties]]
+[[req_core_spatial-object-properties]]
 [requirement,identifier="/req/core/spatial-object-properties"]
 .Spatial Object Properties
 ====
@@ -353,6 +363,7 @@ geo:hasMetricArea
 	skos:prefLabel "has area in meters"@en ;
 .
 ----
+
 TIP: A consistency check can be applied to Geometry instances indicating both this property and the property <<Property: geo:dimension, `geo:dimension`>>: if supplied, the <<Property: geo:dimension, `geo:dimension`>> property's range value must be the literal integer 2 or 3. The following SPARQL query will return `true` if applied to a graph where this is not the case for all Geometries:
 
 [%unnumbered]
@@ -425,8 +436,8 @@ TIP: A consistency check can be applied to Geometries indicating both this prope
 Properties are defined for associating <<Class: geo:Feature, `geo:Feature`>> instances with <<Class: geo:Geometry, `geo:Geometry`>> instances.
 
 
-[[req_geometry-extension_feature-properties]]
-[requirement,identifier="/req/geometry-extension/feature-properties"]
+[[req_core_feature-properties]]
+[requirement,identifier="/req/core/feature-properties"]
 .Feature Properties
 ====
 Implementations shall allow the properties 
@@ -488,7 +499,7 @@ Such cases are application-specific data modeling errors and are therefore outsi
 
 ==== Property: geo:hasBoundingBox
 
-The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of its geometry. Bounding-boxes are typically uses in indexing and discovery.
+The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of the feature's geometry. Bounding-boxes are typically used in indexing and discovery.
 
 [%unnumbered]
 [source,turtle]
