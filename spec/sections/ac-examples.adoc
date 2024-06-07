@@ -95,7 +95,7 @@ Here a `Feature` is declared and given a preferred label.
 
 [[C.1.1.2.2]]
 [example]
-====== A `Feature` related to a `Geometry`
+====== A `Feature` related to a `Geometry` and a `GeometryCollection`
 
 [%unnumbered]
 [source,turtle]
@@ -110,6 +110,26 @@ eg:x
 ----
 
 Here a <<Class: geo:Feature, `geo:Feature`>> is declared, given a preferred label and a Geometry for that <<Class: geo:Feature, `geo:Feature`>> is indicated with the use of <<Property: geo:hasGeometry, `geo:hasGeometry`>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property <<Property: geo:asWKT, `geo:asWKT`>> and the literal type `geo:wktLiteral`.
+
+[%unnumbered]
+[source,turtle]
+----
+eg:x
+    a geo:Feature ;
+    skos:prefLabel "Feature X" ;
+    geo:hasGeometry [
+        a geo:GeometryCollection ;
+        rdfs:member [
+            geo:asWKT "POLYGON ((149.06016 -35.23610, 149.06062 -35.23604, ... , 149.06016 -35.23610))"^^geo:wktLiteral ;
+        ] ,
+        [
+            geo:asWKT "POINT (149.061 -35.23607)"^^geo:wktLiteral ;
+        ] ;
+    ] ;
+.
+----
+
+Here a <<Class: geo:Feature, `geo:Feature`>> is declared and linked to a <<Class: geo:GeometryCollection, `geo:GeometryCollection>> in order to bundle multiple <<Class: geo:Geometry, `geo:Geometry`>> instances together. Using this mechanism, you could add additional properties to the <<Class: geo:GeometryCollection, `geo:GeometryCollection>> to detail useful things about it. This is an alternative to the pattern given in <<C.1.1.2.5, `Feature` with two different `Geometry` instances indicated>> example below.
 
 
 [[C.1.1.2.3]]
@@ -128,7 +148,7 @@ eg:x
     geo:hasMetricArea "8.9E4"^^xsd:double ;
 .
 ----
-This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature, `geo:Feature`>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> (in this case, <<Property: geo:MetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
+This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature, `geo:Feature`>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> (in this case, <<Property: geo:hasMetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
 
 [[C.1.1.2.4]]
 [example]
@@ -367,7 +387,7 @@ ex:fc-x
 .
 ----
 
-All of the GeoSPARQL collection classes are unordered since they are subclasses of the generic http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`], however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instance labels, their areas, geometries or any other property.
+All the GeoSPARQL collection classes are unordered since they are subclasses of the generic http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`], however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instance labels, their areas, geometries or any other property.
 
 [example]
 ===== `GeometryCollection`
@@ -416,13 +436,13 @@ ex:x
     ] ;    
 ----
 
-There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<Property: geo:hasCentroid, `geo:hasCentroid`>> indicates is could be used with a http://www.opengis.net/ont/sf#Point[`sf:Point`] and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> indicates use with an `sf:Envelope`.
+There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<Property: geo:hasCentroid, `geo:hasCentroid`>> indicates it could be used with a http://www.opengis.net/ont/sf#Point[`sf:Point`] and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> indicates use with an `sf:Envelope`.
 
 ==== Properties
 
 ===== Spatial Object Properties
 
-See the section <<C.1.1.1.2 Size Properties>> above.
+See the section <<C.1.1.1.1, >> above.
 
 [example]
 ===== Feature Properties
