@@ -35,7 +35,7 @@ cs:
     dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
     owl:versionIRI geof:1.1 ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
-    skos:definition "All the GeoSPARQL Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:definition "All the GeoSPARQL Functions defined within the GeoSPARQL 1.3 specification"@en ;
 	skos:hasTopConcept
         geof:area ,
         geof:asDGGS ,
@@ -204,6 +204,8 @@ geof:nonTopo
         geof:isEmpty ,
         geof:isSimple ,
         geof:length ,
+	geof:latitude,
+	geof:longitude,
         geof:maxX ,
         geof:maxY ,
         geof:maxZ ,
@@ -1560,6 +1562,51 @@ geofo:isSimple_output a fno:Parameter ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  .
 
+
+geof:latitude
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:valid ;
+    fno:expects (geof:latitude_param1 ) ;
+    fno:returns (geof:latitude_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A query function that returns the latitude of a point geometry."@en ;
+    skos:prefLabel "maxX"@en ;
+    skos:scopeNote "The latitude is returned in the unit defined by the geometries' coordinate reference system"@en ;
+.
+
+geofp:latitude_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:latitude_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  
+
+
+geof:longitude
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:valid ;
+    fno:expects (geof:longitude_param1 ) ;
+    fno:returns (geof:longitude_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A query function that returns the longitude of a point geometry."@en ;
+    skos:prefLabel "maxX"@en ;
+    skos:scopeNote "The longitude is returned in the unit defined by the geometries' coordinate reference system"@en ;
+.
+
+geofp:longitude_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:longitude_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  
 
 geof:maxX
     a sd:Function, fno:Function , skos:Concept ;
