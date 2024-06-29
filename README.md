@@ -28,10 +28,14 @@ If you want to cite the living document of the in-progress standard we encourage
 }
 ```
 
-## Update of GeoSPARQL 1.0 to 1.1
+## Update of GeoSPARQL 1.0 to 1.1 and then 1.3
 
 ### Rationale
-GeoSPARQL 1.0 was published in 2012. Since then the standard has seen considerable uptake. With that came requests for extension and improvement. This has led to the revival of the OGC GeoSPARQL Standards Working Group (SWG). The overall mission of the GeoSPARQL SWG is to ensure that the features of GeoSPARQL remain up-to-date with expectations from the Semantic Web community. For more details, see the [SWG's charter](https://portal.ogc.org/files/93345) (also linked to above) and the recently published OGC whitepaper [Benefits of Representing Spatial Data Using Semantic and Graph Technologies](http://docs.ogc.org/wp/19-078r1/19-078r1.html).
+GeoSPARQL 1.0 was published in 2012. GeoSPARQL 1.1 in 2023 - it contained multiple but small updates to 1.0.
+
+GeoSPARQL 1.2 is a version of 1.1 for International Standards Organization co-release.
+
+GeoSPARQL 1.3 is the current version and contains more major updates to GeoSPARQL, such as initial support for 3D spatial information.
 
 ### Process
 The primary set of tasks for the SWG is [the set of change requests for GeoSPARQL in the OGC Issue Tracker](http://ogc.standardstracker.org/requestlist.cgi?component=11-052r4&list_id=1094&product=OGC). All issues reported in the OGC issue tracker should have duplicates in this repository and should be labelled 'change request'.
