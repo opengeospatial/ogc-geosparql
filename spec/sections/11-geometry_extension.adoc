@@ -49,13 +49,13 @@ Some of the properties defined in these vocabularies, such as DCAT2's https://ww
 
 === GeoSPARQL and Simple Features (SFA-CA)
 
-The GeoSPARQL Geometry Extension is largely based on the ISO/OGC Simple Features Access - Common Architecture (SFA-CA) Standard <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry and not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
+The GeoSPARQL Geometry Extension is largely based on the ISO/OGC Simple Features Access - Common Architecture (SFA-CA) Standard <<OGC06-103r4>>. Contrary to what the name may imply, SFA-CA is about Geometry and not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
 
-Neither GeoSPARQL nor SFA-CA support full three dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This approach is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
+Neither GeoSPARQL nor SFA-CA support full three-dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This approach is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
 
 SFA-CA also describes M coordinate values that may be part of geometry encodings. The M value represents a measure, a value that can be used in information systems that support linear referencing. GeoSPARQL at the moment does not support linear referencing. Like Z values in coordinates, M values are to be ignored.
 
-SFA-CA specifies a class hierarchy for Geometry. Although these classes are not part of the GeoSPARQL ontology, the GeoSPARQL SWG does publish a vocabulary of Simple Features geometry: http://www.opengis.net/ont/sf. Geometry types defined in this vocabulary can be considered safe to use with GeoSPARQL. The two Geometry serializations that were specified in GeoSPARQL 1.0, WKT and GML, fully support all SFA-CA geometry types. However, the two Geometry serializations that were introduced in GeoSPARQL 1.1 do not. Some SFA-CA geometry types are not supported by either the OGC KML <<OGCKML>> or the GeoJSON format. For example, neither KML nor GeoJSON support the Triangulated Integrated Network (TIN) or Triangle geometry types.
+SFA-CA specifies a class hierarchy for Geometry. Although these classes are not part of the GeoSPARQL ontology, the GeoSPARQL SWG does publish a vocabulary of Simple Features geometry: http://www.opengis.net/ont/sf. Geometry types defined in this vocabulary can be considered safe to use with GeoSPARQL. The two Geometry serializations that were specified in GeoSPARQL 1.0, WKT and GML, fully support all SFA-CA geometry types. However, the two Geometry serializations that were introduced in GeoSPARQL 1.1 do not. Some SFA-CA geometry types are not supported by either the OGC KML <<OGC12-007r2>> or the GeoJSON format. For example, neither KML nor GeoJSON support the Triangulated Integrated Network (TIN) or Triangle geometry types.
 
 === Recommendation for units of measure
 
@@ -75,7 +75,7 @@ serialization:: Specifies the serialization standard to use when generating geom
 
 [NOTE,keep-separate=true]
 ====
-A serialization strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<OGCSFACA>> <<ISO19125-1>>; the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
+A serialization strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<OGC06-103r4>> <<ISO19125-1>>; the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
 ====
 
 version:: Specifies the version of the serialization format used.
@@ -134,7 +134,7 @@ geo:GeometryCollection
 .
 ----
 
-Membership of the general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: Geometry, Geometry>>. `geo:GeometryCollection` members are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
+Membership of the general <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: geo:Geometry, Geometry>>. `geo:GeometryCollection` members are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
 
 [NOTE]
 ====
@@ -419,14 +419,14 @@ GeoSPARQL does present some Requirements for literal structure which extend the 
 
 [[NOTE]]
 ====
-GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGCSFACA>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGC06-103r4>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
 
 Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
 ====
 
 ==== Well-Known Text
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<OGCSFACA>> <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
+This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
 
 ===== RDFS Datatype: geo:wktLiteral
 
@@ -550,11 +550,11 @@ Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL
 
 ==== Well-Known Binary
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Binary (WKB) as defined by _Simple Features Access_ <<OGCSFACA>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatype: geo:ewkbLiteral, WKB Literal>> and one property, <<Property: geo:asWKB, as WKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
+This section establishes the requirements for representing Geometry data in RDF based on Well-Known Binary (WKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> and one property, <<Property: geo:asWKB, as WKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
 
 ===== RDFS Datatypes: geo:wkbLiteral
 
-The datatype http://www.opengis.net/ont/geosparql#ewkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (WKB) serialization of a Geometry.
+The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (WKB) serialization of a Geometry.
 
 ```turtle
 geo:ewkbLiteral 
@@ -566,7 +566,7 @@ geo:ewkbLiteral
 ```
 [#req_geometry_extension_wkb-literal]
 |===
-| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatype: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well-Known Binary (WKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatype: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a WKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a WKB string as defined in <<ISO13249>>. The Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
+| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well-Known Binary (WKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances are formed by a WKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a WKB string as defined in <<ISO13249>>. The Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
 |===
 
@@ -584,7 +584,7 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 
 [#req_geometry_extension_wkb-literal-default-srs]
 |===
-| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatype: geo:wkbLiteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
+| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs`]
 |===
 
@@ -592,11 +592,11 @@ The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+
 
 [#req_geometry_extension_wkb-axis-order]
 |===
-| *Req {counter:req}* Coordinate tuples within <<RDFS Datatype: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-axis-order`]
 |===
 
-The example <<RDFS Datatype: geo:ewkbLiteral, WKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 ```turtle
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
@@ -610,7 +610,7 @@ A second example below encodes the same point as encoded in the example above bu
 
 [#req_geometry_extension_wkb-literal-empty]
 |===
-| *Req 18* An empty RDFS Literal of type <<RDFS Datatype: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
+| *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:wkbLiteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-empty`]
 |===
 
@@ -844,7 +844,7 @@ Implementations shall support <<Function: geof:asGeoJSON, `geof:asGeoJSON`>> as 
 
 ==== Keyhole Markup Language
 
-This section establishes the Requirements class for representing Geometry data in RDF based on KML as defined by <<OGCKML>>. It defines one RDFS Datatype:
+This section establishes the Requirements class for representing Geometry data in RDF based on KML as defined by <<OGC12-007r2>>. It defines one RDFS Datatype:
 <<RDFS Datatype: geo:kmlLiteral, KML Literal>> and one property, <<Function: geof:asKML, as KML>>.
 
 ===== RDFS Datatype: geo:kmlLiteral
@@ -862,14 +862,14 @@ geo:kmlLiteral
 .
 ----
 
-Valid <<RDFS Datatype: geo:kmlLiteral, KML Literal>> instances are formed by encoding Geometry information as a Geometry object as defined in the KML specification <<OGCKML>>.
+Valid <<RDFS Datatype: geo:kmlLiteral, KML Literal>> instances are formed by encoding Geometry information as a Geometry object as defined in the KML specification <<OGC12-007r2>>.
 
 
 [[req_geometry_extension_kml-literal]]
 [requirement,identifier="/req/geometry-extension/kml-literal"]
 .KML Literal
 ====
-All <<RDFS Datatype: geo:kmlLiteral, `geo:kmlLiteral`>> instances shall consist of the Geometry objects as defined in the KML specification <<OGCKML>>.
+All <<RDFS Datatype: geo:kmlLiteral, `geo:kmlLiteral`>> instances shall consist of the Geometry objects as defined in the KML specification <<OGC12-007r2>>.
 ====
 
 [[req_geometry_extension_kml-literal-srs]]
