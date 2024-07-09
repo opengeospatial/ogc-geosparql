@@ -8,7 +8,7 @@ The figure below gives an overview of the classes and properties defined by GeoS
 
 [#ont-overview]
 .An overview of the Classes and Properties defined in GeoSPARQL. Where specific Classes and Properties are indicated, the prefixed forms of their ontology identifiers (IRIs) are given. Where types or collections of properties are given, they are described in italics. Where unspecified Classes are given, they are represented with a question mark. For cardinalities and other ontology restrictions, see the ontology document. Subproperties of `geo:hasSize`, its metric equivalent and `geo:hasSerialization` are not shown for clarity.
-image::../figures/ont-overview.png[GeoSPARQL Ontology overview,align="center"]
+image::ont-overview.png[GeoSPARQL Ontology overview,align="center"]
 
 ////
 //REMOVED GSB
@@ -151,7 +151,7 @@ geo:FeatureCollection
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "Feature Collection" ;
     skos:definition "A collection of individual Features."@en ;
-    rdfs:subClassOf geo:SpatialObjectCollection ;
+    rdfs:subClassOf geo:SpatialObjectCollection , geo:Feature ;
     rdfs:subClassOf [
         a owl:Restriction ;
         owl:allValuesFrom :Feature ;
@@ -160,7 +160,12 @@ geo:FeatureCollection
 .
 ----
 
-Membership of the more general <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: geo:Feature, Feature>>. <<Class: geo:FeatureCollection, Feature Collection>> members are to be indicated with the `rdfs:member` property.
+This class is indicated to be a collection of spatial objects by being a subclass of the general <<Class: geo:SpatialObjectCollection, Spatial Object Collection>>. That it contains only <<Class: geo:Feature, Feature>> class instances is indicated by the restriction http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] predicate. That a it can be used as a Feature, for example as the domain value for the <<Property: geo:hasGeometry, has geometry>> predicate, is indicated by it being a subclass of the <<Class: geo:Geometry, Geometry>> class.
+
+[NOTE]
+====
+Many spatial standards, such as <<OGC17-069r3>>, contain a grouping mechanism for Features called _layers_ or _feature collections_ or _feature types_. These are commonly used to contain similar types of, or otherwise relates, Features. The Feature Collection class can be used for this purpose and, where it is, the bounding box geometry or other summary spatial projection of it can be indicated with a geometry directly. See
+====
 
 [[req_core_feature-collection-class]]
 [requirement,identifier="/req/core/feature-collection-class"]
@@ -450,9 +455,11 @@ to be used in SPARQL graph patterns.
 
 ==== Property: geo:hasGeometry
 
-The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`] is used to link a Feature with a Geometry or a Geometry Collection that represents its spatial extent.
+The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`] is used to link a Feature with a Geometry that represents a spatial projection of it.
 
-A Feature may be associated with multiple individual Geometries or even multiple individual Geometry Collections, or any combinations of Geometries or Geometry Collections.
+A Feature may be linked to Geometry Collection instead of a simple Geometry.
+
+A Feature may also be associated with multiple individual Geometries or even multiple individual Geometry Collections, or any combinations of Geometries or Geometry Collections.
 
 [%unnumbered]
 [source,turtle]
@@ -461,13 +468,7 @@ geo:hasGeometry
     a rdf:Property, owl:ObjectProperty ;
     rdfs:isDefinedBy geo: ;
     rdfs:domain geo:Feature ;
-    rdfs:range
-		[
-			owl:unionOf (
-				:Geometry
-				:GeometryCollection
-			)
-		] ;
+    rdfs:range geo:Geometry ;
     skos:prefLabel "has Geometry"@en ;
     skos:definition "A spatial representation for a given Feature."@en ;
 .

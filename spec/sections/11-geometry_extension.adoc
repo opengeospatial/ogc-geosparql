@@ -125,7 +125,7 @@ geo:GeometryCollection
   rdfs:isDefinedBy geo: ;
   skos:prefLabel "Geometry Collection"@en ;
   skos:definition "A collection of individual Geometries."@en ;
-  rdfs:subClassOf geo:SpatialObjectCollection ;
+  rdfs:subClassOf geo:SpatialObjectCollection , geo:Geometry ;
   rdfs:subClassOf [
       a owl:Restriction ;
       owl:allValuesFrom geo:Geometry ;
@@ -134,7 +134,7 @@ geo:GeometryCollection
 .
 ----
 
-Membership of the general <<Class: SpatialObjectCollection, Spatial Object Collection>> that defines this class is restricted to instances of <<Class: Geometry, Geometry>>. `geo:GeometryCollection` members are to be indicated with the http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] property.
+This class is indicated to be a collection of spatial objects by being a subclass of the general <<Class: geo:SpatialObjectCollection, Spatial Object Collection>>. That it contains only <<Class: geo:Geometry, Geometry>> class instances is indicated by the restriction http://www.w3.org/2000/01/rdf-schema#member[`rdfs:member`] predicate. That a it can be used as a Geometry, for example as the range value for the <<Property: geo:hasGeometry, has geometry>> predicate, is indicated by it being a subclass of the <<Class: geo:Geometry, Geometry>> class.
 
 [NOTE]
 ====
@@ -144,7 +144,7 @@ http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instan
 
 Many geometry literal formats also have the ability to represent multiple geometries. Both the OGC Geography Markup Language (GML) and KML use a _MultiGeometry_ type and Well Known Text (WKT) and GeoJSON use a _GeometryCollection_ type. While the names of some of these objects are the same as this class' and all the concepts are similar, there is also no RDF/ontology relationship between this class and these literals. This class contains whole `geo:Geometry` instances, which may have more information within them than just a geometry serialization. 
 
-As per the expected use of http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances mentioned above: the uses of multi-geometry literals and <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> instances is expected to be different too.
+As per the expected use of http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] instances mentioned above, the uses of multi-geometry literals and <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> instances is expected to be different too.
 ====
 
 [[req_geometry_extension_geometry-collection-class]]
