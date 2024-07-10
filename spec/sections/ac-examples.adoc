@@ -512,7 +512,9 @@ In this example, each of the properties defined for a `Geometry` instance has re
 [example]
 ===== Geometry Serializations
 
-This section shows a `Geometry` instance for a `Feature` instance which is represented in all supported GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
+===== Literals
+
+This example shows a `Geometry` instance for a `Feature` instance which is represented in all supported literal GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
 
 Note that the concrete DGGS serialization used is for example purposes only as it is not formally defined in GeoSPARQL.
 
@@ -627,6 +629,25 @@ eg:x
     ] ;
 .
 ----
+
+===== Distributions
+
+This example shows a `Geometry` instance linked to a serialization of it in the https://en.wikipedia.org/wiki/Industry_Foundation_Classes[Industry_Foundation_Classes] according to <<ISO10303-21, ISO 10303-21>> (not a format directly supported with a GeoSPARQL predicate) stored in a local file:
+
+[%unnumbered]
+[source,turtle]
+----
+ex:mygeom
+    a geo:Geometry ;
+    geo:hasSerialization [
+        a dcat:Distribution ;
+        dcterms:conformsTo "https://www.iso.org/standard/63141.html"^^xsd:anyURI ;
+        dcat:byteSize 714356 ;
+        dcat:accessURL "file:///some/local/path/mygeom.ifc"^^xsd:anyURI .
+    ] ;
+.
+----
+
 
 [example]
 === Example SPARQL Queries & Rules 

@@ -389,7 +389,9 @@ geo:isSimple
 
 ==== Property: geo:hasSerialization
 
-The property http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] is defined to connect a Geometry with its text-based serialization (e.g., its WKT serialization).
+The property http://www.opengis.net/ont/geosparql#hasSerialization[`geo:hasSerialization`] is defined to connect a Geometry with its text-based serialization.
+
+It can be used to indicate a literal value, for example a GeoJSON <<RDFS Datatype: geo:geoJSONLiteral, `geo:geoJSONLiteral`>> or Well Known-Text <<RDFS Datatype: geo:wktLiteral, `ge:wktLiteral`>> value, or it can be used to indicate a https://www.w3.org/TR/vocab-dcat/#Class:Distribution[`dcat:Distribution`] object which, as per that class' definition, is "A specific representation of a Dataset..." where, within GeoSPARQL, the Dataset is the Geometry.
 
 [%unnumbered]
 [source,turtle]
@@ -400,13 +402,21 @@ geo:hasSerialization
     skos:prefLabel "has serialization"@en ;
     skos:definition "Connects a Geometry object with its text-based serialization."@en ;
     rdfs:domain geo:Geometry ; 
-    rdfs:range rdfs:Literal ;
+    rdfs:range rdfs:Resource ;
 .
 ----
 
 [NOTE,keep-separate=true]
 ====
-this property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this property for connecting serializations of common types with geometries, for example <<Property: geo:asGeoJSON, as GeoJSON>> which can be used for GeoJSON <<GEOJSON>> literals.
+This property is the generic property used to connect a Geometry with its serialization. GeoSPARQL also contains a number of sub properties of this property for connecting literal serializations of common types with geometries, for example <<Property: geo:asGeoJSON, as GeoJSON>> which can be used for <<GEOJSON, GeoJSON>> literals.
+
+If used to indicate a literal value, the sub properties are preferred.
+
+If used to indicate a https://www.w3.org/TR/vocab-dcat/#Class:Distribution[`dcat:Distribution`] object, the format and/or the conformance of that distribution to a data model or standard should be given as per DCAT Distribution norms, i.e. use of https://www.w3.org/TR/vocab-dcat/#Property:distribution_format[`dcterms:format`] and https://www.w3.org/TR/vocab-dcat/#Property:distribution_conforms_to[`dcterms:conformsTo`] predicates.
+
+https://www.w3.org/TR/vocab-dcat/#Property:distribution_access_url[`dcat:accessURL`] is the preferred predicate to indicate a file location or URL that links to the distribution data.
+
+See the <<Distributions, Distributions>> example.
 ====
 
 === Geometry Serializations
@@ -547,7 +557,6 @@ The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] c
 Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL extension function.
 ====
 
-
 ==== Well-Known Binary
 
 This section establishes the requirements for representing Geometry data in RDF based on Well-Known Binary (WKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> and one property, <<Property: geo:asWKB, as WKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
@@ -649,7 +658,6 @@ The function http://www.opengis.net/def/function/geosparql/asWKB[`geof:asWKB`] c
 | *Req {counter:req}* Implementations shall support <<Property: geo:asWKB, `geo:asWKB`>> as a SPARQL extension function.
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asWKB-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asWKB-function`]
 |===
-
 
 ==== Geography Markup Language
 
@@ -1039,8 +1047,6 @@ The function http://www.opengis.net/def/function/geosparql/asGeocode[`geof:asGeo
 Implementations shall support <<Function: geof:asGeocode, `geof:asGeocode`>> as a SPARQL extension function.
 ====
 
-
-
 ==== Discrete Global Grid System
 
 [requirements_class,identifier="/req/geometry-extension-dggs",subject="Implementation Specification"]
@@ -1175,8 +1181,6 @@ The function http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`]
 Implementations shall support <<Function: geof:asDGGS, `geof:asDGGS`>>  as a SPARQL extension function.
 ====
 
-
-
 [[query_functions]]
 === Non-topological Query Functions
 
@@ -1212,7 +1216,7 @@ Implementations shall support the functions
 <<Function: geof:symDifference, `geof:symDifference`>>, 
 <<Function: geof:transform, `geof:transform`>> and
 <<Function: geof:union, `geof:union`>>
-as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<OGCSFACA>> <<ISO19125-1>>, for non-DGGS geometry literals.
+as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<OGC06-103r4>> <<ISO19125-1>>, for non-DGGS geometry literals.
 ====
 
 [[req_geometry_extension_query-functions-non-sf]]
@@ -1259,7 +1263,7 @@ literals and thus the lack of existing software libraries for their manipulation
 [requirement,identifier="/req/geometry-extension-dggs/query-functions"]
 .DGGS Query Functions (Simple Features)
 ====
-Implementations shall support the functions of Requirement 39 for DGGS geometry literals as SPARQL extension functions, in a manner which is consistent with definitions of these functions in Simple Features <<OGCSFACA>> <<ISO19125-1>>, for non-DGGS geometry literals.
+Implementations shall support the functions of Requirement 39 for DGGS geometry literals as SPARQL extension functions, in a manner which is consistent with definitions of these functions in Simple Features <<OGC06-103r4>> <<ISO19125-1>>, for non-DGGS geometry literals.
 ====
 
 [[req_geometry_extension_query-functions-non-sf-dggs]]
@@ -1459,7 +1463,6 @@ geof:metricDistance (geom1: ogc:geomLiteral,
 ----
 
 The function http://www.opengis.net/def/function/geosparql/metricDistance[`geof:metricDistance`] returns the shortest distance in meters between any two Points in the two geometric objects. Calculations are in the coordinate reference system of `geom1`. This function is similar to <<Function: geof:distance, `geof:distance`>>, but does not need a specification of measurement unit.
-
 
 ==== Function: geof:distance
 
@@ -1734,7 +1737,6 @@ geof:patchN (geom: ogc:geomLiteral, index: xsd:integer): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/patchN[`geof:patchN`] returns the nth polygon of of `geom`, in the order of definition.
 
-
 ==== Function: geof:perimeter
 
 [%unnumbered]
@@ -1763,15 +1765,13 @@ geof:pointN (geom:ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
 
 The function http://www.opengis.net/def/function/geosparql/pointN[`geof:pointN`] Returns the nth point in `geom`.
 
-
 ==== Function: geof:pointOnSurface
 
 ```
 geof:pointOnSurface (geom: ogc:geomLiteral, n: xsd:integer): ogc:geomLiteral
 ```
 
-The function http://www.opengis.net/def/function/geosparql/pointOnSurface[`geof:pointOnSurface returns a point which is guranteed to be on the nth surface of `geom`.
-
+The function http://www.opengis.net/def/function/geosparql/pointOnSurface[`geof:pointOnSurface`] returns a point which is guaranteed to be on the nth surface of `geom`.
 
 ==== Function: geof:spatialDimension
 
