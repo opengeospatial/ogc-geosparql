@@ -563,7 +563,7 @@ Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL
 
 This section establishes the requirements for representing Geometry data in RDF based on Extended Well-Known Binary (EWKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> and one property, <<Property: geo:asEWKB, as EWKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
 
-===== RDFS Datatypes: geo:wkbLiteral
+===== RDFS Datatypes: geo:ewkbLiteral
 
 The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (EWKB) serialization of a Geometry.
 
@@ -578,7 +578,7 @@ geo:ewkbLiteral
 ----
 [#req_geometry_extension_wkb-literal]
 |===
-| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
+| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
 |===
 
@@ -596,7 +596,7 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 
 [#req_geometry_extension_wkb-literal-default-srs]
 |===
-| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
+| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs`]
 |===
 
@@ -604,11 +604,11 @@ The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+
 
 [#req_geometry_extension_wkb-axis-order]
 |===
-| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-axis-order`]
 |===
 
-The example <<RDFS Datatypes: geo:wkbLiteral, EWKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 [source,turtle]
 ----
@@ -624,7 +624,7 @@ A second example below encodes the same point as encoded in the example above bu
 
 [#req_geometry_extension_wkb-literal-empty]
 |===
-| *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:wkbLiteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
+| *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-empty`]
 |===
 
