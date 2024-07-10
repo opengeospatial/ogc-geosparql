@@ -318,17 +318,18 @@ geo:hasMetricSpatialAccuracy
 
 The property http://www.opengis.net/ont/geosparql#isClosed[`geo:isClosed`] will indicate a Boolean object set to `true` if and only if the Geometry is closed, i.e. its start and end point are the same.
 
-```turtle
+[source,turtle]
+----
 geo:isClosed
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "is closed"@en ;
     skos:definition "(true) if this geometric object is closed. If
-                    true, then this geometric object's start point equals its end point."@en ; 
+                    true, then this geometric object's start point equals its end point."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range xsd:boolean ;
 .
-```
+----
 
 [#geo:isEmpty]
 ==== Property: geo:isEmpty
@@ -356,7 +357,8 @@ geo:isEmpty
 
 The property http://www.opengis.net/ont/geosparql#isRing[`geo:isRing`] will indicate a Boolean object set to `true` if and only if the Geometry is closed and simple.
 
-```turtle
+[source,turtle]
+----
 geo:isRing
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:isDefinedBy geo: ;
@@ -366,7 +368,7 @@ geo:isRing
     rdfs:domain geo:Geometry ;
     rdfs:range xsd:boolean ;
 .
-```
+----
 
 [#geo:isSimple]
 ==== Property: geo:isSimple
@@ -565,14 +567,15 @@ This section establishes the requirements for representing Geometry data in RDF 
 
 The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (WKB) serialization of a Geometry.
 
-```turtle
+[source,turtle]
+----
 geo:ewkbLiteral 
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
     skos:prefLabel "(Extended) Well-known Binary literal"@en ;
     skos:definition "An (Extended) Well-known Binary serialization of a Geometry object."@en ;
 .
-```
+----
 [#req_geometry_extension_wkb-literal]
 |===
 | *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well-Known Binary (WKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances are formed by a WKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a WKB string as defined in <<ISO13249>>. The Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
@@ -581,11 +584,11 @@ geo:ewkbLiteral
 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
-```
+----
 ewkbLiteral ::= opt-iri-and-whitespace geometry-data
 
 opt-iri-and-space = "<" IRI ">" LWSP / ""
-```
+----
 
 The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, a binary representation in WKB serialized as Base64. `geometry-data` is the Well-Known Binary representation of the Geometry, defined in <<ISO13249>>.
 
@@ -607,15 +610,17 @@ The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+
 
 The example <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
-```turtle
+[source,turtle]
+----
 "Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
-```
+----
 
 A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
-```turtle
+[source,turtle]
+----
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
-```
+----
 
 [#req_geometry_extension_wkb-literal-empty]
 |===
@@ -633,7 +638,8 @@ The property http://www.opengis.net/ont/geosparql#asWKB[`geo:asWKB`] is defined 
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal`]
 |===
 
-```turtle
+[source,turtle]
+----
 geo:asWKB 
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
@@ -643,13 +649,13 @@ geo:asWKB
     rdfs:domain geo:Geometry ;
     rdfs:range geo:ewkbLiteral ;
 .
-```
+----
 
 ===== Function: geof:asWKB
 
-```
+----
 geof:asWKB (geom: ogc:geomLiteral): geo:ewkbLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asWKB[`geof:asWKB`] converts `geom` to an equivalent WKB representation preserving the spatial reference system. 
 
@@ -974,11 +980,11 @@ geo:geocodeLiteral
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
 [%unnumbered]
-```
+----
 geocodeLiteral ::= opt-iri-and-whitespace geocode-data
 
 opt-iri-and-space = "<" IRI ">" LWSP / ""
-```
+----
 
 The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geocode-data` is the Geocode representation of the Geometry, in the way it is defined in the definition of the respective Geocoding standard, as identified by its IRI.
 
@@ -1034,9 +1040,9 @@ geo:asGeocode
 ===== Function: geof:asGeocode
 
 [%unnumbered]
-```
+----
 geof:asGeocode (geom: ogc:geomLiteral, geocode: rdfs:Resource): geo:geocodeLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/asGeocode[`geof:asGeocode`] converts `geom` to an equivalent Geocode representation in the Geocoding system as defined by the `geocode` parameter. 
 
@@ -1358,9 +1364,9 @@ The function http://www.opengis.net/def/function/geosparql/boundingCircle[`geof:
 
 ==== Function: geof:boundingPolygons
 
-```
+----
 geof:boundingPolygons (geom: ogc:geomLiteral, n: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/boundingPolygons[`geof:boundingPolygons`] returns a collection of polygons which bound the nth polgon of a given PolyhedralSurface `geom`.
 
@@ -1483,9 +1489,9 @@ See the <<Recommendation for units of measure, Recommendation for units of measu
 
 ==== Function: geof:endPoint
 
-```
+----
 geof:endPoint (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/endPoint[`geof:endPoint`] returns the last point in the given `geom` in the literal format of `geom`.
 
@@ -1501,9 +1507,9 @@ The function http://www.opengis.net/def/function/geosparql/envelope[`geof:envelo
 
 ==== Function: geof:exteriorRing
 
-```
+----
 geof:exteriorRing (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/exteriorRing[`geof:exteriorRing`] returns the exterior interior ring of `geom` if the geometry represents a Polygon.
 
@@ -1529,17 +1535,17 @@ The function http://www.opengis.net/def/function/geosparql/geometryType[`geof:ge
 
 ==== Function: geof:getSRID
 
-```
+----
 geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] returns the spatial reference system IRI for `geom`.
 
 ==== Function: geof:interiorRingN
 
-```
+----
 geof:interiorRingN (geom: ogc:geomLiteral, ringindex: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/interiorRingN[`geof:interiorRingN`] returns the nth interior ring of `geom` if the geometry represents a Polygon.
 
@@ -1566,9 +1572,9 @@ The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Ret
 
 ==== Function: geof:isClosed
 
-```
+----
 geof:isClosed (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/isClosed[`geof:isClosed`] returns true if `geom` is a closed geometry, i.e. its start point equals its end point.
 
@@ -1594,9 +1600,9 @@ The function http://www.opengis.net/def/function/geosparql/isMeasured[`geof:isMe
 
 ==== Function: geof:isRing
 
-```
+----
 geof:isRing (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/isRing[`geof:isRing`] Returns true if `geom` is a closed geometry (see <<Function: geof:isClosed, geo:isClosed >>) , and simple (see <<Function: geof:isSimple, geo:isSimple >>).
 
@@ -1707,33 +1713,33 @@ The function http://www.opengis.net/def/function/geosparql/numGeometries[`geof:n
 
 ==== Function: geof:numPatches
 
-```
+----
 geof:numPatches (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/numPatches[`geof:numPatches`] returns the number of including polygons of `geom`.
 
 ==== Function: geof:numInteriorRing
 
-```
+----
 geof:numInteriorRing (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/numInteriorRing[`geof:numInteriorRing`] Returns the number of interior rings of `geom` if the geometry represents a Polygon.
 
 ==== Function: geof:numPoints
 
-```
+----
 geof:numPoints (geom: ogc:geomLiteral): xsd:integer
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/numPoints[`geof:numPoints`] returns the number of points of `geom`.
 
 ==== Function: geof:patchN
 
-```
+----
 geof:patchN (geom: ogc:geomLiteral, index: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/patchN[`geof:patchN`] returns the nth polygon of of `geom`, in the order of definition.
 
@@ -1759,17 +1765,17 @@ The function http://www.opengis.net/def/function/geosparql/metricPerimeter[`geof
 
 ==== Function: geof:pointN
 
-```
+----
 geof:pointN (geom:ogc:geomLiteral, geomindex: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/pointN[`geof:pointN`] Returns the nth point in `geom`.
 
 ==== Function: geof:pointOnSurface
 
-```
+----
 geof:pointOnSurface (geom: ogc:geomLiteral, n: xsd:integer): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/pointOnSurface[`geof:pointOnSurface`] returns a point which is guaranteed to be on the nth surface of `geom`.
 
@@ -1785,9 +1791,9 @@ The function http://www.opengis.net/def/function/geosparql/spatialDimension[`geo
 
 ==== Function: geof:startPoint
 
-```
+----
 geof:startPoint (geom: ogc:geomLiteral): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/startPoint[`geof:startPoint`] Returns the first point in the given `geom` in the literal format of  `geom`.
 
@@ -1830,33 +1836,33 @@ The function http://www.opengis.net/def/function/geosparql/union[`geof:union`] r
 
 ==== Function: geof:X
 
-```
+----
 geof:X (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/X[`geof:X`] returns the X coordinate if `geom` is a point geometry. The X coordinate is determined by the X axis definition of its SRS.
 
 ==== Function: geof:Y
 
-```
+----
 geof:Y (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/Y[`geof:Y`] returns the Y coordinate if `geom` is a point geometry. The Y coordinate is determined by the X axis definition of its SRS.
 
 ==== Function: geof:Z
 
-```
+----
 geof:Z (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/Z[`geof:Z`]  returns the Z coordinate if `geom` is a point geometry. The Z coordinate is determined by the X axis definition of its SRS.
 
 ==== Function: geof:M
 
-```
+----
 geof:M (geom: ogc:geomLiteral): xsd:double
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/M[`geof:M`]  returns the M coordinate if `geom` is a point geometry. The M coordinate is determined by the X axis definition of its SRS.
 
