@@ -3,8 +3,16 @@ layout: default
 ---
 
 <div class="home">
-
-  <h1 class="page-heading">Posts</h1>
+<nav>
+<a href="../index.html#geosparql10">GeoSPARQL 1.0</a>
+<a href="../index.html#geosparql11">GeoSPARQL 1.1</a>
+<a href="../index.html#geosparql12">GeoSPARQL 1.2</a>
+<a href="../index.html#geosparql12">GeoSPARQL Development Draft</a>
+<a href="../index.html#relatedwork">Related Work</a>
+</nav>
+</header>
+<div class="content">
+  <h1 class="page-heading">GeoSPARQL Working Group Meeting Notes</h1>
 
   <ul class="post-list">
     {% for post in site.posts %}
@@ -17,7 +25,25 @@ layout: default
       </li>
     {% endfor %}
   </ul>
+  
+  <!-- 
+    Showing buttons to move to the next and to the previous list of posts (pager buttons).
+  -->
+  {% if paginator.total_pages > 1 %}
+  <ul class="pager">
+      {% if paginator.previous_page %}
+      <li class="previous">
+          <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+      </li>
+      {% endif %}
+      {% if paginator.next_page %}
+      <li class="next">
+          <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+      </li>
+      {% endif %}
+  </ul>
+  {% endif %}
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
 
 </div>
