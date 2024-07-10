@@ -30,14 +30,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		a sdo:Person ;
 		sdo:name "Matthew Perry" ;
 		sdo:affiliation "Oracle Corporation" ;
-		sdo:email "matthew.perry@oracle.com"^^xsd:string ;
+		sdo:email "matthew.perry@oracle.com"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0003-1988-462X"^^xsd:anyURI ;
 	] ,
 	[
 		a sdo:Person ;
 		sdo:name "John Herring" ;
 		sdo:affiliation "Oracle Corporation" ;
-		sdo:email "john.herring@oracle.com"^^xsd:string ;
+		sdo:email "john.herring@oracle.com"^^xsd:anyURI ;
 	] ,
 	[
 		a sdo:Person ;
@@ -50,38 +50,38 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		a sdo:Person ;
 		sdo:name "Joseph Abhayaratna" ;		
 		sdo:affiliation "Geoscape Australia" ;
-		sdo:email "joseph.abhayaratna@geoscape.com.au"^^xsd:string ;
+		sdo:email "joseph.abhayaratna@geoscape.com.au"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0001-5075-6234"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Timo Homburg" ;		
 		sdo:affiliation "Mainz University Of Applied Sciences" ;
-		sdo:email "timo.homburg@hs-mainz.de"^^xsd:string ;
+		sdo:email "timo.homburg@hs-mainz.de"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0002-9499-5840"^^xsd:anyURI ;
 	],
 	[
 		a sdo:Person ;
 		sdo:name "Simon J D Cox" ;		
 		sdo:affiliation "CSIRO Australia" ;
-		sdo:email "simon.cox@csiro.au"^^xsd:string ;
+		sdo:email "simon.cox@csiro.au"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0002-3884-3420"^^xsd:anyURI ;
 	] ,
 	[
 		a sdo:Person ;
 		sdo:name "Frans Knibbe" ;
-		sdo:email "fjknibbe@gmail.com"^^xsd:string ;
+		sdo:email "fjknibbe@gmail.com"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0003-3789-2260"^^xsd:anyURI ;
 	] ,	
 	[
 		a sdo:Person ;
 		sdo:name "Mathias Bonduel" ;
 		sdo:affiliation "KU Leuven" , "Neanex Technologies" ;
-		sdo:email "mathias.bonduel@neanex.com"^^xsd:string ;
+		sdo:email "mathias.bonduel@neanex.com"^^xsd:anyURI ;
 		sdo:url "https://orcid.org/0000-0002-3313-924X"^^xsd:anyURI ;
 	] ;	
 	dcterms:created "2020-09-09"^^xsd:date ;
-	dcterms:modified "2024-06-09"^^xsd:date ;
+	dcterms:modified "2024-07-10"^^xsd:date ;
 	dcterms:replaces <http://www.opengis.net/ont/geosparql/1.1> ;
 	dcterms:description "An RDF/OWL vocabulary for representing spatial information"@en ;
 	dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
@@ -149,7 +149,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		spec11:C.1.2.4 ;	
 .
 
-
 :geocodeLiteral
 	a rdfs:Datatype ;
 	rdfs:isDefinedBy 
@@ -158,7 +157,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	skos:definition """A Geocode serialization of a Geometry object."""@en ;
 	skos:prefLabel "Geocode Literal"@en ;	
 .
-
 
 :kmlLiteral
 	a rdfs:Datatype ;
@@ -821,12 +819,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 :hasSerialization
 	a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain :Geometry ;
-	rdfs:range rdfs:Literal ;
+	rdfs:range rdfs:Resource ;
 	rdfs:isDefinedBy 
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-properties> , 
 		<http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-properties> ;
-	skos:definition """Connects a Geometry object with its text-based serialization."""@en ;
+	skos:definition """Connects a Geometry object with a serialization of it."""@en ;
 	skos:prefLabel "has serialization"@en ;
 	skos:example 
 		spec11:C.1.2.3 ;		
