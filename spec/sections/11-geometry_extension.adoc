@@ -559,13 +559,13 @@ The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] c
 Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL extension function.
 ====
 
-==== Well-Known Binary
+==== Extended Well-Known Binary
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Binary (WKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> and one property, <<Property: geo:asWKB, as WKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
+This section establishes the requirements for representing Geometry data in RDF based on Extended Well-Known Binary (EWKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> and one property, <<Property: geo:asEWKB, as EWKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
 
 ===== RDFS Datatypes: geo:wkbLiteral
 
-The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (WKB) serialization of a Geometry.
+The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (EWKB) serialization of a Geometry.
 
 [source,turtle]
 ----
@@ -578,7 +578,7 @@ geo:ewkbLiteral
 ----
 [#req_geometry_extension_wkb-literal]
 |===
-| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well-Known Binary (WKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances are formed by a WKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a WKB string as defined in <<ISO13249>>. The Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
+| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:wkbLiteral, `geo:wkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
 |===
 
@@ -590,7 +590,7 @@ ewkbLiteral ::= opt-iri-and-whitespace geometry-data
 opt-iri-and-space = "<" IRI ">" LWSP / ""
 ----
 
-The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, a binary representation in WKB serialized as Base64. `geometry-data` is the Well-Known Binary representation of the Geometry, defined in <<ISO13249>>.
+The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, a binary representation in EWKB serialized as Base64. `geometry-data` is the Extended Well-Known Binary representation of the Geometry, defined in <<ISO13249>>.
 
 In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
@@ -608,7 +608,7 @@ The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-axis-order`]
 |===
 
-The example <<RDFS Datatypes: geo:wkbLiteral, WKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatypes: geo:wkbLiteral, EWKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 [source,turtle]
 ----
@@ -628,41 +628,41 @@ A second example below encodes the same point as encoded in the example above bu
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-empty`]
 |===
 
-===== Property: geo:asWKB
+===== Property: geo:asEWKB
 
-The property http://www.opengis.net/ont/geosparql#asWKB[`geo:asWKB`] is defined to link a Geometry with its WKB serialization.
+The property http://www.opengis.net/ont/geosparql#asEWKB[`geo:asEWKB`] is defined to link a Geometry with its EWKB serialization.
 
 [#req_geometry_extension_geometry-as-wkb-literal]
 |===
-| *Req {counter:req}* Implementations shall allow the RDF property <<Property: geo:asWKB, `geo:asWKB`>> to be used in SPARQL graph patterns.
+| *Req {counter:req}* Implementations shall allow the RDF property <<Property: geo:asEWKB, `geo:asEWKB`>> to be used in SPARQL graph patterns.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal`]
 |===
 
 [source,turtle]
 ----
-geo:asWKB 
+geo:asEWKB
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "as WKB"@en ;
-    skos:definition "The WKB serialization of a Geometry."@en ;
+    skos:prefLabel "as EWKB"@en ;
+    skos:definition "The EWKB serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
     rdfs:range geo:ewkbLiteral ;
 .
 ----
 
-===== Function: geof:asWKB
+===== Function: geof:asEWKB
 
 ----
-geof:asWKB (geom: ogc:geomLiteral): geo:ewkbLiteral
+geof:asEWKB (geom: ogc:geomLiteral): geo:ewkbLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asWKB[`geof:asWKB`] converts `geom` to an equivalent WKB representation preserving the spatial reference system. 
+The function http://www.opengis.net/def/function/geosparql/asEWKB[`geof:asEWKB`] converts `geom` to an equivalent EWKB representation preserving the spatial reference system.
 
-[#req_geometry_extension_asWKB-function]
+[#req_geometry_extension_asEWKB-function]
 |===
-| *Req {counter:req}* Implementations shall support <<Property: geo:asWKB, `geo:asWKB`>> as a SPARQL extension function.
-|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asWKB-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asWKB-function`]
+| *Req {counter:req}* Implementations shall support <<Property: geo:asEWKB, `geo:asEWKB`>> as a SPARQL extension function.
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function`]
 |===
 
 ==== Geography Markup Language
