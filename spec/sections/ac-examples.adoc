@@ -923,7 +923,7 @@ LIMIT 3
 
 [[C.2.2.5]]
 [example]
-===== Maximum and mimimum coordinates of a set of geometries
+===== Maximum and minimum coordinates of a set of geometries
 
 _Find the maximum and minimum coordinates of a given set of geometries._
 
@@ -954,6 +954,42 @@ WHERE {
 |*?minX* | *?minY* | *?minZ* | *?maxX* | *?maxY* | *?maxZ*
 
 |`-83.4` | `34.0` | `0` | `-83.1` | `34.2` | `1`
+|===
+
+[example]
+==== Example Easting and Northing Functions
+
+_Find the easting and northing values of the given geometries._
+
+[%unnumbered]
+[source,sparql]
+----
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+SELECT ?easting_geom1 ?easting_geom2 ?easting_geom3 ?northing_geom1 ?northing_geom2 ?northing_geom3
+WHERE { 
+    BIND ("<http://www.opengis.net/def/crs/OGC/1.3/CRS84> 
+            Point (33.95 -83.38)"^^geo:wktLiteral) AS ?testgeom1)
+    BIND ("<http://www.opengis.net/def/crs/EPSG/0/4326> 
+            Point (33.95 -83.38)"^^geo:wktLiteral) AS ?testgeom2)
+    BIND ("<http://www.opengis.net/def/crs/EPSG/0/3857> 
+            POINT (3779296.71243164 -18178745.6206012)"^^geo:wktLiteral) AS ?testgeom2)
+    BIND(geof:easting(?testgeom1) AS ?easting_geom1)
+    BIND(geof:easting(?testgeom2) AS ?easting_geom2)
+    BIND(geof:easting(?testgeom3) AS ?easting_geom3)
+    BIND(geof:northing(?testgeom1) AS ?northing_geom1)
+    BIND(geof:northing(?testgeom2) AS ?northing_geom2)
+    BIND(geof:northing(?testgeom3) AS ?northing_geom3)
+}
+----
+
+*Result*:
+[%unnumbered]
+|===
+|*?easting_geom1* | *?easting_geom2* | *?easting_geom3* | *?northing_geom1* | *?northing_geom2* | *?northing_geom3*
+
+|`33.95` | `-83.38` | `3779296.71243164` | `-83.38` | `33.95` | `-18178745.6206012`
 |===
 
 ==== Example Rule Application
@@ -1036,4 +1072,4 @@ WHERE {
 
 For the geometry literal values in <<C.1.2.4, C.1.2.4 Geometry Serializations>>:
 
-Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].
+Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON, GeoCode, and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].

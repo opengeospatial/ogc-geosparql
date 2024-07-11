@@ -33,6 +33,11 @@ requirement:: /req/geometry-extension/kml-literal-srs
 requirement:: /req/geometry-extension/kml-literal-empty
 requirement:: /req/geometry-extension/geometry-as-kml-literal
 requirement:: /req/geometry-extension/asKML-function
+requirement:: /req/geometry-extension/geocode-literal
+requirement:: /req/geometry-extension/geocode-literal-srs
+requirement:: /req/geometry-extension/geocode-literal-empty
+requirement:: /req/geometry-extension/geometry-as-geocode-literal
+requirement:: /req/geometry-extension/asGeocode-function
 ====
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
@@ -1238,6 +1243,8 @@ Implementations shall support the functions
 <<Function: geof:area, `geof:area`>>, 
 <<Function: geof:endPoint, `geof:endPoint`>>,
 <<Function: geof:geometryN, `geof:geometryN`>>, 
+<<Function: geof:easting, `geof:easting`>>, 
+<<Function: geof:northing, `geof:northing`>>, 
 <<Function: geof:maxX, `geof:maxX`>>,
 <<Function: geof:maxY, `geof:maxY`>>, 
 <<Function: geof:maxZ, `geof:maxZ`>>,  
@@ -1640,6 +1647,23 @@ The function http://www.opengis.net/def/function/geosparql/length[`geof:length`]
 ====
 See the <<Recommendation for units of measure, Recommendation for units of measure>>.
 ====
+
+[%unnumbered]
+[source,turtle]
+----
+geof:easting (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/easting[`geof:easting`] returns the easting, e.g., the latitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
+
+[%unnumbered]
+[source,turtle]
+----
+geof:longitude (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/northing[`geof:northing`] returns nothing, e.g., the longitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
+
 
 ==== Function: geof:maxX
 
