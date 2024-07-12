@@ -1564,7 +1564,28 @@ geofp:isClosed_param1 a fno:Parameter ;
 
 geofo:isClosed_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
-    fno:type xsd:boolean  
+    fno:type xsd:boolean .
+
+geof:isCollection
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isCollection_param1 ) ;
+    fno:returns (geofo:isCollection_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the literal of the geometry encodes a GeometryCollection."@en ;
+    skos:prefLabel "isCollection"@en ;
+.
+
+geofp:isCollection_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isCollection_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean .
 
 geof:simplifyDP
     a sd:Function, fno:Function , skos:Concept ;
