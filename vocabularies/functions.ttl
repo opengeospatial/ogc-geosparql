@@ -1566,6 +1566,33 @@ geofo:isClosed_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:boolean  
 
+geof:simplifyDP
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:simplifyDP_param1, geofp:simplifyDP_param2 ) ;
+    fno:returns (geofo:simplifyDP_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that simplifies a given geometry using the Douglas-Peucker algorithm."@en ;
+    skos:prefLabel "simplifyDP"@en ;
+.
+
+geofp:simplifyDP_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:simplifyDP_param2 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "tolerance"@en .
+
+geofo:simplifyDP_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
 geof:isEmpty
     a sd:Function, fno:Function , skos:Concept ;
     skos:inScheme cs: ;
