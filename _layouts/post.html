@@ -1,10 +1,32 @@
 ---
 layout: default
 ---
+{% if page.collection %}
+{% assign posts = site[page.collection]  %}
+
+{% if posts.size > 1 %}
+  {% assign prevurl = posts.last.url | remove: ".html" %}
+  {% assign nexturl = posts.first.url | remove: ".html" %}
+{% endif %}
+
+{% for links in posts %}
+  {% if links.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next = posts[forloop.index] %}
+      {% assign nexturl = next.url %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = links %}
+{% endfor %}
+{% endif %}
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <div class="post-content" itemprop="articleBody" markdown="1">
     {% include fancy-tables.liquid html=content %}
   </div>
-
+  {% if prevurl %}<a href="{{prevurl}}">Previous</a>&nbsp;&nbsp;&nbsp;{% endif %}
+  {% if nexturl %}<a href="{{nexturl}}">Next</a>{% endif %}
 </article>
