@@ -13,7 +13,7 @@ jobs:
   build10:
     name: Compile GeoSPARQL 1.0 Documentation
     runs-on: ubuntu-latest
-   
+    needs: jekyll
     steps:
     - uses: actions/checkout@v1
       with:
@@ -64,14 +64,14 @@ jobs:
       with:
          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          BRANCH: gh-pages
-         clean: true
+         clean: false
          FOLDER: docs/
   
   
   build11:
     name: Compile GeoSPARQL 1.1 Documentation
     runs-on: ubuntu-latest
- 
+    needs: jekyll
     steps:
     - uses: actions/checkout@v1
       with:
@@ -150,6 +150,7 @@ jobs:
   build12:
    name: Compile GeoSPARQL 1.2 Metanorma
    runs-on: ubuntu-latest
+   needs: jekyll
    steps:
    - uses: actions/checkout@v3
      with:
@@ -231,12 +232,13 @@ jobs:
         with:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            BRANCH: gh-pages
-           clean: false
+           clean: true
            FOLDER: site/
 
   build13:
    name: Compile GeoSPARQL 1.3 Metanorma
    runs-on: ubuntu-latest
+   needs: jekyll
    steps:
    - uses: actions/checkout@v3
      with:
@@ -253,7 +255,6 @@ jobs:
    - uses: actions-mn/setup@main
 
    - run: | 
-         sleep 350
          mkdir site
          mkdir site/geosparql13
          mkdir site/geosparql13/vocabularies/
