@@ -1,21 +1,26 @@
 <html>
-
 <head>
-  <title>OGC GeoSPARQL</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+  <!--<link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">-->
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
   <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
 </head>
 <body>
 <header style="position:fixed;width:100%" id="topNav">
-<nav>
-<a href="#geosparql10">GeoSPARQL 1.0</a>
-<a href="#geosparql11">GeoSPARQL 1.1</a>
-<a href="#geosparql12">GeoSPARQL 1.2</a>
-<a href="#geosparql12">GeoSPARQL Development Draft</a>
-<a href="#relatedwork">Related Work</a>
+  <nav>
+    <a href="{{site.baseurl}}/geosparql10/">GeoSPARQL 1.0</a>
+    <a href="{{site.baseurl}}/geosparql11/">GeoSPARQL 1.1</a>
+    <a href="{{site.baseurl}}/geosparql12/">GeoSPARQL 1.2</a>
+    <a href="{{site.baseurl}}/geosparql13/">GeoSPARQL Development Draft</a>
+    <a href="{{site.baseurl}}/relatedwork/">Related Work</a>
 </nav>
 <h3>GeoSPARQL Standard documentation</h3>
 </header>
@@ -81,6 +86,36 @@
     <li>No documents to be referred to yet</li>
   </ul>
 </div>
+<footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h5 class="footer-heading">{{ site.title }}</h5>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list" style="list-style-type:none;">
+          <li>{{ site.title }}</li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list" style="list-style-type:none;">
+          <li>
+            <a href="https://opengeospatial.github.io/ogc-geosparql/blog/">Meeting Notes</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>{{ site.description }}</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
 </body>
 <script>
 $( document ).ready(function() {
