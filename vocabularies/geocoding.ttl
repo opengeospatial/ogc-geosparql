@@ -1,287 +1,302 @@
-@prefix : <http://www.semanticweb.org/timo.homburg/ontologies/2024/6/untitled-ontology-41/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix schema: <http://schema.org/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <http://www.semanticweb.org/timo.homburg/ontologies/2024/6/untitled-ontology-41/> .
-
-<http://opengis.net/ont/geocode/> rdf:type owl:Ontology ;
-                                   rdfs:label "Geocoding Vocabulary"@en .
-
-#################################################################
-#    Annotation properties
-#################################################################
-
-###  http://www.w3.org/2004/02/skos/core#altLabel
-<http://www.w3.org/2004/02/skos/core#altLabel> rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2004/02/skos/core#definition
-<http://www.w3.org/2004/02/skos/core#definition> rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://opengis.net/ont/geocode/AdministrativeCode
-:AdministrativeCode rdf:type owl:Class ;
-                    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-                    rdfs:label "Administrative Code"@en .
-
-
-###  http://opengis.net/ont/geocode/AirportCode
-:AirportCode rdf:type owl:Class ;
-             rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-             rdfs:label "Airport Code"@en .
-
-
-###  http://opengis.net/ont/geocode/AmateurRadio
-:AmateurRadio rdf:type owl:Class ;
-              rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-              rdfs:label "Amateur radio"@en ;
-              <http://www.w3.org/2004/02/skos/core#definition> "Geocodes used by operators in the amateur radio community"@en .
-
-
-###  http://opengis.net/ont/geocode/CountryCode
-:CountryCode rdf:type owl:Class ;
-             rdfs:subClassOf :AdministrativeCode ;
-             rdfs:label "Country Code"@en .
-
-
-###  http://opengis.net/ont/geocode/NaturalAddressCode
-:NaturalAddressCode rdf:type owl:Class ;
-                    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-                    rdfs:label "Natural Address Code"@en .
-
-
-###  http://opengis.net/ont/geocode/PlaceCode
-:PlaceCode rdf:type owl:Class ;
-           rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-           rdfs:label "Place Code"@en ;
-           <http://www.w3.org/2004/02/skos/core#altLabel> "P-Code"@en ;
-           <http://www.w3.org/2004/02/skos/core#definition> "A Geocode mostly used by emergency response teams"@en .
-
-
-###  http://opengis.net/ont/geocode/PostalCode
-:PostalCode rdf:type owl:Class ;
-            rdfs:subClassOf :AdministrativeCode ;
-            rdfs:label "Postal Code"@en .
-
-
-###  http://opengis.net/ont/geocode/TelephoneCode
-:TelephoneCode rdf:type owl:Class ;
-               rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-               rdfs:label "Telephone Code"@en .
-
-
-###  http://opengis.net/ont/geocode/GeoCode
-<http://opengis.net/ont/geocode/GeoCode> rdf:type owl:Class ;
-                                          rdfs:label "GeoCode"@en .
-
-
-###  http://opengis.net/ont/geocode/GeoHashCode
-<http://opengis.net/ont/geocode/GeoHashCode> rdf:type owl:Class ;
-                                              rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
-                                              schema:citation "http://geohash.org"^^xsd:anyURI ;
-                                              rdfs:label "GeoHash Code"@en ;
-                                              <http://www.w3.org/2004/02/skos/core#definition> "A Geocode following the GeoHash encoding"@en .
-
-
-#################################################################
-#    Individuals
-#################################################################
-
-###  http://opengis.net/ont/geocode/C-Squares
-:C-Squares rdf:type owl:NamedIndividual ,
-                    <http://opengis.net/ont/geocode/GeoCode> ;
-           schema:citation "http://www.marine.csiro.au/csquares/"^^xsd:anyURI ;
-           rdfs:label "C-Squares"@en .
-
-
-###  http://opengis.net/ont/geocode/CLLICode
-:CLLICode rdf:type owl:NamedIndividual ,
-                   <http://opengis.net/ont/geocode/GeoCode> ;
-          rdfs:label "CLLI Code"@en ;
-          <http://www.w3.org/2004/02/skos/core#altLabel> "Common Language Location Identifier Code"@en .
-
-
-###  http://opengis.net/ont/geocode/EirCode
-:EirCode rdf:type owl:NamedIndividual ,
-                  :PostalCode ;
-         rdfs:label "EirCode"@en ;
-         <http://www.w3.org/2004/02/skos/core#definition> "Postal Code of Ireland"@en .
-
-
-###  http://opengis.net/ont/geocode/FIFACountryCode
-:FIFACountryCode rdf:type owl:NamedIndividual ,
-                          :CountryCode ;
-                 rdfs:label "FIFA Country Code"@en .
-
-
-###  http://opengis.net/ont/geocode/GSSCode
-:GSSCode rdf:type owl:NamedIndividual ,
-                  :AdministrativeCode ;
-         rdfs:label "GSS Code"@en .
-
-
-###  http://opengis.net/ont/geocode/GeoHash-36
-:GeoHash-36 rdf:type owl:NamedIndividual ,
-                     <http://opengis.net/ont/geocode/GeoHashCode> ;
-            schema:citation "https://web.archive.org/web/20121227195936/http://www.openpostcode.org/other-codes/geohash-36"^^xsd:anyURI ;
-            rdfs:label "GeoHash-36"@en .
-
-
-###  http://opengis.net/ont/geocode/GeoRef
-:GeoRef rdf:type owl:NamedIndividual ,
-                 <http://opengis.net/ont/geocode/GeoCode> ;
-        schema:citation "https://earth-info.nga.mil/GandG/coordsys/grids/georef.pdf"^^xsd:anyURI ;
-        rdfs:label "GeoRef"@en ;
-        <http://www.w3.org/2004/02/skos/core#altLabel> "World Geographic Reference System"@en .
-
-
-###  http://opengis.net/ont/geocode/IANACountryCode
-:IANACountryCode rdf:type owl:NamedIndividual ,
-                          :CountryCode ;
-                 rdfs:label "IANA Country Code"@en .
-
-
-###  http://opengis.net/ont/geocode/IATAAirportCode
-:IATAAirportCode rdf:type owl:NamedIndividual ,
-                          :AirportCode ;
-                 rdfs:label "IATA Airport Code"@en .
-
-
-###  http://opengis.net/ont/geocode/ICAOAirportCode
-:ICAOAirportCode rdf:type owl:NamedIndividual ,
-                          :AirportCode ;
-                 rdfs:label "ICAO Airport Code"@en .
-
-
-###  http://opengis.net/ont/geocode/IOCCountryCode
-:IOCCountryCode rdf:type owl:NamedIndividual ,
-                         :CountryCode ;
-                rdfs:label "IOC Country Code"@en .
-
-
-###  http://opengis.net/ont/geocode/ITU-RCountryCode
-:ITU-RCountryCode rdf:type owl:NamedIndividual ,
-                           :CountryCode ,
-                           :TelephoneCode ;
-                  rdfs:label "ITU-R Country Code"@en .
-
-
-###  http://opengis.net/ont/geocode/ITU-TCountryCallingCode
-:ITU-TCountryCallingCode rdf:type owl:NamedIndividual ,
-                                  :TelephoneCode ;
-                         rdfs:label "ITU-T Country Calling Code"@en .
-
-
-###  http://opengis.net/ont/geocode/ITU-TMobileCallingCode
-:ITU-TMobileCallingCode rdf:type owl:NamedIndividual ,
-                                 :TelephoneCode ;
-                        rdfs:label "ITU-T Mobile Calling Code"@en .
-
-
-###  http://opengis.net/ont/geocode/MGRS
-:MGRS rdf:type owl:NamedIndividual ,
-               <http://opengis.net/ont/geocode/GeoCode> ;
-      rdfs:label "MGRS"@en ;
-      <http://www.w3.org/2004/02/skos/core#altLabel> "Military Grid Reference System"@en .
-
-
-###  http://opengis.net/ont/geocode/MaidenheadLocatorSystem
-:MaidenheadLocatorSystem rdf:type owl:NamedIndividual ,
-                                  :AmateurRadio ;
-                         rdfs:label "Maidenhead Locator System"@en ;
-                         <http://www.w3.org/2004/02/skos/core#altLabel> "IARU Locator"@en ,
-                                                                        "QTH Locator"@en ;
-                         <http://www.w3.org/2004/02/skos/core#definition> "Geocode System used by amateur radio operators"@en .
-
-
-###  http://opengis.net/ont/geocode/Mapcode
-:Mapcode rdf:type owl:NamedIndividual ,
-                  <http://opengis.net/ont/geocode/GeoCode> ;
-         schema:citation "https://www.mapcode.com"^^xsd:anyURI ;
-         rdfs:label "Mapcode"@en .
-
-
-###  http://opengis.net/ont/geocode/MarsdenSquare
-:MarsdenSquare rdf:type owl:NamedIndividual ,
-                        <http://opengis.net/ont/geocode/GeoCode> ;
-               rdfs:label "Marsden Square"@en .
-
-
-###  http://opengis.net/ont/geocode/NaturalAreaCode
-:NaturalAreaCode rdf:type owl:NamedIndividual ,
-                          <http://opengis.net/ont/geocode/GeoCode> ;
-                 schema:citation "http://www.nacgeo.com"^^xsd:anyURI ;
-                 rdfs:label "Natural Area Code"@en ;
-                 <http://www.w3.org/2004/02/skos/core#altLabel> "Universal Address"@en .
-
-
-###  http://opengis.net/ont/geocode/PostalndexNumber
-:PostalndexNumber rdf:type owl:NamedIndividual ,
-                           :PostalCode ;
-                  rdfs:label "Postal Index Number"@en .
-
-
-###  http://opengis.net/ont/geocode/QRALocator
-:QRALocator rdf:type owl:NamedIndividual ,
-                     :AmateurRadio ;
-            rdfs:label "QRA Locator"@en ;
-            <http://www.w3.org/2004/02/skos/core#altLabel> "QTH Locator"@en ;
-            <http://www.w3.org/2004/02/skos/core#definition> "Obsolete geocoding system used by amateur radio operators in Europe"@en .
-
-
-###  http://opengis.net/ont/geocode/UKPostCode
-:UKPostCode rdf:type owl:NamedIndividual ,
-                     :PostalCode ;
-            rdfs:label "UK PostCode"@en .
-
-
-###  http://opengis.net/ont/geocode/UN-LOCODE
-:UN-LOCODE rdf:type owl:NamedIndividual ,
-                    <http://opengis.net/ont/geocode/GeoCode> ;
-           schema:citation "https://unece.org/trade/uncefact/unlocode"^^xsd:anyURI ;
-           rdfs:label "UN/LOCODE"@en ;
-           <http://www.w3.org/2004/02/skos/core#altLabel> "United Nations Code for Trade and Transport Locations"@en .
-
-
-###  http://opengis.net/ont/geocode/WMOSquare
-:WMOSquare rdf:type owl:NamedIndividual ,
-                    <http://opengis.net/ont/geocode/GeoCode> ;
-           schema:citation "https://www.nodc.noaa.gov/OC5/WOD05/data05geo.html"^^xsd:anyURI ;
-           rdfs:label "WMO Square"@en ;
-           <http://www.w3.org/2004/02/skos/core#altLabel> "World Meteorological Organisation Square"@en .
-
-
-###  http://opengis.net/ont/geocode/ZIPCode
-:ZIPCode rdf:type owl:NamedIndividual ,
-                  :PostalCode ;
-         rdfs:label "ZIP Code"@en ;
-         <http://www.w3.org/2004/02/skos/core#definition> "Postal Code of the USA"@en .
-
-
-###  http://opengis.net/ont/geocode/GeoHash
-<http://opengis.net/ont/geocode/GeoHash> rdf:type owl:NamedIndividual ,
-                                                   <http://opengis.net/ont/geocode/GeoHashCode> .
-
-
-###  http://opengis.net/ont/geocode/OpenLocationCode
-<http://opengis.net/ont/geocode/OpenLocationCode> rdf:type owl:NamedIndividual ,
-                                                            <http://opengis.net/ont/geocode/GeoCode> ;
-                                                   schema:citation "https://maps.google.com/pluscodes/"^^xsd:anyURI ;
-                                                   rdfs:label "Open Location Code"@en ;
-                                                   <http://www.w3.org/2004/02/skos/core#altLabel> "Plus Code"@en .
-
-
-###  http://opengis.net/ont/geocode/What3Words
-<http://opengis.net/ont/geocode/What3Words> rdf:type owl:NamedIndividual ,
-                                                      <http://opengis.net/ont/geocode/GeoCode> ;
-                                             rdfs:label "What3Words"@en .
-
-
-###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
+PREFIX : <http://www.semanticweb.org/timo.homburg/ontologies/2024/6/untitled-ontology-41/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema1: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<http://opengis.net/ont/geocode/>
+    a owl:Ontology ;
+    rdfs:label "Geocoding Vocabulary"@en ;
+.
+
+<http://opengis.net/ont/geocode/GeoHash>
+    a
+        <http://opengis.net/ont/geocode/GeoHashCode> ,
+        owl:NamedIndividual ;
+.
+
+<http://opengis.net/ont/geocode/OpenLocationCode>
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "Open Location Code"@en ;
+    schema1:citation "https://maps.google.com/pluscodes/"^^xsd:anyURI ;
+    skos:altLabel "Plus Code"@en ;
+.
+
+<http://opengis.net/ont/geocode/What3Words>
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "What3Words"@en ;
+.
+
+:C-Squares
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "C-Squares"@en ;
+    schema1:citation "http://www.marine.csiro.au/csquares/"^^xsd:anyURI ;
+.
+
+:CLLICode
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "CLLI Code"@en ;
+    skos:altLabel "Common Language Location Identifier Code"@en ;
+.
+
+:EirCode
+    a
+        :PostalCode ,
+        owl:NamedIndividual ;
+    rdfs:label "EirCode"@en ;
+    skos:definition "Postal Code of Ireland"@en ;
+.
+
+:FIFACountryCode
+    a
+        :CountryCode ,
+        owl:NamedIndividual ;
+    rdfs:label "FIFA Country Code"@en ;
+.
+
+:GSSCode
+    a
+        :AdministrativeCode ,
+        owl:NamedIndividual ;
+    rdfs:label "GSS Code"@en ;
+.
+
+:GeoHash-36
+    a
+        <http://opengis.net/ont/geocode/GeoHashCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "GeoHash-36"@en ;
+    schema1:citation "https://web.archive.org/web/20121227195936/http://www.openpostcode.org/other-codes/geohash-36"^^xsd:anyURI ;
+.
+
+:GeoRef
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "GeoRef"@en ;
+    schema1:citation "https://earth-info.nga.mil/GandG/coordsys/grids/georef.pdf"^^xsd:anyURI ;
+    skos:altLabel "World Geographic Reference System"@en ;
+.
+
+:IANACountryCode
+    a
+        :CountryCode ,
+        owl:NamedIndividual ;
+    rdfs:label "IANA Country Code"@en ;
+.
+
+:IATAAirportCode
+    a
+        :AirportCode ,
+        owl:NamedIndividual ;
+    rdfs:label "IATA Airport Code"@en ;
+.
+
+:ICAOAirportCode
+    a
+        :AirportCode ,
+        owl:NamedIndividual ;
+    rdfs:label "ICAO Airport Code"@en ;
+.
+
+:IOCCountryCode
+    a
+        :CountryCode ,
+        owl:NamedIndividual ;
+    rdfs:label "IOC Country Code"@en ;
+.
+
+:ITU-RCountryCode
+    a
+        :CountryCode ,
+        :TelephoneCode ,
+        owl:NamedIndividual ;
+    rdfs:label "ITU-R Country Code"@en ;
+.
+
+:ITU-TCountryCallingCode
+    a
+        :TelephoneCode ,
+        owl:NamedIndividual ;
+    rdfs:label "ITU-T Country Calling Code"@en ;
+.
+
+:ITU-TMobileCallingCode
+    a
+        :TelephoneCode ,
+        owl:NamedIndividual ;
+    rdfs:label "ITU-T Mobile Calling Code"@en ;
+.
+
+:MGRS
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "MGRS"@en ;
+    skos:altLabel "Military Grid Reference System"@en ;
+.
+
+:MaidenheadLocatorSystem
+    a
+        :AmateurRadio ,
+        owl:NamedIndividual ;
+    rdfs:label "Maidenhead Locator System"@en ;
+    skos:altLabel
+        "IARU Locator"@en ,
+        "QTH Locator"@en ;
+    skos:definition "Geocode System used by amateur radio operators"@en ;
+.
+
+:Mapcode
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "Mapcode"@en ;
+    schema1:citation "https://www.mapcode.com"^^xsd:anyURI ;
+.
+
+:MarsdenSquare
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "Marsden Square"@en ;
+.
+
+:NaturalAddressCode
+    a owl:Class ;
+    rdfs:label "Natural Address Code"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+.
+
+:NaturalAreaCode
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "Natural Area Code"@en ;
+    schema1:citation "http://www.nacgeo.com"^^xsd:anyURI ;
+    skos:altLabel "Universal Address"@en ;
+.
+
+:PlaceCode
+    a owl:Class ;
+    rdfs:label "Place Code"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+    skos:altLabel "P-Code"@en ;
+    skos:definition "A Geocode mostly used by emergency response teams"@en ;
+.
+
+:PostalndexNumber
+    a
+        :PostalCode ,
+        owl:NamedIndividual ;
+    rdfs:label "Postal Index Number"@en ;
+.
+
+:QRALocator
+    a
+        :AmateurRadio ,
+        owl:NamedIndividual ;
+    rdfs:label "QRA Locator"@en ;
+    skos:altLabel "QTH Locator"@en ;
+    skos:definition "Obsolete geocoding system used by amateur radio operators in Europe"@en ;
+.
+
+:UKPostCode
+    a
+        :PostalCode ,
+        owl:NamedIndividual ;
+    rdfs:label "UK PostCode"@en ;
+.
+
+:UN-LOCODE
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "UN/LOCODE"@en ;
+    schema1:citation "https://unece.org/trade/uncefact/unlocode"^^xsd:anyURI ;
+    skos:altLabel "United Nations Code for Trade and Transport Locations"@en ;
+.
+
+:WMOSquare
+    a
+        <http://opengis.net/ont/geocode/GeoCode> ,
+        owl:NamedIndividual ;
+    rdfs:label "WMO Square"@en ;
+    schema1:citation "https://www.nodc.noaa.gov/OC5/WOD05/data05geo.html"^^xsd:anyURI ;
+    skos:altLabel "World Meteorological Organisation Square"@en ;
+.
+
+:ZIPCode
+    a
+        :PostalCode ,
+        owl:NamedIndividual ;
+    rdfs:label "ZIP Code"@en ;
+    skos:definition "Postal Code of the USA"@en ;
+.
+
+skos:altLabel
+    a owl:AnnotationProperty ;
+.
+
+skos:definition
+    a owl:AnnotationProperty ;
+.
+
+<http://opengis.net/ont/geocode/GeoHashCode>
+    a owl:Class ;
+    rdfs:label "GeoHash Code"@en ;
+    schema1:citation "http://geohash.org"^^xsd:anyURI ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+    skos:definition "A Geocode following the GeoHash encoding"@en ;
+.
+
+:AirportCode
+    a owl:Class ;
+    rdfs:label "Airport Code"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+.
+
+:AmateurRadio
+    a owl:Class ;
+    rdfs:label "Amateur radio"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+    skos:definition "Geocodes used by operators in the amateur radio community"@en ;
+.
+
+:AdministrativeCode
+    a owl:Class ;
+    rdfs:label "Administrative Code"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+.
+
+:TelephoneCode
+    a owl:Class ;
+    rdfs:label "Telephone Code"@en ;
+    rdfs:subClassOf <http://opengis.net/ont/geocode/GeoCode> ;
+.
+
+:CountryCode
+    a owl:Class ;
+    rdfs:label "Country Code"@en ;
+    rdfs:subClassOf :AdministrativeCode ;
+.
+
+:PostalCode
+    a owl:Class ;
+    rdfs:label "Postal Code"@en ;
+    rdfs:subClassOf :AdministrativeCode ;
+.
+
+<http://opengis.net/ont/geocode/GeoCode>
+    a owl:Class ;
+    rdfs:label "GeoCode"@en ;
+.
