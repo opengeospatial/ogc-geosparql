@@ -222,8 +222,9 @@ geo:hasDefaultGeometry
 
 geo:ehContains 
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfContains ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -235,8 +236,10 @@ geo:ehContains
 
 geo:ehCoveredBy
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfWithin ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -248,8 +251,9 @@ geo:ehCoveredBy
 
 geo:ehCovers
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfContains ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -261,9 +265,10 @@ geo:ehCovers
 
 geo:ehDisjoint
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :sfDisjoint ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :sfDisjoint, :rcc8dc ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:propertyDisjointWith  :sfIntersects ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -275,9 +280,9 @@ geo:ehDisjoint
 
 geo:ehEquals
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :sfEquals ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :sfEquals, :rcc8eq ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -289,8 +294,9 @@ geo:ehEquals
 
 geo:ehInside
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfWithin ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -302,9 +308,9 @@ geo:ehInside
 
 geo:ehMeet
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :sfTouches ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :sfTouches, :rcc8ec ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -316,8 +322,9 @@ geo:ehMeet
 
 geo:ehOverlap
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :sfOverlaps, :rcc8po ;
 	rdfs:isDefinedBy
 		: ,
 		<http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/eh-spatial-relations> ,
@@ -464,8 +471,9 @@ geo:hasSpatialAccuracy
 
 geo:rcc8dc
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :sfDisjoint, :ehDisjoint ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -477,8 +485,9 @@ geo:rcc8dc
 
 geo:rcc8ec
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :sfTouches, :ehMeet ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -490,8 +499,9 @@ geo:rcc8ec
 
 geo:rcc8eq
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :sfEquals, :ehEquals
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -503,8 +513,9 @@ geo:rcc8eq
 
 geo:rcc8ntpp
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfWithin ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -516,8 +527,9 @@ geo:rcc8ntpp
 
 geo:rcc8ntppi
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfContains ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -529,8 +541,9 @@ geo:rcc8ntppi
 
 geo:rcc8po
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :sfOverlaps, :ehOverlap ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -542,8 +555,9 @@ geo:rcc8po
 
 geo:rcc8tpp
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfWithin ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -555,8 +569,9 @@ geo:rcc8tpp
 
 geo:rcc8tppi
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:subPropertyOf :sfContains ;
 	rdfs:isDefinedBy 
 		geo: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/rcc8-spatial-relations> , 
@@ -594,9 +609,10 @@ geo:sfCrosses
 
 geo:sfDisjoint
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :ehDisjoint ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :ehDisjoint, :rcc8dc ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:propertyDisjointWith  :sfIntersects ;
 	rdfs:isDefinedBy 
 		: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations> ,
@@ -608,9 +624,9 @@ geo:sfDisjoint
 
 geo:sfEquals
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :ehEquals ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :ehEquals, :rcc8eq ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy 
 		: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations> ,
@@ -622,8 +638,9 @@ geo:sfEquals
 
 geo:sfIntersects
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:propertyDisjointWith  :sfDisjoint, :ehDisjoint ;
 	rdfs:isDefinedBy 
 		: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations> ,
@@ -635,8 +652,9 @@ geo:sfIntersects
 
 geo:sfOverlaps
 	a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
+	owl:equivalentProperty :ehOverlap, :rcc8po ;
 	rdfs:isDefinedBy 
 		: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations> ,
@@ -648,9 +666,9 @@ geo:sfOverlaps
 
 geo:sfTouches
 	a rdf:Property, owl:ObjectProperty ;
-	owl:equivalentProperty :ehMeet ;
-	rdfs:domain geo:SpatialObject ;
-	rdfs:range geo:SpatialObject ;
+	owl:equivalentProperty :ehMeet, :rcc8ec ;
+	rdfs:domain :SpatialObject ;
+	rdfs:range :SpatialObject ;
 	rdfs:isDefinedBy 
 		: , 
 		<http://www.opengis.net/spec/geosparql/1.0/req/topology-vocab-extension/sf-spatial-relations> ,
