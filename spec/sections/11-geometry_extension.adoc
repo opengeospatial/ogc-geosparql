@@ -1203,6 +1203,8 @@ Implementations shall support the functions
 <<Function: geof:boundingCircle, `geof:boundingCircle`>>, 
 <<Function: geof:metricBuffer, `geof:metricBuffer`>>, 
 <<Function: geof:buffer, `geof:buffer`>>, 
+<<Function: geof:metricWithinDistance, `geof:metricWithinDistance`>>, 
+<<Function: geof:WithinDistance, `geof:WithinDistance`>>, 
 <<Function: geof:centroid, `geof:centroid`>>, 
 <<Function: geof:convexHull, `geof:convexHull`>>, 
 <<Function: geof:concaveHull, `geof:concaveHull`>>, 
@@ -1214,6 +1216,7 @@ Implementations shall support the functions
 <<Function: geof:envelope, `geof:envelope`>>,
 <<Function: geof:geometryType, `geof:geometryType`>>, 
 <<Function: geof:intersection, `geof:intersection`>>, 
+<<Function: geof:isCollection, `geof:isCollection`>>, 
 <<Function: geof:is3D, `geof:is3D`>>, 
 <<Function: geof:isEmpty, `geof:isEmpty`>>, 
 <<Function: geof:isClosed, `geof:isClosed`>>, 
@@ -1253,6 +1256,7 @@ Implementations shall support the functions
 <<Function: geof:numPatches, `geof:numPatches`>>,
 <<Function: geof:numPoints, `geof:numPoints`>>,
 <<Function: geof:startPoint, `geof:startPoint`>>,
+<<Function: geof:simplify, `geof:simplify`>>,
 <<Function: geof:X, `geof:X`>>,
 <<Function: geof:Y, `geof:Y`>>,
 <<Function: geof:Z, `geof:Z`>>,
@@ -1442,6 +1446,24 @@ geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 
 The function http://www.opengis.net/def/function/geosparql/coordinateDimension[`geof:coordinateDimension`] returns the coordinate dimension of `geom`.
 
+==== Function: geof:metricWithinDistance
+
+```
+geof:metricWithinDistance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
+                 distance: xsd:double): xsd:boolean
+```
+
+Returns true if `geom2` is within a given distance of `geom1`. Calculations are according to the units in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between meter and the unit of the spatial reference system.
+
+==== Function: geof:sfWithinDistance
+
+```
+geof:WithinDistance (geom: ogc:geomLiteral, geom2: ogc:geomLiteral, 
+                 distance: xsd:double, units: xsd:anyURI): xsd:boolean
+```
+
+Returns true if `geom2` is within a given distance of `geom1`. Calculations are in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between the unit given as a parameter and the unit of the spatial reference system.
+
 ==== Function: geof:difference
 
 [%unnumbered]
@@ -1573,6 +1595,14 @@ geof:is3D (geom: ogc:geomLiteral): xsd:boolean
 ----
 
 The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Returns true if `geom` has z coordinate values.
+
+==== Function: geof:isCollection
+
+```
+geof:isCollection (geom: ogc:geomLiteral): xsd:boolean
+```
+
+Returns true if the literal describing `geom` represents a GeometryCollection.
 
 ==== Function: geof:isClosed
 
@@ -1837,6 +1867,16 @@ geof:symDifference (geom1: ogc:geomLiteral,
 
 The function http://www.opengis.net/def/function/geosparql/symDifference[`geof:symDifference`] returns a geometric object that represents all Points in the set symmetric difference of `geom1` with `geom2`. Calculations are in the spatial reference system of `geom1`.
 
+
+==== Function: geof:simplify
+
+```
+geof:simplify (geom: ogc:geomLiteral, tolerance: xsd:double): ogc:geomLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/simplify[geof:simplify] simplifies `geom` by applying the Douglas-Peucker algorithm <<DOUGLASPEUCKER>>.
+
+
 ==== Function: geof:transform
 
 [%unnumbered]
@@ -1924,6 +1964,7 @@ Implementations shall support
 <<Function: geof:aggBoundingBox,`geof:aggBoundingBox`>>, 
 <<Function: geof:aggBoundingCircle,`geof:aggBoundingCircle`>>, 
 <<Function: geof:aggCentroid,`geof:aggCentroid`>>, 
+<<Function: geof:aggCollect,`geof:aggCollect`>>, 
 <<Function: geof:aggConcaveHull,`geof:aggConcaveHull`>>, 
 <<Function: geof:aggConvexHull,`geof:aggConvexHull`>> and 
 <<Function: geof:aggUnion,`geof:aggUnion`>>
@@ -1956,6 +1997,14 @@ geof:aggCentroid (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:aggCentroid`] calculates the centroid of the set of given geometries.
+
+==== Function: geof:aggCollect
+
+```
+geof:aggCollect (geom: ogc:geomLiteral): ogc:geomLiteral
+```
+
+The function http://www.opengis.net/def/function/geosparql/aggCollect[`geof:aggCollect`] calculates creates a GeometryCollection literal out of a set of geometries.
 
 ==== Function: geof:aggConcaveHull
 [%unnumbered]
