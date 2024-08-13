@@ -133,7 +133,7 @@ jobs:
          echo "Generating documentation for GeoSPARQL 1.1 Service Conformance Classes"
          pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
          python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
-         echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
+         echo "Generating documentation for GeoSPARQL 1.1 Service Description All Functions"
          pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
          python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
          cd ../../scripts/
@@ -270,6 +270,42 @@ jobs:
          mv documents/spec/* geosparql13/
          cd ..
          cp index.html site/index.html
+         cd site
+         ls
+         echo "Copying over 1.3 RDF files"
+         cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../vocabularies/requirements.ttl  ../../citeme.bib .
+         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
+         cp -r ../../spec/figures .
+         echo "Generating documentation for GeoSPARQL 1.3 ontology"
+         python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
+         pylode -i ../../vocabularies/geo.ttl -o geo.html
+         echo "Generating documentation for GeoSPARQL 1.3 Profile"
+         #cp ../../profile.ttl .
+         #cp ../../profile.html . 
+         #echo "Generating documentation for GeoSPARQL 1.3 functions and rules"
+         #pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
+         python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
+         pylode -i ../../vocabularies/rules.ttl -o rules.html -p vocpub
+         python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
+         echo "Generating documentation for GeoSPARQL 1.3 Simple Features Vocabulary"
+         pylode -i ../../vocabularies/sf_geometries.ttl -o sf_geometries.html -p vocpub
+         python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
+         #echo "Generating documentation for GeoSPARQL 1.3 SA functions"
+         #pylode -i ../../vocabularies/requirements.ttl -o reqs.html -p vocpub
+         #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
+         #pylode -i ../../vocabularies/validator.ttl -o validation.html
+         echo "Generating documentation for GeoSPARQL 1.3 Service Description Extensions"
+         pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
+         python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
+         echo "Generating documentation for GeoSPARQL 1.3 Service Conformance Classes"
+         pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
+         python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
+         echo "Generating documentation for GeoSPARQL 1.3 Service Description All Functions"
+         pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
+         python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
+         cd ../../scripts/
+         python3 consistencycheck.py 
+         cp logfile.txt ../docs/geosparql13/logfile.txt
 
  
    - name: Deploy 🚀
