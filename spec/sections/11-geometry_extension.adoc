@@ -1222,7 +1222,8 @@ Implementations shall support the functions
 <<Function: geof:isSimple, `geof:isSimple`>>, 
 <<Function: geof:spatialDimension, `geof:spatialDimension`>>, 
 <<Function: geof:symDifference, `geof:symDifference`>>, 
-<<Function: geof:transform, `geof:transform`>> and
+<<Function: geof:transform, `geof:transform`>>,
+<<Function: geof:transformCRS84, `geof:transformCRS84`>>and
 <<Function: geof:union, `geof:union`>>
 as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<OGC06-103r4>> <<ISO19125-1>>, for non-DGGS geometry literals.
 ====
@@ -1846,6 +1847,21 @@ geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+
+[NOTE,keep-separate=true]
+====
+We recommend that implementers use the same literal type as a result of this function as the type of the input literal.
+====
+
+==== Function: geof:transformCRS84
+
+[%unnumbered]
+[source,turtle]
+----
+geof:transformCRS84 (geom: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/transformCRS84[geof:transformCRS84] converts `geom` to the CRS84 coordinate system. The function raises an error if a transformation is not mathematically possible.
 
 [NOTE,keep-separate=true]
 ====
