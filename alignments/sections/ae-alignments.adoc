@@ -1,0 +1,445 @@
+[appendix,obligation=informative]
+
+== Alignments
+
+[discrete]
+=== Overview
+
+The prefixes used for the ontologies mapped to in all following sections are given in the following table.
+
+.Alignment: Namespaces
+[frame=none, grid=none, cols="1, 6"]
+|===
+| as: | https://www.w3.org/ns/activitystreams#
+| dcterms: | http://purl.org/dc/terms/
+| geo: | http://www.opengis.net/ont/geosparql#
+| geom: | http://geovocab.org/geometry#
+| gn: | https://www.geonames.org/ontology#
+| juso: | http://rdfs.co/juso/
+| lgd: | http://linkedgeodata.org/ontology/
+| locn: | https://www.w3.org/ns/locn
+| obo: | http://purl.obolibrary.org/obo/
+| osm:  | https://w3id.org/openstreetmap/terms#
+| osmm: | https://www.openstreetmap.org/meta/
+| osmt: | https://wiki.openstreetmap.org/wiki/Key:
+| pos: | http://www.w3.org/2003/01/geo/wgs84_pos#
+| prov: | http://www.w3.org/ns/prov#
+| rdf: | http://www.w3.org/1999/02/22-rdf-syntax-ns# 
+| rdfs: | http://www.w3.org/2000/01/rdf-schema#
+| sdo: | https://schema.org
+| sosa: | http://www.w3.org/ns/sosa/
+| spatialuk: | http://data.ordnancesurvey.co.uk/ontology/spatialrelations/
+| spatialukgeom: | http://data.ordnancesurvey.co.uk/ontology/geometry/
+| spatial: | http://geovocab.org/spatial#
+| ssn: | http://www.w3.org/ns/ssn/
+| time: | http://www.w3.org/2006/time#
+| wdt: | http://www.wikidata.org/entity/
+|===
+
+=== ISA Programme Location Core Vocabulary (LOCN)
+
+LOCN Source: https://www.w3.org/ns/locn
+
+The LOCN specification provides notes on the use of GeoSPARQL literals (see https://www.w3.org/ns/locn#changes).
+
+.Alignment: ISA Programme Location Core Vocabulary (LOCN)
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.org/dc/terms/Location[`dcterms:Location`] | LOCN states that http://purl.org/dc/terms/Location[`dcterms:Location`] "represents any location, irrespective of size or other restriction". As such, it can be considered as a superclass of <<Class: geo:Feature, `geo:Feature`>>. 
+| https://www.w3.org/ns/locn/Address[`locn:Address`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | Although LOCN does not explicitly indicate spatial or geometry properties for `locn:Address`, this class can be considered as a specialized form of a <<Class: geo:Feature, `geo:Feature`>>.
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | https://www.w3.org/ns/locn/Geometry[`locn:Geometry`] | In LOCN, class https://www.w3.org/ns/locn/Geometry[`locn:Geometry`] "[...] defines the notion of geometry at the conceptual level, and it shall be encoded by using different formats". More precisely, its instances can be either literals or individuals. The GeoSPARQL's class <<Class: geo:Geometry, `geo:Geometry`>> is more narrowly defined, as its instances can only be individuals, and not literals.
+| <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | https://www.w3.org/ns/locn/geometry[`locn:geometry`]  | In LOCN, the usage note to property https://www.w3.org/ns/locn/geometry[`locn:geometry`] states that "Depending on how a geometry is encoded, the range of this property may be one of the following: a literal [...], an instance of a geometry class [...], geocoded URIs [...]". The GeoSPARQL's property <<Property: geo:hasGeometry, `geo:hasGeometry`>> is more narrowly defined, as it can only be used with instances of <<Class: geo:Geometry, `geo:Geometry`>>, and not with literals.
+|===
+
+=== WGS84 Geo Positioning: an RDF vocabulary (POS)
+
+POS Source: http://www.w3.org/2003/01/geo/
+
+.Alignment: WGS84 Geo Positioning Vocabulary (POS)
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| <<Class: geo:SpatialObject, `geo:SpatialObject`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.w3.org/2003/01/geo/SpatialThing[`pos:SpatialThing`] | Both classes are unrestricted, essentially abstract classes
+| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | Via `pos:Point rdfs:subClassOf pos:SpatialThing` but since http://www.w3.org/2003/01/geo/Point[`pos:Point`] usage notes indicates direct positioning, it is a form of geometry
+| http://www.w3.org/2003/01/geo/Point[`pos:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | 
+| http://www.w3.org/2003/01/geo/lat_long[`pos:lat_long`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | A special datatype is not indicated for use with this property by POS, unlike GeoSPARQL's <<Property: geo:hasSerialization,`geo:hasSerialization`>> object literals
+| http://www.w3.org/2003/01/geo/location[`pos:location`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry,`geo:hasGeometry`>> |
+|===
+
+=== W3C Activity Streams Vocabulary
+
+AS Source: https://www.w3.org/TR/activitystreams-vocabulary/
+
+.Alignment: W3C Activity Streams Vocabulary
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| https://www.w3.org/ns/activitystreams#Place[`as:Place`] |http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> | AS places are only defined for point geometries
+| https://www.w3.org/ns/activitystreams#accuracy[`as:accuracy`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSpatialAccuracy,`geo:hasSpatialAccuracy`>> | AS expresses the accuracy in percent
+| https://www.w3.org/ns/activitystreams#altitude[`as:altitude`] | | | The altitude property can be expressed as a Z coordinate in GeoSPARQL-compatible literals
+| https://www.w3.org/ns/activitystreams#latitude[`as:latitude`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | AS defines the range of this property as xsd:float
+| https://www.w3.org/ns/activitystreams#longitude[`as:longitude`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasSerialization,`geo:hasSerialization`>> | AS defines the range of this property as xsd:float
+|===
+
+=== Geonames Ontology (GN)
+
+Geonames source: http://www.geonames.org/ontology/documentation.html
+
+.Alignment: Geonames Vocabulary (GN)
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| https://www.geonames.org/ontology#Feature[`gn:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> |
+| https://www.geonames.org/ontology#GeonamesFeature[`gn:GeonamesFeature`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The GN class is defined as "A feature described in geonames database..."
+| <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | https://www.geonames.org/ontology#Class[`gn:Class`] | The GN class' definition reads "A class of features"
+| https://www.geonames.org/ontology#locatedIn[`gn:locatedIn`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family,`geo:sfWithin`>> |
+| https://www.geonames.org/ontology#nearby[`gn:nearby`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfDisjoint`>> | A https://www.geonames.org/ontology#nearby[`gn:nearby`] B means A is not within or touching B. The only close SF property is disjoint
+| https://www.geonames.org/ontology#neighbour[`gn:neighbour`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfTouches`>> |
+|===
+
+=== NeoGeo Vocabulary
+
+NeoGeo Source: http://geovocab.org/ / http://geovocab.org/doc/neogeo/
+
+.Alignment: NeoGeo Vocabulary
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| http://geovocab.org/spatial#Feature[`spatial:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> |
+| http://geovocab.org/spatial#C[`spatial:C`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8ec`>> | Sub proerty not equivalent property since the NeoGeo property has more restrictive domain & range
+| http://geovocab.org/spatial#DR[`spatial:DR`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8dc`>> |
+| http://geovocab.org/spatial#EC[`spatial:EC`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8ec`>> |
+| http://geovocab.org/spatial#EQ[`spatial:EQ`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8eq`>> |
+| http://geovocab.org/spatial#NTPP[`spatial:NTPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8ntpp`>> |
+| http://geovocab.org/spatial#NTPPi[`spatial:NTPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8ntppi`>> |
+| http://geovocab.org/spatial#O[`spatial:O`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfOverlaps`>> |
+| http://geovocab.org/spatial#P[`spatial:P`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfWithin`>> |
+| http://geovocab.org/spatial#PO[`spatial:PO`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:rcc8po`>> |
+| http://geovocab.org/spatial#PP[`spatial:PP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfWithin`>> |
+| http://geovocab.org/spatial#PPi[`spatial:PPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfContains`>> |
+| http://geovocab.org/spatial#Pi[`spatial:Pi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfContains`>> |
+| http://geovocab.org/spatial#TPP[`spatial:TPP`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo:rcc8tpp`>> |
+| http://geovocab.org/spatial#TPPi[`spatial:TPPi`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_rcc8_relation_family, `geo::rcc8tppi`>> |
+| http://geovocab.org/geometry#Geometry[`geom:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> |
+| http://geovocab.org/geometry#BoundingBox[`geom:BoundingBox`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GeoSPARQL doesn't have a BoundingBox class but has a generic Geometry class that is the range of the `geo:hasBoundingBox` property
+| http://geovocab.org/geometry#GeometryCollection[`geom:GeometryCollection`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> |
+| http://geovocab.org/geometry#LineString[`geom:LineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] |
+| http://geovocab.org/geometry#LinearString[`geom:LinearRing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LinearRing[`sf:LinearRing`] |
+| http://geovocab.org/geometry#MultiLineString[`geom:MultiLineString`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiLineString[`sf:MultiLineString`] |
+| http://geovocab.org/geometry#MultiPoint[`geom:MultiPoint`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPoint[`sf:MultiPoint`] |
+| http://geovocab.org/geometry#MultiPolygon[`geom:MultiPolygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#MultiPolygon[`sf:MultiPolygon`] |
+| http://geovocab.org/geometry#Polygon[`geom:Polygon`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] |
+| http://geovocab.org/geometry#Point[`geom:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] |
+| `geo:hasGeometry` | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://geovocab.org/geometry#geometry[`geom:geometry`] | `geo:hasGeometry` has more restrictive domain
+|===
+
+* The `geom:bbox` property relates a Geometry to another Geometry and is thus not equivalent to GeoSPARQL's Feature-to-Geometry `geo:hasBoundingBox`.
+** An equivalent to `geo:bbox` could be made using a <<Class: geo:Feature, `geo:Feature`>> with a <<Class: geo:Geometry, `geo:Geometry`>>, indicated by `geo:hasGeometry` and a second, specialised Bounding Box <<Class: geo:Geometry, `geo:Geometry`>> indicated with `geo:hasBoundingBox`
+
+=== Juso Ontology
+
+Juso Source: http://rdfs.co/juso/
+
+Juso contains mappings to GeoSPARQL but uses http://www.w3.org/2002/07/owl#sameAs[`owl:sameAs`] which it should instead use http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`].
+
+.Alignment: Juso Ontology
+|===
+| From Element | Mapping relation | To Element 
+
+| http://rdfs.co/juso/SpatialThing[`juso:SpatialThing`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>
+| http://rdfs.co/juso/Feature[`juso:Feature`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>>
+| http://rdfs.co/juso/Geometry[`juso:Geometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>>
+| http://rdfs.co/juso/Point[`juso:Point`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`]
+| http://rdfs.co/juso/geometry[`juso:geometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:hasGeometry, `geo:hasGeometry`>>
+| http://rdfs.co/juso/parent[`juso:parent`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfWithin`>>
+| http://rdfs.co/juso/division[`juso:political_division`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfContains`>>
+| http://rdfs.co/juso/within[`juso:within`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfWithin`>>
+|===
+
+=== Time Ontology in OWL (TIME)
+
+TIME Source: https://www.w3.org/TR/owl-time/
+
+There are no direct class or property correspondences between GeoSPARQL and TIME however class patterning is similar:
+
+* TIME uses https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] to indicate that something has a temporal projection
+* GeoSPARQL uses <<Property: geo:hasGeometry, `geo:hasGeometry`>> to indicate that a <<Class: geo:Feature, `geo:Feature`>> has a spatial projection
+
+and
+
+* TIME uses properties such as https://www.w3.org/TR/owl-time/inXSDDate[`time:inXSDDate`] to indicate the position of temporal entities on a temporal reference system
+* GeoSPARQL uses properties such as <<Property: geo:asWKT, `geo:asWKT`>> to indicate the position of spatial entities (Geometries) on spatial reference systems
+
+OWL TIME sets no domain for https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`] thus this property may be used with anything, including a GeoSPARQL <<Class: geo:Feature, `geo:Feature`>> so that a spatio-temporal Feature may be indicated like this:
+
+[%unnumbered]
+[source,turtle]
+----
+:flooded-area-x
+    a geo:Feature ;
+    geo:hasGeometry [
+        a geo:Geometry ;
+        geo:asWKT "POLYGON (((...)))"^^geo:wktLiteral ;
+    ] ;
+    time:hasTime [
+        a time:ProperInterval ;
+        time:hasBeginning [
+            time:inXSDDate "..."^^xsd:date ;
+        ] ;
+        time:hasEnd [
+            time:inXSDDate "..."^^xsd:date ;
+        ] ;        
+    ] ;
+.    
+----
+
+In the above example, `:flooded-area-x` is a spatio-temporal Feature that has both a GeoSPARQL spatial projection - a <<Class: geo:Geometry, `geo:Geometry`>> - and a temporal projection - a https://www.w3.org/TR/owl-time/ProperInterval[`time:ProperInterval`] which is a specialized form of https://www.w3.org/TR/owl-time/TemporalEntity[`time:TemporalEntity`].
+
+Another possible use of TIME with GeoSPARQL is to assign temporality to individual <<Class: geo:Geometry, `geo:Geometry`>> instances. This is allowed given https://www.w3.org/TR/owl-time/hasTime[`time:hasTime`]'s open domain:
+
+[%unnumbered]
+[source,turtle]
+----
+:flooded-area-x
+    a geo:Feature ;
+    geo:hasGeometry [
+        a geo:Geometry ;
+        geo:asWKT "POLYGON (((...)))"^^geo:wktLiteral ;
+        time:hasTime [ ... ] ;      
+    ] ;
+.
+----
+
+In contrast to the first example, `:flooded-area-x` is inferred to be a spatio-temporal Feature but since it is the Geometry of `:flooded-area-x` that has a temporality, it is possible to describe other Geometries of `:flooded-area-x` with other temporalities.
+
+
+=== schema.org
+
+schema.org Source: https://schema.org
+
+.Alignment: schema.org
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | 	
+https://schema.org/GeoShape[`sdo:GeoShape`] | A GeoShape can various literal geometry representation
+| https://schema.org/GeospatialGeometry[`sdo:GeospatialGeometry`] | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | Since https://schema.org/GeospatialGeometry[`sdo:GeospatialGeometry`] is the domain of SimpleFeature-like properties and a superclass of GeoShape
+| https://schema.org/GeoCoordinates[`sdo:GeoCoordinates`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | GoCoordinates uses direct lat, long, elevation etc properties to indicate position, not a while geometry serialization but it is nevertheless a form of a Geometry
+| https://schema.org/geo[`sdo:geo`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Property: geo:hasGeometry, `geo:hasGeometry`>> |
+| https://schema.org/geoCoveredBy[`sdo:geoCoveredBy`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:ehCoveredBy`>> |
+| https://schema.org/geoCovers[`sdo:geoCovers`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:ehCovers`>> |
+| https://schema.org/geoCrosses[`sdo:geoCrosses`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfCrosses`>> |
+| https://schema.org/geoDisjoint[`sdo:geoDisjoint`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfDisjoint`>> |
+| https://schema.org/geoEquals[`sdo:geoEquals`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfEquals`>> |
+| https://schema.org/geoIntersects[`sdo:geoIntersects`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfIntersects`>> |
+| https://schema.org/geoOverlaps[`sdo:geoOverlaps`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfOverlaps`>> |
+| https://schema.org/geoTouches[`sdo:geoTouches`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfTouches`>> |
+| https://schema.org/geoWithin[`sdo:geoWithin`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfWithin`>> |
+| https://schema.org/geoMidpoint[`sdo:geoMidpoint`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:hasCentroid, `geo:hasCentroid`>> | 
+| https://schema.org/Landform[`sdo:Landform`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> |
+|===
+
+
+=== Semantic Sensor Network Ontology (SSN)
+
+SSN Source: https://www.w3.org/TR/vocab-ssn/
+
+SSN and GeoSPARQL do not cover overlapping concerns directly and therefore there are no direct class or property correspondences between them, however SSN provides advice on the use of GeoSPARQL for location, 
+see Section 7.1 (https://www.w3.org/TR/vocab-ssn/#x7-1-location):
+
+> GeoSPARQL ... provides a flexible and relatively complete platform for geospatial objects, that fosters interoperability between geo-datasets. To do so, these entities can be 
+declared as instances of <<Class: geo:Feature, `geo:Feature`>> and geometries can be assigned to them via the geo:hasGeometry property. In case of classes, e.g., specific features of interests such as 
+rivers, these can be defined as subclasses of <<Class: geo:Feature, `geo:Feature`>>.
+
+
+=== DCMI Metadata Terms (DCTERMS)
+
+DCTERMS Source: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
+
+.Alignment: DCMI Metadata Terms (DCTERMS)
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.org/dc/terms/Location[`dcterms:Location`] | A Location is a "A spatial region or named place."
+| <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.org/dc/terms/spatial[`dcterms:spatial`] | http://purl.org/dc/terms/spatial[`dcterms:spatial`] indicates the "Spatial characteristics of the resource", thus it is a more general form of GeoSPARQL's <<Property: geo:hasGeometry, `geo:hasGeometry`>> which indicates geometry spatial information
+|===
+
+* http://purl.org/dc/terms/spatial[`dcterms:spatial`]: "Spatial characteristics of the resource". The range of this property includes a http://purl.org/dc/terms/Location[`dcterms:Location`], so it is a property for indicating a <<Class: geo:Feature, `geo:Feature`>>, for which GeoSPARQL has no equivalent, but perhaps also for indicating a <<Class: geo:Geometry, `geo:Geometry`>>, thus the subPropertyOf mapping above.
+* http://purl.org/dc/terms/coverage[`dcterms:coverage`]: "The spatial or temporal topic of the resource, spatial applicability of the resource, or jurisdiction under which the resource is relevant". This is a more generic form of http://purl.org/dc/terms/spatial[`dcterms:spatial`] but, since there is no direct GeoSPARQL mapping for http://purl.org/dc/terms/spatial[`dcterms:spatial`], there is no direct mapping for this property either.
+
+DCTERMS-related geometry literals, such as the _DCMI Box Encoding Scheme_ footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-box/] and the _DCMI Point Encoding Scheme_ footnote:[https://www.dublincore.org/specifications/dublin-core/dcmi-point/] 
+could be indicated as GeoSPARQL geometry literals if a literal datatype were created for each. For example, the _DCMI Point Encoding Scheme_ example of "The highest point in Australia" with the literal value 
+`east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko` might be encoded in GeoSPARQL like this:
+
+[%unnumbered]
+[source,turtle]
+----
+:mt-kosciusko
+    a geo:Feature ;
+    geo:hasGeometry [
+        a geo:Geometry ;
+        geo:hasSerialization "east=148.26218; north=-36.45746; elevation=2228; name=Mt. Kosciusko"^^ex:dcmiPoint ;        
+    ] ;
+.
+----
+
+
+=== The Provenance Ontology (PROV)
+
+PROV Source: https://www.w3.org/TR/prov-o/
+
+From GeoSPARQL's point of view, PROV is an "upper" ontology - one dealing with more abstract concepts - and only one of PROV's three main classes of object - `Entity`, `Activity` & `Agent` - has direct relations to GeoSPARQL classes and that is `Entity`. This is because GeoSPARQL characterizes things - spatial objects - which are a kind of `Entity` but does not deal with events (`Activity`) or things with agency (`Agent`).
+
+.Alignment: The Provenance Ontology (PROV)
+|===
+| From Element | Mapping relation | To Element | Notes
+
+| `geo:SpatialObjectCollection` | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://www.w3.org/ns/prov#Collection[`prov:Collection`] | PROV's class is a generic collection class and GeoSPARQL's property is clearly a specialized form of it that may only consist of certain class instances (<<Class: geo:SpatialObject, `geo:SpatialObject`>>)
+| <<Class: geo:SpatialObject, `geo:SpatialObject`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://www.w3.org/ns/prov#Entity[`prov:Entity`] | All SpatialObjects fit within PROV's Entity's definition: "An entity is a physical, digital, conceptual, or other kind of thing with some fixed aspects; entities may be real or imaginary." 
+| <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://www.w3.org/ns/prov#Location[`prov:Location`] | A Location "...can be an identifiable geographic place (ISO 19112), but it can also be a non-geographic place such as a directory, row, or column" so seem to be wider in scope than GeoSPARQL's Feature although a Feature could indeed be something such as a "directory, row, or column"
+|===
+
+* The PROV property http://www.w3.org/ns/prov#atLocation[`prov:atLocation`] indicates http://www.w3.org/ns/prov#Location[`prov:Location`] instances, which may be <<Class: geo:Feature, `geo:Feature`>> instances, but GeoSPARQL has no property to indicate a <<Class: geo:Feature, `geo:Feature`>>, so no mapping is possible. Indicating features is commonly done in ontologies which use GeoSPARQL but not within GeoSPARQL.
+
+* Derivative relations between GeoSPARQL objects could be modelled using PROV, for instance a BoundingBox may be indicated as having been derived from a Polygon like this:
+
+[%unnumbered]
+[source,turtle]
+----
+:bounding-box-y prov:wasDerivedFrom :polygon-x .
+----
+
+=== WikiData
+
+.Alignment: WikiData
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| http://www.wikidata.org/prop/direct/P625[`wdt:P625`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:asWKT, `geo:asWKT`>> | The Wikidata description of this property labeled "coordinate location" note that "For Earth, please note that only WGS84 coordinating system is supported at the moment" but that is a system limit, not an ontological one
+| http://www.wikidata.org/prop/direct/P3896[`wdt:P3896`]   | http://www.w3.org/2002/07/owl#propertyChainAxiom[`owl:propertyChainAxiom`] | `(<<Property: geo:hasGeometry, geo:hasGeometry>> <<Property: geo:asGeoJSON, geo:asGeoJSON>>)` | This Wikidata property labeled "geoshape" indicated GeoJSON geometry literal content for a Feature, but it allows information other than just Geometry in the GeoJSON whereas GeoSPARQL does not.
+| http://www.wikidata.org/prop/direct/P3096[`wdt:P3096`]  | http://www.w3.org/2002/07/owl#propertyChainAxiom[`owl:propertyChainAxiom`] | `(<<Property: geo:hasGeometry, geo:hasGeometry>> <<Property: geo:asKML, geo:asKML>>)` | This Wikidata property labeled "KML File" links to a KML file which is related to the respective instance. This may not be the same representation as in GeoSPARQL, as GeoSPARQL KML literals only encode the geometry part of a KML.
+| http://www.wikidata.org/entity/Q82794[`wd:Q82794`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The Wikidata class is labeled "geographic region" and thus is a subclass of the more general <<Class: geo:Feature, `geo:Feature`>>. There are likely many other classes in Wikidata that could be interpreted as subclasses of <<Class: geo:Feature, `geo:Feature`>>
+| http://www.wikidata.org/entity/Q618123[`wd:Q618123`]  | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Feature, `geo:Feature`>> | The Wikidata class is labeled "geographical feature" and thus corresponds to <<Class: geo:Feature, `geo:Feature`>>.
+| http://www.wikidata.org/entity/Q25404640[`wd:Q25404640`]  | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | The Wikidata class is labeled "spatial object" and thus corresponds to <<Class: geo:SpatialObject, `geo:SpatialObject`>>.
+| http://www.wikidata.org/prop/direct/P150[`wdt:P150`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfContains`>> | The Wikidata property is labeled "contains administrative territorial entity" but also alternatively labeled "contains", "has districts" and others. There are likely many other specialized forms of <<#_simple_features_relation_family, `geo:sfContains`>> and <<#_simple_features_relation_family, `geo:sfWithin`>> in Wikidata
+| <<#_simple_features_relation_family, `geo:sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://www.wikidata.org/prop/direct/P361[`wdt:P361`] | The Wikidata property is labeled "part of" and is sometimes used to indicate Feature parthood. There are likely other parthood properties like this in Wikipedia that may also be used as superproperties of GeoSPARQL feature relations properties. The Wikidata inverse is http://www.wikidata.org/prop/direct/Q65964571[`wdt:Q65964571`] "has part"
+| <<#_simple_features_relation_family, `geo:sfContains`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://www.wikidata.org/entity/Q65964571[`wd:Q65964571`]   | The property labeled "has part" is the inverse of http://www.wikidata.org/prop/direct/P361[`wdt:P361`] (see above)
+| http://www.wikidata.org/prop/direct/P131[`wdt:P131`]  | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfContains`>> | The Wikidata property is labeled "located in the administrative territorial entity" and is essentially the inverse of http://www.wikidata.org/prop/direct/P150[`wdt:P150`] (described above)
+| http://www.wikidata.org/prop/direct/P706[`wdt:P706`] | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<#_simple_features_relation_family, `geo:sfWithin`>> | The Wikidata property is labeled "located in/on physical feature" and is indicated for use with a "(geo)physical feature" and not to be used for administrative features where http://www.wikidata.org/prop/direct/P131[`wdt:P131`] (see above) should be
+| http://www.wikidata.org/prop/direct/P4688[`wdt:P4688`] | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The Wikidata class is labeled "geomorphological unit" and is one of many Wikidata feature classes that could be expressed as a subclass of <<Class: geo:Feature, `geo:Feature`>>. More specialized geological unit examples are http://www.wikidata.org/entity/Q5107[`wd:Q5107`] "continent" and http://www.wikidata.org/prop/direct/P4552[`wdt:P4552`] "mountain range".
+| http://www.wikidata.org/prop/direct/P2046[`wdt:P2046`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:hasArea, `geo:hasArea`>> | The Wikidata property is labeled "area". It indicates a microformat - NUMBER + SPACE + ALLOWED_UNIT_LABEL - with a fixed set of ALLOWED_UNIT_LABELs to present values and units of measure.
+|===
+
+=== OpenStreetMap Ontologies
+There are several approaches to make OpenStreetMap data accessible in the Linked Open Data cloud.
+
+==== LinkedGeoData
+LinkedGeoData emerged from a research project connecting OpenStreetMap representations to an ontology model.
+In this model, specific values of OpenStreetMap tags, e.g. the values of amenity tags are converted to http://www.w3.org/2002/07/owl#Class[owl:Class] representations using an automated process.
+Every class defined in this way represented a <<Class: geo:Feature, `geo:Feature`>> and is linked to either a Geometry or a latitude longitude representation.
+Hence, every linked geodata class can be considered a <<Class: geo:Feature, `geo:Feature`>> in the sense of GeoSPARQL.
+   
+.Alignment: LinkedGeoData   
+|===
+| From Element | Mapping relation | To Element | Notes
+| Any LGD Class | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | Any class defined in the LinkedGeoData ontology is a subclass of <<Class: geo:Feature, `geo:Feature`>>
+|===
+    
+==== OpenStreetMap RDF (Sophox)
+https://wiki.openstreetmap.org/wiki/Sophox#How_OSM_data_is_stored
+
+.Alignment: OpenStreetMap RDF (Sophox)     
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| https://www.openstreetmap.org/meta/loc[`osmm:loc`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:asWKT, `geo:asWKT`>> | The OpenStreetMap RDF property osmm:loc includes WKTliterals which depending on the type of the subject instance describe an OSM node or the centroid of a way or OSM relation
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'n' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/type[`osmm:type`] with value 'n' describes an OSM Node which is equivalent to a http://www.opengis.net/ont/sf#Point[`sf:Point`]
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'w' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/type[`osmm:type`] with value 'w' describes an OSM Way which is equivalent to a sf:LineString
+| https://www.openstreetmap.org/meta/type[`osmm:type`] 'r' | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/type[`osmm:type`] with value 'r' describes an OSM relation Way which is equivalent to a sf:GeometryCollection
+| https://www.openstreetmap.org/meta/has[`osmm:has`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfContains`>>, <<#_egenhofer_relation_family, `geo:ehContains`>>, <<#_rcc8_relation_family, `geo:rcc8ntpp`>> | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/has[osmm:has] describes that a relation contains a way or that a way contains a node
+| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] true | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`]  indicates whether a Way is closed, i.e. if it constitutes a Polygon
+| https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`] false | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The OpenStreetMap RDF property https://www.openstreetmap.org/meta/isClosed[`osmm:isClosed`]  indicates whether a Way is closed, i.e. if it constitutes a Polygon
+|===
+    
+==== Routable Tiles Ontology
+https://github.com/openplannerteam/routable-tiles-ontology
+
+.Alignment: Routable Tiles Ontology
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| `osm:Element` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | <<Class: geo:Geometry, `geo:Geometry`>> | The class osm:Element is equivalent to a <<Class: geo:Geometry, `geo:Geometry`>>
+| `osm:Node` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#Point[`sf:Point`] | The class osm:Node is equivalent to a http://www.opengis.net/ont/sf#Point[`sf:Point`]
+| `osm:Way` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#LineString[`sf:LineString`] | The class osm:Way is equivalent to a http://www.opengis.net/ont/sf#LineString[`sf:LineString`]
+| `osm:Relation` | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`] | The class osm:Relation is equivalent to a http://www.opengis.net/ont/sf#GeometryCollection[`sf:GeometryCollection`]
+|===
+
+=== Ordnance Survey UK Spatial Ontology
+http://www.ordnancesurvey.co.uk/legacy/ontologies/spatialrelations.owl & http://www.ordnancesurvey.co.uk/legacy/ontologies/geometry.owl
+
+NOTE: These two ontologies will be withdrawn during 2022.
+
+The ontology authors note: "We are pleased to have contributed to the discussion some ten years ago but recognize that the subject area has moved on. We would not recommend people starting to relate to our ontology now, and we look forward to migrating to some more authoritative one in due course."
+
+.Alignment: Ordnance Survey UK Spatial Ontology
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/contains[`spatialuk:contains`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfContains`>> |
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/disjoint[`spatialuk:disjoint`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfDisjoint`>> |
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/easting[`spatialuk:easting`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | - | Distance in metres east of National Grid origin
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/equals[`spatialuk:equals`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfEquals`>> |
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing[`spatialuk:northing`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | - | Distance in metres north of National Grid origin
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/touches[`spatialuk:touches`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfTouches`>> |
+| http://data.ordnancesurvey.co.uk/ontology/spatialrelations/within[`spatialuk:within`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<#_simple_features_relation_family, `geo:sfWithin`>> |
+| http://data.ordnancesurvey.co.uk/ontology/geometry/AbstractGeometry[`spatialukgeom:AbstractGeometry`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Class: geo:Geometry, `geo:Geometry`>> |
+| http://data.ordnancesurvey.co.uk/ontology/geometry/extent[`spatialukgeom:extent`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:hasGeometry, `geo:hasGeometry`>> | The range of spatialukgeom:extent is constrained to 2D geometries
+| http://data.ordnancesurvey.co.uk/ontology/geometry/asGML[`spatialukgeom:asGML`] | http://www.w3.org/2002/07/owl#equivalentProperty[`owl:equivalentProperty`] | <<Property: geo:asGML, `geo:asGML`>> | The properties are equivalent, but the range of http://data.ordnancesurvey.co.uk/ontology/geometry/asGML[`spatialukgeom:asGML] is more general: An http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral[rdf:XMLLiteral]
+|===
+
+* http://data.ordnancesurvey.co.uk/ontology/spatialrelations/easting[`spatialuk:easting`] describes a latitude coordinate east of the national UK grid and GeoSPARQL does not contain modelling of individual coordinate reference system elements
+* http://data.ordnancesurvey.co.uk/ontology/spatialrelations/northing[`spatialuk:northing`] describes a longitude coordinate north of the national UK grid so, as above, has not GeoSPARQL equivalent
+
+=== CIDOC CRM Geo
+
+CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pdf
+
+.Alignment: CIDOC CRM Geo
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| http://www.cidoc-crm.org/cidoc-crm/SP1_PhenomenalSpaceTimeVolume[`cidoc:SP1_PhenomenalSpaceTimeVolume`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The CIDOC CRMgeo class SP1_PhenomenalSpaceTimeVolume is a subclass of geo:Feature as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP2_PhenomenalPlace[`cidoc:SP2_PhenomenalPlace`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | The CIDOC CRMgeo class SP2_PhenomenalPlace is a subclass of <<Class: geo:Feature, `geo:Feature`>> as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP5_GeometricPlaceExpression[`cidoc:SP5_GeometricPlaceExpression`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP5_GeometricPlaceExpression is a subclass of <<Class: geo:Geometry, `geo:Geometry`>> as described in the CRMgeo 1.2 specification document.
+| `cidoc:SP6_DeclarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP6_DeclarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| `cidoc:SP7_DelcarativePlace`  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP7_DeclarativePlace is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP10_DeclarativeTimeSpan[`cidoc:SP10_DeclarativeTimeSpan`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP10_DeclarativeTimeSpan is a subclass of <<Class: geo:Geometry, geo:Geometry>> as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP14_TimeExpression[`cidoc:SP14_TimeExpression`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP14_TimeExpression is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+| http://www.cidoc-crm.org/cidoc-crm/SP15_Geometry[`cidoc:SP15_Geometry`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Geometry, `geo:Geometry`>> | The CIDOC CRMgeo class SP15_Geometry is a subclass of geo:Geometry as described in the CRMgeo 1.2 specification document.
+|===
+
+=== Basic Formal Ontology (BFO)
+
+BFO Source: https://basic-formal-ontology.org/bfo-2020.html, and from there, an OWL ontology of BFO2020 at https://github.com/BFO-ontology/BFO-2020
+
+.Alignment: Basic Formal Ontology (BFO)
+[cols="1,1,1,3"]
+|===
+| From Element | Mapping relation | To Element | Notes 
+
+| <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000004[`obo:BFO_0000004`] "independent continuant" | BFO's "independent continuant" is the superclass of "material entity" & "immaterial entity" which are mapped to Feature & Geometry respectively, so at least some independent continuants must be Spatial Objects
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000006[`obo:BFO_0000006`] "spatial region" | BFO's "spatial region" class is described as a "spatial projection of a portion of spacetime" so Geometry appears to be a subclass of this as it's "A coherent set of direct positions in space"
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/IAO_0000030[`obo:IAO_0000030`] "information content entity" | BFO's "information content entity" class is described as "an entity that represents information about some other entity", so Geometry appears to be subclass of this as well as "spatial region" since in GeoSPARQL, Geometry gives the details of the spatial projection of a Feature.
+| http://purl.obolibrary.org/obo/BFO_0000040[`obo:BFO_0000040`] "material entity" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | A BFO "material entity" is something that "has some portion of matter as continuant part" and some Features are such, however Features may be imaginary too
+| http://purl.obolibrary.org/obo/BFO_0000029[`obo:BFO_0000029`] "site" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Class: geo:Feature, `geo:Feature`>> | BFO's sites either cover the same areas as, or have locations determined in relation to, material entities, so sites are Features but not necessarily the other way around
+| <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000211[`obo:BFO_0000211`] "occupies spatial region at all times" | The BFO property links a thing that is not a spatial region to a spatial region, so it can be used as <<Property: geo:hasGeometry, `geo:hasGeometry`>> is used when the thing is taken to be a <<Class: geo:Feature, `geo:Feature`>> and the spatial region a <<Class: geo:Geometry, `geo:Geometry`>>. No GeoSPARQL temporality indicators mean mappings are eternal.
+| <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000210[`obo:BFO_0000210`] "occupies spatial region at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
+| <<#_simple_features_relation_family, `geo:sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_000082[`obo:BFO_0000082`] "located in at all times" | The BFO property "located in at all times" is a super property of <<#_simple_features_relation_family, `geo:sfWithin`>> when the thing located in the spatial region are defined to both be instances of <<Class: geo:Feature, `geo:Feature`>>. Since GeoSPARQL natively supplies no temporal qualifiers, pure GeoSPARQL assertions are assumed to be eternal: "...at all times"
+| <<#_simple_features_relation_family, `geo:sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000171[`obo:BFO_0000171`] "located in at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
+| http://purl.obolibrary.org/obo/BFO_0000066[`obo:BFO_0000066`] "occurs in" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | The BFO property relates a temporal activity to a spatial region but since GeoSPARQL has no notion of events, no mapping to this property can be made. However, BFO indicates this property should be used with a BFO "spatial region" (<<Class: geo:Geometry, `geo:Geometry`>>) range value but from GeoSPARQL's point of view, it could also be used with a <<Class: geo:Feature, `geo:Feature`>> where the "in" would be taken to be within the feature's geometry, so the superclass of feature and geometry is given as the range
+| http://purl.obolibrary.org/obo/BFO_0000216[`obo:BFO_0000216`] "spatially projects onto at some time" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | The reasoning is the same as for "occurs in"
+|===
+
+* BFO distinguishes between _continuants_ & _occurrants_, which _spatial region_ & _spatiotemporal region_ are subclasses of, respectively. GeoSPARQL has no handling of temporality, so cannot yet map to any _continuants_
+** a future version of GeoSPARQL that handled spatio-temporal Features could perhaps claim that <<Class: geo:Feature, `geo:Feature`>> is a http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] http://purl.obolibrary.org/obo/BFO_0000011[`obo:BFO_0000011`] "spatiotemporal region", however inconsistencies from this mapping will occur due to the current Feature/"spatial region" mapping above and this will need to be handled
