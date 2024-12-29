@@ -37,19 +37,14 @@ function loadFiles(){
 	}
 }
 function loadStandardFile(){
- fetch('https://opengeospatial.github.io/ogc-geosparql/'+document.getElementById("standard").value+"/logfile.json")
-  .then(function(response) {
-    response.json();
-  })
-  .then(function(myJson) {
-	standarddata=myJson
-        console.log(standarddata)
+$.getJSON('https://opengeospatial.github.io/ogc-geosparql/'+document.getElementById("standard").value+"/logfile.json", function(jd) {
+	standarddata=jd
 	categories=""
 	for(key in standarddata){
 		categories+="<option value=\""+key+"\">"+key+"</option>"
 	}
 	document.getElementById("category").innerHTML=categories
-  });
+});
 }
 standards=""
 for(stand of standardss){
