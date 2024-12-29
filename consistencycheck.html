@@ -1,0 +1,56 @@
+<html>
+<head>
+<script src="standards/standards.js"></script>
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+</head>
+<body>
+Standard: <select id="standard" onChange="loadStandardFile()"></select><br/>
+Category: <select id="category" onChange="loadFiles()"></select><br/>
+File: <select id="file" onChange="showResults()"></select><br/>
+<ol id="resultlist">
+</ol>
+<script>
+var standarddata={}
+function showResults(){
+	cat=document.getElementById("category").value
+	file=document.getElementById("file").value
+	res=standarddata[cat][file]
+	reslist=""
+	for(key in standarddata[cat][file]){
+		reslist+="<li>"+key+": <b>"+standarddata[cat][file][key]+"</b></li>"
+	}
+	document.getElementById("resultlist").innerHTML=reslist
+}
+function loadFiles(){
+	cat=document.getElementById("category").value
+	if(cat in standarddata){
+		files=""
+		for(fil in standarddata[cat]){
+			files+="<option value=\""+fil+"\">"+fil+"</option>"
+		}
+		document.getElementById("file").innerHTML=files
+	}
+}
+function loadStandardFile(){
+ fetch('https://opengeospatial.github.io/ogc-geosparql/'+document.getElementById("standard").value+"/logfile.json")
+  .then(function(response) {
+    standarddata=response.json();
+	categories=""
+	for(key in standarddata){
+		categories+="<option value=\""+key+"\">"+key+"</option>"
+	}
+	document.getElementById("category").innerHTML=categories
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
+}
+standards=""
+for(stand of standards){
+ standards+="<option value=\""+stand+"\">"+stand+"</option>"
+}
+document.getElementById("standard").innerHTML=standards
+</script>
+</body>
+</html>
