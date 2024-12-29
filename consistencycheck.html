@@ -5,7 +5,10 @@
 standardss=[{"uri":"geosparql10","label":"GeoSPARQL 1.0"},{"uri":"geosparql11","label":"GeoSPARQL 1.1"},{"uri":"geosparql12","label":"GeoSPARQL 1.2"},{"uri":"geosparql13","label":"GeoSPARQL 1.3"}]
 </script>
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.11/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 <h1>GeoSPARQL Standard Consistency Check</h1>
@@ -13,8 +16,8 @@ standardss=[{"uri":"geosparql10","label":"GeoSPARQL 1.0"},{"uri":"geosparql11","
 <tr><td>Category: </td><td><select id="category" onChange="loadFiles()"></select></td></tr>
 <tr><td>File: </td><td><select id="file" onChange="showResults()"></select></td></tr>
 </table>
-<ol id="resultlist">
-</ol>
+<table id="resulttable"><thead><th>Function</th><th>Error</th></thead><tbody id="resulttablebody"></tbody>
+</table>
 <script>
 var standarddata={}
 function showResults(){
@@ -23,9 +26,10 @@ function showResults(){
 	res=standarddata[cat][file]
 	reslist=""
 	for(key in standarddata[cat][file]){
-		reslist+="<li>"+key+": <b>"+standarddata[cat][file][key]+"</b></li>"
+		reslist+="<tr><td>"+key+"</td><td>"+standarddata[cat][file][key]+"</td></tr>"
 	}
-	document.getElementById("resultlist").innerHTML=reslist
+	document.getElementById("resulttablebody").innerHTML=reslist
+	table = $("#resulttable").dataTable({"paging":true});
 }
 function loadFiles(){
 	cat=document.getElementById("category").value
