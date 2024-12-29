@@ -21,6 +21,7 @@ first=true
 </table>
 <script>
 var standarddata={}
+var thetable=null
 function showResults(){
 	cat=document.getElementById("category").value
 	file=document.getElementById("file").value
@@ -31,11 +32,11 @@ function showResults(){
 	}
 	document.getElementById("resulttablebody").innerHTML=reslist
 	if(first){
-		table = $("#resulttable").dataTable({"paging":true});
+		thetable = $("#resulttable").dataTable({"paging":true});
 		first=false
 	}else{
-		//$("#resulttable").DataTable().destroy();
-		table = $("#resulttable").dataTable({"paging":true});
+		thetable.DataTable().clear().destroy();
+		thetable = $("#resulttable").dataTable({"paging":true});
 	}
 }
 function loadFiles(){
