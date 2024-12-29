@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 standardss=[{"uri":"geosparql10","label":"GeoSPARQL 1.0"},{"uri":"geosparql11","label":"GeoSPARQL 1.1"},{"uri":"geosparql12","label":"GeoSPARQL 1.2"},{"uri":"geosparql13","label":"GeoSPARQL 1.3"}]
+first=true
 </script>
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -29,7 +30,12 @@ function showResults(){
 		reslist+="<tr><td>"+key+"</td><td>"+standarddata[cat][file][key]+"</td></tr>"
 	}
 	document.getElementById("resulttablebody").innerHTML=reslist
-	table = $("#resulttable").dataTable({"paging":true});
+	if(first){
+		table = $("#resulttable").dataTable({"paging":true});
+		first=false
+	}else{
+		table = $("#resulttable").dataTable({"paging":true,"destroy":true});
+	}
 }
 function loadFiles(){
 	cat=document.getElementById("category").value
