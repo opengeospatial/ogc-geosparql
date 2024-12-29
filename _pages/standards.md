@@ -3,7 +3,7 @@ layout: null
 ---
 [
 {%- for pag in site.pages -%}
-{%- if "geosparql" in pag.slug -%}
+{%- if pag.slug contains "geosparql" -%}
 {{pag.slug}}
 {%- endif -%}
 {%- endfor -%}
