@@ -191,7 +191,7 @@ def parseSpecForFunctions(directory):
 resultlog={"GeoSPARQL Functions vs. Service Description":{},"GeoSPARQL Functions vs. Spec":{},"GeoSPARQL Functions vs. RIF Rules":{},"GeoSPARQL JSON-LD Context":{},"GeoSPARQL Functions vs. Requirements":{},"GeoSPARQL Functions Translation Completeness":{}}    
 #input1=sys.argv[1]
 #input2=sys.argv[2]
-specvocab=parseSpecForFunctions("../spec/")
+specvocab=parseSpecForFunctions("../spec/sections/")
 input1="../vocabularies/functions.ttl"
 input2="../servicedescription/servicedescription_all_functions.ttl"
 check_functions_sd_consistency(input1,input2,"GeoSPARQL Functions vs. Service Description",resultlog)
