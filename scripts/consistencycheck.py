@@ -134,6 +134,8 @@ def check_rules_spec_consistency(input1,input2,checklabel,jsonlog):
     funcs2={}
     for obj in g1.subjects(URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),URIRef("http://www.w3.org/2002/07/owl#Class")):
         funcs1[str(obj)]=str(obj)[str(obj).rfind("/")+1]
+    for obj in g1.subjects(URIRef("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"),URIRef("http://www.w3.org/2004/02/skos/core#Concept")):
+        funcs1[str(obj)]=str(obj)[str(obj).rfind("/")+1]
     if not isinstance(input2,set):
         g2=Graph()
         g2.parse(input2)
