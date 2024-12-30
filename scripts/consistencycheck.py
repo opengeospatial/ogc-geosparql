@@ -101,8 +101,6 @@ def check_translation_consistency(translationfolder,vocabfolder,checklabel,jsonl
     langs=[langfolder[0] for langfolder in os.walk(translationfolder)]
     for lang in langs:
         if lang!="translations/":
-            if lang not in jsonlog[checklabel]:
-                jsonlog[checklabel][lang]={}
             for file in os.listdir(lang):
                 if ".ttl" in file:
                     filenamemod=file[0:file.rfind("_")]+".ttl"
@@ -110,14 +108,14 @@ def check_translation_consistency(translationfolder,vocabfolder,checklabel,jsonl
                     g.parse(lang+"/"+file)
                     print("\n==========\nCOMPARISON: "+str(file)+" vs. "+str(filenamemod)+"\n==========\n")
                     logfile.write("\n==========\nCOMPARISON: "+str(file)+" vs. "+str(filenamemod)+"\n==========\n")
-                    if str(file) not in jsonlog[checklabel][lang]:
-                        jsonlog[checklabel][lang][str(file)]={}
+                    if str(file) not in jsonlog[checklabel]:
+                        jsonlog[checklabel][str(file)]={}
                     for sub in g.subjects():
                         if str(sub) not in nametoGraph[filenamemod]:
                             if isinstance(sub,URIRef):
                                 print("Translation "+str(str(lang)[lang.rfind("/")+1:].upper())+" missing for "+str(sub)+" ["+str(filenamemod)+"]")
                                 logfile.write("Translation "+str(str(lang)[lang.rfind("/")+1:].upper())+" missing for "+str(sub)+" ["+str(filenamemod)+"]\n")
-                                jsonlog[checklabel][lang][str(file)]["Translation "+str(str(lang)[lang.rfind("/")+1:].upper())+" for "+str(sub)]="missing"
+                                jsonlog[checklabel][str(file)]["Translation "+str(str(lang)[lang.rfind("/")+1:].upper())+" for "+str(sub)]="missing"
     return jsonlog                   
             
     
