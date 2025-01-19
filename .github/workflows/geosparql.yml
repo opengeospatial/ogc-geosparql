@@ -13,8 +13,7 @@ jobs:
   build10:
     name: Compile GeoSPARQL 1.0 Documentation
     runs-on: ubuntu-latest
-    needs: jekyll
-    needs: 3dvocab
+    needs: [jekyll, build3dvoc]
     steps:
     - uses: actions/checkout@v1
       with:
@@ -238,7 +237,7 @@ jobs:
            clean: true
            FOLDER: site/
 
-build3dvoc:
+  build3dvoc:
    name: Compile 3DVocab
    runs-on: ubuntu-latest
    needs: jekyll
@@ -278,7 +277,7 @@ build3dvoc:
        clean: false
        FOLDER: site/       
 
-build13:
+  build13:
    name: Compile GeoSPARQL 1.3 Metanorma
    runs-on: ubuntu-latest
    needs: jekyll
