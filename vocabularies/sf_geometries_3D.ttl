@@ -49,6 +49,37 @@ sf3d:Cone
     skos:prefLabel "Cone"@en ;
 .
 
+sf3d:EllipticCone
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:Cone ;
+    skos:definition """A cone with an elliptical cross section"""@en ;
+    skos:prefLabel "Elliptic Cone"@en ;
+.
+
+sf3d:FrustumCone
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:Cone ;
+    skos:definition """A cone with a removed upper part"""@en ;
+    skos:prefLabel "Frustum Cone"@en ;
+.
+
+sf3d:Prism
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:Solid ;
+    skos:definition """A solid geometric figure whose two ends are similar, equal, and parallel rectilinear figures, and whose sides are parallelograms"""@en ;
+    skos:prefLabel "Prism"@en ;
+.
+
+
 sf3d:Texture
     a
         rdfs:Class ,
@@ -74,7 +105,7 @@ sf:BSplineCurve
         rdfs:Class ,
         owl:Class ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
-    rdfs:subClassOf sf:Curve ;
+    rdfs:subClassOf sf:SplineCurve ;
     skos:definition """A curve based on a B-Splice"""@en ;
     skos:prefLabel "B-Spline Curve"@en ;
 .
@@ -116,6 +147,16 @@ sf:ConicalCurve
     rdfs:subClassOf sf:Curve ;
     skos:prefLabel "Conical Curve"@en ;
 .
+
+sf:SineCurve
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf:Curve ;
+    skos:prefLabel "Sine Curve"@en ;
+.
+
 
 sf:CosineCurve
     a
@@ -294,6 +335,16 @@ sf3d:Cuboid
     skos:altLabel "Box"@en ;
 .
 
+sf3d:Voxel
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:Cuboid ;
+    skos:definition """A three-dimensional counterpart to a pixel"""@en ;
+    skos:prefLabel "Voxel"@en ;
+.
+
 sf3d:Boundary
     a
         rdfs:Class ,
@@ -331,7 +382,17 @@ sf3d:numPoints
         owl:DatatypeProperty ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """The number of points of a geometry"""@en ;
-    skos:prefLabel "number of pointstextures"@en ;
+    skos:prefLabel "number of points"@en ;
+    rdfs:range xsd:integer ;
+    rdfs:domain geo:Geometry ;
+.
+
+sf3d:numTextures
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The number of textures of a geometry"""@en ;
+    skos:prefLabel "number of textures"@en ;
     rdfs:range xsd:integer ;
     rdfs:domain geo:Geometry ;
 .
@@ -366,10 +427,19 @@ sf3d:offsetZ
     rdfs:domain geo:Texture ;
 .
 
+sf3d:baseGeometry
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Relates a 3d object to its base surface geometry"""@en ;
+    skos:prefLabel "base Geometry"@en ;
+    rdfs:range sf3d:Face ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
 sf3d:faces
     a
-        rdfs:Class ,
-        owl:Class ;
+        owl:ObjectProperty ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """Relates a 3d solid to a face"""@en ;
     skos:prefLabel "faces"@en ;
@@ -379,8 +449,7 @@ sf3d:faces
 
 sf3d:textures
     a
-        rdfs:Class ,
-        owl:Class ;
+        owl:ObjectProperty ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """Relates a 3d solid to a texture"""@en ;
     skos:prefLabel "textures"@en ;
