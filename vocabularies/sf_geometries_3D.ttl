@@ -100,6 +100,16 @@ sf3d:Prism
 .
 
 
+sf3d:Scene
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """A scene of 3D models in relation ot each other."""@en ;
+    skos:prefLabel "Scene"@en ;
+.
+
+
 sf3d:Texture
     a
         rdfs:Class ,
@@ -107,6 +117,15 @@ sf3d:Texture
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """an image positioned on a defined position on the surface of a 3D solid"""@en ;
     skos:prefLabel "Texture"@en ;
+.
+
+sf3d:Appearance
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The appearance of a surface"""@en ;
+    skos:prefLabel "Appearance"@en ;
 .
 
 sf3d:Material
@@ -135,8 +154,18 @@ sf:BSplineCurve
         owl:Class ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     rdfs:subClassOf sf:SplineCurve ;
-    skos:definition """A curve based on a B-Splice"""@en ;
+    skos:definition """A curve based on a B-Spline"""@en ;
     skos:prefLabel "B-Spline Curve"@en ;
+.
+
+sf:TSplineCurve
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf:SplineCurve ;
+    skos:definition """A curve based on a T-Spline"""@en ;
+    skos:prefLabel "T-Spline Curve"@en ;
 .
 
 sf:BezierCurve
@@ -257,8 +286,6 @@ sf:PlaneSurface
     skos:prefLabel "Plane Surface"@en ;
 .
 
-
-
 sf:NURBSCurve
     a
         rdfs:Class ,
@@ -351,6 +378,16 @@ sf3d:PointCloud
     rdfs:subClassOf sf:MultiPoint ;
     skos:definition """a set of points in threedimensional space"""@en ;
     skos:prefLabel "PointCloud"@en ;
+.
+
+sf3d:Viewpoint
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf:Point ;
+    skos:definition """A point to position a camera in a 3D scene"""@en ;
+    skos:prefLabel "Viewpoint"@en ;
 .
 
 sf3d:MeshSurface
@@ -569,6 +606,17 @@ sf3d:ambientIntensity
 .
 
 
+sf3d:hasAppearance
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Relates a 3D object to an instance of material or texture"""@en ;
+    skos:prefLabel "base Geometry"@en ;
+    rdfs:range sf3d:Material ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+
 sf3d:baseGeometry
     a
         owl:ObjectProperty ;
@@ -576,6 +624,59 @@ sf3d:baseGeometry
     skos:definition """Relates a 3d object to its base surface geometry"""@en ;
     skos:prefLabel "base Geometry"@en ;
     rdfs:range sf3d:Face ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+sf3d:rotation
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Rotation vector to orient a 3D model"""@en ;
+    skos:prefLabel "rotation"@en ;
+    rdfs:range sf3d:matrixLiteral ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+
+sf3d:position
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The position of a 3D model in the scence"""@en ;
+    skos:prefLabel "position"@en ;
+    rdfs:range sf3d:matrixLiteral ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+
+sf3d:translation
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Translation vector to orient a 3D model"""@en ;
+    skos:prefLabel "translation"@en ;
+    rdfs:range sf3d:matrixLiteral ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+sf3d:orientation
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Orientation of the 3D model"""@en ;
+    skos:prefLabel "orientation"@en ;
+    rdfs:range sf3d:matrixLiteral ;
+    rdfs:domain sf3d:SolidGeometry ;
+. 
+
+
+sf3d:scale
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Scale vector to orient a 3D model"""@en ;
+    skos:prefLabel "scale"@en ;
+    rdfs:range sf3d:matrixLiteral ;
     rdfs:domain sf3d:SolidGeometry ;
 . 
 
