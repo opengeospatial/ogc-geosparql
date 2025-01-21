@@ -39,6 +39,16 @@ sf3d:Cylinder
     skos:prefLabel "Cylinder"@en ;
 .
 
+sf:Vertex
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf:Point ;
+    skos:definition """A point in a shape where lines intersect"""@en ;
+    skos:prefLabel "Vertex"@en ;
+.
+
 sf3d:Cone
     a
         rdfs:Class ,
@@ -69,6 +79,16 @@ sf3d:FrustumCone
     skos:prefLabel "Frustum Cone"@en ;
 .
 
+sf3d:SkewedCone
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:Cone ;
+    skos:definition """A cone with a skew parameter"""@en ;
+    skos:prefLabel "Skewed Cone"@en ;
+.
+
 sf3d:Prism
     a
         rdfs:Class ,
@@ -87,6 +107,15 @@ sf3d:Texture
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """an image positioned on a defined position on the surface of a 3D solid"""@en ;
     skos:prefLabel "Texture"@en ;
+.
+
+sf3d:Material
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """A coloring and  of a surface"""@en ;
+    skos:prefLabel "Material"@en ;
 .
 
 
@@ -314,14 +343,34 @@ sf3d:PointCloud
     skos:prefLabel "PointCloud"@en ;
 .
 
+sf3d:MeshSurface
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf:Surface ;
+    skos:definition """The surface of a Mesh 3D object"""@en ;
+    skos:prefLabel "Mesh Surface"@en ;
+.
+
 sf3d:Mesh
     a
         rdfs:Class ,
         owl:Class ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     rdfs:subClassOf sf3d:3DGeometry ;
-    skos:definition """ a structural build of a 3D model consisting of polygons"""@en ;
+    skos:definition """A structural build of a 3D model consisting of a surface of polygons"""@en ;
     skos:prefLabel "Mesh"@en ;
+.
+
+sf3d:IrregularMesh
+    a
+        rdfs:Class ,
+        owl:Class ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    rdfs:subClassOf sf3d:3DGeometry ;
+    skos:definition """A structural build of a 3D model consisting of a surface of polygons. The polygon's size may vary."""@en ;
+    skos:prefLabel "Irregular Mesh"@en ;
 .
 
 sf3d:Cube
@@ -448,6 +497,68 @@ sf3d:offsetZ
     rdfs:domain geo:Texture ;
 .
 
+sf3d:emissiveColor
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Color value for glowing objects"""@en ;
+    skos:prefLabel "emissive color"@en ;
+    rdfs:range  sf3d:rgbaLiteral ;
+    rdfs:domain geo:Material ;
+.
+
+sf3d:diffuseColor
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Reflective color value"""@en ;
+    skos:prefLabel "diffuse color"@en ;
+    rdfs:range  sf3d:rgbaLiteral ;
+    rdfs:domain geo:Material ;
+.
+
+sf3d:transparency
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Indicates the opacity of an object with 1.0 being completely transparent and 0.0 being completely opaque"""@en ;
+    skos:prefLabel "transparency"@en ;
+    rdfs:range  xsd:double ;
+    rdfs:domain geo:Material ;
+.
+
+
+sf3d:shininess
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Shininess value between 0 and 1 indicating the highlight intensity"""@en ;
+    skos:prefLabel "shininess"@en ;
+    rdfs:range  xsd:double ;
+    rdfs:domain geo:Material ;
+.
+
+sf3d:specularColor
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Color value for shiny spots"""@en ;
+    skos:prefLabel "specular color"@en ;
+    rdfs:range  sf3d:rgbaLiteral ;
+    rdfs:domain geo:Material ;
+.
+
+sf3d:ambientIntensity
+    a
+        owl:DatatypeProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """Reflection value of ambient light between 0 and 1"""@en ;
+    skos:prefLabel "ambient Intensity"@en ;
+    rdfs:range xsd:float ;
+    rdfs:domain geo:Material ;
+.
+
+
 sf3d:baseGeometry
     a
         owl:ObjectProperty ;
@@ -486,6 +597,36 @@ sf3d:textures
     skos:prefLabel "textures"@en ;
     rdfs:range sf3d:Texture ;
     rdfs:domain sf3d:SolidGeometry ;
+.
+
+sf3d:metricXLength
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The longest length in X direction in meter"""@en ;
+    skos:prefLabel "metric x length"@en ;
+    rdfs:range xsd:double ;
+    rdfs:domain geo:Geometry ;
+.
+
+sf3d:metricYLength
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The longest length in Y direction in meter"""@en ;
+    skos:prefLabel "metric Y length"@en ;
+    rdfs:range xsd:double ;
+    rdfs:domain geo:Geometry ;
+.
+
+sf3d:metricZLength
+    a
+        owl:ObjectProperty ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """The longest length in Z direction in meter"""@en ;
+    skos:prefLabel "metric Z length"@en ;
+    rdfs:range xsd:double ;
+    rdfs:domain geo:Geometry ;
 .
 
 sf3d:x3dLiteral
@@ -546,12 +687,20 @@ sf3d:plyLiteral
     skos:prefLabel "PLY literal"@en ;
 .
 
+sf3d:rgbaLiteral
+    a
+       rdfs:Datatype ;
+    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+    skos:definition """a RGBA color value represented as four double values"""@en ;
+    skos:prefLabel "RGBA literal"@en ;
+.
+
 sf3d:matrixLiteral
     a
        rdfs:Datatype ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
     skos:definition """a projection matrix which can be applied to a 3D geometry"""@en ;
-    skos:prefLabel "matrix literalBoundary"@en ;
+    skos:prefLabel "matrix literal"@en ;
 .
 
 <http://www.opengis.net/ont/sf3d>
