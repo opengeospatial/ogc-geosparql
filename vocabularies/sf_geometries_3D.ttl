@@ -550,6 +550,11 @@ sf:Polygon rdf:type owl:Class ;
            rdfs:subClassOf sf:Surface .
 
 
+###  http://www.opengis.net/ont/sf#PolyhedralSurface
+sf:PolyhedralSurface rdf:type owl:Class ;
+                     rdfs:subClassOf sf:Surface .
+
+
 ###  http://www.opengis.net/ont/sf#RationalBezierCurve
 sf:RationalBezierCurve rdf:type owl:Class ;
                        rdfs:subClassOf sf:Curve ;
@@ -674,6 +679,12 @@ sf3d:Cylinder rdf:type owl:Class ;
               skos:prefLabel "Cylinder"@en .
 
 
+###  http://www.opengis.net/ont/sf3d#Dodecahedron
+sf3d:Dodecahedron rdf:type owl:Class ;
+                  rdfs:subClassOf sf3d:Polyhedron ;
+                  rdfs:label "dodecahedron"@en .
+
+
 ###  http://www.opengis.net/ont/sf3d#EllipticCone
 sf3d:EllipticCone rdf:type owl:Class ;
                   rdfs:subClassOf sf3d:Cone ;
@@ -703,7 +714,7 @@ sf3d:Hexahedron rdf:type owl:Class ;
 
 ###  http://www.opengis.net/ont/sf3d#IrregularMesh
 sf3d:IrregularMesh rdf:type owl:Class ;
-                   rdfs:subClassOf <http://www.opengis.net/ont/sf3d#3DGeometry> ;
+                   rdfs:subClassOf sf3d:Mesh ;
                    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
                    skos:definition "A structural build of a 3D model consisting of a surface of polygons. The polygon's size may vary."@en ;
                    skos:prefLabel "Irregular Mesh"@en .
@@ -718,18 +729,24 @@ sf3d:Material rdf:type owl:Class ;
 
 ###  http://www.opengis.net/ont/sf3d#Mesh
 sf3d:Mesh rdf:type owl:Class ;
-          rdfs:subClassOf <http://www.opengis.net/ont/sf3d#3DGeometry> ;
+          rdfs:subClassOf sf3d:SolidGeometry ;
           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
-          skos:definition "A structural build of a 3D model consisting of a surface of polygons"@en ;
+          skos:definition "A structural build of a 3D model consisting of a surface of polygons. The Surface is closed."@en ;
           skos:prefLabel "Mesh"@en .
 
 
 ###  http://www.opengis.net/ont/sf3d#MeshSurface
 sf3d:MeshSurface rdf:type owl:Class ;
-                 rdfs:subClassOf sf:Surface ;
+                 rdfs:subClassOf sf:PolyhedralSurface ;
                  rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
                  skos:definition "The surface of a Mesh 3D object"@en ;
-                 skos:prefLabel "Mesh Surface"@en .
+                 skos:prefLabel "Surface Mesh"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Octahedron
+sf3d:Octahedron rdf:type owl:Class ;
+                rdfs:subClassOf sf3d:Polyhedron ;
+                rdfs:label "octahedron"@en .
 
 
 ###  http://www.opengis.net/ont/sf3d#PointCloud
@@ -738,6 +755,12 @@ sf3d:PointCloud rdf:type owl:Class ;
                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
                 skos:definition "a set of points in threedimensional space"@en ;
                 skos:prefLabel "PointCloud"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#PolygonMesh
+sf3d:PolygonMesh rdf:type owl:Class ;
+                 rdfs:subClassOf sf3d:Mesh ;
+                 rdfs:label "Polygon Mesh"@en .
 
 
 ###  http://www.opengis.net/ont/sf3d#Polyhedron
