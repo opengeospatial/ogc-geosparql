@@ -476,7 +476,7 @@ A second example below encodes the same point as encoded in the example above bu
 An empty RDFS Literal of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted as an empty Geometry.
 ====
 
-[[geo_aswkt]]
+[[geo_asply]]
 ===== Property: geo:asPLY
 
 The property http://www.opengis.net/ont/geosparql#asPLY[`geo:asPLY`] is defined to link a Geometry with its PLY serialization.
@@ -491,7 +491,7 @@ Implementations shall allow the RDF property <<Property: geo:asPLY, `geo:asPLY`>
 [%unnumbered]
 [source,turtle]
 ----
-geo:asWKT 
+geo:asPLY 
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
@@ -519,26 +519,26 @@ The function http://www.opengis.net/def/function/geosparql/asPLY[`geof:asPLY`] c
 Implementations shall support <<Function: geof:asPLY, `geof:asPLY`>> as a SPARQL extension function.
 ====
 
-==== Extended Well-Known Binary
+==== Graphics Library Transmission Format
 
-This section establishes the requirements for representing Geometry data in RDF based on Extended Well-Known Binary (EWKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> and one property, <<Property: geo:asEWKB, as EWKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
+This section establishes the requirements for representing Geometry data in RDF based on Graphics Library Transmission Format (GLTF) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> and one property, <<Property: geo:asGLTF, as GLTF>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
 
-===== RDFS Datatypes: geo:ewkbLiteral
+===== RDFS Datatypes: geo:gltfLiteral
 
-The datatype http://www.opengis.net/ont/geosparql#wkbLiteral[`geo:ewkbLiteral`] is used to contain the Extended Well-Known Binary (EWKB) serialization of a Geometry.
+The datatype http://www.opengis.net/ont/geosparql#gltfLiteral[`geo:gltfLiteral`] is used to contain the Graphics Library Transmission Format (GLTF) serialization of a Geometry.
 
 [source,turtle]
 ----
-geo:ewkbLiteral 
+geo:gltfLiteral 
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "(Extended) Well-known Binary literal"@en ;
-    skos:definition "An (Extended) Well-known Binary serialization of a Geometry object."@en ;
+    skos:prefLabel "GLTF literal"@en ;
+    skos:definition "A GLTF serialization of a Geometry object."@en ;
 .
 ----
-[#req_geometry_extension_wkb-literal]
+[#req_geometry_extension_gltf-literal]
 |===
-| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
+| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
 |===
 
@@ -554,7 +554,7 @@ The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, 
 
 In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
-[#req_geometry_extension_wkb-literal-default-srs]
+[#req_geometry_extension_gltf-literal-default-srs]
 |===
 | *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs`]
@@ -562,68 +562,68 @@ In the absence of a leading spatial reference system IRI, the following spatial 
 
 The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace, and IRIs from this set are recommended for use. However, others may also be used as long as they are valid IRIs.
 
-[#req_geometry_extension_wkb-axis-order]
+[#req_geometry_extension_gltf-axis-order]
 |===
-| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-axis-order`]
+| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-axis-order`]
 |===
 
-The example <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 [source,turtle]
 ----
-"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
+"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#gltfLiteral>
 ----
 
 A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
 
 [source,turtle]
 ----
-"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
+"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#gltfLiteral>
 ----
 
-[#req_geometry_extension_wkb-literal-empty]
+[#req_geometry_extension_gltf-literal-empty]
 |===
-| *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-empty`]
+| *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall be interpreted as an empty Geometry.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty`]
 |===
 
-===== Property: geo:asEWKB
+===== Property: geo:asGLTF
 
-The property http://www.opengis.net/ont/geosparql#asEWKB[`geo:asEWKB`] is defined to link a Geometry with its EWKB serialization.
+The property http://www.opengis.net/ont/geosparql#asGLTF[`geo:asGLTF`] is defined to link a Geometry with its GLTF serialization.
 
-[#req_geometry_extension_geometry-as-wkb-literal]
+[#req_geometry_extension_geometry-as-gltf-literal]
 |===
-| *Req {counter:req}* Implementations shall allow the RDF property <<Property: geo:asEWKB, `geo:asEWKB`>> to be used in SPARQL graph patterns.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal`]
+| *Req {counter:req}* Implementations shall allow the RDF property <<Property: geo:asGLTF, `geo:asGLTF`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gltf-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gltf-literal`]
 |===
 
 [source,turtle]
 ----
-geo:asEWKB
+geo:asGLTF
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "as EWKB"@en ;
-    skos:definition "The EWKB serialization of a Geometry."@en ;
+    skos:prefLabel "as GLTF"@en ;
+    skos:definition "The GLTF serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
-    rdfs:range geo:ewkbLiteral ;
+    rdfs:range geo:gltfLiteral ;
 .
 ----
 
-===== Function: geof:asEWKB
+===== Function: geof:asGLTF
 
-.asEWKB Function
+.asGLTF Function
 ----
-geof:asEWKB (geom: ogc:geomLiteral): geo:ewkbLiteral
+geof:asGLTF (geom: ogc:geomLiteral): geo:gltfLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asEWKB[`geof:asEWKB`] converts `geom` to an equivalent EWKB representation preserving the spatial reference system.
+The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`] converts `geom` to an equivalent GLTF representation preserving the spatial reference system.
 
-[#req_geometry_extension_asEWKB-function]
+[#req_geometry_extension_asGLTF-function]
 |===
-| *Req {counter:req}* Implementations shall support <<Property: geo:asEWKB, `geo:asEWKB`>> as a SPARQL extension function.
-|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function`]
+| *Req {counter:req}* Implementations shall support <<Property: geo:asGLTF, `geo:asGLTF`>> as a SPARQL extension function.
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function`]
 |===
 
 ==== Geography Markup Language
