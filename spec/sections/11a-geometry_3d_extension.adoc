@@ -480,7 +480,8 @@ Implementations shall support <<Function: geof:asPLY, `geof:asPLY`>> as a SPARQL
 
 ==== Graphics Library Transmission Format
 
-This section establishes the requirements for representing Geometry data in RDF based on Graphics Library Transmission Format (GLTF) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> and one property, <<Property: geo:asGLTF, as GLTF>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
+This section establishes the requirements for representing Geometry data in RDF based on Graphics Library Transmission Format (GLTF). 
+It defines the RDFS Datatype: <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> and one property, <<Property: geo:asGLTF, as GLTF>>. 
 
 ===== RDFS Datatypes: geo:gltfLiteral
 
@@ -500,46 +501,6 @@ geo:gltfLiteral
 | *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
 |===
-
-The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
-
-----
-ewkbLiteral ::= opt-iri-and-whitespace geometry-data
-
-opt-iri-and-space = "<" IRI ">" LWSP / ""
-----
-
-The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, a binary representation in EWKB serialized as Base64. `geometry-data` is the Extended Well-Known Binary representation of the Geometry, defined in <<ISO13249>>.
-
-In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
-
-[#req_geometry_extension_gltf-literal-default-srs]
-|===
-| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs`]
-|===
-
-The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace, and IRIs from this set are recommended for use. However, others may also be used as long as they are valid IRIs.
-
-[#req_geometry_extension_gltf-axis-order]
-|===
-| *Req {counter:req}* Coordinate tuples within <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-axis-order`]
-|===
-
-The example <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
-
-[source,turtle]
-----
-"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#gltfLiteral>
-----
-
-A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/SRS/EPSG/0/4326[`+http://www.opengis.net/def/SRS/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
-
-[source,turtle]
-----
-"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#gltfLiteral>
-----
 
 [#req_geometry_extension_gltf-literal-empty]
 |===
