@@ -5,8 +5,8 @@ This clause defines the _Geometry 3D Extension_ parameterized Requirements class
 [requirements_class,identifier="/req/geometry3d-extension",subject="Implementation Specification"]
 .Geometry Extension
 ====
-requirement:: /req/geometry-extension/geometry-class
-requirement:: /req/geometry-extension/geometry-collection-class
+requirement:: /req/geometry-extension/geometry3d-class
+requirement:: /req/geometry-extension/geometry3d-collection-class
 requirement:: /req/geometry-extension/feature-properties
 requirement:: /req/geometry-extension/geometry-properties
 requirement:: /req/geometry-extension/query-functions
@@ -27,16 +27,11 @@ requirement:: /req/geometry-extension/geojson-literal-srs
 requirement:: /req/geometry-extension/geojson-literal-empty
 requirement:: /req/geometry-extension/geometry-as-geojson-literal
 requirement:: /req/geometry-extension/asGeoJSON-function
-requirement:: /req/geometry-extension/kml-literal
-requirement:: /req/geometry-extension/kml-literal-srs
-requirement:: /req/geometry-extension/kml-literal-empty
-requirement:: /req/geometry-extension/geometry-as-kml-literal
-requirement:: /req/geometry-extension/asKML-function
-requirement:: /req/geometry-extension/geocode-literal
-requirement:: /req/geometry-extension/geocode-literal-srs
-requirement:: /req/geometry-extension/geocode-literal-empty
-requirement:: /req/geometry-extension/geometry-as-geocode-literal
-requirement:: /req/geometry-extension/asGeocode-function
+requirement:: /req/geometry-extension/obj-literal
+requirement:: /req/geometry-extension/obj-literal-srs
+requirement:: /req/geometry-extension/obj-literal-empty
+requirement:: /req/geometry-extension/geometry-as-obj-literal
+requirement:: /req/geometry-extension/asOBJ-function
 ====
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
@@ -97,28 +92,27 @@ The class http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] is conce
 [%unnumbered]
 [source,turtle]
 ----
-geo:Geometry 
+geo:3DGeometry 
     a rdfs:Class, owl:Class ;
     rdfs:isDefinedBy geo: ; 
     skos:prefLabel "Geometry"@en ;
-    rdfs:subClassOf geo:SpatialObject ;
+    rdfs:subClassOf geo:Geometry ;
     owl:disjointWith geo:Feature;
-    skos:definition "A coherent set of direct positions in space. The positions 
-                    are held within a Spatial Reference System (SRS)."@en ;
+    skos:definition "A geometry with at least three dimensions."@en ;
     skos:note "Geometry can be used as a representation of the shape, extent or 
               location of a Feature and may exist as a self-contained entity."@en ;
 .
 ----
 
-[[req_geometry-extension_geometry-class]]
+[[req_geometry-extension_3dgeometry-class]]
 [requirement,identifier="/req/geometry-extension/geometry-class"]
-.Geometry Class
+.3DGeometry Class
 ====
-Implementations shall allow the RDFS class <<Class: geo:Geometry, `geo:Geometry`>> to be used in SPARQL graph patterns.
+Implementations shall allow the RDFS class <<Class: geo:3DGeometry, `geo:3DGeometry`>> to be used in SPARQL graph patterns.
 ====
 
 [[geometry_properties]]
-=== Standard Properties for geo:Geometry
+=== Standard Properties for geo:3DGeometry
 
 Properties are defined for describing geometry metadata.
 
@@ -126,18 +120,13 @@ Properties are defined for describing geometry metadata.
 .Geometry 3D Properties
 ====
 Implementations shall allow the properties 
-<<Property: geo:dimension, `geo:dimension`>>, 
-<<Property: geo:coordinateDimension, `geo:coordinateDimension`>>, 
-<<Property: geo:spatialDimension, `geo:spatialDimension`>>, 
-<<Property: geo:hasSpatialResolution, `geo:hasSpatialResolution`>>, 
-<<Property: geo:hasMetricSpatialResolution, `geo:hasMetricSpatialResolution`>>, 
-<<Property: geo:hasSpatialAccuracy, `geo:hasSpatialAccuracy`>>, 
-<<Property: geo:hasMetricSpatialAccuracy, `geo:hasMetricSpatialAccuracy`>>, 
-<<Property: geo:isClosed, `geo:isClosed`>>, 
-<<Property: geo:isEmpty, `geo:isEmpty`>>, 
-<<Property: geo:isRing, `geo:isRing`>>, 
-<<Property: geo:isSimple, `geo:isSimple`>> and 
-<<Property: geo:hasSerialization, `geo:hasSerialization`>> 
+<<Property: geo:textures, `geo:textures`>>, 
+<<Property: geo:vertices, `geo:vertices`>>, 
+<<Property: geo:faces, `geo:faces`>>, 
+<<Property: geo:rotation, `geo:rotation`>>, 
+<<Property: geo:position, `geo:position`>>, 
+<<Property: geo:scale, `geo:scale`>> and
+<<Property: geo:translation, `geo:translation`>> 
 to be used in SPARQL graph patterns.
 ====
 
