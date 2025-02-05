@@ -414,66 +414,26 @@ geo:wktLiteral
 .
 ----
 
-[[req_geometry_extension_wkt-literal]]
-[requirement,identifier="/req/geometry-extension/ply-literal"]
-.PLY Literal
-====
-All RDFS Literals of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
-====
-
-The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
-
-[%unnumbered]
-[source,turtle]
-----
-wktLiteral ::= opt-iri-and-whitespace geometry-data
-
-opt-iri-and-space = "<" IRI ">" LWSP / ""
-----
-
-The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, tabs, newlines) or nothing (`""`), the token `IRI` (Internationalized Resource Identifier) is essentially a web address and is defined in <<IETF3987>> and the token `LWSP`, is one or more white space characters, as defined in <<IETF5234>>. `geometry-data` is the Well-Known Text representation of the Geometry, defined in <<ISO13249>>.
-
-In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
-
-[[req_geometry_extension_wkt-literal-default-srs]]
-[requirement,identifier="/req/geometry-extension/wkt-literal-default-srs"]
-.WKT Literal Default SRS
-====
-The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances that do not specify an explicit spatial reference system IRI.
-====
-
-The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use. However others may also be used, as long as they are valid IRIs.
-
-[[req_geometry_extension_ply-axis-order]]
-[requirement,identifier="/req/geometry-extension/wkt-axis-order"]
-.WKT Literal Axis Order
-====
-Coordinate tuples within <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
-====
-
-The example <<RDFS Datatype: geo:plyLiteral, PLY Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
-
-[%unnumbered]
-[source,turtle]
-----
-"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#plyLiteral>
-----
-
-A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/crs/EPSG/0/4326[`+http://www.opengis.net/def/crs/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
-
-[%unnumbered]
-[source,turtle]
-----
-"<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
-----
-
-
 [[req_geometry_extension_ply-literal-empty]]
 [requirement,identifier="/req/geometry-extension/ply-literal-empty"]
 .Empty PLY Literal
 ====
 An empty RDFS Literal of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted as an empty Geometry.
 ====
+
+An empty Geometry in PLY is equivalent to the following representation.
+[source,turtle]
+----
+ply
+format ascii 1.0
+element vertex 0 
+property float x 
+property float y 
+property float z 
+element face 0 
+property list uchar int vertex_indices
+end_header 
+----
 
 [[geo_asply]]
 ===== Property: geo:asPLY
