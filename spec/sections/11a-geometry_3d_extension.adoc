@@ -626,36 +626,36 @@ The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`]
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function`]
 |===
 
-==== Geography Markup Language
+==== Extensible 3D
 
-This section establishes a Requirements class for representing Geometry data in RDF based on GML as defined by the Geography Markup Language Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
-<<RDFS Datatype: geo:gmlLiteral, GML Literal>> and one property, <<Function: geof:asGML, as GML>>.
+This section establishes a Requirements class for representing Geometry data in RDF based on GML as defined by the Extensible 3D (X3D) Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
+<<RDFS Datatype: geo:x3dLiteral, X3D Literal>> and one property, <<Function: geof:asX3D, as X3D>>.
 
-===== RDFS Datatype: geo:gmlLiteral
+===== RDFS Datatype: geo:x3dLiteral
 
-The datatype http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:gmlLiteral`] is used to contain the Geography Markup Language (GML) serialization of a Geometry.
+The datatype http://www.opengis.net/ont/geosparql#x3dLiteral[`geo:x3dLiteral`] is used to contain the Extensible 3D (X3D) serialization of a Geometry.
 
 [%unnumbered]
 [source,turtle]
 ----
-geo:gmlLiteral 
+geo:x3dLiteral 
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ; 
-    skos:prefLabel "GML literal"@en ;
-    skos:definition "The datatype of GML literal values"@en ;
+    skos:prefLabel "X3D literal"@en ;
+    skos:definition "The datatype of X3D literal values"@en ;
 .
 ----
 
-Valid <<RDFS Datatype: geo:gmlLiteral, GML Literal>> instances are formed by encoding Geometry information as a valid element from the GML schema that implements a subtype of `GM_Object`. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml/3.2}AbstractGeometry`. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml}_Geometry`.
+Valid <<RDFS Datatype: geo:x3dLiteral, X3D Literal>> instances are formed by encoding Geometry information as a valid element from the GML schema that implements a subtype of `GM_Object`. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml/3.2}AbstractGeometry`. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml}_Geometry`.
 
-[[req_geometry_extension_gml-literal]]
-[requirement,identifier="/req/geometry-extension/gml-literal"]
-.GML Literal
+[[req_geometry_extension_x3d-literal]]
+[requirement,identifier="/req/geometry-extension/x3d-literal"]
+.X3D Literal
 ====
-All <<RDFS Datatype: geo:gmlLiteral, `geo:gmlLiteral`>> instances shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in <<OGC07-036>>.
+All <<RDFS Datatype: geo:x3dLiteral, `geo:x3dLiteral`>> instances shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in <<OGC07-036>>.
 ====
 
-The example <<RDFS Datatype: geo:gmlLiteral, GML Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
+The example <<RDFS Datatype: geo:x3dLiteral, X3D Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
 
 [%unnumbered]
 [source,turtle]
@@ -669,60 +669,53 @@ The example <<RDFS Datatype: geo:gmlLiteral, GML Literal>> below encodes a point
 """^^<http://www.opengis.net/ont/geosparql#gmlLiteral>
 ----
 
-[[req_geometry_extension_gml-literal-empty]]
-[requirement,identifier="/req/geometry-extension/gml-literal-empty"]
-.Empty GML Literal
+[[req_geometry_extension_x3d-literal-empty]]
+[requirement,identifier="/req/geometry-extension/x3d-literal-empty"]
+.Empty X3D Literal
 ====
-An empty <<RDFS Datatype: geo:gmlLiteral, `geo:gmlLiteral`>> shall be interpreted as an empty Geometry.
-====
-
-[[req_geometry_extension_gml-profile]]
-[requirement,identifier="/req/geometry-extension/gml-profile"]
-.GML Profile
-====
-Implementations shall document supported GML profiles.
+An empty <<RDFS Datatype: geo:x3dLiteral, `geo:x3dLiteral`>> shall be interpreted as an empty Geometry.
 ====
 
-===== Property: geo:asGML
+===== Property: geo:asX3D
 
-The property http://www.opengis.net/ont/geosparql#asGML[`geo:asGML`] is defined to link a Geometry with its GML serialization.
+The property http://www.opengis.net/ont/geosparql#asX3D[`geo:asX3D`] is defined to link a Geometry with its GML serialization.
 
-[[req_geometry_extension_geometry-as-gml-literal]]
-[requirement,identifier="/req/geometry-extension/geometry-as-gml-literal"]
-.asGML Property
+[[req_geometry_extension_geometry-as-x3d-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-x3d-literal"]
+.asX3D Property
 ====
-Implementations shall allow the RDF property <<Property: geo:asGML, `geo:asGML`>> to be used in SPARQL graph patterns.
+Implementations shall allow the RDF property <<Property: geo:asX3D, `geo:asX3D`>> to be used in SPARQL graph patterns.
 ====
 
 [%unnumbered]
 [source,turtle]
 ----
-geo:asGML 
+geo:asX3D 
     a rdf:Property ; 
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "as GML"@en ;
-    skos:definition "The GML serialization of a Geometry."@en ; 
+    skos:prefLabel "as X3D"@en ;
+    skos:definition "The X3D serialization of a Geometry."@en ; 
     rdfs:domain geo:Geometry ;
-    rdfs:range geo:gmlLiteral ;
+    rdfs:range geo:x3dLiteral ;
 .
 ----
 
-===== Function: geof:asGML
+===== Function: geof:asX3D
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:asGML (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:gmlLiteral
+geof:asX3D (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:x3dLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`] converts `geom` to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system. 
+The function http://www.opengis.net/def/function/geosparql/asX3D[`geof:asX3D`] converts `geom` to an equivalent X3D representation defined by a gmlProfile version string preserving the coordinate reference system. 
 
-[[req_geometry_extension_asGML-function]]
-[requirement,identifier="/req/geometry-extension/asGML-function"]
-.asGML Function
+[[req_geometry_extension_asX3D-function]]
+[requirement,identifier="/req/geometry-extension/asX3D-function"]
+.asX3D Function
 ====
-Implementations shall support <<Function: geof:asGML, `geof:asGML`>> as a SPARQL extension function.
+Implementations shall support <<Function: geof:asX3D, `geof:asX3D`>> as a SPARQL extension function.
 ====
 
 ==== GeoJSON
