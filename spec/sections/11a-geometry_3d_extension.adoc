@@ -445,19 +445,19 @@ The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/d
 
 The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace and IRIs from this set are recommended for use. However others may also be used, as long as they are valid IRIs.
 
-[[req_geometry_extension_wkt-axis-order]]
+[[req_geometry_extension_ply-axis-order]]
 [requirement,identifier="/req/geometry-extension/wkt-axis-order"]
 .WKT Literal Axis Order
 ====
-Coordinate tuples within <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+Coordinate tuples within <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
 ====
 
-The example <<RDFS Datatype: geo:wktLiteral, WKT Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
+The example <<RDFS Datatype: geo:plyLiteral, PLY Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
 [%unnumbered]
 [source,turtle]
 ----
-"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#wktLiteral>
+"Point(-83.38 33.95)"^^<http://www.opengis.net/ont/geosparql#plyLiteral>
 ----
 
 A second example below encodes the same point as encoded in the example above but using a SRS identified by http://www.opengis.net/def/crs/EPSG/0/4326[`+http://www.opengis.net/def/crs/EPSG/0/4326+`]: a WGS 84 geodetic latitude-longitude spatial reference system (note that this spatial reference system defines a different axis order):
@@ -469,23 +469,23 @@ A second example below encodes the same point as encoded in the example above bu
 ----
 
 
-[[req_geometry_extension_wkt-literal-empty]]
-[requirement,identifier="/req/geometry-extension/wkt-literal-empty"]
-.Empty WKT Literal
+[[req_geometry_extension_ply-literal-empty]]
+[requirement,identifier="/req/geometry-extension/ply-literal-empty"]
+.Empty PLY Literal
 ====
-An empty RDFS Literal of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall be interpreted as an empty Geometry.
+An empty RDFS Literal of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted as an empty Geometry.
 ====
 
 [[geo_aswkt]]
-===== Property: geo:asWKT
+===== Property: geo:asPLY
 
-The property http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] is defined to link a Geometry with its WKT serialization.
+The property http://www.opengis.net/ont/geosparql#asPLY[`geo:asPLY`] is defined to link a Geometry with its PLY serialization.
 
 [[req_geometry_extension_geometry-as-wkt-literal]]
-[requirement,identifier="/req/geometry-extension/geometry-as-wkt-literal"]
-.asWKT Property
+[requirement,identifier="/req/geometry-extension/geometry-as-ply-literal"]
+.asPLY Property
 ====
-Implementations shall allow the RDF property <<Property: geo:asWKT, `geo:asWKT`>> to be used in SPARQL graph patterns.
+Implementations shall allow the RDF property <<Property: geo:asPLY, `geo:asPLY`>> to be used in SPARQL graph patterns.
 ====
 
 [%unnumbered]
@@ -495,28 +495,28 @@ geo:asWKT
     a rdf:Property, owl:DatatypeProperty ;
     rdfs:subPropertyOf geo:hasSerialization ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "as WKT"@en ;
-    skos:definition "The WKT serialization of a Geometry."@en ;
+    skos:prefLabel "as PLY"@en ;
+    skos:definition "The PLY serialization of a Geometry."@en ;
     rdfs:domain geo:Geometry ;
-    rdfs:range geo:wktLiteral ;
+    rdfs:range geo:plyLiteral ;
 .
 ----
 
-===== Function: geof:asWKT
+===== Function: geof:asPLY
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:asWKT (geom: ogc:geomLiteral): geo:wktLiteral
+geof:asPLY (geom: ogc:geomLiteral): geo:plyLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] converts `geom` to an equivalent WKT representation preserving the spatial reference system. 
+The function http://www.opengis.net/def/function/geosparql/asPLY[`geof:asPLY`] converts `geom` to an equivalent PLY representation preserving the spatial reference system. 
 
-[[req_geometry_extension_asWKT-function]]
-[requirement,identifier="/req/geometry-extension/asWKT-function"]
-.asWKT Function
+[[req_geometry_extension_asPLY-function]]
+[requirement,identifier="/req/geometry-extension/asPLY-function"]
+.asPLY Function
 ====
-Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL extension function.
+Implementations shall support <<Function: geof:asPLY, `geof:asPLY`>> as a SPARQL extension function.
 ====
 
 ==== Extended Well-Known Binary
