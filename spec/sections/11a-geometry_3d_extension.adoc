@@ -381,9 +381,9 @@ https://www.w3.org/TR/vocab-dcat/#Property:distribution_access_url[`dcat:accessU
 See the <<Distributions, Distributions>> example.
 ====
 
-=== Geometry Serializations
+=== 3D Geometry Serializations
 
-This section establishes the Requirements class for representing Geometry data in RDF literals, according to different non-RDF systems.
+This section establishes the Requirements class for representing 3D Geometry data in RDF literals, according to different non-RDF systems.
 
 GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them. It does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
 
@@ -396,13 +396,13 @@ GeoSPARQL's expectation of RDF literal representations of geometry data is that 
 Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
 ====
 
-==== Well-Known Text
+==== Polygon File Format (PLY)
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
+This section establishes the requirements for representing Geometry data in RDF based on the Polygon File Format (PLY). It defines one RDFS Datatype: <<RDFS Datatype: geo:plyLiteral, PLY Literal>> and one property, <<Function: geof:asPLY, as PLY>>.
 
-===== RDFS Datatype: geo:wktLiteral
+===== RDFS Datatype: geo:plyLiteral
 
-The datatype http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] is used to contain the Well-Known Text (WKT) serialization of a Geometry.
+The datatype http://www.opengis.net/ont/geosparql#plyLiteral[`geo:plyLiteral`] is used to contain the Polygon File Format (PLY) serialization of a Geometry.
 
 [%unnumbered]
 [source,turtle]
@@ -410,16 +410,16 @@ The datatype http://www.opengis.net/ont/geosparql#wktLiteral[`geo:wktLiteral`] i
 geo:wktLiteral 
     a rdfs:Datatype ;
     rdfs:isDefinedBy geo: ;
-    skos:prefLabel "Well-known Text literal"@en ;
-    skos:definition "A Well-known Text serialization of a Geometry object."@en ;
+    skos:prefLabel "PLY literal"@en ;
+    skos:definition "A PLY Text serialization of a Geometry object."@en ;
 .
 ----
 
 [[req_geometry_extension_wkt-literal]]
-[requirement,identifier="/req/geometry-extension/wkt-literal"]
-.WKT Literal
+[requirement,identifier="/req/geometry-extension/ply-literal"]
+.PLY Literal
 ====
-All RDFS Literals of type <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
+All RDFS Literals of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Well Known Text (WKT) description of a geometric value. Valid <<RDFS Datatype: geo:wktLiteral, `geo:wktLiteral`>> instances are formed by either a WKT string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator, and a WKT string as defined in <<ISO13249>>.
 ====
 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
