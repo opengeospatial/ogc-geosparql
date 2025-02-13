@@ -456,6 +456,7 @@ geof:asPLY (geom: ogc:geomLiteral): geo:plyLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/asPLY[`geof:asPLY`] converts `geom` to an equivalent PLY representation preserving the spatial reference system. 
+If `geom` represents a 2D geometry its Z coordinates shall be set to 0.
 
 [[req_geometry_extension_asPLY-function]]
 [requirement,identifier="/req/geometry-extension/asPLY-function"]
@@ -483,16 +484,20 @@ geo:gltfLiteral
 .
 ----
 [#req_geometry_extension_gltf-literal]
-|===
-| *Req {counter:req}* All RDFS Literals of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<RDFS Datatypes: geo:ewkbLiteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
-|===
 
 [#req_geometry_extension_gltf-literal-empty]
 |===
 | *Req 18* An empty RDFS Literal of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall be interpreted as an empty Geometry.
 |http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty`]
 |===
+
+An empty Geometry in GLTF is equivalent to the following representation.
+[source,turtle]
+----
+{
+"meshes":[]
+}
+----
 
 ===== Property: geo:asGLTF
 
@@ -524,7 +529,8 @@ geo:asGLTF
 geof:asGLTF (geom: ogc:geomLiteral): geo:gltfLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`] converts `geom` to an equivalent GLTF representation preserving the spatial reference system.
+The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`] converts `geom` to an equivalent GLTF representation preserving the spatial reference system. 
+If `geom` represents a 2D geometry its Z coordinates shall be set to 0.
 
 [#req_geometry_extension_asGLTF-function]
 |===
@@ -532,9 +538,9 @@ The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`]
 |http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function`]
 |===
 
-==== Extensible 3D
+==== Extensible 3D (X3D)
 
-This section establishes a Requirements class for representing Geometry data in RDF based on GML as defined by the Extensible 3D (X3D) Encoding Standard <<OGC07-036>>. It defines one RDFS Datatype:
+This section establishes a Requirements class for representing Geometry data in RDF as defined by the Extensible 3D (X3D) Encoding Standard. It defines one RDFS Datatype:
 <<RDFS Datatype: geo:x3dLiteral, X3D Literal>> and one property, <<Function: geof:asX3D, as X3D>>.
 
 ===== RDFS Datatype: geo:x3dLiteral
@@ -552,28 +558,12 @@ geo:x3dLiteral
 .
 ----
 
-Valid <<RDFS Datatype: geo:x3dLiteral, X3D Literal>> instances are formed by encoding Geometry information as a valid element from the GML schema that implements a subtype of `GM_Object`. For example, in GML 3.2.1 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml/3.2}AbstractGeometry`. In GML 3.1.1 and GML 2.1.2 this is every element directly or indirectly in the substitution group of the element `{http://www.opengis.net/ont/gml}_Geometry`.
-
 [[req_geometry_extension_x3d-literal]]
 [requirement,identifier="/req/geometry-extension/x3d-literal"]
 .X3D Literal
 ====
 All <<RDFS Datatype: geo:x3dLiteral, `geo:x3dLiteral`>> instances shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in <<OGC07-036>>.
 ====
-
-The example <<RDFS Datatype: geo:x3dLiteral, X3D Literal>> below encodes a point Geometry in the WGS 84 geodetic longitude-latitude spatial reference system using GML version 3.2:
-
-[%unnumbered]
-[source,turtle]
-----
-"""
-<gml:Point 
-        srsName=\"http://www.opengis.net/def/crs/OGC/1.3/CRS84\" 
-        xmlns:gml=\"http://www.opengis.net/gml/3.2\">
-    <gml:pos>-83.38 33.95</gml:pos>
-</gml:Point>
-"""^^<http://www.opengis.net/ont/geosparql#gmlLiteral>
-----
 
 [[req_geometry_extension_x3d-literal-empty]]
 [requirement,identifier="/req/geometry-extension/x3d-literal-empty"]
@@ -615,7 +605,8 @@ geo:asX3D
 geof:asX3D (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:x3dLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/asX3D[`geof:asX3D`] converts `geom` to an equivalent X3D representation defined by a gmlProfile version string preserving the coordinate reference system. 
+The function http://www.opengis.net/def/function/geosparql/asX3D[`geof:asX3D`] converts `geom` to an equivalent X3D representation preserving the coordinate reference system. 
+If `geom` represents a 2D geometry its Z coordinates shall be set to 0.
 
 [[req_geometry_extension_asX3D-function]]
 [requirement,identifier="/req/geometry-extension/asX3D-function"]
@@ -647,23 +638,14 @@ Valid <<RDFS Datatype: geo:objLiteral, OBJ Literal>> instances are formed by enc
 [requirement,identifier="/req/geometry-extension/obj-literal"]
 .OBJ Literal
 ====
-All <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> instances shall consist of the Geometry objects as defined in the OBJ specification <<GEOJSON>>.
+All <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> instances shall consist of the Geometry objects as defined in the OBJ specification.
 ====
-The example <<RDFS Datatype: geo:objLiteral, OBJ Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system for Simple Features 1.0:
-
-[%unnumbered]
-[source,turtle]
-----
-"""
-{"type": "Point", "coordinates": [-83.38,33.95]}
-"""^^<http://www.opengis.net/ont/geosparql#objLiteral>
-----
 
 [[req_geometry_extension_obj-literal-empty]]
 [requirement,identifier="/req/geometry-extension/obj-literal-empty"]
 .Empty OBJ Literal
 ====
-An empty RDFS Literal of type <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> shall be interpreted as an empty Geometry, i.e. `{"geometry": null}` in GeoJSON .
+An empty RDFS Literal of type <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> shall be interpreted as an empty Geometry .
 ====
 
 ===== Property: geo:asOBJ
@@ -700,6 +682,7 @@ geof:asOBJ (geom: ogc:geomLiteral): geo:objLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/asOBJ[`geof:asOBJ`] converts `geom` to an equivalent OBJ representation. 
+If `geom` represents a 2D geometry its Z coordinates shall be set to 0.
 
 [[req_geometry_extension_asOBJ-function]]
 [requirement,identifier="/req/geometry-extension/asOBJ-function"]
