@@ -2455,3 +2455,27 @@ geofp:m_param1 a fno:Parameter ;
 geofo:m_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;    
     fno:type xsd:double  .
+
+geof:extrude
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:experimental ;
+    fno:expects (geofp:extrude_param1 geofp:extrude_param2 ) ;
+    fno:returns (geofo:extrude_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A function that extrudes 2D geometry to 3D given the linestring as an argument. "@en ;
+    skos:prefLabel "Extrude"@en ;
+
+geofp:extrude_param1 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geometry"@en .
+
+geofp:extrude_param2 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "line-segment"@en .
+
+geofo:extrude_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;
+    fno:type geo:Feature .
