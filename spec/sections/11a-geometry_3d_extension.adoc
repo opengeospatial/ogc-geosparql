@@ -542,35 +542,17 @@ This extension mechanism enables GeoSPARQL implementations to simultaneously sup
 Several non-topological query functions use a unit of measure IRI. See the <<Recommendation for units of measure,  Recommendation for units of measure>>. Also, the OGC has recommended units of measure vocabularies for use, see the OGC Definitions Serverfootnote:[https://www.ogc.org/def-server].
 ====
 
-==== Function: geof:metricLength
+==== Function: geof:azimuth
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:metricLength (geom: ogc:geomLiteral): xsd:double
+geof:azimuth (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral): xsd:double
 ----
 
-The function http://www.opengis.net/def/function/geosparql/metricLength[`geof:metricLength`] returns the length of `geom` in meters. The longest length from any one dimension is returned. This is for example the length of a line from its beginning point to its endpoint or the length of the boundary of a polygon. This function is similar to <<Function: geof:length, `geof:length`>> but does not need a specification of measurement unit.
+The function http://www.opengis.net/def/function/geosparql/azimuth[`geof:azimuth`] returns the azimuth of a segment between two points clockwise from the North (0,1) in radians:
+The function does not return any value if the given geometries are not points.
 
-==== Function: geof:minDepth
-
-[%unnumbered]
-[source,turtle]
-----
-geof:minDepth (geom: ogc:geomLiteral, depth: xsd:double, unit: xsd:anyURI): xsd:boolean
-----
-
-The function http://www.opengis.net/def/function/geosparql/minDepth[`geof:minDepth`] returns true if `geom` is of at least a minimum depth (Z-extent). 
-
-==== Function: geof:maxDepth
-
-[%unnumbered]
-[source,turtle]
-----
-geof:maxDepth (geom: ogc:geomLiteral, depth: xsd:double, unit: xsd:anyURI): xsd:boolean
-----
-
-The function http://www.opengis.net/def/function/geosparql/maxDepth[`geof:maxDepth`] returns true if `geom` is of a most a maximum depth (Z-extent).
 
 ==== Function: geof:closestPoint
 
@@ -592,3 +574,22 @@ geof:compactnessRatio (geom1: ogc:geomLiteral): xsd:double
 
 The function http://www.opengis.net/def/function/geosparql/compactnessRatio[`geof:compactnessRatio`] returns the compactness ratio of a geometry.
 
+==== Function: geof:minDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minDepth (geom: ogc:geomLiteral, depth: xsd:double, unit: xsd:anyURI): xsd:boolean
+----
+
+The function http://www.opengis.net/def/function/geosparql/minDepth[`geof:minDepth`] returns true if `geom` is of at least a minimum depth (Z-extent). 
+
+==== Function: geof:maxDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxDepth (geom: ogc:geomLiteral, depth: xsd:double, unit: xsd:anyURI): xsd:boolean
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxDepth[`geof:maxDepth`] returns true if `geom` is of a most a maximum depth (Z-extent).
