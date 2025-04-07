@@ -6,48 +6,952 @@
 |===
 | GeoSPARQL | PostGIS | H2GIS | Spatialite
 | area | st_area | st_area | area
-| asgml | st_asgml | st_asgml | asgml
 | asgeojson | st_asgeojson |  | asgeojson
+| asgml | st_asgml | st_asgml | asgml
 | askml | st_askml |  | askml
 | aswkt |  | st_aswkt | aswkt
 | boundary | st_boundary | st_boundary | boundary
-| bounding circle | st_minimumboundingcircle | st_boundingcircle |
+| bounding circle |  | st_boundingcircle |
 | buffer | st_buffer | st_buffer | buffer
+| centroid | st_centroid | st_centroid | centroid
 | concave hull |  |  | concavehull
-| convex hull | st_convexhull | st_convexhull | convexhull
-| difference | st_difference | st_difference | difference
-| distance | st_distance | st_distance | distance
 | contains | st_contains | st_contains | contains
+| convex hull | st_convexhull | st_convexhull | convexhull
 | covered by | st_coveredby |  | coveredby
 | covers | st_covers | st_covers | covers
+| crosses | st_crosses | st_crosses | crosses
+| difference | st_difference | st_difference | difference
 | disjoint | st_disjoint | st_disjoint | mbrdisjoint
-| equals | st_equals | st_equals | equals
-| overlap | st_overlaps | st_overlaps | overlaps
+| distance | st_distance | st_distance | distance
 | envelope | st_envelope | st_envelope | envelope
+| equals | st_equals | st_equals | equals
+| geometryn | st_geometryn | st_geometryn | geometryn
 | getsrid | st_srid | st_srid | srid
 | intersection | st_intersection | st_intersection | intersection
+| intersects | st_intersects | st_intersects | intersects
 | isempty | st_isempty | st_isempty | isempty
 | issimple | st_issimple | st_issimple | issimple
 | length | st_length | st_length | length
-| perimeter | st_perimeter | st_perimeter | perimeter
-| equals | st_equals | st_equals | equals
-| relate | st_relate | st_relate | relate
-| contains | st_contains | st_contains | contains
-| crosses | st_crosses | st_crosses | crosses
-| disjoint | st_disjoint | st_disjoint | disjoint
-| equals | st_equals | st_equals | equals
-| intersects | st_intersects | st_intersects | intersects
-| overlaps | st_overlaps | st_overlaps | overlaps
-| touches | st_touches | st_touches | touches
-| within | st_within | st_within | within
-| symmetric difference | st_symdifference | st_symdifference | symdifference
-| union | st_union | st_union | gunion
-| bounding circle | st_minimumboundingcircle | st_boundingcircle |
-| centroid | st_centroid | st_centroid | centroid
-| geometryn | st_geometryn | st_geometryn | geometryn
-| numgeometries | st_numgeometries | st_numgeometries | numgeometries
-| transform | st_transform | st_transform | transform
-| numpoints | st_numpoints | st_numpoints | numpoints
 | maxz |  |  | maxz
 | minz |  |  | minz
+| numgeometries | st_numgeometries | st_numgeometries | numgeometries
+| numpoints | st_numpoints | st_numpoints | numpoints
+| overlap | st_overlaps | st_overlaps | overlaps
+| overlaps | st_overlaps | st_overlaps | overlaps
+| perimeter | st_perimeter | st_perimeter | perimeter
+| relate | st_relate | st_relate | relate
+| symmetric difference | st_symdifference | st_symdifference | symdifference
+| touches | st_touches | st_touches | touches
+| transform | st_transform | st_transform | transform
+| union | st_union | st_union | gunion
+| within | st_within | st_within | within
+|  |  |  | 3ddistance
+|  | st_length3d | st_3dlength | 3dlength
+|  |  |  | 3dmaxdistance
+|  |  |  | abs
+|  |  |  | acos
+|  |  |  | addedgemodface
+|  |  |  | addedgenewfaces
+|  |  |  | addfdogeometrycolumn
+|  |  |  | addgeometrycolumn
+|  |  |  | addisoedge
+|  |  |  | addisonetnode
+|  |  |  | addisonode
+|  |  |  | addlink
+|  | st_addmeasure |  | addmeasure
+|  | st_addpoint | st_addpoint | addpoint
+|  |  |  | addtemporarygeometrycolumn
+|  | st_asbinary | st_asbinary | asbinary
+|  |  |  | asencodedpolyline
+|  | st_asewkb |  | asewkb
+|  | st_asewkt |  | asewkt
+|  |  |  | asfgf
+|  |  |  | asgpb
+|  |  |  | asin
+|  | st_assvg |  | assvg
+|  | st_astext | st_astext | astext
+|  |  |  | astwkb
+|  |  |  | asx3d
+|  |  |  | atan
+|  |  |  | atan2
+|  |  |  | atm_astext
+|  |  |  | atm_create
+|  |  |  | atm_createrotate
+|  |  |  | atm_createscale
+|  |  |  | atm_createtranslate
+|  |  |  | atm_createxroll
+|  |  |  | atm_determinant
+|  |  |  | atm_invert
+|  |  |  | atm_isinvertible
+|  |  |  | atm_isvalid
+|  |  |  | atm_multiply
+|  |  |  | atm_rotate
+|  |  |  | atm_scale
+|  |  |  | atm_transform
+|  |  |  | atm_translate
+|  |  |  | atm_xroll
+|  |  |  | atm_yroll
+|  |  |  | autofdostart
+|  |  |  | autofdostop
+|  |  |  | autogpkgstart
+|  |  |  | autogpkgstop
+|  | st_azimuth | st_azimuth | azimuth
+|  | st_bdmpolyfromtext |  | bdmpolyfromtext
+|  |  |  | bdmpolyfromwkb
+|  | st_bdpolyfromtext |  | bdpolyfromtext
+|  |  |  | bdpolyfromwkb
+|  |  |  | blobfromfile
+|  |  |  | blobtofile
+|  |  |  | bufferoptions_getendcapstyle
+|  |  |  | bufferoptions_getjoinstyle
+|  |  |  | bufferoptions_getmitrelimit
+|  |  |  | bufferoptions_getquadrantsegments
+|  |  |  | bufferoptions_reset
+|  |  |  | bufferoptions_setendcapstyle
+|  |  |  | bufferoptions_setjoinstyle
+|  |  |  | bufferoptions_setmitrelimit
+|  |  |  | bufferoptions_setquadrantsegments
+|  | st_buildarea |  | buildarea
+|  |  |  | buildcirclembr
+|  |  |  | buildmbr
+|  |  |  | buildmbrfilter
+|  |  |  | castautomagic
+|  |  |  | casttoblob
+|  |  |  | casttodouble
+|  |  |  | casttogeometycollection
+|  |  |  | casttointeger
+|  |  |  | casttolinestring
+|  |  |  | casttomulti
+|  |  | st_tomultiline | casttomultilinestring
+|  |  |  | casttomultipoint
+|  |  |  | casttomultipolygon
+|  |  |  | casttopoint
+|  |  |  | casttopolygon
+|  |  |  | casttosingle
+|  |  |  | casttotext
+|  |  |  | casttoxy
+|  |  |  | casttoxym
+|  |  |  | casttoxyz
+|  |  |  | casttoxyzm
+|  |  |  | ceil
+|  |  |  | ceiling
+|  |  |  | centimeter
+|  |  |  | changeedgegeom
+|  |  |  | changelinkgeom
+|  |  |  | check_strict_sql_quoting
+|  |  |  | checkduplicaterows
+|  |  |  | checkgeopackagemetadata
+|  |  |  | checkshadowedrowid
+|  |  |  | checkspatialindex
+|  |  |  | checkspatialmetadata
+|  |  |  | checkwithoutrowid
+|  |  |  | circularity
+|  |  |  | clonetable
+|  | st_closestpoint | st_closestpoint | closestpoint
+|  | st_collect | st_collect | collect
+|  | st_collectionextract | st_collectionextract | collectionextract
+|  |  |  | compressgeometry
+|  |  | st_constraineddelaunay | constraineddelaunaytriangulation
+|  |  |  | coorddimension
+|  |  |  | cos
+|  |  |  | cot
+|  |  |  | countunsafetriggers
+|  |  |  | createclonedtable
+|  |  |  | createisometadatatables
+|  |  |  | creatembrcache
+|  |  |  | createmetacatalogtables
+|  |  |  | createmissingrasterlite2columns
+|  |  |  | createmissingsystemtables
+|  |  |  | createnetwork
+|  |  |  | createrastercoveragestable
+|  |  |  | createrouting
+|  |  |  | createrouting_getlasterror
+|  |  |  | createroutingnodes
+|  |  |  | createspatialindex
+|  |  |  | createstylingtables
+|  |  |  | createtemporaryspatialindex
+|  |  |  | createtopogeo
+|  |  |  | createtopology
+|  |  |  | createtopotables
+|  |  |  | createuuid
+|  |  |  | createvectorcoveragestables
+|  |  |  | curvosityindex
+|  |  |  | dd to dms
+|  |  |  | decimeter
+|  |  |  | decodeurl
+|  |  |  | degrees
+|  |  |  | delaunaytriangulation
+|  | st_dimension | st_dimension | dimension
+|  |  |  | dirnamefrompath
+|  |  |  | disablegpkgamphibiousmode
+|  |  |  | disablegpkgmode
+|  |  |  | disablepause
+|  |  |  | disablespatialindex
+|  |  |  | disabletinypoint
+|  |  |  | discardfdogeometrycolumn
+|  |  |  | discardgeometrycolumn
+|  |  |  | dissolvepoints
+|  |  |  | dissolvesegments
+|  |  |  | distancewithin
+|  |  |  | dms to dd
+|  |  |  | downhillheight
+|  |  |  | drapeline
+|  |  |  | drapelineexceptions
+|  |  |  | dropnetwork
+|  |  |  | droptable
+|  |  |  | droptopology
+|  |  |  | dropvirtualgeometry
+|  |  |  | elementarygeometries
+|  |  |  | enablegpkgamphibiousmode
+|  |  |  | enablegpkgmode
+|  |  |  | enablepause
+|  |  |  | enabletinypoint
+|  |  |  | encodeurl
+|  | st_endpoint | st_endpoint | endpoint
+|  |  |  | ensureclosedrings
+|  |  | st_envelopesintersect | envelopesintersects
+|  |  |  | eval
+|  |  |  | exp
+|  | st_expand | st_expand | expand
+|  |  |  | exportdbf
+|  |  |  | exportdxf
+|  |  |  | exportgeojson2
+|  |  |  | exportkml
+|  |  |  | exportshp
+|  | st_extent | st_extent | extent
+|  | st_exteriorring | st_exteriorring | exteriorring
+|  |  |  | extractmultilinestring
+|  |  |  | extractmultipoint
+|  |  |  | extractmultipoint
+|  |  |  | extractmultipolygon
+|  |  |  | fileextfrompath
+|  |  |  | filenamefrompath
+|  |  |  | filtermbrcontains
+|  |  |  | filtermbrintersects
+|  |  |  | filtermbrwithin
+|  |  |  | floor
+|  |  |  | forceasnull
+|  | st_forcerhr |  | forcelhr
+|  |  |  | forcepolygonccw
+|  |  |  | forcepolygoncw
+|  |  |  | frechetdistance
+|  |  |  | freexl_version
+|  |  |  | fullfilenamefrompath
+|  |  |  | garsmbr
+|  |  |  | gcp_astext
+|  |  |  | gcp_compute
+|  |  |  | gcp_isvalid
+|  |  |  | gcp_transform
+|  |  |  | gcp2atm
+|  |  |  | geodesic length
+|  |  |  | geodesicarcarea
+|  |  |  | geodesicarcheight
+|  |  |  | geodesicarclength
+|  |  |  | geodesiccentralangle
+|  |  |  | geodesicchordlength
+|  | st_geohash |  | geohash
+|  |  |  | geomcollfromtext
+|  |  |  | geomcollfromwkb
+|  |  |  | geometrycollectionfromtext
+|  |  |  | geometrycollectionfromwkb
+|  |  |  | geometrypointencode
+|  | geometrytype |  | geometrytype
+|  | st_geomfromewkb |  | geomfromewkb
+|  | st_geomfromewkt |  | geomfromewkt
+|  |  |  | geomfromexifgpsblob
+|  |  |  | geomfromfgf
+|  |  |  | geomfromgeojson
+|  | st_geomfromgml | st_geomfromgml | geomfromgml
+|  |  |  | geomfromgpb
+|  | st_geomfromkml |  | geomfromkml
+|  | st_geomfromtext | st_geomfromtext | geomfromtext
+|  | st_geomfromwkb | st_geomfromwkb | geomfromwkb
+|  |  |  | geos_version
+|  |  |  | geosconcavehull
+|  |  |  | geosdensify
+|  |  |  | geoslargestemptycircle
+|  |  |  | geosmakevalid
+|  |  |  | geosmaximuminscribedcircle
+|  |  |  | geosminimumboundingcenter
+|  |  |  | geosminimumboundingcircle
+|  |  |  | geosminimumboundingradius
+|  |  |  | geosminimumclearance
+|  |  |  | geosminimumclearanceline
+|  |  |  | geosminimumrotatedrectangle
+|  |  |  | geosminimumwidth
+|  |  |  | getcuttermessage
+|  |  |  | getdbobjectscope
+|  |  |  | getdecimalprecision
+|  |  |  | getfacebypoint
+|  |  |  | getfaceedges
+|  |  |  | getfacegeometry
+|  |  |  | getgpkgamphibiousmode
+|  |  |  | getgpkgmode
+|  |  |  | getisometadataid
+|  |  |  | getlastnetworkexception
+|  |  |  | getlasttopologyexception
+|  |  |  | getlayerextent
+|  |  |  | getlinkbypoint
+|  |  |  | getmimetype
+|  |  |  | getnetnodebypoint
+|  |  |  | getnodebypoint
+|  |  |  | getpointindex
+|  |  |  | getvirtualtableextent
+|  |  |  | gpkg_isassignable
+|  |  |  | gpkgaddgeometrycolumn
+|  |  |  | gpkgaddgeometrytriggers
+|  |  |  | gpkgaddspatialindex
+|  |  |  | gpkgaddtiletriggers
+|  |  |  | gpkgcreatebasetables
+|  |  |  | gpkgcreatetilestable
+|  |  |  | gpkgcreatetileszoomlevel
+|  |  |  | gpkggetimagetype
+|  |  |  | gpkggetnormalrow
+|  |  |  | gpkggetnormalzoom
+|  |  |  | gpkginsertepsgsrid
+|  |  |  | gpkgmakepoint
+|  |  |  | gpkgmakepointm
+|  |  |  | gpkgmakepointz
+|  |  |  | gpkgmakepointzm
+|  |  |  | great circle length
+|  |  |  | gunion
+|  |  |  | hasepsg
+|  |  |  | hasfreexl
+|  |  |  | hasgcp
+|  |  |  | hasgeocallbacks
+|  |  |  | hasgeopackage
+|  |  |  | hasgeos
+|  |  |  | hasgeos3100
+|  |  |  | hasgeos3110
+|  |  |  | hasgeosadvanced
+|  |  |  | hasgeosonlyreentrant
+|  |  |  | hasgeosreentrant
+|  |  |  | hasgeostrunk
+|  |  |  | hasiconv
+|  |  |  | hasknn
+|  |  |  | haslibxml2
+|  |  |  | hasmathsql
+|  |  |  | hasminizip
+|  |  |  | hasproj
+|  |  |  | hasproj6
+|  |  |  | hasrouting
+|  |  |  | hasrttopo
+|  |  |  | hastopology
+|  | st_hausdorffdistance |  | hausdorffdistance
+|  |  |  | hexagonalgrid
+|  |  |  | hilbertcode
+|  |  |  | importdbf
+|  |  |  | importdxf
+|  |  |  | importdxffromdir
+|  |  |  | importgeojson
+|  |  |  | importshp
+|  |  |  | importwfs
+|  |  |  | importxls
+|  |  |  | importzipdbf
+|  |  |  | importzipshp
+|  |  |  | indian chain
+|  |  |  | indian foot
+|  |  |  | indian yard
+|  |  |  | initfdospatialmetadata
+|  |  |  | initspatialmetadata
+|  |  |  | initspatialmetadatafull
+|  |  |  | inittopogeo
+|  |  |  | inittoponet
+|  |  |  | insertepsgsrid
+|  | st_interiorringn | st_interiorringn | interiorringn
+|  |  |  | international chain
+|  |  |  | international fathom
+|  |  |  | international foot
+|  |  |  | international inch
+|  |  |  | international link
+|  |  |  | international nautical mile
+|  |  |  | international statute mile
+|  |  |  | international yard
+|  |  |  | interpolatepoint
+|  |  |  | invalidatelayerstatistics
+|  |  | st_is3d | is3d
+|  | st_isclosed | st_isclosed | isclosed
+|  |  |  | iscompressedgeometryblob
+|  |  |  | isdecimalnumber
+|  |  |  | isexifblob
+|  |  |  | isexifgpsblob
+|  |  |  | isgeometryblob
+|  |  |  | isgifblob
+|  |  |  | isinteger
+|  |  |  | isjp2blob
+|  |  |  | isjpegblob
+|  |  |  | islowascii
+|  |  |  | ismeasured
+|  |  |  | isnumber
+|  |  |  | ispauseenabled
+|  |  |  | ispdfblob
+|  |  |  | ispngblob
+|  |  |  | ispolygonccw
+|  |  |  | ispolygoncw
+|  | st_isring | st_isring | isring
+|  |  |  | istiffblob
+|  |  |  | istinypointblob
+|  |  |  | istinypointenabled
+|  | st_isvalid | st_isvalid | isvalid
+|  |  | st_isvaliddetail | isvaliddetail
+|  |  |  | isvalidgpb
+|  | st_isvalidreason | st_isvalidreason | isvalidreason
+|  |  |  | isvalidtrajectory
+|  |  |  | iswebpblob
+|  |  |  | iszipblob
+|  |  |  | kilometer
+|  |  |  | libxml2_version
+|  |  |  | line_interpolate_equidistant_points
+|  | st_line_interpolate_point |  | line_interpolate_point
+|  | st_line_locate_point |  | line_locate_point
+|  | st_line_substring |  | line_substring
+|  |  |  | linefromencodedpolyline
+|  | st_linefromtext | st_linefromtext | "linefromtext
+linestringfromtext"
+|  |  |  | "linefromwkb
+linestringfromwkb"
+|  | st_linemerge | st_linemerge | linemerge
+|  |  |  | linescutatnodes
+|  |  |  | linesfromrings
+|  |  |  | linestringavgsegmentlength
+|  |  |  | linestringfromtext
+|  |  |  | linestringfromwkb
+|  |  |  | linestringminsegmentlength
+|  |  |  | ln
+|  | st_locate_along_measure |  | locatealongmeasure
+|  | st_locate_between_measures |  | locatebetweenmeasures
+|  |  |  | log
+|  |  |  | log10
+|  |  |  | log2
+|  |  |  | loginetfromtgeo
+|  |  |  | m
+|  |  |  | makearc
+|  |  |  | makecircle
+|  |  |  | makecircularsector
+|  |  |  | makecircularstripe
+|  |  | st_makeellipse | makeellipse
+|  |  |  | makeellipticarc
+|  |  |  | makeellipticsector
+|  | st_makeline | st_makeline | makeline
+|  | st_makepoint | st_makepoint | makepoint
+|  | st_makepointm |  | makepointm
+|  |  |  | makepointz
+|  |  |  | makepointzm
+|  | st_makepolygon | st_makepolygon | makepolygon
+|  |  |  | makestringlist
+|  |  | st_makevalid | makevalid
+|  |  |  | makevaliddiscarded
+|  | st_maxdistance | st_maxdistance | maxdistance
+|  |  |  | maxm
+|  |  |  | maxz
+|  |  |  | mbrcontains
+|  |  |  | mbrdisjoint
+|  |  |  | mbrequal
+|  |  |  | mbrintersects
+|  |  |  | mbrmaxx
+|  |  |  | mbrmaxy
+|  |  |  | mbrminx
+|  |  |  | mbrminy
+|  |  |  | mbroverlaps
+|  |  |  | mbrtouches
+|  |  |  | mbrwithin
+|  |  |  | md5checksum
+|  |  |  | md5totalchecksum
+|  |  |  | millimeter
+|  |  |  | minm
+|  |  |  | minz
+|  |  |  | mlinefromtext
+|  |  |  | mlinefromwkb
+|  |  |  | modedgeheal
+|  |  |  | modedgesplit
+|  |  |  | modgeolinksplit
+|  |  |  | modlinkheal
+|  |  |  | modloglinksplit
+|  |  |  | moveisonetnode
+|  |  |  | moveisonode
+|  |  |  | mpointfromtext
+|  | st_mpointfromtext | st_mpointfromtext | "mpointfromtext
+multipointfromtext"
+|  |  |  | "mpointfromwkb
+multipointfromwkb"
+|  |  |  | mpolyfromtext
+|  |  |  | mpolyfromwkb
+|  |  |  | multilinestringfromtext
+|  |  |  | multilinestringfromwkb
+|  |  |  | multipolygonfromtext
+|  |  |  | multipolygonfromwkb
+|  | st_ndims |  | ndims
+|  |  |  | newedgeheal
+|  |  |  | newedgessplit
+|  |  |  | newgeolinksplit
+|  |  |  | newlinkheal
+|  |  |  | newloglinksplit
+|  |  |  | normalizelonlat
+|  | st_npoints | st_npoints | npoints
+|  | st_nrings |  | nrings
+|  | st_numinteriorring | st_numinteriorring | numinteriorring
+|  | st_numinteriorrings | st_numinteriorrings | numinteriorrings
+|  |  |  | offestcurve
+|  |  |  | orientedenvelope
+|  |  |  | pause
+|  |  |  | pi
+|  | st_pointfromtext | st_pointfromtext | pointfromtext
+|  | st_pointfromwkb | st_pointfromwkb | pointfromwkb
+|  | st_pointn | st_pointn | pointn
+|  | st_pointonsurface | st_pointonsurface | pointonsurface
+|  |  |  | polyfromtext
+|  |  |  | polyfromwkb
+|  |  |  | polygonfromtext
+|  |  |  | polygonfromwkb
+|  | st_polygonize | st_polygonize | polygonize
+|  |  |  | postgresql_getlasterror
+|  |  |  | postgresql_resetlasterror
+|  |  |  | postgresql_setlasterror
+|  |  |  | pow
+|  |  |  | power
+|  |  |  | proj_asprojstring
+|  |  |  | proj_aswkt
+|  |  |  | proj_getdatabasepath
+|  |  |  | proj_guesssridfromshp
+|  |  |  | proj_guesssridfromwkt
+|  |  |  | proj_guesssridfromzipshp
+|  |  |  | proj_setdatabasepath
+|  |  |  | proj_version
+|  |  |  | project
+|  |  |  | ptdistwithin
+|  |  |  | radians
+|  |  |  | rebuildgeometrytriggers
+|  |  |  | recoverfdogeometrycolumn
+|  |  |  | recovergeometrycolumn
+|  |  |  | recoverspatialindex
+|  |  |  | recreateisometarefstriggers
+|  |  |  | recreaterastercoveragestriggers
+|  |  |  | recreatestylingtriggers
+|  |  |  | recreatetopotriggers
+|  |  |  | recreatevectorcoveragestriggers
+|  |  |  | reduceprecision
+|  |  |  | reflectcoordinates
+|  |  |  | reflectcoords
+|  |  |  | registerdatalicense
+|  |  |  | registerisometadata
+|  |  |  | registervirtualgeometry
+|  |  |  | relatematch
+|  |  |  | remedgemodface
+|  |  |  | remedgenewface
+|  |  |  | remisoedge
+|  |  |  | remisonetnode
+|  |  |  | remisonode
+|  |  |  | removeduplicaterows
+|  |  |  | removeextraspaces
+|  |  |  | removelink
+|  | st_removepoint |  | removepoint
+|  |  |  | renamecolumn
+|  |  |  | renamedatalicense
+|  |  |  | renametable
+|  | st_reverse | st_reverse | reverse
+|  |  |  | ringscutatnodes
+|  |  |  | rl2_mapconfigurationabstractn
+|  |  |  | rl2_mapconfigurationnamen
+|  |  |  | rl2_mapconfigurationtitlen
+|  |  |  | rl2_nummapconfigurations
+|  |  |  | rl2_registermapconfiguration
+|  |  |  | rl2_reloadmapconfiguration
+|  |  |  | rl2_unregistermapconfiguration
+|  |  |  | rotatecoordinates
+|  |  |  | rotatecoords
+|  |  |  | rttopo_version
+|  |  |  | sanitizegeometry
+|  |  |  | scalecoordinates
+|  |  |  | scalecoords
+|  |  |  | se_autoregisterstandardbrushes
+|  |  |  | se_registerexternalgraphic
+|  |  |  | se_registerrastercoveragekeyword
+|  |  |  | se_registerrastercoveragesrid
+|  |  |  | se_registerrasterstyle
+|  |  |  | se_registerrasterstyledlayer
+|  |  |  | se_registerspatialviewcoverage
+|  |  |  | se_registertopogeocoverage
+|  |  |  | se_registertoponetcoverage
+|  |  |  | se_registervectorcoverage
+|  |  |  | se_registervectorcoveragekeyword
+|  |  |  | se_registervectorcoveragesrid
+|  |  |  | se_registervectorstyle
+|  |  |  | se_registervectorstyledlayer
+|  |  |  | se_registervirtualtablecoverage
+|  |  |  | se_reloadvectorstyle
+|  |  |  | se_setvectorcoveragecopyright
+|  |  |  | se_setvectorcoverageinfos
+|  |  |  | se_setvectorcoveragevisibilityrange
+|  |  |  | se_unregisterexternalgraphic
+|  |  |  | se_unregisterrastercoveragekeyword
+|  |  |  | se_unregisterrastercoveragesrid
+|  |  |  | se_unregisterrasterstyle
+|  |  |  | se_unregisterrasterstyledlayer
+|  |  |  | se_unregistervectorcoverage
+|  |  |  | se_unregistervectorcoveragekeyword
+|  |  |  | se_unregistervectorcoveragesrid
+|  |  |  | se_unregistervectorstyle
+|  |  |  | se_unregistervectorstyledlayer
+|  |  |  | se_updatevectorcoverageextent
+|  | st_segmentize |  | segmentize
+|  |  |  | selfintersections
+|  |  |  | sequence_currval
+|  |  |  | sequence_lastval
+|  |  |  | sequence_nextval
+|  |  |  | sequence_setval
+|  |  |  | setdatalicenseurl
+|  |  |  | setdecimalprecision
+|  |  |  | setendpoint
+|  |  |  | setmultiplepoints
+|  | st_setpoint |  | setpoint
+|  | st_setsrid | st_setsrid | setsrid
+|  |  |  | setstartpoint
+|  |  |  | sharedpaths
+|  |  |  | shiftcoordinates
+|  |  |  | shiftcoords
+|  | st_shortestline | st_shortestline | shortestline
+|  |  |  | sign
+|  | st_simplify | st_simplify | simplify
+|  | st_simplifypreservetopology | st_simplifypreservetopology | simplifypreservetopology
+|  |  |  | sin
+|  |  |  | singlesidedbuffer
+|  |  | st_snap | snap
+|  |  |  | snapandsplit
+|  | st_snaptogrid |  | snaptogrid
+|  |  |  | spatialite_target_cpu
+|  |  |  | spatialite_version
+|  |  |  | spatnetfromgeom
+|  |  |  | spatnetfromtgeo
+|  |  | st_split | split
+|  |  |  | splitleft
+|  |  |  | splitright
+|  |  |  | sqlproc_allvariables
+|  |  |  | sqlproc_cookedsql
+|  |  |  | sqlproc_execute
+|  |  |  | sqlproc_executeloop
+|  |  |  | sqlproc_fromfile
+|  |  |  | sqlproc_fromtext
+|  |  |  | sqlproc_getlasterror
+|  |  |  | sqlproc_getlogfile
+|  |  |  | sqlproc_isvalid
+|  |  |  | sqlproc_numvariables
+|  |  |  | sqlproc_rawsql
+|  |  |  | sqlproc_return
+|  |  |  | sqlproc_setlogfile
+|  |  |  | sqlproc_variablen
+|  |  |  | sqlproc_varvalue
+|  |  |  | sqrt
+|  |  |  | squaregrid
+|  |  |  | sridfromauthcrs
+|  |  |  | st_cutter
+|  |  | st_node | st_node
+|  | st_point | st_point | st_point
+|  | st_shift_longitude |  | st_shift_longitude
+|  |  |  | st_subdivide
+|  | st_translate | st_translate | st_translate
+|  | st_wkbtosql |  | st_wkbtosql
+|  | st_wkttosql |  | st_wkttosql
+|  | st_startpoint | st_startpoint | startpoint
+|  |  |  | startpoint
+|  |  |  | stddev_pop
+|  |  |  | stddev_samp
+|  |  |  | storedproc_createtables
+|  |  |  | storedproc_delete
+|  |  |  | storedproc_execute
+|  |  |  | storedproc_executeloop
+|  |  |  | storedproc_get
+|  |  |  | storedproc_register
+|  |  |  | storedproc_updatesqlbody
+|  |  |  | storedproc_updatetitle
+|  |  |  | storedvar_delete
+|  |  |  | storedvar_get
+|  |  |  | storedvar_getvalue
+|  |  |  | storedvar_register
+|  |  |  | storedvar_updatetitle
+|  |  |  | storedvar_updatevalue
+|  |  |  | swapcoordinates
+|  |  |  | swapcoords
+|  |  |  | tan
+|  |  |  | tinypointencode
+|  |  |  | togars
+|  |  |  | topogeo_addlinestring
+|  |  |  | topogeo_addlinestringnoface
+|  |  |  | topogeo_addpoint
+|  |  |  | topogeo_clone
+|  |  |  | topogeo_createtopolayer
+|  |  |  | topogeo_disambiguatesegmentedges
+|  |  |  | topogeo_exporttopolayer
+|  |  |  | topogeo_fromgeotable
+|  |  |  | topogeo_fromgeotableext
+|  |  |  | topogeo_fromgeotablenoface
+|  |  |  | topogeo_fromgeotablenofaceext
+|  |  |  | topogeo_getedgeseed
+|  |  |  | topogeo_getfaceseed
+|  |  |  | topogeo_inittopolayer
+|  |  |  | topogeo_insertfeaturefromtopolayer
+|  |  |  | topogeo_lineedgeslist
+|  |  |  | topogeo_modedgeheal
+|  |  |  | topogeo_newedgeheal
+|  |  |  | topogeo_newedgessplit
+|  |  |  | topogeo_polyfaceslist
+|  |  |  | topogeo_polygonize
+|  |  |  | topogeo_removedanglingedges
+|  |  |  | topogeo_removedanglingnodes
+|  |  |  | topogeo_removesmallfaces
+|  |  |  | topogeo_removetopolayer
+|  |  |  | topogeo_snaplinetoseed
+|  |  |  | topogeo_snappedgeotable
+|  |  |  | topogeo_snappointtoseed
+|  |  |  | topogeo_subdividelines
+|  |  |  | topogeo_togeotable
+|  |  |  | topogeo_togeotablegeneralize
+|  |  |  | topogeo_toposnap
+|  |  |  | topogeo_updateseeds
+|  |  |  | toponet_clone
+|  |  |  | toponet_disambiguatesegmentlinks
+|  |  |  | toponet_fromgeotable
+|  |  |  | toponet_getlinkseed
+|  |  |  | toponet_linelinkslist
+|  |  |  | toponet_togeotable
+|  |  |  | toponet_togeotablegeneralize
+|  |  |  | toponet_updateseeds
+|  |  |  | trajectoryinterpolatepoint
+|  |  |  | transformxy
+|  |  |  | transformxyz
+|  |  |  | triangulargrid
+|  |  |  | u.s. chain
+|  |  |  | u.s. foot
+|  |  |  | u.s. inch
+|  |  |  | u.s. statute mile
+|  |  |  | u.s. yard
+|  |  |  | unaryunion
+|  |  |  | uncompressgeometry
+|  |  |  | unregisterdatalicense
+|  |  |  | updatelayerstatistics
+|  |  |  | updatemetacatalogstatistics
+|  |  |  | updownheight
+|  |  |  | upgradegeometrytriggers
+|  |  |  | uphillheight
+|  |  |  | validatetopogeo
+|  |  |  | validlogicalnet
+|  |  |  | validspatialnet
+|  |  |  | var_pop
+|  |  |  | var_samp
+|  |  |  | voronojdiagram
+|  |  |  | wms_createtables
+|  |  |  | wms_defaultrefsys
+|  |  |  | wms_defaultsetting
+|  |  |  | wms_getfeatureinforequesturl
+|  |  |  | wms_getmaprequesturl
+|  |  |  | wms_registergetcapabilities
+|  |  |  | wms_registergetmap
+|  |  |  | wms_registerrefsys
+|  |  |  | wms_registersetting
+|  |  |  | wms_registerstyle
+|  |  |  | wms_setgetcapabilitiesinfos
+|  |  |  | wms_setgetmapcopyright
+|  |  |  | wms_setgetmapinfos
+|  |  |  | wms_setgetmapoptions
+|  |  |  | wms_unregistergetcapabilities
+|  |  |  | wms_unregistergetmap
+|  |  |  | wms_unregisterrefsys
+|  |  |  | wms_unregistersetting
+|  |  |  | x
+|  |  |  | xb_addfileid
+|  |  |  | xb_addparentid
+|  |  |  | xb_cacheflush
+|  |  |  | xb_compress
+|  |  |  | xb_create
+|  |  |  | xb_getabstract
+|  |  |  | xb_getdocument
+|  |  |  | xb_getdocumentsize
+|  |  |  | xb_getencoding
+|  |  |  | xb_getfileid
+|  |  |  | xb_getgeometry
+|  |  |  | xb_getinternalschemauri
+|  |  |  | xb_getlastparseerror
+|  |  |  | xb_getlastvalidateerror
+|  |  |  | xb_getlastxpatherror
+|  |  |  | xb_getparentid
+|  |  |  | xb_getpayload
+|  |  |  | xb_getschemauri
+|  |  |  | xb_gettitle
+|  |  |  | xb_iscompressed
+|  |  |  | xb_isgpx
+|  |  |  | xb_isisometadata
+|  |  |  | xb_ismapconfig
+|  |  |  | xb_isschemavalidated
+|  |  |  | xb_issldsevectorstyle
+|  |  |  | xb_issldstyle
+|  |  |  | xb_issvg
+|  |  |  | xb_isvalid
+|  |  |  | xb_isvalidxpathexpression
+|  |  |  | xb_loadxml
+|  |  |  | xb_mlinefromgpx
+|  |  |  | xb_schemavalidate
+|  |  |  | xb_setfileid
+|  |  |  | xb_setparentid
+|  |  |  | xb_storexml
+|  |  |  | xb_uncompress
+|  |  |  | y
+|  |  |  | z
+|  |  |  | zipfile_dbfn
+|  |  |  | zipfile_numdbf
+|  |  |  | zipfile_numshp
+|  |  |  | zipfile_shpn
+|  |  | st_3darea |
+|  | st_perimeter3d | st_3dperimeter |
+|  |  | st_accum |
+|  |  | st_addz |
+|  |  | st_closestcoordinate |
+|  |  | st_compactnessratio |
+|  |  | st_coorddim |
+|  |  | st_delaunay |
+|  |  | st_densify |
+|  |  | st_drape |
+|  | st_dwithin | st_dwithin |
+|  |  | st_explode |
+|  |  | st_extrude |
+|  |  | st_flipcoordinates |
+|  |  | st_force2d |
+|  |  | st_force3d |
+|  |  | st_furthestcoordinate |
+|  |  | st_geometryshadow |
+|  | st_geometrytype | st_geometrytype |
+|  |  | st_geometrytypecode |
+|  |  | st_googlemaplink |
+|  |  | st_holes |
+|  |  | st_interpolate3dline |
+|  |  | st_isovist |
+|  |  | st_isrectangle |
+|  |  | st_linefromwkb |
+|  |  | st_lineintersector |
+|  |  | st_locatealong |
+|  |  | st_longestline |
+|  |  | st_makeenvelope |
+|  |  | st_makegrid |
+|  |  | st_makegridpoints |
+|  |  | st_minimumrectangle |
+|  | st_mlinefromtext | st_mlinefromtext |
+|  | st_mpolyfromtext | st_mpolyfromtext |
+|  |  | st_multiplyz |
+|  |  | st_normalize |
+|  |  | st_octogonalenvelope |
+|  |  | st_orderingequals |
+|  |  | st_osmmaplink |
+|  | st_polygonfromtext | st_polyfromtext |
+|  |  | st_polyfromwkb |
+|  |  | st_precisionreducer |
+|  |  | st_projectpoint |
+|  |  | st_removeduplicatedcoordinates |
+|  |  | st_removeholes |
+|  |  | st_removepoints |
+|  |  | st_removerepeatedpoints |
+|  |  | st_reverse3dline |
+|  |  | st_ringbuffer |
+|  |  | st_ringsidebuffer |
+|  | st_rotate | st_rotate |
+|  |  | st_scale |
+|  |  | st_sidebuffer |
+|  |  | st_split |
+|  |  | st_sunposition |
+|  |  | st_svf |
+|  |  | st_tessellate |
+|  |  | st_tomultipoint |
+|  |  | st_tomultisegments |
+|  |  | st_triangleaspect |
+|  |  | st_trianglecontouring |
+|  |  | st_triangledirection |
+|  |  | st_triangleslope |
+|  |  | st_updatez |
+|  |  | st_voronoi |
+|  |  | st_x |
+|  |  | st_xmax |
+|  |  | st_xmin |
+|  |  | st_y |
+|  |  | st_ymax |
+|  |  | st_ymin |
+|  |  | st_z |
+|  |  | st_zmax |
+|  |  | st_zmin |
+|  |  | st_zupdatelineextremities |
+|  | @ |  |
+|  | && |  |
+|  | &< |  |
+|  | &<| |  |
+|  | &> |  |
+|  | << |  |
+|  | <<| |  |
+|  | = |  |
+|  | >> |  |
+|  | |&> |  |
+|  | |>> |  |
+|  | ~ |  |
+|  | ~= |  |
+|  | box3d |  |
+|  | find_srid |  |
+|  | st_accum |  |
+|  | st_affine |  |
+|  | st_ashexewkb |  |
+|  | st_containsproperly |  |
+|  | st_coorddim |  |
+|  | st_curvetoline |  |
+|  | st_dfullywithin |  |
+|  | st_distance_sphere |  |
+|  | st_distance_spheroid |  |
+|  | st_dump |  |
+|  | st_dumprings |  |
+|  | st_estimated_extent |  |
+|  | st_extent3d |  |
+|  | st_force_2d |  |
+|  | st_force_3d |  |
+|  | st_force_3dm |  |
+|  | st_force_3dz |  |
+|  | st_force_4d |  |
+|  | st_force_collection |  |
+|  | st_geogfromtext |  |
+|  | st_geogfromwkb |  |
+|  | st_geographyfromtext |  |
+|  | st_geometryfromtext |  |
+|  | st_gmltosql |  |
+|  | st_hasarc |  |
+|  | st_length_spheroid |  |
+|  | st_length2d |  |
+|  | st_length2d_spheroid |  |
+|  | st_length3d_spheroid |  |
+|  | st_linecrossingdirection |  |
+|  | st_linefrommultipoint |  |
+|  | st_linefromwkb |  |
+|  | st_linestringfromwkb |  |
+|  | st_linetocurve |  |
+|  | st_locatebetweenelevations |  |
+|  | st_longestline |  |
+|  | st_m |  |
+|  | st_makebox2d |  |
+|  | st_makebox3d |  |
+|  | st_makeenvelope |  |
+|  | st_mem_size |  |
+|  | st_memunion |  |
+|  | st_minimumboundingcircle |  |
+|  | st_multi |  |
+|  | st_orderingequals |  |
+|  | st_perimeter2d |  |
+|  | st_point_inside_circle |  |
+|  | st_polygon |  |
+|  | st_rotatex |  |
+|  | st_rotatey |  |
+|  | st_rotatez |  |
+|  | st_scale |  |
+|  | st_summary |  |
+|  | st_transscale |  |
+|  | st_x |  |
+|  | st_xmax |  |
+|  | st_xmin |  |
+|  | st_y |  |
+|  | st_ymax |  |
+|  | st_ymin |  |
+|  | st_z |  |
+|  | st_zmax |  |
+|  | st_zmflag |  |
+|  | st_zmin |  |
 |===
