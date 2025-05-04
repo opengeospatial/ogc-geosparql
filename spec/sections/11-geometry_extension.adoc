@@ -38,6 +38,25 @@ requirement:: /req/geometry-extension/geocode-literal-srs
 requirement:: /req/geometry-extension/geocode-literal-empty
 requirement:: /req/geometry-extension/geometry-as-geocode-literal
 requirement:: /req/geometry-extension/asGeocode-function
+requirement:: /req/geometry-extension/ply-literal
+requirement:: /req/geometry-extension/ply-literal-default-srs
+requirement:: /req/geometry-extension/ply-axis-order
+requirement:: /req/geometry-extension/ply-literal-empty
+requirement:: /req/geometry-extension/geometry-as-ply-literal
+requirement:: /req/geometry-extension/asPLY-function
+requirement:: /req/geometry-extension/gltf-literal
+requirement:: /req/geometry-extension/gltf-literal-empty
+requirement:: /req/geometry-extension/geometry-as-gltf-literal
+requirement:: /req/geometry-extension/asGLTF-function
+requirement:: /req/geometry-extension/x3d-literal
+requirement:: /req/geometry-extension/x3d-literal-empty
+requirement:: /req/geometry-extension/geometry-as-3d-literal
+requirement:: /req/geometry-extension/asX3D-function
+requirement:: /req/geometry-extension/obj-literal
+requirement:: /req/geometry-extension/obj-literal-srs
+requirement:: /req/geometry-extension/obj-literal-empty
+requirement:: /req/geometry-extension/geometry-as-obj-literal
+requirement:: /req/geometry-extension/asOBJ-function
 ====
 
 As part of the vocabulary, RDFS datatypes are defined for encoding detailed geometry information as a literal value. A literal representation of a geometry is needed so that geometric values may be treated as a single unit. Such a representation allows geometries to be passed to external functions for computations and to be returned from a query.
@@ -1053,6 +1072,331 @@ The function http://www.opengis.net/def/function/geosparql/asGeocode[`geof:asGeo
 .asGeocode Function
 ====
 Implementations shall support <<Function: geof:asGeocode, `geof:asGeocode`>> as a SPARQL extension function.
+====
+
+=== 3D Geometry Serializations
+
+This section establishes the Requirements class for representing 3D Geometry data in RDF literals, according to different non-RDF systems.
+
+GeoSPARQL presents specializations of the `geo:hasSerialization` property for indicating particular serializations and specialized datatype literals for containing them. It does not provide comprehensive definitions of their content since these are given in standards external to GeoSPARQL, all of which are referenced.
+
+GeoSPARQL does present some Requirements for literal structure which extend the serialization-defining standards, for example the requirement to allow indications of spatial reference systems within WKT geometry representations.
+
+[[NOTE]]
+====
+GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGC06-103r4>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+
+Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
+====
+
+==== Polygon File Format (PLY)
+
+This section establishes the requirements for representing Geometry data in RDF based on the Polygon File Format (PLY). It defines one RDFS Datatype: <<RDFS Datatype: geo:plyLiteral, PLY Literal>> and one property, <<Function: geof:asPLY, as PLY>>.
+
+===== RDFS Datatype: geo:plyLiteral
+
+The datatype http://www.opengis.net/ont/geosparql#plyLiteral[`geo:plyLiteral`] is used to contain the Polygon File Format (PLY) serialization of a Geometry.
+
+[%unnumbered]
+[source,turtle]
+----
+geo:plyLiteral 
+    a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "PLY literal"@en ;
+    skos:definition "A PLY Text serialization of a Geometry object."@en ;
+.
+----
+
+[[req_geometry_extension_ply-literal-empty]]
+[requirement,identifier="/req/geometry-extension/ply-literal-empty"]
+.Empty PLY Literal
+====
+An empty RDFS Literal of type <<RDFS Datatype: geo:plyLiteral, `geo:plyLiteral`>> shall be interpreted as an empty Geometry.
+====
+
+An empty Geometry in PLY is equivalent to the following representation.
+[source,turtle]
+----
+ply
+format ascii 1.0
+element vertex 0 
+property float x 
+property float y 
+property float z 
+element face 0 
+property list uchar int vertex_indices
+end_header 
+----
+
+[[geo_asply]]
+===== Property: geo:asPLY
+
+The property http://www.opengis.net/ont/geosparql#asPLY[`geo:asPLY`] is defined to link a Geometry with its PLY serialization.
+
+[[req_geometry_extension_geometry-as-wkt-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-ply-literal"]
+.asPLY Property
+====
+Implementations shall allow the RDF property <<Property: geo:asPLY, `geo:asPLY`>> to be used in SPARQL graph patterns.
+====
+
+[%unnumbered]
+[source,turtle]
+----
+geo:asPLY 
+    a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as PLY"@en ;
+    skos:definition "The PLY serialization of a Geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:plyLiteral ;
+.
+----
+
+===== Function: geof:asPLY
+
+[%unnumbered]
+[source,turtle]
+----
+geof:asPLY (geom: ogc:geomLiteral): geo:plyLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/asPLY[`geof:asPLY`] converts `geom` to an equivalent PLY representation, preserving the spatial reference system. 
+If `geom` represents a 2D geometry, its Z coordinates shall be set to 0.
+
+[[req_geometry_extension_asPLY-function]]
+[requirement,identifier="/req/geometry-extension/asPLY-function"]
+.asPLY Function
+====
+Implementations shall support <<Function: geof:asPLY, `geof:asPLY`>> as a SPARQL extension function.
+====
+
+==== Graphics Library Transmission Format
+
+This section establishes the requirements for representing Geometry data in RDF based on the Graphics Library Transmission Format (GLTF). 
+It defines the RDFS Datatype: <<RDFS Datatypes: geo:gltfLiteral, GLTF Literal>> and one property, <<Property: geo:asGLTF, as GLTF>>. 
+
+===== RDFS Datatypes: geo:gltfLiteral
+
+The datatype http://www.opengis.net/ont/geosparql#gltfLiteral[`geo:gltfLiteral`] is used to contain the Graphics Library Transmission Format (GLTF) serialization of a Geometry.
+
+[source,turtle]
+----
+geo:gltfLiteral 
+    a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "GLTF literal"@en ;
+    skos:definition "A GLTF serialization of a Geometry object."@en ;
+.
+----
+[#req_geometry_extension_gltf-literal]
+
+[#req_geometry_extension_gltf-literal-empty]
+|===
+| *Req {counter:req}* An empty RDFS Literal of type <<RDFS Datatypes: geo:gltfLiteral, `geo:gltfLiteral`>> shall be interpreted as an empty Geometry.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/gltf-literal-empty`]
+|===
+
+An empty Geometry in GLTF is equivalent to the following representation.
+[source,turtle]
+----
+{
+"meshes":[]
+}
+----
+
+===== Property: geo:asGLTF
+
+The property http://www.opengis.net/ont/geosparql#asGLTF[`geo:asGLTF`] is defined to link a Geometry with its GLTF serialization.
+
+[#req_geometry_extension_geometry-as-gltf-literal]
+|===
+| *Req {counter:req}* Implementations shall allow the RDF property <<Property: geo:asGLTF, `geo:asGLTF`>> to be used in SPARQL graph patterns.
+|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gltf-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-gltf-literal`]
+|===
+
+[source,turtle]
+----
+geo:asGLTF
+    a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as GLTF"@en ;
+    skos:definition "The GLTF serialization of a Geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:gltfLiteral ;
+.
+----
+
+===== Function: geof:asGLTF
+
+.asGLTF Function
+----
+geof:asGLTF (geom: ogc:geomLiteral): geo:gltfLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/asGLTF[`geof:asGLTF`] converts `geom` to an equivalent GLTF representation, preserving the spatial reference system. 
+If `geom` represents a 2D geometry, its Z coordinates shall be set to 0.
+
+[#req_geometry_extension_asGLTF-function]
+|===
+| *Req {counter:req}* Implementations shall support <<Property: geo:asGLTF, `geo:asGLTF`>> as a SPARQL extension function.
+|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asGLTF-function`]
+|===
+
+==== Extensible 3D (X3D)
+
+This section establishes a Requirements class for representing Geometry data in RDF as defined by the Extensible 3D (X3D) Encoding Standard. It defines one RDFS Datatype:
+<<RDFS Datatype: geo:x3dLiteral, X3D Literal>> and one property, <<Function: geof:asX3D, as X3D>>.
+
+===== RDFS Datatype: geo:x3dLiteral
+
+The datatype http://www.opengis.net/ont/geosparql#x3dLiteral[`geo:x3dLiteral`] is used to contain the Extensible 3D (X3D) serialization of a Geometry.
+
+[%unnumbered]
+[source,turtle]
+----
+geo:x3dLiteral 
+    a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ; 
+    skos:prefLabel "X3D literal"@en ;
+    skos:definition "The datatype of X3D literal values"@en ;
+.
+----
+
+[[req_geometry_extension_x3d-literal]]
+[requirement,identifier="/req/geometry-extension/x3d-literal"]
+.X3D Literal
+====
+All <<RDFS Datatype: geo:x3dLiteral, `geo:x3dLiteral`>> instances shall consist of a valid element from the GML schema that implements a subtype of `GM_Object` as defined in <<OGC07-036>>.
+====
+
+[[req_geometry_extension_x3d-literal-empty]]
+[requirement,identifier="/req/geometry-extension/x3d-literal-empty"]
+.Empty X3D Literal
+====
+An empty <<RDFS Datatype: geo:x3dLiteral, `geo:x3dLiteral`>> shall be interpreted as an empty Geometry.
+====
+
+===== Property: geo:asX3D
+
+The property http://www.opengis.net/ont/geosparql#asX3D[`geo:asX3D`] is defined as a link between a Geometry and its GML serialization.
+
+[[req_geometry_extension_geometry-as-x3d-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-x3d-literal"]
+.asX3D Property
+====
+Implementations shall allow the RDF property <<Property: geo:asX3D, `geo:asX3D`>> to be used in SPARQL graph patterns.
+====
+
+[%unnumbered]
+[source,turtle]
+----
+geo:asX3D 
+    a rdf:Property ; 
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as X3D"@en ;
+    skos:definition "The X3D serialization of a Geometry."@en ; 
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:x3dLiteral ;
+.
+----
+
+===== Function: geof:asX3D
+
+[%unnumbered]
+[source,turtle]
+----
+geof:asX3D (geom: ogc:geomLiteral, gmlProfile: xsd:string): geo:x3dLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/asX3D[`geof:asX3D`] converts `geom` to an equivalent X3D representation, preserving the coordinate reference system. 
+If `geom` represents a 2D geometry, its Z coordinates shall be set to 0.
+
+[[req_geometry_extension_asX3D-function]]
+[requirement,identifier="/req/geometry-extension/asX3D-function"]
+.asX3D Function
+====
+Implementations shall support <<Function: geof:asX3D, `geof:asX3D`>> as a SPARQL extension function.
+====
+
+==== Wavefront OBJ
+
+This section establishes a Requirements class for representing Geometry data in RDF based on Wavefront OBJ (OBJ). It defines one RDFS Datatype: <<RDFS Datatype: geo:objLiteral, OBJ Literal>> and one property, <<Function: geof:asOBJ, as OBJ>>.
+
+===== RDFS Datatype: geo:objLiteral
+
+The datatype http://www.opengis.net/ont/geosparql#gmlLiteral[`geo:objLiteral`] is used to contain the OBJ serialization of a Geometry.
+
+[%unnumbered]
+[source,turtle]
+----
+geo:objLiteral a rdfs:Datatype ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "OBJ Literal"@en ;
+    skos:definition "A OBJ serialization of a Geometry object."@en .
+----
+
+Valid <<RDFS Datatype: geo:objLiteral, OBJ Literal>> instances are formed by encoding Geometry information as a Geometry object.
+
+[[req_geometry_extension_obj-literal]]
+[requirement,identifier="/req/geometry-extension/obj-literal"]
+.OBJ Literal
+====
+All <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> instances shall consist of the Geometry objects defined in the OBJ specification.
+====
+
+[[req_geometry_extension_obj-literal-empty]]
+[requirement,identifier="/req/geometry-extension/obj-literal-empty"]
+.Empty OBJ Literal
+====
+An empty RDFS Literal of type <<RDFS Datatype: geo:objLiteral, `geo:objLiteral`>> shall be interpreted as an empty Geometry.
+====
+
+===== Property: geo:asOBJ
+
+The property http://www.opengis.net/ont/geosparql#asOBJ[`geo:asOBJ`] is defined to link a Geometry with its OBJ serialization.
+
+[[req_geometry_extension_obj-as-obj-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-obj-literal"]
+.asOBJ Property
+====
+Implementations shall allow the RDF property <<Property: geo:asOBJ, `geo:asOBJ`>> to be used in SPARQL graph patterns.
+====
+
+[%unnumbered]
+[source,turtle]
+----
+geo:asOBJ 
+    a rdf:Property, owl:DatatypeProperty ;
+    rdfs:subPropertyOf geo:hasSerialization ;
+    rdfs:isDefinedBy geo: ;
+    skos:prefLabel "as OBJ"@en ;
+    skos:definition "The OBJ serialization of a Geometry."@en ;
+    rdfs:domain geo:Geometry ;
+    rdfs:range geo:objLiteral ;
+.
+----
+
+===== Function: geof:asOBJ
+
+[%unnumbered]
+[source,turtle]
+----
+geof:asOBJ (geom: ogc:geomLiteral): geo:objLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/asOBJ[`geof:asOBJ`] converts `geom` to an equivalent OBJ representation. 
+If `geom` represents a 2D geometry, its Z coordinates shall be set to 0.
+
+[[req_geometry_extension_asOBJ-function]]
+[requirement,identifier="/req/geometry-extension/asOBJ-function"]
+.asOBJ Function
+====
+Implementations shall support <<Function: geof:asOBJ, `geof:asOBJ`>> as a SPARQL extension function.
 ====
 
 ==== Discrete Global Grid System
