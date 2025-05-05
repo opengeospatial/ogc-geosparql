@@ -1939,7 +1939,7 @@ This Requirements class defines SPARQL functions for performing non-topological 
 .Non-topological Query Functions - 3D
 ====
 Implementations shall support the functions
-<<Function: geof:extrude, `geof:extrude`>> <<Function: geof:extrude, `geof:extrudeToHeight`>> <<Function: geof:extrudeInTime, `geof:extrudeInTime`>>
+<<Function: geof:extrude, `geof:extrude`>> <<Function: geof:extrude, `geof:extrudeByLine`>> <<Function: geof:extrudeInTime, `geof:extrudeInTime`>>
 as SPARQL extension functions which are defined in this standard.
 ====
 
@@ -1949,21 +1949,21 @@ as SPARQL extension functions which are defined in this standard.
 [source,turtle]
 ----
 geof:extrude (geometry: ogc:geomLiteral,
-            line-segment: ogc:geomLiteral): geo:Feature
+            height: xsd:double): geo:Feature
 ----
 
-The function http://www.opengis.net/def/function/geosparql/extrude[`geof:extrude`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `line-segment` marks the starting and ending points of the extruded form in space. Calculations are in the spatial reference system of `geometry`.
+The function http://www.opengis.net/def/function/geosparql/extrude[`geof:extrude`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `height` indicates the number added to Z coordinates of base `geometry` to arrive at Z coordinates of the top most `geometry` in the extruded form. In case of no Z coordinates being present in the base `geometry`, the `height` is added to 0 and is equal to Z coordinates of the top most `geometry` in the extruded form. Calculations are in the spatial reference system of `geometry`.
 
-==== Function: geof:extrudeToHeight
+==== Function: geof:extrudeByLine
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:extrudeToHeight (geometry: ogc:geomLiteral,
-            height: xsd:double): geo:Feature
+geof:extrudeByLine (geometry: ogc:geomLiteral,
+            line-segment: ogc:geomLiteral): geo:Feature
 ----
 
-The function http://www.opengis.net/def/function/geosparql/extrudeToHeight[`geof:extrudeToHeight`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `height` indicates the number added to Z coordinates of base `geometry` to arrive at Z coordinates of the top most `geometry` in the extruded form. In case of no Z coordinates being present in the base `geometry`, the `height` is added to 0 and is equal to Z coordinates of the top most `geometry` in the extruded form. Calculations are in the spatial reference system of `geometry`.
+The function http://www.opengis.net/def/function/geosparql/extrudeByLine[`geof:extrudeByLine`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `line-segment` marks the starting and ending points of the extruded form in space. Calculations are in the spatial reference system of `geometry`.
 
 ==== Function: geof:extrudeInTime
 

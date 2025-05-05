@@ -2463,8 +2463,8 @@ geof:extrude
     fno:expects (geofp:extrude_param1 geofp:extrude_param2 ) ;
     fno:returns (geofo:extrude_output ) ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
-    skos:definition "A function that extrudes 2D geometry to 3D given the linestring as an argument. "@en ;
-    skos:prefLabel "Extrude"@en .
+    skos:definition "A function that extrudes 2D geometry to 3D given the height as an argument. "@en ;
+    skos:prefLabel "extrude"@en .
 
 geofp:extrude_param1 a fno:Parameter ;
     fno:type ogc:geomLiteral;
@@ -2472,35 +2472,35 @@ geofp:extrude_param1 a fno:Parameter ;
     skos:prefLabel "geometry"@en .
 
 geofp:extrude_param2 a fno:Parameter ;
-    fno:type ogc:geomLiteral;
+    fno:type xsd:double;
     fno:required "true"^^xsd:boolean ;
-    skos:prefLabel "line-segment"@en .
+    skos:prefLabel "height"@en .
 
 geofo:extrude_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;
     fno:type geo:Feature .
 
-geof:extrudeToHeight
+geof:extrudeByLine
     a sd:Function, fno:Function ;
     dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
     policy:status status:experimental ;
-    fno:expects (geofp:extrudeToHeight_param1 geofp:extrudeToHeight_param2 ) ;
-    fno:returns (geofo:extrudeToHeight_output ) ;
+    fno:expects (geofp:extrudeByLine_param1 geofp:extrudeByLine_param2 ) ;
+    fno:returns (geofo:extrudeByLine_output ) ;
     rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
-    skos:definition "A function that extrudes 2D geometry to 3D given the height as an argument. "@en ;
-    skos:prefLabel "Extrude"@en .
+    skos:definition "A function that extrudes 2D geometry to 3D given the linestring as an argument. "@en ;
+    skos:prefLabel "extrude by line"@en .
 
-geofp:extrudeToHeight_param1 a fno:Parameter ;
+geofp:extrudeByLine_param1 a fno:Parameter ;
     fno:type ogc:geomLiteral;
     fno:required "true"^^xsd:boolean ;
     skos:prefLabel "geometry"@en .
 
-geofp:extrudeToHeight_param2 a fno:Parameter ;
-    fno:type xsd:double;
+geofp:extrudeByLine_param2 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
     fno:required "true"^^xsd:boolean ;
-    skos:prefLabel "height"@en .
+    skos:prefLabel "line segment"@en .
 
-geofo:extrudeToHeight_output a fno:Output ;
+geofo:extrudeByLine_output a fno:Output ;
     fno:required "true"^^xsd:boolean ;
     fno:type geo:Feature .
 
@@ -2522,7 +2522,7 @@ geofp:extrudeInTime_param1 a fno:Parameter ;
 geofp:extrudeInTime_param2 a fno:Parameter ;
     fno:type ogc:geomLiteral;
     fno:required "true"^^xsd:boolean ;
-    skos:prefLabel "line-segment"@en .
+    skos:prefLabel "line segment"@en .
 
 geofp:extrudeInTime_param3 a fno:Parameter ;
     fno:type xsd:dateTime;
