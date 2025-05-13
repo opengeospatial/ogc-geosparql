@@ -185,7 +185,7 @@ NULL will be returned if there is no pending XPath error.""" ;
 
 gsrdb:02bd09139d66451fa63c40167fdac512 a fno:Function ;
     dcterms:description """Will return the WKT expression corresponding to a given Reference System; the definitions will be taken directly from the private PROJ's own database.
-auth_name and auth_srid identify the requested Reference System. auth_name can be NULL, and in this case EPSG will be assumed.
+auth_name and auth_srid identify the requested Reference System.auth_name can be NULL, and in this case EPSG will be assumed.
 the optional argument style determines which WKT format should be adopted, and must be one between GDAL, ESRI, ISO-2015 or ISO-2018 (this latter being the default setting).
 the optional argument indented if set to TRUE will nicely format a multiline WKT expression, otherwise a single monolithic line lacking any white-space or new-line will be printed (the default is TRUE).
 the optional argument indentation determines how many white-spaces are to be used for indenting (only meaningful if indented=TRUE; the default values is 4).
@@ -277,7 +277,7 @@ gsrdb:053c9a3799b24a6ca60731e5ac8a263a a fno:Function ;
 gsrdb:055473052bbe4a528da2b4a1dc8e6d4b a fno:Function ;
     dcterms:description """Almost the same as CreateSpatialIndex(), but specifically intended to support Geometry columns created by AddTemporaryGeometryColumn()
 db-prefix is the schema-name of some attached database
-Such an Attached Database must necessarily be of the :memory: type being previously created by issuing an SQL statement like: ATTACH DATABASE ':memory:' AS prefix;
+Such an Attached Database must necessarily be of the :memory: type being previously created by issuing an SQL statement like:ATTACH DATABASE ':memory:' AS prefix;
 table and column must identify an already existing Temporary Geometry located on that Database.
 If the above prerequisites are not fullfilled this function will always fail.""" ;
     fno:name "CreateTemporarySpatialIndex" ;
@@ -569,9 +569,9 @@ gsrdb:0b3aa370a42546b6ab671d225b7a6146 a fno:Function ;
 db-prefix can be NULL, and in this case the reference GeoTable is expected to be located within the "MAIN" database.
 ref-column-name too can be NULL, and in this case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or if it contains two or more Geometries an exception will be raised.
 the reference GeoTable must be properly registered and must match both SRID and dimensions declared by the target Network.
-this function accepts input Geometries of the following classes: Point, MultiPoint, Linestring, MultiLinestring, GeometryCollection and Geometry. All areal Geometries (Polygon, MultiPolygon) will be always ignored.
+this function accepts input Geometries of the following classes: Point, MultiPoint, Linestring, MultiLinestring, GeometryCollection and Geometry.All areal Geometries (Polygon, MultiPolygon) will be always ignored.
 the output GeoTable will be always located on the "MAIN" DB and must not exists; it will be automatically created with the same identical attributes of the reference GeoTable.
-all spatial features found into the reference GeoTable will be copied into the output GeoTable. All information attributes will be preserved exactly as they are, and the feature's Geometry will be built by aggregating all Topology objects matching the reference Geometry by Seed correspondences. If no matching Topology objectes are found the result will be a NULL output Geometry.
+all spatial features found into the reference GeoTable will be copied into the output GeoTable. All information attributes will be preserved exactly as they are, and the feature's Geometry will be built by aggregating all Topology objects matching the reference Geometry by Seed correspondences.If no matching Topology objectes are found the result will be a NULL output Geometry.
 Please note: this function will automatically invoke TopoNet_UpdateSeeds() (incremental mode).
 
 Will return 1 on success; an exception will be raised on failure.""" ;
@@ -710,7 +710,7 @@ gsrdb:0de4b05d1bf24958b78bc0cc73ddd09f a fno:Function ;
     dcterms:description """return a geometric object obtained by reprojecting coordinates into the Reference System identified by newSRID
 
 All the following optional arguments are available only when SpatiaLite is built on the top of PROJ.6 (or any later version):
-area_of_use: the BBOX of this Geometry (always required to be in SRID=4326) will be possibly used by PROJ.6 in order to optimize the transformation as much as possible. may be eventually NULL (default setting).
+area_of_use: the BBOX of this Geometry (always required to be in SRID=4326) will be possibly used by PROJ.6 in order to optimize the transformation as much as possible.may be eventually NULL (default setting).
 proj_string_from: an user defined text string accepted by PROJ.6 identifying the origin CRS of the transformation.
 proj_string_to: an user defined text string accepted by PROJ.6 identifying the destination CRS of the transformation.
 Interpretation:
@@ -1367,7 +1367,7 @@ ST_X( pt Point ) : Double precision""" ;
 gsrdb:1e9389b9615545e3b865ccc87b6f6007 a fno:Function ;
     dcterms:description """Return a GeoHash representation (geohash.org) of the geometry.
 A GeoHash encodes a point into a text form that is sortable and searchable based on prefixing.
-If no precision is specficified ST_GeoHash returns a GeoHash based on full precision of the input geometry type. Points return a GeoHash with 20 characters of precision (about enough to hold the full double precision of the input).
+If no precision is specficified ST_GeoHash returns a GeoHash based on full precision of the input geometry type.Points return a GeoHash with 20 characters of precision (about enough to hold the full double precision of the input).
 Other types return a GeoHash with a variable amount of precision, based on the size of the feature. Larger features are represented with less precision, smaller features with more precision. The idea is that the box implied by the GeoHash will always contain the input feature.
 When explicitly set the precision argument will determine how many characters should by used by the returned GeoHash.
 
@@ -1548,7 +1548,7 @@ Will return NULL on success; an exception will be raised on failure.""" ;
 
 gsrdb:2585e6ff53c64838bfde7024e2992323 a fno:Function ;
     dcterms:description """Will return the proj-string expression corresponding to a given Reference System; the definitions will be taken directly from the private PROJ's own database.
-auth_name and auth_srid identify the requested Reference System. auth_name can be NULL, and in this case EPSG will be assumed.
+auth_name and auth_srid identify the requested Reference System.auth_name can be NULL, and in this case EPSG will be assumed.
 
 NULL will be returned on failure.
 Note: this SQL function will be available only when SpatiaLite is built on PROJ.6 (or any later version).""" ;
@@ -1829,7 +1829,7 @@ TopoGeo_Polygonize( toponame Text , force_rebuild Boolean )""" ;
 gsrdb:2b1dc336bf3c41a2a419176d805ccc3a a fno:Function ;
     dcterms:description """Will attempt to import all Geometries from an input GeoTable identified by db-prefix, table-name and column-name into an existing Topology-Geometry created with CreateTopology().
 db-prefix can be NULL. In such a case the input GeoTable is expected to be located within the "MAIN" database, otherwise in the given db-prefix database.
-column-name too can be NULL. In such a case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or contains more than one, an exception will be raised. Otherwise the given column name in "db-prefix"."column-name" will be used if it exists.
+column-name too can be NULL. In such a case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or contains more than one, an exception will be raised.Otherwise the given column name in "db-prefix"."column-name" will be used if it exists.
 the input GeoTable must be properly registered and must match both the SRID and dimensions declared in the target Topology.
 this function accepts input Geometries of any class: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection and Geometry.
 The optional arguments line_max_points and line_max_length will be interpreted in the same way as used in TopoGeo_SubdivideLines() (default for both: NULL [ignore]).
@@ -1875,7 +1875,7 @@ gsrdb:2c2622c6d3fc41bcbd3766396e278f21 a fno:Function ;
 
 gsrdb:2c3106d78c984cdea1258dba700feab4 a fno:Function ;
     dcterms:description """Inserts a new Raster Style definition.
-style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Raster type. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The registered Style will be identified either by its unique Style ID or by its Style Name automatically retrieved from SLD/SE XML.
+style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Raster type.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The registered Style will be identified either by its unique Style ID or by its Style Name automatically retrieved from SLD/SE XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_RegisterRasterStyle" ;
@@ -2070,7 +2070,7 @@ An exception will be raised on invalid arguments.""" ;
 gsrdb:2fb252c9c6f048e1a0e0ec70d0bb8d6c a fno:Function ;
     dcterms:description """Will clone (i.e. create+copy) an origin table into a destination table: the origin could be eventually located into some attached DB, but the destination is always assumed to be located in the primary DB.
 Mandatory arguments:
-db-prefix corresponding to the origin; the primary DB always using the main prefix. Can be legitimately set to NULL, and in this case MAIN will be implicitly assumed.
+db-prefix corresponding to the origin; the primary DB always using the main prefix.Can be legitimately set to NULL, and in this case MAIN will be implicitly assumed.
 input_table name of the origin table
 output_table name of the destination table inside the primary DB.
 transaction a boolean values stating if the whole operation has to be atomically confined within a monolithic SQL transaction
@@ -2302,7 +2302,7 @@ ST_OffsetCurve( geom Curve , radius Double precision ) : Curve""" ;
 
 gsrdb:33cb5ca559574d3789e170c2d918d45c a fno:Function ;
     dcterms:description """Removes an already registered RL2 Map Configuration definition.
-The Map Configuration to be removed could be referenced either by its unique Config Id or by its Config Name. Any attempt to remove a Map Configuration identified by its Name will be rejected if the if two (or more) Configurations share the same Name thus causing ambiguity.
+The Map Configuration to be removed could be referenced either by its unique Config Id or by its Config Name.Any attempt to remove a Map Configuration identified by its Name will be rejected if the if two (or more) Configurations share the same Name thus causing ambiguity.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "RL2_UnregisterMapConfiguration" ;
@@ -2564,7 +2564,7 @@ gsrdb:390305b5a73c479dba7f51a8af1ad09b a fno:Function ;
 
 gsrdb:391a8f2904a54ae2ae076bdf87a67bb0 a fno:Function ;
     dcterms:description """Registers a Data License.
-license_name is expected to be a text string uniquely identifying a license/version. Note: the following licenses are always self-defined when creating a new DB:
+license_name is expected to be a text string uniquely identifying a license/version.Note: the following licenses are always self-defined when creating a new DB:
 Undefined
 Proprietary - Non Free
 PD - Public Domain
@@ -2834,7 +2834,7 @@ TRUE if the BLOB argument is a valid BLOB-TinyPoint.""" ;
 
 gsrdb:3eea3191719142b7b518d60ee42682a6 a fno:Function ;
     dcterms:description """Inserts a new Vector Style definition.
-style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Vector type. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The registered Style will be identified either by its unique Style ID or by its Style Name automatically retrieved from SLD/SE XML.
+style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Vector type.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The registered Style will be identified either by its unique Style ID or by its Style Name automatically retrieved from SLD/SE XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_RegisterVectorStyle" ;
@@ -2886,7 +2886,7 @@ gsrdb:40bd90509813466db79f172d1eb5ea8e a fno:Function ;
     dcterms:description """Will safely remove a Geometry Table (or Spatial View), including any SpatialIndex, triggers, metadata, statistics tables.
 Will also work on ordinary (non-Spatial) Tables and Views, RasterLite2 raster_coverage, GeoPackage (Vector/Raster) and OGR/FDO Geometries.
 db-prefix can be NULL, where the Table or View to be dropped is expected to be located within the "MAIN" database.
-The optional argument permissive determines if a retcode will be returned in the case of failure. The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
+The optional argument permissive determines if a retcode will be returned in the case of failure.The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
 
 Will return 1 (i.e. TRUE) on success, 0 (i.e. FALSE) on failure based on the permissive setting.
 An exception will be always raised on invalid arguments and on failure, except when permissive has been explicitly set.
@@ -3053,7 +3053,7 @@ gsrdb:448abf9bc61f4163b080e3fc7d2bb851 a fno:Function ;
     dcterms:description """Will safely rename a Geometry Table, including any SpatialIndex, triggers, metadata, statistics tables.
 Will also work on ordinary (non-Spatial) Tables, RasterLite2 raster_coverage, GeoPackage (Vector/Raster) and OGR/FDO Geometries.
 db-prefix can be NULL, where the Table to be renamed is expected to be located within the "MAIN" database.
-The optional argument permissive determines if a retcode will be returned in the case of failure. The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
+The optional argument permissive determines if a retcode will be returned in the case of failure.The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
 Will not work on Virtual Tables or Views; Spatial Tables can be renamed only if they are located in the MAIN database.
 Any Views using a renamed Table will be adapted with the renamed Table-Name
 
@@ -3298,11 +3298,11 @@ gsrdb:496540867d9b4667b49334ca3a8ee232 a fno:Function ;
     dcterms:description """Will precisely cut in a topological consistent way a whole Input dataset using a Blade dataset (i.e. an arbitrary polygonal dataset).
 All cut fragments will be stored into a further Output dataset, and all mother-child relationships will be fully preserved by saving the Primary Key values allowing to trace back Input and Blade pairs giving birth to each single fragment.
 Any cut fragment stored into the Output dataset eventually falling outside any Blade will reference a conventional NULL Blade.
-The Input dataset is always expected to declare a Primary Key and must declare a POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING or MULTIPOLYGON Geometry type. It can be located either in the MAIN database or in any other attached DB, and must be fully identified by the input-db-prefix, input-table and input-geometry arguments.
-The Blade dataset is always expected to be a POLYGON or MULTIPOLYGON, with a defined Primary Key. It can be located either in the MAIN database or in any other attached DB, and is fully identified by the blade-db-prefix, blade-table and blade-geometry arguments. Note: both the Input and Blade Geometries must have the same identical SRID value.
-The Output dataset will be always created in the MAIN database. The Output Geometry will have the same name and SRID as the input-geom: the Geometry type will always be one of POINT, LINESTRING or POLYGON (all cut fragments will be stored as simple features on distinct rows).
+The Input dataset is always expected to declare a Primary Key and must declare a POINT, LINESTRING, POLYGON, MULTIPOINT, MULTILINESTRING or MULTIPOLYGON Geometry type.It can be located either in the MAIN database or in any other attached DB, and must be fully identified by the input-db-prefix, input-table and input-geometry arguments.
+The Blade dataset is always expected to be a POLYGON or MULTIPOLYGON, with a defined Primary Key.It can be located either in the MAIN database or in any other attached DB, and is fully identified by the blade-db-prefix, blade-table and blade-geometry arguments.Note: both the Input and Blade Geometries must have the same identical SRID value.
+The Output dataset will be always created in the MAIN database.The Output Geometry will have the same name and SRID as the input-geom: the Geometry type will always be one of POINT, LINESTRING or POLYGON (all cut fragments will be stored as simple features on distinct rows).
 Both the input-db-prefix and blade-db-prefix arguments could be set as NULL, where the MAIN database will then always be assumed.
-also the input-geom and blade-geom arguments can be set as NULL. In such a case the appropriate Geometry column name will be chosen when only one Geometry column is defined, otherwise an exception will be raised.
+also the input-geom and blade-geom arguments can be set as NULL.In such a case the appropriate Geometry column name will be chosen when only one Geometry column is defined, otherwise an exception will be raised.
 The optional argument transaction determines if an internal SQL Transaction should be automatically started or not (the default setting, if not explicitly overridden, is FALSE).
 The optional argument ram-tmp-storage determines if the intermediate temporary tables internally used by this function should be created in RAM or not (the default setting if not explicitly overridden is FALSE).
 Will return -1 on invalid arguments, 0 on failure, 1 on full success and 2 on partial success (i.e.when the output table contains one or more invalid geometries).""" ;
@@ -3373,7 +3373,7 @@ ref-column-name too can be NULL, and in this case the name of the column conta
 the reference GeoTable must be properly registered and must match both SRID and dimensions declared by the target Topology.
 this function accepts input Geometries of any class: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection and Geometry.
 the output GeoTable will be always located on the "MAIN" DB and must not exists; it will be automatically created with the same identical attributes of the reference GeoTable.
-all spatial features found into the reference GeoTable will be copied into the output GeoTable. All information attributes will be preserved exactly as they are, and the feature's Geometry will be built by aggregating all Topology objects matching the reference Geometry by Seed correspondences. If no matching Topology objectes are found the result will be a NULL output Geometry.
+all spatial features found into the reference GeoTable will be copied into the output GeoTable. All information attributes will be preserved exactly as they are, and the feature's Geometry will be built by aggregating all Topology objects matching the reference Geometry by Seed correspondences.If no matching Topology objectes are found the result will be a NULL output Geometry.
 Please note: this function will automatically invoke TopoGeo_UpdateSeeds() (incremental mode).
 
 Will return 1 on success; an exception will be raised on failure.""" ;
@@ -4124,9 +4124,9 @@ geom_column name of the Geometry column.
 filename absolute or relative path leading to the GeoJSON file.
 Optional aguments:
 precision number of decimal digits to be exported; 8 by default.
-lon_lat if TRUE all coordinates are assumed to be expressed as WGS84 longitudes and latitudes (as required by RFC 7946), and ST_Transform will be automatically called if and when required. If FALSE all coordinates are assumed to be expressed in any other (undefined) CRS.
-M_coords if TRUE eventual M-values will be exported as extra coordinates. If FALSE strict RFC 7946 conformance will be applied (no M-Values will be exported)
-indented if TRUE the GeoJSON file will be properly indented for enhanced human readibility If FALSE the whole GeoJSON file will be in a single monolithic line without blank spaces.
+lon_lat if TRUE all coordinates are assumed to be expressed as WGS84 longitudes and latitudes (as required by RFC 7946), and ST_Transform will be automatically called if and when required.If FALSE all coordinates are assumed to be expressed in any other (undefined) CRS.
+M_coords if TRUE eventual M-values will be exported as extra coordinates.If FALSE strict RFC 7946 conformance will be applied (no M-Values will be exported)
+indented if TRUE the GeoJSON file will be properly indented for enhanced human readibilityIf FALSE the whole GeoJSON file will be in a single monolithic line without blank spaces.
 colcase_name one between LOWER | LOWERCASE, UPPER | UPPERCASE or SAME | SAMECASE (same meaning as in ExportSHP).
 
 Will return the total number of exported rows.
@@ -4311,7 +4311,7 @@ gsrdb:61c457ddac24488aaa7b3b5c4522c4fa a fno:Function ;
     dcterms:description """returns a plain URL from its corresponding percent encoding.
 Will return NULL for invalid input.
 the output URL will be always returned as an UTF-8 string.
-the input URL will be converted from the charset encoding specified by the charset argument. if not specified UTF-8 will be assumed by default.""" ;
+the input URL will be converted from the charset encoding specified by the charset argument.if not specified UTF-8 will be assumed by default.""" ;
     fno:name "DecodeURL" ;
     gsrdb:hasScope "Generic SQL functions" ;
     gsrdb:hasSyntax """DecodeURL( url Text ) : Text
@@ -4333,8 +4333,8 @@ virtual_routing_table: name of the VirtualRouting Table to be created.
 input_table: name of the input Table containing the Road Network.
 from_column: name of the input Table column containing FromNode values.
 to_column: name of the input Table column containing ToNode values.
-geom_column: name of the input Table column containing Geometries. Could be eventually NULL for Networks just describing relations but lacking any Spatial representation.
-cost_column: name of the input Table column containing Cost values. Could be eventually NULL and in this case ST_Length(geom_column) will be assumed to be the Cost: in the case of Networks based on some Geographic Reference System (long/lat, as e.g. SRID=4326) a precise measure of lengths expressed in meters will be computed by using geodesic formulas.
+geom_column: name of the input Table column containing Geometries.Could be eventually NULL for Networks just describing relations but lacking any Spatial representation.
+cost_column: name of the input Table column containing Cost values.Could be eventually NULL and in this case ST_Length(geom_column) will be assumed to be the Cost: in the case of Networks based on some Geographic Reference System (long/lat, as e.g. SRID=4326) a precise measure of lengths expressed in meters will be computed by using geodesic formulas.
 road_name_column: name of the input Table column containing Road Name values. Could be eventually NULL.
 a_star_enabled: if the A* algorithm should be enabled or not (default: 1).
 bidirectional: if arcs/links should be considered uni- or bi-directionals (default: 0).
@@ -4543,7 +4543,7 @@ ST_SelfIntersections( geom Geometry ) : Geometry""" ;
 
 gsrdb:65b371e348204860ae4b1902b4ecdbcf a fno:Function ;
     dcterms:description """Updates an already existing Vector Style definition.
-style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Vector type. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The updated Style will continue to be identified by its current unique Style ID but the Style Name will be automatically updated accordingly to SLD/SE XML.
+style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Vector type.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The updated Style will continue to be identified by its current unique Style ID but the Style Name will be automatically updated accordingly to SLD/SE XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_ReloadVectorStyle" ;
@@ -4563,7 +4563,7 @@ gsrdb:660d0353e47b46438179423a66f7fcce a fno:Function ;
     gsrdb:supportsGeometry "1" .
 
 gsrdb:6616d42b454540129d28a436a6ee26f3 a fno:Function ;
-    dcterms:description """any eventual repeated vertex will be ignored or considered accordingly to the seeting of the optional argument ignore_repeated_vertices The default setting is TRUE (that is, ignore)
+    dcterms:description """any eventual repeated vertex will be ignored or considered accordingly to the seeting of the optional argument ignore_repeated_verticesThe default setting is TRUE (that is, ignore)
 returns the length of the shortest segment in the Linestring.
 NULL will be returned if any error is encountered.
 
@@ -4642,13 +4642,13 @@ Will return 1 on success; an exception will be raised on failure.""" ;
 gsrdb:670a01a163ac46de9ec3914da9073555 a fno:Function ;
     dcterms:description """Will attempt to import all Geometries from an input GeoTable identified by db-prefix, table-name and column-name into an already existing Topology-Geometry, in the same way as TopoGeo_FromGeoTable(). The main difference is how Topology exceptions are handled. For each encountered exception the corresponding Primary Keyb> will be stored into the dustbin-table.
 dustbin-table is the name of the table intended to store PK values corresponding to features failing to be imported; this table should not already exist and will be automatically created by the function itself.
-dustbin-view is the name of the Spatial View supporting the above table; this view should not already exist and will be automatically created by the function itself. Note: both the dustbin-table and the dustbin-view will be always created on the same DB containing the input GeoTable.
+dustbin-view is the name of the Spatial View supporting the above table; this view should not already exist and will be automatically created by the function itself.Note: both the dustbin-table and the dustbin-view will be always created on the same DB containing the input GeoTable.
 db-prefix can be NULL. In such a case the input GeoTable is expected to be located within the "MAIN" database, otherwise in the given db-prefix database.
-column-name too can be NULL. In such a case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or contains more than one, an exception will be raised. Otherwise the given column name in "db-prefix"."column-name" will be used if it exists.
+column-name too can be NULL. In such a case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or contains more than one, an exception will be raised.Otherwise the given column name in "db-prefix"."column-name" will be used if it exists.
 the input GeoTable must be properly registered and must match both the SRID and dimensions declared in the target Topology.
 A Primary Key for the input GeoTable is mandatory.
 dustbin-table is the name of the table intended to store the PK values corresponding to each feature that failed to be imported; this table must not exist, since it will be created by this function.
-dustbin-view is the name of the Spatial View supporting the above table; this view should not already exist and will be automatically created by the function itself. Note: both the dustbin-table and the dustbin-view will be created on the same DB containing the input GeoTable. Use DropGetoTable() for both dustbin-table and dustbin-view before recalling, or even better use different names for each call.
+dustbin-view is the name of the Spatial View supporting the above table; this view should not already exist and will be automatically created by the function itself.Note: both the dustbin-table and the dustbin-view will be created on the same DB containing the input GeoTable. Use DropGetoTable() for both dustbin-table and dustbin-view before recalling, or even better use different names for each call.
 this function accepts input Geometries of any class: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection and Geometry.
 The optional arguments line_max_points and line_max_length will be interpreted in the same way as used in TopoGeo_SubdivideLines() (default for both: NULL [ignore]).
 The optional argument tolerance, when omitted, will assume the corresponding value used with CreateTopology().
@@ -5152,11 +5152,11 @@ gsrdb:728fd9d29a0a4d4fbf369b9aa9602e9b a fno:Function ;
 
 gsrdb:7302a4e2d202463d838a9597fbd74a27 a fno:Function ;
     dcterms:description """Will create a new out_table directly corresponding to in_table. The output table will be arranged in such a way that each row will always contain an elementary Geometry; so each time that a MULTI-type Geometry is found in the input table it will be split into many distinct rows.
-out_pk is the name to be set for the output Primary Key, and out_multi_id is the name to be set for a second column within the output table where to store the a zero-based index from which Geometry the Element-Geometry comes from, that together with the original Primary Key can be identified. Note: both out_pk and out_multi_id must not exist in the given in_table table.
+out_pk is the name to be set for the output Primary Key, and out_multi_id is the name to be set for a second column within the output table where to store the a zero-based index from which Geometry the Element-Geometry comes from, that together with the original Primary Key can be identified.Note: both out_pk and out_multi_id must not exist in the given in_table table.
 The optional argument transaction determines if an internal SQL Transaction should be automatically started or not (the default setting if not explicitly overridden is TRUE).
 Optional arguments: a maximum of 10 further options could be eventually be specified. Valid options are:
-::ignore::column_name Note: the geom-column will never be ignored, even if explicitly requested to be.
-::cast2multi:: Will automatically apply a CastToMulti ( geom_column ) directive.
+::ignore::column_nameNote: the geom-column will never be ignored, even if explicitly requested to be.
+::cast2multi::Will automatically apply a CastToMulti ( geom_column ) directive.
 All references to mismatching options or not existing columns will be silently discarded.
 
 Will return the total number of rows inserted into the output table.
@@ -6203,7 +6203,7 @@ ST_Z( pt Point ) : Double precision""" ;
 
 gsrdb:89df4929fc264401b5976a6a484b8b89 a fno:Function ;
     dcterms:description """Updates an already existing Raster Style definition.
-style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Raster type. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The updated Style will continue to be identified by its current unique Style ID but the Style Name will be automatically updated accordingly to SLD/SE XML.
+style is expected to be an XmlBLOB containing a valid SLD/SE Style of the Raster type.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The updated Style will continue to be identified by its current unique Style ID but the Style Name will be automatically updated accordingly to SLD/SE XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_ReloadRasterStyle" ;
@@ -6956,7 +6956,7 @@ gsrdb:9964e5ba9f7e453eabc166c6aaf50cd0 a fno:Function ;
 gsrdb:9a00817cd32b4aa784a56ad84a2725b2 a fno:Function ;
     dcterms:description """Updates the Visibility Scale Range associated to a Vector Coverage.
 coverage_name must identify an existing Vector Coverage.
-minScaleDenominator and maxScaleDenominator set the upper and lower visibility limits. The one or the other (or both) can legitimately be set to NULL, thus meaning that the corresponding limit is intentionally left unassigned.
+minScaleDenominator and maxScaleDenominator set the upper and lower visibility limits.The one or the other (or both) can legitimately be set to NULL, thus meaning that the corresponding limit is intentionally left unassigned.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_SetVectorCoverageVisibilityRange" ;
@@ -7538,8 +7538,8 @@ NULL will be returned if any error occurs or if the required table isn't a Layer
 
 gsrdb:a52a72d718c64290a2d7d81a73145268 a fno:Function ;
     dcterms:description """Removes an already registered Raster Style definition.
-The Style to be removed could be referenced either by its unique Style Id or by its Style Name. Any attempt to remove a Style identified by its Name will be rejected if the if two (or more) Styles share the same Name thus causing ambiguity.
-when the optional argument remove_all is explicitly set to TRUE the Style will be removed even if it's already referenced by some RasterStyledLayer and all dependings references will be removed at the same time. In any other case any attempt to unregister a Style already referenced by one (or more) RasterStyleLayer will be rejected.
+The Style to be removed could be referenced either by its unique Style Id or by its Style Name.Any attempt to remove a Style identified by its Name will be rejected if the if two (or more) Styles share the same Name thus causing ambiguity.
+when the optional argument remove_all is explicitly set to TRUE the Style will be removed even if it's already referenced by some RasterStyledLayer and all dependings references will be removed at the same time.In any other case any attempt to unregister a Style already referenced by one (or more) RasterStyleLayer will be rejected.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_UnregisterRasterStyle" ;
@@ -8272,7 +8272,7 @@ CvtFromIndYd( x Double precision ) : Double precision""" ;
 
 gsrdb:b461d5e77321490b908deb6d12fa4a09 a fno:Function ;
     dcterms:description """Inserts a new RL2 Map Configuration definition.
-config is expected to be an XmlBLOB containing a valid RL2 Map Configuration. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The registered RL2 Map Configuration will be identified either by its unique Config ID or by its Config Name automatically retrieved from XML.
+config is expected to be an XmlBLOB containing a valid RL2 Map Configuration.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The registered RL2 Map Configuration will be identified either by its unique Config ID or by its Config Name automatically retrieved from XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "RL2_RegisterMapConfiguration" ;
@@ -8455,7 +8455,7 @@ aggregate function""" ;
 gsrdb:b66a105cb71f4e34873de4359939aaa1 a fno:Function ;
     dcterms:description """Almost the same as AddGeometryColumn(), with a critical difference:
 db-prefix is the schema-name of some attached database
-Such an Attached Database must necessarily be of the :memory: type being previously created by issuing an SQL statement like: ATTACH DATABASE ':memory:' AS prefix;
+Such an Attached Database must necessarily be of the :memory: type being previously created by issuing an SQL statement like:ATTACH DATABASE ':memory:' AS prefix;
 If the above prerequisite is not fullfilled this function will always fail.""" ;
     fno:name "AddTemporaryGeometryColumn" ;
     gsrdb:hasRequiredModule "base" ;
@@ -8776,8 +8776,8 @@ ST_LinestringMaxSegmentLength( line LineString ) : Double precision""" ;
 
 gsrdb:bbb6f3597c5a4a20b7f2b630dc27f117 a fno:Function ;
     dcterms:description """Removes an already registered Vector Style definition.
-The Style to be removed could be referenced either by its unique Style Id or by its Style Name. Any attempt to remove a Style identified by its Name will be rejected if the if two (or more) Styles share the same Name thus causing ambiguity.
-when the optional argument remove_all is explicitly set to TRUE the Style will be removed even if it's already referenced by some VectorStyledLayer and all dependings references will be removed at the same time. In any other case any attempt to unregister a Style already referenced by one (or more) VectorStyleLayer will be rejected.
+The Style to be removed could be referenced either by its unique Style Id or by its Style Name.Any attempt to remove a Style identified by its Name will be rejected if the if two (or more) Styles share the same Name thus causing ambiguity.
+when the optional argument remove_all is explicitly set to TRUE the Style will be removed even if it's already referenced by some VectorStyledLayer and all dependings references will be removed at the same time.In any other case any attempt to unregister a Style already referenced by one (or more) VectorStyleLayer will be rejected.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
     fno:name "SE_UnregisterVectorStyle" ;
@@ -8898,8 +8898,8 @@ table name of the table to be created.
 filename absolute or relative path leading to the GeoJSON file.
 Optional aguments:
 geo_column name of the Geometry column of the Spatial Table (if not specified it will be 'geometry').
-spatial_index if TRUE a SpatialIndex supporting the Geometry Column will be immediately created. No SpatialIndex will be created.
-srid when positive, the SRID value to be assigned to all Geometries. If 0 or negative SRID=4326 (lon-lat WGS84) will be always assumed accordingly to RFC 7946.
+spatial_index if TRUE a SpatialIndex supporting the Geometry Column will be immediately created.No SpatialIndex will be created.
+srid when positive, the SRID value to be assigned to all Geometries.If 0 or negative SRID=4326 (lon-lat WGS84) will be always assumed accordingly to RFC 7946.
 colcase_name one between LOWER | LOWERCASE, UPPER | UPPERCASE or SAME | SAMECASE (same meaning as in ImportSHP).
 
 Will return the total number of imported rows.
@@ -9010,7 +9010,7 @@ gsrdb:c13c27ed864a41689f4242468172a9f0 a fno:Function ;
     dcterms:description """Drops and creates again two Triggers supporting the ISO_metadata_reference table.
 the optional argument enable_eval chooses wich type of validating Triggers will be installed. By default this argument is always set to FALSE (0)
 enable_eval=FALSE: both the ISO_metadata_reference_row_id_value_insert and the ISO_metadata_reference_row_id_value_update Triggers will be defined in such a way to never check if the referenced row in the target table do really exist.
-enable_eval=TRUE: in this case both Triggers will fully check if the referenced row in the target table do really exist. But for doing such a task they'll require to call the eval() function, that only works when SPATIALITE_SECURITY=relaxed is set, this being a potentially harmful option in many cases.
+enable_eval=TRUE: in this case both Triggers will fully check if the referenced row in the target table do really exist.But for doing such a task they'll require to call the eval() function, that only works when SPATIALITE_SECURITY=relaxed is set, this being a potentially harmful option in many cases.
 Note: CreateIsoMetadataTables() will always create the version of both Triggers not using eval(); you are free to switch between the two altenatives by calling this function.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on invalid arguments.""" ;
@@ -9033,7 +9033,7 @@ gsrdb:c1471fde5e004d7098991d3d546736ff a fno:Function ;
 gsrdb:c1a17f8ba4f44cb8aae2d28ee45f1a84 a fno:Function ;
     dcterms:description """Will import data from a WFS datasource:
 Mandatory arguments:
-filename_or_url absolute or relative path leading to the WFS file. Alternatively an URL corresponding to a WFS service.
+filename_or_url absolute or relative path leading to the WFS file.Alternatively an URL corresponding to a WFS service.
 layer_name name of the WFS layer.
 table name of the table to be created.
 Optional arguments:
@@ -9618,7 +9618,7 @@ gsrdb:d0729a8f78794a9cbab3b300022d7d55 a fno:Function ;
 geom1 is expected to be a 2D Linestring (XY or XYM dimensions).
 geom2 is expected to be a 3D Linestring (XYZ or XYZM dimensions).
 both geom1 and geom2 must share the same SRID.
-the option tolerance is the distance radius between corresponding 2D and 3d points. By default a 0.0 tolerance is intended, thus implying an exact coincidence of X and Y coordinates.
+the option tolerance is the distance radius between corresponding 2D and 3d points.By default a 0.0 tolerance is intended, thus implying an exact coincidence of X and Y coordinates.
 Note: The returned Linestring will contain all Vertices defined by geom1 faithfully preserving their X and Y values; Z and M values will be recovered from the corresponding 3D Vertex from geom2, or will be possibily interpolated if no direct match exists.
 If neither a direct match nor interpolation can be applied then Z and M will assume a conventional 0.0 value.
 
@@ -9742,7 +9742,7 @@ gsrdb:d2babc52e0fe40b7855a7377d7e53433 a fno:Function ;
     dcterms:description """returns the percent encoded URL corresponding to the input value.
 Will return NULL for invalid input.
 the input URL is always assumed to be an UTF-8 string.
-the output URL will be converted into the charset encoding specified by the charset argument. if not specified UTF-8 will be assumed by default.""" ;
+the output URL will be converted into the charset encoding specified by the charset argument.if not specified UTF-8 will be assumed by default.""" ;
     fno:name "EncodeURL" ;
     gsrdb:hasScope "Generic SQL functions" ;
     gsrdb:hasSyntax """EncodeURL( url Text ) : Text
@@ -10549,7 +10549,7 @@ gsrdb:e598dd4f208f4ae2897a42f3c1c7752c a fno:Function ;
 
 gsrdb:e6020bdd3f7145d984892ecf6c8c9d0e a fno:Function ;
     dcterms:description """will return a DMS string (Degrees, Minutes and Seconds) using the given DD (Decimal Degrees) input coordinates
-the optional argument decimal_digits, when explicitly specified, will determine how many decimal digits must be used for representig Seconds. Zero (or a negative value) intends that Seconds will be represented by an integer value (default setting).
+the optional argument decimal_digits, when explicitly specified, will determine how many decimal digits must be used for representig Seconds.Zero (or a negative value) intends that Seconds will be represented by an integer value (default setting).
 
 NULL will be returned on invalid input.""" ;
     fno:name "DD to DMS" ;
@@ -10678,7 +10678,7 @@ This SQL function is only available when using GEOS 3.7.0 (or any subsequent v
 
 gsrdb:e892ce6929fe46eaa2cdeb7e726eeb10 a fno:Function ;
     dcterms:description """Updates an already existing RL2 Map Configuration definition.
-config is expected to be an XmlBLOB containing a valid RL2 Map Configuration. If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation. The updated Map Configuration will continue to be identified by its current unique Config ID but the Config Name will be automatically updated accordingly to XML.
+config is expected to be an XmlBLOB containing a valid RL2 Map Configuration.If CreateStylingTables() was invoked without specifying the relaxed option this XmlBLOB is expected to have successfully passed a formal XML Schema Validation.The updated Map Configuration will continue to be identified by its current unique Config ID but the Config Name will be automatically updated accordingly to XML.
 
 the return type is Integer, with a return value of 1 for TRUE (success) or 0 for FALSE (failure): -1 will be returned on error.""" ;
     fno:name "RL2_ReloadMapConfiguration" ;
@@ -11038,7 +11038,7 @@ ST_IsSimple( geom Geometry ) : Integer""" ;
 gsrdb:eecc953041a14962badaa80486613826 a fno:Function ;
     dcterms:description """returns a new Geometry derived from the input Geometry; all repeated vertices found in Linestrings or Rings will be removed and the same applies to repeated points found in Multipoints.
 This function accepts input Geometries of any class: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection and Geometry.
-if the optional argument tolerance is defined all vertices/points presenting a distance less or equal to this value will be considered as repeated points. The default tolerance value is 0.0, this intending an exact coincidence; the same applies to any negative tolerance.
+if the optional argument tolerance is defined all vertices/points presenting a distance less or equal to this value will be considered as repeated points.The default tolerance value is 0.0, this intending an exact coincidence; the same applies to any negative tolerance.
 Linestring or Ring vertices are considered to be repeated only if they are consecutive.
 Multipoint points are considered to be repeated independentely from their relative order.
 
@@ -11062,7 +11062,7 @@ gsrdb:eefec58349f34c85889b6df851de2ff8 a fno:Function ;
     dcterms:description """Will safely rename a Column belonging to a Geometry Table, including any SpatialIndex, triggers, metadata, statistics tables.
 Will also work on Columns of ordinary (non-Spatial) Tables, GeoPackage and OGR/FDO Geometries.
 db-prefix can be NULL, where the Table containing the Column to be renamed is expected to be located within the "MAIN" database.
-The optional argument permissive determines if a retcode will be returned in the case of failure. The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
+The optional argument permissive determines if a retcode will be returned in the case of failure.The default setting, when not explicitly overridden, is FALSE, where an exception will then be raised.
 Will not work on Virtual Tables or Views; Spatial Tables can rename their Column only if they are located in the MAIN database.
 Any Views using a renamed Column will be adapted with the renamed Column-Name
 
@@ -11516,7 +11516,7 @@ db-prefix can be NULL, and in this case the reference GeoTable is expected to 
 ref-column-name too can be NULL, and in this case the name of the column containing Geometries will be automatically retrieved; if "db"."table" does not contains any Geometry column, or if it contains two or more Geometries an exception will be raised.
 the reference GeoTable must be properly registered and must match both SRID and dimensions declared by the target Topology.
 this function accepts input Geometries of any class: Point, MultiPoint, Linestring, MultiLinestring, Polygon, MultiPolygon, GeometryCollection and Geometry.
-if the optional boolean argument is-view is set to TRUE (any other value different from zero) then a View or a Table containing a unregistered Geometry column will be accepted (FALSE by default). In this case ref-column must be always explicitly defined, and must contain all Geometries matching both SRID and dimensions declared by the target Topology.
+if the optional boolean argument is-view is set to TRUE (any other value different from zero) then a View or a Table containing a unregistered Geometry column will be accepted (FALSE by default).In this case ref-column must be always explicitly defined, and must contain all Geometries matching both SRID and dimensions declared by the target Topology.
 
 Will return 1 on success; an exception will be raised on failure.""" ;
     fno:name "TopoGeo_CreateTopoLayer" ;
