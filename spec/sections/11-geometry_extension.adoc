@@ -11,6 +11,7 @@ requirement:: /req/geometry-extension/feature-properties
 requirement:: /req/geometry-extension/geometry-properties
 requirement:: /req/geometry-extension/query-functions
 requirement:: /req/geometry-extension/srid-function
+requirement:: /req/geometry-extension/query-functions-3D
 requirement:: /req/geometry-extension/sa-functions
 requirement:: /req/geometry-extension/wkt-literal
 requirement:: /req/geometry-extension/wkt-literal-default-srs
@@ -1976,6 +1977,55 @@ geof:getSRID (geom: ogc:geomLiteral): xsd:anyURI
 ----
 
 The function http://www.opengis.net/def/function/geosparql/getSRID[`geof:getSRID`] returns the spatial reference system IRI for `geom`.
+
+[[query_functions_3D]]
+=== Non-topological Query Functions - 3D Extension
+
+This Requirements class defines SPARQL functions for performing non-topological spatial operations in 3D.
+
+[[req_geometry_extension_query-functions-3D]]
+[requirement,identifier="/req/geometry-extension/query-functions-3D"]
+.Non-topological Query Functions - 3D
+====
+Implementations shall support the functions
+<<Function: geof:extrude, `geof:extrude`>> <<Function: geof:extrude, `geof:extrudeByLine`>> <<Function: geof:extrudeInTime, `geof:extrudeInTime`>>
+as SPARQL extension functions which are defined in this standard.
+====
+
+==== Function: geof:extrude
+
+[%unnumbered]
+[source,turtle]
+----
+geof:extrude (geometry: ogc:geomLiteral,
+            height: xsd:double): geo:Feature
+----
+
+The function http://www.opengis.net/def/function/geosparql/extrude[`geof:extrude`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `height` indicates the number added to Z coordinates of base `geometry` to arrive at Z coordinates of the top most `geometry` in the extruded form. In case of no Z coordinates being present in the base `geometry`, the `height` is added to 0 and is equal to Z coordinates of the top most `geometry` in the extruded form. Calculations are in the spatial reference system of `geometry`.
+
+==== Function: geof:extrudeByLine
+
+[%unnumbered]
+[source,turtle]
+----
+geof:extrudeByLine (geometry: ogc:geomLiteral,
+            line-segment: ogc:geomLiteral): geo:Feature
+----
+
+The function http://www.opengis.net/def/function/geosparql/extrudeByLine[`geof:extrudeByLine`] returns a spatial Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `line-segment` marks the starting and ending points of the extruded form in space. Calculations are in the spatial reference system of `geometry`.
+
+==== Function: geof:extrudeInTime
+
+[%unnumbered]
+[source,turtle]
+----
+geof:extrudeInTime (geometry: ogc:geomLiteral,
+                    line-segment: ogc:geomLiteral,
+                    start: xsd:dateTime,
+                    end: xsd:dateTime): geo:Feature
+----
+
+The function http://www.opengis.net/def/function/geosparql/extrude[`geof:extrudeInTime`] returns a spatio-temporal Feature with a 3D geometric object that represents all Points in the extruded form of 2D `geometry` where the `line-segment` marks the starting and ending points of the extruded form in space and ProperInterval with `start` and `end` in time. Calculations are in the spatial reference system of `geometry`.
 
 [[sa_functions]]
 === Spatial Aggregate Functions
