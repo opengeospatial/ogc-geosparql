@@ -51,7 +51,7 @@ It is the SWG's intention to operate as openly and transparently as possible. Di
 
 Next to making change requests in the OGC Issue Tracker, which is possible for everyone at any time, anyone can participate in this standard's development by commenting on [Issues in this repository](https://github.com/opengeospatial/ogc-geosparql/issues/), or adding a new Issue. The SWG particularly want to inivite implementers of the GeoSPARQL standard to get actively involved in working towards improved versions of the standard.
 
-*Note: GeoSPARQL 1.1's work is effectively complete, as of July 2022, however a next version - 1.2 or 2.0 etc. will likely be started soon. Check this repository and its [Issue Tracker](https://github.com/opengeospatial/ogc-geosparql/issues) for updates.*
+*Note: GeoSPARQL 1.1's work is effectively complete, as of July 2022. We are in the process of organising copublication with ISO, and a next version is currently underway. Check this repository and its [Issue Tracker](https://github.com/opengeospatial/ogc-geosparql/issues) for updates.*
 
 #### Contact
 To contact the SWG directly, you may email the closed SWG mailing list (<geosparql.swg@lists.opengeospatial.org>) or email SWG chairs directly:
