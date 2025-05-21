@@ -57,5 +57,5 @@ Next to making change requests in the OGC Issue Tracker, which is possible for e
 To contact the SWG directly, you may email the closed SWG mailing list (<geosparql.swg@lists.opengeospatial.org>) or email SWG chairs directly:
 
 * Joseph Abhayaratna - <joseph.abhayaratna@geoscape.com.au>
-* Linda van den Brink - <l.vandenbrink@geonovum.nl>
-* Dimitris Kotzinos - <kotzino@gmail.com>
+* Timo Homburg
+* Matthew Perry
