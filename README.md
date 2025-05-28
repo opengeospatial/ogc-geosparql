@@ -58,4 +58,4 @@ To contact the SWG directly, you may email the closed SWG mailing list (<geospar
 
 * Joseph Abhayaratna - <joseph.abhayaratna@geoscape.com.au>
 * Timo Homburg
-* Matthew Perry
+* Matthew Perry - <matthew.perry@oracle.com>
