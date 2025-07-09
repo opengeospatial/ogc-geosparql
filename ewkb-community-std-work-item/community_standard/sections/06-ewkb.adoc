@@ -1,0 +1,114 @@
+
+== Extended Well Known Binary (EWKB)
+
+=== Introduction
+
+The original WKB specification made no allowances for adding extra dimensions, like Z and M, that are common in GIS applications. It also had no space for embedding a spatial reference identifier (SRID), which made it unusable as a database import/export format.
+
+The “Extended WKB” variant is a superset of the standard WKB, which allows applications to optionally add extra dimensions, and optionally embed an SRID.
+
+The presence of extra dimensions is indicated by adding flag bits to the existing wkbType that appears in all WKB geometries.
+
+=== Illustrative Examples
+
+Here is the structure and flagging for a 3D point - the dimensionaly flag indicates a Z dimension, and the point member therefore has three coordinates.
+
+.3D Point
+[source, C]
+----
+wkbZ = 0x80000000
+wkbM = 0x40000000
+wkbSRID = 0x20000000
+
+enum wkbGeometryTypeZ {
+
+    wkbPoint = 1,
+    wkbLineString = 2,
+    wkbPolygon = 3,
+    wkbMultiPoint = 4,
+    wkbMultiLineString = 5,
+    wkbMultiPolygon = 6,
+    wkbGeometryCollection = 7,
+
+    // | 0x80000000
+    wkbPointZ = 0x80000001,
+    wkbLineStringZ = 0x80000002,
+    wkbPolygonZ = 0x80000003,
+    wkbMultiPointZ = 0x80000004,
+    wkbMultiLineStringZ = 0x80000005,
+    wkbMultiPolygonZ = 0x80000006,
+    wkbGeometryCollectionZ = 0x80000007,
+}
+
+WKBPointZ {
+    byte   byteOrder; // wkbXDR or wkbNDR
+    uint32 wkbType;   // wkbPointZ = (wkbPoint | wkbZ) = 0x80000001
+    Point {
+        Double x;
+        Double y;
+        Double z;
+    }
+}
+----
+
+When the optional wkbSRID is added to the wkbType, an SRID number is inserted after the wkbType number.
+
+.Point With SRID
+[source, C]
+----
+WKBPointS {
+    byte   byteOrder; // wkbXDR or wkbNDR
+    uint32 wkbType;   // wkbPointS = (wkbPoint | wkbSRID) = 0x20000001
+    uint32 SRID;
+    Point {
+        Double x;
+        Double y;
+    }
+}
+----
+
+The dimensionality and SRID flags can also be combined. Here is a 3D point with an embedded SRID.
+
+.3D Point With SRID
+[source, C]
+----
+WKBPointS {
+    byte   byteOrder; // wkbXDR or wkbNDR
+    uint32 wkbType;   // wkbPointS = (wkbPoint | wbkZ | wkbSRID) = 0xA0000001
+    uint32 SRID;
+    Point {
+        Double x;
+        Double y;
+        Double z;
+    }
+}
+----
+
+=== Writing Extended WKB
+
+.Writing EWKB
+[source, C]
+----
+/* Read a linestring */
+const char* linestring = "LINESTRING(0 0 1, 1 1 1, 2 1 2)";
+GEOSWKBReader* reader = GEOSWKBReader_create();
+GEOSGeom* geom = GEOSWKTReader_read(reader, linestring);
+GEOSSetSRID(geom, 4326);
+
+/* Write it out as Extended WKB */
+GEOSWKBWriter* writer = GEOSWKBWriter_create();
+/* Next line only needed before GEOS 3.12 */
+GEOSWKBWriter_setOutputDimension(writer, 3);
+GEOSWKBWriter_setFlavor(writer, GEOS_WKB_EXTENDED);
+GEOSWKBWriter_setIncludeSRID(writer, 1);
+
+/* Generate the WKB , and store the output length */
+size_t wkb_size;
+unsigned char* wkb = GEOSWKBWriter_write(writer, geom, &wkb_size);
+
+/* do something ... */
+
+/* Free the WKB */
+GEOSFree(wkb);
+GEOSGeom_destroy(geom);
+----
