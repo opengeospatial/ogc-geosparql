@@ -130,6 +130,12 @@ If only wkbZ or wkbM flags are set, Point coordinates shall be XYZ or XYM respec
 
 If both wkbZ and wkbM flags are set, Point coordinates shall be XYZM (Z first).
 
+=== Empty Geometry Handling
+
+For geometries with a counter (nPoints for LineString, nRings for Polygon, nPoints for MultiPoint, nLines for MultiLineString, nPolygons for MultiPolygon, nGeometries for GeometryCollection), an Empty geometry can be represented by setting the counter to zero.
+
+For an empty Point, which does not have a counter, an empty geometry is signalled by setting all coordinates to an IEEE-754 quiet NaN value (big endian 0x7ff8000000000000 or little endian 0x000000000000f87f depending on the endian value of the WKB).
+
 === Illustrative Examples
 
 Here is the structure and flagging for a 3D point - the dimensionaly flag indicates a Z dimension, and the point member therefore has three coordinates.
