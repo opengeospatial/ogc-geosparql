@@ -1,6 +1,5 @@
-[appendix,obligation=informative]
-
-== GeoSPARQL Examples
+[appendix,id=annexc,obligation=informative]
+== Examples
 
 [discrete]
 === C.0. Overview
@@ -16,7 +15,7 @@ This Section illustrates GeoSPARQL ontology modelling with extended examples.
 [[C.1.1.1]]
 [example]
 ===== `SpatialObject`
-The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
+The `SpatialObject` class is defined in <<class-spatialobject, `SpatialObject`>>.
 
 [[C.1.1.1.1]]
 ====== Basic use
@@ -32,22 +31,22 @@ eg:x
 .
 ----
 
-NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> as its two more concrete subclasses, <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>>, are more directly relatable to real-world phenomena and use.
+NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<class-spatialobject, `SpatialObject`>> as it has two, more concrete, subclasses, <<class-feature, `Feature`>> and <<class-geometry, `Geometry`>>, which are more directly relatable to real-world phenomena and use.
 
 [[C.1.1.1.2]]
 [example]
 ====== Size Properties
 
-The "size" properties - <<Property: geo:hasSize, `geo:hasSize`>>,
-<<Property: geo:hasMetricSize, `geo:hasMetricSize`>>,
-<<Property: geo:hasLength, `geo:hasLength`>>, 
-<<Property: geo:hasMetricLength, `geo:hasMetricLength`>>,
-<<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>>, 
-<<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>, 
-<<Property: geo:hasArea, `geo:hasArea`>>,
-<<Property: geo:hasMetricArea, `geo:hasMetricArea`>>,
-<<Property: geo:hasVolume, `geo:hasVolume`>> and
-<<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>> - are all applicable to instances of <<Class: geo:SpatialObject, `geo:SpatialObject`>> although, as per the note in the section above, they are likely to be used with <<Class: geo:Feature, `geo:Feature`>> & <<Class: geo:Geometry, `geo:Geometry`>> instances.
+The "size" properties - <<prop-hassize, `hasSize`>>,
+<<prop-hasmetricsize, `hasMetricSize`>>,
+<<prop-haslength, `hasLength`>>, 
+<<prop-hasmetriclength, `hasMetricLength`>>,
+<<prop-hasperimeterlength, `hasPerimeterLength`>>, 
+<<prop-hasmetricperimeterlength, `hasMetricPerimeterLength`>>, 
+<<prop-hasarea, `hasArea`>>,
+<<prop-hasmetricarea, `hasMetricArea`>>,
+<<prop-hasvolume, `hasVolume`>> and
+<<prop-hasmetricvolume, `hasMetricVolume`>> - are all applicable to instances of <<class-spatialobject, `SpatialObject`>> although, as per the note in the section above, they are likely to be used with <<class-feature, `Feature`>> and <<class-geometry, `Geometry`>> instances.
 
 [%unnumbered]
 [source,turtle]
@@ -69,14 +68,14 @@ eg:moreton-island
 .
 ----
 
-Here a spatial object, Moreton Island, has the distance of its coastline given with two properties: <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> & <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>. The object for the first is a Blank Node with a QUDT value property of 92.367 and a QUDT unit property of `unit:KiloM` (kilometre). The object for the second is the literal `92367` (a double) which is, by the property's definition, a number of metres.
+Here a spatial object, Moreton Island, has the distance of its coastline given with two properties: <<prop-hasperimeterlength, `hasPerimeterLength`>> and <<prop-hasmetricperimeterlength, `hasMetricPerimeterLength`>>. The object for the first is a Blank Node with a QUDT value property of 92.367 and a QUDT unit property of `unit:KiloM` (kilometre). The object for the second is the literal `92367` (a double) which is, by the property's definition, a number of metres.
 
-The use of the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] & http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> and any subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
+The use of the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote:[http://www.qudt.org] and its http://qudt.org/schema/qudt#numericValue[`qudt:numericValue`] and http://qudt.org/schema/qudt#numericValue[`qudt:unit`] is just one of many possible ways to convey the value of <<prop-hasperimeterlength, `hasPerimeterLength`>> and any subproperty of <<prop-hassize, `hasSize`>>.
 
 [[C.1.1.2]]
 [example]
 ===== `Feature`
-The `Feature` class is defined in <<Class: geo:Feature>>.
+The `Feature` class is defined in <<class-feature, `Feature`>>.
 
 
 [[C.1.1.2.1]]
@@ -109,7 +108,7 @@ eg:x
 .
 ----
 
-Here a <<Class: geo:Feature, `geo:Feature`>> is declared, given a preferred label and a Geometry for that <<Class: geo:Feature, `geo:Feature`>> is indicated with the use of <<Property: geo:hasGeometry, `geo:hasGeometry`>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property <<Property: geo:asWKT, `geo:asWKT`>> and the literal type `geo:wktLiteral`.
+Here a <<class-feature, `Feature`>> is declared, given a preferred label and a Geometry for that <<class-feature, `Feature`>> is indicated with the use of <<prop-hasgeometry, `hasGeometry`>>. The `Geometry` indicated is described using a _Well-Known Text_ literal value, indicated by the property <<prop-aswkt, `asWKT`>> and the literal type <<datatype-wktliteral, `wktLiteral`>>.
 
 
 [[C.1.1.2.3]]
@@ -128,7 +127,7 @@ eg:x
     geo:hasMetricArea "8.9E4"^^xsd:double ;
 .
 ----
-This example and the example below (B 1.1.2.4) show the same <<Class: geo:Feature, `geo:Feature`>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> (in this case, <<Property: geo:MetricArea>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
+This example and the example below (B 1.1.2.4) show the same <<class-feature, `Feature`>>, but with a different specification of its area. This example shows the recommended way to express size: by using a subproperty of <<prop-hasmetricsize, `hasMetricSize`>> (in this case, <<prop-hasmetricarea, `hasMetricArea`>>). These subproperties have fixed units based on meter (the unit of distance in the International System of Units).
 
 [[C.1.1.2.4]]
 [example]
@@ -152,7 +151,7 @@ eg:x
 .
 ----
 
-Here a <<Class: geo:Feature, `geo:Feature`>> is described as per the previous example but its area is expressed in non-metric units: the acre.
+Here a <<class-feature, `Feature`>> is described as per the previous example but its area is expressed in non-metric units: the acre.
 
 
 [[C.1.1.2.5]]
@@ -204,7 +203,7 @@ eg:x
 ----
 
 In this example, `Feature X` has two different `Geometry` instances indicated with different spatial resolutions. 
-Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<Property: geo:hasMetricSpatialResolution, `geo:hasMetricSpatialResolution`>>.
+Machine use of this `Feature` would be able to differentiate the two `Geometry` instances based on this use of <<prop-hasmetricspatialresolution, `hasMetricSpatialResolution`>>.
 
 [[C.1.1.2.7]]
 [example]
@@ -273,7 +272,7 @@ This example shows a `Feature` instance with area and volume declared. A categor
 
 [example]
 ===== `Geometry`
-The `Geometry` class is defined in <<Class: geo:Geometry>>.
+The `Geometry` class is defined in <<class-geometry, `Geometry`>>.
 
 [[C.1.1.3.1]]
 ====== Basic Use
@@ -288,7 +287,7 @@ eg:y a geo:Geometry ;
 
 Here a `Geometry` is declared and given a preferred label. 
 
-From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<B 1.1.2.2 A `Feature` related to a `Geometry`>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node. However, it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an absolute URI and data.
+From GeoSPARQL 1.0 use, the most commonly observed use of a `Geometry` is in relation to a `Feature` as per the example in <<C.1.1.2.2>> and often the `Geometry` is indirectly declared by the use of `hasGeometry` on the `Feature` instance indicating a Blank Node. However, it is entirely possible to declare `Geometry` instances without any `Feature` instances. The next basic example declares a `Geometry` instance with an absolute URI and data.
 
 [%unnumbered]
 [source,turtle]
@@ -341,14 +340,14 @@ eg:x-geo
     geo:hasMetricArea "8.7E4"^^xsd:double;
 .
 ----
-This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has both a serialization (WKT) indicated with the predicate <<Property: geo:asWKT, `geo:asWKT`>> and a scalar area indicated with the predicate <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a pre-calculated scalar area in addition to the polygon. Perhaps the polygon is large and detailed and a one-time calculation with results stored is efficient for repeated use.
+This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has both a serialization (WKT) indicated with the predicate <<prop-aswkt, `asWKT`>> and a scalar area indicated with the predicate <<prop-hasmetricarea, `hasMetricArea`>>. While it is entirely possible that scalar areas can be calculated from polygons, it may be efficient to store a pre-calculated scalar area in addition to the polygon. Perhaps the polygon is large and detailed and a one-time calculation with results stored is efficient for repeated use.
 
-This use of a scalar spatial measurement property with a Geometry, here <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>, is possible since the domain of such properties is <<Class: geo:SpatialObject, `geo:SpatialObject`>>, the superclass of both <<Class: geo:Feature, `geo:Feature`>> and <<Class: geo:Geometry, `geo:Geometry`>>.
+This use of a scalar spatial measurement property with a Geometry, here <<prop-hasmetricarea, `hasMetricArea`>>, is possible since the domain of such properties is <<class-spatialobject, `SpatialObject`>>, the superclass of both <<class-feature, `Feature`>> and <<class-geometry, `Geometry`>>.
 
 [example]
 ===== `SpatialObjectCollection`
 
-<<Class: geo:SpatialObjectCollection, `geo:SpatialObjectCollection`>> isn't really intended to be implemented - it's essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> & <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> classes.
+<<class-spatialobjectcollection, `spatialobjectcollection`>> isn't really intended to be implemented - it's essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <<class-featurecollection, `featurecollection`>> and <<class-geometrycollection, `geometrycollection`>> classes.
 
 [example]
 ===== `FeatureCollection`
@@ -417,19 +416,19 @@ ex:x
     ] ;    
 ----
 
-There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<Property: geo:hasCentroid, `geo:hasCentroid`>> indicates is could be used with a http://www.opengis.net/ont/sf#Point[`sf:Point`] and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> indicates use with an `sf:Envelope`.
+There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<prop-hascentroid, `hasCentroid`>> indicates is could be used with a http://www.opengis.net/ont/sf#Point[`sf:Point`] and <<prop-hasboundingbox, `hasBoundingBox`>> indicates use with an `sf:Envelope`.
 
 ==== Properties
 
 ===== Spatial Object Properties
 
-See the section <<C.1.1.1.2 Size Properties>> above.
+See the section <<C.1.1.1.2>> above.
 
 [example]
 ===== Feature Properties
 
-This example shows a <<Class: geo:Feature, `geo:Feature`>> instance with each of the properties defined in <<Standard Properties for geo:Feature>> used, except for the properties
-<<Property: geo:hasMetricSize, `geo:hasMetricSize`>> and <<Property: geo:hasSize, `geo:hasSize`>>, that are intended to be used through their subproperties and <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>> and <<Property: geo:hasPerimeterLength, `geo:hasPerimeterLength`>> which are examplified in <<C.1.1.1.2 Size Properties>>.
+This example shows a <<class-feature, `Feature`>> instance with each of the properties defined in <<feature_properties>> used, except for the properties
+<<prop-hasmetricsize, `hasMetricSize`>> and <<prop-hassize, `hasSize`>>, that are intended to be used through their subproperties and <<prop-hasmetricperimeterlength, `hasMetricPerimeterLength`>> and <<prop-hasperimeterlength, `hasPerimeterLength`>> which are examplified in <<C.1.1.1.2>>.
 
 [%unnumbered]
 [source,turtle]
@@ -476,7 +475,7 @@ eg:x
 
 The properties defined for this example's `Feature` instance are vaguely aligned in that the values are not real but are not unrealistic either. It is outside the scope of GeoSPARQL to validate `Feature` instances' property values.
 
-Note that this `Feature` has a 2D `Geometry` and yet a property indicating a scalar volume: <<Property: geo:hasVolume, `geo:hasVolume`>>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the `Feature` such as its geometry. Perhaps a volume for the feature has been estimated or measured in such a way that a 3D geometry was not created.
+Note that this `Feature` has a 2D `Geometry` and yet a property indicating a scalar volume: <<prop-hasvolume, `hasVolume`>>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the `Feature` such as its geometry. Perhaps a volume for the feature has been estimated or measured in such a way that a 3D geometry was not created.
 
 [example]
 ===== Geometry Properties
@@ -495,7 +494,7 @@ eg:x
         skos:prefLabel "Geometry Y" ;
         geo:dimension 2 ;
         geo:coordinateDimension 2 ;
-        geo:spatialDimension 2 ;
+        geo:hasSpatialDimension 2 ;
         geo:isEmpty false ;
         geo:isSimple true ;
         geo:hasSerialization "<http://www.opengis.net/def/crs/EPSG/0/4326> POLYGON ((149.060 -35.236, ... , 149.060 -35.236)))"^^geo:wktLiteral ;
@@ -630,7 +629,7 @@ eg:x
 ----
 
 [example]
-=== Example SPARQL Queries & Rules 
+=== Example SPARQL Queries and Rules
 
 This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
 
@@ -638,11 +637,12 @@ This Section provides example data and then illustrates the use of GeoSPARQL fun
 
 The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in the figure below. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
 
-All the following examples use the parameter values relation_family = Simple Features, serialization = WKT, and version = 1.0.
+All the following examples use the parameter values `relation_family` = Simple Features, `serialization` = WKT, and `version` = 1.0 and the figure <<img-illustration>> for reference.
 
-[#img-illustration]
+[[img-illustration]]
 .Illustration of spatial data
-image::03.png[600,400,align="center"]
+//image::figures/03.png[600,400,align="center"]
+image::figures/03.png
 
 [%unnumbered]
 [source,turtle]
@@ -996,6 +996,6 @@ WHERE {
 [example]
 ==== Example Geometry Serialization Conversion Functions
 
-For the geometry literal values in <<C.1.2.4 Geometry Serializations, C.1.2.4 Geometry Serializations>>:
+For the geometry literal values in <<Geometry Serializations>>:
 
-Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] & http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].
+Application of the function http://www.opengis.net/def/function/geosparql/asWKT[`geof:asWKT`] to the GML, KML, GeoJSON and DGGS literals should return WKT literal and similarly for each of the other conversion methods, http://www.opengis.net/def/function/geosparql/asGML[`geof:asGML`], http://www.opengis.net/def/function/geosparql/asKML[`geof:asKML`], http://www.opengis.net/def/function/geosparql/asGeoJSON[`geof:asGeoJSON`] and http://www.opengis.net/def/function/geosparql/asDGGS[`geof:asDGGS`].

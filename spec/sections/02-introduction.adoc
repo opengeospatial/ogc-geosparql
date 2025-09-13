@@ -11,13 +11,14 @@ RDF is, among other things, a data model built on edge-node "graphs." Each link 
 * Predicate (verb, property, attribute, relation, member, link, reference)
 * Object (value, end node, non-literal values can be used as a Subject)
 
-Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necissarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser. 
+Any of the three values in a triple can be represented with a Internationalized Resource Identifier (IRI) <<IETF3987>>, which globally and uniquely identifies the resource referenced. IRIs are an extension to Universal Resource Identifiers (URIs) that allow for non-ASCII characters. In addition to functioning as identifiers, IRIs are usually, but not necessarily, resolvable which means a person or machine can "dereference" them (_click on them_ or otherwise action them) and be taken to more information about the resource, perhaps in a web browser.
 
-Subjects and objects within an RDF triple are called nodes and can also be be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialised purposes and in this specification are, for geometry data. The figure below shows a basic triple.
+Subjects and objects within an RDF triple are called nodes and can also be represented with a blank node (a local identifier with meaning outside the graph it is defined within). Objects can further be represented with a literal value. Basic literal values in RDF are those used in XML <<XSD2>> but the basic types can be extended for specialised purposes and in this specification are, for geometry data. The figure below, <<img-rdf>> shows a basic triple.
 
-[#img-rdf]
+[[img-rdf]]
 .An RDF Triple  
-image::01.png[RDF Triple,600,400,align="center"]
+//image::figures/01.png[RDF Triple,600,400,align="center"]
+image::figures/01.png[RDF Triple]
 
 Note that the same node may be a subject in some triples, and an object in others.
 
@@ -33,13 +34,13 @@ SPARQL ... is a set of specifications that provide languages and protocols to qu
 and, from Wikipediafootnote:[https://en.wikipedia.org/wiki/SPARQL]:
 
 [quote]
-SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Protocol and RDF Query Language) is an RDF query language - that is, a semantic query language for databases — able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web. On 15 January 2008, SPARQL 1.0 was acknowledged by W3C as an official recommendation, and SPARQL 1.1 in March, 2013. 
+SPARQL (pronounced "sparkle" /ˈspɑːkəl/, a recursive acronym for SPARQL Protocol and RDF Query Language) is an RDF query language - that is, a semantic query language for databases — able to retrieve and manipulate data stored in Resource Description Framework (RDF) format. It was made a standard by the RDF Data Access Working Group (DAWG) of the World Wide Web Consortium, and is recognized as one of the key technologies of the semantic web. On 15 January 2008, SPARQL 1.0 was acknowledged by W3C as an official recommendation, and SPARQL 1.1 in March 2013.
 
 SPARQL queries work on RDF representations of data by finding patterns that match templates in the query, in effect finding information graphs in the RDF data based on the templates and filters (constraints on nodes and edges) expressed in the query. This query template is represented in the SPARQL query by a set of parameterized “query variables” appearing in a sequence of RDF triples and filters. If the query processor finds a set of triples in the data (converted to an RDF graph in some predetermined standard manner) then the values that the “query variables” take on in those triples become a solution to the query request. The values of the variables are returned in the query result in a format based on the “SELECT” clause of the query (similar to SQL).
 
-In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. The SPARQL specification <<SPARQL>> in section 17.6footnote:[https://www.w3.org/TR/sparql11-query/#extensionFunctions] describes the mechanism for invocation of such a filter function.
+In addition to predicates defined in this manner, the SPARQL query may contain filter functions that can be used to further constrain the query. Several mechanisms are available to extend filter functions to allow for predicates calculated directly on data values. The SPARQL specification <<SPARQL>> in section 17.6 describes the mechanism for invocation of such a filter function.
 
-The OGC GeoSPARQL standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF, and it defines extensions to the SPARQL query language for processing geospatial data.
+The GeoSPARQL standard supports representing and querying geospatial data on the Semantic Web. GeoSPARQL defines a vocabulary for representing geospatial data in RDF, and it defines extensions to the SPARQL query language for processing geospatial data.
 
 === GeoSPARQL Standard structure
 
@@ -50,7 +51,7 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** formally defined as an ontology, defined according to the _Profiles Vocabulary_ <<PROF>>
 ** this relates the parts in the standard together, provides access to them, and declares dependencies on other standards
 2. **specification document**
-** **http://www.opengis.net/doc/IS/geosparql/1.1**
+** _this document_
 ** **defines many of the standard's parts**
 ** **includes normative RDF/OWL <<RDF>>,<<OWL2>> ontology element definitions, conformance requirements and function signatures**
 *** based on the General Feature Model <<ISO19109>>, Simple Features <<ISO19125-1>> and SQL MM <<ISO13249>>
@@ -60,14 +61,14 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** for geographic information representation
 ** based on the General Feature Model <<ISO19109>>, Simple Features Access <<ISO19125-1>>, Feature Geometry <<ISO19107>> and SQL MM <<ISO13249>>
 ** defined within the specification document and delivered in RDF also
-4. Functions & Rules vocabulary
+4. Functions and Rules vocabulary
 ** http://www.opengis.net/def/geosparql/funcsrules
 ** derived from the ontology
 ** presented as a <<SKOS>> taxonomy
 5. Simple Features vocabulary
 ** http://www.opengis.net/ont/sf
 ** derived from Simple Features Access <<ISO19125-1>>'s class model
-** presented as an <<OWL>> ontology
+** presented as an <<OWL2>> ontology
 6. SPARQL <<SPARQL>> extension functions
 ** defined within this specification document
 7. RIF <<RIFCORE>> rules
@@ -76,7 +77,7 @@ The GeoSPARQL standard comprises multiple parts, or _profile resources_. The com
 ** also delivered as a RIF document also
 8. RDF data validator
 ** http://www.opengis.net/def/geosparql/validator
-** pefined using SHACL <<SHACL>>
+** defined using SHACL <<SHACL>>
 ** presented within a single RDF file
 
 This specification document follows a modular design and contains the following components:
