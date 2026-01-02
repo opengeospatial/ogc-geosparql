@@ -93,9 +93,10 @@ Topological relations in the _Egenhofer_ family are summarized in <<egenhofer_re
 |[[Property:geo:ehContains]]contains | http://www.opengis.net/ont/geosparql#ehContains[`geo:ehContains`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>> | `All` | `+(T*TFF*FF*)+`
 |===
 
-=== RCC*-9 Relation Family
+=== RCC8 and RCC*-9 Relation Family
 
-This clause defines Requirements for the region connection calculus basic 9 (_RCC9_) relation family. The reader should consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ relations.
+This clause defines Requirements for the region connection calculus basic 8 and 9 (_RCC8_, _RC*-C9_) relation family. 
+The reader should consult references <<QUAL>> and <<LOGIC>> for a more detailed discussion of _RCC8_ and <<RCC9>> for a discussion of _RCC*-9_ relations.
 
 [#req_topology-vocab-extension_rcc8-spatial-relations]
 [requirement,identifier="/req/topology-vocab-extension/rcc8-spatial-relations"]
@@ -113,7 +114,26 @@ Implementations shall allow the properties
 to be used in SPARQL graph patterns.
 ====
 
-Topological relations in the _RCC9_ family are summarized in <<rcc8_relations>>.
+Topological relations in the _RCC8_ family are summarized in <<rcc8_relations>>.
+
+[#req_topology-vocab-extension_rcc9-spatial-relations]
+[requirement,identifier="/req/topology-vocab-extension/rcc9-spatial-relations"]
+.RCC9 Spatial Relations
+====
+Implementations shall allow the properties 
+<<Property:geo:rcc9eq, `geo:rcc9eq`>>, 
+<<Property:geo:rcc9dc, `geo:rcc9dc`>>, 
+<<Property:geo:rcc9ec, `geo:rcc9ec`>>, 
+<<Property:geo:rcc9po, `geo:rcc9po`>>, 
+<<Property:geo:rcc9tppi, `geo:rcc9tppi`>>, 
+<<Property:geo:rcc9tpp, `geo:rcc9tpp`>>, 
+<<Property:geo:rcc9ntpp, `geo:rcc9ntpp`>>, 
+<<Property:geo:rcc9ntppi, `geo:rcc9ntppi`>> ,
+<<Property:geo:rcc9cr, `geo:rcc9cr`>>, 
+to be used in SPARQL graph patterns.
+====
+
+Topological relations in the _RCC*-9_ family are summarized in <<rcc9_relations>>.
 
 [[rcc8_relations]]
 .RCC8 Topological Relations
@@ -130,8 +150,23 @@ Topological relations in the _RCC9_ family are summarized in <<rcc8_relations>>.
 |[[Property:geo:rcc8ntppi]]non-tangential proper part inverse | http://www.opengis.net/ont/geosparql#rcc8ntppi[`geo:rcc8ntppi`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(TTTFFTFFT)`
 |===
 
+[[rcc9_relations]]
+.RCC*-9 Topological Relations
+|===
+|Relation Name | Relation IRI | Domain/Range | Applies To Geometry Types | DE-9IM Intersection Pattern
 
-=== Equivalent RCC9, Egenhofer and Simple Features Topological Relations
+|[[Property:geo:rcc9eq]]equals | http://www.opengis.net/ont/geosparql#rcc9eq[`geo:rcc9eq`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(TFFF*FFFT)`
+|[[Property:geo:rcc9dc]]disconnected | http://www.opengis.net/ont/geosparql#rcc9dc[`geo:rcc9dc`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(FF*FF****)`
+|[[Property:geo:rcc9ec]]externally connected | http://www.opengis.net/ont/geosparql#rcc9ec[`geo:rcc9ec`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(F*TT**T**) v (FTT***T**) v (F*T*T*T**)`
+|[[Property:geo:rcc9po]]partially overlapping | http://www.opengis.net/ont/geosparql#rcc9po[`geo:rcc9po`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(TTTT**T**) v (T*T*T*T**)`
+|[[Property:geo:rcc9tppi]]tangential proper part inverse | http://www.opengis.net/ont/geosparql#rcc9tppi[`geo:rcc9tppi`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A`  | `(***T**FF*) v (****T*FF*) v ¬(TFFFTFFFT)`
+|[[Property:geo:rcc9tpp]]tangential proper part | http://www.opengis.net/ont/geosparql#rcc9tpp[`geo:rcc9tpp`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(*TF**F***) v (**F*TF***) v ¬(TFFFTFFFT)`
+|[[Property:geo:rcc9ntpp]]non-tangential proper part | http://www.opengis.net/ont/geosparql#rcc9ntpp[`geo:rcc9ntpp`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(*FF*FFT**)`
+|[[Property:geo:rcc9ntppi]]non-tangential proper part inverse | http://www.opengis.net/ont/geosparql#rcc9ntppi[`geo:rcc9ntppi`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(**TFF*FF*)`
+|[[Property:geo:rcc9cr]]crosses | http://www.opengis.net/ont/geosparql#rcc9cr[`geo:rcc9cr`] | <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | `A/A` | `(TFFF*FFFT)`
+|===
+
+=== Equivalent RCC8, Egenhofer and Simple Features Topological Relations
 
 <<relation_equivalences>> summarizes the equivalences between _Egenhofer_, _RCC8_ and _Simple Features_ spatial relations for closed, non-empty regions. The symbol `+` denotes logical `OR`, and the symbol `¬` denotes negation.
 
