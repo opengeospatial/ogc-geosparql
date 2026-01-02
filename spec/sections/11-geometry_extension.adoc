@@ -1254,6 +1254,7 @@ Implementations shall support the functions
 <<Function: geof:area, `geof:area`>>, 
 <<Function: geof:endPoint, `geof:endPoint`>>,
 <<Function: geof:geometryN, `geof:geometryN`>>, 
+<<Function: geof:longestLine, `geof:longestLine`>>,
 <<Function: geof:easting, `geof:easting`>>, 
 <<Function: geof:northing, `geof:northing`>>, 
 <<Function: geof:maxDistance, `geof:maxDistance`>>,
@@ -1689,6 +1690,16 @@ The function http://www.opengis.net/def/function/geosparql/length[`geof:length`]
 See the <<Recommendation for units of measure, Recommendation for units of measure>>.
 ====
 
+==== Function: geof:longestLine
+
+[%unnumbered]
+[source,turtle]
+----
+geof:longestLine (geom: ogc:geomLiteral, geom2: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/longestLine[`geof:length`] returns the longest line geometry which is spanned between the two farthest points between `geom` and `geom2` as determined by e.g. the geof:maxDistance function. If `geom` and `geom2` are the same, the function will return the line corresponding to the longest distance between the two farthest points in `geom`.
+
 [%unnumbered]
 [source,turtle]
 ----
@@ -1715,6 +1726,12 @@ geof:maxDistance (geom: ogc:geomLiteral,geom2: ogc:geomLiteral, unit: xsd:anyURI
 ----
 
 The function http://www.opengis.net/def/function/geosparql/maxDistance[`geof:maxDistance`] returns the maximum distance between two geometries `geom` and `geom2` in a given unit as a double value.
+If `geom` and `geom2` are the same, the function will return the longest distance between the two farthest points in `geom`.
+
+[NOTE,keep-separate=true]
+====
+See the <<Recommendation for units of measure, Recommendation for units of measure>>.
+====
 
 ==== Function: geof:maxMetricDistance
 
@@ -1725,6 +1742,7 @@ geof:maxMetricDistance (geom: ogc:geomLiteral,geom2: ogc:geomLiteral): xsd:doubl
 ----
 
 The function http://www.opengis.net/def/function/geosparql/maxMetricDistance[`geof:maxMetricDistance`] returns the maximum distance between two geometries `geom` and `geom2` in meters.
+If `geom` and `geom2` are the same, the function will return the longest distance between the two farthest points in `geom`.
 
 ==== Function: geof:maxX
 
