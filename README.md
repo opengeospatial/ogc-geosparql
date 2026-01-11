@@ -1,7 +1,7 @@
 # OGC GeoSPARQL
      
 ## Introduction             
-             
+              
 This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL Standard](https://www.ogc.org/standards/geosparql).
       
 This repository is managed by the _GeoSPARQL Standards Working Group_, the Charter for which can be viewed here:
