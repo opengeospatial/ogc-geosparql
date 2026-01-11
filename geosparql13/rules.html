@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoSPARQL 1.1 Rules</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==">
+    <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1Sew
+EAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://www.opengis.net/def/rule/geosparql",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>All the GeoSPARQL Rules defined within the GeoSPARQL 1.1 specification</p>"
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@id": "https://www.ogc.org/license"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "GeoSPARQL 1.1 Rules"
+      }
+    ],
+    "https://schema.org/rights": [
+      {
+        "@value": "&copy; 2023 Open Geospatial Consortium"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.13.2</span>
+  </div>
+  <h1>GeoSPARQL 1.1 Rules</h1>
+<h3><em>A taxonomy</em></h3>
+  <section id="conceptscheme">
+      <h2 style="display:none;">Concept Scheme</h2>
+      <dl>
+          <dt>URI</dt>
+          <dd><code>http://www.opengis.net/def/rule/geosparql</code></dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher">Publisher</a>(s)</dt>
+          <dd>
+              
+    Open Geospatial Consortium<br/>
+          </dd>
+            <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator">Creator</a>(s)</dt>
+          <dd>
+              
+    OGC GeoSPARQL Standards Working Group<br/>
+          </dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/created">Created</a></dt>
+          <dd>2021-06-16</dd>
+          <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+          <dd>2023-11-30</dd>
+          <dt>Version URI</dt>
+          <dd><a href="http://www.opengis.net/def/rule/geosparql/1.1">http://www.opengis.net/def/rule/geosparql/1.1</a></dd>
+          <dt>License &amp; Rights</dt>
+          <dd>
+              <a href="https://www.ogc.org/license">https://www.ogc.org/license</a><br />
+              &copy; 2023 Open Geospatial Consortium
+          </dd>
+          <dt>Source</dt>
+          <dd><a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a></dd>
+          <dt>Ontology RDF</dt>
+          <dd><a href="rules.ttl">RDF (turtle)</a></dd>
+      </dl>
+      <h2>Description</h2>
+      <div id="description">
+          <p>All the GeoSPARQL Rules defined within the GeoSPARQL 1.1 specification</p>
+      </div>
+      <p><strong>History Note:</strong> <p>This vocabulary was generated for GeoSPARQL 1.1 using content that was already specified for GeoSPARQL 1.0</p></p>
+  </section>
+  <section id="toc">
+      <h2>Table of Contents</h2>
+      <ol>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="#concepts">Concepts</a></li>
+          <li><a href="#namespaces">Namespaces</a></li>
+          <li><a href="#legend">Legend</a></li>
+      </ol>
+  </section>
+  <section id="overview">
+      <h2>Overview</h2>
+      <div class="figure">
+          <div style="width:500px; height:500px; background-color: black;">&nbsp;</div>
+          <div class="caption"><strong>Figure 1:</strong> Taxonomy overview</div>
+      </div>
+  </section>
+  <section id="collections">
+    <h2>Collections <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#GeoSPARQLEgenhoferTopologicalRules">GeoSPARQL Egenhofer Topological Rules</a></li>
+        <li><a href="#GeoSPARQLRCC8TopologicalRules">GeoSPARQL RCC8 Topological Rules</a></li>
+        <li><a href="#GeoSPARQLSimpleFeaturesRules">GeoSPARQL Simple Features Rules</a></li>
+    </ul>
+    <div class="entity collection" id="GeoSPARQLEgenhoferTopologicalRules">
+        <h3>GeoSPARQL Egenhofer Topological Rules<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/eh</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Egenhofer Rules defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#inside">inside</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#covers">covers</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#contains">contains</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#equals">equals</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#meet">meet</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#disjoint">disjoint</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#overlap">overlap</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#coveredby">covered by</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLRCC8TopologicalRules">
+        <h3>GeoSPARQL RCC8 Topological Rules<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL RCC8 Rules defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#externallyconnected">externally connected</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#partiallyoverlapping">partially overlapping</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#non-tangentialproperpartinverse">non-tangential proper part inverse</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#non-tangentialproperpart">non-tangential proper part</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#tangentialproperpartinverse">tangential proper part inverse</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#rcc8eq">equals</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#tangentialproperpart">tangential proper part</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#disconnected">disconnected</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+    <div class="entity collection" id="GeoSPARQLSimpleFeaturesRules">
+        <h3>GeoSPARQL Simple Features Rules<sup title="Collection" class="sup-col">col</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sf</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td><p>All the GeoSPARQL Simple Features Topological Rules defined within the GeoSPARQL 1.1 specification</p></td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+            <tr>
+                <th>Members</th>
+                <td>
+                    <a href="#within">within</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#overlaps">overlaps</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#touches">touches</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfContains">contains</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#intersects">intersects</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#crosses">crosses</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfEquals">equals</a><sup class="sup-con" title="concept">con</sup>, 
+                    <a href="#sfDisjoint">disjoint</a><sup class="sup-con" title="concept">con</sup>
+                </td>
+            </tr>
+            
+        </table>
+    </div>
+</section>
+  <section id="concepts">
+    <h2>Concepts <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hierarchy">
+<li><a href="#contains">contains</a></li><li><a href="#coveredby">covered by</a></li><li><a href="#covers">covers</a></li><li><a href="#disjoint">disjoint</a></li><li><a href="#equals">equals</a></li><li><a href="#inside">inside</a></li><li><a href="#meet">meet</a></li><li><a href="#overlap">overlap</a></li><li><a href="#disconnected">disconnected</a></li><li><a href="#externallyconnected">externally connected</a></li><li><a href="#rcc8eq">equals</a></li><li><a href="#non-tangentialproperpart">non-tangential proper part</a></li><li><a href="#non-tangentialproperpartinverse">non-tangential proper part inverse</a></li><li><a href="#partiallyoverlapping">partially overlapping</a></li><li><a href="#tangentialproperpart">tangential proper part</a></li><li><a href="#tangentialproperpartinverse">tangential proper part inverse</a></li><li><a href="#sfContains">contains</a></li><li><a href="#crosses">crosses</a></li><li><a href="#sfDisjoint">disjoint</a></li><li><a href="#sfEquals">equals</a></li><li><a href="#intersects">intersects</a></li><li><a href="#overlaps">overlaps</a></li><li><a href="#touches">touches</a></li><li><a href="#within">within</a></li>
+</ul>
+    <div class="entity concept" id="contains">
+        <h3>contains<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehContains</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="coveredby">
+        <h3>covered by<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehCoveredBy</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is covered by another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="covers">
+        <h3>covers<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehCovers</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object covers another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="disjoint">
+        <h3>disjoint<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehDisjoint</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="equals">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehEquals</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="inside">
+        <h3>inside<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehInside</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is inside another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="meet">
+        <h3>meet<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehMeet</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects meet based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="overlap">
+        <h3>overlap<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/ehOverlap</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="disconnected">
+        <h3>disconnected<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8dc</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="externallyconnected">
+        <h3>externally connected<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8ec</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are externally connected based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="rcc8eq">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8eq</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine two spatial objects are equal based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="non-tangentialproperpart">
+        <h3>non-tangential proper part<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8ntpp</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is a non-tangential proper part of another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="non-tangentialproperpartinverse">
+        <h3>non-tangential proper part inverse<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8ntppi</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is a non-tangential proper part inverse of another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="partiallyoverlapping">
+        <h3>partially overlapping<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8po</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects partially overlap based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="tangentialproperpart">
+        <h3>tangential proper part<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8tpp</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is a tangential proper part of another spatial object based on their associated geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="tangentialproperpartinverse">
+        <h3>tangential proper part inverse<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/rcc8tppi</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is a tangential proper part inverse of another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfContains">
+        <h3>contains<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfContains</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object contains another spatial object based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="crosses">
+        <h3>crosses<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfCrosses</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects cross based their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfDisjoint">
+        <h3>disjoint<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfDisjoint</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are disjoint based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="sfEquals">
+        <h3>equals<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfEquals</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects are equal based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="intersects">
+        <h3>intersects<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfIntersects</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects intersect based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="overlaps">
+        <h3>overlaps<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfOverlaps</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects overlap based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="touches">
+        <h3>touches<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfTouches</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if two spatial objects touch based on their associated primary geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity concept" id="within">
+        <h3>within<sup title="Concept" class="sup-con">con</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opengis.net/def/rule/geosparql/sfWithin</code></td>
+            </tr>
+            <tr>
+                <th>Definition</th>
+                <td>
+                    <p>A query rewrite rule used to determine if one spatial object is within another spatial object based on their associated geometry objects.</p><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Source</th>
+                <td>
+                  <a href="http://www.opengis.net/doc/geosparql/1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>default (:)</dt>
+        <dd><code>http://www.opengis.net/def/rule/geosparql</code></dd>
+        <dt>brick</dt>
+        <dd><code>https://brickschema.org/schema/Brick#</code></dd>
+        <dt>csvw</dt>
+        <dd><code>http://www.w3.org/ns/csvw#</code></dd>
+        <dt>dc</dt>
+        <dd><code>http://purl.org/dc/elements/1.1/</code></dd>
+        <dt>dcam</dt>
+        <dd><code>http://purl.org/dc/dcam/</code></dd>
+        <dt>dcat</dt>
+        <dd><code>http://www.w3.org/ns/dcat#</code></dd>
+        <dt>dcmitype</dt>
+        <dd><code>http://purl.org/dc/dcmitype/</code></dd>
+        <dt>dcterms</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>doap</dt>
+        <dd><code>http://usefulinc.com/ns/doap#</code></dd>
+        <dt>fno</dt>
+        <dd><code>https://w3id.org/function/ontology#</code></dd>
+        <dt>foaf</dt>
+        <dd><code>http://xmlns.com/foaf/0.1/</code></dd>
+        <dt>funcs</dt>
+        <dd><code>http://www.opengis.net/def/function/geosparql/</code></dd>
+        <dt>geo</dt>
+        <dd><code>http://www.opengis.net/ont/geosparql#</code></dd>
+        <dt>odrl</dt>
+        <dd><code>http://www.w3.org/ns/odrl/2/</code></dd>
+        <dt>ogc</dt>
+        <dd><code>http://www.opengis.net/</code></dd>
+        <dt>org</dt>
+        <dd><code>http://www.w3.org/ns/org#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>policy</dt>
+        <dd><code>http://www.opengis.net/def/metamodel/ogc-na/</code></dd>
+        <dt>prof</dt>
+        <dd><code>http://www.w3.org/ns/dx/prof/</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>qb</dt>
+        <dd><code>http://purl.org/linked-data/cube#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>sd</dt>
+        <dd><code>http://www.w3.org/ns/sparql-service-description#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>sh</dt>
+        <dd><code>http://www.w3.org/ns/shacl#</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>sosa</dt>
+        <dd><code>http://www.w3.org/ns/sosa/</code></dd>
+        <dt>spec11</dt>
+        <dd><code>http://www.opengis.net/spec/geosparql/1.1/specification.html#</code></dd>
+        <dt>ssn</dt>
+        <dd><code>http://www.w3.org/ns/ssn/</code></dd>
+        <dt>status</dt>
+        <dd><code>http://www.opengis.net/def/status/</code></dd>
+        <dt>time</dt>
+        <dd><code>http://www.w3.org/2006/time#</code></dd>
+        <dt>vann</dt>
+        <dd><code>http://purl.org/vocab/vann/</code></dd>
+        <dt>void</dt>
+        <dd><code>http://rdfs.org/ns/void#</code></dd>
+        <dt>wgs</dt>
+        <dd><code>https://www.w3.org/2003/01/geo/wgs84_pos#</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+
+  <section id="legend">
+    <h2>Legend</h2>
+    <table class="entity">
+      <tr><td><sup class="sup-col" title="Collections">col</sup></td><td>Collections</td></tr>
+      <tr><td><sup class="sup-con" title="Concepts">con</sup></td><td>Concepts</td></tr>
+    </table>
+  </section>
+</body>
+</html>
