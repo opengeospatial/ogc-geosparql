@@ -17,12 +17,12 @@ for entry in bibtexlib.entries:
             normative=True
     if normative:
         if founddoi:
-            bibstringnormative+="* [[["+entry.key+", doi:"+thedoi+"]]]\n\n"
+            bibstringnormative+="* [[["+entry.key+",local-file("+entry.key+")]]]\n\n"
         else:
             bibstringnormative+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
     else:
         if founddoi:
-            bibstring+="* [[["+entry.key+", doi:"+thedoi+"]]]\n\n"
+            bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
         else:
             bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
 with open("spec/sections/05-references.adoc","a") as bibdoc:
