@@ -12,7 +12,7 @@ for file in os.listdir(directory):
             content=f.read()
             matches=re.findall("<<([A-Za-z]+)>>",content)
             #print("MATCHES: "+str(matches))
-            citedlabels.add(set(matches))
+            citedlabels.union(matches)
         continue
     else:
         continue
