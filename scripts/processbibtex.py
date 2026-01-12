@@ -1,5 +1,6 @@
 import bibtexparser
 import re
+import os
 
 citedlabels=[]
 directory = os.fsencode("spec/sections/")
