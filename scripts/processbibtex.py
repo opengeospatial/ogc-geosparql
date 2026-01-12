@@ -2,7 +2,7 @@ import bibtexparser
 import re
 import os
 
-citedlabels=[]
+citedlabels=set()
 directory = os.fsencode("spec/sections/")
 
 for file in os.listdir(directory):
@@ -11,14 +11,15 @@ for file in os.listdir(directory):
         with open("spec/sections/"+str(filename)) as f:
             content=f.read()
             matches=re.findall("<<([A-Za-z]+)>>",content)
-            print("MATCHES: "+str(matches))
-            citedlabels+=matches
+            #print("MATCHES: "+str(matches))
+            citedlabels.add(set(matches))
         continue
     else:
         continue
 
-citedlabels.sort()
 print(citedlabels)
+
+notcited=set()
 
 with open("spec/bibliography.bib", 'r') as file:
     bibcontent = file.read()
@@ -29,22 +30,27 @@ for entry in bibtexlib.entries:
     founddoi=False
     thedoi=None
     normative=False
-    for field in entry.fields:
-        if field.key=="doi" or field.key=="DOI":
-            thedoi=field.value
-            founddoi=True
-        if field.key=="category" and field.value=="normative":
-            normative=True
-    if normative:
-        if founddoi:
-            bibstringnormative+="* [[["+entry.key+",local-file("+entry.key+")]]]\n\n"
+    if entry.key in citedlabels:
+        for field in entry.fields:
+            if field.key=="doi" or field.key=="DOI":
+                thedoi=field.value
+                founddoi=True
+            if field.key=="category" and field.value=="normative":
+                normative=True
+        if normative:
+            if founddoi:
+                bibstringnormative+="* [[["+entry.key+",local-file("+entry.key+")]]]\n\n"
+            else:
+                bibstringnormative+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
         else:
-            bibstringnormative+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
+            if founddoi:
+                bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
+            else:
+                bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
     else:
-        if founddoi:
-            bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
-        else:
-            bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
+        notcited=entry.key
+if len(notcited)>0:
+    print("The following bibitems were not cited: "+str(notcited))
 with open("spec/sections/05-references.adoc","a") as bibdoc:
     bibdoc.write(bibstringnormative)
 with open("spec/sections/az-bibliography.adoc","a") as bibdoc:
