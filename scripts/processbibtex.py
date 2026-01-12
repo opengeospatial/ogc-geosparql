@@ -10,7 +10,7 @@ for file in os.listdir(directory):
     if filename.endswith(".adoc") and filename!="05-references.adoc" and filename!="az-bibliography.adoc": 
         with open("spec/sections/"+str(filename)) as f:
             content=f.read()
-            matches=re.findall("<<(.*)>>")
+            matches=re.findall("<<(.+)>>",content)
             print("MATCHES: "+str(matches))
             citedlabels+=matches
         continue
