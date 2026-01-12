@@ -1,4 +1,23 @@
 import bibtexparser
+import re
+
+citedlabels=[]
+directory = os.fsencode("spec/sections/")
+
+for file in os.listdir(directory):
+    filename = os.fsdecode(file)
+    if filename.endswith(".adoc") and filename!="05-references.adoc" and filename!="az-bibliography.adoc": 
+        with open("spec/sections/"+str(filename)) as f:
+            content=f.read()
+            matches=re.findall("<<(.*)>>")
+            print("MATCHES: "+str(matches))
+            citedlabels+=matches
+        continue
+    else:
+        continue
+
+citedlabels.sort()
+print(citedlabels)
 
 with open("spec/bibliography.bib", 'r') as file:
     bibcontent = file.read()
