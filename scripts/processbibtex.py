@@ -11,8 +11,9 @@ for file in os.listdir(directory):
         with open("spec/sections/"+str(filename)) as f:
             content=f.read()
             matches=re.findall("<<([A-Za-z]+)>>",content)
-            #print("MATCHES: "+str(matches))
-            citedlabels.union(set(matches))
+            print("MATCHES: "+str(matches))
+            for mat in matches:
+                citedlabels.add(mat)
         continue
     else:
         continue
@@ -49,7 +50,7 @@ for entry in bibtexlib.entries:
             else:
                 bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
     else:
-        notcited=entry.key
+        notcited.add(entry.key)
 if len(notcited)>0:
     print("The following bibitems were not cited: "+str(notcited))
 with open("spec/sections/05-references.adoc","a") as bibdoc:
