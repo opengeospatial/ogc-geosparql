@@ -35,7 +35,7 @@ for entry in bibtexlib.entries:
     normative=False
     print("KEY: "+str(entry.key))
     cited=False
-    if str(entry.key) in citedlabel:
+    if str(entry.key) in citedlabels:
         cited=True
     else:
         cited=False
