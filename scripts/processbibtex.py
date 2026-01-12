@@ -31,7 +31,7 @@ for entry in bibtexlib.entries:
     thedoi=None
     normative=False
     print("KEY: "+str(entry.key))
-    if entry.key in citedlabels:
+    if str(entry.key) in citedlabels:
         for field in entry.fields:
             if field.key=="doi" or field.key=="DOI":
                 thedoi=field.value
