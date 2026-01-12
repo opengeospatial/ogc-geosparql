@@ -2,6 +2,8 @@ import bibtexparser
 import re
 import os
 
+onlycited=False
+
 citedlabels=set()
 directory = os.fsencode("spec/sections/")
 
@@ -32,7 +34,13 @@ for entry in bibtexlib.entries:
     thedoi=None
     normative=False
     print("KEY: "+str(entry.key))
-    if str(entry.key) in citedlabels:
+    cited=False
+    if str(entry.key) in citedlabel:
+        cited=True
+    else:
+        cited=False
+        notcited.add(entry.key)
+    if not onlycited or (onlycited and cited):
         for field in entry.fields:
             if field.key=="doi" or field.key=="DOI":
                 thedoi=field.value
@@ -49,8 +57,6 @@ for entry in bibtexlib.entries:
                 bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
             else:
                 bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
-    else:
-        notcited.add(entry.key)
 if len(notcited)>0:
     print("The following bibitems were not cited: "+str(notcited))
 with open("spec/sections/05-references.adoc","a") as bibdoc:
