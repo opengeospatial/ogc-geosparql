@@ -7,7 +7,7 @@ This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL Standar
 This repository is managed by the _GeoSPARQL Standards Working Group_, the Charter for which can be viewed here:
       
 * [GeoSPARQL SWG Charter](https://rawcdn.githack.com/opengeospatial/ogc-geosparql/f51bfe0643bb4010ba8a2ee2ae79e8335a55558c/charter/swg_charter.html) (online)
-  
+   
 To see in-progress HTML & PDF versions of the various elements of GeoSPARQL 1.1 - specification, ontology, constituent vocabularies etc. - as well as the elements of the 1.0 version of the standard, please see:
  
 * [GeoSPARQL auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)  
