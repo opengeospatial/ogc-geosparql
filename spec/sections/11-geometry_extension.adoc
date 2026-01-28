@@ -56,7 +56,7 @@ Some of the properties defined in these vocabularies, such as DCAT2's https://ww
 
 === GeoSPARQL and Simple Features (SFA-CA)
 
-The GeoSPARQL Geometry Extension is largely based on the ISO/OGC Simple Features Access - Common Architecture (SFA-CA) Standard <<OGC06-103r4>>. Contrary to what the name may imply, SFA-CA is about Geometry and not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
+The GeoSPARQL Geometry Extension is largely based on the ISO/OGC Simple Features Access - Common Architecture (SFA-CA) Standard <<OGCSFACA>>. Contrary to what the name may imply, SFA-CA is about Geometry and not about Features. SFA-CA describes simple geometry, meaning that geometric shapes are based on points and straight lines (linear interpolations) between points. Within a single Geometry, these lines may not cross.
 
 Neither GeoSPARQL nor SFA-CA support full three-dimensional geometry. Coordinates may be three-dimensional, which means that points may have a Z-coordinate next to an X- and Y-coordinate. The Z-coordinate then holds the value of height or depth. However, lines or surfaces can only have one Z value for any explicit or interpolated X,Y pair. This approach is often referred to as 2.5 dimensional geometry. Geometric functions working with Geometries that have Z values will ignore Z values in calculations and first project geometry onto the Z=0 level.
 
@@ -82,7 +82,7 @@ serialization:: Specifies the serialization standard to use when generating geom
 
 [NOTE,keep-separate=true]
 ====
-A serialization strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<OGC06-103r4>> <<ISO19125-1>>; the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
+A serialization strongly affects the geometry conceptualization. The WKT serialization aligns the geometry types with _ISO 19125 Simple Features_ <<OGCSFACA>> <<ISO19125-1>>; the GML serialization aligns the geometry types with _ISO 19107 Spatial Schema_ <<ISO19107>>.
 ====
 
 version:: Specifies the version of the serialization format used.
@@ -434,14 +434,14 @@ GeoSPARQL does present some Requirements for literal structure which extend the 
 
 [[NOTE]]
 ====
-GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGC06-103r4>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
+GeoSPARQL's expectation of RDF literal representations of geometry data is that it is related to the _Simple Features Access_ (SFA) <<OGCSFACA>> <<ISO19125-1>> standard's conceptualization of geometry which defines classes such as `Point`, `Curve` and `Surface` and specialized variants of them which it presents in a hierarchy. All SFA classes are represented in OWL in the _Simple Features Vocabulary_ presented within GeoSPARQL as an independent profile element, see <<GeoSPARQL Standard structure, GeoSPARQL Standard structure>>.
 
 Some geometry representation systems given here do not use the same terminology as SFA, in particular Discrete Global Grid Systems. To know the extent to which geometry literal representations listed here support SFA, or map to SFA, please see their definitions.
 ====
 
 ==== Well-Known Text
 
-This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
+This section establishes the requirements for representing Geometry data in RDF based on Well-Known Text (WKT) as defined by _Simple Features Access_ <<OGCSFACA>> <<ISO19125-1>>. It defines one RDFS Datatype: <<RDFS Datatype: geo:wktLiteral, WKT Literal>> and one property, <<Function: geof:asWKT, as WKT>>.
 
 ===== RDFS Datatype: geo:wktLiteral
 
@@ -564,7 +564,7 @@ Implementations shall support <<Function: geof:asWKT, `geof:asWKT`>> as a SPARQL
 
 ==== Extended Well-Known Binary
 
-This section establishes the requirements for representing Geometry data in RDF based on Extended Well-Known Binary (EWKB) as defined by _Simple Features Access_ <<OGC06-103r4>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> and one property, <<Property: geo:asEWKB, as EWKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
+This section establishes the requirements for representing Geometry data in RDF based on Extended Well-Known Binary (EWKB) as defined by _Simple Features Access_ <<OGCSFACA>> <<ISO19125-1>>. It defines the RDFS Datatype: <<RDFS Datatypes: geo:ewkbLiteral, EWKB Literal>> and one property, <<Property: geo:asEWKB, as EWKB>>. The literal definition in addition, allows for 3D types present in the Extended Well-Known Binary specification.
 
 ===== RDFS Datatypes: geo:ewkbLiteral
 
@@ -1239,7 +1239,7 @@ Implementations shall support the functions
 <<Function: geof:transform, `geof:transform`>>,
 <<Function: geof:transformCRS84, `geof:transformCRS84`>>and
 <<Function: geof:union, `geof:union`>>
-as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<OGC06-103r4>> <<ISO19125-1>>, for non-DGGS geometry literals.
+as SPARQL extension functions, consistent with definitions of these functions in Simple Features <<OGCSFACA>> <<ISO19125-1>>, for non-DGGS geometry literals.
 ====
 
 [[req_geometry_extension_query-functions-non-sf]]
@@ -1289,7 +1289,7 @@ literals and thus the lack of existing software libraries for their manipulation
 [requirement,identifier="/req/geometry-extension-dggs/query-functions"]
 .DGGS Query Functions (Simple Features)
 ====
-Implementations shall support the functions of Requirement 39 for DGGS geometry literals as SPARQL extension functions, in a manner which is consistent with definitions of these functions in Simple Features <<OGC06-103r4>> <<ISO19125-1>>, for non-DGGS geometry literals.
+Implementations shall support the functions of Requirement 39 for DGGS geometry literals as SPARQL extension functions, in a manner which is consistent with definitions of these functions in Simple Features <<OGCSFACA>> <<ISO19125-1>>, for non-DGGS geometry literals.
 ====
 
 [[req_geometry_extension_query-functions-non-sf-dggs]]
