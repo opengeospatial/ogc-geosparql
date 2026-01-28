@@ -11,7 +11,7 @@ This repository is managed by the _GeoSPARQL Standards Working Group_, the Chart
 To see in-progress HTML & PDF versions of the various elements of GeoSPARQL 1.1 - specification, ontology, constituent vocabularies etc. - as well as the elements of the 1.0 version of the standard, please see:
  
 * [GeoSPARQL auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)   
-
+ 
 If you want to cite the living document of the in-progress standard we encourage you to use the following BibTeX statement:
    
 ```bibtex
