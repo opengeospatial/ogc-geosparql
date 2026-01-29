@@ -2,7 +2,7 @@ import bibtexparser
 import re
 import os
 
-onlycited=True
+onlycited=False
 
 citedlabels=set()
 directory = os.fsencode("spec/sections/")
