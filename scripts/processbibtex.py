@@ -27,6 +27,9 @@ notcited=set()
 with open("spec/bibliography.bib", 'r') as file:
     bibcontent = file.read()
 bibtexlib=bibtexparser.parse_string(bibcontent)
+if len(bibtexlib.failed_blocks) > 0:
+    print(str(len(bibtexlib.failed_blocks))+" bibtex items could not be parsed!")
+    print(bibtexlib.failed_blocks)
 bibstring=""
 bibstringnormative=""
 for entry in bibtexlib.entries:
