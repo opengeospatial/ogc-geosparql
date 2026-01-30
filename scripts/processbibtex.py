@@ -62,7 +62,7 @@ for entry in bibtexlib.entries:
                 bibstring+="* [[["+entry.key+", local-file("+entry.key+")]]]\n\n"
 if len(notcited)>0:
     print("The following bibitems were not cited: "+str(notcited))
-with open("spec/sections/05-references.adoc","a") as bibdoc:
+with open("spec/sections/04-normative-references.adoc","a") as bibdoc:
     bibdoc.write(bibstringnormative)
 with open("spec/sections/az-bibliography.adoc","a") as bibdoc:
     bibdoc.write(bibstring)
