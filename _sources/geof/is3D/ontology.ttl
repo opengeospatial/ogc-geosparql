@@ -1,0 +1,2676 @@
+PREFIX cs: <http://www.opengis.net/def/function/geosparql>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX geofp: <http://www.opengis.net/def/function/parameter/geosparql/>
+PREFIX geofo: <http://www.opengis.net/def/function/output/geosparql/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX policy: <http://www.opengis.net/def/metamodel/ogc-na/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ogc: <http://www.opengis.net/> 
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX sdo: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX spec11: <http://www.opengis.net/spec/geosparql/1.1/specification.html#>
+PREFIX status: <http://www.opengis.net/def/status/>
+PREFIX fno: <https://w3id.org/function/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+cs:
+    a skos:ConceptScheme ;
+    dcterms:created "2021-06-16"^^xsd:date ;
+    dcterms:creator [
+        a sdo:Organization ;
+        sdo:name "OGC GeoSPARQL Standards Working Group" ;
+        sdo:url "https://www.ogc.org"^^xsd:anyURI
+    ] ;
+    dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+    dcterms:modified "2023-11-30"^^xsd:date ;
+    dcterms:publisher [
+        a sdo:Organization ;
+        sdo:name "Open Geospatial Consortium" ;
+        sdo:url "https://www.ogc.org"^^xsd:anyURI
+    ] ;
+    dcterms:rights "(c) 2023 Open Geospatial Consortium" ;    
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    owl:versionIRI geof:1.1 ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Functions defined within the GeoSPARQL 1.3 specification"@en ;
+	skos:hasTopConcept
+        geof:area ,
+        geof:asDGGS ,
+        geof:asGML ,
+        geof:asGeoJSON ,
+        geof:asKML ,
+        geof:asWKT ,
+        geof:boundary ,
+        geof:boundingCircle ,
+        geof:buffer ,
+        geof:concaveHull ,
+        geof:convexHull ,
+        geof:difference ,
+        geof:dimension ,
+        geof:distance ,
+        geof:ehContains ,
+        geof:ehCoveredBy ,
+        geof:ehCovers ,
+        geof:ehDisjoint ,
+        geof:ehEquals ,
+        geof:ehInside ,
+        geof:ehMeet ,
+        geof:ehOverlap ,
+        geof:envelope ,
+        geof:getSRID ,
+        geof:intersection ,
+        geof:isEmpty ,
+        geof:isSimple ,
+        geof:length ,
+        geof:maxX ,
+        geof:maxY ,
+        geof:maxZ ,
+        geof:metricArea ,
+        geof:metricBuffer ,
+        geof: ,
+        geof:metricLength ,
+        geof:metricPerimeter ,
+        geof:minX ,
+        geof:minY ,
+        geof:minZ ,
+        geof:perimeter ,
+        geof:rcc8dc ,
+        geof:rcc8ec ,
+        geof:rcc8eq ,
+        geof:rcc8ntpp ,
+        geof:rcc8ntppi ,
+        geof:rcc8po ,
+        geof:rcc8tpp ,
+        geof:rcc8tppi ,
+        geof:relate ,
+        geof:sfContains ,
+        geof:sfCrosses ,
+        geof:sfDisjoint ,
+        geof:sfEquals ,
+        geof:sfIntersects ,
+        geof:sfOverlaps ,
+        geof:sfTouches ,
+        geof:sfWithin ,
+        geof:symDifference ,
+        geof:union ;
+    skos:historyNote "This vocabulary was generated for GeoSPARQL 1.1 using some content that was already specified for GeoSPARQL 1.0 but which was expanded on" ;
+    skos:prefLabel "GeoSPARQL 1.1 Functions"@en ;
+.
+
+geof:aggboundingBox
+    a sd:Aggregate , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the minimum bounding box of set of geometries."@en ;
+    skos:prefLabel "bounding box"@en ;
+.
+
+geof:aggboundingCircle
+    a sd:Aggregate , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the minimum bounding circle of set of geometries."@en ;
+    skos:prefLabel "bounding circle"@en ;
+.
+
+geof:centroid
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:centroid_param1 ) ;
+    fno:returns (geofo:centroid_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates a centroid of a set of geometries."@en ;
+    skos:prefLabel "centroid"@en ;
+.
+
+geofp:centroid_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:centroid_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:common
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Common Query Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member geof:relate ;
+    skos:prefLabel "GeoSPARQL Common Query Functions"@en ;
+.
+
+geof:eh
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Egenhofer Topological Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        geof:ehContains ,
+        geof:ehCoveredBy ,
+        geof:ehCovers ,
+        geof:ehDisjoint ,
+        geof:ehEquals ,
+        geof:ehInside ,
+        geof:ehMeet ,
+        geof:ehOverlap ;
+    skos:prefLabel "GeoSPARQL Egenhofer Topological Functions" ;
+.
+
+geof:nonTopo
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Non-topological Query Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        geof:area ,
+        geof:boundary ,
+        geof:boundingCircle ,
+        geof:buffer ,
+        geof:convexHull ,
+        geof:difference ,
+        geof:dimension ,
+        geof:distance ,
+        geof:envelope ,
+        geof:geometryN ,
+        geof:getSRID ,
+        geof:metricArea ,
+        geof:metricBuffer ,
+        geof: ,
+        geof:metricLength ,
+        geof:intersection ,
+        geof:isEmpty ,
+        geof:isSimple ,
+        geof:length ,
+	geof:easting,
+	geof:northing,
+        geof:maxX ,
+        geof:maxY ,
+        geof:maxZ ,
+        geof:metricArea ,
+        geof:metricBuffer ,
+        geof: ,
+        geof:metricPerimeter ,
+        geof:minX ,
+        geof:minY ,
+        geof:minZ ,
+        geof:perimeter ,
+        geof:numGeometries ,
+        geof:symDifference ,
+        geof:union ;
+    skos:prefLabel "GeoSPARQL Non-topological Query Functions"@en ;
+.
+
+geof:rcc
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL RCC8 Topological Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        geof:rcc8dc ,
+        geof:rcc8ec ,
+        geof:rcc8eq ,
+        geof:rcc8ntpp ,
+        geof:rcc8ntppi ,
+        geof:rcc8po ,
+        geof:rcc8tpp ,
+        geof:rcc8tppi ;
+    skos:prefLabel "GeoSPARQL RCC8 Topological Functions"@en ;
+.
+
+geof:sa
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL aggregation functions"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        geof:aggBoundingBox ,
+        geof:aggBoundingCircle ,
+        geof:aggCentroid ,
+        geof:aggConcaveHull ,
+        geof:aggUnion ;
+    skos:prefLabel "GeoSPARQL Spatial Aggregation Functions"@en ;
+.
+
+geof:sf
+    a skos:Collection ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    rdfs:isDefinedBy cs: ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "All the GeoSPARQL Simple Features Topological Functions defined within the GeoSPARQL 1.1 specification"@en ;
+    skos:inScheme cs: ;
+    skos:member
+        geof:sfContains ,
+        geof:sfCrosses ,
+        geof:sfDisjoint ,
+        geof:sfEquals ,
+        geof:sfIntersects ,
+        geof:sfOverlaps ,
+        geof:sfTouches ,
+        geof:sfWithin ;
+    skos:prefLabel "GeoSPARQL Simple Features Functions"@en ;
+.
+
+geof:aggConcaveHull
+    a sd:Aggregate , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the concave hull of a set of geometries."@en ;
+    skos:prefLabel "concave hull"@en ;
+.
+
+geof:aggUnion
+    a sd:Aggregate , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A spatial aggregate function that calculates the union of a set of geometries."@en ;
+    skos:prefLabel "aggregate union"@en ;
+.
+
+geof:concaveHull
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:concaveHull_param1 ) ;
+    fno:returns (geofo:concaveHull_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that calculates the concave hull of a set of geometries."@en ;
+    skos:prefLabel "concave hull"@en ;
+.
+
+geofp:concaveHull_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:concaveHull_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:metricLength
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricLength_param1 ) ;
+    fno:returns (geofo:metricLength_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the length of a geometry in meters."@en ;
+    skos:prefLabel "metric length"@en ;
+.
+
+geofp:metricLength_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:metricLength_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:length
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:length_param1 geofp:length_param2) ;
+    fno:returns (geofo:length_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the length of a geometry in meters."@en ;
+    skos:prefLabel "length"@en ;
+.
+
+geofp:length_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:length_param1 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:length_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:metricDistance
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricDistance_param1 geofp:metricDistance_param2 ) ;
+    fno:returns (geofo:metricDistance_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the distance in meters between the two closest points of the input geometries."@en ;
+    skos:prefLabel "metric distance"@en ;
+.
+
+geofp:metricDistance_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:metricDistance_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:metricDistance_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:transform
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    fno:expects (geofp:transform_param1 geofp:transform_param2 ) ;
+    fno:returns (geofo:transform_output ) ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that converts a given geometry to a spatial reference system defined by an IRI. The function raises an error if a transformation is not mathematically possible."@en ;
+    skos:prefLabel "transform"@en ;
+.
+
+
+geofp:transform_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:transform_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "srsIRI"@en .
+
+geofo:transform_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+
+geof:transformCRS84
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    fno:expects (geofp:transformCRS84_param1 geofp:transformCRS84_param2 ) ;
+    fno:returns (geofo:transformCRS84_output ) ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that converts a given geometry to the CRS84 coordinate reference system. The function raises an error if a transformation is not mathematically possible."@en ;
+    skos:prefLabel "transformCRS84"@en ;
+.
+
+
+geofp:transformCRS84_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:transformCRS84_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:asDGGS
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:asDGGS_param1 geofp:asDGGS_param2 ) ;
+    fno:returns (geofo:asDGGS_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter."@en ;
+    skos:prefLabel "asDGGS"@en ;
+.
+
+geofp:asDGGS_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:asDGGS_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "specificDggsDatatype"@en .
+
+geofo:asDGGS_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:dggsLiteral  .
+
+
+geof:asDGGSResolution
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:asDGGSResolution_param1 geofp:asDGGSResolution_param2 geofp:asDGGSResolution_param3 ) ;
+    fno:returns (geofo:asDGGSResolution_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-dggs-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter. The parameter resolution describes the resolution in the target DGGS."@en ;
+    skos:prefLabel "asDGGS Resolution"@en ;
+.
+
+geofp:asDGGSResolution_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:asDGGSResolution_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "specificDggsDatatype"@en .
+
+geofp:asDGGSResolution_param3 a fno:Parameter ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "resolution"@en .
+
+geofo:asDGGSResolution_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:string  .
+
+geof:asGML
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:asGML_param1 geofp:asGML_param2 ) ;
+    fno:returns (geofo:asGML_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-gml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system."@en ;
+    skos:prefLabel "asGML"@en ;
+.
+
+geofp:asGML_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:asGML_param2 a fno:Parameter ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "gmlProfile"@en .
+
+geofo:asGML_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:gmlLiteral  .
+
+geof:asGeoJSON
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:contributor "Timo Homburg" ;
+    dcterms:creator "OGC GeoSPARQL 2.0 Standard Working Group" ;
+    dcterms:date "2021-05-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    fno:expects (geofp:asGeoJSON_param1 ) ;
+    fno:returns (geofo:asGeoJSON_output ) ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geojson-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal."@en ;
+    skos:prefLabel "asGeoJSON"@en ;
+.
+
+geofp:asGeoJSON_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:asGeoJSON_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:geoJSONLiteral  .
+
+geof:asKML
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:asKML_param1 ) ;
+    fno:returns (geofo:asKML_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-kml-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal."@en ;
+    skos:prefLabel "asKML"@en ;
+.
+
+geofp:asKML_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:asKML_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:kmlLiteral  .
+
+geof:asEWKB
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geof:asEWKB_param1 ) ;
+    fno:returns (geof:asEWKB_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/geometry-as-ewkb-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "Converts a given geometry to an equivalent EWKB representation preserving the coordinate reference system and geometry type, if possible."@en ;
+    skos:prefLabel "asEWKB"@en ;
+.
+
+geof:asEWKB_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geof:asEWKB_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:ewkbLiteral  .
+
+geof:asGeocode
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geof:asGeocode_param1 ) ;
+    fno:expects (geof:asGeocode_param2 ) ;
+    fno:returns (geof:asGeocode_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-geocode-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent Geocode representation. The kind of Geocode to be converted to is defined in the second parameter of the function."@en ;
+    skos:prefLabel "asGeocode"@en ;
+.
+
+geofp:asGeocode_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:asGeocode_param2 a fno:Parameter ;
+    fno:type rdfs:Resource ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geocode"@en .
+
+geofo:asGeocode_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:geocodeLiteral  .
+
+
+geof:asWKT
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:asWKT_param1 ) ;
+    fno:returns (geofo:asWKT_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/geometry-as-wkt-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible."@en ;
+    skos:prefLabel "asWKT"@en ;
+.
+
+geofp:asWKT_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:asWKT_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral  .
+
+geof:geometryN
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:geometryN_param1 geofp:geometryN_param2 ) ;
+    fno:returns (geofo:geometryN_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "geometryN"@en ;
+.
+
+geofp:geometryN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:geometryN_param2 a fno:Parameter ;
+    fno:type xsd:int ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geomindex"@en .
+
+geofo:geometryN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:metricBuffer
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2022-04-20"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    fno:expects (geofp:metricBuffer_param1 geofp:metricBuffer_param2 ) ;
+    fno:returns (geofo:metricBuffer_output ) ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a buffer around the input geometry, using a distance in meters."@en ;
+    skos:prefLabel "metric buffer"@en ;
+.
+
+geofp:metricBuffer_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:metricBuffer_param2 a fno:Parameter ;
+    fno:type xsd:double ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "radius"@en .
+
+geofo:metricBuffer_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:numGeometries
+    a skos:Concept , sd:Function, fno:Function ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:numGeometries_param1 ) ;
+    fno:returns (geofo:numGeometries_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection."@en ;
+    skos:prefLabel "numGeometries"@en ;
+.
+
+geofp:numGeometries_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:numGeometries_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+ 
+geof:numInteriorRing
+    a
+        skos:Concept ,
+        sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:numInteriorRing_param1 ) ;
+    fno:returns (geofo:numInteriorRing_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the number of interior rings contained in the given geometry."@en ;
+    skos:prefLabel "numInteriorRing"@en ;
+.
+
+geofp:numInteriorRing_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:numInteriorRing_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+geof:numPatches
+    a
+        skos:Concept ,
+        sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:numPatches_param1 ) ;
+    fno:returns (geofo:numPatches_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the number of including polygons of a geometry."@en ;
+    skos:prefLabel "numPatches"@en ;
+.
+
+geofp:numPatches_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:numPatches_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+geof:numPoints
+    a
+        skos:Concept ,
+        sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:numPoints_param1 ) ;
+    fno:returns (geofo:numPoints_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the number of points in the given geometry."@en ;
+    skos:prefLabel "numPoints"@en ;
+.
+
+geofp:numPoints_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:numPoints_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+
+geof:metricPerimeter
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricPerimeter_param1 ) ;
+    fno:returns (geofo:metricPerimeter_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the perimeter of a geometry in meters."@en ;
+    skos:prefLabel "metric perimeter"@en ;
+.
+
+geofp:metricPerimeter_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:metricPerimeter_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+
+geof:patchN
+    a
+        skos:Concept ,
+        sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:patchN_param1 ) ;
+    fno:returns (geofo:patchN_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the nth polygon included in a geometry."@en ;
+    skos:prefLabel "patchN"@en ;
+.
+
+geofp:patchN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:patchN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+ geof:perimeter
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:perimeter_param1 geofp:perimeter_param2) ;
+    fno:returns (geofo:perimeter_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the perimeter of a geometry in meters."@en ;
+    skos:prefLabel "perimeter"@en ;
+.
+
+geofp:perimeter_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:perimeter_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "unit"@en .
+
+geofo:perimeter_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+ 
+
+
+
+geof:metricPerimeter
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricPerimeter_param1 ) ;
+    fno:returns (geofo:metricPerimeter_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the perimeter of a geometry in meters."@en ;
+    skos:prefLabel "metric perimeter"@en ;
+.
+
+geofp:metricPerimeter_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:metricPerimeter_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+ 
+ geof:perimeter
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:perimeter_param1 geofp:perimeter_param2) ;
+    fno:returns (geofo:perimeter_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the perimeter of a geometry in meters."@en ;
+    skos:prefLabel "perimeter"@en ;
+.
+
+geofp:perimeter_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:perimeter_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "unit"@en .
+
+geofo:perimeter_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+ 
+
+geof:metricArea
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricArea_param1 ) ;
+    fno:returns (geofo:metricArea_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in squaremeters."@en ;
+    skos:prefLabel "metric area"@en ;
+.
+
+geofp:metricArea_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:metricArea_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+geof:area
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:area_param1 geofp:area_param2) ;
+    fno:returns (geofo:area_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the area of a geometry in square meters."@en ;
+    skos:prefLabel "area"@en ;
+.
+
+geofp:area_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:area_param2 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "units"@en .
+
+geofo:area_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+geof:boundary
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:boundary_param1 ) ;
+    fno:returns (geofo:boundary_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the boundary of the input geometry."@en ;
+    skos:prefLabel "boundary"@en ;
+.
+
+geofp:boundary_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:boundary_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:boundingCircle
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:date "2021-02-25"^^xsd:date ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that calculates the minimum bounding circle of set of geometries."@en ;
+    skos:prefLabel "bounding circle"@en ;
+.
+
+geofp:boundingCircle_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral, geo:geocodeLiteral ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:boundingCircle_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:buffer
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:buffer_param1 geofp:buffer_param2 geofp:buffer_param3 ) ;
+    fno:returns (geofo:buffer_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a buffer around the input geometry."@en ;
+    skos:prefLabel "buffer"@en ;
+.
+
+geofp:buffer_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:buffer_param2 a fno:Parameter ;
+    fno:type xsd:double ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "radius"@en .
+
+geofp:buffer_param3 a fno:Parameter ;
+    fno:type xsd:anyURI ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "units"@en .
+
+geofo:buffer_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:convexHull
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:convexHull_param1 ) ;
+    fno:returns (geofo:convexHull_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the convex hull of the input geometry."@en ;
+    skos:prefLabel "convex hull"@en ;
+.
+
+geofp:convexHull_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:convexHull_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+
+geof:difference
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:difference_param1 geofp:difference_param2 ) ;
+    fno:returns (geofo:difference_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a geometry consisting of all points that are part of the first geometry but not the second geometry."@en ;
+    skos:prefLabel "difference"@en ;
+.
+
+geofp:difference_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:difference_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:difference_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:dimension
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:dimension_param1 ) ;
+    fno:returns (geofo:dimension_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "Returns the dimension of a geometry."@en ;
+    skos:prefLabel "dimension"@en ;
+.
+
+geofp:dimension_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:dimension_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:integer  .
+
+
+geof:distance
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:distance_param1 geofp:distance_param2 geofp:distance_param3 ) ;
+    fno:returns (geofo:distance_output ) ;  
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the distance between the two closest points of the input geometries."@en ;
+    skos:example spec11:B.2.2.4 ;
+    skos:prefLabel "distance"@en ;
+.
+
+geofp:distance_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofp:distance_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofp:distance_param3 a fno:Parameter ;
+    fno:type xsd:anyURI  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "units"@en .
+
+geofo:distance_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+geof:withinDistance
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:withinDistance_param1 geofp:withinDistance_param2 geofp:withinDistance_param3 geofp:withinDistance_param4 ) ;
+    fno:returns (geofo:withinDistance_output ) ;  
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns true if the second geometry is within the given distance of the first geometry."@en ;
+    skos:example spec11:B.2.2.4 ;
+    skos:prefLabel "within distance"@en ;
+.
+
+geofp:withinDistance_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:withinDistance_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofp:withinDistance_param3 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "distance"@en .
+    
+geofp:withinDistance_param4 a fno:Parameter ;
+    fno:type xsd:anyURI  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "unit"@en .
+
+geofo:withinDistance_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+    
+geof:metricWithinDistance
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:metricWithinDistance_param1 geofp:metricWithinDistance_param2 geofp:metricWithinDistance_param3 ) ;
+    fno:returns (geofo:metricWithinDistance_output ) ;  
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.2/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns true if the second goemetry is within the given metric distance of the first geometry."@en ;
+    skos:example spec11:B.2.2.4 ;
+    skos:prefLabel "metric within distance"@en ;
+.
+
+geofp:metricWithinDistance_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:metricWithinDistance_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofp:metricWithinDistance_param3 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "distance"@en .
+
+geofo:metricWithinDistance_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehContains
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehContains_param1 geofp:ehContains_param2 ) ;
+    fno:returns (geofo:ehContains_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument. 
+      
+DE-9IM: T*TFF*FF*"""@en ;
+    skos:prefLabel "contains"@en ;
+.
+
+geofp:ehContains_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehContains_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehContains_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehCoveredBy
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehCoveredBy_param1 geofp:ehCoveredBy_param2 ) ;
+    fno:returns (geofo:ehConveredBy_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.
+
+DE-9IM: TFF*TFT**"""@en ;
+    skos:prefLabel "covered by"@en ;
+.
+
+geofp:ehCoveredBy_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehCoveredBy_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehCoveredBy_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehCovers
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehCovers_param1 geofp:ehCovers_param2 ) ;
+    fno:returns (geofo:ehCovers_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially covers the second geometry argument.
+
+DE-9IM: T*TFT*FF*"""@en ;
+    skos:prefLabel "covers"@en ;
+.
+
+geofp:ehCovers_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehCovers_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehCovers_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehDisjoint
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehDisjoint_param1 geofp:ehDisjoint_param2 ) ;
+    fno:returns (geofo:ehDisjoint_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are disjoint. 
+
+DE-9IM: FF*FF****"""@en ;
+    skos:prefLabel "disjoint"@en ;
+.
+
+geofp:ehDisjoint_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehDisjoint_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehDisjoint_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehEquals
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehEquals_param1 geofp:ehEquals_param2 ) ;
+    fno:returns (geofo:ehEquals_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are equal. 
+
+DE-9IM: TFFFTFFFT"""@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+geofp:ehEquals_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehEquals_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehEquals_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehInside
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehInside_param1 geofp:ehInside_param2 ) ;
+    fno:returns (geofo:ehInside_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument is spatially inside the second geometry argument.
+
+DE-9IM: TFF*FFT**"""@en ;
+    skos:prefLabel "inside"@en ;
+.
+
+geofp:ehInside_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehInside_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehInside_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehMeet
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehMeet_param1 geofp:ehMeet_param2 ) ;
+    fno:returns (geofo:ehMeet_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries meet.
+
+DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
+    skos:prefLabel "meet"@en ;
+.
+
+geofp:ehMeet_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehMeet_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehMeet_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:ehOverlap
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:ehOverlap_param1 geofp:ehOverlap_param2 ) ;
+    fno:returns (geofo:ehOverlap_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries overlap.
+
+DE-9IM: T*T***T**"""@en ;
+    skos:prefLabel "overlap"@en ;
+.
+
+geofp:ehOverlap_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:ehOverlap_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:ehOverlap_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:endPoint
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:endPoint_param1 ) ;
+    fno:returns (geofo:endPoint_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function which returns the last point of a geometry."@en ;
+    skos:prefLabel "endPoint"@en ;
+.
+
+geofp:endPoint_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:endPoint_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:envelope
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:envelope_param1 ) ;
+    fno:returns (geofo:envelope_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the minimum bounding rectangle of the input geometry."@en ;
+    skos:prefLabel "envelope"@en ;
+.
+
+geofp:envelope_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:envelope_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:exteriorRing
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:exteriorRing_param1 ) ;
+    fno:returns (geofo:exteriorRing_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the exterior interior ring of a geometry."@en ;
+    skos:prefLabel "exteriorRing"@en ;
+.
+
+geofp:exteriorRing_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:exteriorRing_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:getSRID
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:getSRID_param1 ) ;
+    fno:returns (geofo:getSRID_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/srid-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the spatial reference system URI of the input geometry."@en ;
+    skos:prefLabel "getSRID"@en ;
+.
+
+geofp:getSRID_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:getSRID_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:anyURI  .
+
+geof:interiorRingN
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:interiorRingN_param1 geofp:interiorRingN_param2 ) ;
+    fno:returns (geofo:interiorRingN_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the nth interior ring of a geometry."@en ;
+    skos:prefLabel "interiorRingN"@en ;
+.
+
+geofp:interiorRingN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+   
+geofp:interiorRingN_param2 a fno:Parameter ;
+    fno:type xsd:integer  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "n"@en .
+
+geofo:interiorRingN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:intersection
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:intersection_param1 geofp:intersection_param2 ) ;
+    fno:returns (geofo:intersection_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a geometry consisting of all points that are part of both input geometries."@en ;
+    skos:prefLabel "intersection"@en ;
+.
+
+geofp:intersection_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:intersection_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:intersection_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:isClosed
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isClosed_param1 ) ;
+    fno:returns (geofo:isClosed_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is closed."@en ;
+    skos:prefLabel "isClosed"@en .
+
+geofp:isClosed_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isClosed_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean .
+
+geof:isCollection
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isCollection_param1 ) ;
+    fno:returns (geofo:isCollection_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the literal of the geometry encodes a GeometryCollection."@en ;
+    skos:prefLabel "isCollection"@en .
+
+geofp:isCollection_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isCollection_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean .
+
+geof:simplify
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:simplify_param1 geofp:simplify_param2 ) ;
+    fno:returns (geofo:simplify_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that simplifies a given geometry using the Douglas-Peucker algorithm."@en ;
+    skos:prefLabel "simplify"@en .
+
+geofp:simplify_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:simplify_param2 a fno:Parameter ;
+    fno:type xsd:double  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "tolerance"@en .
+
+geofo:simplify_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral .
+
+geof:isEmpty
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isEmpty_param1 ) ;
+    fno:returns (geofo:isEmpty_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is empty."@en ;
+    skos:prefLabel "isEmpty"@en .
+
+geofp:isEmpty_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isEmpty_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:isRing
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isRing_param1 ) ;
+    fno:returns (geofo:isRing_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns true if the input geometry is a ring."@en ;
+    skos:prefLabel "isRing"@en .
+
+geofp:isRing_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isRing_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean .
+
+geof:isSimple
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:isSimple_param1 ) ;
+    fno:returns (geofo:isSimple_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is a simple geometry."@en ;
+    skos:prefLabel "isSimple"@en .
+
+geofp:isSimple_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:isSimple_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+
+geof:easting
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:valid ;
+    fno:expects (geofp:easting_param1 ) ;
+    fno:returns (geofo:easting_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A query function that returns the easting of a point geometry."@en ;
+    skos:prefLabel "easting"@en ;
+    skos:scopeNote "The easting is returned in the unit defined by the geometries' coordinate reference system"@en .
+
+geofp:easting_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:easting_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double .
+
+
+geof:northing
+    a sd:Function, fno:Function, skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:valid ;
+    fno:expects (geofp:northing_param1 ) ;
+    fno:returns (geofo:northing_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A query function that returns the northing of a point geometry."@en ;
+    skos:prefLabel "northing"@en ;
+    skos:scopeNote "The northing is returned in the unit defined by the geometries' coordinate reference system"@en .
+
+geofp:northing_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:northing_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double .
+
+geof:maxX
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:maxX_param1 ) ;
+    fno:returns (geofo:maxX_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the maximum x coordinate of the input geometry."@en ;
+    skos:prefLabel "maxX"@en ;
+    skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en .
+
+geofp:maxX_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:maxX_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:maxY
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:maxY_param1 ) ;
+    fno:returns (geofo:maxY_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the maximum y coordinate of the input geometry."@en ;
+    skos:prefLabel "maxY"@en ;
+    skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en .
+
+geofp:maxY_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:maxY_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:maxZ
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:maxZ_param1 ) ;
+    fno:returns (geofo:maxZ_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the maximum z coordinate of the input geometry."@en ;
+    skos:prefLabel "maxZ"@en ;
+    skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en .
+
+geofp:maxZ_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:maxZ_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:minX
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:minX_param1 ) ;
+    fno:returns (geofo:minX_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the minimum x coordinate of the input geometry."@en ;
+    skos:prefLabel "minX"@en ;
+    skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en .
+
+geofp:minX_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:minX_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:minY
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:minY_param1 ) ;
+    fno:returns (geofo:minY_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the minimum y coordinate of the input geometry."@en ;
+    skos:prefLabel "minY"@en ;
+    skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en .
+
+geofp:minY_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:minY_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:minZ
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:minZ_param1 ) ;
+    fno:returns (geofo:minZ_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns the minimum z coordinate of the input geometry."@en ;
+    skos:prefLabel "minZ"@en ;
+    skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
+.
+
+geofp:minZ_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofo:minZ_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+geof:pointN
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:pointN_param1 geof:pointN_param2 ) ;
+    fno:returns (geofo:pointN_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the nth point of a geometry."@en ;
+    skos:prefLabel "pointN"@en ;
+.
+
+geofp:pointN_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+   
+geofp:pointN_param2 a fno:Parameter ;
+    fno:type xsd:integer  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "n"@en .
+
+geofo:pointN_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:rcc8dc
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8dc_param1 geofp:rcc8dc_param2 ) ;
+    fno:returns (geofo:rcc8dc_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are disjoint. 
+
+DE-9IM: FFTFFTTTT"""@en ;
+    skos:prefLabel "disconnected"@en ;
+.
+
+geofp:rcc8dc_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8dc_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofp:rcc8dc_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8ec
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8ec_param1 geofp:rcc8ec_param2 ) ;
+    fno:returns (geofo:rcc8ec_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries meet. 
+
+DE-9IM: FFTFTTTTT"""@en ;
+    skos:prefLabel "externally connected"@en ;
+.
+
+geofp:rcc8ec_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8ec_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8ec_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8eq
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8eq_param1 geofp:rcc8eq_param2 ) ;
+    fno:returns (geofo:rcc8eq_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are equal. 
+      
+DE-9IM: TFFFTFFFT"""@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+geofp:rcc8eq_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8eq_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8eq_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8ntpp
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8ntpp_param1 geofp:rcc8ntpp_param2 ) ;
+    fno:returns (geofo:rcc8ntpp_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument is spatially inside the second geometry argument.
+
+DE-9IM: TFFTFFTTT"""@en ;
+    skos:prefLabel "non-tangential proper part"@en ;
+.
+
+geofp:rcc8ntpp_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8ntpp_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8ntpp_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8ntppi
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8ntppi_param1 geofp:rcc8ntppi_param2 ) ;
+    fno:returns (geofo:rcc8ntppi_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument.
+
+DE-9IM: TTTFFTFFT"""@en ;
+    skos:prefLabel "non-tangential proper part inverse"@en ;
+.
+
+geofp:rcc8ntppi_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8ntppi_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8ntppi_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8po
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8po_param1 geofp:rcc8po_param2 ) ;
+    fno:returns (geofo:rcc8po_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries overlap.
+
+DE-9IM: TTTTTTTTT"""@en ;
+    skos:prefLabel "partially overlapping"@en ;
+.
+
+geofp:rcc8po_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8po_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8po_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8tpp
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8tpp_param1 geofp:rcc8tpp_param2 ) ;
+    fno:returns (geofo:rcc8tpp_output ) ;   
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.
+
+DE-9IM: TFFTTFTTT"""@en ;
+    skos:prefLabel "tangential proper part"@en ;
+.
+
+geofp:rcc8tpp_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8tpp_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8tpp_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:rcc8tppi
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:rcc8tppi_param1 geofp:rcc8tppi_param2 ) ;
+    fno:returns (geofo:rcc8tppi_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/rcc8-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially covers the second geometry argument.
+
+DE-9IM: TTTFTTFFT"""@en ;
+    skos:prefLabel "tangential proper part inverse"@en ;
+.
+
+geofp:rcc8tppi_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:rcc8tppi_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:rcc8tppi_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+
+geof:relate
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:relate_param1 geofp:relate_param2 geofp:relate_param3 ) ;
+    fno:returns (geofo:relate_output ) ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/relate-query-function> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the spatial relationship between the two input geometries corresponds to one with acceptable values for the specified DE-9IM pattern matrix."@en ;
+    skos:prefLabel "relate"@en ;
+.
+
+geofp:relate_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:relate_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofp:relate_param3 a fno:Parameter ;
+    fno:type xsd:string ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "pattern-matrix"@en .
+
+geofo:relate_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfContains
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfContains_param1 geofp:sfContains_param2 ) ;
+    fno:returns (geofo:sfContains_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially contains the second geometry argument.
+
+DE-9IM: T*****FF*"""@en ;
+    skos:example spec11:B.2.2.1 ;
+    skos:prefLabel "contains"@en ;
+.
+
+geofp:sfContains_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfContains_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfContains_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfCrosses
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfCrosses_param1 geofp:sfCrosses_param2 ) ;
+    fno:returns (geofo:sfCrosses_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially crosses the second geometry argument.
+
+DE-9IM: T*T***T**"""@en ;
+    skos:prefLabel "crosses"@en ;
+.
+
+geofp:sfCrosses_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfCrosses_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfCrosses_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfDisjoint
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfDisjoint_param1 geofp:sfDisjoint_param2 ) ;
+    fno:returns (geofo:sfDisjoint_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are disjoint. 
+      
+DE-9IM: FF*FF****"""@en ;
+    skos:prefLabel "disjoint"@en ;
+.
+
+geofp:sfDisjoint_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfDisjoint_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfDisjoint_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfEquals
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfEquals_param1 geofp:sfEquals_param2 ) ;
+    fno:returns (geofo:sfEquals_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries are equal. 
+
+DE-9IM: TFFFTFFFT"""@en ;
+    skos:prefLabel "equals"@en ;
+.
+
+geofp:sfEquals_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfEquals_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfEquals_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfIntersects
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfIntersects_param1 geofp:sfIntersects_param2 ) ;
+    fno:returns (geofo:sfIntersects_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries intersect.
+
+DE-9IM: T******** ^ *T******* ^ ***T***** ^ ****T**** """@en ;
+    skos:prefLabel "intersects"@en ;
+.
+
+geofp:sfIntersects_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfIntersects_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfIntersects_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfOverlaps
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfOverlaps_param1 geofp:sfOverlaps_param2 ) ;
+    fno:returns (geofo:sfOverlaps_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument spatially overlaps the second geometry argument.
+
+DE-9IM: T*T***T** """@en ;
+    skos:prefLabel "overlaps"@en ;
+.
+
+geofp:sfOverlaps_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfOverlaps_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfOverlaps_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfTouches
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfTouches_param1 geofp:sfTouches_param2 ) ;
+    fno:returns (geofo:sfTouches_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the input geometries touch.
+
+DE-9IM: FT******* ^ F**T***** ^ F***T****"""@en ;
+    skos:example spec11:B.2.2.3 ;
+    skos:prefLabel "touches"@en ;
+.
+
+geofp:sfTouches_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfTouches_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfTouches_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:sfWithin
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:sfWithin_param1 geofp:sfWithin_param2 ) ;
+    fno:returns (geofo:sfWithin_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/sf-query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition """A query function that returns true if the first geometry argument is spatially within the second geometry argument. 
+
+DE-9IM: T*F**F***"""@en ;
+    skos:example spec11:B.2.2.2 ;
+    skos:prefLabel "within"@en ;
+.
+
+geofp:sfWithin_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:sfWithin_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:sfWithin_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:boolean  .
+
+geof:startPoint
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:startPoint_param1 ) ;
+    fno:returns (geofo:startPoint_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function which returns the first point of a geometry."@en ;
+    skos:prefLabel "startPoint"@en ;
+.
+
+geofp:startPoint_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:startPoint_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  .
+
+geof:symDifference
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:symDifference_param1 geofp:symDifference_param2 ) ;
+    fno:returns (geofo:symDifference_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a geometry consisting of all points that are part of only one input geometry."@en ;
+    skos:prefLabel "symmetric difference"@en ;
+.
+
+geofp:symDifference_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:symDifference_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:symDifference_output a fno:Parameter ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
+
+geof:union
+    a sd:Function, fno:Function , skos:Concept ;
+    skos:inScheme cs: ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    fno:expects (geofp:union_param1 geofp:union_param2 ) ;
+    fno:returns (geofo:union_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns a geometry consisting of all points that are part of at least one input geometry."@en ;
+    skos:example spec11:B.2.2.3 ;
+    skos:prefLabel "union"@en ;
+.
+
+geofp:union_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom1"@en .
+
+geofp:union_param2 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom2"@en .
+
+geofo:union_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral . 
+
+geof:x
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:x_param1 ) ;
+    fno:returns (geofo:x_output ) ; 
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/sa-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the x coordinate of a point geometry."@en ;
+    skos:prefLabel "X"@en ;
+    skos:scopeNote "X indicates the first dimension as indicated by the spatial reference system"@en ;
+.
+
+geofp:x_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:x_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+geof:y
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:y_param1 ) ;
+    fno:returns (geofo:y_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the y coordinate of a point geometry."@en ;
+    skos:prefLabel "Y"@en ;
+    skos:scopeNote "Y indicates the second dimension as indicated by the spatial reference system"@en ;
+.
+
+geofp:y_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:y_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+geof:z
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:z_param1 ) ;
+    fno:returns (geofo:z_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the z coordinate of a point geometry."@en ;
+    skos:prefLabel "Z"@en ;
+    skos:scopeNote "Z indicates the third dimension as indicated by the spatial reference system"@en ;
+.
+
+geofp:z_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:z_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+    
+geof:m
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.2> ;
+    policy:status status:valid ;
+    fno:expects (geofp:m_param1 ) ;
+    fno:returns (geofo:m_output ) ; 
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.2> ;
+    skos:definition "A query function that returns the m coordinate of a point geometry."@en ;
+    skos:prefLabel "M"@en ;
+    skos:scopeNote "M indicates the measurement dimension as indicated by the spatial reference system"@en ;
+.
+
+geofp:m_param1 a fno:Parameter ;
+    fno:type geo:wktLiteral, geo:ewkbLiteral, geo:gmlLiteral, geo:geoJSONLiteral, geo:kmlLiteral, geo:dggsLiteral  ;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geom"@en .
+
+geofo:m_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;    
+    fno:type xsd:double  .
+
+geof:extrude
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:experimental ;
+    fno:expects (geofp:extrude_param1 geofp:extrude_param2 ) ;
+    fno:returns (geofo:extrude_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A function that extrudes 2D geometry to 3D given the height as an argument. "@en ;
+    skos:prefLabel "extrude"@en .
+
+geofp:extrude_param1 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geometry"@en .
+
+geofp:extrude_param2 a fno:Parameter ;
+    fno:type xsd:double;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "height"@en .
+
+geofo:extrude_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;
+    fno:type geo:Feature .
+
+geof:extrudeByLine
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:experimental ;
+    fno:expects (geofp:extrudeByLine_param1 geofp:extrudeByLine_param2 ) ;
+    fno:returns (geofo:extrudeByLine_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A function that extrudes 2D geometry to 3D given the linestring as an argument. "@en ;
+    skos:prefLabel "extrude by line"@en .
+
+geofp:extrudeByLine_param1 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geometry"@en .
+
+geofp:extrudeByLine_param2 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "line segment"@en .
+
+geofo:extrudeByLine_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;
+    fno:type geo:Feature .
+
+geof:extrudeInTime
+    a sd:Function, fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.3> ;
+    policy:status status:experimental ;
+    fno:expects (geofp:extrudeInTime_param1 geofp:extrudeInTime_param2 geofp:extrudeInTime_param3 geofp:extrudeInTime_param4 ) ;
+    fno:returns (geofo:extrudeInTime_output ) ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.3> ;
+    skos:definition "A function that extrudes 2D geometry to 3D given the linestring, start dateTime and end dateTime as arguments. "@en ;
+    skos:prefLabel "ExtrudeInTime"@en .
+
+geofp:extrudeInTime_param1 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "geometry"@en .
+
+geofp:extrudeInTime_param2 a fno:Parameter ;
+    fno:type ogc:geomLiteral;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "line segment"@en .
+
+geofp:extrudeInTime_param3 a fno:Parameter ;
+    fno:type xsd:dateTime;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "start"@en .
+
+geofp:extrudeInTime_param4 a fno:Parameter ;
+    fno:type xsd:dateTime;
+    fno:required "true"^^xsd:boolean ;
+    skos:prefLabel "end"@en .
+
+geofo:extrudeInTime_output a fno:Output ;
+    fno:required "true"^^xsd:boolean ;
+    fno:type geo:Feature .
