@@ -1,0 +1,848 @@
+@prefix : <http://www.opengis.net/ont/sf3d#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sdo: <https://schema.org/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf3d: <http://www.opengis.net/ont/sf3d#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <http://www.opengis.net/ont/sf3d> .
+
+<http://www.opengis.net/ont/sf3d> rdf:type owl:Ontology ;
+                                   owl:versionIRI <http://www.opengis.net/ont/sf/1.3> ;
+                                   dcterms:creator "OGC GeoSPARQL Standards Working Group" ;
+                                   dcterms:description "An RDF/OWL vocabulary for defining geometry types in 3D" ;
+                                   dcterms:license "https://www.ogc.org/license"^^xsd:anyURI ;
+                                   dcterms:modified "2022-06-16"^^xsd:date ;
+                                   dcterms:publisher [ rdf:type sdo:Organization ;
+                                                       sdo:name "Open Geospatial Consortium" ;
+                                                       sdo:url "https://www.ogc.org"^^xsd:anyURI
+                                                     ] ;
+                                   dcterms:rights "(c) 2022 Open Geospatial Consortium" ;
+                                   dcterms:title "Simple Features 3D Vocabulary" ;
+                                   owl:versionInfo "OGC GeoSPARQL 1.3" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/description
+dcterms:description rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/license
+dcterms:license rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/publisher
+dcterms:publisher rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/rights
+dcterms:rights rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+dcterms:title rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#altLabel
+skos:altLabel rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#definition
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/name
+sdo:name rdf:type owl:AnnotationProperty .
+
+
+###  https://schema.org/url
+sdo:url rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.opengis.net/ont/sf3d#bplyLiteral
+sf3d:bplyLiteral rdf:type rdfs:Datatype ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "A literal which includes a 3D object in the PLY binary format"@en ;
+                 skos:prefLabel "Binary PLY literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#glbLiteral
+sf3d:glbLiteral rdf:type rdfs:Datatype ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A literal which includes a 3D object in the GLB format"@en ;
+                skos:prefLabel "GLB literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#gltfLiteral
+sf3d:gltfLiteral rdf:type rdfs:Datatype ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "A literal which includes a 3D object in the GLTF format"@en ;
+                 skos:prefLabel "GLTF literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#jMeshLiteral
+sf3d:jMeshLiteral rdf:type rdfs:Datatype ;
+                  rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                  skos:definition "A literal which includes a 3D object in the JMesh format"@en ;
+                  skos:prefLabel "JMesh literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#matrixLiteral
+sf3d:matrixLiteral rdf:type rdfs:Datatype .
+
+
+###  http://www.opengis.net/ont/sf3d#objLiteral
+sf3d:objLiteral rdf:type rdfs:Datatype ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A literal which includes a 3D object in the OBJ format"@en ;
+                skos:prefLabel "OBJ literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#plyLiteral
+sf3d:plyLiteral rdf:type rdfs:Datatype ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A literal which includes a 3D object in the PLY ASCII format"@en ;
+                skos:prefLabel "PLY literal"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#x3dLiteral
+sf3d:x3dLiteral rdf:type rdfs:Datatype ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A literal which includes a 3D object in the X3D format"@en ;
+                skos:prefLabel "X3D literal"@en .
+
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.opengis.net/ont/sf3d#baseGeometry
+sf3d:baseGeometry rdf:type owl:ObjectProperty ;
+                  rdfs:domain sf3d:SolidGeometry ;
+                  rdfs:range sf3d:Face ;
+                  rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                  skos:definition "Relates a 3d object to its base surface geometry"@en ;
+                  skos:prefLabel "base Geometry"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#faces
+sf3d:faces rdf:type owl:ObjectProperty ;
+           rdfs:domain sf3d:SolidGeometry ;
+           rdfs:range sf3d:Face ;
+           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "Relates a 3d solid to a face"@en ;
+           skos:prefLabel "faces"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#hasAppearance
+sf3d:hasAppearance rdf:type owl:ObjectProperty ;
+                   rdfs:domain sf3d:SolidGeometry ;
+                   rdfs:range sf3d:Material ;
+                   rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "Relates a 3D object to an instance of material or texture"@en ;
+                   skos:prefLabel "base Geometry"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#metricXLength
+sf3d:metricXLength rdf:type owl:ObjectProperty ;
+                   rdfs:domain geo:Geometry .
+
+
+###  http://www.opengis.net/ont/sf3d#metricYLength
+sf3d:metricYLength rdf:type owl:ObjectProperty ;
+                   rdfs:domain geo:Geometry .
+
+
+###  http://www.opengis.net/ont/sf3d#metricZLength
+sf3d:metricZLength rdf:type owl:ObjectProperty ;
+                   rdfs:domain geo:Geometry .
+
+
+###  http://www.opengis.net/ont/sf3d#orientation
+sf3d:orientation rdf:type owl:ObjectProperty ;
+                 rdfs:domain sf3d:SolidGeometry .
+
+
+###  http://www.opengis.net/ont/sf3d#position
+sf3d:position rdf:type owl:ObjectProperty ;
+              rdfs:domain sf3d:SolidGeometry .
+
+
+###  http://www.opengis.net/ont/sf3d#rotation
+sf3d:rotation rdf:type owl:ObjectProperty ;
+              rdfs:domain sf3d:SolidGeometry ;
+              rdfs:range sf3d:matrixLiteral ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "Rotation vector to orient a 3D model"@en ;
+              skos:prefLabel "rotation"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#scale
+sf3d:scale rdf:type owl:ObjectProperty ;
+           rdfs:domain sf3d:SolidGeometry .
+
+
+###  http://www.opengis.net/ont/sf3d#textures
+sf3d:textures rdf:type owl:ObjectProperty ;
+              rdfs:domain sf3d:SolidGeometry ;
+              rdfs:range sf3d:Texture ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "Relates a 3d solid to a texture"@en ;
+              skos:prefLabel "textures"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#translation
+sf3d:translation rdf:type owl:ObjectProperty ;
+                 rdfs:domain sf3d:SolidGeometry ;
+                 rdfs:range sf3d:matrixLiteral ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "Translation vector to orient a 3D model"@en ;
+                 skos:prefLabel "translation"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#vertices
+sf3d:vertices rdf:type owl:ObjectProperty ;
+              rdfs:domain sf3d:SolidGeometry ;
+              rdfs:range sf:Point ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "Relates a 3d solid to its vertices"@en ;
+              skos:prefLabel "vertices"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.opengis.net/ont/sf3d#facesList
+sf3d:facesList rdf:type owl:DatatypeProperty ;
+               rdfs:domain geo:Geometry ;
+               rdfs:range xsd:integer ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:definition "Links a solid to a literal containing a "@en ;
+               skos:prefLabel "number of textures"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#metricXLength
+sf3d:metricXLength rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:double .
+
+
+###  http://www.opengis.net/ont/sf3d#metricYLength
+sf3d:metricYLength rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:double .
+
+
+###  http://www.opengis.net/ont/sf3d#metricZLength
+sf3d:metricZLength rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:double .
+
+
+###  http://www.opengis.net/ont/sf3d#numFaces
+sf3d:numFaces rdf:type owl:DatatypeProperty ;
+              rdfs:domain geo:Geometry ;
+              rdfs:range xsd:integer ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "The number of faces of a geometry"@en ;
+              skos:prefLabel "number of faces"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#numPoints
+sf3d:numPoints rdf:type owl:DatatypeProperty ;
+               rdfs:domain geo:Geometry ;
+               rdfs:range xsd:integer ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:definition "The number of points of a geometry"@en ;
+               skos:prefLabel "number of points"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#numTextures
+sf3d:numTextures rdf:type owl:DatatypeProperty ;
+                 rdfs:domain geo:Geometry ;
+                 rdfs:range xsd:integer ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "The number of textures of a geometry"@en ;
+                 skos:prefLabel "number of textures"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#offsetX
+sf3d:offsetX rdf:type owl:DatatypeProperty ;
+             rdfs:domain sf3d:Texture ;
+             rdfs:range xsd:float ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:definition "An offset in the direction of the X axis"@en ;
+             skos:prefLabel "offset X"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#offsetY
+sf3d:offsetY rdf:type owl:DatatypeProperty ;
+             rdfs:domain sf3d:Texture ;
+             rdfs:range xsd:float ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:definition "An offset in the direction of the Y axis"@en ;
+             skos:prefLabel "offset Y"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#offsetZ
+sf3d:offsetZ rdf:type owl:DatatypeProperty ;
+             rdfs:domain sf3d:Texture ;
+             rdfs:range xsd:float ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:definition "An offset in the direction of the Z axis"@en ;
+             skos:prefLabel "offset Z"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#orientation
+sf3d:orientation rdf:type owl:DatatypeProperty ;
+                 rdfs:range sf3d:matrixLiteral .
+
+
+###  http://www.opengis.net/ont/sf3d#position
+sf3d:position rdf:type owl:DatatypeProperty ;
+              rdfs:range sf3d:matrixLiteral .
+
+
+###  http://www.opengis.net/ont/sf3d#scale
+sf3d:scale rdf:type owl:DatatypeProperty ;
+           rdfs:range sf3d:matrixLiteral .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/sf#BSplineCurve
+sf:BSplineCurve rdf:type owl:Class ;
+                rdfs:subClassOf sf:SplineCurve ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A curve based on a B-Spline"@en ;
+                skos:prefLabel "B-Spline Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#BSplineSurface
+sf:BSplineSurface rdf:type owl:Class ;
+                  rdfs:subClassOf sf3d:SplineSurface ;
+                  rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                  skos:definition "A BSpline based surface on a 3D shape"@en ;
+                  skos:prefLabel "B-Spline Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#BezierCurve
+sf:BezierCurve rdf:type owl:Class ;
+               rdfs:subClassOf sf:Curve ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:definition "A curve named after Pierre Bezier which approximates real-world shapes"@en ;
+               skos:prefLabel "Bezier Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#BezierSurface
+sf:BezierSurface rdf:type owl:Class ;
+                 rdfs:subClassOf sf:Polygon ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "A bezier based surface on a 3D shape"@en ;
+                 skos:prefLabel "Bezier Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#BlossCurve
+sf:BlossCurve rdf:type owl:Class ;
+              rdfs:subClassOf sf:Curve ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:prefLabel "Bloss Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#Circle
+sf:Circle rdf:type owl:Class ;
+          rdfs:subClassOf sf:Polygon ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "A circle"@en ;
+          skos:prefLabel "Circle"@en .
+
+
+###  http://www.opengis.net/ont/sf#ClothoidCurve
+sf:ClothoidCurve rdf:type owl:Class ;
+                 rdfs:subClassOf sf:Curve ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:prefLabel "Clothoid Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#ConicalCurve
+sf:ConicalCurve rdf:type owl:Class ;
+                rdfs:subClassOf sf:Curve ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:prefLabel "Conical Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#CosineCurve
+sf:CosineCurve rdf:type owl:Class ;
+               rdfs:subClassOf sf:Curve ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:prefLabel "Cosine Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#Curve
+sf:Curve rdf:type owl:Class ;
+         rdfs:subClassOf sf:Geometry .
+
+
+###  http://www.opengis.net/ont/sf#CylindricalSurface
+sf:CylindricalSurface rdf:type owl:Class ;
+                      rdfs:subClassOf sf:Polygon ;
+                      rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                      skos:definition "A cylindrical based surface on a 3D shape"@en ;
+                      skos:prefLabel "Cylindrical Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#Disk
+sf:Disk rdf:type owl:Class ;
+        rdfs:subClassOf sf:Polygon ;
+        rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+        skos:definition "A disc"@en ;
+        skos:prefLabel "Disc"@en .
+
+
+###  http://www.opengis.net/ont/sf#Face
+sf:Face rdf:type owl:Class ;
+        rdfs:subClassOf sf:Polygon ;
+        rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+        skos:definition "a flat or curved surface on a 3D shape"@en ;
+        skos:prefLabel "Face"@en .
+
+
+###  http://www.opengis.net/ont/sf#Geometry
+sf:Geometry rdf:type owl:Class ;
+            rdfs:subClassOf geo:Geometry .
+
+
+###  http://www.opengis.net/ont/sf#GeometryCollection
+sf:GeometryCollection rdf:type owl:Class ;
+                      rdfs:subClassOf sf:Geometry ;
+                      rdfs:comment "Geometry Collection"@en .
+
+
+###  http://www.opengis.net/ont/sf#MultiPoint
+sf:MultiPoint rdf:type owl:Class ;
+              rdfs:subClassOf sf:GeometryCollection .
+
+
+###  http://www.opengis.net/ont/sf#NURBSCurve
+sf:NURBSCurve rdf:type owl:Class ;
+              rdfs:subClassOf sf:BSplineCurve ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:altLabel "Non-Uniform Rational B-Spline"@en ;
+              skos:definition "A NURBS based surface on a 3D shape"@en ;
+              skos:prefLabel "NURBS Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#NURBSSurface
+sf:NURBSSurface rdf:type owl:Class ;
+                rdfs:subClassOf sf:BSplineSurface ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A NURBS based surface on a 3D shape"@en ;
+                skos:prefLabel "NURBS Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#PlaneSurface
+sf:PlaneSurface rdf:type owl:Class ;
+                rdfs:subClassOf sf:Polygon ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A flat surface in two dimensions"@en ;
+                skos:prefLabel "Plane Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#Point
+sf:Point rdf:type owl:Class ;
+         rdfs:subClassOf sf:Geometry .
+
+
+###  http://www.opengis.net/ont/sf#Polygon
+sf:Polygon rdf:type owl:Class ;
+           rdfs:subClassOf sf:Surface .
+
+
+###  http://www.opengis.net/ont/sf#PolyhedralSurface
+sf:PolyhedralSurface rdf:type owl:Class ;
+                     rdfs:subClassOf sf:Surface .
+
+
+###  http://www.opengis.net/ont/sf#RationalBezierCurve
+sf:RationalBezierCurve rdf:type owl:Class ;
+                       rdfs:subClassOf sf:Curve ;
+                       rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                       skos:definition "A curve based on bezier"@en ;
+                       skos:prefLabel "Rational Bezier Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#RationalBezierSurface
+sf:RationalBezierSurface rdf:type owl:Class ;
+                         rdfs:subClassOf sf:Polygon ;
+                         rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                         skos:definition "A rational bezier based surface on a 3D shape"@en ;
+                         skos:prefLabel "Rational Bezier Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#SineCurve
+sf:SineCurve rdf:type owl:Class ;
+             rdfs:subClassOf sf:Curve ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:prefLabel "Sine Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#SplineCurve
+sf:SplineCurve rdf:type owl:Class ;
+               rdfs:subClassOf sf:Curve ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:definition "A curve based on a spline."@en ;
+               skos:prefLabel "Spline Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#Surface
+sf:Surface rdf:type owl:Class ;
+           rdfs:subClassOf sf:Geometry .
+
+
+###  http://www.opengis.net/ont/sf#TSplineCurve
+sf:TSplineCurve rdf:type owl:Class ;
+                rdfs:subClassOf sf:SplineCurve ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A curve based on a T-Spline"@en ;
+                skos:prefLabel "T-Spline Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#ToroidalSurface
+sf:ToroidalSurface rdf:type owl:Class ;
+                   rdfs:subClassOf sf:Polygon ;
+                   rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "A torus based surface on a 3D shape"@en ;
+                   skos:prefLabel "Toroidal Surface"@en .
+
+
+###  http://www.opengis.net/ont/sf#TriangleCurve
+sf:TriangleCurve rdf:type owl:Class ;
+                 rdfs:subClassOf sf:Curve ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "A triangle curve"@en ;
+                 skos:prefLabel "Triangle Curve"@en .
+
+
+###  http://www.opengis.net/ont/sf#Vertex
+sf:Vertex rdf:type owl:Class ;
+          rdfs:subClassOf sf:Point ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "A point in a shape where lines intersect"@en ;
+          skos:prefLabel "Vertex"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Annulus
+sf3d:Annulus rdf:type owl:Class ;
+             rdfs:subClassOf sf:Circle ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:definition "A region between two concentric circles"@en ;
+             skos:prefLabel "Annulus"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Boundary
+sf3d:Boundary rdf:type owl:Class ;
+              rdfs:subClassOf sf3d:SolidGeometry ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "a round solid figure with every point on its surface equidistant from its centre"@en ;
+              skos:prefLabel "Boundary"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Cone
+sf3d:Cone rdf:type owl:Class ;
+          rdfs:subClassOf sf3d:SolidGeometry ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "a solid or hollow object which tapers from a circular or roughly circular base to a point"@en ;
+          skos:prefLabel "Cone"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Cube
+sf3d:Cube rdf:type owl:Class ;
+          rdfs:subClassOf sf3d:Cuboid ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "a symmetrical three-dimensional shape, either solid or hollow, contained by six equal squares"@en ;
+          skos:prefLabel "Cube"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Cuboid
+sf3d:Cuboid rdf:type owl:Class ;
+            rdfs:subClassOf sf3d:Hexahedron ;
+            rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+            skos:altLabel "Box"@en ;
+            skos:definition "a solid which has six rectangular faces at right angles to each other"@en ;
+            skos:prefLabel "Cuboid"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Cylinder
+sf3d:Cylinder rdf:type owl:Class ;
+              rdfs:subClassOf sf3d:SolidGeometry ;
+              rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "a solid geometrical figure with straight parallel sides and a circular or oval cross section"@en ;
+              skos:prefLabel "Cylinder"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Dodecahedron
+sf3d:Dodecahedron rdf:type owl:Class ;
+                  rdfs:subClassOf sf3d:Polyhedron ;
+                  rdfs:label "dodecahedron"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#EllipticCone
+sf3d:EllipticCone rdf:type owl:Class ;
+                  rdfs:subClassOf sf3d:Cone ;
+                  rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                  skos:definition "A cone with an elliptical cross section"@en ;
+                  skos:prefLabel "Elliptic Cone"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Face
+sf3d:Face rdf:type owl:Class .
+
+
+###  http://www.opengis.net/ont/sf3d#FrustumCone
+sf3d:FrustumCone rdf:type owl:Class ;
+                 rdfs:subClassOf sf3d:Cone ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "A cone with a removed upper part"@en ;
+                 skos:prefLabel "Frustum Cone"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Hexahedron
+sf3d:Hexahedron rdf:type owl:Class ;
+                rdfs:subClassOf sf3d:Polyhedron ;
+                rdfs:label "hexahedron"@en ;
+                skos:definition "A polyhedron with six faces"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#IrregularMesh
+sf3d:IrregularMesh rdf:type owl:Class ;
+                   rdfs:subClassOf sf3d:Mesh ;
+                   rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "A structural build of a 3D model consisting of a surface of polygons. The polygon's size may vary."@en ;
+                   skos:prefLabel "Irregular Mesh"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Mesh
+sf3d:Mesh rdf:type owl:Class ;
+          rdfs:subClassOf sf3d:SolidGeometry ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "A structural build of a 3D model consisting of a surface of polygons. The Surface is closed."@en ;
+          skos:prefLabel "Mesh"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#MeshSurface
+sf3d:MeshSurface rdf:type owl:Class ;
+                 rdfs:subClassOf sf:PolyhedralSurface ;
+                 rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "The surface of a Mesh 3D object"@en ;
+                 skos:prefLabel "Surface Mesh"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Octahedron
+sf3d:Octahedron rdf:type owl:Class ;
+                rdfs:subClassOf sf3d:Polyhedron ;
+                rdfs:label "octahedron"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#PointCloud
+sf3d:PointCloud rdf:type owl:Class ;
+                rdfs:subClassOf sf:MultiPoint ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "a set of points in threedimensional space"@en ;
+                skos:prefLabel "PointCloud"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#PolygonMesh
+sf3d:PolygonMesh rdf:type owl:Class ;
+                 rdfs:subClassOf sf3d:Mesh ;
+                 rdfs:label "Polygon Mesh"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Polyhedron
+sf3d:Polyhedron rdf:type owl:Class ;
+                rdfs:subClassOf sf3d:SolidGeometry ;
+                rdfs:label "polyhedron"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Prism
+sf3d:Prism rdf:type owl:Class ;
+           rdfs:subClassOf sf3d:SolidGeometry ;
+           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "A solid geometric figure whose two ends are similar, equal, and parallel rectilinear figures, and whose sides are parallelograms"@en ;
+           skos:prefLabel "Prism"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Pyramid
+sf3d:Pyramid rdf:type owl:Class ;
+             rdfs:subClassOf sf3d:SolidGeometry ;
+             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+             skos:definition "a conic solid with a polygonal base."@en ;
+             skos:prefLabel "Pyramid"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Scene
+sf3d:Scene rdf:type owl:Class ;
+           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "A scene of 3D models in relation ot each other."@en ;
+           skos:prefLabel "Scene"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#SkewedCone
+sf3d:SkewedCone rdf:type owl:Class ;
+                rdfs:subClassOf sf3d:Cone ;
+                rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                skos:definition "A cone with a skew parameter"@en ;
+                skos:prefLabel "Skewed Cone"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#SolidGeometry
+sf3d:SolidGeometry rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.opengis.net/ont/sf3d#3DGeometry> ;
+                   rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "A solid geometry is a geometry that exists within a three-dimensional Euclidic Space." ;
+                   skos:prefLabel "solid geometry"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Sphere
+sf3d:Sphere rdf:type owl:Class ;
+            rdfs:subClassOf sf3d:SolidGeometry ;
+            rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+            skos:definition "a round solid figure with every point on its surface equidistant from its centre"@en ;
+            skos:prefLabel "Sphere"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#SphericalShell
+sf3d:SphericalShell rdf:type owl:Class ;
+                    rdfs:subClassOf sf3d:SolidGeometry ;
+                    rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                    skos:definition "The region of a ball between two concentric spheres of differing radii"@en ;
+                    skos:prefLabel "SphericalShell"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#SplineSurface
+sf3d:SplineSurface rdf:type owl:Class ;
+                   rdfs:subClassOf sf:Polygon ;
+                   rdfs:label "spline surface"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Tetrahedron
+sf3d:Tetrahedron rdf:type owl:Class ;
+                 rdfs:subClassOf sf3d:Polyhedron ;
+                 rdfs:label "tetrahedron"@en ;
+                 skos:definition "A polyhedron composd of four triangular faces"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Torus
+sf3d:Torus rdf:type owl:Class ;
+           rdfs:subClassOf sf3d:SolidGeometry ;
+           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "a surface or solid formed by rotating a closed curve, especially a circle, about a line which lies in the same plane but does not intersect it"@en ;
+           skos:prefLabel "Torus"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Tube
+sf3d:Tube rdf:type owl:Class ;
+          rdfs:subClassOf sf3d:Cylinder ;
+          rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+          skos:definition "A hollow cylinder"@en ;
+          skos:prefLabel "Tube"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Viewpoint
+sf3d:Viewpoint rdf:type owl:Class ;
+               rdfs:subClassOf sf:Point ;
+               rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+               skos:definition "A point to position a camera in a 3D scene"@en ;
+               skos:prefLabel "Viewpoint"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#Voxel
+sf3d:Voxel rdf:type owl:Class ;
+           rdfs:subClassOf sf3d:Cuboid ;
+           rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "A three-dimensional counterpart to a pixel"@en ;
+           skos:prefLabel "Voxel"@en .
+
+
+###  http://www.opengis.net/ont/sf3d#3DGeometry
+<http://www.opengis.net/ont/sf3d#3DGeometry> rdf:type owl:Class ;
+                                             rdfs:subClassOf sf:Geometry ;
+                                             rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                                             skos:definition "A 3D geometry is a geometry that exclusively exists in at least 3 dimensions" ;
+                                             skos:prefLabel "3D Geometry"@en .
+
+
+###  https://schema.org/Organization
+sdo:Organization rdf:type owl:Class .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+sf3d:matrixLiteral rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "a projection matrix which can be applied to a 3D geometry"@en ;
+                   skos:prefLabel "matrix literal"@en .
+
+
+sf3d:metricXLength rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "The longest length in X direction in meter"@en ;
+                   skos:prefLabel "metric x length"@en .
+
+
+sf3d:metricYLength rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "The longest length in Y direction in meter"@en ;
+                   skos:prefLabel "metric Y length"@en .
+
+
+sf3d:metricZLength rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                   skos:definition "The longest length in Z direction in meter"@en ;
+                   skos:prefLabel "metric Z length"@en .
+
+
+sf3d:orientation rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+                 skos:definition "Orientation of the 3D model"@en ;
+                 skos:prefLabel "orientation"@en .
+
+
+sf3d:position rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+              skos:definition "The position of a 3D model in the scence"@en ;
+              skos:prefLabel "position"@en .
+
+
+sf3d:scale rdfs:isDefinedBy <http://www.opengis.net/ont/sf3d> ;
+           skos:definition "Scale vector to orient a 3D model"@en ;
+           skos:prefLabel "scale"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
