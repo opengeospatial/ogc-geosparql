@@ -62,7 +62,46 @@ jobs:
          BRANCH: gh-pages
          clean: false
          FOLDER: docs/
+ 
   
+  
+  validate-and-process:
+    # Avoid running the workflow on template clone
+    needs: build13
+    if: github.run_number != 1
+    name: Validate and process
+    uses: opengeospatial/bblocks-postprocess/.github/workflows/validate-and-process.yml@master
+    with:
+      skip-pages: true
+      viewer_path: bblocks/
+      before_pages: |
+        CURRENT_BRANCH=13buildingblocks
+        TARGET_BRANCH=gh-pages
+        POSTPROCESS_FILES="build _sources/ bblocks/index.html bblocks/config.js"
+        
+        # Postprocess files
+        git add ${POSTPROCESS_FILES}
+        
+        # Save current changes
+        git commit -m "temp commit for push to ${TARGET_BRANCH}" --no-verify
+        
+        # Fetch target branch
+        git fetch origin ${TARGET_BRANCH}:${TARGET_BRANCH} || true
+        git checkout ${TARGET_BRANCH} || git checkout -b ${TARGET_BRANCH}
+        
+        # Apply changes
+        git checkout $CURRENT_BRANCH -- ${POSTPROCESS_FILES}
+        
+        # Commit and push changes
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add ${POSTPROCESS_FILES}
+        git commit -m "Update directories from $CURRENT_BRANCH"
+        git push origin ${TARGET_BRANCH}
+        
+        # Restore state
+        git checkout $CURRENT_BRANCH
+        git reset --soft HEAD~1  
   
   build11:
     name: Compile GeoSPARQL 1.1 Documentation
