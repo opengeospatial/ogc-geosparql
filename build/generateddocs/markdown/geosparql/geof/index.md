@@ -3,7 +3,7 @@
 
 `ogc.geosparql.geof` *v0.1*
 
-The geof:is3D function tests if a given GeoSPARQL goemetry contains a third dimension
+The geof:is3D function tests if a given GeoSPARQL geometry contains a third dimension
 
 [*Status*](http://www.opengis.net/def/status): Under development
 

@@ -1,5 +1,5 @@
 
-# GeoSPARQL Functions (Model)
+# GeoSPARQL is3D Function (Model)
 
 `ogc.geosparql.geof.nonsf.is3D` *v0.1*
 
