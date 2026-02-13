@@ -3,9 +3,42 @@
 
 `ogc.geosparql.geof.nonsf.is3D` *v0.1*
 
-The geof:is3D function tests if a given GeoSPARQL goemetry contains a third dimension
+The is3D function tests if a given GeoSPARQL goemetry contains a third dimension
 
 [*Status*](http://www.opengis.net/def/status): Under development
+
+## Examples
+
+### Usage example of is3D
+#### ttl
+```ttl
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
+
+my:is3Dquery skos:definition """
+SELECT ?is3D
+WHERE {
+  my:A geo:hasDefaultGeometry ?geom .
+  ?geom geo:asWKT ?wktLiteral .
+  BIND (geof:is3D(?wktLiteral) as ?is3D)
+}
+""" .
+```
+
+#### ttl
+```ttl
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+SELECT ?is3D
+WHERE {
+  my:A geo:hasDefaultGeometry ?geom .
+  ?geom geo:asWKT ?wktLiteral .
+  BIND (geof:is3D(?wktLiteral) as ?is3D)
+}
+```
 
 ## Sources
 
