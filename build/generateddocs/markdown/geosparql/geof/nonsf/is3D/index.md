@@ -27,8 +27,8 @@ WHERE {
 """ .
 ```
 
-#### ttl
-```ttl
+#### plaintext
+```plaintext
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
