@@ -1,0 +1,42 @@
+@prefix cs: <http://www.opengis.net/def/function/geosparql> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix fno: <https://w3id.org/function/ontology#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix geofo: <http://www.opengis.net/def/function/output/geosparql/> .
+@prefix geofp: <http://www.opengis.net/def/function/parameter/geosparql/> .
+@prefix policy: <http://www.opengis.net/def/metamodel/ogc-na/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix status: <http://www.opengis.net/def/status/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+geof:is3D a skos:Concept,
+        sd:Function,
+        fno:Function ;
+    dcterms:source <http://www.opengis.net/doc/geosparql/1.1> ;
+    policy:status status:valid ;
+    rdfs:isDefinedBy <http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/query-functions> ;
+    rdfs:seeAlso <http://www.opengis.net/doc/geosparql/1.1> ;
+    skos:definition "A query function that returns true if the input geometry is 3D."@en ;
+    skos:inScheme cs: ;
+    skos:prefLabel "isSimple"@en ;
+    fno:expects ( geofp:is3D_param1 ) ;
+    fno:returns ( geofo:is3D_output ) .
+
+geofo:is3D_output a fno:Parameter ;
+    fno:required true ;
+    fno:type xsd:boolean .
+
+geofp:is3D_param1 a fno:Parameter ;
+    skos:prefLabel "geom1"@en ;
+    fno:required true ;
+    fno:type geo:dggsLiteral,
+        geo:ewkbLiteral,
+        geo:geoJSONLiteral,
+        geo:gmlLiteral,
+        geo:kmlLiteral,
+        geo:wktLiteral .
+
