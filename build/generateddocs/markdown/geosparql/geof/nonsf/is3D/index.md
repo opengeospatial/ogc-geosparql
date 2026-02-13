@@ -27,8 +27,8 @@ WHERE {
 """ .
 ```
 
-#### plaintext
-```plaintext
+#### sparql
+```sparql
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
@@ -38,6 +38,20 @@ WHERE {
   ?geom geo:asWKT ?wktLiteral .
   BIND (geof:is3D(?wktLiteral) as ?is3D)
 }
+```
+
+#### sparqlresult
+```sparqlresult
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+ <head>
+  <variable name="is3D"/>
+ </head>
+ <results distinct="false" ordered="true">
+  <result>
+   <binding name="is3D"><literal datatype="http://www.w3.org/2001/XMLSchema#boolean">true</literal></binding>
+  </result>
+ </results>
+</sparql>
 ```
 
 ## Sources
