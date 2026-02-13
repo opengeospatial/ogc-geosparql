@@ -1,5 +1,5 @@
 
-# GeoSPARQL Ontology (Model)
+# GeoSPARQL Feature (Model)
 
 `ogc.geosparql.geosparql.classes.feature` *v0.1*
 
