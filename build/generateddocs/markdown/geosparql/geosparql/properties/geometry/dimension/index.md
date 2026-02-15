@@ -7,36 +7,31 @@ Properties which can be used to describe a geometry's dimensionality
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
+## Description
+
+## GeoSPARQL Geometry Dimensionality
+
+This building block includes properties which describe dimensionality of geo:Geometry
+
 ## Examples
 
-### Example
+### A two-dimensional polygon
+A two-dimensional polygon described with the properties geo:dimension, geo:coordinateDimension and geo:spatialDimension .
 #### ttl
 ```ttl
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-ex:AExactGeom
+ex:dimension_example
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
-  geo:isEmpty false ;
-  geo:isSimple true ;
+  skos:definition """A two-dimensional polygon""" ;
   geo:dimension 2 ;
   geo:spatialDimension 2 ;
   geo:coordinateDimension 2 ;
-  geo:hasSerialization """
-        
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))
-        
-    """^^geo:wktLiteral ;
-  geo:asWKT """
-        
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))
-        
-    """^^geo:wktLiteral ;
-  geo:asGML """
-        <gml:Polygon xmlns:gml="http://www.opengis.net/ont/gml" srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.6 34.1 -83.2 34.1 -83.2 34.5 -83.6 34.5 -83.6 34.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
-    """^^geo:gmlLiteral .
+  geo:asWKT """<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"""^^geo:wktLiteral .
 ```
 
 ## Sources
