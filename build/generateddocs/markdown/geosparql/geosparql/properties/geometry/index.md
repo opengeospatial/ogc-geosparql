@@ -9,7 +9,7 @@ Properties which can be used to describe a geometry's attributes
 
 ## Sources
 
-* [Spec section](https://opengeospatial.github.io/ogc-geosparql/geosparql11/document.html#_property_geodimension)
+* [Spec section](https://opengeospatial.github.io/ogc-geosparql/geosparql11/document.html#geometry_properties)
 
 # For developers
 
