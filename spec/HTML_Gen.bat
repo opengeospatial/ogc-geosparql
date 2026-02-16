@@ -1,1 +1,1 @@
-asciidoctor --trace -o _11-052r4.html 00-GeoSPARQL.adoc
+asciidoctor -r asciidoctor-bibtex --trace -o ../index.html document.adoc
