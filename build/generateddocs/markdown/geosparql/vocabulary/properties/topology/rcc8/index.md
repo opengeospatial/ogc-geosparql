@@ -26,6 +26,33 @@ ex:MyPlaceGeom
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 ```
 
+
+### rcc8dc relation example
+A feature is related to itself using the geo:rcc8dc relation.
+#### ttl
+```ttl
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+ex:MyPlace
+  a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
+  geo:hasGeometry ex:MyPlaceGeom ;
+  geo:rcc8dc ex:MyPlace2 .
+
+ex:MyPlaceGeom
+  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
+
+ex:MyPlace2
+  a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
+  geo:hasGeometry ex:MyPlace2Geom ;
+  geo:rcc8dc ex:MyPlace .
+
+ex:MyPlace2Geom
+  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3, -83.6 34.3, -83.6 34.1))"^^geo:wktLiteral  .
+```
+
 ## Sources
 
 * [Spec section](https://opengeospatial.github.io/ogc-geosparql/geosparql11/document.html)
