@@ -77,8 +77,8 @@ ex:MyPlace2Geom
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3, -83.6 34.3, -83.6 34.1))"^^geo:wktLiteral  .
 ```
 
-#### ttl
-```ttl
+#### geojson
+```geojson
 {
   "type": "FeatureCollection",
   "features":[
