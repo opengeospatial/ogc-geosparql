@@ -28,7 +28,7 @@ ex:MyPlaceGeom
 
 
 ### Disjoint relation example
-A feature is related to itself using the geo:ehDisjoint relation.
+A feature is related to another feature using the geo:ehDisjoint relation.
 #### ttl
 ```ttl
 @prefix ex: <http://example.org/ApplicationSchema#> .

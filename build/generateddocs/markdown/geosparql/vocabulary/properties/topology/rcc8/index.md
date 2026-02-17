@@ -28,7 +28,7 @@ ex:MyPlaceGeom
 
 
 ### rcc8dc relation example
-A feature is related to itself using the geo:rcc8dc relation.
+A feature is related to another feature using the geo:rcc8dc relation.
 #### ttl
 ```ttl
 @prefix ex: <http://example.org/ApplicationSchema#> .
