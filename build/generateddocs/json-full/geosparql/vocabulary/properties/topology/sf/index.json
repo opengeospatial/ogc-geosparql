@@ -40,6 +40,12 @@
           "ref": "examples/sfEquals.ttl",
           "code": "@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n\nex:MyPlace\n  a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;\n  geo:hasGeometry ex:MyPlaceGeom ;\n  geo:sfEquals ex:MyPlace .\n\nex:MyPlaceGeom\n  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))\"^^geo:wktLiteral .",
           "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_1_1.ttl"
+        },
+        {
+          "language": "geojson",
+          "ref": "examples/sfEquals.geojson",
+          "code": "{\n  \"type\": \"FeatureCollection\",\n  \"features\":[\n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.2, 34.3], \n                    [-83.0, 34.3], [-83.0, 34.5], \n                    [-83.2, 34.5], [-83.2, 34.3]]]\n        },\n       \"properties\":{\"rdfs:label\":\"MyPlace\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false ,\n                     \"geo:isSimple\": true ,\n                     \"geo:spatialDimension\": 2 \n                    }\n    }\n  ]\n}",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_1_2.geojson"
         }
       ],
       "prefixes": {
@@ -61,6 +67,27 @@
           "ref": "examples/sfDisjoint.geojson",
           "code": "{\n  \"type\": \"FeatureCollection\",\n  \"features\":[\n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.6,34.1], \n                    [-83.4, 34.1], [-83.4, 34.3], \n                    [-83.6, 34.3], [-83.6, 34.1]]]\n        },\n       \"properties\":{\"rdfs:label\":\"BExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false ,\n                     \"geo:isSimple\": true ,\n                     \"geo:spatialDimension\": 2 \n                    }\n    },\n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.2, 34.3], \n                    [-83.0, 34.3], [-83.0, 34.5], \n                    [-83.2, 34.5], [-83.2, 34.3]]]\n        },\n       \"properties\":{\"rdfs:label\":\"CExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false ,\n                     \"geo:isSimple\": true ,\n                     \"geo:spatialDimension\": 2 \n                    }\n    }\n  ]\n}",
           "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_2_2.geojson"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
+      "title": "sfWithin and sfContains relation example",
+      "content": "A feature is related to another feature using the geo:sfWithin and geo:sfContains relations.",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/sfWithinContains.ttl",
+          "code": "@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n\n\nex:MyPlace\n  a <http://example.org/ApplicationSchema#PlaceOfInterest>, <http://www.opengis.net/ont/geosparql#Feature>, <http://www.opengis.net/ont/geosparql#SpatialObject> ;\n  geo:hasGeometry ex:MyPlaceGeom ;\n  geo:sfContains ex:MyPlace2 .\n\nex:MyPlaceGeom\n  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))\"^^geo:wktLiteral .\n\nex:MyPlace2\n  a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;\n  geo:hasGeometry ex:MyPlace2Geom ;\n  geo:sfWithin ex:MyPlace .\n\nex:MyPlace2Geom\n  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3, -83.6 34.3, -83.6 34.1))\"^^geo:wktLiteral  .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_3_1.ttl"
+        },
+        {
+          "language": "geojson",
+          "ref": "examples/sfWithinContains.geojson",
+          "code": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.6,34.1], \n                    [-83.2, 34.1], [-83.2, 34.5], \n                    [-83.6, 34.5], [-83.6, 34.1]]]\n        },\n       \"properties\":{\"rdfs:label\":\"AExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false,\n                     \"geo:isSimple\": true,\n                     \"geo:spatialDimension\": 2 \n                    }\n    },    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.6,34.1], \n                    [-83.4, 34.1], [-83.4, 34.3], \n                    [-83.6, 34.3], [-83.6, 34.1]]]\n        },\n       \"properties\":{\"rdfs:label\":\"BExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false ,\n                     \"geo:isSimple\": true ,\n                     \"geo:spatialDimension\": 2 \n                    }\n    }, \n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Point\",\n      \"coordinates\": [-83.5, 34.2]\n        },\n       \"properties\":{\"rdfs:label\":\"BPointGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:isEmpty\": false,\n                     \"geo:isSimple\": true,\n                     \"geo:spatialDimension\": 2 \n                    }\n    }  \n  ]\n}",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_3_2.geojson"
         }
       ],
       "prefixes": {

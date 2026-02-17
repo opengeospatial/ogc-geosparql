@@ -31,7 +31,7 @@ Example 2 consists of a real world use case in Australia: Moreton Island
 
 ## Examples
 
-### Example
+### GeoSPARQL Specification Annex C Example
 #### ttl
 ```ttl
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -310,6 +310,475 @@ ex:FExactGeom
 
 ```
 
+#### geojson
+```geojson
+{
+  "type": "FeatureCollection",
+  "features": [
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.6,34.1], 
+                    [-83.2, 34.1], [-83.2, 34.5], 
+                    [-83.6, 34.5], [-83.6, 34.1]]]
+        },
+       "properties":{"rdfs:label":"AExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false,
+                     "geo:isSimple": true,
+                     "geo:spatialDimension": 2 
+                    }
+    },    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.6,34.1], 
+                    [-83.4, 34.1], [-83.4, 34.3], 
+                    [-83.6, 34.3], [-83.6, 34.1]]]
+        },
+       "properties":{"rdfs:label":"BExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    },  { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-83.5, 34.2]
+        },
+       "properties":{"rdfs:label":"BPointGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:isEmpty": false,
+                     "geo:isSimple": true,
+                     "geo:spatialDimension": 2 
+                    }
+    },     
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.2, 34.3], 
+                    [-83.0, 34.3], [-83.0, 34.5], 
+                    [-83.2, 34.5], [-83.2, 34.3]]]
+        },
+       "properties":{"rdfs:label":"CExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    },    
+    { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-83.1, 34.4]           
+        },
+       "properties":{"rdfs:label":"CPointGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.3, 34.0], 
+                    [-83.1, 34.0], [-83.1, 34.2], 
+                    [-83.3, 34.2], [-83.3, 34.0]]]
+        },
+       "properties":{"rdfs:label":"DExactGeom",
+                     "geo:coordinateDimension": 2,
+                     "geo:dimension": 2,
+                     "geo:isEmpty": false,
+                     "geo:isSimple": true,
+                     "geo:spatialDimension":2      
+                    }
+    }, 
+        { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-83.2, 34.1]           
+        },
+       "properties":{"rdfs:label":"DPointGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry": { "type": "LineString",
+      "coordinates": [[-83.4, 34.0], 
+                    [-83.3, 34.3]]
+        },
+       "properties":{"rdfs:label":"EExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2                
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-83.4, 34.4]
+        },
+       "properties":{"rdfs:label":"FExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.5, 34.2], [-83.3, 34.2], [-83.3, 34.4], [-83.5, 34.4], [-83.5, 34.2]]]
+        },
+       "properties":{"rdfs:label":"GExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    },
+            { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-83.4, 34.3]           
+        },
+       "properties":{"rdfs:label":"GPointGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry":null,
+       "properties":{"rdfs:label":"HExactGeom",
+               "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": true,                     
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                 }
+    },
+    { "type": "Feature",
+      "geometry":null,
+       "properties":{"rdfs:label":"HPointGeom",
+               "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": true,                     
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                 }
+    },
+    { "type": "Feature",
+      "geometry":null,
+       "properties":{"rdfs:label":"IExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": true,                     
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }, 
+   { "type": "Feature",
+      "geometry":null,
+       "properties":{"rdfs:label":"IPointGeom",
+               "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": true,                     
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                 }
+    },
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-77.089005, 38.913574], [-77.029953, 38.913574], [-77.029953, 38.886321], [-77.089005, 38.886321], [-77.089005, 38.913574]]]
+        },
+       "properties":{"rdfs:label":"JExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple":true ,
+                     "geo:spatialDimension": 2        
+                    }
+    }, 
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-77.089005, 38.913574], [-77.029953, 38.913574], [-77.029953, 38.886321], [-77.089005, 38.886321], [-77.089005, 38.913574]]]
+        },
+       "properties":{"rdfs:label":"KExactGeom",
+                     "geo:coordinateDimension": 2,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty":false ,
+                     "geo:isSimple": true,
+                     "geo:spatialDimension": 2
+                    }
+    },    
+    { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [-88.38, 31.95]
+        },
+     "properties":{
+       "rdfs:label":"LExactGeom",
+       "geo:coordinateDimension": 2,
+       "geo:dimension": 2, 
+       "geo:isEmpty": false,
+       "geo:isSimple": true ,
+       "geo:spatialDimension": 2  
+      }
+    },     
+    { "type": "Feature",
+      "geometry": { "type": "Point",
+      "coordinates": [31.95, -88.38]
+        },
+       "properties":{"rdfs:label":"MExactGeom",
+       "geo:coordinateDimension": 2,
+       "geo:dimension": 2, 
+       "geo:isEmpty": false,
+       "geo:isSimple": true ,
+       "geo:spatialDimension": 2                  
+       }
+    } 
+   ]
+}
+```
+
+#### gml
+```gml
+<?xml version="1.0" encoding="utf-8" ?>
+<ogr:FeatureCollection
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://ogr.maptools.org/ dataset_2.xsd"
+     xmlns:ogr="http://ogr.maptools.org/"
+     xmlns:gml="http://www.opengis.net/gml">
+  <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-88.38 -88.38</gml:lowerCorner><gml:upperCorner>31.95 38.913574</gml:upperCorner></gml:Envelope></gml:boundedBy>                                                                                                                                                       
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.0">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.6 34.1</gml:lowerCorner><gml:upperCorner>-83.2 34.5</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.6 34.1 -83.2 34.1 -83.2 34.5 -83.6 34.5 -83.6 34.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>AExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.1">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.6 34.1</gml:lowerCorner><gml:upperCorner>-83.4 34.3</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.6 34.1 -83.4 34.1 -83.4 34.3 -83.6 34.3 -83.6 34.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>BExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.2">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.5 34.2</gml:lowerCorner><gml:upperCorner>-83.5 34.2</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-83.5 34.2</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>BPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.3">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.2 34.3</gml:lowerCorner><gml:upperCorner>-83.0 34.5</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.2 34.3 -83.0 34.3 -83.0 34.5 -83.2 34.5 -83.2 34.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>CExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.4">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.1 34.4</gml:lowerCorner><gml:upperCorner>-83.1 34.4</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-83.1 34.4</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>CPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.5">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.3 34.0</gml:lowerCorner><gml:upperCorner>-83.1 34.2</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.3 34.0 -83.1 34.0 -83.1 34.2 -83.3 34.2 -83.3 34.0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>DExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.6">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.2 34.1</gml:lowerCorner><gml:upperCorner>-83.2 34.1</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-83.2 34.1</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>DPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.7">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.4 34.0</gml:lowerCorner><gml:upperCorner>-83.3 34.3</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:LineString srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:posList>-83.4 34.0 -83.3 34.3</gml:posList></gml:LineString></ogr:geometryProperty>
+      <ogr:rdfs_label>EExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.8">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.4 34.4</gml:lowerCorner><gml:upperCorner>-83.4 34.4</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-83.4 34.4</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>FExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.9">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.5 34.2</gml:lowerCorner><gml:upperCorner>-83.3 34.4</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.5 34.2 -83.3 34.2 -83.3 34.4 -83.5 34.4 -83.5 34.2</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>GExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.10">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-83.4 34.3</gml:lowerCorner><gml:upperCorner>-83.4 34.3</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-83.4 34.3</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>GPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.11">
+      <ogr:rdfs_label>HExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>true</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.12">
+      <ogr:rdfs_label>HPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>true</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.13">
+      <ogr:rdfs_label>IExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>true</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.14">
+      <ogr:rdfs_label>IPointGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>true</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.15">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-77.089005 38.886321</gml:lowerCorner><gml:upperCorner>-77.029953 38.913574</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-77.089005 38.913574 -77.029953 38.913574 -77.029953 38.886321 -77.089005 38.886321 -77.089005 38.913574</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>JExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.16">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-77.089005 38.886321</gml:lowerCorner><gml:upperCorner>-77.029953 38.913574</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Polygon srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-77.089005 38.913574 -77.029953 38.913574 -77.029953 38.886321 -77.089005 38.886321 -77.089005 38.913574</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></ogr:geometryProperty>
+      <ogr:rdfs_label>KExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.17">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:lowerCorner>-88.38 31.95 </gml:lowerCorner><gml:upperCorner>-88.38 31.95</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:pos>-88.38 31.95</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>LExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+  <ogr:featureMember>
+    <ogr:dataset_2 gml:id="dataset_2.18">
+      <gml:boundedBy><gml:Envelope srsName="http://www.opengis.net/def/crs/EPSG/0/4326"><gml:lowerCorner>31.95 -88.38</gml:lowerCorner><gml:upperCorner>31.95 -88.38</gml:upperCorner></gml:Envelope></gml:boundedBy>
+      <ogr:geometryProperty><gml:Point srsName="http://www.opengis.net/def/crs/EPSG/0/4326"><gml:pos>31.95 -88.38</gml:pos></gml:Point></ogr:geometryProperty>
+      <ogr:rdfs_label>MExactGeom</ogr:rdfs_label>
+      <ogr:geo_coordinateDimension>2</ogr:geo_coordinateDimension>
+      <ogr:geo_dimension>2</ogr:geo_dimension>
+      <ogr:geo_isEmpty>false</ogr:geo_isEmpty>
+      <ogr:geo_isSimple>true</ogr:geo_isSimple>
+      <ogr:geo_spatialDimension>2</ogr:geo_spatialDimension>
+    </ogr:dataset_2>
+  </ogr:featureMember>
+</ogr:FeatureCollection>
+```
+
+
+### GeoSPARQL Specification Moreton Island Example
 #### ttl
 ```ttl
 @prefix : <https://example.com/dataset/geo-demo/> .
@@ -591,6 +1060,190 @@ polys:
     :queensland ;
 .
 
+```
+
+#### geojson
+```geojson
+{
+	"type": "FeatureCollection",
+	"name": "moreton-island",
+	"crs": {
+		"type": "name",
+		"properties": {
+			"name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+		}
+	},
+	"features": [{
+		"type": "Feature",
+		"properties": {
+			"Name": "Moreton Island"
+		},
+		"geometry": {
+			"type": "Polygon",
+			"coordinates": [
+				[
+					[153.4688146, -27.0291517],
+					[153.455768299999988, -27.0242584],
+					[153.4337956, -27.0346564],
+					[153.4090764, -27.0346564],
+					[153.3781774, -27.046888],
+					[153.3610112, -27.0621757],
+					[153.3685643, -27.0792955],
+					[153.3713109, -27.1019141],
+					[153.3630712, -27.1367499],
+					[153.3733708, -27.1764617],
+					[153.3658177, -27.1990606],
+					[153.3754308, -27.2198231],
+					[153.37749070000001, -27.2350872],
+					[153.4042699, -27.2906308],
+					[153.405643199999986, -27.2979531],
+					[153.4207494, -27.3284578],
+					[153.421436, -27.3406573],
+					[153.418002800000011, -27.354685],
+					[153.426929199999989, -27.3607835],
+					[153.4434087, -27.3315078],
+					[153.429675800000012, -27.3174771],
+					[153.4166295, -27.2613365],
+					[153.418002800000011, -27.2106637],
+					[153.4310491, -27.1373609],
+					[153.4688146, -27.0291517]
+				]
+			]
+		}
+	}]
+}
+```
+
+#### kml
+```kml
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <Placemark>
+      <name>Moreton Island</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              153.4688146,-27.0291517,0
+              153.4557683,-27.0242584,0
+              153.4337956,-27.0346564,0
+              153.4090764,-27.0346564,0
+              153.3781774,-27.046888,0
+              153.3610112,-27.0621757,0
+              153.3685643,-27.0792955,0
+              153.3713109,-27.1019141,0
+              153.3630712,-27.1367499,0
+              153.3733708,-27.1764617,0
+              153.3658177,-27.1990606,0
+              153.3754308,-27.2198231,0
+              153.3774907,-27.2350872,0
+              153.4042699,-27.2906308,0
+              153.4056432,-27.2979531,0
+              153.4207494,-27.3284578,0
+              153.421436,-27.3406573,0
+              153.4180028,-27.354685,0
+              153.4269292,-27.3607835,0
+              153.4434087,-27.3315078,0
+              153.4296758,-27.3174771,0
+              153.4166295,-27.2613365,0
+              153.4180028,-27.2106637,0
+              153.4310491,-27.1373609,0
+              153.4688146,-27.0291517,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>
+```
+
+#### gml
+```gml
+<?xml version="1.0" encoding="utf-8" ?>
+<ogr:FeatureCollection
+     gml:id="aFeatureCollection"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://ogr.maptools.org/ moreton-island.xsd"
+     xmlns:ogr="http://ogr.maptools.org/"
+     xmlns:gml="http://www.opengis.net/gml/3.2">
+                                                                                                                                      
+  <ogr:featureMember>
+    <ogr:moreton_island gml:id="moreton_island.0">
+      <ogr:geometryProperty>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG::4326" gml:id="moreton_island.geom.0">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>
+                -27.0291517 153.4688146 -27.0242584 153.4557683 -27.0346564 153.4337956 -27.0346564 153.4090764 -27.046888 153.3781774 -27.0621757 153.3610112 -27.0792955 153.3685643 -27.1019141 153.3713109 -27.1367499 153.3630712 -27.1764617 153.3733708 -27.1990606 153.3658177 -27.2198231 153.3754308 -27.2350872 153.3774907 -27.2906308 153.4042699 -27.2979531 153.4056432 -27.3284578 153.4207494 -27.3406573 153.421436 -27.354685 153.4180028 -27.3607835 153.4269292 -27.3315078 153.4434087 -27.3174771 153.4296758 -27.2613365 153.4166295 -27.2106637 153.4180028 -27.1373609 153.4310491 -27.0291517 153.4688146
+              </gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </ogr:geometryProperty>
+      <ogr:geometryProperty>
+        <gml:Polygon srsName="urn:ogc:def:crs:EPSG:6.9:3857" gml:id="moreton_island.geom.1">
+          <gml:exterior>
+            <gml:LinearRing>
+              <gml:posList>
+                12902794.504700001 -3757970.5163999982 12902886.478399999 -3757877.9356999993 12902680.1307 -3757668.7490000017 12902665.726799998 -3757654.1464999989 12902657.5436 -3757662.6539999992 12902619.630199999 -3757700.3423999995 12902607.136100002 -3757687.6403999999 12902569.230799999 -3757725.3311999999 12902563.392099999 -3757739.1667999998 12902690.743700001 -3757865.7820999995 12902794.504700001 -3757970.5163999982
+              </gml:posList>
+            </gml:LinearRing>
+          </gml:exterior>
+        </gml:Polygon>
+      </ogr:geometryProperty>      
+      <ogr:Name>Moreton Island</ogr:Name>
+    </ogr:moreton_island>
+  </ogr:featureMember>
+</ogr:FeatureCollection>
+```
+
+#### wkt
+```wkt
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <Placemark>
+      <name>Moreton Island</name>
+      <Polygon>
+        <outerBoundaryIs>
+          <LinearRing>
+            <tessellate>1</tessellate>
+            <coordinates>
+              153.4688146,-27.0291517,0
+              153.4557683,-27.0242584,0
+              153.4337956,-27.0346564,0
+              153.4090764,-27.0346564,0
+              153.3781774,-27.046888,0
+              153.3610112,-27.0621757,0
+              153.3685643,-27.0792955,0
+              153.3713109,-27.1019141,0
+              153.3630712,-27.1367499,0
+              153.3733708,-27.1764617,0
+              153.3658177,-27.1990606,0
+              153.3754308,-27.2198231,0
+              153.3774907,-27.2350872,0
+              153.4042699,-27.2906308,0
+              153.4056432,-27.2979531,0
+              153.4207494,-27.3284578,0
+              153.421436,-27.3406573,0
+              153.4180028,-27.354685,0
+              153.4269292,-27.3607835,0
+              153.4434087,-27.3315078,0
+              153.4296758,-27.3174771,0
+              153.4166295,-27.2613365,0
+              153.4180028,-27.2106637,0
+              153.4310491,-27.1373609,0
+              153.4688146,-27.0291517,0
+            </coordinates>
+          </LinearRing>
+        </outerBoundaryIs>
+      </Polygon>
+    </Placemark>
+  </Document>
+</kml>
 ```
 
 ## Sources

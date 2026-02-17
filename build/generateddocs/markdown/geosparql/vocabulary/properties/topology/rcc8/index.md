@@ -26,6 +26,29 @@ ex:MyPlaceGeom
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 ```
 
+#### geojson
+```geojson
+{
+  "type": "FeatureCollection",
+  "features":[
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.2, 34.3], 
+                    [-83.0, 34.3], [-83.0, 34.5], 
+                    [-83.2, 34.5], [-83.2, 34.3]]]
+        },
+       "properties":{"rdfs:label":"MyPlace",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }
+  ]
+}
+```
+
 
 ### rcc8dc relation example
 A feature is related to another feature using the geo:rcc8dc relation.
@@ -51,6 +74,29 @@ ex:MyPlace2
 ex:MyPlace2Geom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3, -83.6 34.3, -83.6 34.1))"^^geo:wktLiteral  .
+```
+
+#### ttl
+```ttl
+{
+  "type": "FeatureCollection",
+  "features":[
+    { "type": "Feature",
+      "geometry": { "type": "Polygon",
+      "coordinates": [[[-83.2, 34.3], 
+                    [-83.0, 34.3], [-83.0, 34.5], 
+                    [-83.2, 34.5], [-83.2, 34.3]]]
+        },
+       "properties":{"rdfs:label":"CExactGeom",
+                     "geo:coordinateDimension": 2 ,
+                     "geo:dimension": 2 ,
+                     "geo:isEmpty": false ,
+                     "geo:isSimple": true ,
+                     "geo:spatialDimension": 2 
+                    }
+    }
+  ]
+}
 ```
 
 ## Sources
