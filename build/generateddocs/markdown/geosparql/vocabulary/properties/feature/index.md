@@ -56,7 +56,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-ex:MyPlace_bbox rdf:type sf:Polygon ;
+ex:MyPlace_bbox a sf:Polygon ;
           geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
 ```
@@ -77,7 +77,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-ex:MyPlace_centroid rdf:type sf:Point ;
+ex:MyPlace_centroid a sf:Point ;
     geo:asWKT "POINT (-83.1 34.4)"^^geo:wktLiteral .
 
 
