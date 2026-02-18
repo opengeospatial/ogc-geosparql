@@ -21,7 +21,7 @@ The resources it does contain are:
 * `translations/` - French and German translations of the RDF files' annotations
 * `index.html` & `spec.pdf` - built HTML & PDF versions of the spec
     * using the commands in `spec/HTML_Gen.bat` & `spec/PDF_Gen.bat` respectively
-* `citeme.bib` - a BibTex file containin .1's citation, as below
+* `citeme.bib` - a BibTex file containing 1.1's citation, as below
 * `LICENSE` - the OGC Document License Agreement which applies to all this content.
 
 ## Current GeoSPARQL development
@@ -32,7 +32,7 @@ For current development of GeoSPARQL, please see the main branch in this reposit
 
 ## Citation
 
-To cit GeoSPARQL 1.1, please use this BibText:
+To cite GeoSPARQL 1.1, please use this BibText:
 
 ```bibtex
 @techreport{nicholas_j_car_ogc_2023,
