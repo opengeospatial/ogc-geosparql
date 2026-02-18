@@ -139,27 +139,33 @@ jobs:
          cd ../docs/geosparql11/
          sed -i 's/<\/title>/<\/title><meta name="viewport" content="width=device-width, initial-scale=1.0">/g' document.html
          echo "Copying over 1.1 RDF files"
-         cp ../../vocabularies/*.ttl ../../profile.ttl ../../citeme.bib .
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/geo.ttl
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/sf_geometries.ttl
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/validators/geo-validator.ttl
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/functions.ttl
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/requirements.ttl
+         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/rules.ttl
+         cp ../../profile.ttl ../../citeme.bib .
          cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
          cp -r ../../spec/figures .
          echo "Generating documentation for GeoSPARQL 1.1 ontology"
          python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
-         pylode -i ../../vocabularies/geo.ttl -o geo.html
+         pylode -i geo.ttl -o geo.html
          echo "Generating documentation for GeoSPARQL 1.1 Profile"
          #cp ../../profile.ttl .
          #cp ../../profile.html . 
          #echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
-         #pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
+         #pylode -i functions.ttl -o functions.html -p vocpub
          python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
-         pylode -i ../../vocabularies/rules.ttl -o rules.html -p vocpub
+         pylode -i rules.ttl -o rules.html -p vocpub
          python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
          echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
-         pylode -i ../../vocabularies/sf_geometries.ttl -o sf_geometries.html -p vocpub
+         pylode -i sf_geometries.ttl -o sf_geometries.html -p vocpub
          python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
          #echo "Generating documentation for GeoSPARQL 1.1 SA functions"
-         #pylode -i ../../vocabularies/requirements.ttl -o reqs.html -p vocpub
+         #pylode -i requirements.ttl -o reqs.html -p vocpub
          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
-         #pylode -i ../../vocabularies/validator.ttl -o validation.html
+         #pylode -i validator.ttl -o validation.html
          echo "Generating documentation for GeoSPARQL 1.1 Service Description Extensions"
          pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
          python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
