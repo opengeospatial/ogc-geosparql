@@ -194,17 +194,17 @@ resultlog={"GeoSPARQL Functions vs. Service Description":{},"GeoSPARQL Functions
 #input1=sys.argv[1]
 #input2=sys.argv[2]
 specvocab=parseSpecForFunctions("../spec/sections/")
-input1="../vocabularies/functions.ttl"
+input1="../rdf/functions.ttl"
 input2="../servicedescription/servicedescription_all_functions.ttl"
 check_functions_sd_consistency(input1,input2,"GeoSPARQL Functions vs. Service Description",resultlog)
 check_functions_sd_consistency(input1,specvocab["functions"],"GeoSPARQL Functions vs. Spec",resultlog)
-input1="../vocabularies/rules.ttl"
+input1="../rdf/rules.ttl"
 check_rules_spec_consistency(input1,specvocab["rules"],"GeoSPARQL Functions vs. RIF Rules",resultlog)
-input1="../vocabularies/geo.ttl"
+input1="../rdf/geo.ttl"
 check_vocab_jsonld_consistency("../contexts/geo-context.json",input1,"GeoSPARQL JSON-LD Context",resultlog)
-input2="../vocabularies/requirements.ttl"
+input2="../rdf/requirements.ttl"
 check_functions_reqs_consistency(input1,input2,"GeoSPARQL Functions vs. Requirements",resultlog)
-check_translation_consistency("../translations/","../vocabularies/","GeoSPARQL Functions Translation Completeness",resultlog)
+check_translation_consistency("../translations/","../rdf/","GeoSPARQL Functions Translation Completeness",resultlog)
 logfile.close()
 with open('logfile.json', 'w', encoding='utf-8') as f:
     json.dump(resultlog, f, ensure_ascii=False, sort_keys=True, indent=2)
