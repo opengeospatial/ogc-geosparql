@@ -46,6 +46,7 @@ ex:MyPlaceGeom
 ```ttl
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
 ex:MyPlace
   a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
@@ -67,6 +68,7 @@ ex:MyPlace_bbox a sf:Polygon ;
 ```ttl
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
 ex:MyPlace
   a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
