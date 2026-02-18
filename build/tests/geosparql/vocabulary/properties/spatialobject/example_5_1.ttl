@@ -1,0 +1,22 @@
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix qudt: <http://qudt.org/vocab/unit/> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:MyPlace a ex:PlaceOfInterest,
+        geo:Feature,
+        geo:SpatialObject ;
+    geo:hasArea ex:MyPlace_volume ;
+    geo:hasGeometry ex:MyPlaceGeom ;
+    geo:hasMetricVolume 1e+02 .
+
+ex:MyPlaceGeom a geo:Geometry,
+        <http://www.opengis.net/ont/gml#Polygon>,
+        sf:Polygon ;
+    geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
+
+ex:MyPlace_volume a geo:SpatialMeasure ;
+    qudt:numericValue "26417.2" ;
+    qudt:unit qudt:GAL_US .
+
