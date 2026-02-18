@@ -9,20 +9,6 @@ The Simple Features vocabulary defines additional geometry types connected to th
 
 ## Examples
 
-### Polygon Geometry
-#### ttl
-```ttl
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix ex: <http://example.org/ApplicationSchema#> .
-@prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix sf: <http://www.opengis.net/ont/sf#> .
-
-ex:MyPolygonGeom a sf:Polygon ;
-  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
-```
-
-
 ### Point Geometry
 #### ttl
 ```ttl
@@ -38,7 +24,39 @@ ex:MyPointGeom a sf:Point ;
 ```
 
 
+### MultiPoint Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyMultiPointGeom a sf:MultiPoint ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiPoint((-83.4 34.3),(-85.2, 32.1))"^^geo:wktLiteral .
+
+```
+
+
+### Line Geometry
+A LineString with exactly 2 Points
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyLineGeom a sf:Line ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
+
+```
+
+
 ### LineString Geometry
+A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment.
 #### ttl
 ```ttl
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -50,6 +68,63 @@ ex:MyPointGeom a sf:Point ;
 ex:MyLineStringGeom a sf:LineString ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 
+```
+
+
+### MultiLineString Geometry
+A MultiLineString is a MultiCurve whose elements are LineStrings.
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyMultiLineStringGeom a sf:MultiLineString ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiLineString((-83.4 34.0, -83.3 34.3), (-80.4 30.0, -85.3 38.3))"^^geo:wktLiteral .
+```
+
+
+### Polygon Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyPolygonGeom a sf:Polygon ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
+```
+
+
+### MultiPolygon Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyMultiPolygonGeom a sf:MultiPolygon ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiPolygon(((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3)),((-80.2 30.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -80.2 30.3)))"^^geo:wktLiteral .
+```
+
+
+### GeometryCollection Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyGeometryCollection a sf:GeometryCollection ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> GeometryCollection(Point(-83.4 34.3),MultiPoint((-83.4 34.3),(-85.2, 32.1)),LineString(-83.4 34.0, -83.3 34.3))"^^geo:wktLiteral .
 ```
 
 ## Sources

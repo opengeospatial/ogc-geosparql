@@ -33,12 +33,12 @@
   "testOutputs": "https://github.com/opengeospatial/ogc-geosparql/blob/master/build/tests/geosparql/simplefeatures/",
   "examples": [
     {
-      "title": "Polygon Geometry",
+      "title": "Point Geometry",
       "snippets": [
         {
           "language": "ttl",
-          "ref": "examples/polygon.ttl",
-          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyPolygonGeom a sf:Polygon ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))\"^^geo:wktLiteral .",
+          "ref": "examples/point.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyPointGeom a sf:Point ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Point(-83.4 34.3)\"^^geo:wktLiteral .\n",
           "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_1_1.ttl"
         }
       ],
@@ -47,12 +47,12 @@
       }
     },
     {
-      "title": "Point Geometry",
+      "title": "MultiPoint Geometry",
       "snippets": [
         {
           "language": "ttl",
-          "ref": "examples/point.ttl",
-          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyPointGeom a sf:Point ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Point(-83.4 34.3)\"^^geo:wktLiteral .\n",
+          "ref": "examples/multipoint.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyMultiPointGeom a sf:MultiPoint ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiPoint((-83.4 34.3),(-85.2, 32.1))\"^^geo:wktLiteral .\n",
           "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_2_1.ttl"
         }
       ],
@@ -61,13 +61,86 @@
       }
     },
     {
+      "title": "Line Geometry",
+      "content": "A LineString with exactly 2 Points",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/line.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyLineGeom a sf:Line ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)\"^^geo:wktLiteral .\n",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_3_1.ttl"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
       "title": "LineString Geometry",
+      "content": "A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment.",
       "snippets": [
         {
           "language": "ttl",
           "ref": "examples/linestring.ttl",
           "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyLineStringGeom a sf:LineString ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)\"^^geo:wktLiteral .\n",
-          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_3_1.ttl"
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_4_1.ttl"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
+      "title": "MultiLineString Geometry",
+      "content": "A MultiLineString is a MultiCurve whose elements are LineStrings.",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/multilinestring.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyMultiLineStringGeom a sf:MultiLineString ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiLineString((-83.4 34.0, -83.3 34.3), (-80.4 30.0, -85.3 38.3))\"^^geo:wktLiteral .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_5_1.ttl"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
+      "title": "Polygon Geometry",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/polygon.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyPolygonGeom a sf:Polygon ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))\"^^geo:wktLiteral .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_6_1.ttl"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
+      "title": "MultiPolygon Geometry",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/multipolygon.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyMultiPolygonGeom a sf:MultiPolygon ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> MultiPolygon(((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3)),((-80.2 30.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -80.2 30.3)))\"^^geo:wktLiteral .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_7_1.ttl"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
+    },
+    {
+      "title": "GeometryCollection Geometry",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/geometrycollection.ttl",
+          "code": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyGeometryCollection a sf:GeometryCollection ;\n  geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> GeometryCollection(Point(-83.4 34.3),MultiPoint((-83.4 34.3),(-85.2, 32.1)),LineString(-83.4 34.0, -83.3 34.3))\"^^geo:wktLiteral .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/simplefeatures/example_8_1.ttl"
         }
       ],
       "prefixes": {
