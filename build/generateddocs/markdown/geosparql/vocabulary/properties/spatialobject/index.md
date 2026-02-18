@@ -80,7 +80,7 @@ ex:MyPlace
   a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
   geo:hasGeometry ex:MyPlaceGeom ;
   geo:hasMetricPerimeterLength "81151.59235053362"^^xsd:double ;
-  geo:hasArea ex:MyPlace_perimeterLength .
+  geo:hasPerimeterLength ex:MyPlace_perimeterLength .
 
 ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
@@ -135,7 +135,7 @@ ex:MyPlace
   a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
   geo:hasGeometry ex:MyPlaceGeom ;
   geo:hasMetricVolume "100"^^xsd:double ;
-  geo:hasArea ex:MyPlace_volume .
+  geo:hasVolume ex:MyPlace_volume .
 
 ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
