@@ -1,1 +1,1 @@
-asciidoctor -r asciidoctor-pdf --trace -b pdf -o _11-052r4.pdf 00-GeoSPARQL.adoc
+asciidoctor -r asciidoctor-pdf  -r asciidoctor-bibtex --trace -b pdf -o ../spec.pdf document.adoc

@@ -5,11 +5,11 @@
 [discrete]
 === F.0. Overview
 
-This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service <<WFS>> and OGC API Features <<OGCAPIF>> which implement CQL.
+This annex presents a mapping between the Common Query Language(CQL) cite:[CQLDEF] and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service cite:[WFS] and OGC API Features cite:[OGCAPIF] which implement CQL.
 
 === Accessing spatial Features in a SPARQL endpoint
 
-Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
+Spatial _Features_ accessed via SPARQL endpoints cite:[SPARQLPROT] are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
 They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where <<Property: geo:FeatureCollection, `geo:FeatureCollection`>> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <<Class: geo:Feature, `geo:Feature`>> instances.
 
 The following example SPARQL query retrieves all Features within the Feature Collection with the IRI `ex:x` within a given SPARQL endpoint.
@@ -61,7 +61,7 @@ Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collect
 
 === Mappings from CQL2 statements to GeoSPARQL queries
 
-This section presents lists of equivalences between Common Query Language (CQL2) <<CQLDEF>> statements and GeoSPARQL statements.
+This section presents lists of equivalences between Common Query Language (CQL2) cite:[CQLDEF] statements and GeoSPARQL statements.
 
 ==== Query Parameters
 
@@ -78,7 +78,7 @@ Several query parameters may be given as parameters to the HTTP request of CD-im
 160.6,-55.95,-170,-25.89`` | ``FILTER(
 geo:sfIntersects())`` | ``FILTER(geo:sfIntersects(?geom, "POLYGON( (160.6 -55.95,160.6 -25.89, -170 -25.89, -170 -55.95, 160.6 -55.95))"^^geo:wktLiteral)``
 ) | WKT does not define a type boundingbox, therefore a bbox is converted to a Polygon
-| datetime | ``datetime= 2018-02-12 T23%3A20%3A52Z`` | - | - | GeoSPARQL doesn't detail temporal aspects of data. Filtering data using RDF temporal properties may be achieved using basic SPARQL queries and also OWL TIME <<TIME>>
+| datetime | ``datetime= 2018-02-12 T23%3A20%3A52Z`` | - | - | GeoSPARQL doesn't detail temporal aspects of data. Filtering data using RDF temporal properties may be achieved using basic SPARQL queries and also OWL TIME cite:[TIME]
 |===
 
 
@@ -172,11 +172,11 @@ Temporal operators are not part of the GeoSPARQL standard.
 | beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
 |===
 
-As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
+As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME cite:[TIME] may be used to assert temporal relations between objects.
 
 === Mappings from Simple Features for SQL
 
-The following table maps the functions and properties from Simple Features for SQL <<OGCSFACA>> <<ISO19125-1>> to GeoSPARQL.
+The following table maps the functions and properties from Simple Features for SQL cite:[OGCSFACA] cite:[ISO19125-1] to GeoSPARQL.
 
 .CQL To GeoSPARQL Mappings: Simple Features for SQL
 [cols="3,3,3,3,3"]
