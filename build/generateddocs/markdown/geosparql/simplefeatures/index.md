@@ -47,7 +47,7 @@ ex:MyPointGeom a sf:Point ;
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix sf: <http://www.opengis.net/ont/sf#> .
 
-ex:MyLineStringGeom a sf:LineString> ;
+ex:MyLineStringGeom a sf:LineString ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 
 ```
