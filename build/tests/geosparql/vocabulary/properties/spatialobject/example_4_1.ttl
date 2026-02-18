@@ -1,20 +1,22 @@
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
-@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix qudt: <http://qudt.org/vocab/unit/> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-ex:MyPlace
-  a ex:PlaceOfInterest, geo:Feature, geo:SpatialObject ;
-  geo:hasGeometry ex:MyPlaceGeom ;
-  geo:hasMetricArea "4.079967948035431E8"^^xsd:double ;
-  geo:hasArea ex:MyPlace_area .
+ex:MyPlace a ex:PlaceOfInterest,
+        geo:Feature,
+        geo:SpatialObject ;
+    geo:hasArea ex:MyPlace_area ;
+    geo:hasGeometry ex:MyPlaceGeom ;
+    geo:hasMetricArea 4.079968e+08 .
 
-ex:MyPlaceGeom
-  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
-  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
+ex:MyPlaceGeom a geo:Geometry,
+        <http://www.opengis.net/ont/gml#Polygon>,
+        sf:Polygon ;
+    geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-my:MyPlace_area a geo:SpatialMeasure ;
-          qudt:numericValue "101064.28" ;
-          qudt:unit qudt:AC .
+ex:MyPlace_area a geo:SpatialMeasure ;
+    qudt:numericValue "101064.28" ;
+    qudt:unit qudt:AC .
+

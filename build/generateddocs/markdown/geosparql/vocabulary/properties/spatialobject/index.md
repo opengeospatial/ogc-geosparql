@@ -30,7 +30,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-my:MyPlace_size a geo:SpatialMeasure ;
+ex:MyPlace_size a geo:SpatialMeasure ;
           qudt:numericValue "101064.28" ;
           qudt:unit qudt:AC .
 
@@ -58,7 +58,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 
-my:MyPlace_length a geo:SpatialMeasure ;
+ex:MyPlace_length a geo:SpatialMeasure ;
           qudt:numericValue "113293.1850877238" ;
           qudt:unit qudt:FT .
 
@@ -86,7 +86,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-my:MyPlace_perimeterLength rdf:type geo:SpatialMeasure ;
+ex:MyPlace_perimeterLength rdf:type geo:SpatialMeasure ;
         qudt:numericValue "50.42" ;
         qudt:unit qudt:MI .
 ```
@@ -113,7 +113,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-my:MyPlace_area a geo:SpatialMeasure ;
+ex:MyPlace_area a geo:SpatialMeasure ;
           qudt:numericValue "101064.28" ;
           qudt:unit qudt:AC .
 
@@ -141,7 +141,7 @@ ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 
-my:MyPlace_volume a geo:SpatialMeasure ;
+ex:MyPlace_volume a geo:SpatialMeasure ;
           qudt:numericValue "26417.2" ;
           qudt:unit qudt:GAL_US .
 
