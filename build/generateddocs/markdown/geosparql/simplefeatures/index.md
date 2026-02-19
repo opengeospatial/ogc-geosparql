@@ -55,6 +55,21 @@ ex:MyLineGeom a sf:Line ;
 ```
 
 
+### LinearRing Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyLinearRingGeom a sf:LinerRing ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LinearRing(-83.4 34.0, -83.3 34.3,-83.4 34.0)"^^geo:wktLiteral .
+
+```
+
+
 ### LineString Geometry
 A LineString is a Curve with linear interpolation between Points. Each consecutive pair of Points defines a Line segment.
 #### ttl
@@ -161,6 +176,24 @@ ex:MyGeometryCollection a sf:GeometryCollection ;
 
 ex:MyTriangle a sf:Triangle ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> TRIANGLE((0 0 0,0 1 0,1 1 0,0 0 0))"^^geo:wktLiteral .
+```
+
+
+### TIN Geometry
+#### ttl
+```ttl
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyTinGeom a sf:TIN ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> TIN (((0 0 0, 0 0 1, 0 1 0, 0 0 0)), ((0 0 0, 0 1 0, 1 1 0, 0 0 0)))"^^geo:wktLiteral .
+
+
+
+
 ```
 
 ## Sources
