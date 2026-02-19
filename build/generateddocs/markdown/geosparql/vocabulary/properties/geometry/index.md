@@ -15,6 +15,8 @@ Properties which can be used to describe a geometry's attributes
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
 
 ex:MyGeom rdf:type sf:Polygon ;
     geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral ;
@@ -28,6 +30,7 @@ ex:MyGeom rdf:type sf:Polygon ;
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
 ex:MyGeom rdf:type sf:LineString ;
     geo:asWKT ""^^geo:wktLiteral ;
@@ -39,6 +42,7 @@ ex:MyGeom rdf:type sf:LineString ;
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
 ex:MyGeom rdf:type sf:Polygon ;
     geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral ;
