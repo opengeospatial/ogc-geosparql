@@ -45,6 +45,18 @@ ex:MyGeom rdf:type sf:Polygon ;
     geo:isSimple "false"^^xsd:boolean .
 ```
 
+
+### A serialization example
+#### ttl
+```ttl
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+ex:MyPlaceGeom
+  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
+```
+
 ## Sources
 
 * [Spec section](https://opengeospatial.github.io/ogc-geosparql/geosparql11/document.html#geometry_properties)
