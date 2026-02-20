@@ -1,0 +1,208 @@
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ont: <http://www.opengis.net/def/geosparql/validator>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+#################################################
+# Shape 1 (1a-1d) - geometry serialization uniqueness
+#################################################
+
+<S1-hasGeometry-hasSerialization>
+    a sh:NodeShape ;
+    rdfs:isDefinedBy ont: ;
+	sh:targetClass geo:Geometry ;
+	sh:targetObjectsOf
+		geo:hasGeometry ,
+		geo:hasDefaultGeometry ,
+		geo:defaultGeometry ;
+	sh:targetSubjectsOf
+		geo:asWKT ,
+		geo:asGML ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
+	sh:property
+		<S1-a-hasGeometry-hasSerialization-sub> ,
+		<S1-b-hasGeometry-hasSerialization-sub> ,
+		<S1-c-hasGeometry-hasSerialization-sub> ,
+		<S1-d-hasGeometry-hasSerialization-sub> ,
+		<S1-e-hasGeometry-hasSerialization-sub> ;
+	sh:message "Each Geometry must have a maximum of one of each kind of outgoing serialization relation." ;
+	schema:name "hasSerialization targets Node Shape" ;
+.
+
+<S1-a-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asWKT ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asWKT relation."@en ;
+	skos:example
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is one geo:asWKT relation
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# A valid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing is one geo:asWKT relation. RDF treats both entries as one triple since they are identical.
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing are two geo:asWKT relations
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.08 -27.32)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ;
+	schema:name "asWKT max property shape" ;
+.
+
+<S1-b-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asGML ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asGML relation."@en ;
+	schema:name "asGML max property shape" ;
+.
+
+<S1-c-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asGeoJSON ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asGeoJSON relation."@en ;
+	schema:name "asGeoJSON max property shape" ;
+.
+
+<S1-d-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asKML ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asKML relation."@en ;
+	schema:name "asKML max property shape" ;
+.
+
+<S1-e-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asDGGS ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asDGGS relation."@en ;
+	schema:name "asDGGS max property shape" ;
+.
+
+#################################################
+# Shape 2 (2a-2d) - Geometry / Feature disjoint
+#################################################
+
+<S2-a-Geometry>
+	a sh:NodeShape ;
+	sh:targetClass geo:Geometry ;
+	sh:property <S2-hasGeometry-hasGeometry-sub> ;
+	sh:message "A Geometry node cannot have an outgoing property indicating another Geometry" ;
+	schema:name "Geometry class node shape" ;
+.
+
+<S2-b-hasGeometry-hasGeometry>
+    a sh:NodeShape ;
+    rdfs:isDefinedBy ont: ;
+	sh:targetObjectsOf geo:hasGeometry ;
+	sh:property <S2-hasGeometry-hasGeometry-sub> ;
+	sh:message "A Geometry node cannot have an outgoing property indicating another Geometry" ;
+	schema:name "hasGeometry objects node shape" ;
+.
+
+<S2-c-hasDefaultGeometry-hasGeometry>
+    a sh:NodeShape ;
+    rdfs:isDefinedBy ont: ;
+	sh:targetObjectsOf geo:hasDefaultGeometry ;
+	sh:property <S2-hasGeometry-hasGeometry-sub> ;
+	sh:message "A Geometry node cannot have an outgoing property indicating another Geometry" ;
+	schema:name "hasDefaultGeometry objects node shape" ;
+.
+
+<S2-d-defaultGeometry-hasGeometry>
+    a sh:NodeShape ;
+    rdfs:isDefinedBy ont: ;
+	sh:targetObjectsOf geo:defaultGeometry ;
+	sh:property <S2-hasGeometry-hasGeometry-sub> ;
+	sh:message "A Geometry node cannot have an outgoing property indicating another Geometry" ;
+	schema:name "defaultGeometry objects node shape" ;
+.
+
+<S2-hasGeometry-hasGeometry-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path [
+		sh:alternativePath (
+			geo:hasGeometry
+			geo:hasDefaultGeometry
+			geo:defaultGeometry
+		)
+	] ;
+	sh:maxCount 0 ;
+	sh:message "A Geometry node cannot have an outgoing geo:hasGeometry property, or a specialization of it, since a geo:Geometry cannot be a geo:Feature and entialment of geo:hasGeometry would make it so."@en ;
+	skos:example
+		"""
+		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasGeometry property and no outgoing geo:hasGeometry or specialization of it
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<resource-x> geo:hasGeometry <resource-x-geom1> .
+		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
+		""" ,
+		"""
+		# An invalid example: the Resource instance <resource-x> has both an outgoing and an incoming geo:hasGeometry property (i.e. it's a geo:Feature and a geo:Geometry at the same time)
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<resource-y>
+			geo:hasGeometry <resource-x> ;
+		.
+		<resource-x>
+			geo:asWKT "POINT (153.084232 -27.322734)"^^geo:wktLiteral ;
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# A valid example: the Resource instance <resource-x-geom1> has an incoming geo:hasDefaultGeometry property and no outgoing geo:hasGeometry or specialization of it
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<resource-x> geo:hasDefaultGeometry <resource-x-geom1> .
+		<resource-x-geom1> geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral .
+		""" ,
+		"""
+		# An invalid example: the Resource instance <resource-x> has an incoming geo:hasDefaultGeometry property and an outgoing geo:hasGeometry (i.e. it's a geo:Feature and a geo:Geometry at the same time)
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<resource-y>
+			geo:hasDefaultGeometry <resource-x> ;
+		.
+		<resource-x>
+			geo:asWKT "POINT (153.084232 -27.322734)"^^geo:wktLiteral ;
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ;
+		schema:name "objects of geometry indicating properties property shape" ;
+.
