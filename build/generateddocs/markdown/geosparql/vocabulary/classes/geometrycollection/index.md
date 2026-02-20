@@ -21,7 +21,7 @@ A building block defining a GeoSPARQL GeometryCollection
 ex:MyGeometryCollection a geo:GeometryCollection ;
     rdfs:member ex:MyGeom .
     
-ex:MyGeom a geo:Geometry, sf:Polygon ;
+ex:MyGeom a geo:Geometry ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 ```
 
