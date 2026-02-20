@@ -1,0 +1,116 @@
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ont: <http://www.opengis.net/def/geosparql/validator>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+<S11-many-isEmpty-one>
+	a sh:NodeShape ;
+	sh:property <S11-many-isEmpty-one-sub> ;
+	sh:targetSubjectsOf geo:isEmpty ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:isEmpty property."@en ;
+	schema:name "isEmpty predicate target" ;
+.
+
+<S11-many-isEmpty-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:isEmpty ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:isEmpty property."@en ;
+	schema:name "isEmpty predicate target max" ;
+.
+
+<S12-many-isSimple-one>
+	a sh:NodeShape ;
+	sh:property <S12-many-isSimple-one-sub> ;
+	sh:targetSubjectsOf geo:isSimple ;
+	sh:message "A geo:Geometry node should have a maximum one outgoing geo:isSimple property."@en ;
+	schema:name "isSimple predicate target" ;
+.
+
+<S12-many-isSimple-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:isSimple ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have a maximum one outgoing geo:isSimple property."@en ;
+	schema:name "isSimple predicate target max" ;
+.
+
+<S13-many-spatialDimension-one>
+	a sh:NodeShape ;
+	sh:property <S13-many-spatialDimension-one-sub> ;
+	sh:targetSubjectsOf geo:spatialDimension ;
+	sh:message "subject of geo:spatialDimension must not have more than one geo:spatialDimension property" ;
+	schema:name "spatialDimension predicate target" ;
+.
+
+<S13-many-spatialDimension-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:spatialDimension ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:spatialDimension property."@en ;
+	schema:name "spatialDimension predicate target max" ;
+.
+
+<S14-many-hasSpatialResolution-one>
+	a sh:NodeShape ;
+	sh:property
+		<S14-many-hasSpatialResolution-one-sub> ,
+		<S14-many-hasMetricSpatialResolution-one-sub> ;
+	sh:targetSubjectsOf
+		geo:hasSpatialResolution ,
+		geo:hasMetricSpatialResolution ;
+	sh:message "subject of geo:hasSpatialResolution and geo:hasMetricSpatialResolution must not have more than one geo:hasSpatialResolution geo:hasMetricSpatialResolution or property" ;
+    schema:name "hasSpatialResolution predicate target" ;
+.
+
+<S14-many-hasSpatialResolution-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:hasSpatialResolution ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialResolution property."@en ;
+	schema:name "hasSpatialResolution predicate target max" ;
+.
+
+<S14-many-hasMetricSpatialResolution-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:hasMetricSpatialResolution ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialResolution property."@en ;
+	schema:name "hasMetricSpatialResolution predicate target max" ;
+.
+
+<S15-many-hasSpatialAccuracy-one>
+	a sh:NodeShape ;
+	sh:property
+		<S15-many-hasSpatialAccuracy-one-sub> ,
+		<S15-many-hasMetricSpatialAccuracy-one-sub> ;
+	sh:targetSubjectsOf
+		geo:hasSpatialAccuracy ,
+		geo:hasMetricSpatialAccuracy ;
+    sh:message "A geo:Geometry node should have maximum of one geo:hasSpatialAccuracy or geo:hasMetricSpatialAccuracy outgoing property" ;
+    schema:name "hasSpatialAccuracy predicate target" ;
+.
+
+<S15-many-hasSpatialAccuracy-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:hasSpatialAccuracy ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasSpatialAccuracy property."@en ;
+	schema:name "hasSpatialAccuracy predicate target max" ;
+.
+
+<S15-many-hasMetricSpatialAccuracy-one-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:hasMetricSpatialAccuracy ;
+	sh:maxCount 1 ;
+	sh:message "A geo:Geometry node should have maximum of one outgoing geo:hasMetricSpatialAccuracy."@en ;
+	schema:name "hasMetricSpatialAccuracy  predicate target max" ;
+.

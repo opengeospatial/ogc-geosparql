@@ -1,0 +1,94 @@
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX ont: <http://www.opengis.net/def/geosparql/validator>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+#################################################
+# Shape 23 - geo:GeometryCollection
+#################################################
+
+<S23-GeometryCollectionClass-member-geometry>
+	a sh:NodeShape ;
+	sh:property
+		<S23-GeometryCollectionClass-minOneMember-geometry-sub> ,
+		<S23-GeometryCollectionClass-member-onlyGeometry-sub> ;
+	sh:targetClass geo:GeometryCollection ;
+	sh:message "GeometryCollectionClass node shape" ;
+	schema:name "GeometryCollection class shape" ;
+.
+
+<S23-GeometryCollectionClass-minOneMember-geometry-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path rdfs:member ;
+	sh:minCount 1 ;
+	sh:message "An instance of geo:GeometryCollection should have at least one outgoing rdfs:member relation."@en ;
+	skos:example
+		"""
+		# A valid example: the geo:GeometryCollection instance node has one incoming rdfs:member relation
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+		<geometryCollection-x>
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.
+
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ,
+		"""
+		# An invalid example: the geo:GeometryCollection instance node has no outgoing rdfs:member relations
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+		<geometryCollection-x> a geo:GeometryCollection .
+		""" ;
+    schema:name "GeometryCollection member min property shape" ;
+.
+
+<S23-GeometryCollectionClass-member-onlyGeometry-sub>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path rdfs:member ;
+	sh:message "An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances."@en ;
+	sh:sparql [
+		sh:select """
+			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+			SELECT $this
+			WHERE {
+				$this rdfs:member ?geometry .
+				FILTER NOT EXISTS {
+					?feature geo:hasGeometry ?geometry .
+				}
+			}
+		""" ;
+	] ;
+	skos:example
+		"""
+		# A valid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to a geo:Geometry node
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+		<geometryCollection-x>
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> ;
+		.
+
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ,
+		"""
+		# An invalid example: the geo:GeometryCollection instance node has one outgoing rdfs:member relation to geo:Geometry node and one to a non-geo:Geometry node (a geo:Feature)
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+		<geometryCollection-x>
+		    a geo:GeometryCollection ;
+		    rdfs:member <geometry-x> , <feature-x> ;
+		.
+
+		<feature-x> geo:hasGeometry <geometry-x> .
+		""" ;
+	schema:name "GeometryCollection member class property shape" ;
+.
