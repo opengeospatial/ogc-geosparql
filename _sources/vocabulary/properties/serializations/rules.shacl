@@ -1,0 +1,102 @@
+PREFIX schema: <https://schema.org/>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX ont: <http://www.opengis.net/def/geosparql/validator>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+#################################################
+# Shape 16-17-18-19-20 - basic geometry serialization pattern matching
+#################################################
+
+<S16-wkt-content>
+	a sh:NodeShape ;
+	sh:property <S16-wkt-content-sub-start> ;
+	sh:targetSubjectsOf geo:asWKT ;
+	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
+	schema:name "WKT Content" ;
+.
+
+<S16-wkt-content-sub-start>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asWKT ;
+	sh:pattern "^\\s*$|^\\s*(M|P|C|S|L|T|<|m|p|c|s|l|t)" ; # starts with space, < or P, C etc.
+	sh:flags "m" ;
+	sh:message "The content of an RDF literal with an incoming geo:asWKT relation must conform to a well-formed WKT string, as defined by its official specification (Simple Features Access)."@en ;
+	schema:name "WKT Content Pattern Match" ;
+.
+
+<S17-gml-content>
+	a sh:NodeShape ;
+	sh:property <S17-gml-content-sub-start> ;
+	sh:targetSubjectsOf geo:asGML ;
+	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification." ;
+	schema:name "GML Content" ;
+.
+
+<S17-gml-content-sub-start>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asGML ;
+	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
+	sh:flags "m" ;
+	sh:message "The content of an RDF literal with an incoming geo:asGML relation must conform to a well-formed GML geometry XML string, as defined by its official specification."@en ;
+	schema:name "GML Content Pattern Match" ;
+.
+
+<S18-geojson-content>
+	a sh:NodeShape ;
+	sh:property <S18-geojson-content-sub-start> ;
+	sh:targetSubjectsOf geo:asGeoJSON ;
+	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
+	schema:name "GeoJSON Content" ;
+.
+
+<S18-geojson-content-sub-start>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asGeoJSON ;
+	sh:pattern "^\\s*$|^\\s*({)(.*)(})\\s*$" ;  # starts with { ends with }
+	sh:flags "s" ;
+	sh:message "The content of an RDF literal with an incoming geo:asGeoJSON relation must conform to a well-formed GeoJSON geometry string, as defined by its official specification."@en ;
+	schema:name "GeoJSON Content Pattern Match" ;
+.
+
+<S19-kml-content>
+	a sh:NodeShape ;
+	sh:property <S19-kml-content-sub-start> ;
+	sh:targetSubjectsOf geo:asKML ;
+	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
+	schema:name "KML Content" ;
+.
+
+<S19-kml-content-sub-start>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asKML ;
+	sh:pattern "^\\s*$|^\\s*(<)(.+)(>)\\s*$" ;  # starts with < ends with >
+	sh:flags "m" ;
+	sh:message "The content of an RDF literal with an incoming geo:asKML relation must conform to a well-formed KML geometry XML string, as defined by its official specification."@en ;
+	schema:name "KML Content Pattern Match" ;
+.
+
+<S20-dggs-content>
+	a sh:NodeShape ;
+	sh:property <S20-dggs-content-sub-start> ;
+	sh:targetSubjectsOf geo:asDGGS ;
+	sh:deactivated true ;
+	rdfs:comment "This shape is deactivated since the precise syntax of DGGS literals is not known"@en ;
+	sh:message "The content of an RDF literal with an incoming geo:asDGGS relation must conform to DGGS literals, as defined by their specifications, however GeoSPARQL requires all DGGS Literals to start by indicating the specific DGGS used with an IRI for that DGGS enclosed n < & >"@en ;
+	schema:name "DGGS Content" ;
+.
+
+<S20-dggs-content-sub-start>
+	a sh:PropertyShape ;
+	rdfs:isDefinedBy ont: ;
+	sh:path geo:asDGGS ;
+	sh:pattern "^\\s*(<(.+)>(\\s+(.+))?)?\\s*$" ;  # starts with space, <, then IRI, then > then DGGS literal content
+	sh:message "The content of an RDF literal with an incoming geo:asDGGS relation must conform to DGGS literals, as defined by their specifications, however GeoSPARQL requires all DGGS Literals to start by indicating the specific DGGS used with an IRI for that DGGS enclosed n < & >"@en ;
+	schema:name "DGGS Content Pattern Match" ;
+.
