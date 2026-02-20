@@ -1,5 +1,5 @@
 Validation report for ogc.geosparql.vocabulary.classes.geometrycollection - GeoSPARQL FeatureCollection
-Generated 2026-02-20T11:53:06.737212+00:00
+Generated 2026-02-20T12:23:16.136755+00:00
 === Files ===
 Using examples/example.ttl from examples
 Output Turtle example_1_1.ttl created
@@ -12,8 +12,30 @@ Prefixes are defined for mynamespace
 === SHACL ===
 
 ** Validation error **
-Error processing _sources/vocabulary/classes/geometrycollection/rules.shacl: at line 27 of <>:
-Bad syntax (Prefix "skos:" not bound) at ^ in:
-"...b'ld have at least one outgoing rdfs:member relation."@en ;\r\n\t'^b'skos:example\r\n\t\t"""\r\n\t\t# A valid example: the geo:GeometryCo'..."
+Validation result for _sources/vocabulary/classes/geometrycollection/rules.shacl:
+  Validation Report
+  Conforms: False
+  Results (1):
+  Constraint Violation in SPARQLConstraintComponent (http://www.w3.org/ns/shacl#SPARQLConstraintComponent):
+  	Severity: sh:Violation
+  	Source Shape: <file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-onlyGeometry-sub>
+  	Focus Node: ex:MyFeatureCollection
+  	Result Path: rdfs:member
+  	Source Constraint: [ sh:select Literal("
+  			PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+  			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  			SELECT $this
+  			WHERE {
+  				$this rdfs:member ?geometry .
+  				FILTER NOT EXISTS {
+  					?feature geo:hasGeometry ?geometry .
+  				}
+  			}
+  		") ]
+  	Message: An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances.
+  
+Focus nodes for _sources/vocabulary/classes/geometrycollection/rules.shacl:
+ - Shape <file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-geometry>: ex:MyFeatureCollection
+
 === End SHACL ===
 

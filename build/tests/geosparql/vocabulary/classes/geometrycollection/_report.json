@@ -2,7 +2,7 @@
   "title": "Validation report for ogc.geosparql.vocabulary.classes.geometrycollection - GeoSPARQL FeatureCollection",
   "bblockName": "GeoSPARQL FeatureCollection",
   "bblockId": "ogc.geosparql.vocabulary.classes.geometrycollection",
-  "generated": "2026-02-20T11:53:06.737263+00:00",
+  "generated": "2026-02-20T12:23:16.136805+00:00",
   "result": false,
   "items": [
     {
@@ -48,17 +48,32 @@
         {
           "name": "SHACL",
           "title": "SHACL",
-          "entries": []
+          "entries": [
+            {
+              "op": "shacl-report",
+              "shaclFile": "_sources/vocabulary/classes/geometrycollection/rules.shacl",
+              "graph": "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n@prefix sh: <http://www.w3.org/ns/shacl#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\n[] a sh:ValidationReport ;\n    sh:conforms false ;\n    sh:result [ a sh:ValidationResult ;\n            sh:focusNode <http://example.org/ApplicationSchema#MyFeatureCollection> ;\n            sh:resultMessage \"An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances.\" ;\n            sh:resultPath rdfs:member ;\n            sh:resultSeverity sh:Violation ;\n            sh:sourceConstraint [ sh:select \"\"\"\\r\n\t\t\tPREFIX geo: <http://www.opengis.net/ont/geosparql#>\\r\n\t\t\tPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\\r\n\t\t\tSELECT $this\\r\n\t\t\tWHERE {\\r\n\t\t\t\t$this rdfs:member ?geometry .\\r\n\t\t\t\tFILTER NOT EXISTS {\\r\n\t\t\t\t\t?feature geo:hasGeometry ?geometry .\\r\n\t\t\t\t}\\r\n\t\t\t}\\r\n\t\t\"\"\" ] ;\n            sh:sourceConstraintComponent sh:SPARQLConstraintComponent ;\n            sh:sourceShape <file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-onlyGeometry-sub> ] .\n\n",
+              "isError": true,
+              "message": "Validation result for _sources/vocabulary/classes/geometrycollection/rules.shacl:\n  Validation Report\n  Conforms: False\n  Results (1):\n  Constraint Violation in SPARQLConstraintComponent (http://www.w3.org/ns/shacl#SPARQLConstraintComponent):\n  \tSeverity: sh:Violation\n  \tSource Shape: <file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-onlyGeometry-sub>\n  \tFocus Node: ex:MyFeatureCollection\n  \tResult Path: rdfs:member\n  \tSource Constraint: [ sh:select Literal(\"\r\n  \t\t\tPREFIX geo: <http://www.opengis.net/ont/geosparql#>\r\n  \t\t\tPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\r\n  \t\t\tSELECT $this\r\n  \t\t\tWHERE {\r\n  \t\t\t\t$this rdfs:member ?geometry .\r\n  \t\t\t\tFILTER NOT EXISTS {\r\n  \t\t\t\t\t?feature geo:hasGeometry ?geometry .\r\n  \t\t\t\t}\r\n  \t\t\t}\r\n  \t\t\") ]\n  \tMessage: An instance of geo:GeometryCollection should only have outgoing rdfs:member relations to geo:Geometry instances.\n  "
+            },
+            {
+              "shaclFile": "_sources/vocabulary/classes/geometrycollection/rules.shacl",
+              "focusNodes": {
+                "<file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-geometry>": {
+                  "nodes": [
+                    "ex:MyFeatureCollection"
+                  ]
+                }
+              },
+              "isError": false,
+              "message": "Focus nodes for _sources/vocabulary/classes/geometrycollection/rules.shacl:\n - Shape <file:///github/workspace/_sources/vocabulary/classes/geometrycollection/S23-GeometryCollectionClass-member-geometry>: ex:MyFeatureCollection\n"
+            }
+          ]
         }
       ]
     }
   ],
-  "globalErrors": {
-    "SHACL": {
-      "isError": true,
-      "message": "Error processing _sources/vocabulary/classes/geometrycollection/rules.shacl: at line 27 of <>:\nBad syntax (Prefix \"skos:\" not bound) at ^ in:\n\"...b'ld have at least one outgoing rdfs:member relation.\"@en ;\\r\\n\\t'^b'skos:example\\r\\n\\t\\t\"\"\"\\r\\n\\t\\t# A valid example: the geo:GeometryCo'...\""
-    }
-  },
+  "globalErrors": {},
   "counts": {
     "total": 1,
     "passed": 0,
