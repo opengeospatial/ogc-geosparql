@@ -171,17 +171,17 @@ A feature is related to another feature using the geo:rcc8po relation.
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
-my:MyPlace rdf:type geo:Feature ;
-     geo:hasGeometry my:MyPlaceGeom ;
-     geo:rcc8po my:MyPlace2 .
+ex:MyPlace rdf:type geo:Feature ;
+     geo:hasGeometry ex:MyPlaceGeom ;
+     geo:rcc8po ex:MyPlace2 .
 
-my:MyPlaceGeom rdf:type sf:Polygon ;
+ex:MyPlaceGeom rdf:type sf:Polygon ;
     geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral .
 
-my:MyPlace2 rdf:type geo:Feature ;
-     geo:hasGeometry my:MyPlace2Geom  .
+ex:MyPlace2 rdf:type geo:Feature ;
+     geo:hasGeometry ex:MyPlace2Geom  .
 
-my:MyPlace2Geom rdf:type sf:Polygon ;
+ex:MyPlace2Geom rdf:type sf:Polygon ;
     geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.3 34.0, -83.1 34.0, -83.1 34.2, -83.3 34.2, -83.3 34.0))"^^geo:wktLiteral .
 ```
 
@@ -234,6 +234,68 @@ ex:MyPlace
   a ex:PlaceOfInterest, geo:Feature ;
   geo:hasGeometry ex:MyPlaceGeom ;
   geo:rcc8ntppi ex:MyPlace2 .
+
+ex:MyPlaceGeom
+  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral .
+
+ex:MyPlace2
+  a ex:PlaceOfInterest, geo:Feature ;
+  geo:hasGeometry ex:MyPlace2Geom ;
+  geo:rcc8ntpp ex:MyPlace .
+
+ex:MyPlace2Geom
+  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.5 34.2, -83.3 34.2, -83.3 34.4, -83.5 34.4, -83.5 34.2))"^^geo:wktLiteral  .
+```
+
+#### geojson
+```geojson
+{
+  "type": "FeatureCollection",
+  "features": [
+        { "type": "Feature",
+        "geometry": { "type": "Polygon",
+        "coordinates": [[[-83.6,34.1], 
+                        [-83.2, 34.1], [-83.2, 34.5], 
+                        [-83.6, 34.5], [-83.6, 34.1]]]
+            },
+        "properties":{"rdfs:label":"AExactGeom",
+                        "geo:coordinateDimension": 2 ,
+                        "geo:dimension": 2 ,
+                        "geo:isEmpty": false,
+                        "geo:isSimple": true,
+                        "geo:spatialDimension": 2 
+                        }
+        },    
+        { "type": "Feature",
+        "geometry": { "type": "Polygon",
+        "coordinates": [[[-83.5, 34.2], [-83.3, 34.2], [-83.3, 34.4], [-83.5, 34.4], [-83.5, 34.2]]]
+            },
+        "properties":{"rdfs:label":"GExactGeom",
+                        "geo:coordinateDimension": 2 ,
+                        "geo:dimension": 2 ,
+                        "geo:isEmpty": false ,
+                        "geo:isSimple": true ,
+                        "geo:spatialDimension": 2 
+                        }
+        }
+    ]
+}
+```
+
+
+### rcc8tppi and rcc8tpp relation example
+A feature is related to another feature using the geo:rcc8tppi relation. The inverse relation rcctpp is documented as well.
+#### ttl
+```ttl
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+
+ex:MyPlace
+  a ex:PlaceOfInterest, geo:Feature ;
+  geo:hasGeometry ex:MyPlaceGeom ;
+  geo:rcc8tppi ex:MyPlace2 .
 
 ex:MyPlaceGeom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;

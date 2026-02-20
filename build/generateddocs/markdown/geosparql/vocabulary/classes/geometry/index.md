@@ -16,22 +16,10 @@ A building block defining a GeoSPARQL Geometry
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
-ex:CExactGeom
-  a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry ;
-  geo:isEmpty false ;
-  geo:isSimple true ;
-  geo:dimension 2 ;
-  geo:spatialDimension 2 ;
-  geo:coordinateDimension 2 ;
-  geo:asWKT """
-        
-            <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))
-        
-    """^^geo:wktLiteral ;
-  geo:asGML """
-        <gml:Polygon xmlns:gml="http://www.opengis.net/ont/gml" srsName="http://www.opengis.net/def/crs/OGC/1.3/CRS84"><gml:exterior><gml:LinearRing><gml:posList>-83.2 34.3 -83.0 34.3 -83.0 34.5 -83.2 34.5 -83.2 34.3</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>
-    """^^geo:gmlLiteral .
+ex:MyGeom a sf:Polygon, geo:Geometry ;
+  geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 ```
 
 ## Sources

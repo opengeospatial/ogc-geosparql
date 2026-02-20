@@ -339,7 +339,6 @@ A feature is related to another feature using the geo:sfCrosses relation.
 ex:MyPlace rdf:type geo:Feature ;
      geo:hasGeometry ex:MyPlaceGeom ; .
 
-###  http://example.org/ApplicationSchema#AExactGeom
 ex:MyPlaceGeom rdf:type sf:Polygon ;
               geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral .
 
