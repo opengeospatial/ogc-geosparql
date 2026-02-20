@@ -5,6 +5,44 @@ PREFIX sh: <http://www.w3.org/ns/shacl#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
+#################################################
+# Shape 3 - serializations must be literals
+#################################################
+
+<S3-hasSerialization-literal>
+	a sh:NodeShape ;
+	sh:targetObjectsOf
+		geo:hasSerialization ,
+		geo:asGML ,
+		geo:asWKT ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
+	sh:nodeKind sh:Literal ;
+	sh:message "The target of a geo:hasSerialization property, or a specialization of, it should be an RDF literal."@en ;
+	skos:example 
+		"""
+		# A valid example: the target of a geo:asWKT property is an RDF literal
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: the target of a geo:asWKT property is not an RDF literal
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-y>
+			geo:hasGeometry [
+				geo:asWKT <geometry-serialization-node> ;
+			] ;
+		.		
+		""" ;
+.
+
 <S11-many-isEmpty-one>
 	a sh:NodeShape ;
 	sh:property <S11-many-isEmpty-one-sub> ;
