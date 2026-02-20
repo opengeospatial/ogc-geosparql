@@ -170,6 +170,7 @@ A feature is related to another feature using the geo:rcc8po relation.
 @prefix ex: <http://example.org/ApplicationSchema#> .
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 
 ex:MyPlace rdf:type geo:Feature ;
      geo:hasGeometry ex:MyPlaceGeom ;

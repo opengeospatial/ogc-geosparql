@@ -1,9 +1,9 @@
 
-# GeoSPARQL FeatureCollection (Model)
+# GeoSPARQL GeometryCollection (Model)
 
 `ogc.geosparql.vocabulary.classes.geometrycollection` *v0.1*
 
-A building block defining a GeoSPARQL FeatureCollection
+A building block defining a GeoSPARQL GeometryCollection
 
 [*Status*](http://www.opengis.net/def/status): Under development
 
@@ -18,10 +18,10 @@ A building block defining a GeoSPARQL FeatureCollection
 @prefix geo: <http://www.opengis.net/ont/geosparql#> .
 @prefix sf: <http://www.opengis.net/ont/sf#> .
 
-ex:MyFeatureCollection a geo:GeometryCollection ;
+ex:MyGeometryCollection a geo:GeometryCollection ;
     rdfs:member ex:MyGeom .
     
-ex:MyGeom a sf:Polygon, geo:Geometry ;
+ex:MyGeom a geo:Geometry, sf:Polygon ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.2 34.3, -83.0 34.3, -83.0 34.5, -83.2 34.5, -83.2 34.3))"^^geo:wktLiteral .
 ```
 
