@@ -7,6 +7,99 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 
 #################################################
+# Shape 1 (1a-1d) - geometry serialization uniqueness
+#################################################
+
+<S1-hasGeometry-hasSerialization>
+    a sh:NodeShape ;
+	sh:targetClass geo:Geometry ;
+	sh:targetObjectsOf 
+		geo:hasGeometry , 
+		geo:hasDefaultGeometry ,
+		geo:defaultGeometry ;
+	sh:targetSubjectsOf 
+		geo:asWKT ,
+		geo:asGML ,
+		geo:asGeoJSON ,
+		geo:asKML ,
+		geo:asDGGS ;
+	sh:property 
+		<S1-a-hasGeometry-hasSerialization-sub> , 
+		<S1-b-hasGeometry-hasSerialization-sub> , 
+		<S1-c-hasGeometry-hasSerialization-sub> , 
+		<S1-d-hasGeometry-hasSerialization-sub> ,
+		<S1-e-hasGeometry-hasSerialization-sub> ;
+.
+
+<S1-a-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asWKT ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asWKT relation."@en ;
+	skos:example 
+		"""
+		# A valid example: incoming into the Geometry Blank Node is geo:hasGeometry, outgoing is one geo:asWKT relation
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# A valid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing is one geo:asWKT relation. RDF treats both entries as one triple since they are identical.
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ,
+		"""
+		# An invalid example: incoming to the Geometry blank node is geo:hasGeometry, outgoing are two geo:asWKT relations
+		PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+
+		<feature-x>
+			geo:hasGeometry [
+				geo:asWKT "POINT (153.084230 -27.322738)"^^geo:wktLiteral ;
+				geo:asWKT "POINT (153.08 -27.32)"^^geo:wktLiteral ;
+			] ;
+		.
+		""" ;
+.
+
+<S1-b-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asGML ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asGML relation."@en ;
+.
+
+<S1-c-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asGeoJSON ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asGeoJSON relation."@en ;
+.
+
+<S1-d-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asKML ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asKML relation."@en ;
+.
+
+<S1-e-hasGeometry-hasSerialization-sub>
+	a sh:PropertyShape ;
+	sh:path geo:asDGGS ;
+	sh:maxCount 1 ;
+	sh:message "Each Geometry node can have a maximum of one outgoing geo:asDGGS relation."@en ;
+.
+
+#################################################
 # Shape 4-5-6-7-8 - serialization datatypes match indicating properties
 #################################################
 
