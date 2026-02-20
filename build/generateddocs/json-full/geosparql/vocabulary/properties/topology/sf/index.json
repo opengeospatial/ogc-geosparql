@@ -135,6 +135,27 @@
       "prefixes": {
         "mynamespace": "https://example.com/dataset/geo-demo/"
       }
+    },
+    {
+      "title": "sfCrosses relation example",
+      "content": "A feature is related to another feature using the geo:sfCrosses relation.",
+      "snippets": [
+        {
+          "language": "ttl",
+          "ref": "examples/sfCrosses.ttl",
+          "code": "@prefix ex: <http://example.org/ApplicationSchema#> .\n@prefix geo: <http://www.opengis.net/ont/geosparql#> .\n@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n@prefix sf: <http://www.opengis.net/ont/sf#> .\n\nex:MyPlace rdf:type geo:Feature ;\n     geo:hasGeometry ex:MyPlaceGeom ; .\n\n###  http://example.org/ApplicationSchema#AExactGeom\nex:MyPlaceGeom rdf:type sf:Polygon ;\n              geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))\"^^geo:wktLiteral .\n\nex:MyPlace2 rdf:type geo:Feature ;\n     geo:hasGeometry ex:MyPlace2Geom ;\n     geo:sfCrosses ex:MyPlace .\n\nex:MyPlace2Geom rdf:type sf:LineString ;\n              geo:asWKT \"<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)\"^^geo:wktLiteral .",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_6_1.ttl"
+        },
+        {
+          "language": "geojson",
+          "ref": "examples/sfCrosses.geojson",
+          "code": "{\n  \"type\": \"FeatureCollection\",\n  \"features\":[\n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"Polygon\",\n      \"coordinates\": [[[-83.6,34.1], \n                    [-83.2, 34.1], [-83.2, 34.5], \n                    [-83.6, 34.5], [-83.6, 34.1]]]\n        },\n       \"properties\":{\"rdfs:label\":\"AExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false,\n                     \"geo:isSimple\": true,\n                     \"geo:spatialDimension\": 2 \n                    }\n    },  \n    { \"type\": \"Feature\",\n      \"geometry\": { \"type\": \"LineString\",\n      \"coordinates\": [[-83.4, 34.0], \n                    [-83.3, 34.3]]\n        },\n       \"properties\":{\"rdfs:label\":\"EExactGeom\",\n                     \"geo:coordinateDimension\": 2 ,\n                     \"geo:dimension\": 2 ,\n                     \"geo:isEmpty\": false ,\n                     \"geo:isSimple\": true ,\n                     \"geo:spatialDimension\": 2                \n                    }\n    }\n  ]\n}",
+          "url": "https://opengeospatial.github.io/ogc-geosparql/build/tests/geosparql/vocabulary/properties/topology/sf/example_6_2.geojson"
+        }
+      ],
+      "prefixes": {
+        "mynamespace": "https://example.com/dataset/geo-demo/"
+      }
     }
   ],
   "examplePrefixes": {
