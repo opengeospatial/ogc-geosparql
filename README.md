@@ -1,4 +1,4 @@
-# OGC GeoSPARQL
+# OGC GeoSPARQL 
                         
 ## Introduction                                                                     
                           
