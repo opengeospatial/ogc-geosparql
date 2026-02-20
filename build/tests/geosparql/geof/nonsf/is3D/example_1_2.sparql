@@ -1,0 +1,9 @@
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+SELECT ?is3D
+WHERE {
+  my:A geo:hasDefaultGeometry ?geom .
+  ?geom geo:asWKT ?wktLiteral .
+  BIND (geof:is3D(?wktLiteral) as ?is3D)
+}
