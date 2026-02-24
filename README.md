@@ -12,7 +12,7 @@ To see in-progress HTML & PDF versions of the various elements of GeoSPARQL 1.1 
  
 * [GeoSPARQL auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)     
  
-If you want to cite the living document of the in-progress standard we encourage you to use the following BibTeX statement:
+If you want to cite the living document of the in-progress standard we encourage you to use the following BibTeX statement: 
     
 ```bibtex
 @techreport{nicholas_j_car_ogc_2023,
