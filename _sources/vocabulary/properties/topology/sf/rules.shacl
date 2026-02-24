@@ -6,7 +6,7 @@
 @prefix geof: <http://www.opengis.net/def/function/geosparql/> .
 @prefix geov: <http://www.opengis.net/def/geosparql/validator/> .
 
-geov:sfEquals a sh:NodeShape ;
+geov:shsfEquals a sh:NodeShape ;
     sh:targetSubjectsOf geo:sfEquals ;
     sh:targetClass geo:Feature ;
     sh:validator [
@@ -24,7 +24,7 @@ geov:sfEquals a sh:NodeShape ;
 .
 
 
-geov:sfDisjoint a sh:NodeShape ;
+geov:shsfDisjoint a sh:NodeShape ;
     sh:targetSubjectsOf geo:sfDisjoint ;
     sh:targetClass geo:Feature ;
     sh:validator [
@@ -39,6 +39,24 @@ geov:sfDisjoint a sh:NodeShape ;
             }
         """ ;
         sh:message "Features related with the property geo:sfDisjoint should return a consistent result when comparing their geometries using the geof:sfDisjoint function" ; ] 
+.
+
+
+geov:shsfTouches a sh:NodeShape ;
+    sh:targetSubjectsOf geo:sfTouches ;
+    sh:targetClass geo:Feature ;
+    sh:validator [
+        a sh:SPARQLAskValidator ;
+        sh:ask  """
+            ask
+            where {
+                ?f <http://www.opengis.net/ont/geosparql#sfTouches> ?f2 .
+                ?f <http://www.opengis.net/ont/geosparql#hasGeometry> ?fgeom . ?fgeom <http://www.opengis.net/ont/geosparql#asWKT> ?fgwkt .
+                ?f2 <http://www.opengis.net/ont/geosparql#hasGeometry> ?f2geom . ?f2geom <http://www.opengis.net/ont/geosparql#asWKT> ?f2gwkt .
+                FILTER (<http://www.opengis.net/def/function/geosparql/sfTouches>(?fgwkt,?f2gwkt)=true)
+            }
+        """ ;
+        sh:message "Features related with the property geo:sfTouches should return a consistent result when comparing their geometries using the geof:sfTouches function" ; ] 
 .
 
 
