@@ -13,10 +13,10 @@ ex:sfEquals a sh:NodeShape ;
         sh:ask  """
             ask
             where {
-                ?f geo:sfEquals ?f2 .
-                ?f geo:hasGeometry ?fgeom . ?fgeom geo:asWKT ?fgwkt .
-                ?f2 geo:hasGeometry ?f2geom . ?f2geom geo:asWKT ?f2gwkt .
-                FILTER (geof:sfEquals(?fgwkt,?f2gwkt)=true)
+                ?f <http://www.opengis.net/ont/geosparql#sfEquals> ?f2 .
+                ?f <http://www.opengis.net/ont/geosparql#hasGeometry> ?fgeom . ?fgeom <http://www.opengis.net/ont/geosparql#asWKT> ?fgwkt .
+                ?f2 <http://www.opengis.net/ont/geosparql#hasGeometry> ?f2geom . ?f2geom <http://www.opengis.net/ont/geosparql#asWKT> ?f2gwkt .
+                FILTER (<http://www.opengis.net/def/function/geosparql/sfEquals>(?fgwkt,?f2gwkt)=true)
             }
         """ ;
         sh:message "Features related with the property geo:sfEquals should return a consistent result when comparing their geometries using the geof:sfEquals function" ; ] 
