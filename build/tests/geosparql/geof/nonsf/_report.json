@@ -2,8 +2,8 @@
   "title": "Validation report for ogc.geosparql.geof.nonsf - GeoSPARQL Non SF Functions",
   "bblockName": "GeoSPARQL Non SF Functions",
   "bblockId": "ogc.geosparql.geof.nonsf",
-  "generated": "2026-03-01T21:49:56.357390+00:00",
-  "result": false,
+  "generated": "2026-03-01T22:51:11.499188+00:00",
+  "result": true,
   "items": [
     {
       "source": {
@@ -13,16 +13,40 @@
         "url": "https://opengeospatial.github.io/ogc-geosparql/_sources/geof/nonsf/tests/sfEquals.ttl",
         "language": "ttl"
       },
-      "result": false,
+      "result": true,
       "sections": [
         {
-          "name": "TURTLE",
-          "title": "Turtle",
+          "name": "FILES",
+          "title": "Files",
           "entries": [
             {
-              "exception": "BadSyntax",
-              "isError": true,
-              "message": "at line 7 of <>:\nBad syntax (Prefix \"xsd:\" not bound) at ^ in:\n\"...b'eo:hasGeometry ex:MyPlaceGeom ;\\n  ex:expectedResult \"true\"^^'^b'xsd:boolean ;\\n  geo:sfEquals ex:MyPlace .\\n\\nex:MyPlaceGeom\\n  '...\""
+              "isError": false,
+              "message": "Using sfEquals.ttl from test resources"
+            }
+          ]
+        },
+        {
+          "name": "SHACL",
+          "title": "SHACL",
+          "entries": [
+            {
+              "op": "shacl-report",
+              "shaclFile": "_sources/geof/nonsf/rules.shacl",
+              "graph": "@prefix sh: <http://www.w3.org/ns/shacl#> .\n@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n\n[] a sh:ValidationReport ;\n    sh:conforms true .\n\n",
+              "isError": false,
+              "message": "Validation result for _sources/geof/nonsf/rules.shacl:\n  Validation Report\n  Conforms: True\n  "
+            },
+            {
+              "shaclFile": "_sources/geof/nonsf/rules.shacl",
+              "focusNodes": {
+                "geov:shsfEquals": {
+                  "nodes": [
+                    "ex:MyPlace"
+                  ]
+                }
+              },
+              "isError": false,
+              "message": "Focus nodes for _sources/geof/nonsf/rules.shacl:\n - Shape geov:shsfEquals: ex:MyPlace\n"
             }
           ]
         }
@@ -32,7 +56,7 @@
   "globalErrors": {},
   "counts": {
     "total": 1,
-    "passed": 0,
-    "failed": 1
+    "passed": 1,
+    "failed": 0
   }
 }
