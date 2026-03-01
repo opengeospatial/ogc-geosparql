@@ -9,7 +9,7 @@ The geof:is3D function tests if a given GeoSPARQL geometry contains a third dime
 
 ## Examples
 
-### Usage example of is3D
+### Usage example of geof:sfEquals: SPARQL Query and sample data
 #### sparql
 ```sparql
 ask
