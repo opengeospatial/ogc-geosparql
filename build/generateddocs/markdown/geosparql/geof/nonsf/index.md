@@ -10,7 +10,7 @@ The geof:is3D function tests if a given GeoSPARQL geometry contains a third dime
 ## Examples
 
 ### Usage example of geof:sfEquals: SPARQL Query and sample data
-A geometry should be equal to itself. The SPARQL query tests this equality relationsship using the function geof:sfEquals
+A geometry should be equal to itself. The SPARQL query tests this equality relationship using the function geof:sfEquals
 #### sparql
 ```sparql
 ask
