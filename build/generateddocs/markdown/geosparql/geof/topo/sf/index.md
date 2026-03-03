@@ -41,7 +41,7 @@ ex:MyPlaceGeom
 ```
 
 
-### Usage example of geof:sDisjoint: SPARQL Query and sample data
+### Usage example of geof:sfDisjoint: SPARQL Query and sample data
 Two disjoint geometries. The SPARQL query tests their disjointness using the function geof:sfDisjoint
 #### sparql
 ```sparql
@@ -80,6 +80,44 @@ ex:MyPlace2
 ex:MyPlace2Geom
   a <http://www.opengis.net/ont/sf#Polygon>, geo:Geometry, <http://www.opengis.net/ont/gml#Polygon> ;
   geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.4 34.1, -83.4 34.3, -83.6 34.3, -83.6 34.1))"^^geo:wktLiteral  .
+```
+
+
+### Usage example of geof:sfCrosses: SPARQL Query and sample data
+Two disjoint geometries. The SPARQL query tests the crosses relation using the function geof:sfCrosses
+#### sparql
+```sparql
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+
+ASK
+WHERE {
+    ?f geo:sfCrosses ?f2 .
+    ?f geo:hasGeometry ?fgeom . ?fgeom geo:asWKT ?fgwkt .
+    ?f2 geo:hasGeometry ?f2geom . ?f2geom geo:asWKT ?f2gwkt .
+    FILTER (geof:sfCrosses(?fgwkt,?f2gwkt)=true)
+}
+```
+
+#### ttl
+```ttl
+@prefix ex: <http://example.org/ApplicationSchema#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+
+ex:MyPlace rdf:type geo:Feature ;
+     geo:hasGeometry ex:MyPlaceGeom ; .
+
+ex:MyPlaceGeom rdf:type sf:Polygon ;
+              geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((-83.6 34.1, -83.2 34.1, -83.2 34.5, -83.6 34.5, -83.6 34.1))"^^geo:wktLiteral .
+
+ex:MyPlace2 rdf:type geo:Feature ;
+     geo:hasGeometry ex:MyPlace2Geom ;
+     geo:sfCrosses ex:MyPlace .
+
+ex:MyPlace2Geom rdf:type sf:LineString ;
+              geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 ```
 
 ## Sources
