@@ -1,7 +1,7 @@
 
 # GeoSPARQL is3D Function (Model)
 
-`ogc.geosparql.geof.nonsf.is3D` *v0.1*
+`ogc.geosparql.geof.nontopo.is3D` *v0.1*
 
 The is3D function tests if a given GeoSPARQL goemetry contains a third dimension
 
@@ -63,5 +63,5 @@ WHERE {
 The source code for this Building Block can be found in the following repository:
 
 * URL: [https://github.com/opengeospatial/ogc-geosparql](https://github.com/opengeospatial/ogc-geosparql)
-* Path: `_sources/geof/nonsf/is3D`
+* Path: `_sources/geof/nontopo/is3D`
 
