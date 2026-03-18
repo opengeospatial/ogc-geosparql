@@ -4,7 +4,7 @@ on:
   push: 
       branches: 
           - master 
-          - geosparql-1.2
+          - geosparql-iso
           - geosparql-1.1
           - geosparql-1.0
           
@@ -146,14 +146,14 @@ jobs:
          clean: false
          FOLDER: docs/
 
-  build12:
-   name: Compile GeoSPARQL 1.2 Metanorma
+  buildiso:
+   name: Compile GeoSPARQL ISO Metanorma
    runs-on: ubuntu-latest
    steps:
    - uses: actions/checkout@v3
      with:
         token: ${{ github.token }}
-        ref: geosparql-1.2
+        ref: geosparql-iso
         submodules: true
 
    - uses: actions/cache@v3
@@ -166,18 +166,18 @@ jobs:
 
    - run: | 
          mkdir site
-         mkdir site/geosparql12
-         mkdir site/geosparql12/vocabularies/
-         mkdir site/geosparql12/servicedescription/
+         mkdir site/geosparqliso
+         mkdir site/geosparqliso/vocabularies/
+         mkdir site/geosparqliso/servicedescription/
          ls
-         mv vocabularies/* site/geosparql12/vocabularies/
-         mv servicedescription/* site/geosparql12/servicedescription/
+         mv vocabularies/* site/geosparqliso/vocabularies/
+         mv servicedescription/* site/geosparqliso/servicedescription/
          metanorma site generate --agree-to-terms -o site
          cd site
          ls
-         ls geosparql12
+         ls geosparqliso
          ls documents
-         mv documents/spec/* geosparql12/
+         mv documents/spec/* geosparqliso/
 
  
    - name: Deploy 🚀

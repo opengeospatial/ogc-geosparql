@@ -1,12 +1,12 @@
 # OGC GeoSPARQL
 
-## 1.2 - ISO co-publication
+## ISO co-publication
 
-This branch of the [GeoSPARQL version control repository](https://github.com/opengeospatial/ogc-geosparql/) contains supporting artefacts for a version of [GeoSPARQL 1.1](http://www.opengis.net/doc/IS/geosparql/1.1) that is proposed to be published by the [International Organization for Standardization](https://www.iso.org)' [Technical Committee 211 Geographic information/Geomatics](https://www.iso.org/committee/54904.html) as a 19*-series standard.
+This branch of the [GeoSPARQL version control repository](https://github.com/opengeospatial/ogc-geosparql/) is a placeholder for the proposed co-publication of [GeoSPARQL 1.1](http://www.opengis.net/doc/IS/geosparql/1.1) as an [International Organization for Standardization](https://www.iso.org)' [Technical Committee 211 Geographic information/Geomatics](https://www.iso.org/committee/54904.html) 19*-series standard.
 
 ### Standard Document
 
-The source files for this version of GeoSPARQL are contained not in this repository but within the ISO's Online Standards Development (OSD) Platform and is currently, as of February 2026, in draft form undergoing TC-211 reviews.
+The source files for this version of GeoSPARQL are contained not in this repository but within the ISO's Online Standards Development (OSD) Platform and is currently, as of March 2026, in draft form undergoing TC-211 reviews.
 
 When published, it will be linked to from here.
 
@@ -33,7 +33,7 @@ Not available yet:
 
 The contact points for this ISO version are:
 
-* **Nicholas Car** - <nick@kurrawong.ai> - GeoSPARQL SWG member responsible
+* **Nicholas Car** - <nick@kurrawong.ai> - GeoSPARQL SWG / ISO/TC211 liaison
 
 and
 
