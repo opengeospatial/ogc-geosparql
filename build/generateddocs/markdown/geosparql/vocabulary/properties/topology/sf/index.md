@@ -350,8 +350,8 @@ ex:MyPlace2Geom rdf:type sf:LineString ;
               geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 ```
 
-#### geojson
-```geojson
+#### json
+```json
 {
   "type": "FeatureCollection",
   "features":[
@@ -381,6 +381,83 @@ ex:MyPlace2Geom rdf:type sf:LineString ;
                      "geo:isSimple": true ,
                      "geo:spatialDimension": 2                
                     }
+    }
+  ]
+}
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -83.4,
+            34.0
+          ],
+          [
+            -83.3,
+            34.3
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "EExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
     }
   ]
 }
