@@ -1,5 +1,5 @@
 ![](ogc-logo.png)
-
+  
 # OGC GeoSPARQL 
 
 ## Introduction                                                            
