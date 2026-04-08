@@ -60,10 +60,6 @@ Work on GeoSPARQL is tracked in this repository's Issue Tracker at <https://gith
 
 Issues listed there are labelled as fixes (errata) for existing standards or items for new versions ("ISO", "1.2" etc). Feel free to lodge bugs / feature requests / Use Cases there.
 
-### License
-
-Work within this repository falls under either the [OGC document](https://www.ogc.org/about/policies/document-license-agreement/) or [OGC software](https://www.ogc.org/about/policies/software-licenses/). 
-
 ## Working documents
 
 An index of the working artefacts for recent and current GeoSPARQL versions from this repository can be found here:
@@ -85,7 +81,13 @@ Additionally, you may communicate with the SWG and raise bugs/issues/Use Cases i
 
 If you're already a member of the ISO, you can be involved in the development of ISO versions of GeoSPARQL through the ISO's [Technical Committee 211 - Geographic information/Geomatics](https://www.iso.org/committee/54904.html). 
 
-### Contact
+## License
+
+OGC documents, such as the [GeoSPARQL 1.1 Standard]() are licensed for use with the [OGC's Document License Agreement for OGC Resources](https://www.ogc.org/about/policies/document-license-agreement/).
+
+Software and data, such as the [GeoSPARQL 1.1 Ontology](http://www.opengis.net/ont/geosparql), are licensed for use with the [Apache Software License 2.0](https://www.apache.org/licenses/LICENSE-2.0) as per the OGC's policy on [Licensing for Geospatial Software](https://www.ogc.org/about/policies/software-licenses/). 
+
+## Contact
 To contact the SWG directly, you may email the closed SWG mailing list (<geosparql.swg@lists.opengeospatial.org>) or email SWG chairs directly:
 
 * Joseph Abhayaratna - <joseph.abhayaratna@geoscape.com.au>
