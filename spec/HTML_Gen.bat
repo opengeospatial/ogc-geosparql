@@ -1,1 +1,1 @@
-asciidoctor -r asciidoctor-bibtex --trace -o ../index.html document.adoc
+asciidoctor -r asciidoctor-bibtex --trace -o index.html document.adoc
