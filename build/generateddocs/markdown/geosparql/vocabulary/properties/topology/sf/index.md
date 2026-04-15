@@ -49,6 +49,59 @@ ex:MyPlaceGeom
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "MyPlace",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### sfDisjoint relation example
 A feature is related to another feature using the geo:sfDisjoint relation.
@@ -108,6 +161,97 @@ ex:MyPlace2Geom
                      "geo:isSimple": true ,
                      "geo:spatialDimension": 2 
                     }
+    }
+  ]
+}
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "CExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
     }
   ]
 }
@@ -188,6 +332,114 @@ ex:MyPlace2Geom
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.5,
+          34.2
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BPointGeom",
+        "geo:coordinateDimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### sfIntersects and sfOverlaps relation example
 A feature is related to another feature using the geo:sfIntersects and geo:sfOverlaps relations.
@@ -263,6 +515,114 @@ ex:MyPlace2Geom
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.5,
+          34.2
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BPointGeom",
+        "geo:coordinateDimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### sfTouches relation example
 A feature is related to another feature using the geo:sfTouches relation.
@@ -326,6 +686,97 @@ ex:MyPlace2Geom
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "CExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### sfCrosses relation example
 A feature is related to another feature using the geo:sfCrosses relation.
@@ -350,8 +801,8 @@ ex:MyPlace2Geom rdf:type sf:LineString ;
               geo:asWKT "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> LineString(-83.4 34.0, -83.3 34.3)"^^geo:wktLiteral .
 ```
 
-#### json
-```json
+#### geojson
+```geojson
 {
   "type": "FeatureCollection",
   "features":[

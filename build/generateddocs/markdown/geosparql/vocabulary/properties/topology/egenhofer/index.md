@@ -49,6 +49,59 @@ ex:MyPlaceGeom
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "MyPlace",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### Disjoint relation example
 A feature is related to another feature using the geo:ehDisjoint relation.
@@ -109,6 +162,97 @@ ex:MyPlace2Geom
                      "geo:isSimple": true ,
                      "geo:spatialDimension": 2 
                     }
+    }
+  ]
+}
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "CExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
     }
   ]
 }
@@ -176,6 +320,97 @@ ex:MyPlace2Geom rdf:type sf:Polygon ;
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### Contains relation example
 A feature is related to another feature using the geo:ehContains relation.
@@ -236,6 +471,97 @@ ex:MyPlace2Geom rdf:type sf:Polygon ;
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.4,
+              34.1
+            ],
+            [
+              -83.4,
+              34.3
+            ],
+            [
+              -83.6,
+              34.3
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "BExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### Inside relation example
 A feature is related to another feature using the geo:ehInside relation.
@@ -292,6 +618,77 @@ ex:MyPlaceGeom rdf:type sf:Polygon ;
                         }
         }
     ]
+}
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -83.4,
+          34.4
+        ]
+      },
+      "properties": {
+        "rdfs:label": "FExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
 }
 ```
 
@@ -356,6 +753,97 @@ ex:MyPlace2Geom rdf:type sf:Polygon ;
 }
 ```
 
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.2,
+              34.3
+            ],
+            [
+              -83.0,
+              34.3
+            ],
+            [
+              -83.0,
+              34.5
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.2,
+              34.3
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "CExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
+}
+```
+
 
 ### Overlap relation example
 A feature is related to another feature using the geo:ehOverlap relation.
@@ -414,6 +902,97 @@ ex:MyPlace2Geom rdf:type sf:Polygon ;
                         }
         }
     ]
+}
+```
+
+#### jsonld
+```jsonld
+{
+  "@context": [
+    {
+      "mynamespace": "https://example.com/dataset/geo-demo/"
+    },
+    {}
+  ],
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.6,
+              34.1
+            ],
+            [
+              -83.2,
+              34.1
+            ],
+            [
+              -83.2,
+              34.5
+            ],
+            [
+              -83.6,
+              34.5
+            ],
+            [
+              -83.6,
+              34.1
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "AExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -83.3,
+              34.0
+            ],
+            [
+              -83.1,
+              34.0
+            ],
+            [
+              -83.1,
+              34.2
+            ],
+            [
+              -83.3,
+              34.2
+            ],
+            [
+              -83.3,
+              34.0
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "rdfs:label": "DExactGeom",
+        "geo:coordinateDimension": 2,
+        "geo:dimension": 2,
+        "geo:isEmpty": false,
+        "geo:isSimple": true,
+        "geo:spatialDimension": 2
+      }
+    }
+  ]
 }
 ```
 
