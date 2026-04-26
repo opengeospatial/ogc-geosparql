@@ -23,6 +23,7 @@ abstract-test:: /conf/core/spatial-object-class
 abstract-test:: /conf/core/feature-class
 abstract-test:: /conf/core/spatial-object-collection-class
 abstract-test:: /conf/core/feature-collection-class
+abstract-test:: /conf/core/feature-properties
 abstract-test:: /conf/core/spatial-object-properties
 ====
 
@@ -80,6 +81,16 @@ test-purpose:: Check conformance with this requirement
 test-method:: Verify that queries involving <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> return the correct result on a test dataset.
 test-method-type:: Capabilities
 reference:: <<Class: geo:FeatureCollection>>
+====
+
+[abstract_test,identifier="/conf/core/feature-properties"]
+====
+[%metadata]
+target:: /req/core/feature-properties
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving <<Property: geo:hasGeometry, `geo:hasGeometry`>>, <<Property: geo:hasDefaultGeometry, `geo:hasDefaultGeometry`>>, <<Property: geo:hasCentroid, `geo:hasCentroid`>> and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<feature_properties>>
 ====
 
 [abstract_test,identifier="/conf/core/spatial-object-properties"]
@@ -186,6 +197,7 @@ abstract-test:: /conf/geometry-extension/geometry-collection-class
 abstract-test:: /conf/geometry-extension/feature-properties
 abstract-test:: /conf/geometry-extension/geometry-properties
 abstract-test:: /conf/geometry-extension/query-functions
+abstract-test:: /conf/geometry-extension/query-functions-non-sf
 abstract-test:: /conf/geometry-extension/srid-function
 abstract-test:: /conf/geometry-extension/sa-functions
 abstract-test:: /conf/geometry-extension/wkt-literal
@@ -238,7 +250,7 @@ reference:: <<Class: geo:GeometryCollection>>
 [abstract_test,identifier="/conf/geometry-extension/feature-properties"]
 ====
 [%metadata]
-target:: /req/geometry-extension/feature-properties
+target:: /req/core/feature-properties
 test-purpose:: Check conformance with this requirement
 test-method:: Verify that queries involving the following properties return the correct result for a test dataset:
 <<Property: geo:hasGeometry, `geo:hasGeometry`>>, 
@@ -304,6 +316,16 @@ test-method:: Verify that a set of SPARQL queries involving each of the followin
 <<Function: geof:union, `geof:union`>>. 
 test-method-type:: Capabilities
 reference: <<query_functions>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/query-functions-non-sf"]
+====
+[%metadata]
+target:: /req/geometry-extension/query-functions-non-sf
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that a set of SPARQL queries involving <<Function: geof:metricLength, `geof:metricLength`>>, <<Function: geof:length, `geof:length`>>, <<Function: geof:metricPerimeter, `geof:metricPerimeter`>>, <<Function: geof:perimeter, `geof:perimeter`>>, <<Function: geof:metricArea, `geof:metricArea`>>, <<Function: geof:area, `geof:area`>>, <<Function: geof:geometryN, `geof:geometryN`>>, <<Function: geof:maxX, `geof:maxX`>>, <<Function: geof:maxY, `geof:maxY`>>, <<Function: geof:maxZ, `geof:maxZ`>>, <<Function: geof:minX, `geof:minX`>>, <<Function: geof:minY, `geof:minY`>>, <<Function: geof:minZ, `geof:minZ`>> and <<Function: geof:numGeometries, `geof:numGeometries`>> returns the correct result for a test dataset when using the specified serialization and version.
+test-method-type:: Capabilities
+reference:: <<query_functions>>
 ====
 
 [abstract_test,identifier="/conf/geometry-extension/srid-function"]
@@ -550,7 +572,6 @@ test-method-type:: Capabilities
 reference:: <<Function: geof:asKML>>
 ====
 
-[conformance_class,identifier="/conf/geometry-extension",subject="DGGS"]
 === DGGS Conformance Class: Geometry Extension - DGGS
 
 This conformance Class applies only to DGGS geometries. See <<Conformance Class: Geometry Extension>> for other geometries.
