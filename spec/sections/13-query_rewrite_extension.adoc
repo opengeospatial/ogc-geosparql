@@ -1,6 +1,6 @@
 == Query Rewrite Extension
 
-This clause establishes the _Query Rewrite Extension_ parameterized Requirements class with base IRI `/req/query-rewrite-extension`, which has a single corresponding conformance class _Query Rewrite Extension_, with IRI `/conf/query-rewrite-extension`. These Requirements define a set of RIF rules cite:[RIFCORE] that use topological extension functions defined in <<geometry_extension>> to establish the existence of direct topological predicates defined in <<vocabulary_extension>>. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.
+This clause establishes the _Query Rewrite Extension_ parameterized Requirements class with base IRI `/req/query-rewrite-extension`, which has a single corresponding conformance class _Query Rewrite Extension_, with IRI `/conf/query-rewrite-extension`. These Requirements define a set of RIF rules <<W3C_NOTE-rif-overview-20130205>> that use topological extension functions defined in <<geometry_extension>> to establish the existence of direct topological predicates defined in <<vocabulary_extension>>. One possible implementation strategy is to transform a given query by expanding a triple pattern involving a direct spatial predicate into a series of triple patterns and an invocation of the corresponding extension function as specified in the RIF rule.
 
 [requirements_class,identifier="/req/query-rewrite-extension",subject="Implementation Specification"]
 .Query Rewrite Extension
@@ -12,7 +12,7 @@ requirement:: /req/query-rewrite-extension/rcc8-query-rewrite
 ====
 
 
-The following rule specified using the RIF Core Dialect cite:[RIFCORE] and shown in _Presentation Syntax_ is used as a template to describe rules in the remainder of this clause. `ogc:relation` is used as a placeholder for the spatial relation IRIs defined in Clause 7, and `ogc:function` is used as a placeholder for the spatial functions defined in <<geometry_extension>>. `ogc:asGeomLiteral` is used to indicate one of the properties that link `geo:Geometry` instances to serialisations, such as http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] or http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`]. The variables `?so1` & `?so2` represent http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] instances (either http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances), `?g1` & `?g2` http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances only and `?g1Serial` & `?g2Serial` represent http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instance serializations, e.g., http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] etc. literals.
+The following rule specified using the RIF Core Dialect <<W3C_NOTE-rif-overview-20130205>> and shown in _Presentation Syntax_ is used as a template to describe rules in the remainder of this clause. `ogc:relation` is used as a placeholder for the spatial relation IRIs defined in Clause 7, and `ogc:function` is used as a placeholder for the spatial functions defined in <<geometry_extension>>. `ogc:asGeomLiteral` is used to indicate one of the properties that link `geo:Geometry` instances to serialisations, such as http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] or http://www.opengis.net/ont/geosparql#asGeoJSON[`geo:asGeoJSON`]. The variables `?so1` & `?so2` represent http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] instances (either http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] or http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances), `?g1` & `?g2` http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instances only and `?g1Serial` & `?g2Serial` represent http://www.opengis.net/ont/geosparql#Geometry[`geo:Geometry`] instance serializations, e.g., http://www.opengis.net/ont/geosparql#asWKT[`geo:asWKT`] etc. literals.
 
 [%unnumbered]
 [source,rif]
@@ -66,7 +66,7 @@ This clause defines Requirements for the _Simple Features_ relation family. <<sf
 [requirement,identifier="/req/query-rewrite-extension/sf-query-rewrite"]
 .Simple Features Query Transformation Rules
 ====
-Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime cite:[SPARQLENT] for the RIF rules cite:[RIFCORE]
+Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<W3C_REC-sparql11-entailment-20130321>> for the RIF rules <<W3C_NOTE-rif-overview-20130205>>
 http://www.opengis.net/def/rule/geosparql/sfEquals[`geor:sfEquals`], 
 http://www.opengis.net/def/rule/geosparql/sfDisjoint[`geor:sfDisjoint`], 
 http://www.opengis.net/def/rule/geosparql/sfIntersects[`geor:sfIntersects`], 
@@ -101,7 +101,7 @@ This clause defines Requirements for the _Egenhofer_ relation family. <<eh_query
 [requirement,identifier="/req/query-rewrite-extension/eh-query-rewrite"]
 .Egenhofer Query Transformation Rules
 ====
-Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime cite:[SPARQLENT] for the RIF rules cite:[RIFCORE]
+Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<W3C_REC-sparql11-entailment-20130321>> for the RIF rules <<W3C_NOTE-rif-overview-20130205>>
 http://www.opengis.net/def/rule/geosparql/ehEquals[`geor:ehEquals`], 
 http://www.opengis.net/def/rule/geosparql/ehDisjoint[`geor:ehDisjoint`], 
 http://www.opengis.net/def/rule/geosparql/ehMeet[`geor:ehMeet`], 
@@ -136,7 +136,7 @@ This clause defines Requirements for the _RCC8_ relation family. <<rcc8_query_tr
 [requirement,identifier="/req/query-rewrite-extension/rcc8-query-rewrite"]
 .RCC8 Query Transformation Rules
 ====
-Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime cite:[SPARQLENT] for the RIF rules cite:[RIFCORE]
+Basic graph pattern matching shall use the semantics defined by the RIF Core Entailment Regime <<W3C_REC-sparql11-entailment-20130321>> for the RIF rules <<W3C_NOTE-rif-overview-20130205>>
 http://www.opengis.net/def/rule/geosparql/rcc8eq[`geor:rcc8eq`], 
 http://www.opengis.net/def/rule/geosparql/rcc8dc[`geor:rcc8dc`], 
 http://www.opengis.net/def/rule/geosparql/rcc8ec[`geor:rcc8ec`], 
