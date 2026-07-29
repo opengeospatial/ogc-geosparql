@@ -72,7 +72,8 @@ If you are looking to use GeoSPARQL, use this version.
 
 Source files, except for RDF files, for this variant are held in the `geosparql-1.1` branch of this repository.
 
-The RDF files for this variant are maintained within the [Geosemantics DWG's repository](https://github.com/opengeospatial/geosemantics-semantic-resources/tree/main/resources/geosparql-swg) from where they are automatically loaded into the [OGC Definitions Service](https://defs.opengis.net/).
+> [!NOTE]
+> All the RDF resources for GeoSPARQL 1.1 are not managed here but in the [Geosemantics DWG repository's GeoSPARQL SWG subfolder](https://github.com/opengeospatial/geosemantics-semantic-resources/tree/main/resources/geosparql-swg). This is because they are automatically picked up from there and loaded into the OGC's [Definitions Service](https://defs.opengis.net/).
 
 ### GeoSPARQL 1.0
 
