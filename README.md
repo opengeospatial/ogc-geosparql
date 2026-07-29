@@ -1,20 +1,30 @@
 ![](ogc-logo.png)
   
-# OGC GeoSPARQL 
- 
-## Introduction                                                            
+# OGC GeoSPARQL
                           
-This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL Standard](https://www.ogc.org/standards/geosparql).
+This GitHub repository contains [OGC](https://www.ogc.org/)'s [GeoSPARQL Standard](https://www.ogc.org/standards/geosparql) and associated resources.
                 
-This repository is managed by the _GeoSPARQL Standards Working Group_, the Charter for which can be viewed here:  
+This repository is managed by the _GeoSPARQL Standards Working Group_ (SWG) within the OGC's [GeoSemantics Domain Working Group](https://github.com/opengeospatial/geosemantics-dwg), the Charter for which can be viewed here:  
       
-* [GeoSPARQL SWG Charter](https://rawcdn.githack.com/opengeospatial/ogc-geosparql/f51bfe0643bb4010ba8a2ee2ae79e8335a55558c/charter/swg_charter.html) (online)
-   
-To see in-progress HTML & PDF versions of the various elements of GeoSPARQL 1.1 - specification, ontology, constituent vocabularies etc. - as well as the elements of the 1.0 version of the standard, please see:
+* [GeoSPARQL SWG Charter](https://opengeospatial.github.io/ogc-geosparql/charter.html)
+
+## Documentation
+
+To see human-readable documented forms of elements of GeoSPARQL standard variants, please see:
  
-* [GeoSPARQL's auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)       
-  
-If you want to cite the current standard (1.1) we encourage you to use the following BibTeX statement:  
+* [GeoSPARQL's auto-built documentation](https://opengeospatial.github.io/ogc-geosparql/)      
+
+The source information for this documentation is:
+
+* static content from the `docco/` folder in this reposiitory
+* GeoSPARQL Next artifacts from the `geosparql-nx` branch
+* GeoSPARQL ISO artifacts from the `geosparql-iso` branch
+* GeoSPARQL 1.1 artifacts from the `geosparql-1.1` branch
+* GeoSPARQL 1.0 artifacts from the `geosparql-1.0` branch
+
+## Citation
+
+If you want to cite the current OGC standard (1.1) we encourage you to use the following BibTeX statement:  
     
 ```bibtex
 @techreport{ogc_geosparql_11_2024,
@@ -32,42 +42,61 @@ If you want to cite the current standard (1.1) we encourage you to use the follo
 
 ## GeoSPARQL variants
 
-### GeoSPARQL 1.2
+### GeoSPARQL Next
 
-This is the current, as of March 2026, in draft version of GeoSPARQL being worked on by the GeoSPARQL SWG. It is expected to be completed in mid to late 2026 with publication in late 2026 or early 2027. It will be proposed for ISO co-adoption as soon as it is published as an OGC standard.
+This is the in-development version of GeoSPARQL, as of July 2026. It is expected to be completed in mid to late 2026 with publication in late 2026 or early 2027. It will be proposed for ISO co-adoption as soon as it is published as an OGC standard.
 
-### GeoSPARQL 1.1
+Current work on GeoSPARQL Next can be tracked by following the [Pull Requests](https://github.com/opengeospatial/ogc-geosparql/pulls) and [Issues](https://github.com/opengeospatial/ogc-geosparql/issues) within this repository as it is through these items that the SWG works. Look for items tagged as "next".
 
-This is the current published standard version of GeoSPARQL, online at <http://www.opengis.net/doc/IS/geosparql/1.1>.
+### GeoSPARQL Building Block
 
-If you are looking to use GeoSPARQL, use this version.
+An experimental [OGC Building Block](https://ogcincubator.github.io/bblocks-docs/) representation of GeoSPARQL is stored in the `bblocks/` folder. This representation may be delivered within _Geosparql Next_.
 
 ### GeoSPARQL ISO
 
-This is the proposed ISO standard ISO 19186-1 that is, as of March 2026, under internal ISO review. It is normatively the same as GeoSPARQL 1.1 with only styling, formatting and non-normative referencing and definitions changes to align it with [ISO/TC211](https://www.iso.org/committee/54904.html)'s 19* series of standards.
+This is the International Standards Organization (ISO) standard ISO 19186-1 which is the ISO's co-adoption of OGC GeoSPARQL 1.1 with only styling, formatting and non-normative referencing and definitions changes to align it with [ISO/TC211](https://www.iso.org/committee/54904.html)'s 19* series of standards.
 
-When published, it will be listed here.
+As of July 2026, this standard is in draft:
+
+* <https://www.iso.org/standard/32591.html>
+
+### GeoSPARQL 1.1
+
+This is the current OGC published standard version of GeoSPARQL, online at <http://www.opengis.net/doc/IS/geosparql/1.1>.
+
+If you are looking to use GeoSPARQL, use this version.
 
 ### GeoSPARQL 1.0
 
-This is the original version of GeoSPARQL published in 2012. A copy of its specification as then published is available from the OGC GeoSPARWL stnadrd listing:
+This is the original version of GeoSPARQL published in 2012. A copy of its specification as then published is available from the OGC GeoSPARQL standard listing:
 
 * <https://www.ogc.org/standards/geosparql/>
 
-## Current Work
+## Other SWG outputs
 
-Work on GeoSPARQL is tracked in this repository's Issue Tracker at <https://github.com/opengeospatial/ogc-geosparql/issues>.
+This SWG has produced resources other than GeoSPARQL standard variants:
 
-Issues listed there are labelled as fixes (errata) for existing standards or items for new versions ("ISO", "1.2" etc). Feel free to lodge bugs / feature requests / Use Cases there.
+### Charter
+
+* [GeoSPARQL SWG Charter](charter/swg_charter.html)
+
+Source files in `charter/` folder.
+
+### Extended Well Known Binary (EWKB) Community Standard
+
+* [Community Standard Work Item Justification](https://opengeospatial.github.io/ogc-geosparql/ewkb/work_item.html)
+* [Community Standard](https://opengeospatial.github.io/ogc-geosparql/ewkb/community_standard.html)
+
+Source files for both in `ewkb/` folder.
 
 ## Working documents
 
-An index of the working artefacts for recent and current GeoSPARQL versions from this repository can be found here:
+An index of the working artefacts for the current GeoSPARQL variants can be found here:
 
 * <https://opengeospatial.github.io/ogc-geosparql/>. These are built automatically as updates occur. 
 
 > [!NOTE]
-> These are only working documents. Approved OGC documents are at <https://www.ogc.org/standards/geosparql> and technical artefacts are published in the [OGC RAINBOW Reference Data Platform](https://defs.opengis.net) within the [Geosemantics DWG Catalogue](https://defs.opengis.net/prez/catalogs/ogc-cat:datamodels/col/catalog:geosparql) 
+> These are only working documents only and are not approved standards, so they are in flux. To see a stable standard, selecte one of the variants listed above.
 
 Extended GeoSPARQL work can also be found in the following OGC code repositories:
 
@@ -75,11 +104,11 @@ Extended GeoSPARQL work can also be found in the following OGC code repositories
 
 ## How to get involved
 
-To be involved in the development of current/new versions of GeoSPARQL, join the OGC and participate in the GeoSPARQL Standard Working Group!
+To be involved in the development of GeoSPARQL, [join the OGC](https://www.ogc.org/membership/) and participate in the GeoSPARQL SWG!
 
 Additionally, you may communicate with the SWG and raise bugs/issues/Use Cases in the issue tracker at <https://github.com/opengeospatial/ogc-geosparql/issues>.
 
-If you're already a member of the ISO, you can be involved in the development of ISO versions of GeoSPARQL through the ISO's [Technical Committee 211 - Geographic information/Geomatics](https://www.iso.org/committee/54904.html). 
+If you're already a member of the ISO, you can be involved in the development of ISO versions of GeoSPARQL too through the ISO's [Technical Committee 211 - Geographic information/Geomatics](https://www.iso.org/committee/54904.html). 
 
 ## License
 
@@ -88,7 +117,10 @@ OGC documents, such as the [GeoSPARQL 1.1 Standard]() are licensed for use with 
 Software and data, such as the [GeoSPARQL 1.1 Ontology](http://www.opengis.net/ont/geosparql), are licensed for use with the [Apache Software License 2.0](https://www.apache.org/licenses/LICENSE-2.0) as per the OGC's policy on [Licensing for Geospatial Software](https://www.ogc.org/about/policies/software-licenses/). 
 
 ## Contact
-To contact the SWG directly, you may email the closed SWG mailing list (<geosparql.swg@lists.opengeospatial.org>) or email SWG chairs directly:
+
+To contact the SWG directly, please email the chairs:
 
 * Joseph Abhayaratna - <joseph.abhayaratna@geoscape.com.au>
 * Matthew Perry - <matthew.perry@oracle.com>
+
+You may also get in touch by posting an Issue in the [Issue Tracker](https://github.com/opengeospatial/ogc-geosparql/issues).
