@@ -1,14 +1,8 @@
-# OGC GeoSPARQL
+# GeoSPARQL ISO
 
-## ISO co-publication
+This branch of the [GeoSPARQL version control repository](https://github.com/opengeospatial/ogc-geosparql/) is a placeholder for the [International Organization for Standardization](https://www.iso.org)' co-publication of [GeoSPARQL 1.1](http://www.opengis.net/doc/IS/geosparql/1.1) as [ISO 19186-1](https://www.iso.org/standard/32591.html) which, as of July 2026, is in draft.
 
-This branch of the [GeoSPARQL version control repository](https://github.com/opengeospatial/ogc-geosparql/) is a placeholder for the proposed co-publication of [GeoSPARQL 1.1](http://www.opengis.net/doc/IS/geosparql/1.1) as an [International Organization for Standardization](https://www.iso.org)' [Technical Committee 211 Geographic information/Geomatics](https://www.iso.org/committee/54904.html) 19*-series standard.
-
-### Standard Document
-
-The source files for this version of GeoSPARQL are contained not in this repository but within the ISO's Online Standards Development (OSD) Platform and is currently, as of March 2026, in draft form undergoing TC-211 reviews.
-
-When published, it will be linked to from here.
+This standard is being prepared by [Technical Committee 211 Geographic information/Geomatics](https://www.iso.org/committee/54904.html).
 
 ### RDF Resources
 
@@ -16,7 +10,7 @@ The RDF resources for this version of the standard are taken entirely from v1.1 
 
 * [Geosemantics DWG-maintained GeoSPARQL SWG Resources](https://github.com/opengeospatial/geosemantics-semantic-resources/tree/main/resources/geosparql-swg)
 
-These resources are all published online via the [OGCs Rainbow Platform](https://defs.opengis.net/prez/) where they can be resolved via IRI:
+These resources are also all published online via the [OGC Definitions Service](https://defs.opengis.net/prez/) where they can be resolved via IRI:
 
 * [GeoSPARQL 1.1 Ontology](http://www.opengis.net/ont/geosparql)
 * [GeoSPARQL RDF Shapes Validator](http://www.opengis.net/def/geosparql/validator)
