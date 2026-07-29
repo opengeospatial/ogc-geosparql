@@ -3,18 +3,18 @@ name: Ontology Documentation CI
 on: 
   push: 
       branches: 
-          - master 
-          - geosparql-1.2
+          - master
           - geosparql-1.1
           - geosparql-1.0
+          - geosparql-n
           - 13buildingblocks
-          
+
 jobs:   
   
   build10:
     name: Compile GeoSPARQL 1.0 Documentation
     runs-on: ubuntu-latest
-    needs: [jekyll, build3dvoc]
+    needs: [docco, build3dvoc]
     steps:
     - uses: actions/checkout@v1
       with:
@@ -65,255 +65,95 @@ jobs:
          FOLDER: docs/
  
    
-  
-  validate-and-process:
-    # Avoid running the workflow on template clone
-    needs: build13
-    if: github.run_number != 1
-    name: Validate and process
-    uses: opengeospatial/bblocks-postprocess/.github/workflows/validate-and-process.yml@master
-    with:
-      skip-pages: true
-      ref: 13buildingblocks
-      viewer_path: bblocks/
-      before_pages: |
-        CURRENT_BRANCH=13buildingblocks
-        TARGET_BRANCH=gh-pages
-        POSTPROCESS_FILES="build _sources/ bblocks/index.html bblocks/config.js"
-        touch .nojekyll
-        git add .nojekyll
-        # Postprocess files
-        git add ${POSTPROCESS_FILES}
-        
-        # Save current changes
-        git commit -m "temp commit for push to ${TARGET_BRANCH}" --no-verify
-        
-        # Fetch target branch
-        git fetch origin ${TARGET_BRANCH}:${TARGET_BRANCH} || true
-        git checkout ${TARGET_BRANCH} || git checkout -b ${TARGET_BRANCH}
-        
-        # Apply changes
-        git checkout $CURRENT_BRANCH -- ${POSTPROCESS_FILES}
-        
-        # Commit and push changes
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add ${POSTPROCESS_FILES}
-        git commit -m "Update directories from $CURRENT_BRANCH"
-        git push origin ${TARGET_BRANCH}
-        
-        # Restore state
-        git checkout $CURRENT_BRANCH
-        git reset --soft HEAD~1  
-  
+
   build11:
     name: Compile GeoSPARQL 1.1 Documentation
     runs-on: ubuntu-latest
-    needs: jekyll
+    needs: docco
     steps:
-    - uses: actions/checkout@v1
-      with:
+      - uses: actions/checkout@v1
+        with:
           ref: geosparql-1.1
-    
-    - uses: actions/cache@v3
-      with:
-        path: ~/.fontist
-        key: fontist-ubuntu-latest
-        restore-keys: fontist-ubuntu-latest
 
-    - uses: actions-mn/setup@main
-    
-    - name: Create Ontology Documentation 🔧
-      run: |
-         sudo apt-get install python3 python3-setuptools python3-pip gcc libpq-dev -y
-         sudo apt-get install python3-dev python3-pip -y
-         sudo apt-get install python3-venv python3-wheel -y
-         sudo pip3 install wheel pylode==2.13.2 rdflib
-         sudo pip3 install --pre bibtexparser
-         sudo gem install asciidoctor-bibtex
-         mkdir -p docs/servicedescription
-         mkdir -p site/geosparql11
-         python3 scripts/processbibtex.py
-         metanorma site generate --agree-to-terms -o site
-         cp indexx.html site/index.html
-         cd site
-         mv documents/spec/* geosparql11/
-         mv geosparql11 ../docs/
-         cd ../docs/geosparql11/
-         sed -i 's/<\/title>/<\/title><meta name="viewport" content="width=device-width, initial-scale=1.0">/g' document.html
-         echo "Copying over 1.1 RDF files"
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/geo.ttl
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/sf_geometries.ttl
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/validators/geo-validator.ttl
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/functions.ttl
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/requirements.ttl
-         wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/rules.ttl
-         cp ../../citeme.bib .
-         #cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
-         cp -r ../../spec/figures .
-         echo "Generating documentation for GeoSPARQL 1.1 ontology"
-         python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
-         pylode -i geo.ttl -o geo.html
-         echo "Generating documentation for GeoSPARQL 1.1 Profile"
-         #cp ../../profile.ttl .
-         #cp ../../profile.html . 
-         #echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
-         #pylode -i functions.ttl -o functions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
-         pylode -i rules.ttl -o rules.html -p vocpub
-         python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
-         echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
-         pylode -i sf_geometries.ttl -o sf_geometries.html -p vocpub
-         python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
-         #echo "Generating documentation for GeoSPARQL 1.1 SA functions"
-         #pylode -i requirements.ttl -o reqs.html -p vocpub
-         #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
-         #pylode -i validator.ttl -o validation.html
-         #echo "Generating documentation for GeoSPARQL 1.1 Service Description Extensions"
-         #pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
-         #python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
-         #echo "Generating documentation for GeoSPARQL 1.1 Service Conformance Classes"
-         #pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
-         #python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
-         #echo "Generating documentation for GeoSPARQL 1.1 Service Description All Functions"
-         #pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
-         #python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
-         cd ../../scripts/
-         #python3 consistencycheck.py 
-         #cp logfile.txt logfile.json ../docs/geosparql11/
-
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@releases/v4
-      with:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         BRANCH: gh-pages
-         clean: false
-         FOLDER: docs/
-
-#build12:
-# name: Compile GeoSPARQL 1.2 Metanorma
-# runs-on: ubuntu-latest
-# needs: jekyll
-# steps:
-# - uses: actions/checkout@v3
-#   with:
-#      token: ${{ github.token }}
-#      ref: geosparql-1.2
-#      submodules: true
-#
-#   - uses: actions/cache@v3
-#     with:
-#        path: ~/.fontist
-#        key: fontist-ubuntu-latest
-#        restore-keys: fontist-ubuntu-latest
-#
-#   - uses: actions-mn/setup@main
-#
-#   - run: | 
-#         sudo apt-get install python3 python3-setuptools python3-pip gcc libpq-dev -y
-#         sudo apt-get install python3-dev python3-pip -y
-#         sudo pip3 install --pre bibtexparser
-#         mkdir -p site/geosparql12/{vocabularies,servicedescription}
-#         mv vocabularies/* site/geosparql12/vocabularies/
-#         mv servicedescription/* site/geosparql12/servicedescription/
-#         python3 scripts/processbibtex.py
-#         metanorma site generate --agree-to-terms -o site
-#         mv site/documents/spec/* site/geosparql12/
-#         cp index.html site/index.html
-#
-# 
-#   - name: Deploy 🚀
-#     uses: JamesIves/github-pages-deploy-action@releases/v4
-#     with:
-#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       BRANCH: gh-pages
-#       clean: false
-#       FOLDER: site/
-
-  jekyll:
-    name: Build Jekyll
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
         with:
-            token: ${{ github.token }}
-            ref: master
-            submodules: true
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1.280.0 # v1.161.0
-        with:
-          ruby-version: '3.4' # Not needed with a .ruby-version file
-          bundler-cache: false # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v4
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
+          path: ~/.fontist
+          key: fontist-ubuntu-latest
+          restore-keys: fontist-ubuntu-latest
+
+      - uses: actions-mn/setup@main
+
+      - name: Create Ontology Documentation 🔧
         run: |
-         gem install jekyll bundler
-         bundle install
-         bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
-      - run: |
-            mkdir site
-            cd site
-            mkdir blog
-            cd ..
-            mv _site/* site/
-            cp index.html site/index.html
-            #rm site/blog/index.html
-            #mv site/blog/index.html site/blog/index.html
+          sudo apt-get install python3 python3-setuptools python3-pip gcc libpq-dev -y
+          sudo apt-get install python3-dev python3-pip -y
+          sudo apt-get install python3-venv python3-wheel -y
+          sudo pip3 install wheel pylode==2.13.2 rdflib
+          sudo pip3 install --pre bibtexparser
+          sudo gem install asciidoctor-bibtex
+          mkdir -p docs/servicedescription
+          mkdir -p site/geosparql11
+          python3 scripts/processbibtex.py
+          metanorma site generate --agree-to-terms -o site
+          cp indexx.html site/index.html
+          cd site
+          mv documents/spec/* geosparql11/
+          mv geosparql11 ../docs/
+          cd ../docs/geosparql11/
+          sed -i 's/<\/title>/<\/title><meta name="viewport" content="width=device-width, initial-scale=1.0">/g' document.html
+          echo "Copying over 1.1 RDF files"
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/geo.ttl
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/ontologies/sf_geometries.ttl
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/validators/geo-validator.ttl
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/functions.ttl
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/requirements.ttl
+          wget https://raw.githubusercontent.com/opengeospatial/geosemantics-semantic-resources/refs/heads/main/resources/geosparql-swg/vocabs/rules.ttl
+          cp ../../citeme.bib .
+          #cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
+          cp -r ../../spec/figures .
+          echo "Generating documentation for GeoSPARQL 1.1 ontology"
+          python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
+          pylode -i geo.ttl -o geo.html
+          echo "Generating documentation for GeoSPARQL 1.1 Profile"
+          #cp ../../profile.ttl .
+          #cp ../../profile.html . 
+          #echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
+          #pylode -i functions.ttl -o functions.html -p vocpub
+          python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
+          pylode -i rules.ttl -o rules.html -p vocpub
+          python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
+          echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
+          pylode -i sf_geometries.ttl -o sf_geometries.html -p vocpub
+          python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
+          #echo "Generating documentation for GeoSPARQL 1.1 SA functions"
+          #pylode -i requirements.ttl -o reqs.html -p vocpub
+          #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
+          #pylode -i validator.ttl -o validation.html
+          #echo "Generating documentation for GeoSPARQL 1.1 Service Description Extensions"
+          #pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
+          #python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
+          #echo "Generating documentation for GeoSPARQL 1.1 Service Conformance Classes"
+          #pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
+          #python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
+          #echo "Generating documentation for GeoSPARQL 1.1 Service Description All Functions"
+          #pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
+          #python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
+          cd ../../scripts/
+          #python3 consistencycheck.py 
+          #cp logfile.txt logfile.json ../docs/geosparql11/
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           BRANCH: gh-pages
-           clean: true
-           FOLDER: site/
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          clean: false
+          FOLDER: docs/
 
-  build3dvoc:
-   name: Compile 3DVocab
+  buildnext:
+   name: Compile GeoSPARQL Next
    runs-on: ubuntu-latest
-   needs: jekyll
-   steps:
-   - uses: actions/checkout@v3
-     with:
-        token: ${{ github.token }}
-        ref: 3dvocab
-        submodules: true
-
-   - uses: actions/cache@v3
-     with:
-        path: ~/.fontist
-        key: fontist-ubuntu-latest
-        restore-keys: fontist-ubuntu-latest
-
-   - uses: actions-mn/setup@main
-
-   - run: | 
-         sudo apt-get install python3 python3-setuptools python3-pip gcc libpq-dev -y
-         sudo apt-get install python3-dev python3-pip -y
-         sudo apt-get install python3-venv python3-wheel -y
-         sudo pip3 install wheel pylode==2.13.2 rdflib
-         #cp ../../vocabularies/sf_geometries_3D.ttl .
-         mkdir -p site/3dvocab
-         cd site/3dvocab
-         echo "Generating documentation 3D Vocab"
-         pylode -i ../../vocabularies/sf_geometries_3D.ttl -o index.html
-   - name: Deploy 🚀
-     uses: JamesIves/github-pages-deploy-action@releases/v4
-     with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       BRANCH: gh-pages
-       clean: false
-       FOLDER: site/       
-
-  build13:
-   name: Compile GeoSPARQL 1.3 Metanorma
-   runs-on: ubuntu-latest
-   needs: jekyll
+   needs: docco
    steps:
    - uses: actions/checkout@v3
      with:
@@ -383,7 +223,7 @@ jobs:
          #python3 consistencycheck.py 
          #cp logfile.txt logfile.json ../site/geosparql13/
 
- 
+
    - name: Deploy 🚀
      uses: JamesIves/github-pages-deploy-action@releases/v4
      with:
@@ -391,3 +231,124 @@ jobs:
        BRANCH: gh-pages
        clean: false
        FOLDER: site/
+
+  build3dvoc:
+   name: Compile 3DVocab
+   runs-on: ubuntu-latest
+   needs: docco
+   steps:
+   - uses: actions/checkout@v3
+     with:
+        token: ${{ github.token }}
+        ref: 3dvocab
+        submodules: true
+
+   - uses: actions/cache@v3
+     with:
+        path: ~/.fontist
+        key: fontist-ubuntu-latest
+        restore-keys: fontist-ubuntu-latest
+
+   - uses: actions-mn/setup@main
+
+   - run: | 
+         sudo apt-get install python3 python3-setuptools python3-pip gcc libpq-dev -y
+         sudo apt-get install python3-dev python3-pip -y
+         sudo apt-get install python3-venv python3-wheel -y
+         sudo pip3 install wheel pylode==2.13.2 rdflib
+         #cp ../../vocabularies/sf_geometries_3D.ttl .
+         mkdir -p site/3dvocab
+         cd site/3dvocab
+         echo "Generating documentation 3D Vocab"
+         pylode -i ../../vocabularies/sf_geometries_3D.ttl -o index.html
+   - name: Deploy 🚀
+     uses: JamesIves/github-pages-deploy-action@releases/v4
+     with:
+       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       BRANCH: gh-pages
+       clean: false
+       FOLDER: site/
+
+  validate-and-process:
+    # Avoid running the workflow on template clone
+    needs: build13
+    if: github.run_number != 1
+    name: Validate and process
+    uses: opengeospatial/bblocks-postprocess/.github/workflows/validate-and-process.yml@master
+    with:
+      skip-pages: true
+      ref: 13buildingblocks
+      viewer_path: bblocks/
+      before_pages: |
+        CURRENT_BRANCH=13buildingblocks
+        TARGET_BRANCH=gh-pages
+        POSTPROCESS_FILES="build _sources/ bblocks/index.html bblocks/config.js"
+        touch .nojekyll
+        git add .nojekyll
+        # Postprocess files
+        git add ${POSTPROCESS_FILES}
+        
+        # Save current changes
+        git commit -m "temp commit for push to ${TARGET_BRANCH}" --no-verify
+        
+        # Fetch target branch
+        git fetch origin ${TARGET_BRANCH}:${TARGET_BRANCH} || true
+        git checkout ${TARGET_BRANCH} || git checkout -b ${TARGET_BRANCH}
+        
+        # Apply changes
+        git checkout $CURRENT_BRANCH -- ${POSTPROCESS_FILES}
+        
+        # Commit and push changes
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add ${POSTPROCESS_FILES}
+        git commit -m "Update directories from $CURRENT_BRANCH"
+        git push origin ${TARGET_BRANCH}
+        
+        # Restore state
+        git checkout $CURRENT_BRANCH
+        git reset --soft HEAD~1  
+  
+
+  docco:
+    name: Build Jekyll
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+            token: ${{ github.token }}
+            ref: master
+            submodules: true
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.280.0 # v1.161.0
+        with:
+          ruby-version: '3.4' # Not needed with a .ruby-version file
+          bundler-cache: false # runs 'bundle install' and caches installed gems automatically
+          cache-version: 0 # Increment this number if you need to re-download cached gems
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+      - name: Build with Jekyll
+        # Outputs to the './_site' directory by default
+        run: |
+         gem install jekyll bundler
+         bundle install
+         bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+      - run: |
+            mkdir site
+            cd site
+            mkdir blog
+            cd ..
+            mv _site/* site/
+            cp index.html site/index.html
+            #rm site/blog/index.html
+            #mv site/blog/index.html site/blog/index.html
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           BRANCH: gh-pages
+           clean: true
+           FOLDER: site/
