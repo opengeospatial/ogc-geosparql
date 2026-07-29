@@ -46,6 +46,8 @@ If you want to cite the current OGC standard (1.1) we encourage you to use the f
 
 This is the in-development version of GeoSPARQL, as of July 2026. It is expected to be completed in mid to late 2026 with publication in late 2026 or early 2027. It will be proposed for ISO co-adoption as soon as it is published as an OGC standard.
 
+Source files for this variant are held in the `geosparql-next` branch of this repository.
+
 Current work on GeoSPARQL Next can be tracked by following the [Pull Requests](https://github.com/opengeospatial/ogc-geosparql/pulls) and [Issues](https://github.com/opengeospatial/ogc-geosparql/issues) within this repository as it is through these items that the SWG works. Look for items tagged as "next".
 
 ### GeoSPARQL Building Block
@@ -60,17 +62,25 @@ As of July 2026, this standard is in draft:
 
 * <https://www.iso.org/standard/32591.html>
 
+Source files for this variant are internal to ISO systems and not publicly available. The RDF data use for this variant is the same as that of GeoSPARQL 1.1.
+
 ### GeoSPARQL 1.1
 
 This is the current OGC published standard version of GeoSPARQL, online at <http://www.opengis.net/doc/IS/geosparql/1.1>.
 
 If you are looking to use GeoSPARQL, use this version.
 
+Source files, except for RDF files, for this variant are held in the `geosparql-1.1` branch of this repository.
+
+The RDF files for this variant are maintained within the [Geosemantics DWG's repository](https://github.com/opengeospatial/geosemantics-semantic-resources/tree/main/resources/geosparql-swg) from where they are automatically loaded into the [OGC Definitions Service](https://defs.opengis.net/).
+
 ### GeoSPARQL 1.0
 
 This is the original version of GeoSPARQL published in 2012. A copy of its specification as then published is available from the OGC GeoSPARQL standard listing:
 
 * <https://www.ogc.org/standards/geosparql/>
+
+Source files for this variant are held in the `geosparql-1.0` branch of this repository.
 
 ## Other SWG outputs
 
