@@ -421,27 +421,53 @@ CRMGeo Source: https://www.cidoc-crm.org/crmgeo/sites/default/files/CRMgeo1_2.pd
 | http://www.cidoc-crm.org/cidoc-crm/SP15_Geometry[`cidoc:SP15_Geometry`]  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Geometry, Geometry>> | The CIDOC CRMgeo class SP15_Geometry is a subclass of <<Geometry, Geometry>> as described in the CRMgeo 1.2 specification document.
 |===
 
-=== Basic Formal Ontology (BFO)
+=== Basic Formal Ontology (BFO) and Common Core Ontologies (CCO)
 
+Basic Formal Ontology (<<BFO>>) is a 'top level ontology', which makes a basic distinction between _Continuants_ and _Occurrents_. 
+GeoSPARQL does not consider temporal behaviours explicitly, so the key BFO concern is not matched directly.  
+Furthermore, BFO also distinguishes _Independent Continuants_ from _Dependent Continuants_,  of which individuals of the latter generally capture all of the properties or qualities of individuals of the former. 
 BFO Source: https://basic-formal-ontology.org/bfo-2020.html, and from there, an OWL ontology of BFO2020 at https://github.com/BFO-ontology/BFO-2020
 
-.Alignment: Basic Formal Ontology (BFO)
+Common Core Ontologies https://github.com/CommonCoreOntology/CommonCoreOntologies[(CCO)] is a set of 'mid level ontologies', based on BFO. 
+CCO provides modules of sets of common concepts that may then be used in many application domains. 
+CCO Source: https://github.com/CommonCoreOntology/CommonCoreOntologies, in particular https://github.com/CommonCoreOntology/CommonCoreOntologies/blob/develop/src/cco-modules/GeospatialOntology.ttl[GeospatialOntology] and https://github.com/CommonCoreOntology/CommonCoreOntologies/blob/develop/src/cco-modules/InformationEntityOntology.ttl[InformationEntityOntology]. 
+
+The use of BFO and CCO as the basis for a D&I Ontology in USA is mandated in a DoD memorandumfootnote:[https://dailynous.com/wp-content/uploads/2024/03/memo-dod-applied-ontology.pdf].
+Thus, an alignment of GeoSPARQL with BFO/CCO is required for GeoSPARQL to be used in D&I Ontologies. 
+
+.Alignment: Basic Formal Ontology (BFO) and Common Core Ontologies (CCO)
 [cols="1,1,1,3"]
 |===
 | From Element | Mapping relation | To Element | Notes 
 
-| <<SpatialObject, SpatialObject>>  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000004[`obo:BFO_0000004`] "independent continuant" | BFO's "independent continuant" is the superclass of "material entity" & "immaterial entity" which are mapped to Feature & Geometry respectively, so at least some independent continuants must be Spatial Objects
-| <<Geometry, Geometry>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000006[`obo:BFO_0000006`] "spatial region" | BFO's "spatial region" class is described as a "spatial projection of a portion of spacetime" so Geometry appears to be a subclass of this as it's "A coherent set of direct positions in space"
-| <<Geometry, Geometry>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/IAO_0000030[`obo:IAO_0000030`] "information content entity" | BFO's "information content entity" class is described as "an entity that represents information about some other entity", so Geometry appears to be subclass of this as well as "spatial region" since in GeoSPARQL, Geometry gives the details of the spatial projection of a Feature.
-| http://purl.obolibrary.org/obo/BFO_0000040[`obo:BFO_0000040`] "material entity" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Feature, Feature>> | A BFO "material entity" is something that "has some portion of matter as continuant part" and some Features are such, however Features may be imaginary too
-| http://purl.obolibrary.org/obo/BFO_0000029[`obo:BFO_0000029`] "site" | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | <<Feature, Feature>> | BFO's sites either cover the same areas as, or have locations determined in relation to, material entities, so sites are Features but not necessarily the other way around
-| <<hasGeometry>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000211[`obo:BFO_0000211`] "occupies spatial region at all times" | The BFO property links a thing that is not a spatial region to a spatial region, so it can be used as <<hasGeometry>> is used when the thing is taken to be a <<Feature, Feature>> and the spatial region a <<Geometry, Geometry>>. No GeoSPARQL temporality indicators mean mappings are eternal.
-| <<hasGeometry>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000210[`obo:BFO_0000210`] "occupies spatial region at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
-| <<simple_features_relation_family, `sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_000082[`obo:BFO_0000082`] "located in at all times" | The BFO property "located in at all times" is a super property of <<simple_features_relation_family, `sfWithin`>> when the thing located in the spatial region are defined to both be instances of <<Feature, Feature>>. Since GeoSPARQL natively supplies no temporal qualifiers, pure GeoSPARQL assertions are assumed to be eternal: "...at all times"
-| <<simple_features_relation_family, `sfWithin`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://purl.obolibrary.org/obo/BFO_0000171[`obo:BFO_0000171`] "located in at some time" | A transitive mapping from the mapping above. Temporal qualification can be used with GeoSPARQL, see the OWL TIME alignment.
-| http://purl.obolibrary.org/obo/BFO_0000066[`obo:BFO_0000066`] "occurs in" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | <<SpatialObject, SpatialObject>> | The BFO property relates a temporal activity to a spatial region but since GeoSPARQL has no notion of events, no mapping to this property can be made. However, BFO indicates this property should be used with a BFO "spatial region" (<<Geometry, Geometry>>) range value but from GeoSPARQL's point of view, it could also be used with a <<Feature, Feature>> where the "in" would be taken to be within the feature's geometry, so the superclass of feature and geometry is given as the range
-| http://purl.obolibrary.org/obo/BFO_0000216[`obo:BFO_0000216`] "spatially projects onto at some time" | http://www.w3.org/2000/01/rdf-schema#range[`rdfs:range`] | <<SpatialObject, SpatialObject>> | The reasoning is the same as for "occurs in"
+| <<Class: geo:SpatialObject, `geo:SpatialObject`>>  | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000001[`obo:BFO_0000001`] "entity" | BFO's "entity" is the superclass of "continuant" and "occurrent"
+| <<Class: geo:Feature, `geo:Feature`>> | http://www.w3.org/2002/07/owl#equivalentClass[`owl:equivalentClass`] | http://purl.obolibrary.org/obo/BFO_0000004[`obo:BFO_0000004`] "independent continuant" `or` http://purl.obolibrary.org/obo/BFO_0000015[`obo:BFO_0000015`] "process" `or` http://purl.obolibrary.org/obo/BFO_0000035[`obo:BFO_0000035`] "process boundary" | GeoSPARQL ``Features`` are generally things that may be shown on a map
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | http://purl.obolibrary.org/obo/BFO_0000031[`obo:BFO_0000031`] "generically dependent continuant" | BFO's "generically dependent continuant" is the class of things that may be associated with an "independent continuant"
+| <<Class: geo:Geometry, `geo:Geometry`>> | http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] | https://www.commoncoreontologies.org/ont00000853[`cco:ont00000853`] "descriptive information content entity" | CCO's "descriptive information content entity" (a subclass of "generically dependent continuant") is the class of things that may describe an entity
+| <<Property: geo:hasGeometry, `geo:hasGeometry`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | https://www.commoncoreontologies.org/ont00001917[`cco:ont00001917`] "described by" | CCO's "described by" is the property that links an "entity" to a "descriptive information content entity"
+| <<Property: geo:hasSerialization, `geo:hasSerialization`>> | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | http://www.w3.org/2002/07/owl#topDataProperty[`owl:topDataProperty`] | GeoSPARQL `hasSerialization` (and its specializations) is a `DataTypeProperty`
+| http://purl.obolibrary.org/obo/BFO_0000171[`obo:BFO_0000171`] "located in" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:sfWithin, `geo:sfWithin`>>  | BFO's "located in" is a relationship between "independent continuants" but not including "spatial regions". This is more restricted than GeoSPARQL's `sfWithin` which can be used with any `SpatialObject`
+| http://purl.obolibrary.org/obo/BFO_0000066[`obo:BFO_0000066`] "occurs in" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:sfWithin, `geo:sfWithin`>>  | BFO's "occurs in" is a relationship between a "process" or "process boundary" and a "site" or "material entity". This is more restricted than GeoSPARQL's `sfWithin` which can be used between any `SpatialObjects`
+| https://www.commoncoreontologies.org/ont00001944[`cco:ont00001944`] "spatial part of" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:sfWithin, `geo:sfWithin`>>  .2+| CCO's spatial relationships are between "immaterial entities". This is more restricted than GeoSPARQL's which can be used between any `SpatialObjects` 
+| https://www.commoncoreontologies.org/ont00001855[`cco:ont00001855`] "has spatial part" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:sfContains, `geo:sfContains`>>  
+| https://www.commoncoreontologies.org/ont00001791[`cco:ont00001791`] "coincides with" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8eq, `geo:rcc8eq`>> "spatially equals" .8+| CCO's RCC8 relationships are between "immaterial entities". This is more restricted than GeoSPARQL's which can be used between any `SpatialObjects`
+| https://www.commoncoreontologies.org/ont00001931[`cco:ont00001931`] "externally connects with" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8ec, `geo:rcc8ec`>> "spatially meets" 
+| https://www.commoncoreontologies.org/ont00001797[`cco:ont00001797`] "partially overlaps with" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8po, `geo:rcc8po`>> "spatially overlaps" 
+| https://www.commoncoreontologies.org/ont00001909[`cco:ont00001909`] "has tangential part" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8tppi, `geo:rcc8tppi`>> "spatially covers" 
+| https://www.commoncoreontologies.org/ont00001796[`cco:ont00001796`] "tangential part of" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8tpp, `geo:rcc8tpp`>> "spatially covered by" 
+| https://www.commoncoreontologies.org/ont00001989[`cco:ont00001989`] "has nontangential part" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8ntppi, `geo:rcc8ntppi`>> "contains" 
+| https://www.commoncoreontologies.org/ont00001827[`cco:ont00001827`] "nontangential part of" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8ntpp, `geo:rcc8ntpp`>> "inside" 
+| https://www.commoncoreontologies.org/ont00001838[`cco:ont00001838`] "disconnected with" | http://www.w3.org/2000/01/rdf-schema#subPropertyOf[`rdfs:subPropertyOf`] | <<Class: geo:rcc8dc, `geo:rcc8dc`>> "spatially disjoint" 
 |===
 
-* BFO distinguishes between _continuants_ & _occurrants_, which _spatial region_ & _spatiotemporal region_ are subclasses of, respectively. GeoSPARQL has no handling of temporality, so cannot yet map to any _continuants_
-** a future version of GeoSPARQL that handled spatio-temporal Features could perhaps claim that <<Feature, Feature>> is a http://www.w3.org/2000/01/rdf-schema#subClassOf[`rdfs:subClassOf`] http://purl.obolibrary.org/obo/BFO_0000011[`obo:BFO_0000011`] "spatiotemporal region", however inconsistencies from this mapping will occur due to the current Feature/"spatial region" mapping above and this will need to be handled
+GeoSPARQL `Feature` is generally understood to be the set of things that might appear on a map. 
+This includes "independent continuants" such as rivers and also "processes" such as floods, or "process boundaries". 
+In turn this includes "immaterial entities" such as sites, boundaries, and regions. 
+These typically relate to "material entities" but do not have any material properties. 
+
+GeoSPARQL `Geometry` describes the shape and location of a `Feature`, so is aligned with BFO's "generically dependent continuant", more specifically the CCO subclass "descriptive information content entity", i.e., information that is used to describe something (a `Feature`).
+
+Spatial relationships in the CCO Geospatial Ontology are based on the RCC8 region connection calculus (<<LOGIC>>). 
+
+
+
