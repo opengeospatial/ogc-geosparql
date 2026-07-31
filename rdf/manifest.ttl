@@ -1,3 +1,4 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX mrr: <https://prez.dev/ManifestResourceRoles/>
 PREFIX prez: <https://prez.dev/>
 PREFIX prof: <http://www.w3.org/ns/dx/prof/>
@@ -6,9 +7,30 @@ PREFIX schema: <https://schema.org/>
 []    a prez:Manifest ;
     prof:hasResource 
         [
-            prof:hasArtifact "ontologies/*.ttl" ;
+            prof:hasArtifact "alignments/alignments.ttl" ;
             prof:hasRole mrr:ResourceData ;
-            schema:name "GeoSPARQL Ontologies" ;
+            schema:name "GeoSPARQL Alignments" ;
+        ] ,
+        [
+            prof:hasArtifact "_background/*.ttl" ;
+            prof:hasRole mrr:IncompleteCatalogueAndResourceLabels ;
+            schema:name "Labels and Agent information" ;
+        ] ,
+        [
+            prof:hasArtifact "validators/*.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:name "GeoSPARQL Validators" ;
+        ] ,
+        [
+            dcterms:conformsTo <https://linked.data.gov.au/def/vocpub/validator> ;
+            prof:hasArtifact "vocabularies/*.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:name "GeoSPARQL Vocabularies" ;
+        ] ,
+        [
+            prof:hasArtifact "profile.ttl" ;
+            prof:hasRole mrr:ResourceData ;
+            schema:name "GeoSPARQL Profile" ;
         ] ,
         [
             prof:hasArtifact "catalogue.ttl" ;
@@ -16,32 +38,8 @@ PREFIX schema: <https://schema.org/>
             schema:name "GeoSPARQL Catalogue" ;
         ] ,
         [
-            prof:hasArtifact "_background/agents.ttl" ;
-            prof:hasRole mrr:IncompleteCatalogueAndResourceLabels ;
-            schema:name "Agent information" ;
-        ] ,
-        [
-            prof:hasArtifact "validator.ttl" ;
+            prof:hasArtifact "ontologies/*.ttl" ;
             prof:hasRole mrr:ResourceData ;
-            schema:name "GeoSPARQL Validators" ;
-        ] ,
-        [
-            prof:hasArtifact "vocabs/*.ttl" ;
-            prof:hasRole mrr:ResourceData ;
-            schema:name "GeoSPARQL Vocabularies" ;
-        ] ,
-        [
-            prof:hasArtifact "_background/labels.ttl" ;
-            prof:hasRole mrr:IncompleteCatalogueAndResourceLabels ;
-            schema:name "Labels" ;
-        ] ,
-        [
-            prof:hasArtifact
-                [
-                    schema:contentLocation "profile.ttl" ;
-                    schema:mainEntity <http://www.opengis.net/def/geosparql> ;
-                ] ;
-            prof:hasRole mrr:ResourceData ;
-            schema:name "GeoSPARQL Profile" ;
+            schema:name "GeoSPARQL Ontologies" ;
         ] ;
 .
