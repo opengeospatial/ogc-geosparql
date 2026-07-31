@@ -1,1 +1,0 @@
-kurra file merge -d alignments.ttl *.ttl

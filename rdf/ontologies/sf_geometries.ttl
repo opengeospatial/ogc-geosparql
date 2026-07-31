@@ -1,4 +1,3 @@
-PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -6,44 +5,6 @@ PREFIX schema: <https://schema.org/>
 PREFIX sf: <http://www.opengis.net/ont/sf#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-
-<http://www.opengis.net/ont/sf>
-    a owl:Ontology ;
-    skos:definition "An RDF/OWL vocabulary for defining SimpleFeature geometry types" ;
-    schema:license "https://www.ogc.org/license"^^xsd:anyURI ;
-    schema:dateCreated "2012-05-15"^^xsd:date ;
-    schema:dateModified "2025-11-16"^^xsd:date ;
-    schema:dateIssued "2025-11-19"^^xsd:date ;
-    schema:codeRepository "https://github.com/opengeospatial/ogc-geosparql/"^^xsd:anyURI ;
-    schema:copyrightNotice "(c) 2022 Open Geospatial Consortium" ;
-    skos:prefLabel "Simple Features Vocabulary"@en ;
-    owl:versionIRI <http://www.opengis.net/ont/sf/1.1> ;
-    owl:versionInfo "OGC GeoSPARQL 1.1" ;
-	schema:creator <https://defs.opengis.net/org/geosparql-swg> ;
-	schema:publisher <https://defs.opengis.net/org/ogc> ;
-	rdfs:member
-        sf:Curve ,
-        sf:Envelope ,
-        sf:Geometry ,
-        sf:GeometryCollection ,
-        sf:Line ,
-        sf:LineString ,
-        sf:LinearRing ,
-        sf:MultiCurve ,
-        sf:MultiLineString ,
-        sf:MultiPoint ,
-        sf:MultiPolygon ,
-        sf:MultiSurface ,
-        sf:Point ,
-        sf:Polygon ,
-        sf:PolyhedralSurface ,
-        sf:Surface ,
-        sf:TIN ,
-        sf:Triangle ,
-        sf:maximum ,
-        sf:minimum ;
-	skos:historyNote """2025-11: Made OntPub valid""" ;
-.
 
 sf:Curve
     a
@@ -75,16 +36,16 @@ sf:Envelope
         rdfs:Class ,
         owl:Class ;
     rdfs:isDefinedBy <http://www.opengis.net/ont/sf> ;
-    rdfs:subClassOf
+    rdfs:subClassOf 
         [
             a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty sf:maximum
+            owl:onProperty sf:minimum ;
         ] ,
         [
             a owl:Restriction ;
             owl:cardinality "1"^^xsd:nonNegativeInteger ;
-            owl:onProperty sf:minimum
+            owl:onProperty sf:maximum ;
         ] ,
         sf:Polygon ;
     skos:definition """Shape defined by the corner points of the bounding box of a geometry.
@@ -327,4 +288,42 @@ sf:minimum
     rdfs:range sf:Point ;
     skos:definition "Point containing the minimum values of the coordinates of an envelope or bounding box"@en ;
     skos:prefLabel "minimum"@en ;
+.
+
+<http://www.opengis.net/ont/sf>
+    a owl:Ontology ;
+    rdfs:member
+        sf:Curve ,
+        sf:Envelope ,
+        sf:Geometry ,
+        sf:GeometryCollection ,
+        sf:Line ,
+        sf:LineString ,
+        sf:LinearRing ,
+        sf:MultiCurve ,
+        sf:MultiLineString ,
+        sf:MultiPoint ,
+        sf:MultiPolygon ,
+        sf:MultiSurface ,
+        sf:Point ,
+        sf:Polygon ,
+        sf:PolyhedralSurface ,
+        sf:Surface ,
+        sf:TIN ,
+        sf:Triangle ,
+        sf:maximum ,
+        sf:minimum ;
+    owl:versionIRI <http://www.opengis.net/ont/sf/1.1> ;
+    owl:versionInfo "OGC GeoSPARQL 1.1" ;
+    skos:definition "An RDF/OWL vocabulary for defining SimpleFeature geometry types" ;
+    skos:historyNote "2025-11: Made OntPub valid" ;
+    skos:prefLabel "Simple Features Vocabulary"@en ;
+    schema:codeRepository "https://github.com/opengeospatial/ogc-geosparql/"^^xsd:anyURI ;
+    schema:copyrightNotice "(c) 2022 Open Geospatial Consortium" ;
+    schema:creator <https://defs.opengis.net/org/geosparql-swg> ;
+    schema:dateCreated "2012-05-15"^^xsd:date ;
+    schema:dateIssued "2025-11-19"^^xsd:date ;
+    schema:dateModified "2025-11-16"^^xsd:date ;
+    schema:license "https://www.ogc.org/license"^^xsd:anyURI ;
+    schema:publisher <https://defs.opengis.net/org/ogc> ;
 .
