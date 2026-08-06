@@ -30,12 +30,8 @@ jobs:
         run: |
           gem install asciidoctor asciidoctor-pdf --no-document
           mkdir -p site/geosparql-next
-          asciidoctor \
-            -o site/geosparql-next/spec.html \
-            geosparql-next/spec/document.adoc
-          asciidoctor-pdf \
-            -o site/geosparql-next/spec.pdf \
-            geosparql-next/spec/document.adoc
+          asciidoctor -o site/geosparql-next/spec.html geosparql-next/spec/document.adoc
+          asciidoctor-pdf -o site/geosparql-next/spec.pdf geosparql-next/spec/document.adoc
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -46,18 +42,30 @@ jobs:
         run: |
           python -m pip install --upgrade pip pylode
           # ontologies
+          echo "Making Ontology HTML"
           pylode geosparql-next/rdf/ontologies/geo.ttl -o site/geosparql-next/ont.html -p ontpub
+          echo "Making SF Geoms Ontology HTML"
           pylode geosparql-next/rdf/ontologies/sf_geometries.ttl -o site/geosparql-next/sf_geometries.html -p ontpub
           # vocabularies
+          echo "Making Egenhofer vocab HTML"
           pylode geosparql-next/rdf/vocabularies/egenhofer.ttl -o site/geosparql-next/egenhofer.html -p vocpub
+          echo "Making Functions vocab HTML"
           pylode geosparql-next/rdf/vocabularies/functions.ttl -o site/geosparql-next/functions.html -p vocpub
+          echo "Making Geocoding vocab HTML"
           pylode geosparql-next/rdf/vocabularies/geocoding.ttl -o site/geosparql-next/geocoding.html -p vocpub
+          echo "Making RCC8 vocab HTML"
           pylode geosparql-next/rdf/vocabularies/rcc8.ttl -o site/geosparql-next/rcc8.html -p vocpub
+          echo "Making RCC9 vocab HTML"
           pylode geosparql-next/rdf/vocabularies/rcc9.ttl -o site/geosparql-next/rcc9.html -p vocpub
+          echo "Making Requirements vocab HTML"
           pylode geosparql-next/rdf/vocabularies/requirements.ttl -o site/geosparql-next/requirements.html -p vocpub
+          echo "Making Rules vocab HTML"
           pylode geosparql-next/rdf/vocabularies/rules.ttl -o site/geosparql-next/rules.html -p vocpub
+          echo "Making SA Funcs vocab HTML"
           pylode geosparql-next/rdf/vocabularies/safuncs.ttl -o site/geosparql-next/safuncs.html -p vocpub
+          echo "Making SF vocab HTML"
           pylode geosparql-next/rdf/vocabularies/sf.ttl -o site/geosparql-next/sf.html -p vocpub
+          echo "Completed RDF -> HTML"
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
