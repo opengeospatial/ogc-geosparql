@@ -102,12 +102,12 @@ Source files for both in `ewkb/` folder.
 
 ## Working documents
 
-An index of the working artefacts for the current GeoSPARQL variants can be found here:
+An index of the working artifacts for the current GeoSPARQL variants can be found here:
 
 * <https://opengeospatial.github.io/ogc-geosparql/>. These are built automatically as updates occur. 
 
 > [!NOTE]
-> These are only working documents only and are not approved standards, so they are in flux. To see a stable standard, selecte one of the variants listed above.
+> These are only working documents only and are not approved standards, so they are in flux. To see a stable standard, select one of the variants listed above.
 
 Extended GeoSPARQL work can also be found in the following OGC code repositories:
 
