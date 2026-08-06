@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GeoSPARQL Next Functions</title>
+    <style>
+        #pylode {
+            position: fixed;
+            top: 205px;
+            left: -150px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+        #pylode #p {
+            color: #329545;
+        }
+        #pylode #y {
+            color: #f9cb33;
+        }
+        #pylode #version {
+            font-size: 1.0em;
+        }
+
+        #profile {
+            font-style: italic;
+            font-size: 1.25em;
+            color: darkred!important;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dl {
+            /*border: 1px solid navy;*/
+            /*padding:5px;*/
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 0;
+        }
+
+        dd {
+            margin-bottom: 10px;
+            padding-top: 7px;
+        }
+
+        ul.pylodelitlist {
+            list-style-type: none;
+            margin-left: -40px;
+        }
+
+        #metadata ul li,
+        #classes ul li {
+            margin-bottom: 10px;
+        }
+
+        #metadata dd p {
+          margin: 0 0 1em 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        div.hierarchy {
+            margin-bottom: 30px;
+            background-color: #F4FFFF;
+            padding: 10px;
+        }
+
+        ul.hierarchy {=
+            padding: 5px 25px 5px 25px;
+        }
+
+        ul.hierarchy li {
+            margin-top:5px;
+        }
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 {
+            font: italic 100% sans-serif;
+            margin-bottom: 10px;
+        }
+        h6 { font: small-caps 100% sans-serif }
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: left;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col {
+            cursor:help;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        sup {
+            margin-left: -3px;
+        }
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+
+        #toc {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            border: solid 1px navy;
+            font-size: small;
+            width: 180px;
+        }
+        #toc h3 {
+            margin-top: 5px;
+        }
+
+        #toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #toc .first > li {
+            margin-top: 5px;
+        }
+
+        #toc .second,
+        #toc .third {
+            padding-left: 10px;
+        }
+
+        #content {
+            width: calc(100% - 150px);
+        }
+
+        .hover_property {
+            cursor: help;
+            text-decoration: none;
+            border-bottom: dashed 1px;
+        }
+
+        .setclass {
+            list-style-type: none;
+        }
+
+        code{
+            word-wrap: break-word;
+          }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        td {
+            word-wrap: break-word;
+        }
+        #legend table.entity {
+            width: 25%;
+        }
+	</style>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1SewEAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC" rel="icon" sizes="16x16" type="image/png">
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==" rel="icon" sizes="32x32" type="image/png">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script id="schema.org" type="application/ld+json">
+[
+  {
+    "@id": "http://www.opengis.net/def/function/geosparql",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/creator": [
+      {
+        "@id": "https://defs.opengis.net/org/geosparql-swg"
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+        "@value": "https://www.ogc.org/license"
+      }
+    ],
+    "https://schema.org/publisher": [
+      {
+        "@id": "https://defs.opengis.net/org/ogc"
+      }
+    ]
+  }
+]
+	</script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section" id="metadata">
+        <h1></h1>
+        <h2>Metadata</h2>
+        <dl>
+          <div>
+            <dt>
+              <strong>IRI</strong>
+            </dt>
+            <dd>
+              <code>http://www.opengis.net/def/function/geosparql</code>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/creator">Creator</a>
+            </dt>
+            <dd>
+              <div>
+                <p>https://defs.opengis.net/org/geosparql-swg</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/license">License</a>
+            </dt>
+            <dd>
+              <div>
+                <p>
+                  <a href="https://www.ogc.org/license">https://www.ogc.org/license</a>
+                </p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/publisher">Publisher</a>
+            </dt>
+            <dd>
+              <div>
+                <p>https://defs.opengis.net/org/ogc</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/source">Source</a>
+            </dt>
+            <dd>
+              <div>
+                <p>http://www.opengis.net/doc/geosparql/nxt</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">Type</a>
+            </dt>
+            <dd>
+              <div>
+                <p>
+                  <a href="http://www.w3.org/2004/02/skos/core#ConceptScheme">Concept Scheme</a>
+                </p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2000/01/rdf-schema#seeAlso">see also</a>
+            </dt>
+            <dd>
+              <div>
+                <p>http://www.opengis.net/doc/geosparql/nxt</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2002/07/owl#versionIRI">Version Iri</a>
+            </dt>
+            <dd>
+              <div>
+                <p>http://www.opengis.net/def/function/geosparql/Next</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2004/02/skos/core#hasTopConcept">Has Top Concept</a>
+            </dt>
+            <dd>
+              <div>
+                <p>http://www.opengis.net/def/function/geosparql/sfIntersects</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/convexHull">convex hull</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/sfOverlaps</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/metricLength">metric length</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/ehOverlap</p>
+                <p>http://www.opengis.net/def/function/geosparql/sfTouches</p>
+                <p>http://www.opengis.net/def/function/geosparql/ehInside</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/envelope">envelope</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/maxX">maxX</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/area">area</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/asWKT">asWKT</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/ehCoveredBy</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/concaveHull">concave hull</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/sfContains</p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8ntpp</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/asKML">asKML</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/distance">distance</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8ec</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/isEmpty">isEmpty</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/asDGGS">asDGGS</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/asGML">asGML</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/isSimple">isSimple</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8eq</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/minZ">minZ</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/relate">relate</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8tpp</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/buffer">buffer</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/perimeter">perimeter</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/ehMeet</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/length">length</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/sfDisjoint</p>
+                <p>http://www.opengis.net/def/function/geosparql/ehEquals</p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8po</p>
+                <p>http://www.opengis.net/def/function/geosparql/sfEquals</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/intersection">intersection</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/maxZ">maxZ</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/metricArea">metric area</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/minX">minX</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/ehCovers</p>
+                <p>http://www.opengis.net/def/function/geosparql/ehContains</p>
+                <p>http://www.opengis.net/def/function/geosparql/ehDisjoint</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/boundingCircle">bounding circle</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/difference">difference</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/boundary">boundary</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/minY">minY</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/metricPerimeter">metric perimeter</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8tppi</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/asGeoJSON">asGeoJSON</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/symDifference">symmetric difference</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/dimension">dimension</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/metricBuffer">metric buffer</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/union">union</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/maxY">maxY</a>
+                </p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/getSRID">getSRID</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8dc</p>
+                <p>http://www.opengis.net/def/function/geosparql/sfCrosses</p>
+                <p>http://www.opengis.net/def/function/geosparql/sfWithin</p>
+                <p>
+                  <a href="http://www.opengis.net/def/function/geosparql/metricDistance">metric distance</a>
+                </p>
+                <p>http://www.opengis.net/def/function/geosparql/rcc8ntppi</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2004/02/skos/core#historyNote">History Note</a>
+            </dt>
+            <dd>
+              <div>
+                <p>2026-08: GeoSPARQL Next version built from 1.1 version
+
+2025-11: Made OntPub valid
+
+2022: This vocabulary was generated for GeoSPARQL 1.1 using some content that was already specified for GeoSPARQL 1.0</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/copyrightNotice">Copyright Notice</a>
+            </dt>
+            <dd>
+              <div>
+                <p>(c) 2026 Open Geospatial Consortium</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/dateCreated">Date Created</a>
+            </dt>
+            <dd>
+              <div>
+                <p>2021-06-16</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/dateModified">Date Modified</a>
+            </dt>
+            <dd>
+              <div>
+                <p>2026-08-06</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/description">Description</a>
+            </dt>
+            <dd>
+              <div>
+                <p>All the GeoSPARQL Functions defined within the GeoSPARQL Next specification</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/license">License</a>
+            </dt>
+            <dd>
+              <div>
+                <p>
+                  <a href="https://www.ogc.org/license">https://www.ogc.org/license</a>
+                </p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/name">Name</a>
+            </dt>
+            <dd>
+              <div>
+                <p>GeoSPARQL Next Functions</p>
+              </div>
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div id="concept-hierarchy">
+        <h2>Concept Hierarchy</h2>
+        <div class="hierarchy">
+          <ul class="hierarchy">
+            <li>
+              <a href="#area">area</a>
+            </li>
+            <li>
+              <a href="#asDGGS">asDGGS</a>
+            </li>
+            <li>
+              <a href="#asGeoJSON">asGeoJSON</a>
+            </li>
+            <li>
+              <a href="#asGML">asGML</a>
+            </li>
+            <li>
+              <a href="#asKML">asKML</a>
+            </li>
+            <li>
+              <a href="#asWKT">asWKT</a>
+            </li>
+            <li>
+              <a href="#boundary">boundary</a>
+            </li>
+            <li>
+              <a href="#boundingCircle">bounding circle</a>
+            </li>
+            <li>
+              <a href="#buffer">buffer</a>
+            </li>
+            <li>
+              <a href="#centroid">centroid</a>
+            </li>
+            <li>
+              <a href="#concaveHull">concave hull</a>
+            </li>
+            <li>
+              <a href="#convexHull">convex hull</a>
+            </li>
+            <li>
+              <a href="#difference">difference</a>
+            </li>
+            <li>
+              <a href="#dimension">dimension</a>
+            </li>
+            <li>
+              <a href="#distance">distance</a>
+            </li>
+            <li>
+              <a href="#envelope">envelope</a>
+            </li>
+            <li>
+              <a href="#geometryN">geometryN</a>
+            </li>
+            <li>
+              <a href="#getSRID">getSRID</a>
+            </li>
+            <li>
+              <a href="#intersection">intersection</a>
+            </li>
+            <li>
+              <a href="#isEmpty">isEmpty</a>
+            </li>
+            <li>
+              <a href="#isSimple">isSimple</a>
+            </li>
+            <li>
+              <a href="#length">length</a>
+            </li>
+            <li>
+              <a href="#maxX">maxX</a>
+            </li>
+            <li>
+              <a href="#maxY">maxY</a>
+            </li>
+            <li>
+              <a href="#maxZ">maxZ</a>
+            </li>
+            <li>
+              <a href="#metricArea">metric area</a>
+            </li>
+            <li>
+              <a href="#metricBuffer">metric buffer</a>
+            </li>
+            <li>
+              <a href="#metricDistance">metric distance</a>
+            </li>
+            <li>
+              <a href="#metricLength">metric length</a>
+            </li>
+            <li>
+              <a href="#metricPerimeter">metric perimeter</a>
+            </li>
+            <li>
+              <a href="#minX">minX</a>
+            </li>
+            <li>
+              <a href="#minY">minY</a>
+            </li>
+            <li>
+              <a href="#minZ">minZ</a>
+            </li>
+            <li>
+              <a href="#numGeometries">numGeometries</a>
+            </li>
+            <li>
+              <a href="#perimeter">perimeter</a>
+            </li>
+            <li>
+              <a href="#relate">relate</a>
+            </li>
+            <li>
+              <a href="#symDifference">symmetric difference</a>
+            </li>
+            <li>
+              <a href="#transform">transform</a>
+            </li>
+            <li>
+              <a href="#union">union</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="concepts">
+        <h2>Concept Definitions</h2>
+        <div class="entity">
+          <h3 id="geof_area">area</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/area</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the area of a geometry in square meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_asDGGS">asDGGS</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/asDGGS</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Converts a given geometry to an equivalent DGGS representation, formulated according to the specific DGGS literal indicated using the specificDggsDatatype parameter.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_asGML">asGML</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/asGML</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Converts a given geometry to an equivalent GML representation defined by a gmlProfile version string preserving the coordinate reference system.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_asGeoJSON">asGeoJSON</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/asGeoJSON</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Converts a given geometry to an equivalent GeoJSON representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a GeoJSON literal.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_asKML">asKML</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/asKML</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Converts a given geometry to an equivalent KML representation. Coordinates are converted to the CRS84 coordinate system, the only valid coordinate system to be used in a KML literal.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_asWKT">asWKT</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/asWKT</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Converts a given geometry to an equivalent WKT representation preserving the coordinate reference system and geometry type, if possible.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_boundary">boundary</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/boundary</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the boundary of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_boundingCircle">bounding circle</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/boundingCircle</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that calculates the minimum bounding circle of set of geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_buffer">buffer</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/buffer</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a buffer around the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_centroid">centroid</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/centroid</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A spatial aggregate function that calculates a centroid of a set of geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_concaveHull">concave hull</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/concaveHull</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that calculates the concave hull of a set of geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_convexHull">convex hull</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/convexHull</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the convex hull of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_difference">difference</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/difference</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a geometry consisting of all points that are part of the first geometry but not the second geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_dimension">dimension</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/dimension</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the dimension of a geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_distance">distance</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/distance</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the distance between the two closest points of the input geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept.">Example</a>
+              </td>
+              <td>
+                <a href="#spec11_B.2.2.4">http://www.opengis.net/spec/geosparql/1.1/specification.html#B.2.2.4</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_envelope">envelope</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/envelope</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the minimum bounding rectangle of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_geometryN">geometryN</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/geometryN</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the the nth geometry if the given geometry literal contains a GeometryCollection.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_getSRID">getSRID</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/getSRID</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the spatial reference system URI of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_intersection">intersection</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/intersection</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a geometry consisting of all points that are part of both input geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_isEmpty">isEmpty</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/isEmpty</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns true if the input geometry is empty.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_isSimple">isSimple</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/isSimple</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns true if the input geometry is a simple geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_length">length</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/length</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the length of a geometry in meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_maxX">maxX</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/maxX</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the maximum x coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_maxY">maxY</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/maxY</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the maximum y coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_maxZ">maxZ</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/maxZ</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the maximum z coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_metricArea">metric area</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/metricArea</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the area of a geometry in squaremeters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_metricBuffer">metric buffer</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/metricBuffer</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a buffer around the input geometry, using a distance in meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_metricDistance">metric distance</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/metricDistance</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the distance in meters between the two closest points of the input geometries.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_metricLength">metric length</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/metricLength</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the length of a geometry in meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_metricPerimeter">metric perimeter</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/metricPerimeter</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the perimeter of a geometry in meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_minX">minX</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/minX</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the minimum x coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_minY">minY</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/minY</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the minimum y coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_minZ">minZ</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/minZ</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the minimum z coordinate of the input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_numGeometries">numGeometries</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/numGeometries</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns the number of geometries if the given geometry literal contains a GeometryCollection.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_perimeter">perimeter</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/perimeter</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>Returns the perimeter of a geometry in meters.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_relate">relate</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/relate</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns true if the spatial relationship between the two input geometries corresponds to one with acceptable values for the specified DE-9IM pattern matrix.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_symDifference">symmetric difference</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/symDifference</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a geometry consisting of all points that are part of only one input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_transform">transform</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/transform</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that converts a given geometry to a spatial reference system defined by an IRI. The function raises an error if a transformation is not mathematically possible.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_union">union</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/union</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="https://schema.org/description" title="A description of the item.">Description</a>
+              </td>
+              <td>A query function that returns a geometry consisting of all points that are part of at least one input geometry.</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>This vocabulary</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#example" title="An example of the use of a concept.">Example</a>
+              </td>
+              <td>
+                <a href="#spec11_B.2.2.3">http://www.opengis.net/spec/geosparql/1.1/specification.html#B.2.2.3</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#geo11_">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="namespaces">
+        <h2>Namespaces</h2>
+        <dl>
+          <dt id="cs">cs</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/geosparql</code>
+          </dd>
+          <dt id="dcterms">dcterms</dt>
+          <dd>
+            <code>http://purl.org/dc/terms/</code>
+          </dd>
+          <dt id="fno">fno</dt>
+          <dd>
+            <code>https://w3id.org/function/ontology#</code>
+          </dd>
+          <dt id="geo">geo</dt>
+          <dd>
+            <code>http://www.opengis.net/ont/geosparql#</code>
+          </dd>
+          <dt id="geo11">geo11</dt>
+          <dd>
+            <code>http://www.opengis.net/doc/geosparql/1.1</code>
+          </dd>
+          <dt id="geof">geof</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/geosparql/</code>
+          </dd>
+          <dt id="geofo">geofo</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/output/geosparql/</code>
+          </dd>
+          <dt id="geofp">geofp</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/parameter/geosparql/</code>
+          </dd>
+          <dt id="geonxt">geonxt</dt>
+          <dd>
+            <code>http://www.opengis.net/doc/geosparql/nxt</code>
+          </dd>
+          <dt id="ogc">ogc</dt>
+          <dd>
+            <code>https://defs.opengis.net/org/ogc</code>
+          </dd>
+          <dt id="owl">owl</dt>
+          <dd>
+            <code>http://www.w3.org/2002/07/owl#</code>
+          </dd>
+          <dt id="policy">policy</dt>
+          <dd>
+            <code>http://www.opengis.net/def/metamodel/ogc-na/</code>
+          </dd>
+          <dt id="rdf">rdf</dt>
+          <dd>
+            <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
+          </dd>
+          <dt id="rdfs">rdfs</dt>
+          <dd>
+            <code>http://www.w3.org/2000/01/rdf-schema#</code>
+          </dd>
+          <dt id="schema">schema</dt>
+          <dd>
+            <code>https://schema.org/</code>
+          </dd>
+          <dt id="sd">sd</dt>
+          <dd>
+            <code>http://www.w3.org/ns/sparql-service-description#</code>
+          </dd>
+          <dt id="skos">skos</dt>
+          <dd>
+            <code>http://www.w3.org/2004/02/skos/core#</code>
+          </dd>
+          <dt id="spec11">spec11</dt>
+          <dd>
+            <code>http://www.opengis.net/spec/geosparql/1.1/specification.html#</code>
+          </dd>
+          <dt id="status">status</dt>
+          <dd>
+            <code>http://www.opengis.net/def/status/</code>
+          </dd>
+          <dt id="swg">swg</dt>
+          <dd>
+            <code>https://defs.opengis.net/org/geosparql-swg</code>
+          </dd>
+          <dt id="xsd">xsd</dt>
+          <dd>
+            <code>http://www.w3.org/2001/XMLSchema#</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div id="pylode">
+      <p>made by 
+        <a href="https://github.com/rdflib/pyLODE">
+          <span id="p">p</span>
+          <span id="y">y</span>
+          <span>LODE</span>
+        </a>
+        <a href="https://github.com/rdflib/pyLODE/release/3.5.1" id="version">3.5.1</a>
+        <span> with the </span>
+        <a href="https://linked.data.gov.au/def/vocpub" id="profile">VocPub</a>
+        <span>profile</span>
+      </p>
+    </div>
+    <div id="toc">
+      <h3>Table of Contents</h3>
+      <ul class="first">
+        <li>
+          <h4>
+            <a href="#metadata">Metadata</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#concept-hierarchy">Concepts Hierarchy</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#concepts">Concept Definitions</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#namespaces">Namespaces</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#cs">cs</a>
+            </li>
+            <li>
+              <a href="#dcterms">dcterms</a>
+            </li>
+            <li>
+              <a href="#fno">fno</a>
+            </li>
+            <li>
+              <a href="#geo">geo</a>
+            </li>
+            <li>
+              <a href="#geo11">geo11</a>
+            </li>
+            <li>
+              <a href="#geof">geof</a>
+            </li>
+            <li>
+              <a href="#geofo">geofo</a>
+            </li>
+            <li>
+              <a href="#geofp">geofp</a>
+            </li>
+            <li>
+              <a href="#geonxt">geonxt</a>
+            </li>
+            <li>
+              <a href="#ogc">ogc</a>
+            </li>
+            <li>
+              <a href="#owl">owl</a>
+            </li>
+            <li>
+              <a href="#policy">policy</a>
+            </li>
+            <li>
+              <a href="#rdf">rdf</a>
+            </li>
+            <li>
+              <a href="#rdfs">rdfs</a>
+            </li>
+            <li>
+              <a href="#schema">schema</a>
+            </li>
+            <li>
+              <a href="#sd">sd</a>
+            </li>
+            <li>
+              <a href="#skos">skos</a>
+            </li>
+            <li>
+              <a href="#spec11">spec11</a>
+            </li>
+            <li>
+              <a href="#status">status</a>
+            </li>
+            <li>
+              <a href="#swg">swg</a>
+            </li>
+            <li>
+              <a href="#xsd">xsd</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <h4>
+            <a href="#legend">Legend</a>
+          </h4>
+          <ul class="second"></ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
