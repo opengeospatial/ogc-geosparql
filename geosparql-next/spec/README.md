@@ -16,7 +16,7 @@ To build the document from these you will need Metanorma installed, and then you
 metanorma compile --agree-to-terms -t ogc -x html document.adoc
 ```
 
-Or you can use Docker the Metanorma container image:
+Or you can use Docker the Metanorma container image as we (the editors) do:
 
 ```
 docker run --rm -v "$PWD:/metanorma" -w /metanorma metanorma/metanorma metanorma compile --agree-to-terms -t ogc -x html document.adoc
