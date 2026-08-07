@@ -21,17 +21,16 @@ jobs:
           ref: master
           submodules: true
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.4'
-
-      - name: Build specification
+      - name: Build specification doc using Metanorma
         run: |
-          gem install asciidoctor asciidoctor-pdf --no-document
+          docker run --rm \
+            -v "$PWD/geosparql-next/spec:/metanorma" \
+            -w /metanorma \
+            metanorma/metanorma \
+            metanorma compile --agree-to-terms -t ogc -x html,pdf document.adoc
           mkdir -p site/geosparql-next
-          asciidoctor -o site/geosparql-next/spec.html geosparql-next/spec/document.adoc
-          asciidoctor-pdf -o site/geosparql-next/spec.pdf geosparql-next/spec/document.adoc
+          cp geosparql-next/spec/document.html site/geosparql-next/spec.html
+          cp geosparql-next/spec/document.pdf site/geosparql-next/spec.pdf
 
       - name: Set up Python
         uses: actions/setup-python@v5
