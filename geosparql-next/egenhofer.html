@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Egenhofer Topological Functions</title>
+    <style>
+        #pylode {
+            position: fixed;
+            top: 205px;
+            left: -150px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+        #pylode #p {
+            color: #329545;
+        }
+        #pylode #y {
+            color: #f9cb33;
+        }
+        #pylode #version {
+            font-size: 1.0em;
+        }
+
+        #profile {
+            font-style: italic;
+            font-size: 1.25em;
+            color: darkred!important;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dl {
+            /*border: 1px solid navy;*/
+            /*padding:5px;*/
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 0;
+        }
+
+        dd {
+            margin-bottom: 10px;
+            padding-top: 7px;
+            line-height: 1.6em;
+        }
+
+        ul.pylodelitlist {
+            list-style-type: none;
+            margin-left: -40px;
+        }
+
+        #metadata ul li,
+        #classes ul li {
+            margin-bottom: 10px;
+        }
+
+        #metadata dd p {
+          margin: 0 0 1em 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        div.hierarchy {
+            margin-bottom: 30px;
+            background-color: #F4FFFF;
+            padding: 10px;
+        }
+
+        ul.hierarchy {=
+            padding: 5px 25px 5px 25px;
+        }
+
+        ul.hierarchy li {
+            margin-top:5px;
+        }
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 {
+            font: italic 100% sans-serif;
+            margin-bottom: 10px;
+        }
+        h6 { font: small-caps 100% sans-serif }
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: left;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-con,
+        .sup-col,
+        .sup-ns,
+        .sup-ps {
+            cursor:help;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-con {
+            color:orange;
+        }
+
+        .sup-col {
+            color:darkred;
+        }
+
+        .sup-ns {
+            color:lightgreen;
+        }
+
+        .sup-ps {
+            color:lightblue;
+        }
+
+        sup {
+            margin-left: -3px;
+        }
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+
+        #toc {
+            position: fixed;
+            top: 0;
+            right: 0;
+            z-index: 2;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            border: solid 1px navy;
+            font-size: small;
+            width: 180px;
+        }
+        #toc h3 {
+            margin-top: 5px;
+        }
+
+        #toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #toc .first > li {
+            margin-top: 5px;
+        }
+
+        #toc .second,
+        #toc .third {
+            padding-left: 10px;
+        }
+
+        .second li {
+            margin-top: 0.5em;
+        }
+
+        #content {
+            width: calc(100% - 150px);
+        }
+
+        .hover_property {
+            cursor: help;
+            text-decoration: none;
+            border-bottom: dashed 1px;
+        }
+
+        .setclass {
+            list-style-type: none;
+        }
+
+        code{
+            word-wrap: break-word;
+          }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        td {
+            word-wrap: break-word;
+            line-height: 1.6em ;
+        }
+        #legend table.entity {
+            width: 25%;
+        }
+	</style>
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABhklEQVQ4jbWPzStEURjG3yQLirlGKUnKFO45Z+SjmXvnnmthQcpCoVhYmD/AwmJiI3OvZuZc2U3UlKU0/gAslMw9JgvhHxAr2fko7r0jHSsl+TgbTz2Lt5731/MASEiJW9ONml2QyX6rsGalmnT74v8BDf12hxJfpV8d1uwNKUBYszabdFv84L8B9X0rESVmmUup2fme0cVhJWaZHw4NWL1SewEAfDe6H3Dy6Ll456WEJsRZS630MwCAOI20ei5OBpxse5zcBZw8eS4uPpfIuDiCainIg9umBCU0GZzgLZ9Hn31OgoATL+CkLDGB5H1OKj4nFd/FBxUXJ0UZNb4edw/6nLyJXaj5FeCVyPLNIVmYK8TG1IwWb16L1gEACAFV90ftoT8bdOX0EeyY99gxBXZMgRz6qGb1KantAACI0UvE6F5XJqEjpsdURouI0Vt5gGOUkUNnPu7ObGIIMfNaGqDmjDRi9FZldF1lRgYzeqUyeoiY4ag5Iy3RgOYRM8+/M2bG8efsO4hGrpmJseyMAAAAAElFTkSuQmCC" rel="icon" sizes="16x16" type="image/png">
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAC40lEQVRYhe2UT0hUQRzHp6Iss1B3VZKIDbbdfW9mnoi4f3zzjkJQeOgS0SEIb1EWBGGlLLu460zQPQM1unUIIjA6rfpm6ZAhHjoIRVQUFUlEbG+euTsdXG1d3VL3bVD4g+9h+L35fT/8fvN7ADgY9aHY5fpIvK82HO9ysu66wxWOzbkjcekKx0a2ALYA/n2AGi3a6ArFezcidziecQygNhhrcUficjP6PwBqtGijKxy/thnVBePHywYoDsFhl53GV8SEcsTx4usCMLUewTVpc23BNvEzm6Neyf1+KcG2vwqwUjgrOJq2JmHftwmkVBRGTvncFodnbI7vChO/FRznCmHsNM7aHM9Yk7Df5iqsLMw9sMNOK2g+jS4IEz0UJv4iuJZb2RltWnB4UZqH6ioGAgAAGe5vtiZhtzDx7OoRadLmeM7m6IRjhnLMW2Vx1bA5GhAmnhIcz6/xNj4Ujsky8UspwfayjDPjsF2Y6L7N8Vzx/BfP+KPg6LbgSqd8DnfJW2CnbaLhfH5ephpqygJYvQU4Z3P82TLRsDDhUTnmrSq+Y3N0Mg+Xldy/zwEAnLMWZ3pHpNExmfLs/t0dOdVcbT0JeKxUwFP2VljjqiE47Jp53LTXNxhsUZjerTByXWX6VZWRs/4bIQ2ACv+UAomgDzLCISNZxAxZKMhIDjLy1JfsaK+I+eGBUBNk5E2x8RogX/PdcDZUqieWTSh5D6nOVKqfhoycUmlHFFIyu5RXqf7AcQDISCpv/tqbMBqK883RtmpISRoxQyJKPgGn3wNk5NEigDFa6hslqV/Kj+FdBQD0bshIDlKSLlVcoWQo36UhR80BAMB73lulMn0EMpJTqD6qJiOt3mho/8GbkT2BZNgDB/V+RI0fkOrT3kRIVQbaDizJm2hdNbINBxwk5xAj3yEjuV9rZ1iIkgxixkLBA83mz8uCjLwoGwAx0vOnFSy5mtR4VTaAQvVORMnwZgSpzkrV/QmdE2tKe46+MQAAAABJRU5ErkJggg==" rel="icon" sizes="32x32" type="image/png">
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script id="schema.org" type="application/ld+json">
+[
+  {
+    "@id": "http://www.opengis.net/def/function/eh",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/creator": [
+      {
+        "@id": "https://defs.opengis.net/org/geosparql-swg"
+      }
+    ],
+    "https://schema.org/dateCreated": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2025-10-14"
+      }
+    ],
+    "https://schema.org/dateModified": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#date",
+        "@value": "2026-01-19"
+      }
+    ],
+    "https://schema.org/license": [
+      {
+        "@type": "http://www.w3.org/2001/XMLSchema#anyURI",
+        "@value": "https://www.ogc.org/license"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@language": "en",
+        "@value": "Egenhofer Topological Functions"
+      }
+    ],
+    "https://schema.org/publisher": [
+      {
+        "@id": "https://defs.opengis.net/org/ogc"
+      }
+    ]
+  }
+]
+	</script>
+  </head>
+  <body>
+    <div id="content">
+      <h1>Egenhofer Topological Functions</h1>
+      <div class="section" id="metadata">
+        <h1></h1>
+        <h2>Metadata</h2>
+        <dl>
+          <div>
+            <dt>
+              <strong>IRI</strong>
+            </dt>
+            <dd>
+              <code>http://www.opengis.net/def/function/eh</code>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2004/02/skos/core#definition">Definition</a>
+            </dt>
+            <dd>
+              <div>
+                <p>All Egenhofer Topological Functions</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/publisher">Publisher</a>
+            </dt>
+            <dd>
+              <div>
+                <p>https://defs.opengis.net/org/ogc</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/creator">Creator</a>
+            </dt>
+            <dd>
+              <div>
+                <p>https://defs.opengis.net/org/geosparql-swg</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/created">Created</a>
+            </dt>
+            <dd>
+              <div>
+                <p>2025-10-14</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/modified">Modified</a>
+            </dt>
+            <dd>
+              <div>
+                <p>2026-01-19</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/license">License</a>
+            </dt>
+            <dd>
+              <div>
+                <p>
+                  <a href="https://www.ogc.org/license">https://www.ogc.org/license</a>
+                </p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="https://schema.org/copyrightNotice">Copyright Notice</a>
+            </dt>
+            <dd>
+              <div>
+                <p>(c) 2026 Open Geospatial Consortium</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://www.w3.org/2004/02/skos/core#historyNote">History Note</a>
+            </dt>
+            <dd>
+              <div>
+                <p>Defined since GeoSPARQL 1.0</p>
+              </div>
+            </dd>
+          </div>
+          <div>
+            <dt>
+              <a href="http://purl.org/dc/terms/source">Source</a>
+            </dt>
+            <dd>
+              <div>
+                <p>http://www.opengis.net/doc/geosparql/1.1</p>
+              </div>
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div id="concept-hierarchy">
+        <h2>Concept Hierarchy</h2>
+        <div class="hierarchy">
+          <ul class="hierarchy">
+            <li>
+              <a href="#ehContains">contains</a>
+            </li>
+            <li>
+              <a href="#ehCoveredBy">covered by</a>
+            </li>
+            <li>
+              <a href="#ehCovers">covers</a>
+            </li>
+            <li>
+              <a href="#ehDisjoint">disjoint</a>
+            </li>
+            <li>
+              <a href="#ehEquals">equals</a>
+            </li>
+            <li>
+              <a href="#ehInside">inside</a>
+            </li>
+            <li>
+              <a href="#ehMeet">meet</a>
+            </li>
+            <li>
+              <a href="#ehOverlap">overlap</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="concepts">
+        <h2>Concept Definitions</h2>
+        <div class="entity">
+          <h3 id="geof_ehContains">contains</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehContains</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the first geometry argument spatially contains the second geometry argument.
+
+DE-9IM: T*TFF*FF*</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehCoveredBy">covered by</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehCoveredBy</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the first geometry argument is spatially covered by the second geometry argument.
+
+DE-9IM: TFF*TFT**</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehCovers">covers</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehCovers</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the first geometry argument spatially covers the second geometry argument.
+
+DE-9IM: T*TFT*FF*</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehDisjoint">disjoint</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehDisjoint</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the input geometries are disjoint.
+
+DE-9IM: FF*FF****</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehEquals">equals</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehEquals</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the input geometries are equal.
+
+DE-9IM: TFFFTFFFT</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehInside">inside</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehInside</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the first geometry argument is spatially inside the second geometry argument.
+
+DE-9IM: TFF*FFT**</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehMeet">meet</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehMeet</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the input geometries meet.
+
+DE-9IM: FT******* ^ F**T***** ^ F***T****</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="entity">
+          <h3 id="geof_ehOverlap">overlap</h3>
+          <table>
+            <tr>
+              <td style="width:250px;">
+                <strong>IRI</strong>
+              </td>
+              <td>
+                <code>http://www.opengis.net/def/function/geosparql/ehOverlap</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2004/02/skos/core#definition" title="A statement or formal explanation of the meaning of a concept.">Definition</a>
+              </td>
+              <td>A query function that returns true if the input geometries overlap.
+
+DE-9IM: T*T***T**</td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://www.w3.org/2000/01/rdf-schema#isDefinedBy" title="The definition of the subject resource.">Is Defined By</a>
+              </td>
+              <td>
+                <a href="#ns1_eh-query-functions">http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/eh-query-functions</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="http://purl.org/dc/terms/source" title="A related resource from which the described resource is derived.">Source</a>
+              </td>
+              <td>
+                <a href="#ns2_1.1">http://www.opengis.net/doc/geosparql/1.1</a>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div id="namespaces">
+        <h2>Namespaces</h2>
+        <dl>
+          <dt id="cs">cs</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/eh</code>
+          </dd>
+          <dt id="dcterms">dcterms</dt>
+          <dd>
+            <code>http://purl.org/dc/terms/</code>
+          </dd>
+          <dt id="fno">fno</dt>
+          <dd>
+            <code>https://w3id.org/function/ontology#</code>
+          </dd>
+          <dt id="geo">geo</dt>
+          <dd>
+            <code>http://www.opengis.net/ont/geosparql#</code>
+          </dd>
+          <dt id="geof">geof</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/geosparql/</code>
+          </dd>
+          <dt id="geofo">geofo</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/output/geosparql/</code>
+          </dd>
+          <dt id="geofp">geofp</dt>
+          <dd>
+            <code>http://www.opengis.net/def/function/parameter/geosparql/</code>
+          </dd>
+          <dt id="ns1">ns1</dt>
+          <dd>
+            <code>http://www.opengis.net/spec/geosparql/1.1/req/geometry-topology-extension/</code>
+          </dd>
+          <dt id="ns2">ns2</dt>
+          <dd>
+            <code>http://www.opengis.net/doc/geosparql/</code>
+          </dd>
+          <dt id="owl">owl</dt>
+          <dd>
+            <code>http://www.w3.org/2002/07/owl#</code>
+          </dd>
+          <dt id="policy">policy</dt>
+          <dd>
+            <code>http://www.opengis.net/def/metamodel/ogc-na/</code>
+          </dd>
+          <dt id="rdf">rdf</dt>
+          <dd>
+            <code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code>
+          </dd>
+          <dt id="rdfs">rdfs</dt>
+          <dd>
+            <code>http://www.w3.org/2000/01/rdf-schema#</code>
+          </dd>
+          <dt id="schema">schema</dt>
+          <dd>
+            <code>https://schema.org/</code>
+          </dd>
+          <dt id="sd">sd</dt>
+          <dd>
+            <code>http://www.w3.org/ns/sparql-service-description#</code>
+          </dd>
+          <dt id="skos">skos</dt>
+          <dd>
+            <code>http://www.w3.org/2004/02/skos/core#</code>
+          </dd>
+          <dt id="status">status</dt>
+          <dd>
+            <code>http://www.opengis.net/def/status/</code>
+          </dd>
+          <dt id="xsd">xsd</dt>
+          <dd>
+            <code>http://www.w3.org/2001/XMLSchema#</code>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div id="pylode">
+      <p>made by 
+        <a href="https://github.com/rdflib/pyLODE">
+          <span id="p">p</span>
+          <span id="y">y</span>
+          <span>LODE</span>
+        </a>
+        <a href="https://github.com/rdflib/pyLODE/release/3.5.2" id="version">3.5.2</a>
+        <span> with the </span>
+        <a href="https://linked.data.gov.au/def/vocpub" id="profile">VocPub</a>
+        <span>profile</span>
+      </p>
+    </div>
+    <div id="toc">
+      <h3>Table of Contents</h3>
+      <ul class="first">
+        <li>
+          <h4>
+            <a href="#metadata">Metadata</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#concept-hierarchy">Concepts Hierarchy</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#concepts">Concept Definitions</a>
+          </h4>
+        </li>
+        <li>
+          <h4>
+            <a href="#namespaces">Namespaces</a>
+          </h4>
+          <ul class="second">
+            <li>
+              <a href="#cs">cs</a>
+            </li>
+            <li>
+              <a href="#dcterms">dcterms</a>
+            </li>
+            <li>
+              <a href="#fno">fno</a>
+            </li>
+            <li>
+              <a href="#geo">geo</a>
+            </li>
+            <li>
+              <a href="#geof">geof</a>
+            </li>
+            <li>
+              <a href="#geofo">geofo</a>
+            </li>
+            <li>
+              <a href="#geofp">geofp</a>
+            </li>
+            <li>
+              <a href="#ns1">ns1</a>
+            </li>
+            <li>
+              <a href="#ns2">ns2</a>
+            </li>
+            <li>
+              <a href="#owl">owl</a>
+            </li>
+            <li>
+              <a href="#policy">policy</a>
+            </li>
+            <li>
+              <a href="#rdf">rdf</a>
+            </li>
+            <li>
+              <a href="#rdfs">rdfs</a>
+            </li>
+            <li>
+              <a href="#schema">schema</a>
+            </li>
+            <li>
+              <a href="#sd">sd</a>
+            </li>
+            <li>
+              <a href="#skos">skos</a>
+            </li>
+            <li>
+              <a href="#status">status</a>
+            </li>
+            <li>
+              <a href="#xsd">xsd</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
