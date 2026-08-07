@@ -1,12 +1,15 @@
 [appendix,obligation=informative]
 
+[[cql_geosparql_mapping]]
 == CQL / GeoSPARQL Mapping
 
 [discrete]
+[[cql_geosparql_mapping_overview]]
 === F.0. Overview
 
 This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service <<WFS>> and OGC API Features <<OGCSFACA>> which implement CQL.
 
+[[accessing_spatial_features_in_a_sparql_endpoint]]
 === Accessing spatial Features in a SPARQL endpoint
 
 Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
@@ -59,10 +62,12 @@ Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collect
 ** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property http://purl.org/dc/terms/identifier[`dcterms:identifier`] may be used to store appropriate token-like identifiers
 * Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
 
+[[mappings_from_cql2_statements_to_geosparql_queries]]
 === Mappings from CQL2 statements to GeoSPARQL queries
 
 This section presents lists of equivalences between Common Query Language (CQL2) <<CQLDEF>> statements and GeoSPARQL statements.
 
+[[query_parameters]]
 ==== Query Parameters
 
 Several query parameters may be given as parameters to the HTTP request of CD-implementing systems, such as the OGC API Features service. These parameters have an influence on the SPARQL query to be executed for the retrieval of a FeatureCollection to be exposed using an OGC API Features service.
@@ -82,6 +87,7 @@ geo:sfIntersects())`` | ``FILTER(geo:sfIntersects(?geom, "POLYGON( (160.6 -55.95
 |===
 
 
+[[literal_values]]
 ==== Literal Values
 
 CQL2 defines literal values for a variety of datatypes. The following table shows the equivalences of these values in RDF which may be used in any GeoSPARQL query.
@@ -98,6 +104,7 @@ CQL2 defines literal values for a variety of datatypes. The following table show
 | Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | http://www.w3.org/2001/XMLSchema#date[``xsd:date``], http://www.w3.org/2001/XMLSchema#dateTime[``xsd:dateTime``], http://www.w3.org/2001/XMLSchema#dateTimeStamp[``xsd:dateTimeStamp``] | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |===
 
+[[property_references]]
 ==== Property references
 
 CQL2 allows the referencing of properties in a Feature Collection it is targeting for filtering. A property reference is converted to a triple pattern as shown in the following example. A SPARQL variable ``?item`` is assumed to represent the Feature Collection.
@@ -111,6 +118,7 @@ CQL2 allows the referencing of properties in a Feature Collection it is targetin
 | number>5 | ``?item my:number ?number . FILTER(?number>5)``
 |===
 
+[[comparison_predicates]]
 ==== Comparison Predicates
 
 CQL2 defines comparison predicates to compare two scalar expressions. A comparison predicate is converted to a triple pattern as shown in the following example. A SPARQL variable `?item` is assumed to represent the Feature Collection.
@@ -131,6 +139,7 @@ CQL2 defines comparison predicates to compare two scalar expressions. A comparis
 
 There is no direct GeoSPARQL equivalent to a CRS-based CQL filter, however certain GeoSPARQL geometry literals have explicity CRS/SRS information that may be filtered using SPARQL `REGEX` operators.
 
+[[spatial_operators]]
 ==== Spatial Operators
 
 GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in the table below.
@@ -149,6 +158,7 @@ GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in t
 | WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
 |===
 
+[[temporal_operators]]
 ==== Temporal Operators
 
 Temporal operators are not part of the GeoSPARQL standard. 
@@ -174,6 +184,7 @@ Temporal operators are not part of the GeoSPARQL standard.
 
 As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
 
+[[mappings_from_simple_features_for_sql]]
 === Mappings from Simple Features for SQL
 
 The following table maps the functions and properties from Simple Features for SQL <<OGCSFACA>> <<ISO19125-1>> to GeoSPARQL.

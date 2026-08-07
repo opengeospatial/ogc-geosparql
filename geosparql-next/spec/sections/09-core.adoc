@@ -34,12 +34,14 @@ requirement:: /req/core/spatial-object-properties
 Implementations shall support the SPARQL Query Language for RDF <<SPARQL>>, the SPARQL Protocol <<SPARQLPROT>> and the SPARQL Query Results XML <<SPARQLRESX>> and JSON <<SPARQLRESJ>> Formats.
 ====
 
+[[classes]]
 === Classes
 
 Two main classes are defined: <<Class: geo:SpatialObject, `geo:SpatialObject`>> and <<Class: geo:Feature, Feature>>.
 
 Two container classes are defined: <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> and <<Class: geo:FeatureCollection, Feature Collection>>. 
 
+[[class_geo_spatialobject]]
 ==== Class: geo:SpatialObject
 
 The class http://www.opengis.net/ont/geosparql#SpatialObject[`geo:SpatialObject`] is defined by the following:
@@ -74,6 +76,7 @@ eg:x
 .
 ----
 
+[[class_geo_feature]]
 ==== Class: geo:Feature
 
 The class http://www.opengis.net/ont/geosparql#Feature[`geo:Feature`] is equivalent to the class `GFI_Feature` <<ISO19156>> and is defined by the following:
@@ -107,6 +110,7 @@ geo:Feature
 Implementations shall allow the RDFS class <<Class: geo:Feature, Feature>> to be used in SPARQL graph patterns.
 ====
 
+[[class_geo_spatialobjectcollection]]
 ==== Class: geo:SpatialObjectCollection
 
 The class http://www.opengis.net/ont/geosparql#SpatialObjectCollection[Spatial Object Collection] is defined by the following:
@@ -138,6 +142,7 @@ Membership of the generic  http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:
 Implementations shall allow the RDFS class <<Class: geo:SpatialObjectCollection, Spatial Object Collection>> to be used in SPARQL graph patterns.
 ====
 
+[[class_geo_featurecollection]]
 ==== Class: geo:FeatureCollection
 
 The class http://www.opengis.net/ont/geosparql#FeatureCollection[`geo:FeatureCollection`] is defined by the following:
@@ -174,6 +179,7 @@ Implementations shall allow the RDFS class <<Class: geo:FeatureCollection, Featu
 ====
 
 [[spatial-object-properties]]
+[[standard_properties_for_geo_spatialobject]]
 === Standard Properties for geo:SpatialObject
 
 Properties are defined for associating Spatial Objects with scalar spatial measurements (sizes) .
@@ -197,6 +203,7 @@ Implementations shall allow the properties
 to be used in SPARQL graph patterns.
 ====
 
+[[property_geo_hassize]]
 ==== Property: geo:hasSize
 
 The property http://www.opengis.net/ont/geosparql#hasSize[`geo:hasSize`] is the superproperty of all properties that can be used to indicate the size of a Spatial Object in case (only) metric units (meter, square meter or cubic meter) can not be used. If it is possible to express size in metric units, subproperties of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>> should be used.
@@ -222,6 +229,7 @@ geo:hasSize
 .
 ----
 
+[[property_geo_hasmetricsize]]
 ==== Property: geo:hasMetricSize
 
 The property http://www.opengis.net/ont/geosparql#hasMetricSize[`geo:hasMetricSize`] is the superproperty of all properties that can be used to indicate the size of a Spatial Object using metric units (meter, square meter or cubic meter). Using a subproperty of this property is the recommended way to specify size, because using a standard unit of length (meter) benefits data interoperability and simplicity. Subproperties of <<Property: geo:hasSize, `geo:hasSize`>> can be used if more complex expressions are necessary, for example if the unit of length can not be converted to meter, or if additional data are needed to describe the measurement or estimate of size.
@@ -248,6 +256,7 @@ geo:hasMetricSize
 .
 ----
 
+[[property_geo_haslength]]
 ==== Property: geo:hasLength
 
 The property http://www.opengis.net/ont/geosparql#hasLength[`geo:hasLength`] can be used to indicate the length of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricLength, `geo:hasMetricLength`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
@@ -265,6 +274,7 @@ geo:hasLength
 .
 ----
 
+[[property_geo_hasmetriclength]]
 ==== Property: geo:hasMetricLength
 
 The property http://www.opengis.net/ont/geosparql#hasMetricLength[`geo:hasMetricLength`] can be used to indicate the length of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having one, two, or three dimensions.
@@ -283,6 +293,7 @@ geo:hasMetricLength
 .
 ----
 
+[[property_geo_hasperimeterlength]]
 ==== Property: geo:hasPerimeterLength
 
 The property http://www.opengis.net/ont/geosparql#hasPerimeterLength[`geo:hasPerimeterLength`] can be used to indicate the length of the outer boundary of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricPerimeterLength, `geo:hasMetricPerimeterLength`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
@@ -299,6 +310,7 @@ geo:hasPerimeterLength
 .
 ----
 
+[[property_geo_hasmetricperimeterlength]]
 ==== Property: geo:hasMetricPerimeterLength
 
 The property http://www.opengis.net/ont/geosparql#hasMetricPerimeterLength[`geo:hasMetricPerimeterLength`] can be used to indicate the length of the outer boundary of a Spatial Object in meters (m). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. Circumference is considered a type of perimeter, so this property can be used for circular or curved objects too. This property can be used for Spatial Objects having two or three dimensions.
@@ -333,6 +345,7 @@ TIP: A consistency check can be applied to Geometry instances indicating both th
 ----
 
 
+[[property_geo_hasarea]]
 ==== Property: geo:hasArea
 
 The property http://www.opengis.net/ont/geosparql#hasArea[`geo:hasArea`] can be used to indicate the area of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
@@ -350,6 +363,7 @@ geo:hasArea
 .
 ----
 
+[[property_geo_hasmetricarea]]
 ==== Property: geo:hasMetricArea
 
 The property http://www.opengis.net/ont/geosparql#hasMetricArea[`geo:hasMetricArea`] can be used to indicate the area of a Spatial Object in square meters (m^2^). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having two or three dimensions.
@@ -384,6 +398,7 @@ TIP: A consistency check can be applied to Geometry instances indicating both th
     }
 ----
 
+[[property_geo_hasvolume]]
 ==== Property: geo:hasVolume
 
 The property http://www.opengis.net/ont/geosparql#hasVolume[`geo:hasVolume`] can be used to indicate the volume of a Spatial Object if it is not possible to use the property <<Property: geo:hasMetricVolume, `geo:hasMetricVolume`>>. It is a subproperty of <<Property: geo:hasSize, `geo:hasSize`>>.
@@ -401,6 +416,7 @@ geo:hasVolume
 .
 ----
 
+[[property_geo_hasmetricvolume]]
 ==== Property: geo:hasMetricVolume
 
 The property http://www.opengis.net/ont/geosparql#hasMetricVolume[`geo:hasMetricVolume`] can be used to indicate the volume of a Spatial Object in cubic meters (m^3^). It is a subproperty of <<Property: geo:hasMetricSize, `geo:hasMetricSize`>>. This property can be used for Spatial Objects having three dimensions.
@@ -452,6 +468,7 @@ Implementations shall allow the properties
 to be used in SPARQL graph patterns.
 ====
 
+[[property_geo_hasgeometry]]
 ==== Property: geo:hasGeometry
 
 The property http://www.opengis.net/ont/geosparql#hasGeometry[`geo:hasGeometry`] is used to link a Feature with a Geometry that represents a spatial projection of it.
@@ -473,6 +490,7 @@ geo:hasGeometry
 .
 ----
 
+[[property_geo_hasdefaultgeometry]]
 ==== Property: geo:hasDefaultGeometry
 
 The property http://www.opengis.net/ont/geosparql#hasDefaultGeometry[`geo:hasDefaultGeometry`] is used to link a Feature with its default Geometry. The default geometry is the Geometry that should be used for spatial calculations in the absence of a request for a specific geometry (e.g. in the case of query rewrite).
@@ -505,6 +523,7 @@ WHERE { :f1 geo:sfDisjoint :f1 }
 
 Such cases are application-specific data modeling errors and are therefore outside of the scope of the GeoSPARQL specification., however it is recommended that multiple geometries indicated with <<Property: geo:hasDefaultGeometry, `geo:hasDefaultGeometry`>> should be differentiated by `Geometry` class properties, perhaps relating to precision, SRS etc.
 
+[[property_geo_hasboundingbox]]
 ==== Property: geo:hasBoundingBox
 
 The property http://www.opengis.net/ont/geosparql#hasBoundingBox[`geo:hasBoundingBox`] is used to link a Feature with a simplified geometry-representation corresponding to the envelope of the feature's geometry. Bounding-boxes are typically used in indexing and discovery.
@@ -528,6 +547,7 @@ geo:hasBoundingBox
 
 GeoSPARQL does not restrict the cardinality of the <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> property. A Feature may be associated with more than one bounding-box, for example in different coordinate reference systems.
 
+[[property_geo_hascentroid]]
 ==== Property: geo:hasCentroid
 
 The property http://www.opengis.net/ont/geosparql#hasCentroid[`geo:hasCentroid`] is used to link a Feature with a point geometry corresponding with the centroid of its geometry. The centroid is typically used to show location on a low-resolution image, and for some indexing and discovery functions. 

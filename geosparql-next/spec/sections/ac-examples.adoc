@@ -1,25 +1,31 @@
 [appendix,obligation=informative]
 
 [[GeoSPARQL_Examples]]
+[[geosparql_examples]]
 == GeoSPARQL Examples
 
 [discrete]
+[[geosparql_examples_overview]]
 === C.0. Overview
 
 This Annex provides examples of the GeoSPARQL ontology and functions. In addition to these, extended examples are provided separately by the GeoSPARQL 1.1 profile. See the <<GeoSPARQL Standard structure>> for the link to those examples.
 
+[[rdf_examples]]
 === RDF Examples
 
 This Section illustrates GeoSPARQL ontology modelling with extended examples.
 
+[[rdf_examples_classes]]
 ==== Classes
 
 [[C.1.1.1]]
 [example]
+[[spatialobject]]
 ===== `SpatialObject`
 The `SpatialObject` class is defined in <<Class: geo:SpatialObject>>.
 
 [[C.1.1.1.1]]
+[[basic_use]]
 ====== Basic use
 
 Basic use (as per the example in the class definition)
@@ -37,6 +43,7 @@ NOTE: It is unlikely that users of GeoSPARQL will create many instances of <<Cla
 
 [[C.1.1.1.2]]
 [example]
+[[size_properties]]
 ====== Size Properties
 
 The "size" properties - <<Property: geo:hasSize, `geo:hasSize`>>,
@@ -76,10 +83,12 @@ The use of the _Quantities, Units, Dimensions and Types (QUDT)_ ontologyfootnote
 
 [[C.1.1.2]]
 [example]
+[[feature]]
 ===== `Feature`
 The `Feature` class is defined in <<Class: geo:Feature>>.
 
 [[C.1.1.2.1]]
+[[feature_basic_use]]
 ====== Basic use
 
 [%unnumbered]
@@ -95,6 +104,7 @@ Here a `Feature` is declared and given a preferred label.
 
 [[C.1.1.2.2]]
 [example]
+[[a_feature_related_to_a_geometry_and_a_geometrycollection]]
 ====== A `Feature` related to a `Geometry` and a `GeometryCollection`
 
 [%unnumbered]
@@ -133,6 +143,7 @@ Here a <<Class: geo:Feature, `geo:Feature`>> is declared and linked to a <<Class
 
 [[C.1.1.2.3]]
 [example]
+[[feature_with_geometry_and_size_area]]
 ====== `Feature` with `Geometry` and size (area)
 
 [%unnumbered]
@@ -151,6 +162,7 @@ This example and the example below (B 1.1.2.4) show the same <<Class: geo:Featur
 
 [[C.1.1.2.4]]
 [example]
+[[feature_with_geometry_and_non_metric_size]]
 ====== `Feature` with `Geometry` and non-metric size
 
 [%unnumbered]
@@ -175,6 +187,7 @@ Here a <<Class: geo:Feature, `geo:Feature`>> is described as per the previous ex
 
 [[C.1.1.2.5]]
 [example]
+[[feature_with_two_different_geometry_instances_indicated]]
 ====== `Feature` with two different `Geometry` instances indicated
 
 [%unnumbered]
@@ -200,6 +213,7 @@ In this example, `Feature X` has two different `Geometry` instances indicated wi
 
 [[C.1.1.2.6]]
 [example]
+[[feature_with_two_different_geometry_instances_with_different_property_values]]
 ====== `Feature` with two different `Geometry` instances with different property values
 
 [%unnumbered]
@@ -224,6 +238,7 @@ Machine use of this `Feature` would be able to differentiate the two `Geometry` 
 
 [[C.1.1.2.7]]
 [example]
+[[feature_with_non_metric_size]]
 ====== `Feature` with non-metric size
 
 [%unnumbered]
@@ -250,6 +265,7 @@ In this example it is not possible to convert the length of the feature to meter
 
 [[C.1.1.2.8]]
 [example]
+[[feature_with_two_different_types_of_geometry_instances]]
 ====== `Feature` with two different types of `Geometry` instances
 
 [%unnumbered]
@@ -271,6 +287,7 @@ Here a `Feature` instance has two geometries, one indicated with the general pro
 
 [[C.1.1.2.9]]
 [example]
+[[feature_with_multiple_sizes]]
 ====== `Feature` with multiple sizes
 
 [%unnumbered]
@@ -288,10 +305,12 @@ ex:lake-x
 This example shows a `Feature` instance with area and volume declared. A categorization of the Feature is given through the use of the `eg:hasFeatureCategory` dummy property which, along with the Feature's preferred label, indicate that this Feature is a lake. Having both an area and a volume makes sense for a lake.
 
 [example]
+[[geometry]]
 ===== `Geometry`
 The `Geometry` class is defined in <<Class: geo:Geometry>>.
 
 [[C.1.1.3.1]]
+[[geometry_basic_use]]
 ====== Basic Use
 
 [%unnumbered]
@@ -320,6 +339,7 @@ Here the `Geometry` instance has data in WKT form and, since no CRS is declared,
 
 [[C.1.1.3.2]]
 [example]
+[[a_geometry_with_multiple_serializations]]
 ====== A `Geometry` with multiple serializations
 
 [%unnumbered]
@@ -339,6 +359,7 @@ Here a single `Geometry`, linked to a `Feature` instance, is expressed using two
 
 [[C.1.1.3.3]]
 [example]
+[[geometry_with_scalar_spatial_property]]
 ====== `Geometry` with scalar spatial property
 
 [%unnumbered]
@@ -362,11 +383,13 @@ This example shows a Feature, `eg:x`, with a Geometry, `eg:x-geo`, which has bot
 This use of a scalar spatial measurement property with a Geometry, here <<Property: geo:hasMetricArea, `geo:hasMetricArea`>>, is possible since the domain of such properties is <<Class: geo:SpatialObject, `geo:SpatialObject`>>, the superclass of both <<Class: geo:Feature, `geo:Feature`>> and <<Class: geo:Geometry, `geo:Geometry`>>.
 
 [example]
+[[spatialobjectcollection]]
 ===== `SpatialObjectCollection`
 
 <<Class: geo:SpatialObjectCollection, `geo:SpatialObjectCollection`>> isn't really intended to be implemented - it's essentially an abstract class - therefore no examples of its use are given. See the following two sections for examples of the concrete <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> & <<Class: geo:GeometryCollection, `geo:GeometryCollection`>> classes.
 
 [example]
+[[featurecollection]]
 ===== `FeatureCollection`
 
 This example shows a `FeatureCollection` instance containing 3 `Feature` instances and a `hasBoundingBox` predicate instance indicating a Geometry - the bounding box of all the Features within the Feature Collection.
@@ -390,6 +413,7 @@ ex:fc-x
 All the GeoSPARQL collection classes are unordered since they are subclasses of the generic http://www.w3.org/2000/01/rdf-schema#Container[`rdfs:Container`], however implementers should consider that there are many ways to order the members of a `FeatureCollection` such as the `Feature` instance labels, their areas, geometries or any other property.
 
 [example]
+[[geometrycollection]]
 ===== `GeometryCollection`
 
 This example shows a `GeometryCollection` instance containing 3 `Geometry` instances.
@@ -410,6 +434,7 @@ ex:gc-x
 As per `FeatureCollection`, the `GeometryCollection` itself doesn't impose any ordering on its member `Geometry` instances, however there are many ways to order them, based on their own properties.
 
 [example]
+[[simple_features_classes]]
 ===== Simple Features classes
 
 Most of the geometry seralizations used in GeoSPARQL define the geometry type - point, polygon etc. _within_ the literal, e.g. WKT can encode `POLYGON(())` or 'POINT()', however the _Simple Features Vocabulary_ resource within GeoSPARQL 1.1 contains specialised Geometry RDF classes such as http://www.opengis.net/ont/sf#Polygon[`sf:Polygon`], http://www.opengis.net/ont/sf#PolyhedralSurface[`sf:PolyhedralSurface`] and others.
@@ -438,13 +463,16 @@ ex:x
 
 There are several GeoSPARQL properties that suggest they could be used with particular _Simple Features Vocabulary_ geometry types, for instance, <<Property: geo:hasCentroid, `geo:hasCentroid`>> indicates it could be used with a http://www.opengis.net/ont/sf#Point[`sf:Point`] and <<Property: geo:hasBoundingBox, `geo:hasBoundingBox`>> indicates use with an `sf:Envelope`.
 
+[[properties]]
 ==== Properties
 
+[[spatial_object_properties]]
 ===== Spatial Object Properties
 
 See the section <<C.1.1.1.1, >> above.
 
 [example]
+[[properties_feature_properties]]
 ===== Feature Properties
 
 This example shows a <<Class: geo:Feature, `geo:Feature`>> instance with each of the properties defined in <<Standard Properties for geo:Feature>> used, except for the properties
@@ -498,6 +526,7 @@ The properties defined for this example's `Feature` instance are vaguely aligned
 Note that this `Feature` has a 2D `Geometry` and yet a property indicating a scalar volume: <<Property: geo:hasVolume, `geo:hasVolume`>>. Used in this way, the scalar property is indicating information that cannot be calculated from other information about the `Feature` such as its geometry. Perhaps a volume for the feature has been estimated or measured in such a way that a 3D geometry was not created.
 
 [example]
+[[properties_geometry_properties]]
 ===== Geometry Properties
 
 This example shows a `Geometry` instance, a Blank Node, declared in relation to a `Feature` instance, with each of the properties defined in <<Standard Properties for geo:Geometry>> used.
@@ -531,8 +560,10 @@ In this example, each of the properties defined for a `Geometry` instance has re
 
 [[C.1.2.4]]
 [example]
+[[properties_geometry_serializations]]
 ===== Geometry Serializations
 
+[[literals]]
 ===== Literals
 
 This example shows a `Geometry` instance for a `Feature` instance which is represented in all supported literal GeoSPARQL serlializations. The geometry values given are real geometry values and approximate link:https://en.wikipedia.org/wiki/Moreton_Island[Moreton Island] in Queensland, Australia.
@@ -651,6 +682,7 @@ eg:x
 .
 ----
 
+[[distributions]]
 ===== Distributions
 
 This example shows a `Geometry` instance linked to a serialization of it in the https://en.wikipedia.org/wiki/Industry_Foundation_Classes[Industry_Foundation_Classes] according to <<ISO10303-21, ISO 10303-21>> (not a format directly supported with a GeoSPARQL predicate) stored in a local file:
@@ -671,10 +703,12 @@ ex:mygeom
 
 
 [example]
+[[example_sparql_queries_rules]]
 === Example SPARQL Queries & Rules
 
 This Section provides example data and then illustrates the use of GeoSPARQL functions and the application of rules with that data.
 
+[[example_data]]
 ==== Example Data
 
 The following RDF data (Turtle format) encodes application-specific spatial data. The resulting spatial data is illustrated in the figure below. The RDF statements define the feature class `my:PlaceOfInterest`, and two properties are created for associating geometries with features: `my:hasExactGeometry` and `my:hasPointGeometry`. `my:hasExactGeometry` is designated as the default geometry for the `my:PlaceOfInterest` feature class.
@@ -771,12 +805,14 @@ my:FExactGeom a sf:Point ;
                  Point(-83.4 34.4)"""^^geo:wktLiteral.
 ----
 
+[[example_queries]]
 ==== Example Queries
 
 This Section illustrates the use of GeoSPARQL functions through a series of example queries.
 
 [[C.2.2.1]]
 [example]
+[[all_features_that_a_given_feature_contains]]
 ===== All features that a given feature contains
 
 _Find all features that feature `my:A` contains, where spatial calculations are based on_ `my:hasExactGeometry`.
@@ -813,6 +849,7 @@ WHERE {
 
 [[C.2.2.2]]
 [example]
+[[all_features_within_bounding_box]]
 ===== All features within bounding box
 
 _Find all features that are within a transient bounding box geometry, where spatial calculations are based on_ `my:hasPointGeometry`.
@@ -850,6 +887,7 @@ WHERE {
 
 [[C.2.2.3]]
 [example]
+[[all_features_touching_the_union_of_two_features]]
 ===== All features touching the union of two features
 
 _Find all features that touch the union of feature `my:A` and feature `my:D`, where computations are based on_ `my:hasExactGeometry`.
@@ -888,6 +926,7 @@ WHERE {
 
 [[C.2.2.4]]
 [example]
+[[three_closest_features_to_a_feature]]
 ===== Three closest features to a feature
 
 _Find the 3 closest features to feature my:C, where computations are based on_ `my:hasExactGeometry`.
@@ -924,6 +963,7 @@ LIMIT 3
 
 [[C.2.2.5]]
 [example]
+[[maximum_and_minimum_coordinates_of_a_set_of_geometries]]
 ===== Maximum and minimum coordinates of a set of geometries
 
 _Find the maximum and minimum coordinates of a given set of geometries._
@@ -958,6 +998,7 @@ WHERE {
 |===
 
 [example]
+[[example_easting_and_northing_functions]]
 ==== Example Easting and Northing Functions
 
 _Find the easting and northing values of the given geometries._
@@ -993,12 +1034,14 @@ WHERE {
 |`33.95` | `-83.38` | `3779296.71243164` | `-83.38` | `33.95` | `-18178745.6206012`
 |===
 
+[[example_rule_application]]
 ==== Example Rule Application
 
 This section illustrates the query transformation strategy for implementing GeoSPARQL rules.
 
 [[C.2.3.1]]
 [example]
+[[all_features_or_geometries_overlapping_with_another_feature]]
 ===== All features or geometries overlapping with another feature
 
 _Find all features or geometries that overlap feature_ `my:A`.
@@ -1069,6 +1112,7 @@ WHERE {
 |===
 
 [example]
+[[example_geometry_serialization_conversion_functions]]
 ==== Example Geometry Serialization Conversion Functions
 
 For the geometry literal values in <<C.1.2.4, C.1.2.4 Geometry Serializations>>:
