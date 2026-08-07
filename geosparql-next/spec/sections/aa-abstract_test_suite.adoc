@@ -26,6 +26,7 @@ abstract-test:: /conf/core/feature-class
 abstract-test:: /conf/core/spatial-object-collection-class
 abstract-test:: /conf/core/feature-collection-class
 abstract-test:: /conf/core/spatial-object-properties
+abstract-test:: /conf/core/feature-properties
 ====
 
 [[conformance_class_core_sparql]]
@@ -117,6 +118,7 @@ target:: /req/topology-vocab-extension
 abstract-test:: /conf/topology-vocab-extension/sf-spatial-relations
 abstract-test:: /conf/topology-vocab-extension/eh-spatial-relations
 abstract-test:: /conf/topology-vocab-extension/rcc8-spatial-relations
+abstract-test:: /conf/topology-vocab-extension/rcc9-spatial-relations
 ====
 
 [[conformance_class_topology_vocabulary_extension_simple_features_relation_family]]
@@ -182,6 +184,19 @@ test-method-type:: Capabilities
 reference:: <<rcc8_relations>>
 ====
 
+[[conformance_class_topology_vocabulary_extension_rcc9_relation_family]]
+==== RCC*-9 Relation Family
+
+[abstract_test,identifier="/conf/topology-vocab-extension/rcc9-spatial-relations"]
+====
+[%metadata]
+target:: /req/topology-vocab-extension/rcc9-spatial-relations
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving the following properties return the correct result for a test dataset: <<property_geo_rcc9eq, `geo:rcc9eq`>>, <<property_geo_rcc9dc, `geo:rcc9dc`>>, <<property_geo_rcc9cr, `geo:rcc9cr`>>, <<property_geo_rcc9ec, `geo:rcc9ec`>>, <<property_geo_rcc9po, `geo:rcc9po`>>, <<property_geo_rcc9tppi, `geo:rcc9tppi`>>, <<property_geo_rcc9tpp, `geo:rcc9tpp`>>, <<property_geo_rcc9ntpp, `geo:rcc9ntpp`>> and <<property_geo_rcc9ntppi, `geo:rcc9ntppi`>>.
+test-method-type:: Capabilities
+reference:: <<req_topology-vocab-extension_rcc9-spatial-relations>>
+====
+
 [[conformance_class_geometry_extension]]
 === Conformance Class: Geometry Extension
 
@@ -192,9 +207,10 @@ reference:: <<rcc8_relations>>
 target:: /req/geometry-extension
 abstract-test:: /conf/geometry-extension/geometry-class
 abstract-test:: /conf/geometry-extension/geometry-collection-class
-abstract-test:: /conf/geometry-extension/feature-properties
 abstract-test:: /conf/geometry-extension/geometry-properties
 abstract-test:: /conf/geometry-extension/query-functions
+abstract-test:: /conf/geometry-extension/query-functions-non-sf
+abstract-test:: /conf/geometry-extension/query-functions-3D
 abstract-test:: /conf/geometry-extension/srid-function
 abstract-test:: /conf/geometry-extension/sa-functions
 abstract-test:: /conf/geometry-extension/wkt-literal
@@ -203,6 +219,12 @@ abstract-test:: /conf/geometry-extension/wkt-axis-order
 abstract-test:: /conf/geometry-extension/wkt-literal-empty
 abstract-test:: /conf/geometry-extension/geometry-as-wkt-literal
 abstract-test:: /conf/geometry-extension/asWKT-function
+abstract-test:: /conf/geometry-extension/ewkb-literal
+abstract-test:: /conf/geometry-extension/ewkb-literal-default-srs
+abstract-test:: /conf/geometry-extension/ewkb-axis-order
+abstract-test:: /conf/geometry-extension/ewkb-literal-empty
+abstract-test:: /conf/geometry-extension/geometry-as-wkb-literal
+abstract-test:: /conf/geometry-extension/asEWKB-function
 abstract-test:: /conf/geometry-extension/gml-literal
 abstract-test:: /conf/geometry-extension/gml-literal-empty
 abstract-test:: /conf/geometry-extension/gml-profile
@@ -218,6 +240,10 @@ abstract-test:: /conf/geometry-extension/kml-literal-srs
 abstract-test:: /conf/geometry-extension/kml-literal-empty
 abstract-test:: /conf/geometry-extension/geometry-as-kml-literal
 abstract-test:: /conf/geometry-extension/asKML-function
+abstract-test:: /conf/geometry-extension/geocode-literal-srs
+abstract-test:: /conf/geometry-extension/geocode-literal-empty
+abstract-test:: /conf/geometry-extension/geometry-as-geocode-literal
+abstract-test:: /conf/geometry-extension/asGeocode-function
 ====
 
 This Conformance Class applies to non-DGGS geometries. See <<dggs_conformance_class_geometry_extension_dggs>> for DGGS geometries.
@@ -245,10 +271,10 @@ test-method-type:: Capabilities
 reference:: <<class_geo_geometrycollection>>
 ====
 
-[abstract_test,identifier="/conf/geometry-extension/feature-properties"]
+[abstract_test,identifier="/conf/core/feature-properties"]
 ====
 [%metadata]
-target:: /req/geometry-extension/feature-properties
+target:: /req/core/feature-properties
 test-purpose:: Check conformance with this requirement
 test-method:: Verify that queries involving the following properties return the correct result for a test dataset:
 <<property_geo_hasgeometry, `geo:hasGeometry`>>,
@@ -314,6 +340,26 @@ test-method:: Verify that a set of SPARQL queries involving each of the followin
 <<function_geof_union, `geof:union`>>.
 test-method-type:: Capabilities
 reference: <<query_functions>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/query-functions-non-sf"]
+====
+[%metadata]
+target:: /req/geometry-extension/query-functions-non-sf
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that a set of SPARQL queries involving each non-Simple Features function listed by the requirement returns the correct result for a test dataset using a non-DGGS geometry literal.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_query-functions-non-sf>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/query-functions-3D"]
+====
+[%metadata]
+target:: /req/geometry-extension/query-functions-3D
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that SPARQL queries involving <<function_geof_extrude, `geof:extrude`>>, <<function_geof_extrudebyline, `geof:extrudeByLine`>> and <<function_geof_extrudeintime, `geof:extrudeInTime`>> return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_query-functions-3D>>
 ====
 
 [abstract_test,identifier="/conf/geometry-extension/srid-function"]
@@ -403,6 +449,69 @@ test-purpose:: Check conformance with this requirement
 test-method:: Verify that a set of SPARQL queries involving the <<function_geof_aswkt, `geof:asWKT`>> function returns the correct result for a test dataset when using the specified serialization and version.
 test-method-type:: Capabilities
 reference:: <<function_geof_aswkt>>
+====
+
+[[ewkb_serialization]]
+==== EWKB Serialization
+
+[abstract_test,identifier="/conf/geometry-extension/ewkb-literal"]
+====
+[%metadata]
+target:: /req/geometry-extension/ewkb-literal
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> values return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_wkb-literal>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/ewkb-literal-default-srs"]
+====
+[%metadata]
+target:: /req/geometry-extension/ewkb-literal-default-srs
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> values without an explicit SRS IRI use CRS84 and return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_wkb-literal-default-srs>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/ewkb-axis-order"]
+====
+[%metadata]
+target:: /req/geometry-extension/ewkb-axis-order
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that coordinate tuples in <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> values are interpreted using the axis order of their spatial reference system.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_wkb-axis-order>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/ewkb-literal-empty"]
+====
+[%metadata]
+target:: /req/geometry-extension/ewkb-literal-empty
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that an empty <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> is interpreted as an empty Geometry.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_wkb-literal-empty>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/geometry-as-wkb-literal"]
+====
+[%metadata]
+target:: /req/geometry-extension/geometry-as-wkb-literal
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving the <<property_geo_asewkb, `geo:asEWKB`>> property return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_geometry-as-wkb-literal>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/asEWKB-function"]
+====
+[%metadata]
+target:: /req/geometry-extension/asEWKB-function
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that SPARQL queries involving the <<function_geof_asewkb, `geof:asEWKB`>> function return the correct EWKB representation for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_asEWKB-function>>
 ====
 
 [[gml_serialization]]
@@ -564,6 +673,49 @@ test-method-type:: Capabilities
 reference:: <<function_geof_askml>>
 ====
 
+[[geocode_serialization]]
+==== Geocode Serialization
+
+[abstract_test,identifier="/conf/geometry-extension/geocode-literal-srs"]
+====
+[%metadata]
+target:: /req/geometry-extension/geocode-literal-srs
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving <<rdfs_datatype_geo_geocodeliteral, `geo:geocodeLiteral`>> values containing a geocoding-system IRI return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_geocode-literal-srs>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/geocode-literal-empty"]
+====
+[%metadata]
+target:: /req/geometry-extension/geocode-literal-empty
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that an empty <<rdfs_datatype_geo_geocodeliteral, `geo:geocodeLiteral`>> is interpreted as an empty Geometry.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_geocode-literal-empty>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/geometry-as-geocode-literal"]
+====
+[%metadata]
+target:: /req/geometry-extension/geometry-as-geocode-literal
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that queries involving the <<property_geo_asgeocode, `geo:asGeocode`>> property return the correct result for a test dataset.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_geometry-as-geocode-literal>>
+====
+
+[abstract_test,identifier="/conf/geometry-extension/asGeocode-function"]
+====
+[%metadata]
+target:: /req/geometry-extension/asGeocode-function
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that SPARQL queries involving the <<function_geof_asgeocode, `geof:asGeocode`>> function return the correct result for a test dataset using the specified geocoding system.
+test-method-type:: Capabilities
+reference:: <<req_geometry_extension_asGeocode-function>>
+====
+
 [conformance_class,identifier="/conf/geometry-extension",subject="DGGS"]
 [[dggs_conformance_class_geometry_extension_dggs]]
 === DGGS Conformance Class: Geometry Extension - DGGS
@@ -678,6 +830,7 @@ abstract-test:: /conf/geometry-topology-extension/relate-query-function
 abstract-test:: /conf/geometry-topology-extension/sf-query-functions
 abstract-test:: /conf/geometry-topology-extension/eh-query-functions
 abstract-test:: /conf/geometry-topology-extension/rcc8-query-functions
+abstract-test:: /conf/geometry-topology-extension/rcc9-query-functions
 ====
 
 [[tests_for_all_relation_families]]
@@ -730,6 +883,19 @@ test-purpose:: Check conformance with this requirement
 test-method:: Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: http://www.opengis.net/def/function/geosparql/rcc8eq[`geof:rcc8eq`], http://www.opengis.net/def/function/geosparql/rcc8dc[`geof:rcc8dc`], http://www.opengis.net/def/function/geosparql/rcc8ec[`geof:rcc8ec`], http://www.opengis.net/def/function/geosparql/rcc8po[`geof:rcc8po`], http://www.opengis.net/def/function/geosparql/rcc8tppi[`geof:rcc8tppi`], http://www.opengis.net/def/function/geosparql/rcc8tpp[`geof:rcc8tpp`], http://www.opengis.net/def/function/geosparql/rcc8ntpp[`geof:rcc8ntpp`], http://www.opengis.net/def/function/geosparql/rcc8ntppi[`geof:rcc8ntppi`] .
 test-method-type:: Capabilities
 reference:: <<rcc8_relation_family>>
+====
+
+[[conformance_class_geometry_topology_extension_rcc9_relation_family]]
+==== RCC*-9 Relation Family
+
+[abstract_test,identifier="/conf/geometry-topology-extension/rcc9-query-functions"]
+====
+[%metadata]
+target:: /req/geometry-topology-extension/rcc9-query-functions
+test-purpose:: Check conformance with this requirement
+test-method:: Verify that a set of SPARQL queries involving each of the following functions returns the correct result for a test dataset when using the specified serialization and version: `geof:rcc9eq`, `geof:rcc9dc`, `geof:rcc9cr`, `geof:rcc9ec`, `geof:rcc9po`, `geof:rcc9tppi`, `geof:rcc9tpp`, `geof:rcc9ntpp` and `geof:rcc9ntppi`.
+test-method-type:: Capabilities
+reference:: <<req_geometry-topology-extension_rcc9-query-functions>>
 ====
 
 [[conformance_class_rdfs_entailment_extension]]

@@ -6,11 +6,12 @@ This clause defines the _Geometry Extension_ parameterized Requirements class wi
 [requirements_class,identifier="/req/geometry-extension",subject="Implementation Specification"]
 .Geometry Extension
 ====
+[%metadata]
 requirement:: /req/geometry-extension/geometry-class
 requirement:: /req/geometry-extension/geometry-collection-class
-requirement:: /req/geometry-extension/feature-properties
 requirement:: /req/geometry-extension/geometry-properties
 requirement:: /req/geometry-extension/query-functions
+requirement:: /req/geometry-extension/query-functions-non-sf
 requirement:: /req/geometry-extension/srid-function
 requirement:: /req/geometry-extension/query-functions-3D
 requirement:: /req/geometry-extension/sa-functions
@@ -20,6 +21,12 @@ requirement:: /req/geometry-extension/wkt-axis-order
 requirement:: /req/geometry-extension/wkt-literal-empty
 requirement:: /req/geometry-extension/geometry-as-wkt-literal
 requirement:: /req/geometry-extension/asWKT-function
+requirement:: /req/geometry-extension/ewkb-literal
+requirement:: /req/geometry-extension/ewkb-literal-default-srs
+requirement:: /req/geometry-extension/ewkb-axis-order
+requirement:: /req/geometry-extension/ewkb-literal-empty
+requirement:: /req/geometry-extension/geometry-as-wkb-literal
+requirement:: /req/geometry-extension/asEWKB-function
 requirement:: /req/geometry-extension/gml-literal
 requirement:: /req/geometry-extension/gml-literal-empty
 requirement:: /req/geometry-extension/gml-profile
@@ -35,7 +42,6 @@ requirement:: /req/geometry-extension/kml-literal-srs
 requirement:: /req/geometry-extension/kml-literal-empty
 requirement:: /req/geometry-extension/geometry-as-kml-literal
 requirement:: /req/geometry-extension/asKML-function
-requirement:: /req/geometry-extension/geocode-literal
 requirement:: /req/geometry-extension/geocode-literal-srs
 requirement:: /req/geometry-extension/geocode-literal-empty
 requirement:: /req/geometry-extension/geometry-as-geocode-literal
@@ -606,11 +612,12 @@ geo:ewkbLiteral
     skos:definition "An (Extended) Well-known Binary serialization of a Geometry object."@en ;
 .
 ----
-[#req_geometry_extension_wkb-literal]
-|===
-| *Req {counter:req}* All RDFS Literals of type <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal`]
-|===
+[[req_geometry_extension_wkb-literal]]
+[requirement,identifier="/req/geometry-extension/ewkb-literal"]
+.EWKB Literal
+====
+All RDFS Literals of type <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall consist of an optional IRI identifying the coordinate reference system and a required Extended Well-Known Binary (EWKB) description of a geometric value encoded in Base64. Valid <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> instances are formed by a EWKB string as defined in <<ISO13249>> or by concatenating a valid absolute IRI, as defined in <<IETF3987>>, enclosed in angled brackets (`<` & `>`) followed by whitespace as a separator and a EWKB string as defined in <<ISO13249>>. The Extended Well-Known Binary description shall allow the dimensionality flags defined in the Extended Well-Known Binary specification to represent 3D geometries.
+====
 
 The following _ABNF_ <<IETF5234>> syntax specification formally defines this literal:
 
@@ -624,19 +631,21 @@ The token `opt-iri-and-whitespace` may be either an IRI and whitespace (spaces, 
 
 In the absence of a leading spatial reference system IRI, the following spatial reference system IRI will be assumed: http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`]. This IRI denotes WGS 84 longitude-latitude.
 
-[#req_geometry_extension_wkb-literal-default-srs]
-|===
-| *Req {counter:req}* The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-default-srs`]
-|===
+[[req_geometry_extension_wkb-literal-default-srs]]
+[requirement,identifier="/req/geometry-extension/ewkb-literal-default-srs"]
+.EWKB Literal Default SRS
+====
+The IRI http://www.opengis.net/def/crs/OGC/1.3/CRS84[`+<http://www.opengis.net/def/crs/OGC/1.3/CRS84>+`] shall be assumed as the spatial reference system for <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> instances that do not specify an explicit spatial reference system IRI. IRIs defined as SRIDs in an Extended Well-Known Binary format shall be ignored.
+====
 
 The OGC maintains a set of SRS IRIs under the `+http://www.opengis.net/def/crs/+` namespace, and IRIs from this set are recommended for use. However, others may also be used as long as they are valid IRIs.
 
-[#req_geometry_extension_wkb-axis-order]
-|===
-| *Req {counter:req}* Coordinate tuples within <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-axis-order[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-axis-order`]
-|===
+[[req_geometry_extension_wkb-axis-order]]
+[requirement,identifier="/req/geometry-extension/ewkb-axis-order"]
+.EWKB Axis Order
+====
+Coordinate tuples within <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall be interpreted using the axis order defined in the spatial reference system used.
+====
 
 The example <<rdfs_datatypes_geo_ewkbliteral, EWKB Literal>> below encodes a point Geometry using the default WGS84 geodetic longitude-latitude spatial reference system:
 
@@ -652,22 +661,24 @@ A second example below encodes the same point as encoded in the example above bu
 "<http://www.opengis.net/def/crs/EPSG/0/4326> Point(33.95 -83.38)"^^<http://www.opengis.net/ont/geosparql#ewkbLiteral>
 ----
 
-[#req_geometry_extension_wkb-literal-empty]
-|===
-| *Req 18* An empty RDFS Literal of type <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/wkb-literal-empty[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/ewkb-literal-empty`]
-|===
+[[req_geometry_extension_wkb-literal-empty]]
+[requirement,identifier="/req/geometry-extension/ewkb-literal-empty"]
+.Empty EWKB Literal
+====
+An empty RDFS Literal of type <<rdfs_datatypes_geo_ewkbliteral, `geo:ewkbLiteral`>> shall be interpreted as an empty Geometry.
+====
 
 [[property_geo_asewkb]]
 ===== Property: geo:asEWKB
 
 The property http://www.opengis.net/ont/geosparql#asEWKB[`geo:asEWKB`] is defined to link a Geometry with its EWKB serialization.
 
-[#req_geometry_extension_geometry-as-wkb-literal]
-|===
-| *Req {counter:req}* Implementations shall allow the RDF property <<property_geo_asewkb, `geo:asEWKB`>> to be used in SPARQL graph patterns.
-|http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal[`http://www.opengis.net/spec/geosparql/1.0/req/geometry-extension/geometry-as-wkb-literal`]
-|===
+[[req_geometry_extension_geometry-as-wkb-literal]]
+[requirement,identifier="/req/geometry-extension/geometry-as-wkb-literal"]
+.asEWKB Property
+====
+Implementations shall allow the RDF property <<property_geo_asewkb, `geo:asEWKB`>> to be used in SPARQL graph patterns.
+====
 
 [source,turtle]
 ----
@@ -692,11 +703,12 @@ geof:asEWKB (geom: ogc:geomLiteral): geo:ewkbLiteral
 
 The function http://www.opengis.net/def/function/geosparql/asEWKB[`geof:asEWKB`] converts `geom` to an equivalent EWKB representation preserving the spatial reference system.
 
-[#req_geometry_extension_asEWKB-function]
-|===
-| *Req {counter:req}* Implementations shall support <<property_geo_asewkb, `geo:asEWKB`>> as a SPARQL extension function.
-|http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function[`http://www.opengis.net/spec/geosparql/1.1/req/geometry-extension/asEWKB-function`]
-|===
+[[req_geometry_extension_asEWKB-function]]
+[requirement,identifier="/req/geometry-extension/asEWKB-function"]
+.asEWKB Function
+====
+Implementations shall support <<function_geof_asewkb, `geof:asEWKB`>> as a SPARQL extension function.
+====
 
 [[geography_markup_language]]
 ==== Geography Markup Language
@@ -1108,6 +1120,7 @@ Implementations shall support <<function_geof_asgeocode, `geof:asGeocode`>> as a
 [requirements_class,identifier="/req/geometry-extension-dggs",subject="Implementation Specification"]
 .Geometry DGGS Extension
 ====
+[%metadata]
 requirement:: /req/geometry-extension-dggs/query-functions
 requirement:: /req/geometry-extension-dggs/query-functions-non-sf
 requirement:: /req/geometry-extension-dggs/srid-function
@@ -1337,6 +1350,8 @@ geometry literals as it is expected that implementing these functions for DGGS l
 literals and thus the lack of existing software libraries for their manipulation.
 ====
 
+////
+
 [[req_geometry_extension_query-functions-dggs]]
 [requirement,identifier="/req/geometry-extension-dggs/query-functions"]
 .DGGS Query Functions (Simple Features)
@@ -1351,7 +1366,19 @@ Implementations shall support the functions of Requirement 39 for DGGS geometry 
 Implementations shall support the functions of Requirement 40 for DGGS geometry literals as SPARQL extension functions which are defined in this standard, for non-DGGS geometry literals.
 ====
 
-////
+[[req_geometry_extension_srid-function-dggs]]
+[requirement,identifier="/req/geometry-extension-dggs/srid-function"]
+.DGGS SRID Function
+====
+Implementations shall support <<non_topological_query_functions_function_geof_getsrid, `geof:getSRID`>> for DGGS geometry literals as a SPARQL extension function.
+====
+
+[[req_geometry_extension_sa-functions-dggs]]
+[requirement,identifier="/req/geometry-extension-dggs/sa-functions"]
+.DGGS Spatial Aggregate Functions
+====
+Implementations shall support the spatial aggregate functions defined in <<sa_functions>> for DGGS geometry literals as SPARQL extension functions.
+====
 
 Functions from this Requirements class are listed below, alphabetically.
 
