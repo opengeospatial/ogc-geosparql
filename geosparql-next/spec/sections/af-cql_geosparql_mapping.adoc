@@ -5,15 +5,15 @@
 
 [discrete]
 [[cql_geosparql_mapping_overview]]
-=== F.0. Overview
+=== Overview
 
 This annex presents a mapping between the Common Query Language(CQL) <<CQLDEF>> and GeoSPARQL as well as generic SPARQL <<SPARQL>>. This is likely of relevance to the delivery of GeoSPARQL data via systems such as the OGC's Web Feature Service <<WFS>> and OGC API Features <<OGCSFACA>> which implement CQL.
 
 [[accessing_spatial_features_in_a_sparql_endpoint]]
 === Accessing spatial Features in a SPARQL endpoint
 
-Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<Class: geo:Feature, `geo:Feature`>> or of subclasses of it.
-They may have one or more <<Property: geo:hasGeometry, `geo:hasGeometry`>> properties indicating <<Class: geo:Geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instances where <<Property: geo:FeatureCollection, `geo:FeatureCollection`>> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <<Class: geo:Feature, `geo:Feature`>> instances.
+Spatial _Features_ accessed via SPARQL endpoints <<SPARQLPROT>> are, as defined in the GeoSPARQL standard, instances of the OWL class <<class_geo_feature, `geo:Feature`>> or of subclasses of it.
+They may have one or more <<property_geo_hasgeometry, `geo:hasGeometry`>> properties indicating <<class_geo_geometry, `geo:Geometry`>> instances and other properties related to the Feature. They may also be grouped into <<class_geo_featurecollection, `geo:FeatureCollection`>> instances where <<class_geo_featurecollection,`geo:FeatureCollection`>> is a new class in GeoSPARQL 1.1, specifically for the description of collections of <<class_geo_feature, `geo:Feature`>> instances.
 
 The following example SPARQL query retrieves all Features within the Feature Collection with the IRI `ex:x` within a given SPARQL endpoint.
 
@@ -23,14 +23,14 @@ The following example SPARQL query retrieves all Features within the Feature Col
 PREFIX ex: <http://example.com/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?fcollection ?item ?rel ?val ?geom 
+SELECT ?fcollection ?item ?rel ?val ?geom
 WHERE {
   ex:x rdfs:member ?item .
   ?item rdfs:subClassOf* geo:Feature .
 }
 ----
 
-GeoSPARQL's <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> definition requires that <<Class: geo:Feature, `geo:Feature`>> instances are to be linked to the Collection by use of the http://www.w3.org/1999/02/22-rdf-syntax-ns#member[``rdf:member``] property. No inverse property is defined.
+GeoSPARQL's <<class_geo_featurecollection, `geo:FeatureCollection`>> definition requires that <<class_geo_feature, `geo:Feature`>> instances are to be linked to the Collection by use of the http://www.w3.org/1999/02/22-rdf-syntax-ns#member[``rdf:member``] property. No inverse property is defined.
 
 [NOTE]
 ====
@@ -45,7 +45,7 @@ An extension to the above can retrieve any Geometry serializations for the Featu
 PREFIX ex: <http://example.com/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?fcollection ?item ?rel ?val ?geom 
+SELECT ?fcollection ?item ?rel ?val ?geom
 WHERE {
   ex:x rdfs:member ?item .
   ?item rdfs:subClassOf* geo:Feature .
@@ -58,7 +58,7 @@ WHERE {
 
 Some additional concerns for GeoSPARQL / CQL or OGC API Features Feature Collections mappings are:
 
-* APIs may need more information about the <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the <<Class: geo:FeatureCollection, `geo:FeatureCollection`>> instance then this may be queried for. If not, the API might need to create such data
+* APIs may need more information about the <<class_geo_featurecollection, `geo:FeatureCollection`>> instance for correct handling, in particular, an identifier and perhaps a label. If the back-end data store also contains information for the <<class_geo_featurecollection, `geo:FeatureCollection`>> instance then this may be queried for. If not, the API might need to create such data
 ** One particular scenario observed is that OGC APIs require token-like identifiers for Feature Collections and GeoSPARQL IRIs, or their parts, may not be able to be used for such. In these cases, the RDF property http://purl.org/dc/terms/identifier[`dcterms:identifier`] may be used to store appropriate token-like identifiers
 * Perhaps only data in a certain namespace is of interest. The solution is to apply FILTER expressions to the SPARQL query
 
@@ -96,11 +96,11 @@ CQL2 defines literal values for a variety of datatypes. The following table show
 |===
 | CQL2 literal | Examples  | (Geo)SPARQL literal | Examples
 
-| String  | "This is a string" | http://www.w3.org/2001/XMLSchema#string[``xsd:string``] | "This is a string"^^xsd:string 
-| Number  | -100  3.14159 | http://www.w3.org/2001/XMLSchema#int[``xsd:int``], http://www.w3.org/2001/XMLSchema#integer[``xsd:integer``], http://www.w3.org/2001/XMLSchema#double[``xsd:double``] | "-100"^^xsd:integer  "3.14159"^^xsd:double 
-| Boolean  | true false | http://www.w3.org/2001/XMLSchema#boolean[``xsd:boolean``] | "true"^^xsd:boolean  "false"^^xsd:boolean 
-| Spatial Geometry (WKT)  | POINT(1 1) | <<RDFS Datatype: geo:wktLiteral, WKT Literal>> | "POINT(1 1)"^^geo:wktLiteral
-| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | <<RDFS Datatype: geo:geoJSONLiteral, GeoJSON Literal>> | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
+| String  | "This is a string" | http://www.w3.org/2001/XMLSchema#string[``xsd:string``] | "This is a string"^^xsd:string
+| Number  | -100  3.14159 | http://www.w3.org/2001/XMLSchema#int[``xsd:int``], http://www.w3.org/2001/XMLSchema#integer[``xsd:integer``], http://www.w3.org/2001/XMLSchema#double[``xsd:double``] | "-100"^^xsd:integer  "3.14159"^^xsd:double
+| Boolean  | true false | http://www.w3.org/2001/XMLSchema#boolean[``xsd:boolean``] | "true"^^xsd:boolean  "false"^^xsd:boolean
+| Spatial Geometry (WKT)  | POINT(1 1) | <<rdfs_datatype_geo_wktliteral, WKT Literal>> | "POINT(1 1)"^^geo:wktLiteral
+| Spatial Geometry (JSON)  | {"type": "Point", "coordinates":[1,1]} | <<rdfs_datatype_geo_geojsonliteral, GeoJSON Literal>> | "{"type": "Point", "coordinates":[1,1]}"^^geo:geoJSONLiteral
 | Temporal Literal  | 1969-07-20  1969-07-20T20:17:40Z | http://www.w3.org/2001/XMLSchema#date[``xsd:date``], http://www.w3.org/2001/XMLSchema#dateTime[``xsd:dateTime``], http://www.w3.org/2001/XMLSchema#dateTimeStamp[``xsd:dateTimeStamp``] | "1969-07-20"^^xsd:date "1969-07-20T20:17:40Z"^^xsd:dateTime
 |===
 
@@ -128,7 +128,7 @@ CQL2 defines comparison predicates to compare two scalar expressions. A comparis
 | Comparison predicate  | Triple pattern | Comment
 
 | name="OGC" | `?item my:name "OGC"^^xsd:string` | Equality statements can be converted to a triple pattern
-| number=5 | ``?item my:number "5"^^xsd:integer`` | 
+| number=5 | ``?item my:number "5"^^xsd:integer`` |
 | number>5 | ?item my:number ?number . FILTER(?number>5) | Arithmetic comparisons (<,>,>=,<=) are converted to filter expressions
 | number BETWEEN 5 AND 10 | `?item my:number ?number . FILTER(?number>=5 && ?number<=10)` | BETWEEN statements are converted to arithmetic expressions
 | name IN ("OGC","W3C") | `?item my:name IN ("OGC", "W3C")` | IN statements may also be expressed using SPARQL VALUES statements
@@ -146,26 +146,26 @@ GeoSPARQL includes equivalents of many CQL2 filter functions as can be seen in t
 
 .CQL To GeoSPARQL Mappings: Spatial Operators
 |===
-| CQL2 Filter Expression  | GeoSPARQL Filter Function 
+| CQL2 Filter Expression  | GeoSPARQL Filter Function
 
-| CONTAINS(geometry1,geometry2)  | FILTER(geof:sfContains(?geometry1,?geometry2))  
-| CROSSES(geometry1,geometry2)  | FILTER(geof:sfCrosses(?geometry1,?geometry2))  
-| DISJOINT(geometry1,geometry2)  | FILTER(geof:sfDisjoint(?geometry1,?geometry2)) 
-| EQUALS(geometry1,geometry2)  | FILTER(geof:sfEquals(?geometry1,?geometry2))  
-| INTERSECTS(geometry1,geometry2)  | FILTER(geof:sfIntersects(?geometry1,?geometry2)) 
-| OVERLAPS(geometry1,geometry2)  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))  
-| TOUCHES(geometry1,geometry2)  | FILTER(geof:sfTouches(?geometry1,?geometry2))  
-| WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))  
+| CONTAINS(geometry1,geometry2)  | FILTER(geof:sfContains(?geometry1,?geometry2))
+| CROSSES(geometry1,geometry2)  | FILTER(geof:sfCrosses(?geometry1,?geometry2))
+| DISJOINT(geometry1,geometry2)  | FILTER(geof:sfDisjoint(?geometry1,?geometry2))
+| EQUALS(geometry1,geometry2)  | FILTER(geof:sfEquals(?geometry1,?geometry2))
+| INTERSECTS(geometry1,geometry2)  | FILTER(geof:sfIntersects(?geometry1,?geometry2))
+| OVERLAPS(geometry1,geometry2)  | FILTER(geof:sfOverlaps(?geometry1,?geometry2))
+| TOUCHES(geometry1,geometry2)  | FILTER(geof:sfTouches(?geometry1,?geometry2))
+| WITHIN(geometry1,geometry2)  | FILTER(geof:sfWithin(?geometry1,?geometry2))
 |===
 
 [[temporal_operators]]
 ==== Temporal Operators
 
-Temporal operators are not part of the GeoSPARQL standard. 
+Temporal operators are not part of the GeoSPARQL standard.
 
 .CQL To GeoSPARQL Mappings: Temporal Operators
 |===
-| CQL2 Filter Expression  | GeoSPARQL Filter Function 
+| CQL2 Filter Expression  | GeoSPARQL Filter Function
 
 | beginTime AFTER 1969-07-16T13:32:00Z | N/A
 | beginTime BEFORE 1969-07-16T13:32:00Z | N/A
@@ -176,13 +176,13 @@ Temporal operators are not part of the GeoSPARQL standard.
 | beginTime ENDS 1969-07-16T13:32:00Z | N/A
 | beginTime MEETS 1969-07-16T13:32:00Z | N/A
 | beginTime METBY 1969-07-16T13:32:00Z | N/A
-| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | N/A 
-| beginTime TCONTAINS 1969-07-16T13:32:00Z | N/A  
-| beginTime TEQUALS 1969-07-16T13:32:00Z | N/A 
+| beginTime OVERLAPPEDBY 1969-07-16T13:32:00Z | N/A
+| beginTime TCONTAINS 1969-07-16T13:32:00Z | N/A
+| beginTime TEQUALS 1969-07-16T13:32:00Z | N/A
 | beginTime TOVERLAPS 1969-07-16T13:32:00Z | N/A
 |===
 
-As noted above in Section <<F.2.1 Query Parameters, F.2.1 Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
+As noted above in <<query_parameters,Query Parameters>>, temporal filtering of RDF data via SPARQL queries is possible with standard SPARQL functions to compare date values (http://www.w3.org/2001/XMLSchema#date[`xsd:date`], http://www.w3.org/2001/XMLSchema#dateTime[`xsd:dateTime`] and http://www.w3.org/2001/XMLSchema#dateTimeStamp[`xsd:dateTimeStamp`] literals) and OWL TIME <<TIME>> may be used to assert temporal relations between objects.
 
 [[mappings_from_simple_features_for_sql]]
 === Mappings from Simple Features for SQL
