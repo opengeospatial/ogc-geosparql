@@ -1,41 +1,84 @@
+PREFIX cco: <https://www.commoncoreontologies.org/>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-obo:BFO_0000029
-    rdfs:subClassOf geo:Feature ;
-.
-
-obo:BFO_0000040
-    rdfs:subClassOf geo:Feature ;
-.
-
 obo:BFO_0000066
-    rdfs:range geo:SpatialObject ;
+    rdfs:subPropertyOf geo:sfWithin ;  # "occurs in" has more limited domain and range than sfWithin
 .
 
-obo:BFO_0000216
-    rdfs:range geo:SpatialObject ;
+obo:BFO_0000171
+    rdfs:subPropertyOf geo:sfWithin ;  # "located in" has more limited domain and range than sfWithin
+.
+
+geo:Feature
+    owl:equivalentClass
+        [
+            a owl:Class ;
+            owl:unionOf (
+                obo:BFO_0000004  # independent continuant
+                obo:BFO_0000015  # process
+                obo:BFO_0000035  # process boundary
+            ) ;
+        ] ;
 .
 
 geo:Geometry
     rdfs:subClassOf
-        obo:BFO_0000006 ,
-        obo:IAO_0000030 ;
-.
-
-geo:hasGeometry
-    rdfs:subPropertyOf
-        obo:BFO_0000210 ,
-        obo:BFO_0000211 ;
-.
-
-geo:sfWithin
-    rdfs:subPropertyOf
-        obo:BFO_0000082 ,
-        obo:BFO_0000171 ;
+        obo:BFO_0000031 ,  # generically dependent continuant
+        cco:ont00000853 ;  # Descriptive Information Content Entity
 .
 
 geo:SpatialObject
-    rdfs:subClassOf obo:BFO_0000004 ;
+    rdfs:subClassOf obo:BFO_0000001 ;  # entity
+.
+
+geo:hasGeometry
+    rdfs:subPropertyOf cco:ont00001917 ;  # described by
+.
+
+geo:hasSerialization
+    rdfs:subPropertyOf owl:topDataProperty ;
+.
+
+cco:ont00001791  # coincides with, spatially equals
+    rdfs:subPropertyOf geo:rcc8eq ;
+.
+
+cco:ont00001796  # tangential part of, spatially covered by
+    rdfs:subPropertyOf geo:rcc8tpp ;
+.
+
+cco:ont00001797  # partially overlaps with, spatially overlaps
+    rdfs:subPropertyOf geo:rcc8po ;
+.
+
+cco:ont00001827  # nontangential part of, inside
+    rdfs:subPropertyOf geo:rcc8ntpp ;
+.
+
+cco:ont00001838  # disconnected with, spatially disjoint
+    rdfs:subPropertyOf geo:rcc8dc ;
+.
+
+cco:ont00001855  # has spatial part
+    rdfs:subPropertyOf geo:sfContains ;
+.
+
+cco:ont00001909  # has tangential part, spatially covers
+    rdfs:subPropertyOf geo:rcc8tppi ;
+.
+
+cco:ont00001931  # externally connects with, spatially meets
+    rdfs:subPropertyOf geo:rcc8ec ;
+.
+
+cco:ont00001944  # spatial part of
+    rdfs:subPropertyOf geo:sfWithin ;
+.
+
+cco:ont00001989  # has nontangential part, contains
+    rdfs:subPropertyOf geo:rcc8ntppi ;
 .
