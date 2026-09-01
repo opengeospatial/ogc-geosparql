@@ -1,24 +1,20 @@
 name: Ontology Documentation CI
 
-on: 
-  push: 
-      branches: 
-          - master
-          - geosparql-1.1
-          - geosparql-1.0
-          - geosparql-n
-          - 13buildingblocks
+on:
+  push:
+    branches:
+      - master
+      - geosparql-next
 
 jobs:
   buildnext:
     name: Compile GeoSPARQL Next
+    if: github.ref == 'refs/heads/geosparql-next'
     runs-on: ubuntu-latest
-    needs: docco
     steps:
       - uses: actions/checkout@v3
         with:
           token: ${{ github.token }}
-          ref: master
           submodules: true
 
       - name: Build specification doc using Metanorma
@@ -74,6 +70,7 @@ jobs:
 
   docco:
     name: Publish docco
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
