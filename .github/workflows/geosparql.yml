@@ -6,6 +6,10 @@ on:
       - master
       - geosparql-next
 
+concurrency:
+  group: geosparql-pages
+  cancel-in-progress: false
+
 jobs:
   buildnext:
     name: Compile GeoSPARQL Next
@@ -65,8 +69,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          clean: false
-          folder: site/
+          clean: true
+          folder: site/geosparql-next
+          target-folder: geosparql-next
 
   docco:
     name: Publish docco
@@ -89,4 +94,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           clean: true
+          clean-exclude: geosparql-next
           folder: site/
