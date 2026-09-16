@@ -28,7 +28,7 @@ If you want to cite the current OGC standard (1.1) we encourage you to use the f
     
 ```bibtex
 @techreport{ogc_geosparql_11_2024,
-	type = {{OGC} {Implementation} {Standard}}, 
+	type = {{OGC} {Implementation} {Standard}},
 	title = {{OGC} {GeoSPARQL} - {A} {Geographic} {Query} {Language} for {RDF} {Data}},
 	url = {http://www.opengis.net/doc/IS/geosparql/1.1},
 	number = {OGC 22-047},
