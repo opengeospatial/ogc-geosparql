@@ -1,195 +1,79 @@
 name: Ontology Documentation CI
 
-on: 
-  push: 
-      branches: 
-          - master
-          - geosparql-1.2
-          - geosparql-1.1
-          - geosparql-1.0
-          
-jobs:   
-  
-  build10:
-    name: Compile GeoSPARQL 1.0 Documentation
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: geosparql-pages
+  cancel-in-progress: false
+
+jobs:
+  buildnext:
+    name: Compile GeoSPARQL Next
     runs-on: ubuntu-latest
-   
     steps:
-    - uses: actions/checkout@v1
-      with:
-          ref: geosparql-1.0    
-    - name: Create GeoSPARQL 1.0 Ontology Documentation
-      run: |
-         sudo apt-get install python3 python3-setuptools python3-pip -y
-         sudo apt-get install gcc libpq-dev -y
-         sudo apt-get install python3-dev python3-pip -y
-         sudo apt-get install python3-venv python3-wheel -y
-         sudo pip3 install wheel pylode==2.13.2 rdflib
-         mkdir docs
-         mkdir docs/geosparql10/
-         mkdir docs/geosparql10/servicedescription
-         mkdir docs/geosparql10/vocabularies
-         cd docs/geosparql10/
-         cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../spec/11-052r4_OGC_GeoSPARQL.pdf ../../citeme.bib . 
-         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl .  
-         echo "Generating documentation for GeoSPARQL 1.0 ontology"
-         pylode -i ../../vocabularies/geo.ttl -o index.html
-         python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
-         #cp ../../profile.ttl .
-         #cp ../../profile.html . 
-         echo "Generating documentation for GeoSPARQL 1.0 functions and rules"
-         pylode -i ../../vocabularies/rules.ttl -o rules.html -p vocpub
-         python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
-         pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
-         echo "Generating documentation for GeoSPARQL 1.0 Simple Features Vocabulary"
-         pylode -i ../../vocabularies/sf_geometries.ttl -o sf_geometries.html -p vocpub
-         python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
-         # pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
-         echo "Generating documentation for GeoSPARQL 1.0 Service Description Extensions"
-         pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
-         echo "Generating documentation for GeoSPARQL 1.0 Service Description Conformance Classes"
-         pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
-         echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
-         pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
-         cd ../../scripts/
-         python3 consistencycheck.py 
-         cp logfile.txt ../docs/geosparql10/logfile.txt
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@releases/v4
-      with:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         BRANCH: gh-pages
-         clean: true
-         FOLDER: docs/
-  
-  
-  build11:
-    name: Compile GeoSPARQL 1.1 Documentation
-    runs-on: ubuntu-latest
- 
-    steps:
-    - uses: actions/checkout@v1
-      with:
-          ref: geosparql-1.1
-    
-    - uses: actions/cache@v3
-      with:
-        path: ~/.fontist
-        key: fontist-ubuntu-latest
-        restore-keys: fontist-ubuntu-latest
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          submodules: true
 
-    - uses: actions-mn/setup@main
-    
-    - name: Create Ontology Documentation 🔧
-      run: |
-         sudo apt-get install python3 python3-setuptools python3-pip -y
-         sudo apt-get install gcc libpq-dev -y
-         sudo apt-get install python3-dev python3-pip -y
-         sudo apt-get install python3-venv python3-wheel -y
-         sudo pip3 install wheel pylode==2.13.2 rdflib
-         mkdir docs
-         mkdir docs/servicedescription
-         mkdir site
-         mkdir site/geosparql11
-         ls
-         metanorma site generate --agree-to-terms -o site
-         cd site
-         ls
-         ls geosparql11
-         ls documents
-         mv documents/spec/* geosparql11/
-         mv geosparql11 ../docs/
-         cd ../docs/geosparql11/
-         echo "Copying over 1.1 RDF files"
-         cp ../../vocabularies/geo.ttl ../../profile.ttl ../../vocabularies/rules.ttl ../../vocabularies/functions.ttl ../../vocabularies/sf_geometries.ttl ../../vocabularies/requirements.ttl  ../../citeme.bib .
-         cp ../../servicedescription/servicedescription_all_functions.ttl ../../servicedescription/servicedescription_conformanceclasses.ttl ../../servicedescription/servicedescription_extensions.ttl ../../vocabularies/validator.ttl .
-         cp -r ../../spec/figures .
-         echo "Generating documentation for GeoSPARQL 1.1 ontology"
-         python3 ../../scripts/convertjsonld.py geo.ttl geo.json geo.n3
-         pylode -i ../../vocabularies/geo.ttl -o index.html
-         echo "Generating documentation for GeoSPARQL 1.1 Profile"
-         #cp ../../profile.ttl .
-         #cp ../../profile.html . 
-         #echo "Generating documentation for GeoSPARQL 1.1 functions and rules"
-         #pylode -i ../../vocabularies/functions.ttl -o functions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py functions.ttl functions.json functions.n3
-         pylode -i ../../vocabularies/rules.ttl -o rules.html -p vocpub
-         python3 ../../scripts/convertjsonld.py rules.ttl rules.json rules.n3
-         echo "Generating documentation for GeoSPARQL 1.1 Simple Features Vocabulary"
-         pylode -i ../../vocabularies/sf_geometries.ttl -o sf_geometries.html -p vocpub
-         python3 ../../scripts/convertjsonld.py sf_geometries.ttl sf_geometries.json sf_geometries.n3
-         #echo "Generating documentation for GeoSPARQL 1.1 SA functions"
-         #pylode -i ../../vocabularies/requirements.ttl -o reqs.html -p vocpub
-         #pylode -u http://schemas.opengis.net/gml/3.2.1/gml_32_geometries.rdf -o gml_geometries.html -p vocpub
-         #pylode -i ../../vocabularies/validator.ttl -o validation.html
-         echo "Generating documentation for GeoSPARQL 1.1 Service Description Extensions"
-         pylode -i ../../servicedescription/servicedescription_extensions.ttl -o servicedescription_extensions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_extensions.ttl servicedescription_extensions.json servicedescription_extensions.n3
-         echo "Generating documentation for GeoSPARQL 1.1 Service Conformance Classes"
-         pylode -i ../../servicedescription/servicedescription_conformanceclasses.ttl -o servicedescription_conformanceclasses.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_conformanceclasses.ttl servicedescription_conformanceclasses.json servicedescription_conformanceclasses.n3
-         echo "Generating documentation for GeoSPARQL 1.0 Service Description All Functions"
-         pylode -i ../../servicedescription/servicedescription_all_functions.ttl -o servicedescription_all_functions.html -p vocpub
-         python3 ../../scripts/convertjsonld.py servicedescription_all_functions.ttl servicedescription_all_functions.json servicedescription_all_functions.n3
-         cd ../../scripts/
-         python3 consistencycheck.py 
-         cp logfile.txt ../docs/geosparql11/logfile.txt
-    - name: Deploy 🚀
-      uses: JamesIves/github-pages-deploy-action@releases/v4
-      with:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         BRANCH: gh-pages
-         clean: false
-         FOLDER: docs/
+      - name: Build specification doc using Metanorma
+        run: |
+          docker run --rm \
+            -v "$PWD/geosparql-next/spec:/metanorma" \
+            -w /metanorma \
+            metanorma/metanorma \
+            metanorma compile --agree-to-terms -t ogc -x html document.adoc
+          mkdir -p site/geosparql-next
+          cp geosparql-next/spec/document.html site/geosparql-next/spec.html
 
-  build12:
-   name: Compile GeoSPARQL 1.2 Metanorma
-   runs-on: ubuntu-latest
-   steps:
-   - uses: actions/checkout@v3
-     with:
-        token: ${{ github.token }}
-        ref: geosparql-1.2
-        submodules: true
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
 
-   - uses: actions/cache@v3
-     with:
-        path: ~/.fontist
-        key: fontist-ubuntu-latest
-        restore-keys: fontist-ubuntu-latest
+      - name: Build ontology documentation
+        run: |
+          python -m pip install --upgrade pip pylode
+          # ontologies
+          echo "Making Ontology HTML"
+          pylode geosparql-next/rdf/ontologies/geo.ttl -o site/geosparql-next/ont.html -p ontpub
+          echo "Making SF Geoms Ontology HTML"
+          pylode geosparql-next/rdf/ontologies/sf_geometries.ttl -o site/geosparql-next/sf_geometries.html -p ontpub
+          # vocabularies
+          echo "Making Egenhofer vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/egenhofer.ttl -o site/geosparql-next/egenhofer.html -p vocpub
+          echo "Making Functions vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/functions.ttl -o site/geosparql-next/functions.html -p vocpub
+          echo "Making Geocoding vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/geocoding.ttl -o site/geosparql-next/geocoding.html -p vocpub
+          echo "Making RCC8 vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/rcc8.ttl -o site/geosparql-next/rcc8.html -p vocpub
+          echo "Making RCC9 vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/rcc9.ttl -o site/geosparql-next/rcc9.html -p vocpub
+          echo "Making Requirements vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/requirements.ttl -o site/geosparql-next/requirements.html -p vocpub
+          echo "Making Rules vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/rules.ttl -o site/geosparql-next/rules.html -p vocpub
+          echo "Making SA Funcs vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/safuncs.ttl -o site/geosparql-next/safuncs.html -p vocpub
+          echo "Making SF vocab HTML"
+          pylode geosparql-next/rdf/vocabularies/sf.ttl -o site/geosparql-next/sf.html -p vocpub
+          echo "Completed RDF -> HTML"
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          clean: true
+          folder: site/geosparql-next
+          target-folder: geosparql-next
 
-   - uses: actions-mn/setup@main
-
-   - run: | 
-         mkdir site
-         mkdir site/geosparql12
-         mkdir site/geosparql12/vocabularies/
-         mkdir site/geosparql12/servicedescription/
-         ls
-         mv vocabularies/* site/geosparql12/vocabularies/
-         mv servicedescription/* site/geosparql12/servicedescription/
-         metanorma site generate --agree-to-terms -o site
-         cd site
-         ls
-         ls geosparql12
-         ls documents
-         mv documents/spec/* geosparql12/
-
- 
-   - name: Deploy 🚀
-     uses: JamesIves/github-pages-deploy-action@releases/v4
-     with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       BRANCH: gh-pages
-       clean: false
-       FOLDER: site/
-
-  jekyll:
-    name: Build Jekyll
+  docco:
+    name: Publish docco
+    needs: buildnext
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -197,76 +81,16 @@ jobs:
             token: ${{ github.token }}
             ref: master
             submodules: true
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@8575951200e472d5f2d95c625da0c7bec8217c42 # v1.161.0
-        with:
-          ruby-version: '3.2.2' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v4
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
+      - name: Prepare static page
         run: |
-         gem install jekyll bundler
-         bundle install
-         bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
-      - run: |
-            mkdir site
-            cd site
-            mkdir blog
-            cd ..
-            mv _site/* site/blog/
-            rm site/blog/index.html
-            mv site/blog/posts.html site/blog/index.html
+          mkdir site
+          cp docco/index.html site/index.html
+          touch site/.nojekyll
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           BRANCH: gh-pages
-           clean: false
-           FOLDER: site/
-
-  build13:
-   name: Compile GeoSPARQL 1.3 Metanorma
-   runs-on: ubuntu-latest
-   steps:
-   - uses: actions/checkout@v3
-     with:
-        token: ${{ github.token }}
-        ref: master
-        submodules: true
-
-   - uses: actions/cache@v3
-     with:
-        path: ~/.fontist
-        key: fontist-ubuntu-latest
-        restore-keys: fontist-ubuntu-latest
-
-   - uses: actions-mn/setup@main
-
-   - run: | 
-         sleep 400
-         mkdir site
-         mkdir site/geosparql13
-         mkdir site/geosparql13/vocabularies/
-         mkdir site/geosparql13/servicedescription/
-         ls
-         mv vocabularies/* site/geosparql13/vocabularies/
-         mv servicedescription/* site/geosparql13/servicedescription/
-         metanorma site generate --agree-to-terms -o site
-         ls
-         cp index.html site/index.html
-         cd site
-         mv documents/spec/* geosparql13/
- 
-   - name: Deploy 🚀
-     uses: JamesIves/github-pages-deploy-action@releases/v4
-     with:
-       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       BRANCH: gh-pages
-       clean: false
-       FOLDER: site/
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          clean: true
+          clean-exclude: geosparql-next
+          folder: site/

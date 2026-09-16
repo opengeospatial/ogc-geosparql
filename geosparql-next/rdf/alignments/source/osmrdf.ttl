@@ -1,0 +1,56 @@
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX osmm: <https://www.openstreetmap.org/meta/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX sf: <http://www.opengis.net/ont/sf#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+sf:GeometryCollection
+    owl:equivalentClass 
+        [
+            a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:hasValue "r"^^xsd:string ;
+            owl:onProperty osmm:type ;
+        ] ,
+        [
+            a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:hasValue "r"^^xsd:string ;
+            owl:onProperty osmm:type ;
+        ] ;
+.
+
+sf:LineString
+    owl:equivalentClass
+        [
+            a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:hasValue "w"^^xsd:string ;
+            owl:onProperty osmm:type ;
+        ] ;
+.
+
+sf:Polygon
+    owl:equivalentClass
+        [
+            a owl:Restriction ;
+            owl:cardinality "1"^^xsd:nonNegativeInteger ;
+            owl:hasValue true ;
+            owl:onProperty osmm:isClosed ;
+        ] ;
+.
+
+osmm:has
+    owl:equivalentProperty
+        geo:ehContains ,
+        geo:rcc8ntpp ,
+        geo:sfContains ;
+.
+
+osmm:loc
+    owl:equivalentProperty geo:asWKT ;
+.
+
+osmm:isClosed
+    owl:equivalentClass geo:rcc8ntpp ;
+.
