@@ -9,6 +9,7 @@ This clause defines the _Geometry Extension_ parameterized Requirements class wi
 [%metadata]
 requirement:: /req/geometry-extension/geometry-class
 requirement:: /req/geometry-extension/geometry-collection-class
+requirement:: /req/geometry-extension/feature-properties
 requirement:: /req/geometry-extension/geometry-properties
 requirement:: /req/geometry-extension/query-functions
 requirement:: /req/geometry-extension/query-functions-non-sf
@@ -42,6 +43,7 @@ requirement:: /req/geometry-extension/kml-literal-srs
 requirement:: /req/geometry-extension/kml-literal-empty
 requirement:: /req/geometry-extension/geometry-as-kml-literal
 requirement:: /req/geometry-extension/asKML-function
+requirement:: /req/geometry-extension/geocode-literal
 requirement:: /req/geometry-extension/geocode-literal-srs
 requirement:: /req/geometry-extension/geocode-literal-empty
 requirement:: /req/geometry-extension/geometry-as-geocode-literal
@@ -1318,13 +1320,20 @@ Implementations shall support the functions
 <<function_geof_perimeter, `geof:perimeter`>>,
 <<function_geof_metricarea, `geof:metricArea`>>,
 <<function_geof_area, `geof:area`>>,
-<<function_geof_endpoint, `geof:endPoint`>>,
-<<function_geof_geometryn, `geof:geometryN`>>,
+<<function_geof_azimuth, `geof:azimuth`>>,
+<<function_geof_compactnessratio, `geof:compactnessRatio`>>,
 <<function_geof_easting,`geof:easting`>>,
+<<function_geof_endpoint, `geof:endPoint`>>,
+<<function_geof_farthestcoordinate, `geof:farthestCoordinate`>>,
+<<function_geof_geometryn, `geof:geometryN`>>,
+<<function_geof_longestline, `geof:longestLine`>>,
+<<function_geof_maxdistance, `geof:maxDistance`>>,
 <<function_geof_northing,`geof:northing`>>,
+<<function_geof_maxm, `geof:maxM`>>,
 <<function_geof_maxx, `geof:maxX`>>,
 <<function_geof_maxy, `geof:maxY`>>,
 <<function_geof_maxz, `geof:maxZ`>>,
+<<function_geof_minm, `geof:minM`>>,
 <<function_geof_minx, `geof:minX`>>,
 <<function_geof_miny, `geof:minY`>>,
 <<function_geof_minz, `geof:minZ`>>,
@@ -1332,8 +1341,10 @@ Implementations shall support the functions
 <<function_geof_numinteriorring, `geof:numInteriorRing`>>,
 <<function_geof_numpatches, `geof:numPatches`>>,
 <<function_geof_numpoints, `geof:numPoints`>>,
+<<function_geof_shortestline, `geof:shortestLine`>>,
 <<function_geof_startpoint, `geof:startPoint`>>,
 <<function_geof_simplify, `geof:simplify`>>,
+<<function_geof_tessellate, `geof:tessellate`>>,
 <<function_geof_x, `geof:X`>>,
 <<function_geof_y, `geof:Y`>>,
 <<function_geof_z, `geof:Z`>>,
@@ -1438,6 +1449,22 @@ geof:area (geom: ogc:geomLiteral, units: xsd:anyURI): rdf:Resource
 ----
 
 The function http://www.opengis.net/def/function/geosparql/area[`geof:area`] returns the area of `geom`. Must return zero for all geometry types other than Polygon. This function is similar to <<function_geof_metricarea, `geof:metricArea`>>, which does not need a specification of measurement unit.
+
+[NOTE,keep-separate=true]
+====
+See the <<recommendation_for_units_of_measure, Recommendation for units of measure>>.
+====
+
+[[function_geof_azimuth]]
+==== Function: geof:azimuth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:azimuth (geom: ogc:geomLiteral, units: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/azimuth[`geof:azimuth`] returns the azimuth of `geom` in a given unit.
 
 [NOTE,keep-separate=true]
 ====
@@ -1549,23 +1576,46 @@ geof:coordinateDimension (geom: ogc:geomLiteral): xsd:integer
 
 The function http://www.opengis.net/def/function/geosparql/coordinateDimension[`geof:coordinateDimension`] returns the coordinate dimension of `geom`.
 
+[[function_geof_compactnessratio]]
+==== Function: geof:compactnessRatio
+
+[%unnumbered]
+[source,turtle]
+----
+geof:compactnessRatio (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/compactnessRatio[`geof:compactnessRatio`] calculates the compactness ratio of a geometry based on its dimensionality.
+For a 2D geometry, the function returns the square root of the polygon’s area divided by the area of the circle with circumference equal to the polygon’s perimeter. In 3D the classical compactness of a solid can be measured by the ratio (area^3)/(volume^2), which is dimensionless and minimised by a sphere.
+
+[[function_geof_farthestcoordinate]]
+==== Function: geof:farthestCoordinate
+
+[%unnumbered]
+[source,turtle]
+----
+geof:farthestCoordinate (geom: ogc:geomLiteral, geom2: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/farthestCoordinate[`geof:farthestCoordinate`] retrieves the farthest coordinate of `geom` from a given point `geom2` in the CRS of `geom`.
+
 [[function_geof_metricwithindistance]]
 ==== Function: geof:metricWithinDistance
 
-```
+----
 geof:metricWithinDistance (geom1: ogc:geomLiteral, geom2: ogc:geomLiteral,
                  distance: xsd:double): xsd:boolean
-```
+----
 
 Returns true if `geom2` is within a given distance of `geom1` in meters. Calculations are according to the units in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between meter and the unit of the spatial reference system.
 
 [[function_geof_withindistance]]
 ==== Function: geof:withinDistance
 
-```
+----
 geof:withinDistance (geom: ogc:geomLiteral, geom2: ogc:geomLiteral,
                  distance: xsd:double, units: xsd:anyURI): xsd:boolean
-```
+----
 
 Returns true if `geom2` is within a given distance of `geom1`. Calculations are in the spatial reference system of `geom1`. The triple store implementation needs to take care of a conversion between the unit given as a parameter and the unit of the spatial reference system.
 
@@ -1622,6 +1672,17 @@ The function http://www.opengis.net/def/function/geosparql/distance[`geof:distan
 See the <<recommendation_for_units_of_measure, Recommendation for units of measure>>.
 ====
 
+[[function_geof_easting]]
+==== Function: geof:easting
+
+[%unnumbered]
+[source,turtle]
+----
+geof:easting (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/easting[`geof:easting`] returns the easting, e.g., the latitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
+
 [[function_geof_endpoint]]
 ==== Function: geof:endPoint
 
@@ -1650,6 +1711,15 @@ geof:exteriorRing (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/exteriorRing[`geof:exteriorRing`] returns the exterior interior ring of `geom` if the geometry represents a Polygon.
+
+[[function_geof_force2d]]
+==== Function: geof:force2D
+
+----
+geof:force2D (geom: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/force2D[`geof:force2D`] returns a 2D version of `geom` by stripping existing Z coordinates.
 
 [[function_geof_geometryn]]
 ==== Function: geof:geometryN
@@ -1717,9 +1787,9 @@ The function http://www.opengis.net/def/function/geosparql/is3D[`geof:is3D`] Ret
 [[function_geof_iscollection]]
 ==== Function: geof:isCollection
 
-```
+----
 geof:isCollection (geom: ogc:geomLiteral): xsd:boolean
-```
+----
 
 Returns true if the literal describing `geom` represents a GeometryCollection.
 
@@ -1801,28 +1871,123 @@ The function http://www.opengis.net/def/function/geosparql/length[`geof:length`]
 See the <<recommendation_for_units_of_measure, Recommendation for units of measure>>.
 ====
 
-[[function_geof_easting]]
-==== Function: geof:easting
+[[function_geof_longestline]]
+==== Function: geof:longestLine
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:easting (geom: ogc:geomLiteral): xsd:double
+geof:longestLine (geom: ogc:geomLiteral, geom2: ogc:geomLiteral): ogc:geomLiteral
 ----
 
-The function http://www.opengis.net/def/function/geosparql/easting[`geof:easting`] returns the easting, e.g., the latitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
+The function http://www.opengis.net/def/function/geosparql/longestLine[`geof:longestLine`] returns the longest line geometry which is spanned between the two farthest points between `geom` and `geom2` as determined by e.g. the geof:maxDistance function. If `geom` and `geom2` are the same, the function will return the line corresponding to the longest distance between the two farthest points in `geom`.
+The result geometry shall be in the same CRS as input parameter `geom`.
 
-[[function_geof_northing]]
-==== Function: geof:northing
+[[function_geof_maxdistance]]
+==== Function: geof:maxDistance
 
 [%unnumbered]
 [source,turtle]
 ----
-geof:northing (geom: ogc:geomLiteral): xsd:double
+geof:maxDistance (geom: ogc:geomLiteral,geom2: ogc:geomLiteral, unit: xsd:anyURI): xsd:double
 ----
 
-The function http://www.opengis.net/def/function/geosparql/northing[`geof:northing`] returns the northing, e.g., the longitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
+The function http://www.opengis.net/def/function/geosparql/maxDistance[`geof:maxDistance`] returns the maximum distance between two geometries `geom` and `geom2` in a given unit as a double value.
+If `geom` and `geom2` are the same, the function will return the longest distance between the two farthest points in `geom`.
 
+[NOTE,keep-separate=true]
+====
+See the <<Recommendation for units of measure, Recommendation for units of measure>>.
+====
+
+[[function_geof_maxmetricdistance]]
+==== Function: geof:maxMetricDistance
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxMetricDistance (geom: ogc:geomLiteral,geom2: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxMetricDistance[`geof:maxMetricDistance`] returns the maximum distance between two geometries `geom` and `geom2` in meters.
+If `geom` and `geom2` are the same, the function will return the longest distance between the two farthest points in `geom`.
+
+[[function_geof_maxdepth]]
+==== Function: geof:maxDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxDepth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxDepth[`geof:maxDepth`] returns the maximum depth for `geom` in a given unit.
+
+[[function_geof_maxmetricdepth]]
+==== Function: geof:maxMetricDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxMetricDepth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxMetricDepth[`geof:maxMetricDepth`] returns the maximum depth for `geom` in meters.
+
+[[function_geof_maxheight]]
+==== Function: geof:maxHeight
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxHeight (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxHeight[`geof:maxHeight`] returns the maximum height for `geom` in a given unit.
+
+[[function_geof_maxmetricheight]]
+==== Function: geof:maxMetricHeight
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxMetricHeight (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxMetricHeight[`geof:maxMEtricHeight`] returns the maximum height for `geom` in meters.
+
+[[function_geof_maxwidth]]
+==== Function: geof:maxWidth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxWidth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxWidth[`geof:maxWidth`] returns the maximum width for `geom` in a given unit.
+
+[[function_geof_maxmetricwidth]]
+==== Function: geof:maxMetricWidth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxMetricWidth (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxMetricWidth[`geof:maxMetricWidth`] returns the maximum width for `geom` in meters.
+
+[[function_geof_maxm]]
+==== Function: geof:maxM
+
+[%unnumbered]
+[source,turtle]
+----
+geof:maxM (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/maxM[`geof:maxM`] returns the maximum M coordinate for `geom` using the SRS of `geom`.
 
 [[function_geof_maxx]]
 ==== Function: geof:maxX
@@ -1857,6 +2022,83 @@ geof:maxZ (geom: ogc:geomLiteral): xsd:double
 
 The function http://www.opengis.net/def/function/geosparql/maxZ[`geof:maxZ`] returns the maximum Z coordinate for `geom` using the SRS of `geom`.
 
+[[function_geof_mindepth]]
+==== Function: geof:minDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minDepth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minDepth[`geof:minDepth`] returns the minimum depth for `geom` in a given unit.
+
+[[function_geof_minmetricdepth]]
+==== Function: geof:minMetricDepth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minMetricDepth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minMetricDepth[`geof:minMetricDepth`] returns the minimum depth for `geom` in meters.
+
+[[function_geof_minheight]]
+==== Function: geof:minHeight
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minHeight (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minHeight[`geof:minHeight`] returns the minimum height for `geom` in a given unit.
+
+[[function_geof_minmetricheight]]
+==== Function: geof:minMetricHeight
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minMetricHeight (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minMetricHeight[`geof:minMetricHeight`] returns the minimum width for `geom` in meters.
+
+[[function_geof_minwidth]]
+==== Function: geof:minWidth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minWidth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minWidth[`geof:minWidth`] returns the minimum width for `geom` in a given unit.
+
+[[function_geof_minmetricwidth]]
+==== Function: geof:minMetricWidth
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minMetricWidth (geom: ogc:geomLiteral,unit: xsd:anyURI): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minMetricWidth[`geof:minMetricWidth`] returns the minimum width for `geom` in meters.
+
+[[function_geof_minm]]
+==== Function: geof:minM
+
+[%unnumbered]
+[source,turtle]
+----
+geof:minM (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/minM[`geof:minM`] returns the minimum Z coordinate for `geom` using the SRS of `geom`.
+
 [[function_geof_minx]]
 ==== Function: geof:minX
 
@@ -1889,6 +2131,17 @@ geof:minZ (geom: ogc:geomLiteral): xsd:double
 ----
 
 The function http://www.opengis.net/def/function/geosparql/minZ[`geof:minZ`] returns the minimum Z coordinate for `geom` using the SRS of `geom`.
+
+[[function_geof_northing]]
+==== Function: geof:northing
+
+[%unnumbered]
+[source,turtle]
+----
+geof:northing (geom: ogc:geomLiteral): xsd:double
+----
+
+The function http://www.opengis.net/def/function/geosparql/northing[`geof:northing`] returns the northing, e.g., the longitude of `geom` in the unit that is proposed by the coordinate reference system associated with the geometry. This function is defined only for such `geom` representing Points.
 
 [[function_geof_numgeometries]]
 ==== Function: geof:numGeometries
@@ -1956,6 +2209,17 @@ geof:perimeter (geom: ogc:geomLiteral, unit: xsd:anyURI): xsd:double
 
 The function http://www.opengis.net/def/function/geosparql/perimeter[`geof:perimeter`] returns the perimeter of  `geom` in the unit specified by the unit parameter for areal geometries. For non-areal geometries the result is equivalent to geof:hasLength.
 
+[[function_geof_matrixtransform]]
+==== Function: geof:matrixTransform
+
+[%unnumbered]
+[source,turtle]
+----
+geof:matrixTransform (geom: ogc:geomLiteral,matrix: geo:matrix): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/matrixTransform[`geof:matrixTransform`] returns the input geometry `geom` transformed using a transformation matrix defined in the second parameter of the function call. An exact definition of the transformation matrix format is given in geo:matrixLiteral.
+
 [[function_geof_metricperimeter]]
 ==== Function: geof:metricPerimeter
 
@@ -1984,6 +2248,34 @@ geof:pointOnSurface (geom: ogc:geomLiteral, n: xsd:integer): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/pointOnSurface[`geof:pointOnSurface`] returns a point which is guaranteed to be on the n^th^ surface of `geom`.
+
+[[function_geof_scale]]
+==== Function: geof:scale
+
+[%unnumbered]
+[source,turtle]
+----
+geof:scale (geom: ogc:geomLiteral,factorX: xsd:double,factorY: xsd:double,factorZ: xsd:double): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/scale[geof:scale] scales the ordinates of `geom` using the factors given as parameters of this function.
+
+[NOTE,keep-separate=true]
+====
+We recommend that implementers use the same literal type as a result of this function as the type of the input literal.
+====
+
+[[function_geof_shortestline]]
+==== Function: geof:shortestLine
+
+[%unnumbered]
+[source,turtle]
+----
+geof:shortestLine (geom: ogc:geomLiteral, geom2: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/shortestLine[`geof:shortestLine`] returns the shortest line geometry which is spanned between the two nearest points between `geom` and `geom2` as determined by e.g. the geof:distance function. If `geom` and `geom2` are the same, the function will return the line corresponding to the shortest distance between the two nearest points in `geom`.
+The result geometry shall be in the same CRS as input parameter `geom`.
 
 [[function_geof_spatialdimension]]
 ==== Function: geof:spatialDimension
@@ -2021,12 +2313,28 @@ The function http://www.opengis.net/def/function/geosparql/symDifference[`geof:s
 [[function_geof_simplify]]
 ==== Function: geof:simplify
 
-```
+----
 geof:simplify (geom: ogc:geomLiteral, tolerance: xsd:double): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/simplify[geof:simplify] simplifies `geom` by applying the Douglas-Peucker algorithm <<DOUGLASPEUCKER>>.
 
+[[function_geof_tessellate]]
+==== Function: geof:tessellate
+
+[%unnumbered]
+[source,turtle]
+----
+geof:tessellate (geom: ogc:geomLiteral): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/transform[geof:tessellate] converts `geom` to its tessellation with adaptive triangles.
+
+
+[NOTE,keep-separate=true]
+====
+We recommend that implementers use the same literal type as a result of this function as the type of the input literal.
+====
 
 [[function_geof_transform]]
 ==== Function: geof:transform
@@ -2038,6 +2346,38 @@ geof:transform (geom: ogc:geomLiteral, srsIRI: xsd:anyURI): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/transform[geof:transform] converts `geom` to a spatial reference system defined by srsIRI. The function raises an error if a transformation is not mathematically possible.
+
+[NOTE,keep-separate=true]
+====
+We recommend that implementers use the same literal type as a result of this function as the type of the input literal.
+====
+
+[[function_geof_translate]]
+==== Function: geof:translate
+
+[%unnumbered]
+[source,turtle]
+----
+geof:translate(geom: ogc:geomLiteral,deltax: xsd:double,deltay: xsd:double,deltaz: xsd:double): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/translate[geof:translate] translates the position of `geom` to the position indicated by the translation values.
+
+[NOTE,keep-separate=true]
+====
+We recommend that implementers use the same literal type as a result of this function as the type of the input literal.
+====
+
+[[function_geof_translateMulti]]
+==== Function: geof:translateMult
+
+[%unnumbered]
+[source,turtle]
+----
+geof:translateMult(geom: ogc:geomLiteral,deltax: xsd:double,deltay: xsd:double,deltaz: xsd:double): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/translateMult[geof:translateMult] translates the position of `geom` to the position multiplied by the translation values.
 
 [NOTE,keep-separate=true]
 ====
@@ -2238,9 +2578,9 @@ The function http://www.opengis.net/def/function/geosparql/aggCentroid[`geof:agg
 [[function_geof_aggcollect]]
 ==== Function: geof:aggCollect
 
-```
+----
 geof:aggCollect (geom: ogc:geomLiteral[]): ogc:geomLiteral
-```
+----
 
 The function http://www.opengis.net/def/function/geosparql/aggCollect[`geof:aggCollect`] creates a GeometryCollection literal out of a set of geometries.
 
