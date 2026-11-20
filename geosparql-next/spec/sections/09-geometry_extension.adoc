@@ -1312,6 +1312,7 @@ as SPARQL extension functions, consistent with definitions of these functions in
 .Non-topological Query Functions (Non Simple Features)
 ====
 Implementations shall support the functions
+<<function_geof_convertToFormat, `geof:convertToFormat`>>,
 <<function_geof_metriclength, `geof:metricLength`>>,
 <<function_geof_length, `geof:length`>>,
 <<function_geof_metricperimeter, `geof:metricPerimeter`>>,
@@ -1515,6 +1516,17 @@ geof:centroid (geom: ogc:geomLiteral): ogc:geomLiteral
 ----
 
 The function http://www.opengis.net/def/function/geosparql/centroid[`geof:centroid`] returns the mathematical centroid of `geom`. The centroid point does not have to be part of the surface it is derived from.
+
+[[function_geof_convertToFormat]]
+==== Function: geof:convertToFormat
+
+[%unnumbered]
+[source,turtle]
+----
+geof:convertToFormat (geom: ogc:geomLiteral, literalType: xsd:anyURI, crsType:xsd:anyURI): ogc:geomLiteral
+----
+
+The function http://www.opengis.net/def/function/geosparql/convertToFormat[`geof:convertFormat`] returns a geometric object in one literal format, expressed in the literal format that is described by `literalType`. The `crsType` parameter is needed to define a more detailed literal subtype, e.g., for GeoCode Literals or DGGS System specifications or a CRS specification for literals such as WKT. For literal types that do not support such subtypes, e.g., GeoJSON, this parameter shall be ignored. 
 
 [[function_geof_convexhull]]
 ==== Function: geof:convexHull
